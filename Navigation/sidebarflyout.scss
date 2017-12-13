@@ -1,0 +1,56 @@
+@import '../../settings';
+
+.mrc-sidebar-navigation-flyout {
+  position: absolute;
+  z-index: $z-index-nav-flyout;
+  top: 0;
+  left: -340px + $topbar-height-tablet;
+  width: 340px;
+  height: 100vh;
+  background-color: #EBF3F9;
+  transition: left .4s;
+  display: none;
+
+  @include respond-to('tablet') {
+    display: block;
+  }
+
+  &.show {
+    left: $topbar-height-tablet;
+  }
+
+  &.disappear {
+    visibility: hidden;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: $topbar-height-tablet + 1px; // FIXME 1px for border (despite border-box?)
+    padding: 0 16px;
+    border-bottom: 1px solid rgba(125,146,188,0.5);
+  }
+
+  .header-text {
+    font-size: 32px;
+    font-weight: 300;
+    line-height: 38px;
+  }
+
+  .header-icon {
+    padding: 16px;
+    height: 48px;
+  }
+
+  ul {
+    padding: (111px - $topbar-height-tablet) 0 0 16px;
+  }
+
+  ul a {
+    color: #0099FF;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 19px;
+  }
+}

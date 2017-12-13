@@ -1,0 +1,39 @@
+@import '../../settings';
+@import '../../buttons';
+
+.mrc-bottom-navigation {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  height: $topbar-height-mobile;
+  width: 80px;
+  background-color: $metro-blue;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+
+  .btn {
+    display: flex;
+    width: 80px;
+    padding: .75em;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .active {
+    background-color: $sky-blue;
+  }
+
+  .mrc-burger-menu {
+    order: 99; // Right side
+  }
+
+  img {
+    width: 100%;
+  }
+
+  &.bottom-toolbar {
+    width: 100%;
+  }
+}
+
