@@ -1,0 +1,24 @@
+@import "../../settings";
+
+.mrc-brandbar {
+  // Add a name for content area, see js/index.scss
+  grid-area: topbar;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  color: $light-grey;
+  background-color: $metro-blue;
+
+  .brandbar-icon {
+    margin: 19px;
+    height: 24px;
+  }
+
+  .brandbar-title {
+    align-self: center;
+    margin: 0 auto;
+    font-weight: 500;
+  }
+}

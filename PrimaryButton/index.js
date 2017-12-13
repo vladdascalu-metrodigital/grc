@@ -1,0 +1,26 @@
+import React, {Component} from 'react';
+import MrcSpinner from '../../comp/Util/MrcSpinner';
+import './index.scss';
+
+export default class PrimaryButton extends Component {
+
+    createContent(props) {
+        if (props.showSpinner) {
+            return <MrcSpinner/>;
+        }
+        return (
+            <button type={props.type || 'button'} onClick={props.onClick} disabled={props.disabled}>
+                {props.icon ? <img className='icon' src={props.icon}/> : null}
+                {props.text}
+            </button>
+        );
+    }
+
+    render() {
+        return (
+            <div className='mrc-primary-button'>
+                {this.createContent(this.props)}
+            </div>
+        );
+    }
+}

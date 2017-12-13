@@ -1,0 +1,34 @@
+@import '../../settings';
+
+// TODO Make this more dynamic
+.mrc-quicknav {
+  $border-size: 3px;
+
+  grid-area: topbar;
+
+  height: $topbar-height-mobile;
+  z-index: $z-index-topbar;
+  background-color: white;
+  padding-left: 27px;
+  box-shadow: 0 1px $border-size rgba(0,0,0,.25);
+
+  ul {
+    font-weight: 500;
+    display: flex;
+  }
+
+  li {
+    line-height:$topbar-height-mobile - $border-size;
+    padding-right: 1rem;
+    color: $sky-blue;
+  }
+
+  li.active {
+    border-bottom: $border-size solid $sky-blue;
+  }
+
+  @include respond-to("tablet") {
+    height: $topbar-height-tablet;
+    li {line-height: $topbar-height-tablet - $border-size}
+  };
+}
