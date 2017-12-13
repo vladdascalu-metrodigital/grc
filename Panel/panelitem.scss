@@ -1,0 +1,9 @@
+@import "../../settings";
+
+.mrc-panel-item{
+  width: 100%;
+  @include respond-to('tablet'){
+    width:50%;
+    padding: 10px;
+  }
+}

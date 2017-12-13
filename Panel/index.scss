@@ -1,0 +1,48 @@
+@import "../../settings";
+
+.mrc-panel {
+
+  @include respond-to('tablet') {
+    width: 90%;
+    margin: 10px auto auto;
+  }
+
+  background-color: $form-bg;
+  border-bottom: $form-border;
+
+  .panel-header {
+    height: 50px;
+    width: 100%;
+    border: 1px solid #eeeeee;
+    min-width: 300px;
+
+    display: none;
+    @include respond-to('tablet') {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .title {
+    padding-left: 20px;
+    color: $form-placeholder-color;
+    font-size: $small-text;
+    font-weight: 500;
+    text-transform: uppercase;
+    justify-content: space-between;
+  }
+
+  .panel-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 20px;
+
+    fieldset {
+      border-bottom: none;
+      flex-grow: 1;
+    }
+  }
+}
