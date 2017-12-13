@@ -1,0 +1,26 @@
+@import "../../settings";
+
+.mrc-status-bar {
+  width: 100%;
+  height: 48px;
+  color: white;
+  background-color: $success-green;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: $content-padding-horizontal-mobile;
+
+  @include respond-to('tablet') {
+    padding-left: $content-padding-horizontal-tablet;
+  }
+
+  &.warning {
+    background-color: $warning-orange;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+  }
+}
