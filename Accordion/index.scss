@@ -1,0 +1,63 @@
+@import "../../settings";
+
+.mrc-accordion {
+  // see https://github.com/glennflanagan/react-collapsible/blob/develop/example/_src/sass/components/_Collapsible.scss
+  // The main container element
+  .Collapsible {
+  }
+
+  //The content within the collapsible area
+  .Collapsible__contentInner {
+    border: 1px solid $light-grey;
+    border-top: 0;
+  }
+
+  //The link which when clicked opens the collapsible area
+  .Collapsible__trigger {
+
+    .trigger-content {
+      background-color: $form-bg;
+      border-bottom: $form-border;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: 18px $content-padding-horizontal-mobile;
+
+      @include respond-to('tablet') {
+        padding: 0 $content-padding-horizontal-tablet;
+      }
+
+      h1 {
+        color: $metro-blue;
+        font-size: $text-flow;
+        font-weight: 500;
+      }
+
+      img {
+        transition: transform 200ms;
+        transform: rotateZ(90deg);
+        width: 30px;
+        height: 30px;
+
+        @include respond-to('tablet') {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+
+    &.is-open {
+      .trigger-content {
+        img {
+          transform: rotateZ(-90deg);
+        }
+      }
+    }
+
+    &.is-disabled {
+      opacity: 0.5;
+      background-color: $light-grey;
+    }
+  }
+}
