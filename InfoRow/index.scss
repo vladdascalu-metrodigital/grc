@@ -1,0 +1,73 @@
+@import "../../settings";
+
+.mrc-info-row {
+  width: 100%;
+  background-color: $form-bg;
+  border-bottom: $form-border;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .infos {
+    padding: 18px 0 15px $content-padding-horizontal-mobile;
+    display: flex;
+    flex-direction: column;
+
+    @include respond-to('tablet') {
+      padding: 18px 0 15px $content-padding-horizontal-tablet;
+      flex-direction: row;
+    }
+
+    h1 {
+      color: $metro-blue;
+      font-size: $text-flow;
+      font-weight: 500;
+    }
+
+    h2 {
+      color: #666;
+      font-size: $text-flow;
+      font-weight: inherit;
+      margin-top: 10px;
+
+      @include respond-to('tablet') {
+        margin-top: 0;
+        margin-left: 12px;
+      }
+    }
+  }
+
+  .icon {
+    display: flex;
+    padding-right: $content-padding-horizontal-mobile;
+
+    @include respond-to('tablet') {
+      padding-right: $content-padding-horizontal-tablet;
+    }
+
+    img {
+      width: 30px;
+      height: 30px;
+
+      @include respond-to('tablet') {
+        width: 16px;
+        height: 16px;
+
+        &.no-icon-text {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+
+    p {
+      display: none;
+
+      @include respond-to('tablet') {
+        margin-left: 9px;
+        color: $sky-blue;
+        display: block;
+      }
+    }
+  }
+}
