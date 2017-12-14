@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import NavigationLayout from './NavigationLayout';
-import {navFlyoutVisibilityChangeEvent} from '../../comp/Util/events';
+import {navFlyoutVisibilityChangeEvent} from '../../global/Util/events';
 
 // FIXME Typo: expended -> expanded
 export const reducer = {burgerMenuExpended: reducerFn};
