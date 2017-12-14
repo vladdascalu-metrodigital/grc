@@ -1,0 +1,59 @@
+@import "settings";
+
+// see https://github.com/reactjs/react-tabs/blob/master/style/react-tabs.scss
+.react-tabs {
+  &__tab-list {
+    border-bottom: 1px solid $light-grey;
+    margin: 0 0 10px;
+    padding: 0;
+  }
+
+  &__tab {
+    display: inline-block;
+    border: 1px solid transparent;
+    border-bottom: none;
+    bottom: -1px;
+    position: relative;
+    list-style: none;
+    padding: 15px 20px;
+    cursor: pointer;
+    color: $light-blue;
+    font-size: $small-text;
+    font-weight: 500;
+    text-transform: uppercase;
+
+    &--selected {
+      background: #fff;
+      border-color: $light-grey;
+      color: $sky-blue;
+    }
+    &:focus {
+      box-shadow: 0 0 5px hsl(208, 99%, 50%);
+      border-color: hsl(208, 99%, 50%);
+      outline: none;
+
+      &:after {
+        content: "";
+        position: absolute;
+        height: 5px;
+        left: -4px;
+        right: -4px;
+        bottom: -5px;
+        background: #fff;
+      }
+    }
+  }
+
+  &__tab-panel {
+    display: none;
+
+    &--selected {
+      display: block;
+    }
+
+    &--disabled {
+      color: $light-grey;
+      cursor: default;
+    }
+  }
+}

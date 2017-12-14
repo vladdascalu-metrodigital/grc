@@ -1,0 +1,82 @@
+@charset "UTF-8";
+@import "settings";
+// Workaround, until UX Hub adds CORS Headers to the fonts, we have to load it on our own.
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  line-height: 1.5rem;
+  font-weight: 300;
+  color: $metro-blue;
+  background-color: $mother-of-all-bg;
+  overflow-x: hidden;
+}
+
+html, input, select {
+  font-family: 'Roboto', sans-serif;
+}
+
+li {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color: $metro-blue;
+}
+
+// Base config of the main grid
+.mrc-grid-wrapper {
+  display: grid;
+  width: 100vw;
+  height: calc(100vh - 56px); // leaving some space for bottom bar
+  overflow: auto;
+  grid-template-columns: $topbar-height-mobile auto;
+  grid-template-rows: $topbar-height-mobile auto;
+  grid-template-areas: "metro-logo   topbar" "content      content";
+
+  @include respond-to('tablet') {
+    height: 100vh;
+    overflow: visible;
+    grid-template-columns: $topbar-height-tablet auto;
+    grid-template-rows: $topbar-height-tablet auto;
+    grid-template-areas: "metro-logo   topbar" "navigation   content";
+  }
+
+  &.no-topbar {
+    @include respond-to('tablet') {
+      grid-template-areas: "metro-logo   content" "navigation   content";
+    }
+  }
+}
+
+.mrc-main {
+  grid-area: content;
+
+  @include respond-to('tablet') {
+    overflow: auto;
+  }
+}
+
+.metro-logo {
+  grid-area: metro-logo;
+  z-index: $z-index-nav;
+  padding: 19px;
+  height: $topbar-height-mobile;
+  width: $topbar-height-mobile;
+  background-color: $metro-blue;
+
+  @include respond-to('tablet') {
+    padding: 25px;
+    height: $topbar-height-tablet;
+    width: $topbar-height-tablet;
+  }
+}
+
+@import "forms";

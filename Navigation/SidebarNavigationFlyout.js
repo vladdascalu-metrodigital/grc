@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import './sidebarflyout.scss';
 import classNames from 'classnames';
 import {navFlyoutVisibilityChangeEvent} from '../Util/events';
-import CloseDarkIcon from '../../icons/close-dark.svg';
+import CloseDarkIcon from '../icons/close-dark.svg';
 
 class SidebarNavigationFlyoutLayout extends Component {
 

@@ -1,0 +1,64 @@
+// Breakpoints
+$breakpoints: (
+  'tablet': 768px,
+  'desktop': 992px
+) !default;
+
+@mixin respond-to($breakpoint) {
+  // If the key exists in the map
+  @if map-has-key($breakpoints, $breakpoint) {
+    // Prints a media query based on the value
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+
+  // If the key doesn't exist in the map
+  @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        + "Available breakpoints are: #{map-keys($breakpoints)}.";
+  }
+}
+
+// Fonts
+$headline-monster: 3rem; /* =48px */
+$headline-large: 2rem; /* =32px */
+$headline-regular: 1.5rem; /* =24px */
+$headline-small: 1.25rem; /* =20px */
+$text-flow: 1rem; /* =16px */
+$small-text: 0.8125rem; /* =13px */
+
+
+// Colors
+$metro-blue: rgb(26,59,122);
+$metro-yellow: rgb(251,228,0);
+$success-green: rgb(116,186,0);
+$sky-blue: rgb(0,153,255);
+$discount-red: rgb(204,51,0);
+$warning-orange: rgb(255,89,22);
+
+$mother-of-all-bg: rgb(243,248,251);
+
+$light-grey: rgb(238,238,238);
+$light-blue: rgb(159,209,243);
+$middle-blue: rgb(81,182,249);
+
+$form-font-size: $text-flow;
+$form-bg: white;
+$form-bg-disabled: rgb(249, 249, 249);
+$form-border: 1px solid $light-grey;
+$form-height: 40px;
+$form-label-color: #909090;
+$form-placeholder-color: rgb(153, 153, 153);
+
+$nav-border-top-color: rgb(76,103,158);
+
+$topbar-height-mobile: 56px;
+$topbar-height-tablet: 80px;
+
+$z-index-topbar: 100;
+$z-index-nav-flyout: 200;
+$z-index-nav: 300;
+
+$content-padding-horizontal-mobile: 23px;
+$content-padding-horizontal-tablet: 64px;

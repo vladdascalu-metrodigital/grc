@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './index.scss';
 import ReactCollapsible from 'react-collapsible';
-import ArrowRight from '../../icons/arrow-right-12.svg';
+import ArrowRight from '../icons/arrow-right-12.svg';
 
 export class Accordion extends Component {
 

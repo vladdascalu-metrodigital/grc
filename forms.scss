@@ -1,0 +1,80 @@
+@import "settings";
+
+fieldset {
+  border-style: none;
+  border-bottom: $form-border;
+  background-color: $form-bg;
+  padding: 20px 18px;
+  width: 100%;
+}
+
+input, select {
+  background-color: $form-bg;
+  border: $form-border;
+  padding-left: 16px;
+  color: $form-label-color;
+}
+
+input[disabled] {
+  background-color: $form-bg-disabled;
+}
+
+input:focus {
+  border-color: $sky-blue;
+  outline: none;
+}
+
+label {
+  font-size: $text-flow;
+  color: $form-label-color;
+  font-weight: 400;
+}
+
+select {
+  height: 40px;
+  border: 1px solid #eeeeee;
+  margin-top: 5px;
+  padding: 5px 15px;
+}
+
+.mrc-input {
+  display: flex;
+  flex-direction: row;
+
+  height: $form-height;
+  background-color: $form-bg;
+  border: $form-border;
+
+  input {
+    font-size: $form-font-size;
+    flex: 1;
+    border: none;
+    background-color: transparent;
+    padding: 5px 15px;
+  }
+
+  input::placeholder {
+    color: $form-placeholder-color;
+  }
+
+
+  .mrc-icon {
+    padding: 5px;
+    margin: 2px;
+
+    > * {
+      // form-height - (2*parent-padding) - (2*parent-margin)
+      $icon-size: $form-height - (2*5)- (2*2) - 2;
+      width: $icon-size;
+      height: $icon-size;
+
+      display: inline-block;
+      background-repeat: no-repeat;
+    }
+  }
+
+  .mrc-icon-search {
+    background-image: url(icons/search.svg);
+  }
+}
+

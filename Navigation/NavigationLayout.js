@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import SidebarNavigation from './SidebarNavigation';
 import BurgerMenuLayout from './BurgerMenuLayout';
 import PropTypes from 'prop-types';
-import BurgerMenu from '../../icons/burger-menu.svg';
+import BurgerMenu from '../icons/burger-menu.svg';
 import BackBtn from './BackBtn';
 import './bottommenu.scss';
 

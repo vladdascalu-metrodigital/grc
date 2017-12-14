@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import './sidebar.scss';
-import LaunchpadIcon from '../../icons/launchpad.svg';
+import LaunchpadIcon from '../icons/launchpad.svg';
 import BackBtn from './BackBtn';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
