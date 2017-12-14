@@ -1,5 +1,5 @@
 # Metro Risk Check - Global React Components
 
-This repo uses tags which are tracked by dependent projects.
+This repo is used to share react components and styles between multiple MRC services.
 
- - Tag `limitrequest` is tracked by https://git.metrosystems.net/mrc/credit-limit
+
