@@ -10,6 +10,9 @@
   width: $topbar-height-tablet;
   border-top: 1px solid $nav-border-top-color;
 
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+
   nav {
     height: 100%;
     position: relative;

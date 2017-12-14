@@ -41,6 +41,10 @@ a {
   grid-template-rows: $topbar-height-mobile auto;
   grid-template-areas: "metro-logo   topbar" "content      content";
 
+  display: -ms-grid;
+  -ms-grid-columns: $topbar-height-mobile 95vw;
+  -ms-grid-rows: $topbar-height-mobile 91vh;
+
   @include respond-to('tablet') {
     height: 100vh;
     overflow: visible;
@@ -58,6 +62,8 @@ a {
 
 .mrc-main {
   grid-area: content;
+  -ms-grid-row: 2;
+  -ms-grid-column: 2;
 
   @include respond-to('tablet') {
     overflow: auto;
@@ -68,6 +74,8 @@ a {
   grid-area: metro-logo;
   z-index: $z-index-nav;
   position: relative;
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
   padding: 19px;
   height: $topbar-height-mobile;
   width: $topbar-height-mobile;

@@ -6,6 +6,9 @@
 
   grid-area: topbar;
 
+  -ms-grid-row: 1;
+  -ms-grid-column: 2;
+
   height: $topbar-height-mobile;
   z-index: $z-index-topbar;
   background-color: white;
