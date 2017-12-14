@@ -5,6 +5,7 @@
 
   grid-area: navigation;
   z-index: $z-index-nav;
+  position: relative;
   background-color: $metro-blue;
   width: $topbar-height-tablet;
   border-top: 1px solid $nav-border-top-color;

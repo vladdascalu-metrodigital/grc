@@ -67,6 +67,7 @@ a {
 .metro-logo {
   grid-area: metro-logo;
   z-index: $z-index-nav;
+  position: relative;
   padding: 19px;
   height: $topbar-height-mobile;
   width: $topbar-height-mobile;
