@@ -4,10 +4,9 @@
 .mrc-quicknav {
   $border-size: 3px;
 
-  grid-area: topbar;
-
   -ms-grid-row: 1;
   -ms-grid-column: 2;
+  grid-area: topbar;
 
   height: $topbar-height-mobile;
   z-index: $z-index-topbar;

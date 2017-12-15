@@ -1,7 +1,8 @@
 @import "../settings";
 
 .mrc-brandbar {
-  // Add a name for content area, see js/index.scss
+  -ms-grid-row: 1;
+  -ms-grid-column: 2;
   grid-area: topbar;
 
   display: flex;

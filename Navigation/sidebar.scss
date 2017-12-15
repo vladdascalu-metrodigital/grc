@@ -3,15 +3,15 @@
 
 .mrc-sidebar-navigation {
 
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
   grid-area: navigation;
+
   z-index: $z-index-nav;
   position: relative;
   background-color: $metro-blue;
   width: $topbar-height-tablet;
   border-top: 1px solid $nav-border-top-color;
-
-  -ms-grid-row: 2;
-  -ms-grid-column: 1;
 
   nav {
     height: 100%;

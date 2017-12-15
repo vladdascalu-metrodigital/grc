@@ -31,39 +31,55 @@ a {
   color: $metro-blue;
 }
 
+// For IE
+main, section, article {
+  display: block;
+}
+
 // Base config of the main grid
 .mrc-grid-wrapper {
+  display: -ms-grid;
   display: grid;
+
   width: 100vw;
   height: calc(100vh - 56px); // leaving some space for bottom bar
   overflow: auto;
+
+  -ms-grid-columns: $topbar-height-mobile 1fr;
   grid-template-columns: $topbar-height-mobile auto;
+
+  -ms-grid-rows: $topbar-height-mobile 1fr;
   grid-template-rows: $topbar-height-mobile auto;
+
   grid-template-areas: "metro-logo   topbar" "content      content";
 
-  display: -ms-grid;
-  -ms-grid-columns: $topbar-height-mobile 95vw;
-  -ms-grid-rows: $topbar-height-mobile 91vh;
 
   @include respond-to('tablet') {
     height: 100vh;
     overflow: visible;
+    -ms-grid-columns: $topbar-height-tablet 1fr;
     grid-template-columns: $topbar-height-tablet auto;
+
+    -ms-grid-rows: $topbar-height-tablet 1fr;
     grid-template-rows: $topbar-height-tablet auto;
-    grid-template-areas: "metro-logo   topbar" "navigation   content";
+    grid-template-areas:
+      "metro-logo   topbar"
+      "navigation   content";
   }
 
   &.no-topbar {
     @include respond-to('tablet') {
-      grid-template-areas: "metro-logo   content" "navigation   content";
+      grid-template-areas:
+        "metro-logo   content"
+        "navigation   content";
     }
   }
 }
 
 .mrc-main {
-  grid-area: content;
   -ms-grid-row: 2;
   -ms-grid-column: 2;
+  grid-area: content;
 
   @include respond-to('tablet') {
     overflow: auto;
@@ -71,11 +87,12 @@ a {
 }
 
 .metro-logo {
-  grid-area: metro-logo;
-  z-index: $z-index-nav;
-  position: relative;
   -ms-grid-row: 1;
   -ms-grid-column: 1;
+  grid-area: metro-logo;
+
+  z-index: $z-index-nav;
+  position: relative;
   padding: 19px;
   height: $topbar-height-mobile;
   width: $topbar-height-mobile;
