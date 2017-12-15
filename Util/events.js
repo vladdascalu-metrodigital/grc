@@ -24,3 +24,13 @@ export const hideError = () => ({
     type: 'ERROR',
     error: null
 });
+
+export const auxControlEvent = value => {
+    const type = 'AUX_CONTROL_EVENT';
+    return Object.assign({value}, {type});
+};
+
+export const currentUiPageTitleEvent = text => ({
+    type: 'CURRENT_UI_PAGE_TITLE',
+    text
+});
