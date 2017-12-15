@@ -1,0 +1,16 @@
+@import "../settings";
+
+.mrc-error, .mrc-warning {
+  width: 100%;
+  background-color: $warning-orange;
+  color: white;
+
+  .message {
+    padding: 17px 19px;
+  }
+}
+
+.mrc-warning {
+  background-color: $metro-yellow;
+  color: inherit;
+}
