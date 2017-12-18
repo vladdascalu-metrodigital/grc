@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import MrcSpinner from '../../comp/Util/MrcSpinner';
+import MrcSpinner from '../Util/MrcSpinner';
 import './index.scss';
 
 export default class PrimaryButton extends Component {

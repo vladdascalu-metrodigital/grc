@@ -30,7 +30,9 @@ export const auxControlEvent = value => {
     return Object.assign({value}, {type});
 };
 
+
 export const currentUiPageTitleEvent = text => ({
     type: 'CURRENT_UI_PAGE_TITLE',
     text
 });
+
