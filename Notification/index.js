@@ -1,24 +1,14 @@
-import ErrorLayout from './ErrorLayout';
-import WarningLayout from './WarningLayout';
+import NotificationLayout from './NotificationLayout';
 import './index.scss';
 import {connect} from 'react-redux';
 
-export const Error = connect(
-    mapStateToPropsError
-)(ErrorLayout);
+export const Notification = connect(
+    mapStateToProps
+)(NotificationLayout);
 
-export const Warning = connect(
-    mapStateToPropsWarn
-)(WarningLayout);
-
-
-function mapStateToPropsError(state) {
+function mapStateToProps(state) {
     return {
-        error: state.ui.error,
-        showReloadBtn: state.ui.showReloadBtn
+        message: state.ui.message,
+        messageType: state.ui.messageType
     };
-}
-
-function mapStateToPropsWarn(state) {
-    return {message: state.ui.message};
 }

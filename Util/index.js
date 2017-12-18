@@ -26,10 +26,8 @@ function reducerFn(state = {pageTitle: 'Launch Pad', navFlyoutVisible: 'hide', a
             } else {
                 return state;
             }
-        case 'ERROR':
-            return Object.assign({}, state, {error: action.error, showReloadBtn: action.showReloadBtn});
-        case 'WARNING':
-            return Object.assign({}, state, {message: action.message});
+        case 'NOTIFICATION':
+            return Object.assign({}, state, {message: action.message, messageType: action.messageType});
         case 'AUX_CONTROL_EVENT':
             return handleAuxControlState(action, state);
         default:

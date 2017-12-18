@@ -9,20 +9,22 @@ export const resizeEvent = (tablet, desktop) => ({
     desktop
 });
 
-export const showError = (error, showReloadBtn = false) => ({
-    type: 'ERROR',
-    error,
-    showReloadBtn
+export const showWarning = (message) => showNotification(message, 'warning');
+
+export const showSuccess = (message) => showNotification(message, 'success');
+
+export const showError = (message) => showNotification(message, 'error');
+
+export const showNotification = (message, messageType) => ({
+    type: 'NOTIFICATION',
+    message,
+    messageType
 });
 
-export const showWarning = (message) => ({
-    type: 'WARNING',
-    message
-});
-
-export const hideError = () => ({
-    type: 'ERROR',
-    error: null
+export const hideNotification = () => ({
+    type: 'NOTIFICATION',
+    message: null,
+    messageType: null
 });
 
 export const auxControlEvent = value => {

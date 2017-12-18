@@ -1,16 +1,22 @@
 @import "../settings";
 
-.mrc-error, .mrc-warning {
+.mrc-notification {
   width: 100%;
-  background-color: $warning-orange;
   color: white;
+
+  &.error {
+    background-color: $warning-orange;
+  }
+
+  &.warning {
+    background-color: $metro-yellow;
+  }
+
+  &.success {
+    background-color: $success-green;
+  }
 
   .message {
     padding: 17px 19px;
   }
-}
-
-.mrc-warning {
-  background-color: $metro-yellow;
-  color: inherit;
 }
