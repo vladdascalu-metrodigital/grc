@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Spinner from '../../../../../node_modules/spin.js/spin';
+import Spinner from 'spin.js';
 
 // inspired by https://github.com/qimingweng/react-spinjs/blob/master/src/index.js
 export default class MrcSpinner extends Component {
