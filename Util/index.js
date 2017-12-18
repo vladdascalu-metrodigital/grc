@@ -1,5 +1,5 @@
 import {extractJoinedProps} from './util';
-import {createLoadingHelpers, enhanceReducer} from '../../comp/Util/reduxHelpers';
+import {createLoadingHelpers, enhanceReducer} from './reduxHelpers';
 
 export const configLoadingHelpers = createLoadingHelpers('UI', 'CONFIG', () => '/creditlimit/api/config');
 export const uiReducer = {ui: enhanceReducer(reducerFn, {config: configLoadingHelpers.reducer})};
