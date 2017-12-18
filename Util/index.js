@@ -1,4 +1,8 @@
-export const uiReducer = {ui: reducerFn};
+import {extractJoinedProps} from './util';
+import {createLoadingHelpers, enhanceReducer} from '../../comp/Util/reduxHelpers';
+
+export const configLoadingHelpers = createLoadingHelpers('UI', 'CONFIG', () => '/creditlimit/api/config');
+export const uiReducer = {ui: enhanceReducer(reducerFn, {config: configLoadingHelpers.reducer})};
 
 // when the flyout disappears and the mouse leaves the flyout, do not process the 'hide' event
 // because that would cause the flyout to slide to the left (instead of staying 'disappeared')
@@ -23,7 +27,9 @@ function reducerFn(state = {pageTitle: 'Launch Pad', navFlyoutVisible: 'hide', a
                 return state;
             }
         case 'ERROR':
-            return Object.assign({}, state, {error: action.error});
+            return Object.assign({}, state, {error: action.error, showReloadBtn: action.showReloadBtn});
+        case 'WARNING':
+            return Object.assign({}, state, {message: action.message});
         case 'AUX_CONTROL_EVENT':
             return handleAuxControlState(action, state);
         default:
@@ -58,4 +64,23 @@ export function debounce(fn, wait, immediate) {
 
         if (callNow) resolve(fn.call(context));
     });
+}
+
+/**
+ *
+ * @param {Object} creditData
+ * @param prefix default = '_'
+ * @returns {Object} new Object with filtered properties
+ */
+export function filterObjectByPrefix(creditData, prefix = '_') {
+    const creditDataFiltered = {};
+    Object.keys(creditData).filter(k => !k.startsWith(prefix)).forEach((k) => creditDataFiltered[k] = creditData[k]);
+    return creditDataFiltered;
+}
+
+export function displayName(customer, fallback='Unknown') {
+    return extractJoinedProps(customer, 'companyName')
+        || extractJoinedProps(customer, 'customerFirstName', 'customerLastName')
+        || extractJoinedProps(customer, 'companyOwnerFirstName', 'companyOwnerLastName')
+        || fallback;
 }
