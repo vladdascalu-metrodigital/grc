@@ -21,7 +21,9 @@ class SidebarNavigationFlyoutLayout extends Component {
                     <Link to='#' onClick={this.props.disappearFlyout}><img className='header-icon' src={CloseDarkIcon} alt='Close' /></Link>
                 </header>
                 <ul className='links'>
-                    <li><Link to='/' onClick={this.props.disappearFlyout}>LAUNCH PAD</Link></li>
+                    <li>
+                        <a href="/" onClick={this.props.disappearFlyout}>LAUNCH PAD</a>
+                    </li>
                 </ul>
             </div>
         );
