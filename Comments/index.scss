@@ -1,0 +1,36 @@
+@import "../settings";
+
+.mrc-comments {
+
+  textarea {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    height: 150px;
+    background-color: $form-bg;
+  }
+
+  h3 {
+    padding: 1em 0;
+    font-weight: 500;
+    font-size: $text-flow;
+    text-transform: uppercase;
+    color: #333333;
+  }
+
+  .mrc-primary-button button {
+    min-width: 0px;
+  }
+
+  .mrc-primary-button .icon {
+    margin-right: 0px;
+  }
+
+  pre {
+    width: 100%;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+  }
+}
