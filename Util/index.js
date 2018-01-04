@@ -82,3 +82,11 @@ export function displayName(customer, fallback='Unknown') {
         || extractJoinedProps(customer, 'companyOwnerFirstName', 'companyOwnerLastName')
         || fallback;
 }
+
+export const checkResponseIsOk = resp => {
+    if (!resp.ok) {
+        throw new Error();
+    } else {
+        return resp;
+    }
+};

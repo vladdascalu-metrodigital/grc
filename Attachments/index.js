@@ -34,12 +34,12 @@ export default class Attachments extends Component {
     sendFile = (file) => {
         this.props.addAttachment(file, this.state.title);
         this.setState({title: ''});
-    }
+    };
 
     updateTitle = (evt) => {
         evt.preventDefault();
         this.setState({title: evt.target.value});
-    }
+    };
 }
 
 Attachments.propTypes = {
