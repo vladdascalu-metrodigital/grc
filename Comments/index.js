@@ -41,7 +41,7 @@ export default class Comments extends Component {
     };
 
     addComment = () => {
-        const comment = {comment: this.state.newComment};
+        const comment = this.state.newComment;
         this.setState({newComment: ''});
         this.props.addComment(comment);
     };
