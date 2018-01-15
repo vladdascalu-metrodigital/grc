@@ -2,19 +2,20 @@
 
 // see https://github.com/reactjs/react-tabs/blob/master/style/react-tabs.scss
 .react-tabs {
+
+  > ul {
+    list-style: none;
+  }
+
   &__tab-list {
-    border-bottom: 1px solid $light-grey;
-    margin: 0 0 10px;
-    padding: 0;
+    background-color: white;
+    border: 1px solid $light-grey;
   }
 
   &__tab {
     display: inline-block;
-    border: 1px solid transparent;
-    border-bottom: none;
-    bottom: -1px;
+    border-right: 1px solid $light-grey;
     position: relative;
-    list-style: none;
     padding: 15px 20px;
     cursor: pointer;
     color: $light-blue;
@@ -24,28 +25,18 @@
 
     &--selected {
       background: #fff;
-      border-color: $light-grey;
       color: $sky-blue;
     }
-    &:focus {
-      box-shadow: 0 0 5px hsl(208, 99%, 50%);
-      border-color: hsl(208, 99%, 50%);
-      outline: none;
 
-      &:after {
-        content: "";
-        position: absolute;
-        height: 5px;
-        left: -4px;
-        right: -4px;
-        bottom: -5px;
-        background: #fff;
-      }
+    &:focus {
+      outline: none;
     }
   }
 
   &__tab-panel {
     display: none;
+    background-color: $light-grey;
+    padding: 15px 20px;
 
     &--selected {
       display: block;
