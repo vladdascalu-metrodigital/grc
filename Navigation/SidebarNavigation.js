@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
 import './sidebar.scss';
 import LaunchpadIcon from '../icons/launchpad.svg';
 import BackBtn from './BackBtn';
@@ -10,7 +9,6 @@ export default class SidebarNavigation extends Component {
 
     constructor(props) {
         super(props);
-        // this.createBackBtn = this.createBackBtn.bind(this);
     }
 
     createBackBtn = () => {
@@ -21,7 +19,7 @@ export default class SidebarNavigation extends Component {
                 <BackBtn onClick={this.props.disappearFlyout}/>
             </li>
         );
-    }
+    };
 
     render() {
         const backBtn = this.createBackBtn();
@@ -29,9 +27,9 @@ export default class SidebarNavigation extends Component {
             <nav>
                 <ul onMouseEnter={this.props.showFlyout}>
                     <li>
-                        <Link to='/' onClick={this.props.disappearFlyout}>
+                        <a href='/' onClick={this.props.disappearFlyout}>
                             <img className='icon' src={LaunchpadIcon} alt='Launch Pad'/>
-                        </Link>
+                        </a>
                     </li>
                     {backBtn}
                 </ul>
