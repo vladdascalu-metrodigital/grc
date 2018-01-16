@@ -5,11 +5,6 @@ import PropTypes from 'prop-types';
 
 export default class CommentsRows extends Component {
 
-    constructor(props) {
-        super(props);
-        // this.createRow = this.createRow.bind(this);
-    }
-
     render() {
         if (!(this.props.data && this.props.data.length > 0)) {
             return <span>No Comments</span>;
