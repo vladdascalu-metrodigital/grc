@@ -33,11 +33,11 @@ function periodSorter(a, b) {
 export default function getPossibleValues(availablePayments, type, period) {
     if (!availablePayments) return null;
     const typeValues = extractTypes(availablePayments);
-    if (type == null) {
+    if (type === null) {
         return typeValues;
     } else {
         const periodValues = extractPeriods(availablePayments, type);
-        if (period == null) {
+        if (period === null) {
             return periodValues;
         } else {
             return extractDebitTypes(availablePayments, type, period);
