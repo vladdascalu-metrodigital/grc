@@ -9,6 +9,8 @@ export const resizeEvent = (tablet, desktop) => ({
     desktop
 });
 
+export const showInfo = (message) => showNotification(message, 'info');
+
 export const showWarning = (message) => showNotification(message, 'warning');
 
 export const showSuccess = (message) => showNotification(message, 'success');

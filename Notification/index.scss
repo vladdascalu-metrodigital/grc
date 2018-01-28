@@ -4,6 +4,10 @@
   width: 100%;
   color: white;
 
+  &.info {
+    background-color: $metro-blue;
+  }
+
   &.error {
     background-color: $warning-orange;
   }
