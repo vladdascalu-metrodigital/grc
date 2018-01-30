@@ -1,25 +1,25 @@
-function extractTypes(availablePayments) {
-    const allTypes = availablePayments.map(p => p.type);
-    return Array.from(new Set(allTypes)).sort();
+function extractCreditProducts(availablePayments) {
+    const allCreditProducts = availablePayments.map(p => p.creditProduct);
+    return Array.from(new Set(allCreditProducts)).sort();
 }
 
-function extractPeriods(availablePayments, type) {
-    const periods = availablePayments
-        .filter(p => p.type === type)
-        .map(p => p.period);
-    return Array.from(new Set(periods)).sort(periodSorter);
+function extractCreditPeriods(availablePayments, creditProduct) {
+    const creditPeriods = availablePayments
+        .filter(p => p.creditProduct === creditProduct)
+        .map(p => p.creditPeriod);
+    return Array.from(new Set(creditPeriods)).sort(creditPeriodSorter);
 }
 
-function extractDebitTypes(availablePayments, type, period) {
+function extractDebitTypes(availablePayments, creditProduct, creditPeriod) {
     const debitTypes = availablePayments
-        .filter(p => p.type === type)
-        .filter(p => p.period === period)
+        .filter(p => p.creditProduct === creditProduct)
+        .filter(p => p.creditPeriod === creditPeriod)
         .filter(p => p.debitType)
         .map(p => p.debitType);
     return Array.from(new Set(debitTypes)).sort();
 }
 
-function periodSorter(a, b) {
+function creditPeriodSorter(a, b) {
     const aNumber = Number.parseFloat(a);
     const bNumber = Number.parseFloat(b);
     if (!Number.isNaN(aNumber) && !Number.isNaN(bNumber)) {
@@ -30,17 +30,17 @@ function periodSorter(a, b) {
 }
 
 // TODO This can definitely be optimized!!
-export default function getPossibleValues(availablePayments, type, period) {
+export default function getPossibleValues(availablePayments, creditProduct, creditPeriod) {
     if (!availablePayments) return null;
-    const typeValues = extractTypes(availablePayments);
-    if (type === null) {
-        return typeValues;
+    const creditProductValues = extractCreditProducts(availablePayments);
+    if (creditProduct === null) {
+        return creditProductValues;
     } else {
-        const periodValues = extractPeriods(availablePayments, type);
-        if (period === null) {
-            return periodValues;
+        const creditPeriodValues = extractCreditPeriods(availablePayments, creditProduct);
+        if (creditPeriod === null) {
+            return creditPeriodValues;
         } else {
-            return extractDebitTypes(availablePayments, type, period);
+            return extractDebitTypes(availablePayments, creditProduct, creditPeriod);
         }
     }
 
