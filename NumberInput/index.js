@@ -5,10 +5,13 @@ export class NumberInput extends Component {
     constructor(props) {
         super(props);
         this.state = {value: props.initialValue ? props.initialValue + '' : ''};
+        if (props.value) {
+            console.log('NumberInput should not be passed a value prop (will be ignored)');
+        }
     }
 
     parse(str) {
-        return (/^[0-9]+(\.[0-9]*)?$/.test(str))
+        return (/^[0-9]+(\.[0-9]{0,2})?$/.test(str))
             ? Number(str)
             : NaN;
     }
@@ -27,6 +30,7 @@ export class NumberInput extends Component {
 
     render() {
         const inputProps = {...this.props};
+        delete inputProps.value;
         delete inputProps.onChange;
         delete inputProps.initialValue;
         return (
