@@ -26,7 +26,9 @@ export default class Comments extends Component {
                 </PanelItem>
                 <PanelItem>
                     <label>Comment<textarea value={this.state.newComment}
-                                            onChange={this.handleNewCommentChange}/></label>
+                                            onChange={this.handleNewCommentChange}
+                                            disabled={this.props.readonly}/>
+                    </label>
                     <PrimaryButton
                         showSpinner={!this.props.ready}
                         icon={Add}
