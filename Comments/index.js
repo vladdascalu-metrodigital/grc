@@ -31,7 +31,7 @@ export default class Comments extends Component {
                         showSpinner={!this.props.ready}
                         icon={Add}
                         onClick={this.addComment}
-                        disabled={!readyToSend}/>
+                        disabled={this.props.readonly || !readyToSend}/>
                 </PanelItem>
             </Panel>);
     }
@@ -50,5 +50,6 @@ export default class Comments extends Component {
 Comments.propTypes = {
     addComment: PropTypes.func.isRequired,
     data: PropTypes.array,
-    ready: PropTypes.bool
+    ready: PropTypes.bool,
+    readonly: PropTypes.bool
 };

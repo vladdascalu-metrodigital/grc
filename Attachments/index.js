@@ -24,9 +24,9 @@ export default class Attachments extends Component {
             <PanelItem>
                 <label>Title</label>
                 <div className="mrc-input">
-                    <input name="Title" type="text" value={this.state.title} onChange={this.updateTitle}/>
+                    <input name="Title" type="text" value={this.state.title} onChange={this.updateTitle} disabled={this.props.readonly}/>
                 </div>
-                <FileUpload label="SELECT FILE" sendFile={this.sendFile} disabled={!readyToSend}/>
+                <FileUpload label="SELECT FILE" sendFile={this.sendFile} disabled={this.props.readonly || !readyToSend}/>
             </PanelItem>
         </Panel>;
     }
@@ -44,5 +44,6 @@ export default class Attachments extends Component {
 
 Attachments.propTypes = {
     addAttachment: PropTypes.func.isRequired,
-    data: PropTypes.array
+    data: PropTypes.array,
+    readonly: PropTypes.bool
 };
