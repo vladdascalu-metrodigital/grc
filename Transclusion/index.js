@@ -11,11 +11,19 @@ export default class Transclusion extends Component {
         this.iFrame.addEventListener('load', () => this.adjustIFrameHeight());
     }
 
+    calculateIFrameContentHeight() {
+        // https://stackoverflow.com/a/1147768
+        const body = this.iFrame.contentWindow.document.body;
+        const html = this.iFrame.contentWindow.document.documentElement;
+
+        return Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+    }
+
     adjustIFrameHeight() {
         const iFrameDocument = this.iFrame.contentWindow.document;
         const successIndicator = 'data-fragment-loaded'; // the iframe is only visible if the loaded body element contains this string
         if (iFrameDocument && iFrameDocument.body && iFrameDocument.body.outerHTML && iFrameDocument.body.outerHTML.includes(successIndicator)) {
-            this.setState({iFrameHeight: iFrameDocument.body.scrollHeight + 'px'});
+            this.setState({iFrameHeight: this.calculateIFrameContentHeight() + 'px'});
         } else {
             this.setState({iFrameHeight: '0px'});
         }
