@@ -17,12 +17,6 @@ export function enhanceReducer(reducer, enhancements) {
     };
 }
 
-function addCsrfToken(headers) {
-    const headerName = document.querySelector('meta[name="_csrf_header_name"]').getAttribute('content');
-    const token = document.querySelector('meta[name="_csrf_token"]').getAttribute('content');
-    headers.append(headerName, token);
-}
-
 export function createLoadingHelpers(prefix, name, createUrl, optional = false) {
 
     // action types
@@ -53,16 +47,7 @@ export function createLoadingHelpers(prefix, name, createUrl, optional = false) 
         (...args) => {
             const url = createUrl.apply(null, args);
             dispatch(loadingInProgress());
-
-            const headers = new Headers();
-            addCsrfToken(headers);
-            const request = {
-                method: method,
-                headers: headers,
-                credentials: 'include'
-            };
-
-            fetch(url, request)
+            fetch(url, {credentials: 'include', method: method})
                 .then(resp => {
                         if (!resp.ok && !(optional && resp.status === 404)) {
                             throw new Error();
