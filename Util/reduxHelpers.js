@@ -43,11 +43,11 @@ export function createLoadingHelpers(prefix, name, createUrl, optional = false) 
     };
 
     // loading
-    const createLoader = (dispatch, method='GET') =>
+    const createLoader = (dispatch) =>
         (...args) => {
             const url = createUrl.apply(null, args);
             dispatch(loadingInProgress());
-            fetch(url, {credentials: 'include', method: method})
+            fetch(url, {credentials: 'include', method: 'GET'})
                 .then(resp => {
                         if (!resp.ok && !(optional && resp.status === 404)) {
                             throw new Error();
