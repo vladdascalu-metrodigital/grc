@@ -11,7 +11,7 @@ export class NumberInput extends Component {
     }
 
     parse(str) {
-        return (/^[0-9]+(\.[0-9]{0,2})?$/.test(str))
+        return (/^[0-9]+$/.test(str))
             ? Number(str)
             : NaN;
     }
