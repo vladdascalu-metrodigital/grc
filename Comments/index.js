@@ -1,41 +1,36 @@
 import React, {Component} from 'react';
 import './index.scss';
-import PrimaryButton from '../PrimaryButton';
-import Add from '../icons/add.svg';
-import Panel from '../Panel';
-import PanelItem from '../Panel/PanelItem';
-import CommentsRows from './CommentsRows';
 import PropTypes from 'prop-types';
+import Moment from 'react-moment';
 
 export default class Comments extends Component {
 
     constructor(props) {
         super(props);
         this.state = {newComment: ''};
-
-        // this.handleNewCommentChange = this.handleNewCommentChange.bind(this);
-        // this.addComment = this.addComment.bind(this);
     }
 
     render() {
         const readyToSend = this.state.newComment.trim().length > 0;
+        const comments = this.props.data || [];
         return (
-            <Panel title='Comments' className='mrc-comments'>
-                <PanelItem>
-                    <CommentsRows data={this.props.data}/>
-                </PanelItem>
-                <PanelItem>
-                    <label>Comment<textarea value={this.state.newComment}
-                                            onChange={this.handleNewCommentChange}
-                                            disabled={this.props.readonly}/>
-                    </label>
-                    <PrimaryButton
-                        showSpinner={!this.props.ready}
-                        icon={Add}
-                        onClick={this.addComment}
-                        disabled={this.props.readonly || !readyToSend}/>
-                </PanelItem>
-            </Panel>);
+            <div className='mrc-comments'>
+                {comments.map(comment => {
+                    return (<div key={comment.id} className='mrc-comment'>
+                        <span className='datetime'><Moment className='absolute' format='LL HH:mm'>{comment.uploadTimestamp}</Moment></span> <span className='author'>{comment.uploaderPrincipalName} ({comment.uploaderPosition})</span>
+                        <div className='content'>{comment.comment}</div>
+                    </div>);
+                })}
+                <div className='m-input m-input-name'>
+                    <div className='m-input-elementWrapper'>
+                        <textarea value={this.state.newComment} onChange={this.handleNewCommentChange}
+                                  disabled={this.props.readonly}
+                                  className='m-input-element extra-class-on-input-tag'/>
+                    </div>
+                </div>
+                <button disabled={this.props.readonly || !readyToSend} onClick={this.addComment}
+                        type='button' className='m-button m-button-secondary m-button-block m-button-small'>+</button>
+            </div>);
     }
 
     handleNewCommentChange = (event) => {

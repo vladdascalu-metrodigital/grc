@@ -1,7 +1,6 @@
 @charset "UTF-8";
+@import "component-library/public/css/bundle.css";
 @import "settings";
-// Workaround, until UX Hub adds CORS Headers to the fonts, we have to load it on our own.
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
 
 * {
   margin: 0;
@@ -16,10 +15,6 @@ html {
   color: $metro-blue;
   background-color: $mother-of-all-bg;
   overflow-x: hidden;
-}
-
-html, input, select {
-  font-family: 'Roboto', sans-serif;
 }
 
 li {
