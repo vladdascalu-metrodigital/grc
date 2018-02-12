@@ -29,7 +29,7 @@ export default class Attachments extends Component {
                             labelUpload="UPLOAD FILE"
                             updateFile={this.updateFile}
                             sendFile={this.sendFile}
-                            selectDisabled={this.state.file !== null}
+                            selectDisabled={this.state.readonly || this.state.file !== null}
                             uploadDisabled={!readyToSend}/>
             </PanelItem>
         </Panel>;
