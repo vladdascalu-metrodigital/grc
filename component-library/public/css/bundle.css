@@ -1330,40 +1330,40 @@ html:not(.touchevents) .m-tabPanel-tab:hover { text-decoration: underline; }
 
 .m-barcodeCard-secure span { display: block; position: absolute; top: 0; left: 0; height: 100%; width: 20%; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
 
-.m-barcodeCard-secure span:nth-child(1) { left: -14.28571%; width: 19.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-1; animation-duration: 4.9s; }
+.m-barcodeCard-secure span:nth-child(1) { left: -14.28571%; width: 16.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-1; animation-duration: 4.5s; }
 
-@keyframes barcode-secure-1 { 0%, 100% { transform: translateX(125.28571%) scaleX(0.65); }
+@keyframes barcode-secure-1 { 0%, 100% { transform: translateX(46.28571%) scaleX(1.43); }
+  50% { transform: translateX(-56.71429%) scaleX(1); } }
+
+.m-barcodeCard-secure span:nth-child(2) { left: 0%; width: 16.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-2; animation-duration: 5.2s; }
+
+@keyframes barcode-secure-2 { 0%, 100% { transform: translateX(123.28571%) scaleX(1.16); }
   50% { transform: translateX(-80.71429%) scaleX(1); } }
 
-.m-barcodeCard-secure span:nth-child(2) { left: 0%; width: 24.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-2; animation-duration: 4.7s; }
+.m-barcodeCard-secure span:nth-child(3) { left: 14.28571%; width: 29.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-3; animation-duration: 5.2s; }
 
-@keyframes barcode-secure-2 { 0%, 100% { transform: translateX(52.28571%) scaleX(1.48); }
-  50% { transform: translateX(-105.71429%) scaleX(1); } }
-
-.m-barcodeCard-secure span:nth-child(3) { left: 14.28571%; width: 33.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-3; animation-duration: 6.2s; }
-
-@keyframes barcode-secure-3 { 0%, 100% { transform: translateX(158.28571%) scaleX(0.67); }
+@keyframes barcode-secure-3 { 0%, 100% { transform: translateX(158.28571%) scaleX(1.05); }
   50% { transform: translateX(-9.71429%) scaleX(1); } }
 
-.m-barcodeCard-secure span:nth-child(4) { left: 28.57143%; width: 16.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-4; animation-duration: 6.3s; }
+.m-barcodeCard-secure span:nth-child(4) { left: 28.57143%; width: 26.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-4; animation-duration: 5.7s; }
 
-@keyframes barcode-secure-4 { 0%, 100% { transform: translateX(102.28571%) scaleX(0.64); }
-  50% { transform: translateX(-2.71429%) scaleX(1); } }
+@keyframes barcode-secure-4 { 0%, 100% { transform: translateX(93.28571%) scaleX(1.29); }
+  50% { transform: translateX(16.28571%) scaleX(1); } }
 
-.m-barcodeCard-secure span:nth-child(5) { left: 42.85714%; width: 30.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-5; animation-duration: 6.9s; }
+.m-barcodeCard-secure span:nth-child(5) { left: 42.85714%; width: 15.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-5; animation-duration: 6s; }
 
-@keyframes barcode-secure-5 { 0%, 100% { transform: translateX(56.28571%) scaleX(1.4); }
-  50% { transform: translateX(10.28571%) scaleX(1); } }
+@keyframes barcode-secure-5 { 0%, 100% { transform: translateX(85.28571%) scaleX(0.79); }
+  50% { transform: translateX(-76.71429%) scaleX(1); } }
 
-.m-barcodeCard-secure span:nth-child(6) { left: 57.14286%; width: 33.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-6; animation-duration: 6.2s; }
+.m-barcodeCard-secure span:nth-child(6) { left: 57.14286%; width: 31.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-6; animation-duration: 7.2s; }
 
-@keyframes barcode-secure-6 { 0%, 100% { transform: translateX(183.28571%) scaleX(0.55); }
-  50% { transform: translateX(-55.71429%) scaleX(1); } }
+@keyframes barcode-secure-6 { 0%, 100% { transform: translateX(90.28571%) scaleX(0.8); }
+  50% { transform: translateX(2.28571%) scaleX(1); } }
 
-.m-barcodeCard-secure span:nth-child(7) { left: 71.42857%; width: 22.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-7; animation-duration: 7.7s; }
+.m-barcodeCard-secure span:nth-child(7) { left: 71.42857%; width: 15.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-7; animation-duration: 7.8s; }
 
-@keyframes barcode-secure-7 { 0%, 100% { transform: translateX(95.28571%) scaleX(0.98); }
-  50% { transform: translateX(-100.71429%) scaleX(1); } }
+@keyframes barcode-secure-7 { 0%, 100% { transform: translateX(50.28571%) scaleX(1.36); }
+  50% { transform: translateX(-117.71429%) scaleX(1); } }
 
 .m-barcodeCard-blue { /* OHOH */ background-color: #48b0ff; content: "#48b0ff"; content: "#3399ff"; content: "#247bff"; content: "#113dff"; content: "#4ba5ff"; }
 

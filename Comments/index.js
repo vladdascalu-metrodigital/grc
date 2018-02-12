@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './index.scss';
 import PropTypes from 'prop-types';
-import Moment from 'react-moment';
 
 export default class Comments extends Component {
 
@@ -17,7 +16,7 @@ export default class Comments extends Component {
             <div className='mrc-comments'>
                 {comments.map(comment => {
                     return (<div key={comment.id} className='mrc-comment'>
-                        <span className='datetime'><Moment className='absolute' format='LL HH:mm'>{comment.uploadTimestamp}</Moment></span> <span className='author'>{comment.uploaderPrincipalName} ({comment.uploaderPosition})</span>
+                        <mrc-datetime class='datetime'>{comment.uploadTimestamp}</mrc-datetime> <span className='author'>{comment.uploaderPrincipalName} ({comment.uploaderPosition})</span>
                         <div className='content'>{comment.comment}</div>
                     </div>);
                 })}

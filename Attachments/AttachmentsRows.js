@@ -1,7 +1,6 @@
-import React, { Component } from "react";
-import "./AttachmentsRows.scss";
-import Moment from "react-moment";
-import PropTypes from "prop-types";
+import React, {Component} from 'react';
+import './AttachmentsRows.scss';
+import PropTypes from 'prop-types';
 
 export default class AttachmentsRows extends Component {
 
@@ -32,7 +31,7 @@ export default class AttachmentsRows extends Component {
 
     createTs(ts) {
         return <div className='registration-date'>
-            <Moment className='absolute' format='LL HH:mm'>{ts}</Moment>
+            <mrc-datetime>{ts}</mrc-datetime>
         </div>;
     }
 }
