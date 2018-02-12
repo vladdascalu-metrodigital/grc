@@ -23,7 +23,7 @@ export default class Attachments extends Component {
                 <label>Title</label>
                 <div className="mrc-input">
                     <input name="Title" type="text" value={this.state.title} onChange={this.updateTitle}
-                    />
+                    disabled={this.state.readonly}/>
                 </div>
                 <FileUpload labelSelect="SELECT FILE"
                             labelUpload="UPLOAD FILE"
