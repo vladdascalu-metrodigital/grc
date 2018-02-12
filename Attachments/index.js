@@ -10,13 +10,11 @@ export default class Attachments extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {title: ''};
-        // this.updateTitle = this.updateTitle.bind(this);
-        // this.sendFile = this.sendFile.bind(this);
+        this.state = {title: '', file: null};
     }
 
     render() {
-        const readyToSend = this.state.title.trim().length > 0;
+        const readyToSend = this.state.title.trim().length > 0 && this.state.file !== null;
         return <Panel title="Attachments" className="mrc-attachments">
             <PanelItem>
                 <AttachmentsRows data={this.props.data}/>
@@ -24,20 +22,38 @@ export default class Attachments extends Component {
             <PanelItem>
                 <label>Title</label>
                 <div className="mrc-input">
-                    <input name="Title" type="text" value={this.state.title} onChange={this.updateTitle} disabled={this.props.readonly}/>
+                    <input name="Title" type="text" value={this.state.title} onChange={this.updateTitle}
+                    />
                 </div>
-                <FileUpload label="SELECT FILE" sendFile={this.sendFile} disabled={this.props.readonly || !readyToSend}/>
+                <FileUpload labelSelect="SELECT FILE"
+                            labelUpload="UPLOAD FILE"
+                            updateFile={this.updateFile}
+                            sendFile={this.sendFile}
+                            selectDisabled={this.state.file !== null}
+                            uploadDisabled={!readyToSend}/>
             </PanelItem>
         </Panel>;
     }
 
-    sendFile = (file) => {
-        this.props.addAttachment(file, this.state.title);
-        this.setState({title: ''});
+    updateFile = (file) => {
+        if (this.state.title.trim().length > 0) {
+            console.log('file has name already');
+            this.setState({file: file});
+        } else {
+            this.setState({title: file.name, file: file});
+        }
+    }
+
+    sendFile = () => {
+        this.props.addAttachment(this.state.file, this.state.title);
+        this.setState({title: '', file: null});
     };
 
     updateTitle = (evt) => {
         evt.preventDefault();
+        if (evt.target.value.trim().length === 0) {
+            this.setState({file: null});
+        }
         this.setState({title: evt.target.value});
     };
 }

@@ -7,25 +7,40 @@ export default class FileUpload extends Component {
 
     constructor(props) {
         super(props);
-        // this.uploadFile = this.uploadFile.bind(this);
     }
 
-    uploadFile = (event) => {
-        this.props.sendFile(event.target.files[0]);
+    updateFile = (event) => {
+        console.log('triggered updateFile');
+        this.props.updateFile(event.target.files[0]);
+        event.target.files = null;
+    }
+
+    sendFile = () => {
+        this.props.sendFile();
     }
 
     render() {
         return (
-            <label className={classNames('mrc-file-upload', {'disabled': this.props.disabled})}>
-                {this.props.label}
-                <input type='file' name="file" onChange={this.uploadFile} disabled={this.props.disabled}/>
-            </label>
+            <div className='button-wrapper'>
+                <label className={classNames('mrc-file-upload', {'disabled': this.props.selectDisabled})}>
+                    {this.props.labelSelect}
+                    <input type='file' name="file" onChange={this.updateFile} disabled={this.props.selectDisabled}/>
+                </label>
+                <label className={classNames('mrc-file-upload', {'disabled': this.props.uploadDisabled})}>
+                    {this.props.labelUpload}
+                    <input type='button' name="upload-button" onClick={this.sendFile}
+                           disabled={this.props.uploadDisabled}/>
+                </label>
+            </div>
         );
     }
 }
 
 FileUpload.propTypes = {
+    updateFile: PropTypes.func.isRequired,
     sendFile: PropTypes.func.isRequired,
-    label: PropTypes.string.isRequired,
-    disabled: PropTypes.bool
+    labelSelect: PropTypes.string.isRequired,
+    labelUpload: PropTypes.string.isRequired,
+    selectDisabled: PropTypes.bool,
+    uploadDisabled: PropTypes.bool
 };
