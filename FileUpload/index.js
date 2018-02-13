@@ -10,7 +10,6 @@ export default class FileUpload extends Component {
     }
 
     updateFile = (event) => {
-        console.log('triggered updateFile');
         this.props.updateFile(event.target.files[0]);
         event.target.files = null;
     }
