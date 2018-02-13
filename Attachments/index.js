@@ -23,7 +23,7 @@ export default class Attachments extends Component {
                 <label>Title</label>
                 <div className='mrc-input'>
                     <input name='Title' type='text' value={this.state.title} onChange={this.updateTitle}
-                           disabled={this.props.readonly}/>
+                           disabled={this.props.readonly} maxLength={255}/>
                 </div>
                 <label name='selected-file' className='selected-file'>Selected file: {this.state.file && this.state.file.name}</label>
                 <FileUpload labelSelect='SELECT FILE'
