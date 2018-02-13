@@ -1330,42 +1330,6 @@ html:not(.touchevents) .m-tabPanel-tab:hover { text-decoration: underline; }
 
 .m-barcodeCard-secure span { display: block; position: absolute; top: 0; left: 0; height: 100%; width: 20%; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
 
-<<<<<<< HEAD
-.m-barcodeCard-secure span:nth-child(1) { left: -14.28571%; width: 16.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-1; animation-duration: 4.5s; }
-
-@keyframes barcode-secure-1 { 0%, 100% { transform: translateX(46.28571%) scaleX(1.43); }
-  50% { transform: translateX(-56.71429%) scaleX(1); } }
-
-.m-barcodeCard-secure span:nth-child(2) { left: 0%; width: 16.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-2; animation-duration: 5.2s; }
-
-@keyframes barcode-secure-2 { 0%, 100% { transform: translateX(123.28571%) scaleX(1.16); }
-  50% { transform: translateX(-80.71429%) scaleX(1); } }
-
-.m-barcodeCard-secure span:nth-child(3) { left: 14.28571%; width: 29.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-3; animation-duration: 5.2s; }
-
-@keyframes barcode-secure-3 { 0%, 100% { transform: translateX(158.28571%) scaleX(1.05); }
-  50% { transform: translateX(-9.71429%) scaleX(1); } }
-
-.m-barcodeCard-secure span:nth-child(4) { left: 28.57143%; width: 26.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-4; animation-duration: 5.7s; }
-
-@keyframes barcode-secure-4 { 0%, 100% { transform: translateX(93.28571%) scaleX(1.29); }
-  50% { transform: translateX(16.28571%) scaleX(1); } }
-
-.m-barcodeCard-secure span:nth-child(5) { left: 42.85714%; width: 15.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-5; animation-duration: 6s; }
-
-@keyframes barcode-secure-5 { 0%, 100% { transform: translateX(85.28571%) scaleX(0.79); }
-  50% { transform: translateX(-76.71429%) scaleX(1); } }
-
-.m-barcodeCard-secure span:nth-child(6) { left: 57.14286%; width: 31.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-6; animation-duration: 7.2s; }
-
-@keyframes barcode-secure-6 { 0%, 100% { transform: translateX(90.28571%) scaleX(0.8); }
-  50% { transform: translateX(2.28571%) scaleX(1); } }
-
-.m-barcodeCard-secure span:nth-child(7) { left: 71.42857%; width: 15.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-7; animation-duration: 7.8s; }
-
-@keyframes barcode-secure-7 { 0%, 100% { transform: translateX(50.28571%) scaleX(1.36); }
-  50% { transform: translateX(-117.71429%) scaleX(1); } }
-=======
 .m-barcodeCard-secure span:nth-child(1) { left: -14.28571%; width: 32.28571%; /*filter: hue-rotate(random(10) * -1deg) saturate(115 - random(30) * 1%);*/ animation-name: barcode-secure-1; animation-duration: 3.6s; }
 
 @keyframes barcode-secure-1 { 0%, 100% { transform: translateX(160.28571%) scaleX(1.49); }
@@ -1400,7 +1364,6 @@ html:not(.touchevents) .m-tabPanel-tab:hover { text-decoration: underline; }
 
 @keyframes barcode-secure-7 { 0%, 100% { transform: translateX(35.28571%) scaleX(0.9); }
   50% { transform: translateX(-47.71429%) scaleX(1); } }
->>>>>>> component-library update
 
 .m-barcodeCard-blue { /* OHOH */ background-color: #48b0ff; content: "#48b0ff"; content: "#3399ff"; content: "#247bff"; content: "#113dff"; content: "#4ba5ff"; }
 
