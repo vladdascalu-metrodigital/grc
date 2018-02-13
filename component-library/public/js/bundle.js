@@ -435,6 +435,25 @@ var possibleConstructorReturn = function (self, call) {
   }
 })(window);
 
+var MrcDate = function (_HTMLElement) {
+    inherits(MrcDate, _HTMLElement);
+    function MrcDate() {
+        classCallCheck(this, MrcDate);
+        return possibleConstructorReturn(this, (MrcDate.__proto__ || Object.getPrototypeOf(MrcDate)).apply(this, arguments));
+    }
+    createClass(MrcDate, [{
+        key: 'connectedCallback',
+        value: function connectedCallback() {
+            var string = this.textContent;
+            if (string) {
+                this.textContent = new Date(string).toLocaleDateString();
+            }
+        }
+    }]);
+    return MrcDate;
+}(HTMLElement);
+customElements.define('mrc-date', MrcDate);
+
 var MrcDatetime = function (_HTMLElement) {
     inherits(MrcDatetime, _HTMLElement);
     function MrcDatetime() {
@@ -446,7 +465,7 @@ var MrcDatetime = function (_HTMLElement) {
         value: function connectedCallback() {
             var utcTimestamp = this.textContent;
             if (utcTimestamp) {
-                this.textContent = new Date(Date.parse(utcTimestamp)).toLocaleString();
+                this.textContent = new Date(utcTimestamp).toLocaleString();
             }
         }
     }]);
