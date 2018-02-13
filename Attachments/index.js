@@ -15,19 +15,19 @@ export default class Attachments extends Component {
 
     render() {
         const readyToSend = this.state.title.trim().length > 0 && this.state.file !== null;
-        return <Panel title="Attachments" className="mrc-attachments">
+        return <Panel title='Attachments' className='mrc-attachments'>
             <PanelItem>
                 <AttachmentsRows data={this.props.data}/>
             </PanelItem>
             <PanelItem>
                 <label>Title</label>
-                <div className="mrc-input">
-                    <input name="Title" type="text" value={this.state.title} onChange={this.updateTitle}
+                <div className='mrc-input'>
+                    <input name='Title' type='text' value={this.state.title} onChange={this.updateTitle}
                            disabled={this.props.readonly}/>
                 </div>
-                <label name="selected-file" className="selected-file">Selected file: {this.state.file && this.state.file.name}</label>
-                <FileUpload labelSelect="SELECT FILE"
-                            labelUpload="UPLOAD FILE"
+                <label name='selected-file' className='selected-file'>Selected file: {this.state.file && this.state.file.name}</label>
+                <FileUpload labelSelect='SELECT FILE'
+                            labelUpload='UPLOAD FILE'
                             updateFile={this.updateFile}
                             sendFile={this.sendFile}
                             selectDisabled={this.props.readonly}

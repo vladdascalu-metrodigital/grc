@@ -24,11 +24,11 @@ export default class FileUpload extends Component {
             <div className='button-wrapper'>
                 <label className={classNames('mrc-file-upload', {'disabled': this.props.selectDisabled})}>
                     {this.props.labelSelect}
-                    <input type='file' name="file" onChange={this.updateFile} disabled={this.props.selectDisabled}/>
+                    <input type='file' name='file' onChange={this.updateFile} disabled={this.props.selectDisabled}/>
                 </label>
                 <label className={classNames('mrc-file-upload', {'disabled': this.props.uploadDisabled})}>
                     {this.props.labelUpload}
-                    <input type='button' name="upload-button" onClick={this.sendFile}
+                    <input type='button' name='upload-button' onClick={this.sendFile}
                            disabled={this.props.uploadDisabled}/>
                 </label>
             </div>
