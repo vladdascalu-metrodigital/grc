@@ -23,13 +23,14 @@ export default class Attachments extends Component {
                 <label>Title</label>
                 <div className="mrc-input">
                     <input name="Title" type="text" value={this.state.title} onChange={this.updateTitle}
-                    disabled={this.props.readonly}/>
+                           disabled={this.props.readonly}/>
                 </div>
+                <label name="selected-file" className="selected-file">Selected file: {this.state.file && this.state.file.name}</label>
                 <FileUpload labelSelect="SELECT FILE"
                             labelUpload="UPLOAD FILE"
                             updateFile={this.updateFile}
                             sendFile={this.sendFile}
-                            selectDisabled={this.props.readonly || this.state.file !== null}
+                            selectDisabled={this.props.readonly}
                             uploadDisabled={!readyToSend}/>
             </PanelItem>
         </Panel>;
@@ -37,7 +38,6 @@ export default class Attachments extends Component {
 
     updateFile = (file) => {
         if (this.state.title.trim().length > 0) {
-            console.log('file has name already');
             this.setState({file: file});
         } else {
             this.setState({title: file.name, file: file});
@@ -51,9 +51,6 @@ export default class Attachments extends Component {
 
     updateTitle = (evt) => {
         evt.preventDefault();
-        if (evt.target.value.trim().length === 0) {
-            this.setState({file: null});
-        }
         this.setState({title: evt.target.value});
     };
 }
