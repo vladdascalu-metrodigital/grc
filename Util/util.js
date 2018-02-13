@@ -37,17 +37,3 @@ export function createUriPath() {
     const args = Array.prototype.slice.call(arguments);
     return '/' + args.map(encodeURIComponent).join('/');
 }
-
-/**
- * renders either date or just time
- * @param {*} date 
- */
-export function renderDateOrTime(date) {
-    const today = new Date();
-    const d = new Date(date);
-    return (today.getUTCDate()  === d.getUTCDate() 
-        && today.getUTCMonth()  === d.getUTCMonth() 
-        && today.getFullYear()  === d.getFullYear()
-        ? d.toLocaleTimeString()
-        : d.toLocaleDateString());
-}
