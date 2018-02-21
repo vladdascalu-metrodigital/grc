@@ -1,7 +1,8 @@
 export function extractJoinedProps(object, ...paths) {
-    if (paths.every(p => extract(object, p))) {
+    if (paths.some(p => extract(object, p))) {
         return paths
             .map(p => extract(object, p))
+            .filter(e => e)
             .join(' ');
     } else {
         return null;
