@@ -18,5 +18,5 @@ export default class StatusBar extends Component {
 StatusBar.propTypes = {
     isWarning: PropTypes.bool,
     icon: PropTypes.string,
-    message: PropTypes.string
+    message: PropTypes.any
 };
