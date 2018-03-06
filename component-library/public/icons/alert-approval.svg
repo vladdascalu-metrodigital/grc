@@ -7,10 +7,7 @@
 </style>
 <title>logout</title>
 <g>
-	<polyline class="st0" points="30.9,36.6 30.9,40 16,40 16,16 30.9,16 30.9,20.6 	"/>
-	<g>
-		<line class="st0" x1="20.6" y1="28.6" x2="40" y2="28.6"/>
-		<polyline class="st0" points="34.3,22.8 40,28.6 34.3,34.3 		"/>
-	</g>
+	<polyline class="st0" points="35,23.1 24.5,32.9 21,29.4 	"/>
+	<circle class="st0" cx="28" cy="28" r="16"/>
 </g>
 </svg>

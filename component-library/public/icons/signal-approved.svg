@@ -3,14 +3,15 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 56 56" style="enable-background:new 0 0 56 56;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st0{fill:#FFFFFF;stroke:#667284;stroke-width:2;stroke-miterlimit:10;}
+	.st1{fill:#CCD0D6;}
+	.st2{fill:#34C082;}
 </style>
-<title>logout</title>
 <g>
-	<polyline class="st0" points="30.9,36.6 30.9,40 16,40 16,16 30.9,16 30.9,20.6 	"/>
-	<g>
-		<line class="st0" x1="20.6" y1="28.6" x2="40" y2="28.6"/>
-		<polyline class="st0" points="34.3,22.8 40,28.6 34.3,34.3 		"/>
-	</g>
+	<rect id="SVGID_1_" x="17.5" y="7" class="st0" width="21" height="42"/>
 </g>
+<title>logout</title>
+<circle class="st1" cx="28" cy="28" r="4.4"/>
+<circle class="st1" cx="28" cy="15.8" r="4.4"/>
+<circle class="st2" cx="28" cy="40.2" r="4.4"/>
 </svg>

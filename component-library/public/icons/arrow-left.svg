@@ -6,11 +6,5 @@
 	.st0{fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 </style>
 <title>logout</title>
-<g>
-	<polyline class="st0" points="30.9,36.6 30.9,40 16,40 16,16 30.9,16 30.9,20.6 	"/>
-	<g>
-		<line class="st0" x1="20.6" y1="28.6" x2="40" y2="28.6"/>
-		<polyline class="st0" points="34.3,22.8 40,28.6 34.3,34.3 		"/>
-	</g>
-</g>
+<polyline class="st0" points="37,12 19,28 37,44 "/>
 </svg>
