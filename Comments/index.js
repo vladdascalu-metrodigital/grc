@@ -28,7 +28,7 @@ export default class Comments extends Component {
                     </div>
                 </div>
                 <button disabled={this.props.readonly || !readyToSend} onClick={this.addComment}
-                        type='button' className='mrc-secondary-button'>Add Comment</button>
+                        type='button' className='m-button m-button-secondary m-button-block m-button-small'>+</button>
             </div>);
     }
 
