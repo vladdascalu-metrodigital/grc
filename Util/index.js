@@ -77,7 +77,8 @@ export function filterObjectByPrefix(creditData, prefix = '_') {
 }
 
 export function displayName(customer, fallback='Unknown') {
-    return extractJoinedProps(customer, 'customerFirstName', 'customerLastName')
+    return extractJoinedProps(customer, 'companyName')
+        || extractJoinedProps(customer, 'customerFirstName', 'customerLastName')
         || extractJoinedProps(customer, 'companyOwnerFirstName', 'companyOwnerLastName')
         || fallback;
 }
