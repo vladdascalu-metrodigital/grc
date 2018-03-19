@@ -4,17 +4,17 @@ import './quicknav.scss';
 export default class QuickNav extends Component {
 
     render() {
-        const navEntry = (name, href) => {
+        const navEntry = (name) => {
             return name === this.props.active
                 ? <li className='active'>{name}</li>
-                : <li><a href={href} className='no-underline'>{name}</a></li>;
+                : <li>{name}</li>;
         };
         return (
             <nav className='mrc-quicknav'>
                 <ul>
-                    {navEntry('Inbox', '/inbox')}
-                    {navEntry('Limit Check', '/creditlimit')}
-                    {navEntry('History', '/history')}
+                    {navEntry('Inbox')}
+                    {navEntry('Limit Check')}
+                    {navEntry('History')}
                 </ul>
             </nav>
         );
