@@ -9,7 +9,7 @@ class TopBarLayout extends Component {
 
     render() {
         if (this.props.tablet && this.props.title !== 'Launch Pad')
-            return <QuickNav/>;
+            return <QuickNav active={this.props.active}/>;
         else if (this.props.tablet)
             return null;
         else

@@ -21,12 +21,16 @@
 
   li {
     line-height:$topbar-height-mobile - $border-size;
-    padding-right: 1rem;
+    margin-right: 2rem;
     color: $sky-blue;
   }
 
   li.active {
     border-bottom: $border-size solid $sky-blue;
+  }
+
+  a {
+    color: $sky-blue;
   }
 
   @include respond-to("tablet") {
