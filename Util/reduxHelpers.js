@@ -11,34 +11,50 @@ export function enhanceReducer(reducer, enhancements) {
     return (state = initialState, action) => {
         // Find that part of state that conforms with the structure of `enhancements`.
         // Otherwise combineReducers will submit a warning.
-        const comb = Object.keys(enhancements).reduce((comb,key) => { comb[key] = state[key]; return comb; }, {});
+        const comb = Object.keys(enhancements).reduce((comb, key) => {
+            comb[key] = state[key];
+            return comb;
+        }, {});
 
         return reducer({...state, ...cr(comb, action)}, action);
     };
 }
 
-export function createLoadingHelpers(prefix, name, createUrl, optional = false) {
+export function createLoadingHelpers(prefix, name, createUrl, optional = false, errorMessageExpected = false) {
 
     // action types
-    const LOADING   = `${prefix}_LOAD_${name}_IN_PROGRESS`;
-    const COMPLETE  = `${prefix}_LOAD_${name}_COMPLETE`;
-    const ERROR     = `${prefix}_LOAD_${name}_ERROR`;
-    const CLEANUP   = `${prefix}_LOAD_${name}_CLEANUP`;
+    const LOADING = `${prefix}_LOAD_${name}_IN_PROGRESS`;
+    const COMPLETE = `${prefix}_LOAD_${name}_COMPLETE`;
+    const ERROR = `${prefix}_LOAD_${name}_ERROR`;
+    const CLEANUP = `${prefix}_LOAD_${name}_CLEANUP`;
 
     // actions
-    const loadingInProgress = ()        => { return {type: LOADING}; };
-    const loadingComplete   = (data)    => { return {type: COMPLETE, data}; };
-    const loadingError      = ()        => { return {type: ERROR}; };
-    const cleanup           = ()        => { return {type: CLEANUP}; };
+    const loadingInProgress = () => {
+        return {type: LOADING};
+    };
+    const loadingComplete = (data) => {
+        return {type: COMPLETE, data};
+    };
+    const loadingError = () => {
+        return {type: ERROR};
+    };
+    const cleanup = () => {
+        return {type: CLEANUP};
+    };
 
     // reducer function
     const reducer = (state = {}, action) => {
         switch (action.type) {
-            case LOADING:   return {...state, loading: true};
-            case COMPLETE:  return {...state, loading: false, data: action.data};
-            case ERROR:     return {...state, loading: false, error: true};
-            case CLEANUP:   return {};
-            default:        return state;
+            case LOADING:
+                return {...state, loading: true};
+            case COMPLETE:
+                return {...state, loading: false, data: action.data};
+            case ERROR:
+                return {...state, loading: false, error: true};
+            case CLEANUP:
+                return {};
+            default:
+                return state;
         }
     };
 
@@ -49,18 +65,32 @@ export function createLoadingHelpers(prefix, name, createUrl, optional = false) 
             dispatch(loadingInProgress());
             fetch(url, {credentials: 'include', method: 'GET'})
                 .then(resp => {
-                        if (!resp.ok && !(optional && resp.status === 404)) {
-                            throw new Error();
-                        } else {
+                        if (resp.ok) {
                             return resp;
+                        } else if (optional && resp.status === 404) {
+                            return resp;
+                        } else if (errorMessageExpected && resp.status === 400) {
+                            return resp;
+                        } else {
+                            throw new Error();
                         }
                     }
                 )
-                .then(resp => (resp.status === 404) ? null : resp.json())
-                .then(json => dispatch(loadingComplete(json)))
-                .catch(() => {
+                .then(resp => (resp.status === 404)
+                    ? [null, resp]
+                    : resp.json().then(json => [json, resp]))
+                .then(([json, resp]) => {
+                    if (resp.ok || resp.status === 404) {
+                        dispatch(loadingComplete(json));
+                    } else {
+                        const msg = json && json.errormessage;
+                        throw new Error(msg);
+                    }
+                })
+                .catch(error => {
                     dispatch(loadingError());
-                    dispatch(showError(`Error loading ${name.toLowerCase()}`));
+                    const msg = error.message || `Error loading ${name.toLowerCase()}`;
+                    dispatch(showError(msg));
                 });
         };
 
@@ -69,8 +99,8 @@ export function createLoadingHelpers(prefix, name, createUrl, optional = false) 
 
     // updating data
     const createUpdater = (dispatch) => ({
-        start:  ()      => dispatch(loadingInProgress()),
-        done:   (data)  => dispatch(loadingComplete(data))
+        start: () => dispatch(loadingInProgress()),
+        done: (data) => dispatch(loadingComplete(data))
     });
 
     return {reducer, createLoader, createCleanup, createUpdater};
