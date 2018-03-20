@@ -1,8 +1,13 @@
 import {extractJoinedProps} from './util';
 import {createLoadingHelpers, enhanceReducer} from './reduxHelpers';
 
-export const configLoadingHelpers = createLoadingHelpers('UI', 'CONFIG', () => '/creditlimit/api/config');
-export const uiReducer = {ui: enhanceReducer(reducerFn, {config: configLoadingHelpers.reducer})};
+export const utilFactory = configUrl => {
+    const configLoadingHelpers = createLoadingHelpers('UI', 'CONFIG', () => configUrl);
+    return {
+        configLoadingHelpers: configLoadingHelpers,
+        uiReducer: {ui: enhanceReducer(reducerFn, {config: configLoadingHelpers.reducer})}
+    };
+};
 
 // when the flyout disappears and the mouse leaves the flyout, do not process the 'hide' event
 // because that would cause the flyout to slide to the left (instead of staying 'disappeared')
@@ -47,6 +52,7 @@ function handleAuxControlState(action, state) {
 }
 
 let debounceTimeout;
+
 export function debounce(fn, wait, immediate) {
     let context = this;
 
@@ -76,7 +82,7 @@ export function filterObjectByPrefix(creditData, prefix = '_') {
     return creditDataFiltered;
 }
 
-export function displayName(customer, fallback='Unknown') {
+export function displayName(customer, fallback = 'Unknown') {
     return extractJoinedProps(customer, 'companyName')
         || extractJoinedProps(customer, 'customerFirstName', 'customerLastName')
         || extractJoinedProps(customer, 'companyOwnerFirstName', 'companyOwnerLastName')

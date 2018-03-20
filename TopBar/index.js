@@ -9,7 +9,7 @@ class TopBarLayout extends Component {
 
     render() {
         if (this.props.tablet && this.props.title !== 'Launch Pad')
-            return <QuickNav active={this.props.active}/>;
+            return <QuickNav active={this.props.active} config={this.props.config}/>;
         else if (this.props.tablet)
             return null;
         else
@@ -22,5 +22,9 @@ const TopBar = connect(mapStateToProps)(TopBarLayout);
 export default TopBar;
 
 function mapStateToProps(state) {
-    return {tablet: state.ui.tablet, title: state.ui.pageTitle};
+    return {
+        tablet: state.ui.tablet,
+        title: state.ui.pageTitle,
+        config: state.ui.config
+    };
 }

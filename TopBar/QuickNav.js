@@ -4,10 +4,20 @@ import './quicknav.scss';
 export default class QuickNav extends Component {
 
     render() {
+        const config = this.props.config.data;
+        if (!config) {
+            return null;
+        }
+
         const navEntry = (name) => {
-            return name === this.props.active
-                ? <li className='active'>{name}</li>
-                : <li>{name}</li>;
+            const entryConfig = config.quickNav[name];
+            if (!entryConfig.show) {
+                return null;
+            } else if (entryConfig.active) {
+                return <li className='active'>{name}</li>;
+            } else {
+                return <li>{name}</li>;
+            }
         };
         return (
             <nav className='mrc-quicknav'>
