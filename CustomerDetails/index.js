@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { PropTypes } from "prop-types";
-import Moment from "react-moment";
-import CustomerDetailsDE from "./CustomerDetails_DE";
-import CustomerDetailsEN from "./CustomerDetails_EN";
-import "./index.scss";
+import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
+import Moment from 'react-moment';
+import CustomerDetailsDE from './CustomerDetails_DE';
+import CustomerDetailsEN from './CustomerDetails_EN';
+import './index.scss';
 
 export default class CustomerDetails extends Component {
 
