@@ -8,31 +8,23 @@ import './bottommenu.scss';
 
 export default class NavigationLayout extends Component {
 
-    constructor(props) {
-        super(props);
-        // this.toggleBurgerMenu = this.toggleBurgerMenu.bind(this);
-        // this.hideBurgerMenu = this.hideBurgerMenu.bind(this);
-        // this.renderSidebarNavigation = this.renderSidebarNavigation.bind(this);
-        // this.renderBottomToolbarLayout = this.renderBottomToolbarLayout.bind(this);
-    }
-
     toggleBurgerMenu = (event) => {
         event.preventDefault();
         this.props.updateBurgerMenuExpended(!this.props.displayMenu);
-    }
+    };
 
     hideBurgerMenu = () => {
         this.props.updateBurgerMenuExpended(false);
-    }
+    };
 
     renderSidebarNavigation = () => {
         return <div className='mrc-sidebar-navigation'>
             <SidebarNavigation showFlyout={this.props.showFlyout}
                                disappearFlyout={this.props.disappearFlyout}
-                               backBtn={this.props.displayBottomToolbar}
+                               backBtn={this.props.displayBackButton}
             />
         </div>;
-    }
+    };
 
     renderBottomToolbarLayout = () => {
         let classes = 'mrc-bottom-navigation';
@@ -52,7 +44,7 @@ export default class NavigationLayout extends Component {
                                   hideBurgerMenu={this.hideBurgerMenu}/>
             </nav>
         );
-    }
+    };
 
     render() {
         return this.props.tablet ? this.renderSidebarNavigation() : this.renderBottomToolbarLayout();
@@ -65,5 +57,6 @@ NavigationLayout.propTypes = {
     disappearFlyout: PropTypes.func.isRequired,
     displayMenu: PropTypes.bool.isRequired,
     displayBottomToolbar: PropTypes.bool.isRequired,
+    displayBackButton: PropTypes.bool.isRequired,
     updateBurgerMenuExpended: PropTypes.func // FIXME Typo: expended -> expanded
 };
