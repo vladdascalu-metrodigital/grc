@@ -38,3 +38,25 @@ export function createUriPath() {
     const args = Array.prototype.slice.call(arguments);
     return '/' + args.map(encodeURIComponent).join('/');
 }
+
+const jobs = [];
+const processJobs = () => {
+    const scheduleNextRun = (millis = 0) => {
+        setTimeout(processJobs, millis);
+    };
+    const nextJob = jobs.shift();
+    if (nextJob) {
+        fetch(nextJob.uri, nextJob.request)
+            .then(nextJob.resolve)
+            .catch(nextJob.reject)
+            .finally(scheduleNextRun);
+    } else {
+        scheduleNextRun(100);
+    }
+};
+processJobs();
+export const fetchSequentially = (uri, request) => {
+    return new Promise((resolve, reject) => {
+        jobs.push({uri, request, resolve, reject});
+    });
+};
