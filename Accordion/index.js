@@ -2,11 +2,13 @@ import React, {Component} from 'react';
 import './index.scss';
 import ReactCollapsible from 'react-collapsible';
 import ArrowRight from '../icons/arrow-right-12.svg';
+import classNames from "classnames";
 
 export class Accordion extends Component {
 
     render() {
-        return <div className='mrc-accordion' {...this.props}/>;
+        const {className, ...anyprops} = this.props;
+        return <div className={className + ' mrc-accordion'} {...anyprops}></div>;
     }
 }
 
@@ -14,7 +16,7 @@ export class Collapsible extends Component {
 
     render() {
         const trigger = (
-            <span className='trigger-content'>
+            <span className={classNames(this.props.className, 'trigger-content')}>
                 <h1>{this.props.trigger}</h1>
                 <img src={ArrowRight}/>
             </span>);
