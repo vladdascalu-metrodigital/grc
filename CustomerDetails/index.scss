@@ -1,0 +1,73 @@
+@import "../settings";
+
+.mrc-customer-details {
+  width: 100%;
+
+  .header {
+    border-bottom: $form-border;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 $content-padding-horizontal-mobile;
+
+    @include respond-to('tablet') {
+      padding: 0 $content-padding-horizontal-tablet;
+    }
+
+    h2 {
+      font-size: $small-text;
+      text-transform: uppercase;
+      color: #666;
+      font-weight: 400;
+    }
+
+    a {
+      font-size: $small-text;
+      color: $sky-blue;
+    }
+  }
+
+  .details {
+    font-size: $small-text;
+    line-height: 18px;
+    padding: 0 $content-padding-horizontal-mobile 2em;
+
+    @include respond-to('tablet') {
+      padding: 0 $content-padding-horizontal-tablet 2em;
+    }
+
+    h3 {
+      padding: 1em 0;
+      font-weight: 500;
+      font-size: $text-flow;
+    }
+
+    dt:before {
+      content: "";
+      display: block;
+    }
+
+    dt, dd {
+      display: inline;
+    }
+
+    dt:after {
+      content: ": ";
+    }
+
+    dl, address {
+      margin-bottom: 2em;
+    }
+
+    address {
+      font-style: normal;
+    }
+  }
+
+  .registration-date {
+    .relative:before {content: "(" }
+    .relative:after {content: ")" }
+  }
+
+}
