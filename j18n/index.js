@@ -1,6 +1,6 @@
 import loader from './loader';
 
-let _dataFn = () => loader.translations;
+let _translationsGetter = () => loader.translations;
 
 //
 // helper: resolve template values in translation string
@@ -24,18 +24,19 @@ let _replace = (translation, replacements) => {
 };
 
 
-let t = (key, replacement = {} ) => {
-    if (!_dataFn || !_dataFn() || !_dataFn()[key]) return key;
-    return _replace(_dataFn()[key], replacement);
+let translate = (key, replacement = {} ) => {
+    if (!_translationsGetter || !_translationsGetter() ) return key;
+
+    let trans = _translationsGetter()[key] || key;
+    return _replace(trans, replacement);
 };
 
-t.setDataFn = (fn) => { _dataFn = fn; };
+translate.setTranslationsGetter = (fn) => { _translationsGetter = fn; };
 
-// Object.defineProperty(t, 'language', {
-//   set: (lang) => {
-//       console.log('language', lang);
-//       loader.language = lang;
-//   }
-// });
+Object.defineProperty(translate, 'language', {
+  get: () => {
+      return loader.language;
+  }
+});
 
-export default t;
+export default translate;
