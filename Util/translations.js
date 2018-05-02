@@ -1,10 +1,14 @@
 import {addCsrfToken} from './csrf';
 
 // the values defined here are only used for development
-// only add entries that are needed in global-react-components, service specific translations are defined in services themselves
+// only add entries that are used in global-react-components, other translations are defined in services themselves
+// (this makes it easier to see which keys are actually used or can be cleaned up)
 let translations = {
-    'global.file.select': 'SELECT FILE',
-    'global.file.upload': 'UPLOAD FILE',
+    'mrc.file.select': 'SELECT FILE',
+    'mrc.file.upload': 'UPLOAD FILE',
+    'mrc.attachments.title': 'Attachments',
+    'mrc.attachments.fields.title': 'Title',
+    'mrc.attachments.fields.file': 'Selected file'
 };
 
 export const addTranslations = (update) => {
@@ -27,5 +31,5 @@ const request = {
     body: JSON.stringify(Object.keys(translations)),
     credentials: 'include'
 };
-// it doesn't matter if this failes because it will automatically be retried more than often enough
+// it doesn't matter if this fails because it will automatically be retried more than often enough
 fetch('/creditlimit/api/requestedtranslations', request);

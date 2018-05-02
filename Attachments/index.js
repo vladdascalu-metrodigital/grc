@@ -16,19 +16,19 @@ export default class Attachments extends Component {
 
     render() {
         const readyToSend = this.state.title.trim().length > 0 && this.state.file !== null;
-        return <Panel title='Attachments' className='mrc-attachments'>
+        return <Panel title={lookup('mrc.attachments.title')} className='mrc-attachments'>
             <PanelItem>
                 <AttachmentsRows data={this.props.data}/>
             </PanelItem>
             <PanelItem>
                 <label>Title</label>
                 <div className='mrc-input'>
-                    <input name='Title' type='text' value={this.state.title} onChange={this.updateTitle}
+                    <input name={lookup('mrc.attachments.fields.title')} type='text' value={this.state.title} onChange={this.updateTitle}
                            disabled={this.props.readonly} maxLength={255}/>
                 </div>
-                <label name='selected-file' className='selected-file'>Selected file: {this.state.file && this.state.file.name}</label>
-                <FileUpload labelSelect={lookup('global.file.select')}
-                            labelUpload={lookup('global.file.upload')}
+                <label name='selected-file' className='selected-file'>{lookup('mrc.attachments.fields.file')}: {this.state.file && this.state.file.name}</label>
+                <FileUpload labelSelect={lookup('mrc.file.select')}
+                            labelUpload={lookup('mrc.file.upload')}
                             updateFile={this.updateFile}
                             sendFile={this.sendFile}
                             selectDisabled={this.props.readonly}
@@ -43,7 +43,7 @@ export default class Attachments extends Component {
         } else {
             this.setState({title: file.name, file: file});
         }
-    }
+    };
 
     sendFile = () => {
         this.props.addAttachment(this.state.file, this.state.title);
