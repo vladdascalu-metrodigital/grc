@@ -63,7 +63,7 @@ export function createLoadingHelpers(prefix, name, createUrl, optional = false, 
         (...args) => {
             const url = createUrl.apply(null, args);
             dispatch(loadingInProgress());
-            fetch(url, {credentials: 'include', method: 'GET'})
+            return fetch(url, {credentials: 'include', method: 'GET'})
                 .then(resp => {
                         if (resp.ok) {
                             return resp;

@@ -5,6 +5,7 @@ import PanelItem from '../Panel/PanelItem';
 import FileUpload from '../FileUpload';
 import AttachmentsRows from './AttachmentsRows';
 import PropTypes from 'prop-types';
+import {lookup} from '../Util/translations.js';
 
 export default class Attachments extends Component {
 
@@ -26,8 +27,8 @@ export default class Attachments extends Component {
                            disabled={this.props.readonly} maxLength={255}/>
                 </div>
                 <label name='selected-file' className='selected-file'>Selected file: {this.state.file && this.state.file.name}</label>
-                <FileUpload labelSelect='SELECT FILE'
-                            labelUpload='UPLOAD FILE'
+                <FileUpload labelSelect={lookup('global.file.select')}
+                            labelUpload={lookup('global.file.upload')}
                             updateFile={this.updateFile}
                             sendFile={this.sendFile}
                             selectDisabled={this.props.readonly}
