@@ -47,9 +47,15 @@ const processJobs = () => {
     const nextJob = jobs.shift();
     if (nextJob) {
         fetch(nextJob.uri, nextJob.request)
-            .then(nextJob.resolve)
-            .catch(nextJob.reject)
-            .finally(scheduleNextRun);
+            // not using finally() here because the IE11 polyfill doesn't seem to support that
+            .then(r => {
+                nextJob.resolve(r);
+                scheduleNextRun();
+            })
+            .catch(e => {
+                nextJob.reject(e);
+                scheduleNextRun();
+            });
     } else {
         scheduleNextRun(100);
     }
