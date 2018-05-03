@@ -3,13 +3,14 @@ import {PropTypes} from 'prop-types';
 import Moment from 'react-moment';
 import './index.scss';
 import {displayName} from '../../global/Util/index';
+import {lookup} from '../../global/Util/translations';
 
 
 export default class CustomerDetails extends Component {
 
     describeTerm(term, description) {
         return (term && description)
-            ? [<dt key='dt'>{term}</dt>, <dd key='dd'>{description}</dd>]
+            ? [<dt key='dt'>{lookup(term)}</dt>, <dd key='dd'>{description}</dd>]
             : null;
     }
 
@@ -43,20 +44,20 @@ export default class CustomerDetails extends Component {
                 <section className='details'>
                     <h3>{this.displayName()}</h3>
                     <dl>
-                        {this.describeTerm('Customer Number', `${c.storeNumber}/${c.customerNumber}`)}
-                        {this.describeTerm('Tax Number', c.vatSpecNumber)}
-                        {this.describeTerm('Legal Form', c.legalForm)}
+                        {this.describeTerm('mrc.customerdetails.fields.customernumber', `${c.storeNumber}/${c.customerNumber}`)}
+                        {this.describeTerm('mrc.customerdetails.fields.taxnumber', c.vatSpecNumber)}
+                        {this.describeTerm('mrc.customerdetails.fields.legalform', c.legalForm)}
                     </dl>
                     <address>
-                        E-Mail: {this.printAndBr(c.email)}
-                        Phone: {this.printAndBr(c.phoneNumber)}
-                        Mobile: {this.printAndBr(c.mobilePhoneNumber)}
+                        {lookup('mrc.customerdetails.fields.email')+':'} {this.printAndBr(c.email)}
+                        {lookup('mrc.customerdetails.fields.phone')+':'} {this.printAndBr(c.phoneNumber)}
+                        {lookup('mrc.customerdetails.fields.mobile')+':'} {this.printAndBr(c.mobilePhoneNumber)}
                         <br/>
-                        Street: {this.printAndBr(c.street, c.houseNumber)}
-                        ZIP/City: <abbr title='ZIP'>{c.zipCode}</abbr> <abbr title='City'>{c.city}</abbr>
+                        {lookup('mrc.customerdetails.fields.street')+':'} {this.printAndBr(c.street, c.houseNumber)}
+                        {lookup('mrc.customerdetails.fields.zipcity')+':'} <abbr title='ZIP'>{c.zipCode}</abbr> <abbr title='City'>{c.city}</abbr>
                     </address>
                     <div>
-                        Registration: {this.printDate(c.registrationDate)}
+                        {lookup('mrc.customerdetails.fields.registration')+':'} {this.printDate(c.registrationDate)}
                     </div>
                 </section>
         </div>);

@@ -8,7 +8,17 @@ let translations = {
     'mrc.file.upload': 'UPLOAD FILE',
     'mrc.attachments.title': 'Attachments',
     'mrc.attachments.fields.title': 'Title',
-    'mrc.attachments.fields.file': 'Selected file'
+    'mrc.attachments.fields.file': 'Selected file',
+
+    'mrc.customerdetails.fields.customernumber': 'Customer Number',
+    'mrc.customerdetails.fields.taxnumber': 'Tax Number',
+    'mrc.customerdetails.fields.legalform': 'Legal Form',
+    'mrc.customerdetails.fields.email': 'E-Mail',
+    'mrc.customerdetails.fields.phone': 'Phone',
+    'mrc.customerdetails.fields.mobile': 'Mobile',
+    'mrc.customerdetails.fields.street': 'Street',
+    'mrc.customerdetails.fields.zipcity': 'ZIP/City',
+    'mrc.customerdetails.fields.registration': 'Registration',
 };
 
 export const addTranslations = (update) => {
