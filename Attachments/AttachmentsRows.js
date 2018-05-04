@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import './AttachmentsRows.scss';
 import PropTypes from 'prop-types';
+import {lookup} from '../Util/translations.js';
 
 export default class AttachmentsRows extends Component {
 
     render() {
         if (!(this.props.data && this.props.data.length > 0)) {
-            return <span>No Attachments</span>;
+            return <span>{lookup('mrc.attachments.noattachments')}</span>;
         }
         return <ul className='mrc-attachments-rows'>{this.props.data.map(this.createRow)}</ul>;
     }

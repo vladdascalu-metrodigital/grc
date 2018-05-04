@@ -9,6 +9,7 @@ let translations = {
     'mrc.attachments.title': 'Attachments',
     'mrc.attachments.fields.title': 'Title',
     'mrc.attachments.fields.file': 'Selected file',
+    'mrc.attachments.noattachments': 'No Attachments',
 
     'mrc.customerdetails.fields.customernumber': 'Customer Number',
     'mrc.customerdetails.fields.taxnumber': 'Tax Number',

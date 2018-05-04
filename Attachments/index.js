@@ -21,9 +21,9 @@ export default class Attachments extends Component {
                 <AttachmentsRows data={this.props.data}/>
             </PanelItem>
             <PanelItem>
-                <label>Title</label>
+                <label>{lookup('mrc.attachments.fields.title')}</label>
                 <div className='mrc-input'>
-                    <input name={lookup('mrc.attachments.fields.title')} type='text' value={this.state.title} onChange={this.updateTitle}
+                    <input name='title' type='text' value={this.state.title} onChange={this.updateTitle}
                            disabled={this.props.readonly} maxLength={255}/>
                 </div>
                 <label name='selected-file' className='selected-file'>{lookup('mrc.attachments.fields.file')}: {this.state.file && this.state.file.name}</label>
