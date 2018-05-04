@@ -1,10 +1,11 @@
-import React, {Component} from 'react';
-import SidebarNavigation from './SidebarNavigation';
-import BurgerMenuLayout from './BurgerMenuLayout';
-import PropTypes from 'prop-types';
-import BurgerMenu from '../icons/burger-menu.svg';
-import BackBtn from './BackBtn';
-import './bottommenu.scss';
+import React, { Component } from "react";
+import SidebarNavigation from "./SidebarNavigation";
+import BurgerMenuLayout from "./BurgerMenuLayout";
+import PropTypes from "prop-types";
+import BurgerMenu from "../icons/burger-menu.svg";
+import BackBtn from "./BackBtn";
+import "./bottommenu.scss";
+import classNames from "classnames";
 
 export default class NavigationLayout extends Component {
 
@@ -18,13 +19,25 @@ export default class NavigationLayout extends Component {
     };
 
     renderSidebarNavigation = () => {
-        return <div className='mrc-sidebar-navigation'>
+        if (this.props.config.loading) return null;
+        return <div className='mrc-sidebar'>
             <SidebarNavigation showFlyout={this.props.showFlyout}
                                disappearFlyout={this.props.disappearFlyout}
-                               backBtn={this.props.displayBackButton}
+                               config={this.props.config}
             />
+            {this.createBackBtn()}
         </div>;
     };
+
+    createBackBtn() {
+        // BackBtn not removed from dom but only set to 'invisible' to make sure that the onMouseEnter event is not
+        // triggered on the <ul> when the back button is clicked
+        return (
+            <div className={classNames('back-action',{hidden: !this.props.displayBackButton})}>
+                <BackBtn onClick={this.props.disappearFlyout}/>
+            </div>
+        );
+    }
 
     renderBottomToolbarLayout = () => {
         let classes = 'mrc-bottom-navigation';
@@ -53,6 +66,7 @@ export default class NavigationLayout extends Component {
 
 NavigationLayout.propTypes = {
     tablet: PropTypes.bool,
+    config: PropTypes.object.isRequired,
     showFlyout: PropTypes.func,
     disappearFlyout: PropTypes.func.isRequired,
     displayMenu: PropTypes.bool.isRequired,

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px"
+	 viewBox="0 0 32 32" style="enable-background:new 0 0 32 32;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#0064FE;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<title>logout</title>
+<g>
+	<g>
+		<circle class="st0" cx="21.3" cy="21.3" r="5.7"/>
+		<line class="st0" x1="18.9" y1="21.3" x2="23.7" y2="21.3"/>
+		<line class="st0" x1="21.3" y1="23.7" x2="21.3" y2="18.9"/>
+	</g>
+	<g>
+		<polyline class="st0" points="24.1,14.1 24.1,6.9 20.3,6.9 		"/>
+		<polyline class="st0" points="8.8,6.9 5,6.9 5,22.2 13.6,22.2 		"/>
+		<rect x="8.8" y="5" class="st0" width="2.9" height="3.8"/>
+		<rect x="17.4" y="5" class="st0" width="2.9" height="3.8"/>
+		<line class="st0" x1="11.7" y1="6.9" x2="17.4" y2="6.9"/>
+		<line class="st0" x1="5" y1="11.7" x2="24.1" y2="11.7"/>
+	</g>
+</g>
+</svg>

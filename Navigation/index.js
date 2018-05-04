@@ -1,6 +1,6 @@
-import {connect} from 'react-redux';
-import NavigationLayout from './NavigationLayout';
-import {navFlyoutVisibilityChangeEvent} from '../../global/Util/events';
+import { connect } from "react-redux";
+import NavigationLayout from "./NavigationLayout";
+import { navFlyoutVisibilityChangeEvent } from "../../global/Util/events";
 
 // FIXME Typo: expended -> expanded
 export const reducer = {burgerMenuExpended: reducerFn};
@@ -31,6 +31,7 @@ function mapStateToProps(state) {
     return {
         tablet: state.ui.tablet,
         displayMenu: state.burgerMenuExpended,
+        config: state.ui.config,
         // normally bottomToolbar is shown when back button is shown, but can be hidden explicitly to only have back button (e.g. in inbox)
         displayBottomToolbar: !!state.ui.auxControls.back && !state.ui.auxControls.hideBottomToolbar,
         displayBackButton: !!state.ui.auxControls.back

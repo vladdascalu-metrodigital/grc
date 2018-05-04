@@ -1,39 +1,58 @@
-import React, {Component} from 'react';
-import './sidebar.scss';
-import LaunchpadIcon from '../icons/launchpad.svg';
-import BackBtn from './BackBtn';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import "./sidebar.scss";
+import LaunchpadIcon from "../icons/menu.svg";
+import InboxIcon from "../icons/inbox.svg";
+import LimitcheckIcon from "../icons/credit-request.svg";
+import HistoryIcon from "../icons/history.svg";
+import PropTypes from "prop-types";
+import { createUriPath } from "../Util/util";
+import SelectLanguage from "../i18n";
 
 export default class SidebarNavigation extends Component {
 
     constructor(props) {
         super(props);
+        this.iconMap = {
+            launchpad: LaunchpadIcon, // Will not be part of the config, just for here
+            limitCheck: LimitcheckIcon,
+            history: HistoryIcon,
+            inbox:  InboxIcon
+        };
+        this.sortMap = [
+            'inbox',
+            'limitCheck',
+            'history'
+        ];
     }
 
-    createBackBtn = () => {
-        // BackBtn not removed from dom but only set to 'invisible' to make sure that the onMouseEnter event is not
-        // triggered on the <ul> when the back button is clicked
-        return (
-            <li className={classNames({end: true, hidden: !this.props.backBtn})}>
-                <BackBtn onClick={this.props.disappearFlyout}/>
-            </li>
-        );
+    static createHref(template, roleKey) {
+        if (!template) return '/';
+        return template.indexOf('{') < 0
+            ? template
+            : createUriPath('search', roleKey, template);
+    }
+
+    createBtn = (btnConf) => {
+        const href = SidebarNavigation.createHref(btnConf.template, btnConf.roleKey);
+        const isAbsolute = href.startsWith('http');
+        const title = this.props.config.data.translations[btnConf.roleKey];
+        const img = <img className='m-icon-medium' src={this.iconMap[btnConf.roleKey]} alt={title}/>;
+        const anchor = isAbsolute
+            ? <a href={href} onClick={this.props.disappearFlyout}>{img}</a>
+            : <Link to={href}>{img}</Link>;
+        return <div key={btnConf.roleKey} className='action'>{anchor}</div>;
     };
 
     render() {
-        const backBtn = this.createBackBtn();
+        const sortedTiles = this.props.config.data.launchpad.tiles.sort((a,b) => this.sortMap.indexOf(a.roleKey) - this.sortMap.indexOf(b.roleKey));
+        const actions = sortedTiles.map(this.createBtn, this);
         return (
-            <nav>
-                <ul onMouseEnter={this.props.showFlyout}>
-                    <li>
-                        <a href='/' onClick={this.props.disappearFlyout}>
-                            <img className='icon' src={LaunchpadIcon} alt='Launch Pad'/>
-                        </a>
-                    </li>
-                    {backBtn}
-                </ul>
-            </nav>
+            <div onMouseEnter={this.props.showFlyout}>
+                {this.createBtn({roleKey:'launchpad', title: 'Launchpad'})}
+                {actions}
+                <div className='action mrc-language'><SelectLanguage/></div>
+            </div>
         );
     }
 }
@@ -42,5 +61,5 @@ export default class SidebarNavigation extends Component {
 SidebarNavigation.propTypes = {
     showFlyout: PropTypes.func.isRequired,
     disappearFlyout: PropTypes.func.isRequired,
-    backBtn: PropTypes.bool.isRequired
+    config: PropTypes.object.isRequired
 };

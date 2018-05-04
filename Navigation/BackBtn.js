@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import ArrowLeft from '../icons/arrow-left-12.svg';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import ArrowLeft from "../icons/arrow-left.svg";
+import PropTypes from "prop-types";
 
 export default class BackBtn extends Component {
 
@@ -16,13 +16,13 @@ export default class BackBtn extends Component {
     navBack = () => {
         window.history.back();
         if (this.props.onClick) this.props.onClick();
-    }
+    };
 
     render() {
         if (this.props.disabled) return null;
         return (
             <a className='btn' onClick={this.navBack}>
-                <img src={ArrowLeft} alt='Back' />
+                <img className='m-icon-medium' src={ArrowLeft} alt='Back' />
             </a>
         );
     }

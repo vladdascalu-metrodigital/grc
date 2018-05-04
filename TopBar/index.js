@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import QuickNav from './QuickNav';
-import BrandBar from './BrandBar';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+//import QuickNav from './QuickNav';
+import BrandBar from "./BrandBar";
 
 export const showTopbar = (pathname) => '/' !== pathname;
 
@@ -9,7 +9,7 @@ class TopBarLayout extends Component {
 
     render() {
         if (this.props.tablet && this.props.title !== 'Launch Pad')
-            return <QuickNav active={this.props.active} config={this.props.config}/>;
+            return null;//<QuickNav active={this.props.active} config={this.props.config}/>;
         else if (this.props.tablet)
             return null;
         else
