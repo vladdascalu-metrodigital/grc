@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, {Component} from "react";
+import {Link} from "react-router-dom";
 import "./sidebar.scss";
 import LaunchpadIcon from "../icons/menu.svg";
 import InboxIcon from "../icons/inbox.svg";
 import LimitcheckIcon from "../icons/credit-request.svg";
 import HistoryIcon from "../icons/history.svg";
 import PropTypes from "prop-types";
-import { createUriPath } from "../Util/util";
+import {createUriPath} from "../Util/util";
 import SelectLanguage from "../i18n";
 
 export default class SidebarNavigation extends Component {
@@ -44,13 +44,27 @@ export default class SidebarNavigation extends Component {
         return <div key={btnConf.roleKey} className='action'>{anchor}</div>;
     };
 
+    extractNavsFromQuickNav() {
+        if (!this.props.config.data.quickNav) return null;
+        const navs = this.props.config.data.quickNav;
+        return Object.keys(navs).reduce((result, nav) => {
+            if (navs[nav].show) result.push({...navs[nav], roleKey: nav, template: navs[nav].url});
+            return result;
+        }, []);
+    }
+    extractNavsFromLaunchpad() {
+        if (!this.props.config.data.launchpad.tiles) return null;
+        return this.props.config.data.launchpad.tiles;
+    }
+
     render() {
-        const sortedTiles = this.props.config.data.launchpad.tiles.sort((a,b) => this.sortMap.indexOf(a.roleKey) - this.sortMap.indexOf(b.roleKey));
-        const actions = sortedTiles.map(this.createBtn, this);
+        const navs = this.extractNavsFromQuickNav() || this.extractNavsFromLaunchpad();
+        const sortedNavs = navs.sort((a,b) => this.sortMap.indexOf(a.roleKey) - this.sortMap.indexOf(b.roleKey));
+        const navElements = sortedNavs.map(this.createBtn, this);
         return (
-            <div onMouseEnter={this.props.showFlyout}>
+            <div> {/*onMouseEnter={this.props.showFlyout}*/}
                 {this.createBtn({roleKey:'launchpad', title: 'Launchpad'})}
-                {actions}
+                {navElements}
                 <div className='action mrc-language'><SelectLanguage/></div>
             </div>
         );

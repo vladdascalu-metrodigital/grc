@@ -10,21 +10,21 @@ export default class QuickNav extends Component {
         }
 
         const navEntry = (name) => {
-            const entryConfig = config.quickNav[name];
-            if (!entryConfig.show) {
+            const entry = config.quickNav[name];
+            if (!entry.show) {
                 return null;
-            } else if (entryConfig.active) {
-                return <li className='active'>{name}</li>;
+            } else if (entry.active) {
+                return <li className='active'>{entry.title}</li>;
             } else {
-                return <li>{name}</li>;
+                return <li>{entry.title}</li>;
             }
         };
         return (
             <nav className='mrc-quicknav'>
                 <ul>
-                    {navEntry('Inbox')}
-                    {navEntry('Limit Check')}
-                    {navEntry('History')}
+                    {navEntry('inbox')}
+                    {navEntry('limitCheck')}
+                    {navEntry('history')}
                 </ul>
             </nav>
         );
