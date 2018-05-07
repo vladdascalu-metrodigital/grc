@@ -1,12 +1,12 @@
-import React, {Component} from "react";
-import {Link} from "react-router-dom";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import "./sidebar.scss";
 import LaunchpadIcon from "../icons/menu.svg";
 import InboxIcon from "../icons/inbox.svg";
 import LimitcheckIcon from "../icons/credit-request.svg";
 import HistoryIcon from "../icons/history.svg";
 import PropTypes from "prop-types";
-import {createUriPath} from "../Util/util";
+import { createUriPath } from "../Util/util";
 import SelectLanguage from "../i18n";
 
 export default class SidebarNavigation extends Component {
@@ -20,6 +20,7 @@ export default class SidebarNavigation extends Component {
             inbox:  InboxIcon
         };
         this.sortMap = [
+            'launchpad',
             'inbox',
             'limitCheck',
             'history'
@@ -46,28 +47,34 @@ export default class SidebarNavigation extends Component {
 
     extractNavsFromQuickNav() {
         if (!this.props.config.data.quickNav) return null;
-        const navs = this.props.config.data.quickNav;
-        return Object.keys(navs).reduce((result, nav) => {
-            if (navs[nav].show) result.push({...navs[nav], roleKey: nav, template: navs[nav].url});
+        const navConfigs = this.props.config.data.quickNav;
+        const navs = Object.keys(navConfigs).reduce((result, nav) => {
+            if (navConfigs[nav].show) result.push({...navConfigs[nav], roleKey: nav, template: navConfigs[nav].url});
             return result;
         }, []);
+        const sortedNavs = SidebarNavigation.sortNavs(navs, this.sortMap);
+        return sortedNavs.map(this.createBtn, this);
+
     }
     extractNavsFromLaunchpad() {
         if (!this.props.config.data.launchpad.tiles) return null;
-        return this.props.config.data.launchpad.tiles;
+        const sortedNavs = SidebarNavigation.sortNavs(this.props.config.data.launchpad.tiles, this.sortMap);
+        const navElements = sortedNavs.map(this.createBtn, this);
+        navElements.unshift(this.createBtn({roleKey:'launchpad', title: 'Launchpad'}));
+        return navElements;
     }
 
     render() {
-        const navs = this.extractNavsFromQuickNav() || this.extractNavsFromLaunchpad();
-        const sortedNavs = navs.sort((a,b) => this.sortMap.indexOf(a.roleKey) - this.sortMap.indexOf(b.roleKey));
-        const navElements = sortedNavs.map(this.createBtn, this);
         return (
             <div> {/*onMouseEnter={this.props.showFlyout}*/}
-                {this.createBtn({roleKey:'launchpad', title: 'Launchpad'})}
-                {navElements}
+                {this.extractNavsFromQuickNav() || this.extractNavsFromLaunchpad()}
                 <div className='action mrc-language'><SelectLanguage/></div>
             </div>
         );
+    }
+
+    static sortNavs(navs, sortMap) {
+        return navs.sort((a,b) => sortMap.indexOf(a.roleKey) - sortMap.indexOf(b.roleKey));
     }
 }
 
