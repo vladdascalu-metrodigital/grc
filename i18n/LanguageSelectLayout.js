@@ -13,7 +13,7 @@ export default class LanguageSelectLayout extends Component {
     static createOption(country) {
         return (
             <option key={country.code} value={country.code}>
-                <span className="flag-icon flag-icon-{country.code}">&nbsp;</span> {country.label}
+                <span className="flag-icon flag-icon-{country.code}">{country.label}</span>
             </option>
         );
     }
