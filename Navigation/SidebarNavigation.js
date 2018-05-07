@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import "./sidebar.scss";
-import LaunchpadIcon from "../icons/menu.svg";
-import InboxIcon from "../icons/inbox.svg";
-import LimitcheckIcon from "../icons/credit-request.svg";
-import HistoryIcon from "../icons/history.svg";
-import PropTypes from "prop-types";
-import { createUriPath } from "../Util/util";
-import SelectLanguage from "../i18n";
+import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
+import './sidebar.scss';
+import LaunchpadIcon from '../icons/menu.svg';
+import InboxIcon from '../icons/inbox.svg';
+import LimitcheckIcon from '../icons/credit-request.svg';
+import HistoryIcon from '../icons/history.svg';
+import PropTypes from 'prop-types';
+import {createUriPath} from '../Util/util';
+import SelectLanguage from '../i18n';
 
 export default class SidebarNavigation extends Component {
 
