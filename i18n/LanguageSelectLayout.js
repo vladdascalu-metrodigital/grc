@@ -7,18 +7,20 @@ export default class LanguageSelectLayout extends Component {
         {code: 'de', label: 'De'},
         {code: 'en', label: 'En'},
         {code: 'es', label: 'Es'},
-        {code: 'ro', label: 'Ro'}
+        {code: 'pt', label: 'Pt'}
     ];
 
     static createOption(country) {
+        const languageclass = "flag-icon flag-icon-"+country.code;
         return (
             <option key={country.code} value={country.code}>
-                <span className="flag-icon flag-icon-{country.code}">{country.label}</span>
+                <span className={languageclass}>{country.label}</span>
             </option>
         );
     }
 
     render() {
+        console.log('Current language: ' + this.props.currentLanguageCode);
         return (
             <div className="m-select">
                 <div className="m-input">
