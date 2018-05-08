@@ -26,7 +26,7 @@ export default class AttachmentsRows extends Component {
                     {item.uploaderPrincipalName}
                 </div>
             </div>
-            <a href={item.contentUri}>{item.title}</a>
+            <a target='_blank' href={item.contentUri}>{item.title}</a>
         </li>;
     };
 
