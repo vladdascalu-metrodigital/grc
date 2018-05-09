@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
-import './sidebar.scss';
-import LaunchpadIcon from '../icons/menu.svg';
-import InboxIcon from '../icons/inbox.svg';
-import LimitcheckIcon from '../icons/credit-request.svg';
-import HistoryIcon from '../icons/history.svg';
-import PropTypes from 'prop-types';
-import {createUriPath} from '../Util/util';
-import SelectLanguage from '../i18n';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import "./sidebar.scss";
+import LaunchpadIcon from "../icons/menu.svg";
+import InboxIcon from "../icons/inbox.svg";
+import LimitcheckIcon from "../icons/credit-request.svg";
+import HistoryIcon from "../icons/history.svg";
+import PropTypes from "prop-types";
+import { createUriPath } from "../Util/util";
+import SelectLanguage from "../i18n";
 
 export default class SidebarNavigation extends Component {
 
@@ -15,14 +15,14 @@ export default class SidebarNavigation extends Component {
         super(props);
         this.iconMap = {
             launchpad: LaunchpadIcon, // Will not be part of the config, just for here
-            limitCheck: LimitcheckIcon,
+            limitcheck: LimitcheckIcon,
             history: HistoryIcon,
             inbox:  InboxIcon
         };
         this.sortMap = [
             'launchpad',
             'inbox',
-            'limitCheck',
+            'limitcheck',
             'history'
         ];
     }
@@ -34,11 +34,15 @@ export default class SidebarNavigation extends Component {
             : createUriPath('search', roleKey, template);
     }
 
-    createBtn = (btnConf) => {
+    createNav = (btnConf) => {
+        const title = this.props.config.data.translations[`mrc.apps.${btnConf.roleKey.toLowerCase()}`];
+        const icon = this.iconMap[btnConf.roleKey.toLowerCase()];
+        if (!icon || !title) {
+            console.warn('Missing icon or translation to render sidebar nav. Data:', btnConf);
+        }
         const href = SidebarNavigation.createHref(btnConf.template, btnConf.roleKey);
         const isAbsolute = href.startsWith('http');
-        const title = this.props.config.data.translations[btnConf.roleKey];
-        const img = <img className='m-icon-medium' src={this.iconMap[btnConf.roleKey]} alt={title}/>;
+        const img = <img className='m-icon-medium' src={icon} alt={title}/>;
         const anchor = isAbsolute
             ? <a href={href} onClick={this.props.disappearFlyout}>{img}</a>
             : <Link to={href}>{img}</Link>;
@@ -53,28 +57,20 @@ export default class SidebarNavigation extends Component {
             return result;
         }, []);
         const sortedNavs = SidebarNavigation.sortNavs(navs, this.sortMap);
-        return sortedNavs.map(this.createBtn, this);
-
-    }
-    extractNavsFromLaunchpad() {
-        if (!this.props.config.data.launchpad.tiles) return null;
-        const sortedNavs = SidebarNavigation.sortNavs(this.props.config.data.launchpad.tiles, this.sortMap);
-        const navElements = sortedNavs.map(this.createBtn, this);
-        navElements.unshift(this.createBtn({roleKey:'launchpad', title: 'Launchpad'}));
-        return navElements;
+        return sortedNavs.map(this.createNav, this);
     }
 
     render() {
         return (
-            <div> {/*onMouseEnter={this.props.showFlyout}*/}
-                {this.extractNavsFromQuickNav() || this.extractNavsFromLaunchpad()}
+            <div>
+                {this.extractNavsFromQuickNav()}
                 <div className='action mrc-language'><SelectLanguage/></div>
             </div>
         );
     }
 
     static sortNavs(navs, sortMap) {
-        return navs.sort((a,b) => sortMap.indexOf(a.roleKey) - sortMap.indexOf(b.roleKey));
+        return navs.sort((a,b) => sortMap.indexOf(a.roleKey.toLowerCase()) - sortMap.indexOf(b.roleKey.toLowerCase()));
     }
 }
 

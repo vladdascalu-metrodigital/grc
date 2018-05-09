@@ -14,5 +14,9 @@
     &:hover, &:focus {
       background-color: transparent;
     }
+
+    select {
+      text-transform: capitalize;
+    }
   }
 }

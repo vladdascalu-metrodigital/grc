@@ -3,23 +3,18 @@ import PropTypes from "prop-types";
 
 export default class LanguageSelectLayout extends Component {
 
-    countries = [
-        {code: 'de', label: 'De'},
-        {code: 'en', label: 'En'},
-        {code: 'es', label: 'Es'},
-        {code: 'pt', label: 'Pt'}
-    ];
-
     static createOption(country) {
-        const languageclass = "flag-icon flag-icon-"+country.code;
+        // const languageclass = 'flag-icon flag-icon-'+country.code;
         return (
-            <option key={country.code} value={country.code}>
-                <span className={languageclass}>{country.label}</span>
+            <option key={country} value={country}>
+                {/*<span className={languageclass}>{country}</span>*/}
+                {country}
             </option>
         );
     }
 
     render() {
+        if (!this.props.config.data) return null;
         console.log('Current language: ' + this.props.currentLanguageCode);
         return (
             <div className="m-select">
@@ -29,7 +24,7 @@ export default class LanguageSelectLayout extends Component {
                                 value={this.props.currentLanguageCode}
                                 onChange={this.props.languageChange}
                                 className="m-input-element m-select-input">
-                            {this.countries.map(LanguageSelectLayout.createOption)}
+                            {this.props.config.data.availableLanguages.map(LanguageSelectLayout.createOption)}
                         </select>
 
                     </div>
@@ -43,5 +38,6 @@ export default class LanguageSelectLayout extends Component {
 
 LanguageSelectLayout.propTypes = {
     currentLanguageCode: PropTypes.string,
+    config: PropTypes.object,
     languageChange: PropTypes.func.isRequired
 };
