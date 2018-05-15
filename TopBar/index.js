@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 //import QuickNav from './QuickNav';
 import BrandBar from "./BrandBar";
+import {lookup} from '../Util/translations';
 
 export const showTopbar = (pathname) => '/' !== pathname;
 
@@ -24,7 +25,7 @@ export default TopBar;
 function mapStateToProps(state) {
     return {
         tablet: state.ui.tablet,
-        title: state.ui.pageTitle,
+        title: lookup(state.ui.pageTitle),
         config: state.ui.config
     };
 }
