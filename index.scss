@@ -36,6 +36,9 @@ main {
   height: 100%;
 }
 
+// UX Hub sets this to none, which is really bad for click handlers. See toggleBurgerMenu.
+a.active { pointer-events: auto; }
+
 // Base config of the main grid
 .mrc-grid-wrapper {
   display: -ms-grid;
