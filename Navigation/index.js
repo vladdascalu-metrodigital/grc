@@ -1,6 +1,5 @@
 import { connect } from "react-redux";
 import NavigationLayout from "./NavigationLayout";
-import { navFlyoutVisibilityChangeEvent } from "../../global/Util/events";
 
 // FIXME Typo: expended -> expanded
 export const reducer = {burgerMenuExpended: reducerFn};
@@ -40,8 +39,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        showFlyout: () => dispatch(navFlyoutVisibilityChangeEvent('show')),
-        disappearFlyout: () => dispatch(navFlyoutVisibilityChangeEvent('disappear')),
         updateBurgerMenuExpended: (value) => dispatch(burgerMenuExpendedEvent(value))
     };
 }

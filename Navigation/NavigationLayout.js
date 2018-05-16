@@ -11,6 +11,7 @@ export default class NavigationLayout extends Component {
 
     toggleBurgerMenu = (event) => {
         event.preventDefault();
+        console.log('toggle burger menu', this.props.displayMenu);
         this.props.updateBurgerMenuExpended(!this.props.displayMenu);
     };
 
@@ -21,10 +22,7 @@ export default class NavigationLayout extends Component {
     renderSidebarNavigation = () => {
         if (this.props.config.loading) return null;
         return <div className='mrc-sidebar'>
-            <SidebarNavigation showFlyout={this.props.showFlyout}
-                               disappearFlyout={this.props.disappearFlyout}
-                               config={this.props.config}
-            />
+            <SidebarNavigation config={this.props.config}/>
             {this.createBackBtn()}
         </div>;
     };
@@ -34,7 +32,7 @@ export default class NavigationLayout extends Component {
         // triggered on the <ul> when the back button is clicked
         return (
             <div className={classNames('back-action',{hidden: !this.props.displayBackButton})}>
-                <BackBtn onClick={this.props.disappearFlyout}/>
+                <BackBtn/>
             </div>
         );
     }
@@ -46,6 +44,8 @@ export default class NavigationLayout extends Component {
         let btnBurgerMenuClasses = 'btn mrc-burger-menu';
         if (this.props.displayMenu) btnBurgerMenuClasses += ' active';
 
+        // if (!this.props.displayBottomToolbar) return null;
+
         // TODO Move Burger Menu stuff to BurgerMenuLayout and rename that to BurgerMenu
         return (
             <nav className={classes}>
@@ -54,6 +54,7 @@ export default class NavigationLayout extends Component {
                     <img src={BurgerMenu} alt='menu'/>
                 </a>
                 <BurgerMenuLayout isExpanded={this.props.displayMenu}
+                                  config={this.props.config}
                                   hideBurgerMenu={this.hideBurgerMenu}/>
             </nav>
         );
@@ -67,8 +68,6 @@ export default class NavigationLayout extends Component {
 NavigationLayout.propTypes = {
     tablet: PropTypes.bool,
     config: PropTypes.object.isRequired,
-    showFlyout: PropTypes.func,
-    disappearFlyout: PropTypes.func.isRequired,
     displayMenu: PropTypes.bool.isRequired,
     displayBottomToolbar: PropTypes.bool.isRequired,
     displayBackButton: PropTypes.bool.isRequired,

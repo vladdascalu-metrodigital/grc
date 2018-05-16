@@ -14,9 +14,9 @@
     &:hover, &:focus {
       background-color: transparent;
     }
-
-    select {
-      text-transform: capitalize;
-    }
   }
+}
+
+.mrc-language select {
+  text-transform: capitalize;
 }
