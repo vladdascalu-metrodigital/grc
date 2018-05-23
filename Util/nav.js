@@ -47,7 +47,7 @@ export function createNav(btnConf, translations) {
     }
     return {
         key: btnConf.roleKey,
-        title: title || btnConf.title,
+        title: title || btnConf.title || btnConf.roleKey,
         icon: icon,
         href: href,
         isAbsolute: href.startsWith('http'),
