@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 export default class LanguageSelectLayout extends Component {
 
@@ -12,7 +12,7 @@ export default class LanguageSelectLayout extends Component {
     }
 
     render() {
-        if (!this.props.config.data) return null;
+        if(!this.props.config.data) return null;
 
         return (
             <div className="m-select">

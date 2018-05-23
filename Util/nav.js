@@ -1,5 +1,5 @@
 import React from "react";
-import { createUriPath } from "./util";
+import {createUriPath} from "./util";
 import LaunchpadIcon from "../icons/menu.svg";
 import InboxIcon from "../icons/inbox.svg";
 import LimitcheckIcon from "../icons/credit-request.svg";
@@ -43,11 +43,11 @@ export function createNav(btnConf, translations) {
     const icon = iconMap[btnConf.roleKey.toLowerCase()];
     const href = createHref(btnConf.template, btnConf.roleKey);
     if (!icon || !title) {
-        console.warn('Missing icon or translation to render sidebar nav. Data:', btnConf);
+        console.warn('Missing icon or title translation to render sidebar nav. Data:', btnConf);
     }
     return {
         key: btnConf.roleKey,
-        title: title,
+        title: title || btnConf.title,
         icon: icon,
         href: href,
         isAbsolute: href.startsWith('http'),
