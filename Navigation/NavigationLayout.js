@@ -1,17 +1,16 @@
-import React, { Component } from "react";
-import SidebarNavigation from "./SidebarNavigation";
-import BurgerMenuLayout from "./BurgerMenuLayout";
-import PropTypes from "prop-types";
-import BurgerMenu from "../icons/burger-menu.svg";
-import BackBtn from "./BackBtn";
-import "./bottommenu.scss";
-import classNames from "classnames";
+import React, {Component} from 'react';
+import SidebarNavigation from './SidebarNavigation';
+import BurgerMenuLayout from './BurgerMenuLayout';
+import PropTypes from 'prop-types';
+import BurgerMenu from '../icons/burger-menu.svg';
+import BackBtn from './BackBtn';
+import './bottommenu.scss';
+import classNames from 'classnames';
 
 export default class NavigationLayout extends Component {
 
     toggleBurgerMenu = (event) => {
         event.preventDefault();
-        console.log('toggle burger menu', this.props.displayMenu);
         this.props.updateBurgerMenuExpended(!this.props.displayMenu);
     };
 
@@ -31,7 +30,7 @@ export default class NavigationLayout extends Component {
         // BackBtn not removed from dom but only set to 'invisible' to make sure that the onMouseEnter event is not
         // triggered on the <ul> when the back button is clicked
         return (
-            <div className={classNames('back-action',{hidden: !this.props.displayBackButton})}>
+            <div className={classNames('back-action', {hidden: !this.props.displayBackButton})}>
                 <BackBtn/>
             </div>
         );
