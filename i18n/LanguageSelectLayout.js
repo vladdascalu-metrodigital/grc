@@ -12,8 +12,8 @@ export default class LanguageSelectLayout extends Component {
     }
 
     render() {
-        if(!this.props.config.data) return null;
-
+        if (!this.props.config.data || !this.props.config.data.availableLanguages) return null;
+        const languages = this.props.config.data.availableLanguages;
         return (
             <div className="m-select">
                 <div className="m-input">
@@ -22,7 +22,7 @@ export default class LanguageSelectLayout extends Component {
                                 value={this.props.config.data.currentLocale}
                                 onChange={this.props.languageChange}
                                 className="m-input-element m-select-input">
-                            {this.props.config.data.availableLocales.map(locale =>
+                            {languages.map(locale =>
                                 LanguageSelectLayout.createOption(locale, locale === this.props.config.data.currentLocale))}
                         </select>
 
@@ -36,6 +36,12 @@ export default class LanguageSelectLayout extends Component {
 }
 
 LanguageSelectLayout.propTypes = {
-    config: PropTypes.object,
+    currentLanguageCode: PropTypes.string,
+    config: PropTypes.shape({
+        data: PropTypes.shape({
+            availableLanguages: PropTypes.array,
+            currentLocale: PropTypes.string
+        }).isRequired
+    }),
     languageChange: PropTypes.func.isRequired
 };

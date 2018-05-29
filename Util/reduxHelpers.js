@@ -88,8 +88,9 @@ export function createLoadingHelpers(prefix, name, createUrl, optional = false, 
                     }
                 })
                 .catch(error => {
-                    dispatch(loadingError());
                     const msg = error.message || `Error loading ${name.toLowerCase()}`;
+                    console.error(msg, error);
+                    dispatch(loadingError());
                     dispatch(showError(msg));
                 });
         };
