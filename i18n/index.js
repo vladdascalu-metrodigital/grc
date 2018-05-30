@@ -28,7 +28,10 @@ function mapDispatchToProps() {
             if (!value.match(/^[a-zA-Z]{2}/)) {
                 console.warn(`Expected Language with 2 chars but was '${value}'`);
             }
-            document.cookie = `${COOKIE_NAME}=${value.substr(0, 2).toLowerCase()}`;
+            const expiryDate = new Date();
+            expiryDate.setTime(expiryDate.getTime() + (10 * 365 * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + expiryDate.toUTCString();
+            document.cookie = `${COOKIE_NAME}=${value.substr(0, 2).toLowerCase()};${expires}`;
             window.location.reload();
         }
     };
