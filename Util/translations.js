@@ -33,6 +33,16 @@ export const lookup = (key) => {
     return translation ? translation : key;
 };
 
+export const reverseLookup = (translation) => {
+    Object.keys(translations)
+        .forEach(function eachKey(key) {
+            if (translations[key] == translation) {
+                return key;
+            }
+        });
+    return translation;
+};
+
 const headers = new Headers();
 headers.append('Content-Type', 'application/json;charset=UTF-8');
 addCsrfToken(headers);
