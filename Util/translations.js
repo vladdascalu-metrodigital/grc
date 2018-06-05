@@ -30,9 +30,14 @@ export const addTranslations = (update) => {
 
 export const lookup = (key) => {
     const translation = translations[key];
-    return translation ? translation : key;
+    if (translation) { return translation;}
+    else {
+        let newTranslation = {};
+        newTranslation[key] = key;
+        translations = Object.assign({}, translations, newTranslation);
+        return key;
+    }
 };
-
 export const reverseLookup = (translation) => {
     Object.keys(translations)
         .forEach(function eachKey(key) {
