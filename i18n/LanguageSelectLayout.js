@@ -1,14 +1,23 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import moment from "moment/moment";
+
+const COOKIE_NAME = 'MRC_LOCALE';
 
 export default class LanguageSelectLayout extends Component {
 
     static createOption(country, selected) {
         return (
-            <option key={country} value={country} selected={selected}>
+            <option key={country} value={country} defaultValue={selected}>
                 {country}
             </option>
         );
+    }
+
+    componentDidMount() {
+        const expiryDate = new Date(moment().add(5, 'years').calendar());
+        const expires = "expires=" + expiryDate.toUTCString();
+        document.cookie = `${COOKIE_NAME}=${this.props.config.data.currentLocale.substr(0, 2).toLowerCase()};${expires}`;
     }
 
     render() {
