@@ -39,17 +39,20 @@ export const lookup = (key) => {
     }
 };
 export const reverseLookup = (translation) => {
-    console.log('reverse lookup for ', translation);
-    console.log('in map of translation ', translations);
-    Object.keys(translations)
-        .forEach(function eachKey(key) {
-            if (translations[key] === translation) {
-                console.log('found key and returning ', key);
-                return key;
-            }
-        });
-    console.log('couldnt find key and returning original input', translation);
-    return translation;
+    let result = translation;
+    const FoundException={};
+    try {
+        Object.keys(translations)
+            .forEach(function eachKey(key) {
+                if (translations[key] === translation) {
+                    result = key;
+                    throw FoundException;
+                }
+            });
+    } catch (e) {
+        return result;
+    }
+    return result;
 };
 
 const headers = new Headers();
