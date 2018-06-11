@@ -387,7 +387,7 @@ fieldset { margin: 0; padding: 0; border: none; }
 
 hr { display: block; height: 1px; border: 0; border-top: 1px solid #f2f3f5; margin: 1em 0; padding: 0; }
 
-main { flex-grow: 2; width: 100%; height: 100vh; margin-bottom: 2rem; }
+main { flex-grow: 2; width: 100%; height: 100vh; }
 
 .m p, .m-p { font-weight: normal; font-size: 1rem; line-height: 1.375rem; color: #001432; }
 
