@@ -95,7 +95,7 @@ a.active { pointer-events: auto; }
   grid-area: metro-logo;
 
   z-index: $z-index-nav;
-  position: relative;
+  position: fixed;
   padding: 19px;
   height: $topbar-height-mobile;
   width: $topbar-height-mobile;
