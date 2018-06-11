@@ -34,6 +34,7 @@ main, section, article {
 // Override of ux-hub style
 main {
   height: 100%;
+  margin-bottom: unset;
 }
 
 // UX Hub sets this to none, which is really bad for click handlers. See toggleBurgerMenu.
