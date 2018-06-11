@@ -95,7 +95,7 @@ a.active { pointer-events: auto; }
   grid-area: metro-logo;
 
   z-index: $z-index-nav;
-  position: fixed;
+  transform: none !important;
   padding: 19px;
   height: $topbar-height-mobile;
   width: $topbar-height-mobile;
@@ -105,6 +105,7 @@ a.active { pointer-events: auto; }
     padding: 25px;
     height: $topbar-height-tablet;
     width: $topbar-height-tablet;
+    position: fixed;
   }
 }
 
