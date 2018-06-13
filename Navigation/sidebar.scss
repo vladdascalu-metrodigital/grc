@@ -22,7 +22,8 @@
 }
 
 .back-action {
-  position:sticky;
+  position: fixed;
+  bottom: 10px;
 }
 .mrc-language select {
   text-transform: capitalize;
