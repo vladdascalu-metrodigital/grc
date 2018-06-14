@@ -30,7 +30,29 @@ export const addTranslations = (update) => {
 
 export const lookup = (key) => {
     const translation = translations[key];
-    return translation ? translation : key;
+    if (translation) { return translation;}
+    else {
+        let newTranslation = {};
+        newTranslation[key] = key;
+        translations = Object.assign({}, translations, newTranslation);
+        return key;
+    }
+};
+export const reverseLookup = (translation) => {
+    let result = translation;
+    const FoundException={};
+    try {
+        Object.keys(translations)
+            .forEach(function eachKey(key) {
+                if (translations[key] === translation) {
+                    result = key;
+                    throw FoundException;
+                }
+            });
+    } catch (e) {
+        return result;
+    }
+    return result;
 };
 
 const headers = new Headers();

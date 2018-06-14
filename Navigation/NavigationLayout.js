@@ -48,7 +48,7 @@ export default class NavigationLayout extends Component {
         // TODO Move Burger Menu stuff to BurgerMenuLayout and rename that to BurgerMenu
         return (
             <nav className={classes}>
-                <BackBtn disabled={!this.props.displayBottomToolbar}/>
+                <BackBtn/>
                 <a className={btnBurgerMenuClasses} onClick={this.toggleBurgerMenu}>
                     <img src={BurgerMenu} alt='menu'/>
                 </a>

@@ -28,7 +28,7 @@ function mapDispatchToProps() {
             if (!value.match(/^[a-zA-Z]{2}/)) {
                 console.warn(`Expected Language with 2 chars but was '${value}'`);
             }
-            document.cookie = `${COOKIE_NAME}=${value.substr(0, 2).toLowerCase()}`;
+            document.cookie = `${COOKIE_NAME}=${value.substr(0, 2).toLowerCase()};`;
             window.location.reload();
         }
     };
