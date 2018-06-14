@@ -5,6 +5,7 @@ import './index.scss';
 import {displayName} from '../../global/Util/index';
 import {lookup} from '../../global/Util/translations';
 
+const COOKIE_NAME = 'MRC_LOCALE';
 
 export default class CustomerDetails extends Component {
 
@@ -12,6 +13,11 @@ export default class CustomerDetails extends Component {
         return (term && description)
             ? [<dt key='dt'>{lookup(term)}</dt>, <dd key='dd'>{description}</dd>]
             : null;
+    }
+
+    getLocale() {
+        var match = document.cookie.match(new RegExp('(^| )' + COOKIE_NAME + '=([^;]+)'));
+        if (match) return match[2];
     }
 
     printAndBr() {
@@ -25,9 +31,10 @@ export default class CustomerDetails extends Component {
         if (!date) {
             return null;
         }
+        var localeDate = new Date(date).toLocaleDateString(this.getLocale(), {year: 'numeric', month: 'long', day: 'numeric' });
         return (
             <div className='registration-date'>
-                <Moment className='absolute' format='LL'>{date}</Moment>
+                {localeDate}
                 {withRelative && <Moment className='relative' fromNow={true}>{date}</Moment>}
             </div>
         );
