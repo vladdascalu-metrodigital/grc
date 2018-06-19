@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import moment from "moment/moment";
+import Moment from "react-moment";
 
 const COOKIE_NAME = 'MRC_LOCALE';
 
@@ -18,6 +19,7 @@ export default class LanguageSelectLayout extends Component {
         const expiryDate = new Date(moment().add(5, 'years').calendar());
         const expires = "expires=" + expiryDate.toUTCString();
         document.cookie = `${COOKIE_NAME}=${this.props.config.data.currentLocale.substr(0, 2).toLowerCase()};${expires}`;
+        Moment.globalLocale = this.props.config.data.currentLocale.substr(0, 2).toLowerCase();
     }
 
     render() {

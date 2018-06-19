@@ -3,7 +3,7 @@ import {PropTypes} from 'prop-types';
 import Moment from 'react-moment';
 import './index.scss';
 import {displayName} from '../Util/index';
-import {lookup, getLocale} from '../Util/translations';
+import {lookup} from '../Util/translations';
 
 export default class CustomerDetails extends Component {
 
@@ -24,11 +24,10 @@ export default class CustomerDetails extends Component {
         if (!date) {
             return null;
         }
-        const locale = getLocale();
         return (
             <div className='registration-date'>
-                <Moment className='absolute' format='LL' locale={locale}>{date}</Moment>
-                {withRelative && <Moment className='relative' fromNow={true} locale={locale}>{date}</Moment>}
+                <Moment className='absolute' format='LL'>{date}</Moment>
+                {withRelative && <Moment className='relative' fromNow={true}>{date}</Moment>}
             </div>
         );
     }
