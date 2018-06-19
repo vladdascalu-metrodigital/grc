@@ -1,5 +1,6 @@
 import {addCsrfToken} from './csrf';
 
+const COOKIE_NAME = 'MRC_LOCALE';
 // the values defined here are only used for development
 // only add entries that are used in global-react-components, other translations are defined in services themselves
 // (this makes it easier to see which keys are actually used or can be cleaned up)
@@ -21,6 +22,13 @@ let translations = {
     'mrc.customerdetails.fields.zipcity': 'ZIP/City',
     'mrc.customerdetails.fields.registration': 'Registration',
 };
+
+export const getLocale = () => {
+    const match = document.cookie.match(new RegExp('(^| )' + COOKIE_NAME + '=([^;]+)'));
+    if (match) return match[2];
+};
+
+
 
 export const addTranslations = (update) => {
     if (update) {
