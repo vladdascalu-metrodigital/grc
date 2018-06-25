@@ -464,6 +464,7 @@ var MrcDatetime = function (_HTMLElement) {
         key: 'connectedCallback',
         value: function connectedCallback() {
             var utcTimestamp = this.textContent;
+            console.log('//Temporary log : MrcDateTime entered with utcTimestamp : ' + utcTimestamp);
             if (utcTimestamp) {
                 this.textContent = new Date(utcTimestamp).toLocaleString();
             }
