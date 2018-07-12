@@ -37,7 +37,7 @@ export default class AttachmentsRows extends Component {
 
     createNoAttachmentsView(){
         return <div className="mrc-attachments">
-                <div className="tiles-mobile"><ul><span>{lookup('mrc.attachments.noattachments')}</span></ul>
+                <div className="tiles-mobile"><li><span>{lookup('mrc.attachments.noattachments')}</span></li>
                  {this.createUploader()}
                  </div>
                 </div>;
@@ -45,7 +45,7 @@ export default class AttachmentsRows extends Component {
 
     createUploader() {
         const readyToSend = this.state.title.trim().length > 0 && this.state.file !== null;
-        return <ul>
+        return <li>
                         <label>{lookup('mrc.attachments.fields.title')}</label>
                         <div className='mrc-input'>
                             <input name='title' type='text' value={this.state.title} onChange={this.updateTitle}
@@ -58,14 +58,14 @@ export default class AttachmentsRows extends Component {
                                 sendFile={this.sendFile}
                                 selectDisabled={this.props.readonly}
                                 uploadDisabled={!readyToSend}/>
-                    </ul>;
+                    </li>;
     }
 
     createRow = (item) => {
         if (!item) {
             return null;
         }
-        return <ul key={item.id}>
+        return <li key={item.id}>
             <div className="mrc-square">
             <div className="square-content" onClick={this.downloadFile.bind(this,item)}>
                 <h3 className="span-metro-blue">{item.title}</h3>
@@ -75,7 +75,7 @@ export default class AttachmentsRows extends Component {
             <div className="edge-line"></div>
             {this.displayIcon(item)}
         </div>
-        </ul>;
+        </li>;
     };
 
     displayIcon(item){
