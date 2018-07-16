@@ -15,7 +15,7 @@ export default class Attachments extends Component {
     render() {
         return <Panel title={lookup('mrc.attachments.title')}>
                     <AttachmentsRows data={this.props.data}
-                    readOnly = {this.props.readonly} addAttachment = {this.props.addAttachment} />
+                    readonly = {this.props.readonly} addAttachment = {this.props.addAttachment} />
                </Panel>;
 
     }
