@@ -84,10 +84,14 @@ a.active { pointer-events: auto; }
   -ms-grid-row: 2;
   -ms-grid-column: 2;
   grid-area: content;
+  width:100vw;
 
   @include respond-to('tablet') {
     overflow: auto;
+    width: unset;
   }
+
+
 }
 
 .metro-logo {

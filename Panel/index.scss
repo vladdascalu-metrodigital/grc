@@ -2,11 +2,6 @@
 
 .mrc-panel {
 
-  @include respond-to('tablet') {
-    width: 90%;
-    margin: 10px auto auto;
-  }
-
   background-color: $form-bg;
   border-bottom: $form-border;
 

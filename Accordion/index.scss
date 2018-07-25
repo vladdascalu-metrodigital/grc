@@ -4,6 +4,11 @@
   // see https://github.com/glennflanagan/react-collapsible/blob/develop/example/_src/sass/components/_Collapsible.scss
   // The main container element
   .Collapsible {
+    @include respond-to('tablet') {
+      padding-bottom: 10px;
+    }
+
+
   }
 
   //The content within the collapsible area
@@ -16,6 +21,7 @@
   .Collapsible__trigger {
 
     .trigger-content {
+      height: 54px;
       background-color: $form-bg;
       border-bottom: $form-border;
       display: flex;

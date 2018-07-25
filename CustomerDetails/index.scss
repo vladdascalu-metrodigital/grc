@@ -2,6 +2,7 @@
 
 .mrc-customer-details {
   width: 100%;
+  background: white;
 
   .header {
     border-bottom: $form-border;
@@ -38,6 +39,7 @@
     }
 
     h3 {
+      margin: unset;
       padding: 1em 0;
       font-weight: 500;
       font-size: $text-flow;
