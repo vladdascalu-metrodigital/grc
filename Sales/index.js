@@ -19,8 +19,8 @@ export default class Sales extends Component {
     }
 
     render() {
-        if(this.state.mdwData == null){
-            return null;
+    	if(this.state.mdwData == null){
+            return <h3>No Mdw Data available</h3>;
         }
         return (<Panel title = 'Sales'>
                 <div className="mrc-scoring-data">
