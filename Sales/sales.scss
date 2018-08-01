@@ -1,0 +1,16 @@
+.mrc-credit-request-tabs {
+    margin: 10px 0;
+}
+
+.mrc-sales-actions {
+    margin: 0 20px;
+}
+
+.mrc-sales-detail {
+    display: flex;
+    justify-content: space-between;
+    .sales-content {
+        margin: 10px;
+    }
+    .uppercase { text-transform: uppercase; }
+}
