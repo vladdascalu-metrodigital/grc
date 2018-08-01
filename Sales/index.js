@@ -19,7 +19,7 @@ export default class Sales extends Component {
     }
 
     render() {
-    	if(this.state.mdwData == null){
+        if(this.state.mdwData == null){
             return <h3>No Mdw Data available</h3>;
         }
         return (<Panel title = 'Sales'>
@@ -30,7 +30,7 @@ export default class Sales extends Component {
         </div>
         <div className="data-table-wrapper">
             <div className="col-scroll">
-                <table>
+                <table><tbody>
                     <tr className="emphazised">
                         <th className="row-title"></th>
                         <td className="col-1">L1M</td>
@@ -72,7 +72,7 @@ export default class Sales extends Component {
                     </tr>
 
                     {this.state.mdwData[0].behaviourDataList.map(this.createRow)}
-
+                    </tbody>
                 </table>
             </div>
         </div>
