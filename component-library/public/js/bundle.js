@@ -473,39 +473,39 @@ var MrcDatetime = function (_HTMLElement) {
 }(HTMLElement);
 customElements.define('mrc-datetime', MrcDatetime);
 
-var countryAndCurrency = {
-    'DE':'EUR',
-    'ES':'EUR',
-    'PT':'EUR',
-    'AT':'EUR',
-    'PK':'PKR' //Pakistan Rupee
-};
+    var countryAndCurrency = {
+        'DE':'EUR',
+        'ES':'EUR',
+        'PT':'EUR',
+        'AT':'EUR',
+        'PK':'PKR' //Pakistan Rupee
+    };
 
-var MrcNumber = function (_HTMLElement) {
-    inherits(MrcNumber, _HTMLElement);
-    function MrcNumber() {
-        classCallCheck(this, MrcNumber);
-        return possibleConstructorReturn(this, (MrcNumber.__proto__ || Object.getPrototypeOf(MrcNumber)).apply(this, arguments));
-    }
-    createClass(MrcNumber, [{
-        key: 'connectedCallback',
-        value: function connectedCallback() {
-            var number = this.textContent;
-            if (!number) return;
-            var options = {};
-            var countryCode = this.getAttribute('show-currency-for-country');
-            var currency = countryAndCurrency[countryCode.toUpperCase()];
-            if (currency) {
-                options.style = 'currency';
-                options.currency = currency;
-                options.maximumFractionDigits = 0;
-                options.minimumFractionDigits = 0;
-            }
-            this.textContent = new Intl.NumberFormat(undefined, options).format(number);
+    var MrcNumber = function (_HTMLElement) {
+        inherits(MrcNumber, _HTMLElement);
+        function MrcNumber() {
+            classCallCheck(this, MrcNumber);
+            return possibleConstructorReturn(this, (MrcNumber.__proto__ || Object.getPrototypeOf(MrcNumber)).apply(this, arguments));
         }
-    }]);
-    return MrcNumber;
-}(HTMLElement);
-customElements.define('mrc-number', MrcNumber);
+        createClass(MrcNumber, [{
+            key: 'connectedCallback',
+            value: function connectedCallback() {
+                var number = this.textContent;
+                if (!number) return;
+                var options = {};
+                var countryCode = this.getAttribute('show-currency-for-country');
+                var currency = countryAndCurrency[countryCode ? countryCode.toUpperCase() : null];
+                if (currency) {
+                    options.style = 'currency';
+                    options.currency = currency;
+                    options.maximumFractionDigits = 2;
+                    options.minimumFractionDigits = 0;
+                }
+                this.textContent = new Intl.NumberFormat(undefined, options).format(number);
+            }
+        }]);
+        return MrcNumber;
+    }(HTMLElement);
+    customElements.define('mrc-number', MrcNumber);
 
 }());
