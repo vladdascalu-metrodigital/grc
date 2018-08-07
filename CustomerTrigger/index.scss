@@ -1,0 +1,15 @@
+@import "../../global/settings";
+
+.mrc-customer-trigger {
+  padding-right: 16px;
+
+  .previousAmounts {
+    width: auto;
+    text-align: right;
+    font-size: 13px;
+    font-weight: 400;
+    position: relative;
+    top: -2.5em;
+    margin-bottom: -3em;
+  }
+}
