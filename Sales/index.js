@@ -85,7 +85,7 @@ export default class Sales extends Component {
 
     render() {
         if(this.state.mdwData == null){
-            return <h3>No Mdw Data available</h3>;
+            return <h4>{lookup('mrc.mdw.nodataavailable')}</h4>;
         }
         //For group 
         const collapsibles = this.state.mdwData.map(mdwCustomer => {
