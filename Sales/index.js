@@ -25,7 +25,7 @@ export default class Sales extends Component {
         <div className="mrc-scoring-data">
             <div className="mrc-data-table">
                 <div className="table-header">
-                    <p className="metro-blue"> Sales Overview</p>
+                    <p className="metro-blue">{lookup('mrc.mdw.salesoverview')}</p>
                 </div>
     <div className="data-table-wrapper">
     <div className="col-scroll">
@@ -38,21 +38,21 @@ export default class Sales extends Component {
                 <td className="col-4">L12M</td>
             </tr>
             <tr>
-                <th className="row-title">Number of Purchases</th>
+                <th className="row-title">{lookup('mrc.mdw.numberofpurchase')}</th>
                 <td className="col-1">{mdwCustomer.customerCreditData.numPurchasesL1m}</td>
                 <td className="col-2">{mdwCustomer.customerCreditData.numPurchasesL3m}</td>
                 <td className="col-3">{mdwCustomer.customerCreditData.numPurchasesL6m}</td>
                 <td className="col-4">{mdwCustomer.customerCreditData.numPurchasesL12m}</td>
             </tr>
             <tr>
-                <th className="row-title">Number of Invoices</th>
+                <th className="row-title">{lookup('mrc.mdw.numberofinvoices')}</th>
                 <td className="col-1">{mdwCustomer.customerCreditData.numInvoicesL1m}</td>
                 <td className="col-2">{mdwCustomer.customerCreditData.numInvoicesL3m}</td>
                 <td className="col-3">{mdwCustomer.customerCreditData.numInvoicesL6m}</td>
                 <td className="col-4">{mdwCustomer.customerCreditData.numInvoicesL12m}</td>
             </tr>
             <tr className="emphazised break">
-                <th className="row-title">Total Turnover</th>
+                <th className="row-title">{lookup('mrc.mdw.totalturnover')}</th>
                 <td className="col-1">{mdwCustomer.customerCreditData.sellValNspL1m}</td>
                 <td className="col-2">{mdwCustomer.customerCreditData.sellValNspL3m}</td>
                 <td className="col-3">{mdwCustomer.customerCreditData.sellValNspL6m}</td>
@@ -63,7 +63,7 @@ export default class Sales extends Component {
                 <th className="row-title break"></th>
             </tr>
             <tr className="emphazised">
-                <th className="row-title">Merchandise Group Turnover</th>
+                <th className="row-title">{lookup('mrc.mdw.merchandisegroupturnover')}</th>
                 <td className="col-1">L1M</td>
                 <td className="col-2">L3M</td>
                 <td className="col-3">L6M</td>
