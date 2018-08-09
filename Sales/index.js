@@ -29,7 +29,7 @@ export default class Sales extends Component {
                 </div>
     <div className="data-table-wrapper">
     <div className="col-scroll">
-        <table><tbody>
+        <table className='mdw-data-table'><tbody>
             <tr className="emphazised">
                 <th className="row-title"></th>
                 <td className="col-1">L1M</td>
@@ -85,7 +85,7 @@ export default class Sales extends Component {
 
     render() {
         if(this.state.mdwData == null){
-            return <h4>{lookup('mrc.mdw.nodataavailable')}</h4>;
+            return <h4 className='not-found'>{lookup('mrc.mdw.nodataavailable')}</h4>;
         }
         //For group 
         const collapsibles = this.state.mdwData.map(mdwCustomer => {
@@ -108,7 +108,7 @@ export default class Sales extends Component {
         
         //End for group
         
-        return <Accordion className='mrc-customer-details-group'>
+        return <Accordion className='mrc-sales-accordion'>
                 {collapsibles}
                </Accordion>;
         
