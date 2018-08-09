@@ -93,6 +93,9 @@ export default class Sales extends Component {
             const trigger   = <CustomerTrigger
             customer    = {mdwCustomer.customer}
             createdFrom = {this.props.createdFrom}
+            //Current and requested are sent only for approval view
+            current={mdwCustomer.current ? mdwCustomer.current : null}
+            requested={mdwCustomer.requested}
         />;
             return <Collapsible open    = {true}
                         key     = {key}
