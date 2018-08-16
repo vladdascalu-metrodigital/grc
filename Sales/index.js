@@ -124,8 +124,8 @@ export default class Sales extends Component {
     {
         console.log(item);
         return (
-        <tr key={item.id.behaviouralCode}>
-        <th className="row-title">{lookup('mrc.mdw.behaviour-' + item.id.behaviouralCode + '-' + item.id.country)}</th>
+        <tr key={item.behaviouralCode}>
+        <th className="row-title">{lookup('mrc.mdw.behaviour-' + item.behaviouralCode + '-' + item.country)}</th>
             <td className="col-1">{item.behvSellValNspL1m}</td>
             <td className="col-2">{item.behvSellValNspL3m}</td>
             <td className="col-3">{item.behvSellValNspL6m}</td>
