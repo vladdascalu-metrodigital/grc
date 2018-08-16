@@ -122,7 +122,7 @@ export default class Sales extends Component {
     
     createRow = (item) => 
     {
-    	console.log(item);
+        console.log(item);
         return (
         <tr key={item.id.behaviouralCode}>
         <th className="row-title">{lookup('mrc.mdw.behaviour-' + item.id.behaviouralCode + '-' + item.id.country)}</th>
