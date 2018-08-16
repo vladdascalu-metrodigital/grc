@@ -94,8 +94,8 @@ export default class Sales extends Component {
             customer    = {mdwCustomer.customer}
             createdFrom = {this.props.createdFrom}
             //Current and requested are sent only for approval view
-            current={mdwCustomer.current ? mdwCustomer.current : null}
-            requested={mdwCustomer.requested}
+            current={mdwCustomer.currentCreditData ? mdwCustomer.currentCreditData.amount : null}
+            requested={mdwCustomer.requestedCreditData ? mdwCustomer.requestedCreditData.amount : null}
         />;
             return <Collapsible open    = {true}
                         key     = {key}
@@ -122,7 +122,6 @@ export default class Sales extends Component {
     
     createRow = (item) => 
     {
-        console.log(item);
         return (
         <tr key={item.behaviouralCode}>
         <th className="row-title">{lookup('mrc.mdw.behaviour-' + item.behaviouralCode + '-' + item.country)}</th>
