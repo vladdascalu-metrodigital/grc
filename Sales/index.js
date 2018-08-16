@@ -84,7 +84,7 @@ export default class Sales extends Component {
     }
 
     render() {
-        if(this.state.mdwData == null){
+        if(this.state.mdwData == null || this.state.mdwData.length == 0){
             return <h4 className='not-found'>{lookup('mrc.mdw.nodataavailable')}</h4>;
         }
         //For group 
@@ -122,6 +122,7 @@ export default class Sales extends Component {
     
     createRow = (item) => 
     {
+    	console.log(item);
         return (
         <tr key={item.id.behaviouralCode}>
         <th className="row-title">{lookup('mrc.mdw.behaviour-' + item.id.behaviouralCode + '-' + item.id.country)}</th>
