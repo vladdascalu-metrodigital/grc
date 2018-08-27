@@ -1598,6 +1598,7 @@ html:not(.touchevents) .m-tabPanel-tab:hover, html:not(.touchevents) .mrc-list-t
      .mrc-panel .panel-content {width:98% !important;}
      .mrc-info-row {width:98% !important;}
      .mrc-progress-bar .details {width:98% !important;}
+     .react-tabs__tab-panel--selected {width:98%;}
 }
 
 .m-input-isStandalone { margin-bottom: 0; }
