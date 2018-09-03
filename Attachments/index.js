@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './index.scss';
+import './attachments.scss';
 import Panel from '../Panel';
 import AttachmentsRows from './AttachmentsRows';
 import PropTypes from 'prop-types';
