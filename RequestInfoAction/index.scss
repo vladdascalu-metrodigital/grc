@@ -1,0 +1,45 @@
+@import "../settings";
+@import "../buttons";
+@import "../helpers";
+
+.mrc-send-back {
+
+  float: left;
+  display: inline-flex;
+  padding-left: 12px;
+
+  select {
+    width: fit-content;
+    margin-right: 20px;
+    margin-bottom: unset;
+  }
+
+  button {
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 500;
+    font-size: 13px;
+
+    padding: 0px 0.75rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 5px;
+    background-color: $sky-blue;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15);
+
+    &[disabled] {
+      background-color: $form-placeholder-color;
+      box-shadow: none;
+    }
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+  }
+
+}
