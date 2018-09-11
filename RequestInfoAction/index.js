@@ -21,7 +21,7 @@ export default class RequestInfoAction extends Component {
                 <select onChange={this.updateState}>
                     {this.mapStepsToOptions(this.props.steps)}
                 </select>
-                <button onClick={this.requestInfo} disabled={this.props.disabled}>
+                <button className='sendback' onClick={this.requestInfo} disabled={this.props.disabled}>
                     {lookup('approval.action.requestinfo')}
                 </button>
             </div>
