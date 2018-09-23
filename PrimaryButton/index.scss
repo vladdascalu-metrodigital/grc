@@ -31,6 +31,10 @@
     &.warning {
       background-color: $warning-orange;
     }
+    
+    &.reject {
+      background-color: $warning-orange;
+    }
 
     &[disabled] {
       background-color: $form-placeholder-color;
