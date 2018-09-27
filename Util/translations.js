@@ -13,6 +13,7 @@ let translations = {
 
     'mrc.customerdetails.fields.customernumber': 'Customer Number',
     'mrc.customerdetails.fields.taxnumber': 'Tax Number',
+    'mrc.customerdetails.fields.vateunumber': 'Vat EU Number',
     'mrc.customerdetails.fields.legalform': 'Legal Form',
     'mrc.customerdetails.fields.email': 'E-Mail',
     'mrc.customerdetails.fields.phone': 'Phone',

@@ -45,6 +45,7 @@ export default class CustomerDetails extends Component {
                     <dl>
                         {this.describeTerm('mrc.customerdetails.fields.customernumber', `${c.storeNumber}/${c.customerNumber}`)}
                         {this.describeTerm('mrc.customerdetails.fields.taxnumber', c.vatSpecNumber)}
+                        {this.describeTerm('mrc.customerdetails.fields.vateunumber', c.vatEuNumber)}
                         {this.describeTerm('mrc.customerdetails.fields.legalform', c.legalForm)}
                     </dl>
                     <address>
