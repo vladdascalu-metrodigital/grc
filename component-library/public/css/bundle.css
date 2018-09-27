@@ -1592,6 +1592,15 @@ html:not(.touchevents) .m-tabPanel-tab:hover, html:not(.touchevents) .mrc-list-t
 
 .m-input, .mrc-input { margin-bottom: 1.5rem; /* Hide clear and reveal icons in internet explorer */ }
 
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+     /* IE10+ CSS styles go here */
+     .mrc-search, .mrc-input {width:96%;/* Reveal Magnifying glass sign in internet explorer 11 */ }
+     .mrc-panel .panel-content {width:98% !important;}
+     .mrc-info-row {width:98% !important;}
+     .mrc-progress-bar .details {width:98% !important;}
+     .react-tabs__tab-panel--selected {width:98%;}
+}
+
 .m-input-isStandalone { margin-bottom: 0; }
 
 .m-input ::-webkit-input-placeholder, .mrc-input ::-webkit-input-placeholder { /* Chrome/Opera/Safari */ color: #667284; }
@@ -1625,6 +1634,8 @@ html:not(.touchevents) .m-tabPanel-tab:hover, html:not(.touchevents) .mrc-list-t
 .m-input-element.m-input-hasError { border: 1px solid #eb8676; box-shadow: 0 0 0 1px #eb8676; }
 
 .m-input-element.m-input-hasIcon { padding-right: 2.75rem; }
+
+.m-input-element::-ms-expand{display: none;}
 
 .m-input input[type="search"], .mrc-input input[type="search"] { -webkit-appearance: textfield; }
 
