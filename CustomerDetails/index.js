@@ -39,7 +39,6 @@ export default class CustomerDetails extends Component {
     render() {
         const c = this.props.customer;
         if (!c) return null;
-        console.log(c);
         return (<div className='mrc-customer-details' id={c.storeNumber+'/'+c.customerNumber}>
                 <section className='details'>
                     <h3>{this.displayName()}</h3>
