@@ -28,7 +28,7 @@ export default class Comments extends Component {
                     </div>
                 </div>
                 <button disabled={this.props.readonly || !readyToSend} onClick={this.addComment}
-                        type='button' className='mrc-secondary-button'>Add Comment</button>
+                        type='button' className='mrc-secondary-button'>{this.props.addCommentTitle}</button>
             </div>);
     }
 
@@ -47,5 +47,6 @@ Comments.propTypes = {
     addComment: PropTypes.func.isRequired,
     data: PropTypes.array,
     ready: PropTypes.bool,
-    readonly: PropTypes.bool
+    readonly: PropTypes.bool,
+    addCommentTitle: PropTypes.string
 };
