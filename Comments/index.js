@@ -12,6 +12,7 @@ export default class Comments extends Component {
     render() {
         const readyToSend = this.state.newComment.trim().length > 0;
         const comments = this.props.data || [];
+        const addCommentTitle = this.props.addCommentTitle || "Add Comment";
         return (
             <div className='mrc-comments'>
                 {comments.map(comment => {
@@ -28,7 +29,7 @@ export default class Comments extends Component {
                     </div>
                 </div>
                 <button disabled={this.props.readonly || !readyToSend} onClick={this.addComment}
-                        type='button' className='mrc-secondary-button'>{this.props.addCommentTitle}</button>
+                        type='button' className='mrc-secondary-button'>{addCommentTitle}</button>
             </div>);
     }
 
