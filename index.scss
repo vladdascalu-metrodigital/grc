@@ -46,8 +46,8 @@ a.active { pointer-events: auto; }
   display: grid;
 
   width: 100vw;
-  height: 80vh;
-  height: calc(100vh - 56px); // leaving some space for bottom bar
+  height: 70vh;
+  //height: calc(100vh - 56px); // leaving some space for bottom bar
   overflow: auto;
 
   -ms-grid-columns: $topbar-height-mobile 1fr;
