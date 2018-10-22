@@ -7,6 +7,7 @@
   float: left;
   display: inline-flex;
   padding-left: 12px;
+  padding-bottom: 9px;
 
   select {
     width: fit-content;
@@ -22,9 +23,11 @@
 
     padding: 0px 0.75rem;
 
-    display: flex;
     align-items: center;
     justify-content: center;
+
+    white-space: nowrap;
+    height: 40px;
 
     border-radius: 5px;
     background-color: $sky-blue;
