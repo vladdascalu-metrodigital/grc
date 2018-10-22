@@ -44,7 +44,6 @@ a.active { pointer-events: auto; }
 .mrc-grid-wrapper {
   display: -ms-grid;
   display: grid;
-
   width: 100vw;
   height: 70vh;
   //height: calc(100vh - 56px); // leaving some space for bottom bar
