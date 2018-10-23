@@ -44,7 +44,6 @@ a.active { pointer-events: auto; }
 .mrc-grid-wrapper {
   display: -ms-grid;
   display: grid;
-
   width: 100vw;
   padding-bottom: 56px;
   overflow-x: hidden;
@@ -57,6 +56,9 @@ a.active { pointer-events: auto; }
 
   grid-template-areas: "metro-logo   topbar" "content      content";
 
+  @include respond-to('phone') {
+      height: 85vh;
+  }
 
   @include respond-to('tablet') {
     height: 100vh;
