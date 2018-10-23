@@ -4,26 +4,49 @@ export class NumberInput extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {value: props.initialValue ? props.initialValue + '' : ''};
+        this.state = {value: props.initialValue ? props.initialValue + '' : '',
+        		      changed : false};
         if (props.value) {
             console.log('NumberInput should not be passed a value prop (will be ignored)');
         }
     }
 
+    //deprecated, we use parseFloat instead, because these field should also accept float.
     parse(str) {
         return (/^[0-9]+$/.test(str))
             ? Number(str)
             : NaN;
     }
+    
+    componentDidUpdate(){
+    	if(this.props.shouldBePrefilledWith && !this.state.changed){
+    		this.handleChangeAmount(this.props.shouldBePrefilledWith);
+    	}
+    	if(this.props.shouldBePrefilledWith == null && this.state.changed){
+    		this.handleChangeAmount('');
+    	}
+    }
 
     handleChange = (event) => {
         const str = event.target.value;
-        const parsed = this.parse(str);
+        const parsed = parseFloat(str);
         if (str.length === 0) {
             this.setState({value: str});
             this.props.onChange(null);
         } else if (!Number.isNaN(parsed)) {
             this.setState({value: str});
+            this.props.onChange(parsed);
+        }
+    };
+    
+    handleChangeAmount = (amount) => {
+        const str = amount;
+        const parsed = parseFloat(str);
+        if (str.length === 0) {
+            this.setState({value: str, changed: !this.state.changed});
+            this.props.onChange(null);
+        } else if (!Number.isNaN(parsed)) {
+            this.setState({value: str, changed: !this.state.changed});
             this.props.onChange(parsed);
         }
     };
@@ -33,6 +56,7 @@ export class NumberInput extends Component {
         delete inputProps.value;
         delete inputProps.onChange;
         delete inputProps.initialValue;
+        delete inputProps.shouldBePrefilledWith;
         return (
             <input type='text'
                    value={this.state.value}
