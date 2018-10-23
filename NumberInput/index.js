@@ -5,7 +5,7 @@ export class NumberInput extends Component {
     constructor(props) {
         super(props);
         this.state = {value: props.initialValue ? props.initialValue + '' : '',
-        		      changed : false};
+                changed : false};
         if (props.value) {
             console.log('NumberInput should not be passed a value prop (will be ignored)');
         }
@@ -19,12 +19,12 @@ export class NumberInput extends Component {
     }
     
     componentDidUpdate(){
-    	if(this.props.shouldBePrefilledWith && !this.state.changed){
-    		this.handleChangeAmount(this.props.shouldBePrefilledWith);
-    	}
-    	if(this.props.shouldBePrefilledWith == null && this.state.changed){
-    		this.handleChangeAmount('');
-    	}
+        if(this.props.shouldBePrefilledWith && !this.state.changed){
+            this.handleChangeAmount(this.props.shouldBePrefilledWith);
+    }
+        if(this.props.shouldBePrefilledWith == null && this.state.changed){
+            this.handleChangeAmount('');
+        }
     }
 
     handleChange = (event) => {
