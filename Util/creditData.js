@@ -3,11 +3,12 @@ function extractCreditProducts(availablePayments) {
     return Array.from(new Set(allCreditProducts)).sort();
 }
 
+// as the payment mapper service delivery a hashlinkedset here, we won't sort the collection anymore but keep the sequence
 function extractCreditPeriods(availablePayments, creditProduct) {
     const creditPeriods = availablePayments
         .filter(p => p.creditProduct === creditProduct)
         .map(p => p.creditPeriod);
-    return Array.from(new Set(creditPeriods)).sort(creditPeriodSorter);
+    return Array.from(new Set(creditPeriods));
 }
 
 function extractDebitTypes(availablePayments, creditProduct, creditPeriod) {
@@ -17,16 +18,6 @@ function extractDebitTypes(availablePayments, creditProduct, creditPeriod) {
         .filter(p => p.debitType)
         .map(p => p.debitType);
     return Array.from(new Set(debitTypes)).sort();
-}
-
-function creditPeriodSorter(a, b) {
-    const aNumber = Number.parseFloat(a);
-    const bNumber = Number.parseFloat(b);
-    if (!Number.isNaN(aNumber) && !Number.isNaN(bNumber)) {
-        return aNumber - bNumber;
-    } else {
-        return a.localeCompare(b);
-    }
 }
 
 // TODO This can definitely be optimized!!
