@@ -9,32 +9,38 @@ export default class LanguageSelectLayout extends Component {
 
     static createOption(country, selected) {
         return (
-            <option key={country} value={country} defaultValue={selected}>
+            <option key={country} value={country+''} defaultValue={selected}>
                 {country}
             </option>
         );
     }
 
     componentDidMount() {
+        // TODO Remove dependency from LanguageSelector to moment.js:
         const expiryDate = new Date(moment().add(5, 'years').calendar());
-        const expires = "expires=" + expiryDate.toUTCString();
-        document.cookie = `${COOKIE_NAME}=${this.props.config.data.currentLocale.substr(0, 2).toLowerCase()};${expires}`;
-        Moment.globalLocale = this.props.config.data.currentLocale.substr(0, 2).toLowerCase();
+        const expires = 'expires=' + expiryDate.toUTCString();
+        const currentLocale = this.props.config.data.currentLocale;
+        if (currentLocale) {
+            const locale = currentLocale.substr(0, 2).toLowerCase();
+            document.cookie = `${COOKIE_NAME}=${locale};${expires}`;
+            Moment.globalLocale = locale;
+        }
     }
 
     render() {
         if (!this.props.config.data || !this.props.config.data.availableLanguages) return null;
-        const languages = this.props.config.data.availableLanguages;
+        const data = this.props.config.data;
+        const languages = data.availableLanguages;
         return (
             <div className="m-select">
                 <div className="m-input">
                     <div className="m-input-elementWrapper">
                         <select name="language"
-                                value={this.props.config.data.currentLocale}
+                                value={data.currentLocale || ''}
                                 onChange={this.props.languageChange}
                                 className="m-input-element m-select-input">
                             {languages.map(locale =>
-                                LanguageSelectLayout.createOption(locale, locale === this.props.config.data.currentLocale))}
+                                LanguageSelectLayout.createOption(locale, locale === data.currentLocale))}
                         </select>
 
                     </div>
