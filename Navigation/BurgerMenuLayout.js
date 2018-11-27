@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import "./burgermenu.scss";
-import BurgerMenuNavigation from "./BurgerMenuNavigation";
-import PropTypes from "prop-types";
+import React, {Component} from 'react';
+import './burgermenu.scss';
+import BurgerMenuNavigation from './BurgerMenuNavigation';
+import PropTypes from 'prop-types';
 
 export default class BurgerMenuLayout extends Component {
 

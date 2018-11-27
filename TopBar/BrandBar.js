@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import "./brandbar.scss";
-import LogoutIcon from "../icons/logout.svg";
-import CloseIcon from "../icons/close.svg";
-import { Link } from "react-router-dom";
+import React, {Component} from 'react';
+import './brandbar.scss';
+import LogoutIcon from '../icons/logout.svg';
+import CloseIcon from '../icons/close.svg';
+import {Link} from 'react-router-dom';
 
 export default class BrandBar extends Component {
 

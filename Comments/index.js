@@ -12,7 +12,7 @@ export default class Comments extends Component {
     render() {
         const readyToSend = this.state.newComment.trim().length > 0;
         const comments = this.props.data || [];
-        const addCommentTitle = this.props.addCommentTitle || "Add Comment";
+        const addCommentTitle = this.props.addCommentTitle || 'Add Comment';
         return (
             <div className='mrc-comments'>
                 {comments.map(comment => {

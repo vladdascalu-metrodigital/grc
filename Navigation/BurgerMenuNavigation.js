@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import "./burgermenu.scss";
-import PropTypes from "prop-types";
-import { createNav, extractNavsFromQuickNav } from "../Util/nav";
-import SelectLanguage from "../i18n";
-import classNames from "classnames";
+import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
+import './burgermenu.scss';
+import PropTypes from 'prop-types';
+import {createNav, extractNavsFromQuickNav} from '../Util/nav';
+import SelectLanguage from '../i18n';
+import classNames from 'classnames';
 
 export default class BurgerMenuNavigation extends Component {
 

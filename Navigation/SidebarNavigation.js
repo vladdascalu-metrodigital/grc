@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import "./sidebar.scss";
-import PropTypes from "prop-types";
-import SelectLanguage from "../i18n";
-import { createNav, extractNavsFromQuickNav } from "../Util/nav";
+import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
+import './sidebar.scss';
+import PropTypes from 'prop-types';
+import SelectLanguage from '../i18n';
+import {createNav, extractNavsFromQuickNav} from '../Util/nav';
 
 export default class SidebarNavigation extends Component {
 

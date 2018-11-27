@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 //import QuickNav from './QuickNav';
-import BrandBar from "./BrandBar";
+import BrandBar from './BrandBar';
 import {lookup} from '../Util/translations';
 
 export const showTopbar = (pathname) => '/' !== pathname;

@@ -1,9 +1,9 @@
-import React from "react";
-import {createUriPath} from "./util";
-import LaunchpadIcon from "../icons/menu.svg";
-import InboxIcon from "../icons/inbox.svg";
-import LimitcheckIcon from "../icons/credit-request.svg";
-import HistoryIcon from "../icons/history.svg";
+import React from 'react';
+import {createUriPath} from './util';
+import LaunchpadIcon from '../icons/menu.svg';
+import InboxIcon from '../icons/inbox.svg';
+import LimitcheckIcon from '../icons/credit-request.svg';
+import HistoryIcon from '../icons/history.svg';
 
 const iconMap = {
     launchpad: LaunchpadIcon, // Will not be part of the config, just for here

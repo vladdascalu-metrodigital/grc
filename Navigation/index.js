@@ -1,5 +1,5 @@
-import { connect } from "react-redux";
-import NavigationLayout from "./NavigationLayout";
+import {connect} from 'react-redux';
+import NavigationLayout from './NavigationLayout';
 
 // FIXME Typo: expended -> expanded
 export const reducer = {burgerMenuExpended: reducerFn};

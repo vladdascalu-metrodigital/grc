@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import ArrowLeft from "../icons/arrow-left.svg";
-import PropTypes from "prop-types";
+import React, {Component} from 'react';
+import ArrowLeft from '../icons/arrow-left.svg';
+import PropTypes from 'prop-types';
 
 export default class BackBtn extends Component {
 
