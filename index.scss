@@ -56,9 +56,10 @@ a.active { pointer-events: auto; }
 
   grid-template-areas: "metro-logo   topbar" "content      content";
 
-  @include respond-to('phone') {
+  // Phone is not supported
+  /*@include respond-to('phone') {
       height: 85vh;
-  }
+  }*/
 
   @include respond-to('tablet') {
     height: 100vh;
