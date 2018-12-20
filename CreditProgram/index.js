@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import './index.scss';
 import PropTypes from 'prop-types';
 import {lookup} from '../../global/Util/translations';
 
@@ -68,7 +69,7 @@ export default class CreditProgram extends Component {
             <div className="mrc-credit-programs">
                 <label
                     hidden={this.state.availableCreditPrograms.length > 1 ? false : true}>{lookup('creditlimit.choose')}</label>
-                <select className='mrc-credit-programs-select' name='creditPrograms'
+                <select name='creditPrograms'
                         value={(this.state.selectedCreditProgram == null || this.state.selectedCreditProgram == '') ? '' : this.state.selectedCreditProgram}
                         onChange={this.handleCreditProgramChange}
                         required={this.state.availableCreditPrograms.length > 1 ? true : false}
