@@ -18,39 +18,44 @@ export default class CreditProgram extends Component {
     }
 
     handleCreditProgramChange = (event) => {
-        const selectedCreditPrograms =  event.target.value;
-        const creditProgram = this.createCreditProgram(selectedCreditPrograms);
-        this.setState({...this.state, selectedCreditProgram: selectedCreditPrograms});
-        this.props.setValidity(this.setValidCreditProgram(selectedCreditPrograms));
+        const selectedCreditProgram = event.target.value;
+        const creditProgram = this.createCreditProgram(selectedCreditProgram);
+        this.setState({...this.state, selectedCreditProgram: selectedCreditProgram});
+        this.props.setValidity(this.setValidCreditProgram(selectedCreditProgram));
         return this.props.setCreditPrograms(this.props.limitRequestId, creditProgram);
     };
 
-
     createCreditProgram(selectedCreditProgram) {
         return {
-            creditProgram: selectedCreditProgram,
+            selectedCreditProgram: selectedCreditProgram,
             availableCreditPrograms: this.state.availableCreditPrograms
         };
     }
 
     setAvailableCreditProgramsToState(requestId) {
         this.props.getCreditPrograms(requestId).then(data => {
-            for (let i in data) {
-                const receivedSelectedCreditProgram = (i !== '' ? i : null);
-                this.setState({...this.state, selectedCreditProgram: receivedSelectedCreditProgram});
-                for (let j in data[i]) {
-                    this.setState({...this.state, availableCreditPrograms: data[i][j]});
-                }
+            let selectedCreditProgram = data['selectedCreditProgram'];
+            let availableCreditPrograms = data['availableCreditPrograms'];
+
+            this.setState({...this.state, availableCreditPrograms: availableCreditPrograms});
+            if (availableCreditPrograms.length === 1) {
+                selectedCreditProgram = availableCreditPrograms[0];
+                const creditProgram = this.createCreditProgram(selectedCreditProgram);
+                this.props.setCreditPrograms(this.props.limitRequestId, creditProgram);
             }
+
+            this.setState({...this.state, selectedCreditProgram: selectedCreditProgram});
             this.props.setValidity(this.setValidCreditProgram(this.state.selectedCreditProgram));
         });
     }
 
     setValidCreditProgram(selectedCreditPrograms) {
-       return ((this.state.availableCreditPrograms.length > 0 && (selectedCreditPrograms === null || selectedCreditPrograms ==='')) ? false : true);
+        return ((this.state.availableCreditPrograms.length > 0 && (selectedCreditPrograms === null || selectedCreditPrograms === '')) ? false : true);
     }
 
-    toOptionProgram(t) {return <option key={t} value={t}>{lookup(t)}</option>;}
+    toOptionProgram(t) {
+        return <option key={t} value={t}>{lookup(t)}</option>;
+    }
 
     createCreditProgramOptions() {
         if (this.state.availableCreditPrograms.length > 0) {
