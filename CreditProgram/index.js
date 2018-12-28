@@ -14,7 +14,12 @@ export default class CreditProgram extends Component {
     }
 
     componentDidMount() {
+        this._isMount = true;
         this.setAvailableCreditProgramsToState(this.props.limitRequestId);
+    }
+
+    componentWillUnmount() {
+        this._isMount = false;
     }
 
     handleCreditProgramChange = (event) => {
@@ -36,21 +41,22 @@ export default class CreditProgram extends Component {
         this.props.getCreditPrograms(requestId).then(data => {
             let selectedCreditProgram = data['selectedCreditProgram'];
             let availableCreditPrograms = data['availableCreditPrograms'];
-
+            if (!this._isMount) {
+                return;
+            }
             this.setState({...this.state, availableCreditPrograms: availableCreditPrograms});
-            if (availableCreditPrograms.length === 1) {
+            if (availableCreditPrograms && availableCreditPrograms.length === 1) {
                 selectedCreditProgram = availableCreditPrograms[0];
                 const creditProgram = this.createCreditProgram(selectedCreditProgram);
                 this.props.setCreditPrograms(this.props.limitRequestId, creditProgram);
             }
-
             this.setState({...this.state, selectedCreditProgram: selectedCreditProgram});
             this.props.setValidity(this.setValidCreditProgram(this.state.selectedCreditProgram));
         });
     }
 
     setValidCreditProgram(selectedCreditPrograms) {
-        return ((this.state.availableCreditPrograms.length > 0 && (selectedCreditPrograms === null || selectedCreditPrograms === '')) ? false : true);
+        return ((this.state.availableCreditPrograms && this.state.availableCreditPrograms.length > 0 && (selectedCreditPrograms === null || selectedCreditPrograms === '')) ? false : true);
     }
 
     toOptionProgram(t) {
@@ -58,8 +64,8 @@ export default class CreditProgram extends Component {
     }
 
     createCreditProgramOptions() {
-        if (this.state.availableCreditPrograms.length > 0) {
-            if (this.state.availableCreditPrograms.length === 1) {
+        if (this.state.availableCreditPrograms && this.state.availableCreditPrograms.length > 0) {
+            if (this.state.availableCreditPrograms && this.state.availableCreditPrograms.length === 1) {
                 return this.state.availableCreditPrograms.map(this.toOptionProgram);
             } else {
                 return [<option key='null'/>].concat(this.state.availableCreditPrograms.map(this.toOptionProgram));
@@ -68,18 +74,18 @@ export default class CreditProgram extends Component {
             return null;
         }
     }
-
+    
     render() {
         return (
             <div className="mrc-credit-programs">
                 <label
-                    hidden={this.state.availableCreditPrograms.length > 1 ? false : true}>{lookup('creditlimit.choose')}</label>
+                    hidden={this.state.availableCreditPrograms && this.state.availableCreditPrograms.length > 1 ? false : true}>{lookup('creditlimit.choose')}</label>
                 <select name='creditPrograms'
                         value={(this.state.selectedCreditProgram == null || this.state.selectedCreditProgram == '') ? '' : this.state.selectedCreditProgram}
                         onChange={this.handleCreditProgramChange}
-                        required={this.state.availableCreditPrograms.length > 1 ? true : false}
-                        disabled={this.state.availableCreditPrograms.length === 1 ? true : false}
-                        hidden={this.state.availableCreditPrograms.length === 0 ? true : false}>
+                        required={this.state.availableCreditPrograms && this.state.availableCreditPrograms.length > 1 ? true : false}
+                        disabled={this.state.availableCreditPrograms && this.state.availableCreditPrograms.length === 1 ? true : false}
+                        hidden={!this.state.availableCreditPrograms || (this.state.availableCreditPrograms && this.state.availableCreditPrograms.length === 0) ? true : false}>
                     {this.createCreditProgramOptions()}
                 </select>
             </div>);
