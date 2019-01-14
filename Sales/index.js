@@ -85,7 +85,7 @@ export default class Sales extends Component {
     }
 
     render() {
-    	if(this.props.createdFrom == 'creditlimit') { return null; }
+        if(this.props.createdFrom == 'creditlimit') { return null; }
         if (this.state.mdwData == null || this.state.mdwData.length == 0) {
             return <h4 className='not-found'>{lookup('mrc.mdw.nodataavailable')}</h4>;
         }
