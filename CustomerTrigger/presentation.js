@@ -1,8 +1,8 @@
 import './index.scss';
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {displayName} from '../../global/Util';
-import {lookup} from '../../global/Util/translations';
+import {displayName} from '../Util';
+import {lookup} from '../Util/translations';
 
 
 export default class CustomerTrigger extends Component {

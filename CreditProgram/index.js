@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './index.scss';
 import PropTypes from 'prop-types';
-import {lookup} from '../../global/Util/translations';
+import {lookup} from '../Util/translations';
 
 export default class CreditProgram extends Component {
 
