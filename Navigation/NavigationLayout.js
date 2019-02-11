@@ -4,6 +4,7 @@ import BurgerMenuLayout from './BurgerMenuLayout';
 import PropTypes from 'prop-types';
 import BurgerMenu from '../icons/burger-menu.svg';
 import BackBtn from './BackBtn';
+import SelectLanguage from '../i18n';
 import './bottommenu.scss';
 import classNames from 'classnames';
 
@@ -20,9 +21,14 @@ export default class NavigationLayout extends Component {
 
     renderSidebarNavigation = () => {
         if (this.props.config.loading) return null;
-        return <div className='mrc-sidebar'>
-            <SidebarNavigation config={this.props.config}/>
-            {this.createBackBtn()}
+        return <div className='mrc-sidebar-wrapper'>
+            <div className='mrc-sidebar'>
+                <SidebarNavigation config={this.props.config}/>
+                <ul>
+                    <li className='lang-setting'><SelectLanguage/></li>
+                    {this.createBackBtn()}
+                </ul>
+            </div>
         </div>;
     };
 
@@ -30,9 +36,9 @@ export default class NavigationLayout extends Component {
         // BackBtn not removed from dom but only set to 'invisible' to make sure that the onMouseEnter event is not
         // triggered on the <ul> when the back button is clicked
         return (
-            <div className={classNames('back-action', {hidden: !this.props.displayBackButton})}>
+            <li className={classNames('back-action', {hidden: !this.props.displayBackButton})}>
                 <BackBtn/>
-            </div>
+            </li>
         );
     }
 

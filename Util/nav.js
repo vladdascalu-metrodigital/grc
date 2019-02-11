@@ -39,8 +39,9 @@ export function extractNavsFromQuickNav(navConfigs) {
 }
 
 export function createNav(btnConf, translations) {
-    const title = translations[`mrc.apps.${btnConf.roleKey.toLowerCase()}`];
-    const icon = iconMap[btnConf.roleKey.toLowerCase()];
+    const service = btnConf.roleKey.toLowerCase();
+    const title = translations[`mrc.apps.${service}`];
+    const icon = iconMap[service];
     const href = createHref(btnConf.template, btnConf.roleKey);
     if (!icon || !title) {
         console.warn('Missing icon or title translation to render sidebar nav. Data:', btnConf);
@@ -51,6 +52,6 @@ export function createNav(btnConf, translations) {
         icon: icon,
         href: href,
         isAbsolute: href.startsWith('http'),
-        imgEl: <img className='m-icon-medium' src={icon} alt={title}/>
+        imgEl: <img className={'mrc-icon m-icon-medium ' + service} src={icon} alt={title}/>
     };
 }
