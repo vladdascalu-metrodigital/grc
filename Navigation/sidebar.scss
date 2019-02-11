@@ -2,9 +2,6 @@
 @import '../helpers';
 
 .mrc-sidebar {
-
-  position: fixed;
-  top: 80px;
   height: calc(100vh - 80px);
 
   -ms-grid-row: 2;
