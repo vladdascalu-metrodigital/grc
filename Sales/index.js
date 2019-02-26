@@ -7,6 +7,7 @@ import {lookup} from '../Util/translations.js';
 import {Accordion, Collapsible} from '../Accordion';
 import CustomerTrigger from '../CustomerTrigger/presentation';
 
+//comment just to test
 export default class Sales extends Component {
 
     constructor(props) {
