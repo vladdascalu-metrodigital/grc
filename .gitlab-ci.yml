@@ -1,0 +1,4 @@
+publish:
+  script:
+    - npm version patch
+    - npm publish
