@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './index.scss';
+import {lookup} from '../Util/translations';
 import PropTypes from 'prop-types';
 
 export default class Comments extends Component {
@@ -18,7 +19,7 @@ export default class Comments extends Component {
                 {comments.map(comment => {
                     return (<div key={comment.id} className='mrc-comment'>
                         <mrc-datetime class='datetime'>{comment.uploadTimestamp}</mrc-datetime> <span className='author'>{comment.uploaderPrincipalName} ({comment.uploaderPosition})</span>
-                        <div className='content'>{comment.comment}</div>
+                        <div className='content'>{lookup(comment.comment)}</div>
                     </div>);
                 })}
                 <div className='m-input m-input-name'>

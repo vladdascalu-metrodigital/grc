@@ -6,8 +6,8 @@ import Panel from '../Panel';
 import {lookup} from '../Util/translations.js';
 import {Accordion, Collapsible} from '../Accordion';
 import CustomerTrigger from '../CustomerTrigger/presentation';
+import {sumTemp} from './helper.js'; 
 
-//comment just to test
 export default class Sales extends Component {
 
     constructor(props) {
@@ -20,6 +20,60 @@ export default class Sales extends Component {
             this.setState({mdwData: result});
         });
     }
+
+ 
+    createConsolidatedSalesView(mdwData) {
+    let sum=sumTemp(mdwData);
+       return (<Panel title='Sales'>
+               <div className="mrc-scoring-data">
+                   <div className="mrc-data-table">
+                       <div className="table-header">
+                           <p className="metro-blue">{lookup('mrc.mdw.salesoverview')}</p>
+                       </div>
+                       <div className="data-table-wrapper">
+                           <div className="col-scroll">
+                               <table className='mdw-data-table'>
+                                   <tbody>
+                                   <tr className="emphazised">
+                                       <th className="row-title"></th>
+                                       <td className="col-1">L1M</td>
+                                       <td className="col-2">L3M</td>
+                                       <td className="col-3">L6M</td>
+                                       <td className="col-4">L12M</td>
+                                   </tr>
+                                   <tr>
+                                       <th className="row-title">{lookup('mrc.mdw.numberofpurchase')}</th>
+                                        <td className="col-1">{sum.l1.purchases}</td>
+                                        <td className="col-1">{sum.l3.purchases}</td>
+                                        <td className="col-1">{sum.l6.purchases}</td>
+                                        <td className="col-1">{sum.l12.purchases}</td>
+                                   </tr>
+                                   <tr>
+                                       <th className="row-title">{lookup('mrc.mdw.numberofinvoices')}</th>
+                                        <td className="col-1">{sum.l1.invoice}</td>
+                                        <td className="col-1">{sum.l3.invoice}</td>
+                                        <td className="col-1">{sum.l6.invoice}</td>
+                                        <td className="col-1">{sum.l12.invoice}</td>
+                                   </tr>
+                                   <tr className="emphazised break">
+                                       <th className="row-title">{lookup('mrc.mdw.totalturnover')}</th>
+                                        <td className="col-1">{sum.l1.turnover}</td>
+                                        <td className="col-1">{sum.l3.turnover}</td>
+                                        <td className="col-1">{sum.l6.turnover}</td>
+                                        <td className="col-1">{sum.l12.turnover}</td>
+                                   </tr>
+
+                                   </tbody>
+                               </table>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <div className="edge-line"></div>
+           </Panel>
+
+       );
+   }
 
     createOneSalesView(mdwCustomer) {
         return (<Panel title='Sales'>
@@ -90,6 +144,7 @@ export default class Sales extends Component {
         if (this.state.mdwData == null || this.state.mdwData.length == 0) {
             return <h4 className='not-found'>{lookup('mrc.mdw.nodataavailable')}</h4>;
         }
+
         //For group 
         const collapsibles = this.state.mdwData.map(mdwCustomer => {
             const key = mdwCustomer.customerCreditData.storeNumber + '/' + mdwCustomer.customerCreditData.customerNumber;
@@ -105,12 +160,23 @@ export default class Sales extends Component {
             </Collapsible>;
         });
 
-
-        //End for group
-
-        return <Accordion className='mrc-sales-accordion'>
-            {collapsibles}
-        </Accordion>;
+        let accordion;
+        if(this.state.mdwData.length > 1){
+            accordion = <Accordion className='mrc-sales-accordion'> 
+                            <Collapsible open={true} trigger={lookup('mrc.mdw.consolidatedturnover')}> 
+                                                    {this.createConsolidatedSalesView(this.state.mdwData)} 
+                            </Collapsible>           
+                            {collapsibles} 
+                        </Accordion>;
+        }
+        else{                        
+            accordion = <Accordion className='mrc-sales-accordion'> {collapsibles} </Accordion>;
+        }
+        return (
+            <div>
+                {accordion};
+            </div>
+            );
     }
 
     createRow = (item) => {
@@ -127,10 +193,8 @@ export default class Sales extends Component {
 
 }
 
-
 Sales.propTypes = {
     limitRequestId: PropTypes.string,
     getMdwData: PropTypes.func,
     createdFrom: PropTypes.string
 };
-
