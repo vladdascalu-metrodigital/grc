@@ -1,1 +1,5 @@
 .idea
+.npmrc
+global-react-components.iml
+node_modules
+
