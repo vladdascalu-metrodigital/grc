@@ -66,6 +66,7 @@ a.active { pointer-events: auto; }
 
   @include respond-to('tablet') {
     height: auto;
+    padding-bottom: 0; // on tablet we do not have the bottom navigation bar
     overflow: visible;
     -ms-grid-columns: $topbar-height-tablet 1fr;
     grid-template-columns: $topbar-height-tablet auto;
