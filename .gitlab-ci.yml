@@ -1,6 +1,0 @@
-publish:
-  stage: test
-  when: manual
-  script:
-    - npm version patch
-    - npm publish
