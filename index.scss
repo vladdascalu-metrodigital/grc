@@ -33,7 +33,7 @@ main, section, article {
 
 // Override of ux-hub style
 main {
-  height: 100%;
+  height: auto;
 }
 
 main.mrc-main {
@@ -61,11 +61,11 @@ a.active { pointer-events: auto; }
 
   // Phone is not supported
   /*@include respond-to('phone') {
-      height: 85vh;
+      height: auto;
   }*/
 
   @include respond-to('tablet') {
-    height: 100vh;
+    height: auto;
     overflow: visible;
     -ms-grid-columns: $topbar-height-tablet 1fr;
     grid-template-columns: $topbar-height-tablet auto;
