@@ -31,15 +31,6 @@ main, section, article {
   display: block;
 }
 
-// Override of ux-hub style
-main.mrc-main {
-  height: auto;
-}
-
-main.mrc-main {
-  margin-bottom: unset;
-}
-
 // UX Hub sets this to none, which is really bad for click handlers. See toggleBurgerMenu.
 a.active { pointer-events: auto; }
 
@@ -92,6 +83,8 @@ a.active { pointer-events: auto; }
   -ms-grid-column: 2;
   grid-area: content;
   width:100%;
+  height: auto; // Override of ux-hub style
+  margin-bottom: unset; // Override of ux-hub style
 
   @include respond-to('tablet') {
     overflow: auto;
