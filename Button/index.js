@@ -8,7 +8,7 @@ export default class Button extends Component {
     }
 
     render() {
-        const species = this.props.species;
+        const { species, icon, text, type, disabled, onclick } = this.props;
         const buttonClasses = classNames(
             'mrc-btn',
             {'mrc-primary-button': species === 'primary'},
@@ -17,9 +17,9 @@ export default class Button extends Component {
             {'mrc-success-button': species === 'success'},
         );
         return (
-            <button className={buttonClasses} type={props.type || 'button'} onClick={props.onClick} disabled={props.disabled}>
-                {props.icon ? <img className='icon' src={props.icon}/> : null}
-                {props.text}
+            <button className={buttonClasses} type={type || 'button'} onClick={onClick} disabled={disabled}>
+                {icon ? <img className='icon' src={icon}/> : null}
+                {text}
             </button>
         );
     }
