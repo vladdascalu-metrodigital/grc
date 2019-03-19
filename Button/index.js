@@ -8,13 +8,13 @@ export default class Button extends Component {
     }
 
     render() {
-        const { species, icon, text, type, disabled, onClick } = this.props;
+        const { status, icon, text, type, disabled, onClick } = this.props;
         const buttonClasses = classNames(
             'mrc-btn',
-            {'mrc-primary-button': species === 'primary'},
-            {'mrc-secondary-button': species === 'secondary'},
-            {'mrc-error-button': species === 'error'},
-            {'mrc-success-button': species === 'success'},
+            {'mrc-primary-button': status === 'primary'},
+            {'mrc-secondary-button': status === 'secondary'},
+            {'mrc-error-button': status === 'error'},
+            {'mrc-success-button': status === 'success'},
         );
         return (
             <button className={buttonClasses} type={type || 'button'} onClick={onClick} disabled={disabled}>
