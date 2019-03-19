@@ -82,13 +82,13 @@ a.active { pointer-events: auto; }
   -ms-grid-row: 2;
   -ms-grid-column: 2;
   grid-area: content;
-  width:100%;
+  width:100vw;
   height: auto; // Override of ux-hub style
   margin-bottom: unset; // Override of ux-hub style
 
   @include respond-to('tablet') {
     overflow: auto;
-    width: unset;
+    width: 100%;
   }
 
 
