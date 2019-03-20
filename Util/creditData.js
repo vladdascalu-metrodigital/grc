@@ -9,7 +9,9 @@ function extractCreditPeriods(availablePayments, creditProduct) {
         .filter(p => p.creditProduct === creditProduct
             || 'mrc.payment.' + p.creditProduct.split(' ').join('_').toLowerCase() === creditProduct.toLowerCase())
         .map(p => p.creditPeriod);
-    return Array.from(new Set(creditPeriods));
+    return Array.from(new Set(creditPeriods)).sort(function (a, b) {
+        return a.localeCompare(b, undefined, {numeric: true, sensitivity: 'base'});
+    });
 }
 
 function extractDebitTypes(availablePayments, creditProduct, creditPeriod) {
