@@ -59,6 +59,11 @@ export default class CustomerDetails extends Component {
                     <div>
                         {lookup('mrc.customerdetails.fields.registration')+':'} {this.printDate(c.registrationDate)}
                     </div>
+                    <br key='br'/>
+                    <dl>
+                        {c.blockingReason && this.describeTerm('mrc.blockingReason', lookup('mrc.blockingReason.message.'+c.blockingReason))}
+                        {c.checkoutCheckCode && this.describeTerm('mrc.checkoutCheckCode', lookup('mrc.checkoutCheckCode.message.'+c.checkoutCheckCode))}
+                    </dl>
                 </section>
         </div>);
     }
