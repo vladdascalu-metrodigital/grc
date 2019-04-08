@@ -64,6 +64,11 @@ export default class CustomerDetails extends Component {
                         {c.blockingReason && this.describeTerm('mrc.blockingReason', lookup('mrc.blockingReason.message.'+c.blockingReason))}
                         {c.checkoutCheckCode && this.describeTerm('mrc.checkoutCheckCode', lookup('mrc.checkoutCheckCode.message.'+c.checkoutCheckCode))}
                     </dl>*/}
+					<dl>
+						 {c.branchId && ([<dt key='dt'>BranchId</dt>,<dd key='dd'>{c.branchId}</dd>])}
+						 {c.branchDescription && ([<dt key='dt'>Branch description</dt>,<dd key='dd'>{c.branchDescription}</dd>])}
+						 {c.segment && ([<dt key='dt'>Segment</dt>,<dd key='dd'>{c.segment}</dd>])}
+					</dl>
                 </section>
         </div>);
     }
