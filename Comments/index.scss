@@ -1,8 +1,13 @@
 @import "../settings";
 
 .mrc-comments {
-  @include respond-to('tablet') {
-    width: 90%;
-    margin: 10px auto auto;
-  }
+	background-color: none;
+	padding: 1rem;
+	button {
+		margin: 1rem auto;
+	}
+}
+
+.mrc-comment {
+	margin-top: 0;
 }

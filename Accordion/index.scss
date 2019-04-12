@@ -28,10 +28,10 @@
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
-      padding: 18px $content-padding-horizontal-mobile;
+      padding: 0 1rem;
 
       @include respond-to('tablet') {
-        padding: 0 $content-padding-horizontal-tablet;
+        padding: 0 1rem;
       }
 
       h1 {
@@ -44,8 +44,8 @@
       img {
         transition: transform 200ms;
         transform: rotateZ(90deg);
-        width: 30px;
-        height: 30px;
+        width: 18px;
+        height: 18px;
 
         @include respond-to('tablet') {
           width: 24px;

@@ -52,6 +52,6 @@ export function createNav(btnConf, translations) {
         icon: icon,
         href: href,
         isAbsolute: href.startsWith('http'),
-        imgEl: <img className={'mrc-icon m-icon-medium ' + service} src={icon} alt={title}/>
+        imgEl: <img className={'mrc-icon-base ' + service} src={icon} alt={title}/>
     };
 }

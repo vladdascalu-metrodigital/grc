@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import './sales.scss';
 import './data-table.scss';
-import Panel from '../Panel';
 import {lookup} from '../Util/translations.js';
 import {Accordion, Collapsible} from '../Accordion';
 import CustomerTrigger from '../CustomerTrigger/presentation';
@@ -24,8 +23,7 @@ export default class Sales extends Component {
  
     createConsolidatedSalesView(mdwData) {
     let sum=sumTemp(mdwData);
-       return (<Panel title='Sales'>
-               <div className="mrc-scoring-data">
+       return (<div className="mrc-scoring-data">
                    <div className="mrc-data-table">
                        <div className="table-header">
                            <p className="metro-blue">{lookup('mrc.mdw.salesoverview')}</p>
@@ -69,15 +67,11 @@ export default class Sales extends Component {
                        </div>
                    </div>
                </div>
-               <div className="edge-line"></div>
-           </Panel>
-
        );
    }
 
     createOneSalesView(mdwCustomer) {
-        return (<Panel title='Sales'>
-                <div className="mrc-scoring-data">
+        return (<div className="mrc-scoring-data">
                     <div className="mrc-data-table">
                         <div className="table-header">
                             <p className="metro-blue">{lookup('mrc.mdw.salesoverview')}</p>
@@ -133,9 +127,6 @@ export default class Sales extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="edge-line"></div>
-            </Panel>
-
         );
     }
 

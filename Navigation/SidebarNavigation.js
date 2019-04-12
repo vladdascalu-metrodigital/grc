@@ -21,9 +21,11 @@ export default class SidebarNavigation extends Component {
 
     render() {
         return (
-            <ul>
-                {extractNavsFromQuickNav(this.props.config.data.quickNav).map(this.createNavWithWrapper, this)}
-            </ul>
+            <div className='primary-actions'>
+                <ul>
+                    {extractNavsFromQuickNav(this.props.config.data.quickNav).map(this.createNavWithWrapper, this)}
+                </ul>
+            </div>
         );
     }
 

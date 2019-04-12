@@ -22,7 +22,7 @@ export default class BackBtn extends Component {
         if (this.props.disabled) return null;
         return (
             <a className='btn' onClick={this.navBack}>
-                <img className='m-icon-medium mrc-icon back' src={ArrowLeft} alt='Back' />
+                <img className='mrc-icon-base mrc-icon back' src={ArrowLeft} alt='Back' />
             </a>
         );
     }
