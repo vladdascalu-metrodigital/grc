@@ -3,6 +3,8 @@ import './index.scss';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import FileUploadIcon from '../icons/file-upload.svg';
+
 export default class FileUpload extends Component {
 
     constructor(props) {
@@ -17,10 +19,7 @@ export default class FileUpload extends Component {
     sendFile = () => {
         this.props.sendFile();
     }
-
-    render() {
-        return (
-            <div className='button-wrapper'>
+ /*           <div className='button-wrapper'>
                 <label className={classNames('mrc-file-upload', {'disabled': this.props.selectDisabled})}>
                     {this.props.labelSelect}
                     <input type='file' name='file' onChange={this.updateFile} disabled={this.props.selectDisabled}/>
@@ -30,6 +29,17 @@ export default class FileUpload extends Component {
                     <input type='button' name='upload-button' onClick={this.sendFile}
                            disabled={this.props.uploadDisabled}/>
                 </label>
+            </div> */
+    render() {
+        return (
+            <div className="mrc-file-upload">
+                <div className="m-fileDropzone">
+                    <img src={FileUploadIcon} alt="File Upload" />
+                    <br />
+                      <span>
+                        <button className="m-fileDropzone-button">Choose files<input type="file" name='file' onChange={this.updateFile} disabled={this.props.selectDisabled}/></button> to upload or drop them here.
+                      </span>
+                </div>
             </div>
         );
     }
@@ -37,9 +47,6 @@ export default class FileUpload extends Component {
 
 FileUpload.propTypes = {
     updateFile: PropTypes.func.isRequired,
-    sendFile: PropTypes.func.isRequired,
-    labelSelect: PropTypes.string.isRequired,
     labelUpload: PropTypes.string.isRequired,
     selectDisabled: PropTypes.bool,
-    uploadDisabled: PropTypes.bool
 };
