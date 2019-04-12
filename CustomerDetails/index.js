@@ -40,8 +40,7 @@ export default class CustomerDetails extends Component {
         const c = this.props.customer;
         if (!c) return null;
         return (<div className='mrc-customer-details' id={c.storeNumber+'/'+c.customerNumber}>
-                <section className='details'>
-                    <h3>{this.displayName()}</h3>
+                <section className='mrc-detail'>
                     <dl>
                         {this.describeTerm('mrc.customerdetails.fields.customernumber', `${c.storeNumber}/${c.customerNumber}`)}
                         {this.describeTerm('mrc.customerdetails.fields.taxnumber', c.vatSpecNumber)}
