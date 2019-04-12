@@ -9,7 +9,7 @@ export default class PrimaryButton extends Component {
             return <MrcSpinner/>;
         }
         return (
-            <button className={props.buttonClass} type={props.type || 'button'} onClick={props.onClick} disabled={props.disabled}>
+            <button className={'mrc-primary-button ' + props.buttonClass} type={props.type || 'button'} onClick={props.onClick} disabled={props.disabled}>
                 {props.icon ? <img className='icon' src={props.icon}/> : null}
                 {props.text}
             </button>
@@ -18,7 +18,7 @@ export default class PrimaryButton extends Component {
 
     render() {
         return (
-            <div className='mrc-primary-button'>
+            <div className='mrc-btn'>
                 {this.createContent(this.props)}
             </div>
         );
