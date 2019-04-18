@@ -57,9 +57,9 @@ export default class AttachmentsRows extends Component {
         return <div className="mrc-attachment" key={item.id}>
             {this.displayIcon(item)}
             <span onClick={this.downloadFile.bind(this,item)}>
-                <h4>{item.title}</h4>
+                <h4 className='attachment-title'>{item.title}</h4>
                 <h4>
-                    <mrc-datetime className="datetime">{item.uploadTimestamp}</mrc-datetime>
+                    <mrc-datetime class="datetime">{item.uploadTimestamp}</mrc-datetime>
                     <span className="author">{item.uploaderPrincipalName} ({item.uploaderPosition})</span>
                 </h4>
             </span>
