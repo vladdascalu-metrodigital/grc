@@ -1,12 +1,9 @@
 {
   "name": "global-react-components",
-  "version": "1.0.26",
+  "version": "1.0.25",
   "description": "MRC collection of reusable frontend react components",
   "publishConfig": {
     "registry": "https://nexus-dst.metrosystems.net/repository/npm-mrc-component-libraries/"
   },
-  "author": "MRC4-Team",
-  "devDependencies": {
-    "npm-version": "^1.1.0"
-  }
+  "author": "MRC4-Team"
 }

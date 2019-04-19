@@ -9,7 +9,7 @@ export default class LanguageSelectLayout extends Component {
 
     static createOption(country, selected) {
         return (
-            <option key={country} value={country+''} defaultValue={selected}>
+            <option key={country} label={country} value={country+''} defaultValue={selected}>
                 {country}
             </option>
         );
@@ -36,6 +36,7 @@ export default class LanguageSelectLayout extends Component {
                 <div className="m-input">
                     <div className="m-input-elementWrapper">
                         <select name="language"
+                                id="language-select"
                                 value={data.currentLocale || ''}
                                 onChange={this.props.languageChange}
                                 className="m-input-element m-select-input">

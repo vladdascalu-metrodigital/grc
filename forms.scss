@@ -8,13 +8,6 @@ fieldset {
   width: 100%;
 }
 
-input, select {
-  background-color: $form-bg;
-  border: $form-border;
-  padding-left: 16px;
-  color: $form-label-color;
-}
-
 input[disabled] {
   background-color: $form-bg-disabled;
 }
@@ -38,30 +31,7 @@ select {
 }
 
 .mrc-input {
-  display: flex;
-  flex-direction: row;
-
-  height: $form-height;
-  background-color: $form-bg;
-  border: $form-border;
-
-  input {
-    font-size: $form-font-size;
-    flex: 1;
-    border: none;
-    background-color: transparent;
-    padding: 5px 15px;
-  }
-
-  input::placeholder {
-    color: $form-placeholder-color;
-  }
-
-
   .mrc-icon {
-    padding: 5px;
-    margin: 2px;
-
     > * {
       // form-height - (2*parent-padding) - (2*parent-margin)
       $icon-size: $form-height - (2*5)- (2*2) - 2;

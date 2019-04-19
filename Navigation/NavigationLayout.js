@@ -24,10 +24,13 @@ export default class NavigationLayout extends Component {
         return <div className='mrc-sidebar-wrapper'>
             <div className='mrc-sidebar'>
                 <SidebarNavigation config={this.props.config}/>
-                <ul>
-                    <li className='lang-setting'><SelectLanguage/></li>
-                    {this.createBackBtn()}
-                </ul>
+                <div className='secondary-actions'>
+                    <ul>
+                        <li className='lang-setting'>
+                            <SelectLanguage />
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>;
     };

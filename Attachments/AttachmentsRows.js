@@ -19,69 +19,55 @@ export default class AttachmentsRows extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {title: '', file: null};
-        
+        this.state = {title: '', file: null}
     }
 
     render() {
-        if (!(this.props.data && this.props.data.length > 0)) {
-            {return this.createNoAttachmentsView();}
+        const noAttachmentsGiven = !(this.props.data && this.props.data.length > 0);
+        if (noAttachmentsGiven) {
+            return <div className="mrc-attachments">
+                    <div className="mrc-detail">{lookup('mrc.attachments.noattachments')}</div>
+                    {this.createUploader()}
+                </div>;
+        } else {
+        return <div className="mrc-attachments">
+                    <div className="mrc-attachment-group col-2">{this.props.data.map(this.createRow)}</div>
+                    {this.createUploader()}
+                </div>;
         }
-        return <div className="mrc-attachments">
-                <div className="tiles-mobile">{this.props.data.map(this.createRow)}
-                 {this.createUploader()}
-                 </div>
-                </div>;
-    }
-
-
-    createNoAttachmentsView(){
-        return <div className="mrc-attachments">
-                <div className="tiles-mobile"><li><span>{lookup('mrc.attachments.noattachments')}</span></li>
-                 {this.createUploader()}
-                 </div>
-                </div>;
     }
 
     createUploader() {
         const readyToSend = this.state.title.trim().length > 0 && this.state.file !== null;
-        return <li>
-                        <label>{lookup('mrc.attachments.fields.title')}</label>
-                        <div className='mrc-input'>
-                            <input name='title' type='text' value={this.state.title} onChange={this.updateTitle}
-                            disabled={this.props.readonly} maxLength={255}/>
-                        </div>
-                        <label name='selected-file' className='selected-file'>{lookup('mrc.attachments.fields.file')}: {this.state.file && this.state.file.name}</label>
-                        <FileUpload labelSelect={lookup('mrc.file.select')}
-                                labelUpload={lookup('mrc.file.upload')}
-                                updateFile={this.updateFile}
-                                sendFile={this.sendFile}
-                                selectDisabled={this.props.readonly}
-                                uploadDisabled={!readyToSend}/>
-                    </li>;
+        return <div className="mrc-add-attachment">
+            <FileUpload labelSelect={lookup('mrc.file.select')}
+                updateFile={this.updateFile}
+                selectDisabled={this.props.readonly}
+                uploadDisabled={!readyToSend}/>
+            <label name='selected-file' className='selected-file'>{lookup('mrc.attachments.fields.file')}: {this.state.file && this.state.file.name}</label><br/>
+            <input className='m-input-element' name='title' type='text' value={this.state.title} onChange={this.updateTitle} disabled={this.props.readonly} maxLength={255} placeholder="Title" />
+            <button className="mrc-btn mrc-secondary-button" type='button' name='upload-button' onClick={this.sendFile} disabled={!readyToSend}>{lookup('mrc.file.upload')}</button>
+        </div>;
     }
 
     createRow = (item) => {
         if (!item) {
             return null;
         }
-        return <li key={item.id}>
-            <div className="mrc-square">
-            <div className="square-content" onClick={this.downloadFile.bind(this,item)}>
-                <h3 className="span-metro-blue">{item.title}</h3>
-                <mrc-datetime class="datetime"><b>{item.uploadTimestamp}</b></mrc-datetime>
-                <span className="author"> <b>{item.uploaderPrincipalName} ({item.uploaderPosition})</b></span>
-            </div>
-            <div className="edge-line"></div>
+        return <div className="mrc-attachment" key={item.id}>
             {this.displayIcon(item)}
-        </div>
-        </li>;
+            <span onClick={this.downloadFile.bind(this,item)}>
+                <h4 className='attachment-title'>{item.title}</h4>
+                <h4>
+                    <mrc-datetime class="datetime">{item.uploadTimestamp}</mrc-datetime>
+                    <span className="author">{item.uploaderPrincipalName} ({item.uploaderPosition})</span>
+                </h4>
+            </span>
+        </div>;
     };
 
     displayIcon(item){
-        return <div className="icon-wrapper">
-                    <img className="m-icon-large" src={this.getIcon(item).src} alt={this.getIcon(item).extension + ' File'}></img>
-                </div>;   
+        return <img className="mrc-icon-large" src={this.getIcon(item).src} alt={this.getIcon(item).extension + ' File'} />;
     }
 
     downloadFile(item){
