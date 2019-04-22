@@ -63,18 +63,20 @@ export default class CustomerDetails extends Component {
                         {c.blockingReason && this.describeTerm('mrc.blockingReason', lookup('mrc.blockingReason.message.'+c.blockingReason))}
                         {c.checkoutCheckCode && this.describeTerm('mrc.checkoutCheckCode', lookup('mrc.checkoutCheckCode.message.'+c.checkoutCheckCode))}
                     </dl>*/}
-					{c.country && c.country=='DE' &&
-                    (
-                        <dl>
-                            {c.branchId && ([<dt key='dt'>{lookup('mrc.branchId')+''}</dt>,<dd key='dd'>{c.branchId}</dd>])}
-						    {c.branchDescription && ([<dt key='dt'>{lookup('mrc.branchDescription')+''}</dt>,<dd key='dd'>{c.branchDescription}</dd>])}
-                            {c.segment && ([<dt key='dt'>{lookup('mrc.segment')+''}</dt>,<dd key='dd'>{c.segment}</dd>])}
-                            {c.companyFoundationDate && ([<dt key='dt'>{lookup('mrc.companyFoundationDate')+''}</dt>,<dd key='dd'>
-                            {c.companyFoundationDate}  (
-                            {(moment.duration(moment().diff(c.companyFoundationDate))).years()} years)  </dd>])}
-                         {c.legalFormDescription && ([<dt key='dt'>{lookup('mrc.legalFormsDescription')+''}</dt>,<dd key='dd'>{c.legalFormDescription}</dd>])}
+					 {c.country && c.country=='DE' &&
+                (
+                    <dl>
+                        
+                         {c.branchId && ([<dt key='dt'>{lookup('mrc.customerdetails.fields.branchid')+''}</dt>,<dd key='dd'>{c.branchId}</dd>])}
+						 {c.branchDescription && ([<dt key='dt'>{lookup('mrc.customerdetails.fields.branchdescription')+''}</dt>,<dd key='dd'>{c.branchDescription}</dd>])}
+                         {c.segment && ([<dt key='dt'>{lookup('mrc.customerdetails.fields.segment')+''}</dt>,<dd key='dd'>{c.segment}</dd>])}
+                         {c.companyFoundationDate && ([<dt key='dt'>{lookup('mrc.customerdetails.fields.companyfoundationdate')+''}</dt>,<dd key='dd'>
+                         {c.companyFoundationDate}  (
+                         {(moment.duration(moment().diff(c.companyFoundationDate))).years()} years)  </dd>])}
+
+                         {c.legalFormDescription && ([<dt key='dt'>{lookup('mrc.customerdetails.fields.legalformdescription')+''}</dt>,<dd key='dd'>{c.legalFormDescription}</dd>])}
 					</dl>
-                )}     
+                )}    
                 </section>
         </div>);
     }
