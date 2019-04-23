@@ -68,7 +68,7 @@ export default class CustomerDetails extends Component {
                     (
                     <dl>
                         {c.branchId && lookup('mrc.customerdetails.fields.branchid')+':'} {this.printAndBr(c.branchId)}
-						 {c.branchDescription && lookup('mrc.customerdetails.fields.branchdescription')+':'},{this.printAndBr(c.branchDescription)}
+						 {c.branchDescription && lookup('mrc.customerdetails.fields.branchdescription')+':'} {this.printAndBr(c.branchDescription)}
                          {c.segment && lookup('mrc.customerdetails.fields.segment')+':'}  {this.printAndBr(c.segment)}
                          {c.companyFoundationDate && lookup('mrc.customerdetails.fields.companyfoundationdate')+':'} 
                          {this.printDate(c.companyFoundationDate)}
