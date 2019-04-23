@@ -67,12 +67,11 @@ export default class CustomerDetails extends Component {
                      {c.country && c.country=='DE' &&
                     (
                     <dl>
-                        {c.branchId && lookup('mrc.customerdetails.fields.branchid')+':'},{this.printAndBr(c.branchId)}
+                        {c.branchId && lookup('mrc.customerdetails.fields.branchid')+':'} {this.printAndBr(c.branchId)}
 						 {c.branchDescription && lookup('mrc.customerdetails.fields.branchdescription')+':'},{this.printAndBr(c.branchDescription)}
                          {c.segment && lookup('mrc.customerdetails.fields.segment')+':'}  {this.printAndBr(c.segment)}
                          {c.companyFoundationDate && lookup('mrc.customerdetails.fields.companyfoundationdate')+':'} 
-                         {this.printDate(c.companyFoundationDate)} (
-                         {(moment.duration(moment().diff(c.companyFoundationDate))).years()} years))}
+                         {this.printDate(c.companyFoundationDate)}
                          {c.legalFormDescription &&  lookup('mrc.customerdetails.fields.legalformdescription')+':'}  {this.printAndBr(c.legalFormDescription)}
 					</dl>
                      )}    
