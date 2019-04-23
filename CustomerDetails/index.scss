@@ -29,22 +29,7 @@
     }
   }
 
-  .details {
-    font-size: $small-text;
-    line-height: 18px;
-    padding: 0 $content-padding-horizontal-mobile 2em;
-
-    @include respond-to('tablet') {
-      padding: 0 $content-padding-horizontal-tablet 2em;
-    }
-
-    h3 {
-      margin: unset;
-      padding: 1em 0;
-      font-weight: 500;
-      font-size: $text-flow;
-    }
-
+  .mrc-detail {
     dt:before {
       content: "";
       display: block;
@@ -71,5 +56,4 @@
     .relative:before {content: "(" }
     .relative:after {content: ")" }
   }
-
 }
