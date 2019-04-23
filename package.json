@@ -7,6 +7,17 @@
   },
   "author": "MRC4-Team",
   "devDependencies": {
-    "npm-version": "^1.1.0"
+    "@babel/core": "^7.4.3",
+    "@storybook/addon-actions": "5.0.10",
+    "@storybook/addon-links": "5.0.10",
+    "@storybook/addons": "5.0.10",
+    "@storybook/react": "5.0.10"
+  },
+  "dependencies": {
+    "mrc-component-library": "^1.0.32"
+  },
+  "scripts": {
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   }
 }
