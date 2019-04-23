@@ -42,7 +42,7 @@ export default class FileUpload extends Component {
                   </svg>
                     <br />
                       <span>
-                        <button className="m-fileDropzone-button">Choose files<input type="file" name='file' onChange={this.updateFile} disabled={this.props.selectDisabled}/></button> to upload or drop them here.
+                        <div className="m-fileDropzone-button">Choose files<input type="file" name='file' onChange={this.updateFile} disabled={this.props.selectDisabled}/></div> to upload or drop them here.
                       </span>
                 </div>
             </div>
