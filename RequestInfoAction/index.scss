@@ -4,39 +4,16 @@
 
 .mrc-send-back {
 
-  float: left;
   display: inline-flex;
-  padding-left: 12px;
-  padding-bottom: 9px;
 
   select {
+    margin: 1rem 0 1rem 1.5rem;
     width: fit-content;
-    margin-right: 20px;
-    margin-bottom: unset;
   }
 
   button {
-    text-transform: uppercase;
-    color: #fff;
-    font-weight: 500;
-    font-size: 13px;
-
-    padding: 0px 0.75rem;
-
-    align-items: center;
-    justify-content: center;
-
-    white-space: nowrap;
-    height: 40px;
-
-    border-radius: 5px;
-    background-color: $sky-blue;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15);
-
-    &[disabled] {
-      background-color: $form-placeholder-color;
-      box-shadow: none;
-    }
+    min-width: 160px;
+    background-color: white;
   }
 
   .icon {
