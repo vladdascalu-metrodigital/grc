@@ -12,11 +12,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 $content-padding-horizontal-mobile;
-
-    @include respond-to('tablet') {
-      padding: 0 $content-padding-horizontal-tablet;
-    }
 
     .name {
       text-transform: uppercase;

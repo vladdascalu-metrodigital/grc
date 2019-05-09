@@ -9,12 +9,10 @@
   justify-content: space-between;
 
   .infos {
-    padding: 18px 0 15px $content-padding-horizontal-mobile;
     display: flex;
     flex-direction: column;
 
     @include respond-to('tablet') {
-      padding: 18px 0 15px $content-padding-horizontal-tablet;
       flex-direction: row;
     }
 
@@ -39,20 +37,12 @@
 
   .icon {
     display: flex;
-    padding-right: $content-padding-horizontal-mobile;
-
-    @include respond-to('tablet') {
-      padding-right: $content-padding-horizontal-tablet;
-    }
 
     img {
-      width: 30px;
-      height: 30px;
+      width: 1.5rem;
+      height: 1.5rem;
 
       @include respond-to('tablet') {
-        width: 16px;
-        height: 16px;
-
         &.no-icon-text {
           width: 24px;
           height: 24px;
