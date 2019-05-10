@@ -15,7 +15,7 @@ export default class BrandBar extends Component {
     }
 
     renderIcon(icon) {
-        const img = <img className='m-icon-large' src={icon.src} alt={icon.alt} />;
+        const img = <img className='mrc-icon-large' src={icon.src} alt={icon.alt} />;
         return icon.href ? <Link to={icon.href}>{img}</Link> : img;
     }
 
