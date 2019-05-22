@@ -4,17 +4,21 @@ import LaunchpadIcon from '../icons/menu.svg';
 import InboxIcon from '../icons/inbox.svg';
 import LimitcheckIcon from '../icons/credit-request.svg';
 import HistoryIcon from '../icons/history.svg';
+import QuickcheckIcon from '../icons/quick-check.svg';
+
 
 const iconMap = {
     launchpad: LaunchpadIcon, // Will not be part of the config, just for here
     limitcheck: LimitcheckIcon,
     history: HistoryIcon,
-    inbox:  InboxIcon
+    inbox:  InboxIcon,
+    quickcheck: QuickcheckIcon
 };
 const sortMap = [
     'launchpad',
     'inbox',
     'limitcheck',
+    'quickcheck',
     'history'
 ];
 
