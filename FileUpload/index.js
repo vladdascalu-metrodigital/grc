@@ -29,7 +29,6 @@ export default class FileUpload extends Component {
                               disabled={this.props.uploadDisabled}/>
                    </label>
                </div> */
-    dropRef = React.createRef()
     state = {
         drag: false
     }
@@ -49,20 +48,20 @@ export default class FileUpload extends Component {
     }
 
     componentDidMount() {
-        let div = this.dropRef.current
+        let div = this.dropRef
         div.addEventListener('dragover', this.handleDrag)
         div.addEventListener('drop', this.handleDrop)
     }
 
     componentWillUnmount() {
-        let div = this.dropRef.current
+        let div = this.dropRef
         div.removeEventListener('dragover', this.handleDrag)
         div.removeEventListener('drop', this.handleDrop)
     }
 
     render() {
         return (
-            <div className="mrc-file-upload" ref={this.dropRef}>
+            <div className="mrc-file-upload" ref={(input) => { this.dropRef = input; }}>
                 <div className="m-fileDropzone">
                     <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" height="64" width="48" viewBox="0 0 48 64" className="m-icon blue" style={{"fontSize": "3rem"}}>
                         <g fill="#000" fillRule="evenodd" stroke="none" transform="translate(-8)">
