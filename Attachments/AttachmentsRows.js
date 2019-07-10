@@ -17,9 +17,12 @@ import UnknownIcon from '../icons/doc.svg'; //TODO : need to replace this with a
 
 export default class AttachmentsRows extends Component {
 
+    FILE_TYPES_TRANSLATION_KEYS = ['mrc.attachments.fileType.general', 'mrc.attachments.fileType.invoice'];
+
     constructor(props) {
         super(props);
-        this.state = {title: '', file: null}
+        this.state = {title: '', file: null, fileType: null}
+        if(props.fileTypes) this.FILE_TYPES_TRANSLATION_KEYS = props.fileTypes;
     }
 
     render() {
@@ -38,7 +41,7 @@ export default class AttachmentsRows extends Component {
     }
 
     createUploader() {
-        const readyToSend = this.state.title.trim().length > 0 && this.state.file !== null;
+        const readyToSend = this.state.title.trim().length > 0 && this.state.file !== null && this.state.fileType !== null && this.state.fileType !== '';
         return <div className="mrc-add-attachment">
             <FileUpload labelSelect={lookup('mrc.file.select')}
                 updateFile={this.updateFile}
@@ -46,6 +49,20 @@ export default class AttachmentsRows extends Component {
                 uploadDisabled={!readyToSend}/>
             <label name='selected-file' className='selected-file'>{lookup('mrc.attachments.fields.file')}: {this.state.file && this.state.file.name}</label><br/>
             <input className='m-input-element' name='title' type='text' value={this.state.title} onChange={this.updateTitle} disabled={this.props.readonly} maxLength={255} placeholder="Title" />
+
+
+            <label name='selected-file-type' className='selected-file'>{lookup('mrc.attachments.fields.fileType')}: {this.state.file && this.state.file.name}</label><br/>
+
+            <select name='file-type'
+                        value={(this.state.fileType == null || this.state.fileType == '') ? '' : this.state.fileType}
+                        onChange={this.handleFileTypeChange}
+                        disabled={this.props.readonly}
+                        placeholder="File Type">
+                    {[<option key='null'/>].concat(this.FILE_TYPES_TRANSLATION_KEYS.map((t) => <option key={t} value={t}>{lookup(t)}</option>))}
+            </select>
+
+
+
             <button className="mrc-btn mrc-secondary-button" type='button' name='upload-button' onClick={this.sendFile} disabled={!readyToSend}>{lookup('mrc.file.upload')}</button>
         </div>;
     }
@@ -115,22 +132,25 @@ export default class AttachmentsRows extends Component {
 
     updateFile = (file) => {
         if (this.state.title.trim().length > 0) {
-            this.setState({file: file});
+            this.setState({...this.state, file: file});
         } else {
-            this.setState({title: file.name, file: file});
+            this.setState({...this.state, title: file.name, file: file});
         }
     };
 
     sendFile = () => {
-        this.props.addAttachment(this.state.file, this.state.title);
-        this.setState({title: '', file: null});
+        this.props.addAttachment(this.state.file, this.state.title, this.state.fileType);
+        this.setState({title: '', file: null, fileType: null});
     };
 
     updateTitle = (evt) => {
         evt.preventDefault();
-        this.setState({title: evt.target.value});
+        this.setState({...this.state, title: evt.target.value});
     };
-    
+
+    handleFileTypeChange = (event) => {
+        this.setState({...this.state, fileType: event.target.value});
+    };
 
 }
 
