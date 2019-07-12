@@ -47,22 +47,24 @@ export default class AttachmentsRows extends Component {
                 updateFile={this.updateFile}
                 selectDisabled={this.props.readonly}
                 uploadDisabled={!readyToSend}/>
-            <label name='selected-file' className='selected-file'>{lookup('mrc.attachments.fields.file')}: {this.state.file && this.state.file.name}</label><br/>
-            <input className='m-input-element' name='title' type='text' value={this.state.title} onChange={this.updateTitle} disabled={this.props.readonly} maxLength={255} placeholder="Title" />
 
 
-            <label name='selected-file-type' className='selected-file'>{lookup('mrc.attachments.fields.fileType')}: {this.state.file && this.state.file.name}</label><br/>
-
-            <select name='file-type'
-                        value={(this.state.fileType == null || this.state.fileType == '') ? '' : this.state.fileType}
-                        onChange={this.handleFileTypeChange}
-                        disabled={this.props.readonly}
-                        placeholder="File Type">
-                    {[<option key='null'/>].concat(this.FILE_TYPES_TRANSLATION_KEYS.map((t) => <option key={t} value={t}>{lookup(t)}</option>))}
-            </select>
-
-
-
+            <div className='row'>
+                <div className='column'>
+                    <label name='selected-file' className='selected-file'>{lookup('mrc.attachments.fields.file')}: {this.state.file && this.state.file.name}</label><br/>
+                    <input className='m-input-element' name='title' type='text' value={this.state.title} onChange={this.updateTitle} disabled={this.props.readonly} maxLength={255} placeholder="Title" />
+                </div>
+                <div className='column'>
+                    <label name='selected-file-type' className='selected-file'>{lookup('mrc.attachments.fields.fileType')}: {this.state.file && this.state.file.name}</label><br/>
+                    <select name='file-type' id='select-file-type'
+                                value={(this.state.fileType == null || this.state.fileType == '') ? '' : this.state.fileType}
+                                onChange={this.handleFileTypeChange}
+                                disabled={this.props.readonly}
+                                placeholder="File Type">
+                            {[<option key='null'/>].concat(this.FILE_TYPES_TRANSLATION_KEYS.map((t) => <option key={t} value={t}>{lookup(t)}</option>))}
+                    </select>
+                </div>
+            </div>
             <button className="mrc-btn mrc-secondary-button" type='button' name='upload-button' onClick={this.sendFile} disabled={!readyToSend}>{lookup('mrc.file.upload')}</button>
         </div>;
     }
