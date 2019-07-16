@@ -5,6 +5,7 @@ import InboxIcon from '../icons/inbox.svg';
 import LimitcheckIcon from '../icons/credit-request.svg';
 import HistoryIcon from '../icons/history.svg';
 import QuickcheckIcon from '../icons/quick-check.svg';
+import CreditcorrectionIcon from '../icons/credit-correction-white.svg';
 
 
 const iconMap = {
@@ -12,13 +13,16 @@ const iconMap = {
     limitcheck: LimitcheckIcon,
     history: HistoryIcon,
     inbox:  InboxIcon,
-    quickcheck: QuickcheckIcon
+    quickcheck: QuickcheckIcon,
+    creditcorrection:CreditcorrectionIcon
+
 };
 const sortMap = [
     'launchpad',
     'inbox',
     'limitcheck',
     'quickcheck',
+    'creditcorrection',
     'history'
 ];
 
