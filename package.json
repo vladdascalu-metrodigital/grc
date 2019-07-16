@@ -19,7 +19,7 @@
     "style-loader": "^0.23.1"
   },
   "dependencies": {
-    "mrc-component-library": "^1.0.32"
+    "mrc-component-library": "^1.0.33"
   },
   "scripts": {
     "storybook": "start-storybook -p 6006",
