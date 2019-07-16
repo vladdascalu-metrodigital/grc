@@ -54,35 +54,35 @@ export default class AttachmentsRows extends Component {
                 </div>
                 <div className='column'>
                     <label name='selected-file-type' className='selected-file'>{lookup('mrc.attachments.fields.fileType')}: {this.state.file && this.state.file.name}</label><br />
-                    <select name='file-type' id='select-file-type'
+                    {/* <select name='file-type' id='select-file-type'
                         value={(this.state.fileType == null || this.state.fileType == '') ? '' : this.state.fileType}
                         onChange={this.handleFileTypeChange}
                         disabled={this.props.readonly || (this.props.fileTypes && this.props.fileTypes.length === 1 ? true : false)}
                         placeholder="File Type">
                         {this.createFileTypeOptions()}
-                    </select>
+                    </select> */}
                 </div>
             </div>
             <button className="mrc-btn mrc-secondary-button" type='button' name='upload-button' onClick={this.sendFile} disabled={!readyToSend}>{lookup('mrc.file.upload')}</button>
         </div>;
     }
 
-    createFileTypeOptions() {
-        if (this.props.fileTypes && this.props.fileTypes.length > 0) {
-            if (this.props.fileTypes && this.props.fileTypes.length === 1) {
-                this.setState({...this.state, fileType: this.props.fileTypes[0]});
-                return this.props.fileTypes.map(this.toOption);
-            } else {
-                return [<option key='null'/>].concat(this.props.fileTypes.map(this.toOption));
-            }
-        } else {
-            return null;
-        }
-    }
+    // createFileTypeOptions() {
+    //     if (this.props.fileTypes && this.props.fileTypes.length > 0) {
+    //         if (this.props.fileTypes && this.props.fileTypes.length === 1) {
+    //             this.setState({...this.state, fileType: this.props.fileTypes[0]});
+    //             return this.props.fileTypes.map(this.toOption);
+    //         } else {
+    //             return [<option key='null'/>].concat(this.props.fileTypes.map(this.toOption));
+    //         }
+    //     } else {
+    //         return null;
+    //     }
+    // }
 
-    toOption(t) {
-        return <option key={t} value={t}>{lookup(t)}</option>;
-    }
+    // toOption(t) {
+    //     return <option key={t} value={t}>{lookup(t)}</option>;
+    // }
 
     createRow = (item) => {
         if (!item) {
