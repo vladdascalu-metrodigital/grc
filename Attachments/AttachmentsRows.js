@@ -39,7 +39,7 @@ export default class AttachmentsRows extends Component {
     }
 
     createUploader() {
-        const readyToSend = this.state.title.trim().length > 0 && this.state.file !== null && this.state.fileType !== null && this.state.fileType !== '';
+        const readyToSend = this.state.title.trim().length > 0 && this.state.file !== null;
         return <div className="mrc-add-attachment">
             <FileUpload labelSelect={lookup('mrc.file.select')}
                 updateFile={this.updateFile}
@@ -49,19 +49,20 @@ export default class AttachmentsRows extends Component {
 
             <div className='row'>
                 <div className='column'>
-                    <label name='selected-file' className='selected-file'>{lookup('mrc.attachments.fields.file')}: {this.state.file && this.state.file.name}</label><br />
-                    <input className='m-input-element' name='title' type='text' value={this.state.title} onChange={this.updateTitle} disabled={this.props.readonly} maxLength={255} placeholder="Title" />
+                <label name='selected-file' className='selected-file'>{lookup('mrc.attachments.fields.file')}: {this.state.file && this.state.file.name}</label><br/>
+                <input className='m-input-element' name='title' type='text' value={this.state.title} onChange={this.updateTitle} disabled={this.props.readonly} maxLength={255} placeholder='Title' />
+
                 </div>
-                <div className='column'>
+                {/* <div className='column'>
                     <label name='selected-file-type' className='selected-file'>{lookup('mrc.attachments.fields.fileType')}: {this.state.file && this.state.file.name}</label><br />
-                    {/* <select name='file-type' id='select-file-type'
+                    { <select name='file-type' id='select-file-type'
                         value={(this.state.fileType == null || this.state.fileType == '') ? '' : this.state.fileType}
                         onChange={this.handleFileTypeChange}
                         disabled={this.props.readonly || (this.props.fileTypes && this.props.fileTypes.length === 1 ? true : false)}
                         placeholder="File Type">
                         {this.createFileTypeOptions()}
-                    </select> */}
-                </div>
+                    </select> }
+                </div> */}
             </div>
             <button className="mrc-btn mrc-secondary-button" type='button' name='upload-button' onClick={this.sendFile} disabled={!readyToSend}>{lookup('mrc.file.upload')}</button>
         </div>;
