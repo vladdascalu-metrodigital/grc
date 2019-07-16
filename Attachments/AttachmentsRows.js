@@ -29,12 +29,12 @@ export default class AttachmentsRows extends Component {
             return <div className="mrc-attachments">
                     <div className="mrc-detail">{lookup('mrc.attachments.noattachments')}</div>
                     {this.createUploader()}
-                </div>;
+            </div>;
         } else {
-        return <div className="mrc-attachments">
-                    <div className="mrc-attachment-group col-2">{this.props.data.map(this.createRow)}</div>
-                    {this.createUploader()}
-                </div>;
+            return <div className="mrc-attachments">
+                <div className="mrc-attachment-group col-2">{this.props.data.map(this.createRow)}</div>
+                {this.createUploader()}
+            </div>;
         }
     }
 
@@ -44,27 +44,43 @@ export default class AttachmentsRows extends Component {
             <FileUpload labelSelect={lookup('mrc.file.select')}
                 updateFile={this.updateFile}
                 selectDisabled={this.props.readonly}
-                uploadDisabled={!readyToSend}/>
+                uploadDisabled={!readyToSend} />
 
 
             <div className='row'>
                 <div className='column'>
-                    <label name='selected-file' className='selected-file'>{lookup('mrc.attachments.fields.file')}: {this.state.file && this.state.file.name}</label><br/>
+                    <label name='selected-file' className='selected-file'>{lookup('mrc.attachments.fields.file')}: {this.state.file && this.state.file.name}</label><br />
                     <input className='m-input-element' name='title' type='text' value={this.state.title} onChange={this.updateTitle} disabled={this.props.readonly} maxLength={255} placeholder="Title" />
                 </div>
                 <div className='column'>
-                    <label name='selected-file-type' className='selected-file'>{lookup('mrc.attachments.fields.fileType')}: {this.state.file && this.state.file.name}</label><br/>
+                    <label name='selected-file-type' className='selected-file'>{lookup('mrc.attachments.fields.fileType')}: {this.state.file && this.state.file.name}</label><br />
                     <select name='file-type' id='select-file-type'
-                                value={(this.state.fileType == null || this.state.fileType == '') ? '' : this.state.fileType}
-                                onChange={this.handleFileTypeChange}
-                                disabled={this.props.readonly}
-                                placeholder="File Type">
-                            {[<option key='null'/>].concat(this.props.fileTypes && this.props.fileTypes.map((t) => <option key={t} value={t}>{lookup(t)}</option>))}
+                        value={(this.state.fileType == null || this.state.fileType == '') ? '' : this.state.fileType}
+                        onChange={this.handleFileTypeChange}
+                        disabled={this.props.readonly || (this.props.fileTypes && this.props.fileTypes.length === 1 ? true : false)}
+                        placeholder="File Type">
+                        {this.createFileTypeOptions()}
                     </select>
                 </div>
             </div>
             <button className="mrc-btn mrc-secondary-button" type='button' name='upload-button' onClick={this.sendFile} disabled={!readyToSend}>{lookup('mrc.file.upload')}</button>
         </div>;
+    }
+
+    createFileTypeOptions() {
+        if (this.props.fileTypes && this.props.fileTypes.length > 0) {
+            if (this.props.fileTypes && this.props.fileTypes.length === 1) {
+                return this.props.fileTypes.map(this.toOption);
+            } else {
+                return [<option key='null'/>].concat(this.props.fileTypes.map(this.toOption));
+            }
+        } else {
+            return null;
+        }
+    }
+
+    toOption(t) {
+        return <option key={t} value={t}>{lookup(t)}</option>;
     }
 
     createRow = (item) => {
@@ -78,7 +94,7 @@ export default class AttachmentsRows extends Component {
                 <h4>
                     <mrc-datetime class="datetime">{item.uploadTimestamp}</mrc-datetime>
                     <span className="author">{' '}{item.uploaderPrincipalName} ({item.uploaderPosition}) {' '}</span>
-					<span className="author">{item.fileType}</span> 
+					<span className="author">{item.fileType}</span>
                 </h4>
             </span>
         </div>;
