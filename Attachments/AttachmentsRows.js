@@ -17,12 +17,10 @@ import UnknownIcon from '../icons/doc.svg'; //TODO : need to replace this with a
 
 export default class AttachmentsRows extends Component {
 
-    FILE_TYPES_TRANSLATION_KEYS = ['mrc.attachments.fileType.general', 'mrc.attachments.fileType.invoice'];
-
     constructor(props) {
         super(props);
         this.state = {title: '', file: null, fileType: null}
-        if(props.fileTypes) this.FILE_TYPES_TRANSLATION_KEYS = props.fileTypes;
+        this.FILE_TYPES_TRANSLATION_KEYS = props.fileTypes;
     }
 
     render() {
@@ -61,7 +59,7 @@ export default class AttachmentsRows extends Component {
                                 onChange={this.handleFileTypeChange}
                                 disabled={this.props.readonly}
                                 placeholder="File Type">
-                            {[<option key='null'/>].concat(this.FILE_TYPES_TRANSLATION_KEYS.map((t) => <option key={t} value={t}>{lookup(t)}</option>))}
+                            {[<option key='null'/>].concat(this.props.fileTypes && this.props.fileTypes.map((t) => <option key={t} value={t}>{lookup(t)}</option>))}
                     </select>
                 </div>
             </div>
@@ -79,7 +77,8 @@ export default class AttachmentsRows extends Component {
                 <h4 className='attachment-title'>{item.title}</h4>
                 <h4>
                     <mrc-datetime class="datetime">{item.uploadTimestamp}</mrc-datetime>
-                    <span className="author">{item.uploaderPrincipalName} ({item.uploaderPosition})</span>
+                    <span className="author">{' '}{item.uploaderPrincipalName} ({item.uploaderPosition}) {' '}</span>
+					<span className="author">{item.fileType}</span> 
                 </h4>
             </span>
         </div>;
