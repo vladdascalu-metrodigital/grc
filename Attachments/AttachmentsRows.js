@@ -70,6 +70,7 @@ export default class AttachmentsRows extends Component {
     createFileTypeOptions() {
         if (this.props.fileTypes && this.props.fileTypes.length > 0) {
             if (this.props.fileTypes && this.props.fileTypes.length === 1) {
+                this.setState({...this.state, fileType: this.props.fileTypes[0]});
                 return this.props.fileTypes.map(this.toOption);
             } else {
                 return [<option key='null'/>].concat(this.props.fileTypes.map(this.toOption));
