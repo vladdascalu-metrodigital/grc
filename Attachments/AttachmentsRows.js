@@ -39,7 +39,7 @@ export default class AttachmentsRows extends Component {
     }
 
     createUploader() {
-        const readyToSend = this.state.title.trim().length > 0 && this.state.file !== null && this.state.fileType !== null && this.state.fileType !== '';
+        const readyToSend = this.state.title.trim().length > 0 && this.state.file !== null;
         return <div className="mrc-add-attachment">
             <FileUpload labelSelect={lookup('mrc.file.select')}
                 updateFile={this.updateFile}
@@ -55,11 +55,12 @@ export default class AttachmentsRows extends Component {
                 <div className='column'>
                     <label name='selected-file-type' className='selected-file'>{lookup('mrc.attachments.fields.fileType')} </label><br/>
                     <select name='file-type' id='select-file-type'
-                                value={(this.state.fileType == null || this.state.fileType == '') ? '' : this.state.fileType}
+                                defaultValue={this.state.general}
                                 onChange={this.handleFileTypeChange}
                                 disabled={this.props.readonly}
                                 placeholder="File Type">
-                            {[<option key='null'/>].concat(this.props.fileTypes && this.props.fileTypes.map((t) => <option key={t} value={t}>{lookup(t)}</option>))}
+                               <option key='general'/> 
+                               <option value="general">general</option>
                     </select>
                 </div>
             </div>
@@ -78,7 +79,7 @@ export default class AttachmentsRows extends Component {
                 <h4>
                     <mrc-datetime class="datetime">{item.uploadTimestamp}</mrc-datetime>
                     <span className="author">{' '}{item.uploaderPrincipalName} ({item.uploaderPosition}) {' '}</span>
-					<span className="author">{item.fileType}</span> 
+					<span className="author">{'general'}</span> 
                 </h4>
             </span>
         </div>;
@@ -140,7 +141,7 @@ export default class AttachmentsRows extends Component {
     };
 
     sendFile = () => {
-        this.props.addAttachment(this.state.file, this.state.title, this.state.fileType);
+        this.props.addAttachment(this.state.file, this.state.title, "general");
         this.setState({title: '', file: null, fileType: null});
     };
 
