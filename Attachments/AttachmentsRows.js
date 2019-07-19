@@ -94,7 +94,7 @@ export default class AttachmentsRows extends Component {
                 <h4>
                     <mrc-datetime class="datetime">{item.uploadTimestamp}</mrc-datetime>
                     <span className="author">{' '}{item.uploaderPrincipalName} ({item.uploaderPosition}) {' '}</span>
-					<span className="author">{item.fileType}</span>
+					<span className="file-type">{item.fileType}</span>
                 </h4>
             </span>
         </div>;
