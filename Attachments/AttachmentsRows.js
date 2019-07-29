@@ -157,7 +157,6 @@ export default class AttachmentsRows extends Component {
 
     sendFile = () => {
         let fileType = this.state.fileType;
-        console.log("sendFile - props.fileTypes: " + this.props.fileTypes + ", state.fileType: " + this.state.fileType);
         if(fileType === null)
             fileType = this.props.fileTypes[0];
         this.props.addAttachment(this.state.file, this.state.title, fileType);
