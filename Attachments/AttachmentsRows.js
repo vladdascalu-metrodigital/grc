@@ -53,7 +53,7 @@ export default class AttachmentsRows extends Component {
                     <input className='m-input-element' name='title' type='text' value={this.state.title} onChange={this.updateTitle} disabled={this.props.readonly} maxLength={255} placeholder="Title" />
                 </div>
                 <div className='column'>
-                    <label name='selected-file-type' className='selected-file'>{lookup('mrc.attachments.fields.fileType')}: </label><br />
+                    <label name='selected-file-type' className='selected-file'>{lookup('mrc.attachments.fields.fileType')}: {this.state.file && this.state.file.name}</label><br />
                     <select name='file-type' id='select-file-type'
                         value={(this.state.fileType == null || this.state.fileType == '') ? '' : this.state.fileType}
                         onChange={this.handleFileTypeChange}
@@ -69,7 +69,7 @@ export default class AttachmentsRows extends Component {
 
     createFileTypeOptions() {
         if (this.props.fileTypes && this.props.fileTypes.length > 0) {
-            if (this.props.fileTypes && this.props.fileTypes.length === 1) {
+            if (this.props.fileTypes && this.props.fileTypes.length === 1 || this.state.fileType != null) {
                 return this.props.fileTypes.map(this.toOption);
             } else {
                 return [<option key='null'>Please Choose...</option>].concat(this.props.fileTypes.map(this.toOption));
@@ -94,7 +94,7 @@ export default class AttachmentsRows extends Component {
                 <h4>
                     <mrc-datetime class="datetime">{item.uploadTimestamp}</mrc-datetime>
                     <span className="author">{' '}{item.uploaderPrincipalName} ({item.uploaderPosition}) {' '}</span>
-					<span className="file-type">{item.fileType}</span>
+					<span className="author">{item.fileType}</span>
                 </h4>
             </span>
         </div>;
@@ -157,6 +157,7 @@ export default class AttachmentsRows extends Component {
 
     sendFile = () => {
         let fileType = this.state.fileType;
+        console.log("sendFile - props.fileTypes: " + this.props.fileTypes + ", state.fileType: " + this.state.fileType);
         if(fileType === null)
             fileType = this.props.fileTypes[0];
         this.props.addAttachment(this.state.file, this.state.title, fileType);
