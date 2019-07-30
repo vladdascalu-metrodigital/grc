@@ -53,7 +53,7 @@ export default class AttachmentsRows extends Component {
                     <input className='m-input-element' name='title' type='text' value={this.state.title} onChange={this.updateTitle} disabled={this.props.readonly} maxLength={255} placeholder="Title" />
                 </div>
                 <div className='column'>
-                    <label name='selected-file-type' className='selected-file'>{lookup('mrc.attachments.fields.fileType')}: {this.state.file && this.state.file.name}</label><br />
+                    <label name='selected-file-type' className='selected-file'>{lookup('mrc.attachments.fields.fileType')}: </label><br />
                     <select name='file-type' id='select-file-type'
                         value={(this.state.fileType == null || this.state.fileType == '') ? '' : this.state.fileType}
                         onChange={this.handleFileTypeChange}
