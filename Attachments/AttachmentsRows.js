@@ -12,14 +12,14 @@ import XlsIcon from '../icons/xls.svg';
 import TifIcon from '../icons/tif.svg';
 import PngIcon from '../icons/png.svg';
 import JpgIcon from '../icons/jpg.svg';
-import UnknownIcon from '../icons/doc.svg'; //TODO : need to replace this with an general 'unknown' icon. 
-
+import UnknownIcon from '../icons/doc.svg'; //TODO : need to replace this with an general 'unknown' icon.
 
 export default class AttachmentsRows extends Component {
 
+
     constructor(props) {
         super(props);
-        this.state = {title: '', file: null, fileType: null}
+        this.state = {title: '', file: null, fileType: null};
         this.FILE_TYPES_TRANSLATION_KEYS = props.fileTypes;
     }
 
@@ -38,7 +38,30 @@ export default class AttachmentsRows extends Component {
         }
     }
 
+    shortenFileName (name, maxLength) {
+        let array = name.split(".");
+        let result = "";
+        let ext = "";
+
+        if (array.length >= 2) {
+            ext = array[array.length - 1];
+            result = name.substring(0, name.length - ext.length - 1)
+        } else {
+            result = name;
+        }
+
+        result = result.substring(0, maxLength);
+
+        if (ext.length > 0 ) {
+            result += "." + ext;
+        }
+
+        return result;
+    }
+
     createUploader() {
+        const maxFileNameLength = 80;
+
         const readyToSend = this.state.title.trim().length > 0 && this.state.file !== null && ((this.state.fileType !== null && this.state.fileType !== '') || (this.props.fileTypes !== null && this.props.fileTypes.length === 1));
         return <div className="mrc-add-attachment">
             <FileUpload labelSelect={lookup('mrc.file.select')}
@@ -50,7 +73,7 @@ export default class AttachmentsRows extends Component {
             <div className='row'>
                 <div className='column'>
                     <label name='selected-file' className='selected-file'>{lookup('mrc.attachments.fields.file')}: {this.state.file && this.state.file.name}</label><br />
-                    <input className='m-input-element' name='title' type='text' value={this.state.title} onChange={this.updateTitle} disabled={this.props.readonly} maxLength={255} placeholder="Title" />
+                    <input maxLength={maxFileNameLength} className='m-input-element' name='title' type='text' value={this.shortenFileName(this.state.title, maxFileNameLength)} onChange={this.updateTitle} disabled={this.props.readonly} placeholder="Title" />
                 </div>
                 <div className='column'>
                     <label name='selected-file-type' className='selected-file'>{lookup('mrc.attachments.fields.fileType')}: </label><br />
