@@ -60,7 +60,7 @@ export default class AttachmentsRows extends Component {
     }
 
     createUploader() {
-        const maxFileNameLength = 80;
+        const maxFileNameLength = 50;
 
         const readyToSend = this.state.title.trim().length > 0 && this.state.file !== null && ((this.state.fileType !== null && this.state.fileType !== '') || (this.props.fileTypes !== null && this.props.fileTypes.length === 1));
         return <div className="mrc-add-attachment">
