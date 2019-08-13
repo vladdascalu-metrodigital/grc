@@ -21,6 +21,7 @@ let translations = {
     'mrc.customerdetails.fields.street': 'Street',
     'mrc.customerdetails.fields.zipcity': 'ZIP/City',
     'mrc.customerdetails.fields.registration': 'Registration',
+    'mrc.customerdetails.fields.legalformdescription': 'Legal Form Description',
 };
 
 export const addTranslations = (update) => {

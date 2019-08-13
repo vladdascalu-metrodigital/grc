@@ -36,17 +36,30 @@ export default class CustomerDetails extends Component {
         return displayName(this.props.customer);
     }
 
+    displayCustomerBasicDetails(c) {
+        if (c.country && c.country=='DE' && c.legalFormDescription) {
+            return (<dl>
+                    {this.describeTerm('mrc.customerdetails.fields.customernumber', `${c.storeNumber}/${c.customerNumber}`)}
+                        {this.describeTerm('mrc.customerdetails.fields.taxnumber', c.vatSpecNumber)}
+                    {this.describeTerm('mrc.customerdetails.fields.vateunumber', c.vatEuNumber)}
+                    {this.describeTerm('mrc.customerdetails.fields.legalform', c.legalForm)}
+                    {this.describeTerm('mrc.customerdetails.fields.legalformdescription', c.legalFormDescription)}
+                </dl>);
+        }
+        return (<dl>
+                {this.describeTerm('mrc.customerdetails.fields.customernumber', `${c.storeNumber}/${c.customerNumber}`)}
+                {this.describeTerm('mrc.customerdetails.fields.taxnumber', c.vatSpecNumber)}
+                {this.describeTerm('mrc.customerdetails.fields.vateunumber', c.vatEuNumber)}
+                {this.describeTerm('mrc.customerdetails.fields.legalform', c.legalForm)}
+            </dl>);
+    }
+
     render() {
         const c = this.props.customer;
         if (!c) return null;
         return (<div className='mrc-customer-details' id={c.storeNumber+'/'+c.customerNumber}>
                 <section className='mrc-detail'>
-                    <dl>
-                        {this.describeTerm('mrc.customerdetails.fields.customernumber', `${c.storeNumber}/${c.customerNumber}`)}
-                        {this.describeTerm('mrc.customerdetails.fields.taxnumber', c.vatSpecNumber)}
-                        {this.describeTerm('mrc.customerdetails.fields.vateunumber', c.vatEuNumber)}
-                        {this.describeTerm('mrc.customerdetails.fields.legalform', c.legalForm)}
-                    </dl>
+                    {this.displayCustomerBasicDetails(c)}
                     <address>
                         {lookup('mrc.customerdetails.fields.email')+':'} {this.printAndBr(c.email)}
                         {lookup('mrc.customerdetails.fields.phone')+':'} {this.printAndBr(c.phoneNumber)}
@@ -72,7 +85,6 @@ export default class CustomerDetails extends Component {
                          {c.segment && lookup('mrc.customerdetails.fields.segment')+':'}  {this.printAndBr(c.segment)}
                          {c.companyFoundationDate && lookup('mrc.customerdetails.fields.companyfoundationdate')+':'} 
                          {this.printDate(c.companyFoundationDate)}
-                         {c.legalFormDescription &&  lookup('mrc.customerdetails.fields.legalformdescription')+':'}  {this.printAndBr(c.legalFormDescription)}
 					</dl>
                      )}    
                 </section>
