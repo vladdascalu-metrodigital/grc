@@ -4,6 +4,9 @@ import './attachments.scss';
 import PropTypes from 'prop-types';
 import {lookup} from '../Util/translations.js';
 import FileUpload from '../FileUpload';
+import MrcDatePickerInput from '../DatePicker/index';
+import {NumberInput} from '../NumberInput/index';
+import moment from "moment";
 //icons:
 import DocIcon from '../icons/doc.svg';
 import PdfIcon from '../icons/pdf.svg';
@@ -16,10 +19,9 @@ import UnknownIcon from '../icons/doc.svg'; //TODO : need to replace this with a
 
 export default class AttachmentsRows extends Component {
 
-
     constructor(props) {
         super(props);
-        this.state = {title: '', file: null, fileType: null};
+        this.state = {title: '', file: null, fileType: null, attachmentExpiryDate: null, showCollateralMeta: false, attachmentAmount: null};
         this.FILE_TYPES_TRANSLATION_KEYS = props.fileTypes;
     }
 
@@ -69,9 +71,9 @@ export default class AttachmentsRows extends Component {
                 selectDisabled={this.props.readonly}
                 uploadDisabled={!readyToSend} />
 
-
             <div className='row'>
                 <div className='column'>
+
                     <label name='selected-file' className='selected-file'>{lookup('mrc.attachments.fields.file')}: {this.state.file && this.state.file.name}</label><br />
                     <input maxLength={maxFileNameLength} className='m-input-element' name='title' type='text' value={this.shortenFileName(this.state.title, maxFileNameLength)} onChange={this.updateTitle} disabled={this.props.readonly} placeholder="Title" />
                 </div>
@@ -86,8 +88,40 @@ export default class AttachmentsRows extends Component {
                     </select>
                 </div>
             </div>
+            <div>{this.createCollateralsFields()} </div>
+
             <button className="mrc-btn mrc-secondary-button" type='button' name='upload-button' onClick={this.sendFile} disabled={!readyToSend}>{lookup('mrc.file.upload')}</button>
         </div>;
+    }
+
+    createCollateralsFields() {
+        if (this.state.showCollateralMeta) {
+            return <div className='row'>
+                <div className='column'>
+                    <label name='attachement-amount'
+                           className='selected-file'>{lookup('mrc.attachements.amount')}</label><br/>
+                    <NumberInput className='m-input-element' name='attachment-amount'
+                                 value={this.state.attachmentAmount}
+                                 onChange={this.handleAttachmentAmountChange}
+                                 id="attachement-amount"/>
+                </div>
+                <div className='column'>
+                    <label name='attachement-expiry-date'
+                           className='selected-file'>{lookup('mrc.attachements.expiry-date')}</label><br/>
+                    <MrcDatePickerInput className="m-input-element"
+                                        onChange={this.handleDatePickerChange}
+                        // onBlur={this.handleLimitExpiryDateOnBlur}
+                                        selected={this.state.attachmentExpiryDate == null ? null : moment(this.state.attachmentExpiryDate)}
+                                        minDate={moment().add(1, 'days')}
+                                        showYearDropdown={true}
+                                        dateFormat={"DD.MM.YYYY"}
+                                        placeholderText={"DD.MM.YYYY"}
+                                        id="attachement-expiry-date"/>
+                </div>
+            </div>
+        } else {
+            return <div></div>;
+        }
     }
 
     createFileTypeOptions() {
@@ -114,6 +148,7 @@ export default class AttachmentsRows extends Component {
             {this.displayIcon(item)}
             <span onClick={this.downloadFile.bind(this,item)}>
                 <h4 className='attachment-title'>{item.title}</h4>
+                {this.displayCollateralsMeta(item)}
                 <h4>
                     <mrc-datetime class="datetime">{item.uploadTimestamp}</mrc-datetime>
                     <span className="author">{' '}{item.uploaderPrincipalName} ({item.uploaderPosition}) {' '}</span>
@@ -122,6 +157,18 @@ export default class AttachmentsRows extends Component {
             </span>
         </div>;
     };
+
+
+    displayCollateralsMeta(item) {
+        if (item.amount && item.expiryDate) {
+            var d = new Date(Date.parse(item.expiryDate));
+            var dateString = (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear();
+            return <h4 className='attachment-collaterals-meta'> {lookup('mrc.attachment.expiryDateLabel')}: {dateString}; {lookup('mrc.attachment.amountLabel')}: {item.amount} </h4>
+        } else {
+            return;
+        }
+    }
+
 
     displayIcon(item){
         return <img className="mrc-icon-large" src={this.getIcon(item).src} alt={this.getIcon(item).extension + ' File'} />;
@@ -182,8 +229,9 @@ export default class AttachmentsRows extends Component {
         let fileType = this.state.fileType;
         if(fileType === null)
             fileType = this.props.fileTypes[0];
-        this.props.addAttachment(this.state.file, this.state.title, fileType);
-        this.setState({title: '', file: null, fileType: null});
+        this.props.addAttachment(this.state.file, this.state.title, fileType, this.state.attachmentExpiryDate, this.state.attachmentAmount);
+
+        this.setState({title: '', file: null, fileType: null, showCollateralMeta: false, attachmentAmount: 0, attachmentExpiryDate: null});
     };
 
     updateTitle = (evt) => {
@@ -192,8 +240,27 @@ export default class AttachmentsRows extends Component {
     };
 
     handleFileTypeChange = (event) => {
+        this.checkForCollateralTypes(event.target.value);
         this.setState({...this.state, fileType: event.target.value});
     };
+
+    handleAttachmentAmountChange = (amount) => {
+        this.setState({attachmentAmount: parseFloat(amount)});
+    };
+
+    checkForCollateralTypes(value) {
+        if (this.props.collaterals.includes(value)) {
+            this.setState({showCollateralMeta: true});
+        } else {
+            this.setState({showCollateralMeta: false});
+        }
+    }
+
+    handleDatePickerChange = (date) => {
+        if (date)
+            this.setState({...this.state, attachmentExpiryDate: date});
+    };
+
 
 }
 
