@@ -4,8 +4,8 @@ import './attachments.scss';
 import PropTypes from 'prop-types';
 import {lookup} from '../Util/translations.js';
 import FileUpload from '../FileUpload';
-import MrcDatePickerInput from '../DatePicker/index';
 import {NumberInput} from '../NumberInput/index';
+import MrcDatePickerInput from '../DatePicker/index';
 import moment from "moment";
 //icons:
 import DocIcon from '../icons/doc.svg';
@@ -19,9 +19,17 @@ import UnknownIcon from '../icons/doc.svg'; //TODO : need to replace this with a
 
 export default class AttachmentsRows extends Component {
 
+
     constructor(props) {
         super(props);
-        this.state = {title: '', file: null, fileType: null, attachmentExpiryDate: null, showCollateralMeta: false, attachmentAmount: null};
+        this.state = {
+            title: '',
+            file: null,
+            fileType: null,
+            attachmentExpiryDate: null,
+            showCollateralMeta: false,
+            attachmentAmount: null
+        };
         this.FILE_TYPES_TRANSLATION_KEYS = props.fileTypes;
     }
 
@@ -29,8 +37,8 @@ export default class AttachmentsRows extends Component {
         const noAttachmentsGiven = !(this.props.data && this.props.data.length > 0);
         if (noAttachmentsGiven) {
             return <div className="mrc-attachments">
-                    <div className="mrc-detail">{lookup('mrc.attachments.noattachments')}</div>
-                    {this.createUploader()}
+                <div className="mrc-detail">{lookup('mrc.attachments.noattachments')}</div>
+                {this.createUploader()}
             </div>;
         } else {
             return <div className="mrc-attachments">
@@ -40,7 +48,7 @@ export default class AttachmentsRows extends Component {
         }
     }
 
-    shortenFileName (name, maxLength) {
+    shortenFileName(name, maxLength) {
         let array = name.split(".");
         let result = "";
         let ext = "";
@@ -54,7 +62,7 @@ export default class AttachmentsRows extends Component {
 
         result = result.substring(0, maxLength);
 
-        if (ext.length > 0 ) {
+        if (ext.length > 0) {
             result += "." + ext;
         }
 
@@ -67,30 +75,35 @@ export default class AttachmentsRows extends Component {
         const readyToSend = this.state.title.trim().length > 0 && this.state.file !== null && ((this.state.fileType !== null && this.state.fileType !== '') || (this.props.fileTypes !== null && this.props.fileTypes.length === 1));
         return <div className="mrc-add-attachment">
             <FileUpload labelSelect={lookup('mrc.file.select')}
-                updateFile={this.updateFile}
-                selectDisabled={this.props.readonly}
-                uploadDisabled={!readyToSend} />
+                        updateFile={this.updateFile}
+                        selectDisabled={this.props.readonly}
+                        uploadDisabled={!readyToSend}/>
+
 
             <div className='row'>
                 <div className='column'>
-
-                    <label name='selected-file' className='selected-file'>{lookup('mrc.attachments.fields.file')}: {this.state.file && this.state.file.name}</label><br />
-                    <input maxLength={maxFileNameLength} className='m-input-element' name='title' type='text' value={this.shortenFileName(this.state.title, maxFileNameLength)} onChange={this.updateTitle} disabled={this.props.readonly} placeholder="Title" />
+                    <label name='selected-file'
+                           className='selected-file'>{lookup('mrc.attachments.fields.file')}: {this.state.file && this.state.file.name}</label><br/>
+                    <input maxLength={maxFileNameLength} className='m-input-element' name='title' type='text'
+                           value={this.shortenFileName(this.state.title, maxFileNameLength)} onChange={this.updateTitle}
+                           disabled={this.props.readonly} placeholder="Title"/>
                 </div>
                 <div className='column'>
-                    <label name='selected-file-type' className='selected-file'>{lookup('mrc.attachments.fields.fileType')}: </label><br />
+                    <label name='selected-file-type'
+                           className='selected-file'>{lookup('mrc.attachments.fields.fileType')}: </label><br/>
                     <select name='file-type' id='select-file-type'
-                        value={(this.state.fileType == null || this.state.fileType == '') ? '' : this.state.fileType}
-                        onChange={this.handleFileTypeChange}
-                        disabled={this.props.readonly || (this.props.fileTypes && this.props.fileTypes.length === 1 ? true : false)}
-                        placeholder="File Type">
+                            value={(this.state.fileType == null || this.state.fileType == '') ? '' : this.state.fileType}
+                            onChange={this.handleFileTypeChange}
+                            disabled={this.props.readonly || (this.props.fileTypes && this.props.fileTypes.length === 1 ? true : false)}
+                            placeholder="File Type">
                         {this.createFileTypeOptions()}
                     </select>
                 </div>
             </div>
             <div>{this.createCollateralsFields()} </div>
 
-            <button className="mrc-btn mrc-secondary-button" type='button' name='upload-button' onClick={this.sendFile} disabled={!readyToSend}>{lookup('mrc.file.upload')}</button>
+            <button className="mrc-btn mrc-secondary-button" type='button' name='upload-button' onClick={this.sendFile}
+                    disabled={!readyToSend}>{lookup('mrc.file.upload')}</button>
         </div>;
     }
 
@@ -146,9 +159,10 @@ export default class AttachmentsRows extends Component {
         }
         return <div className="mrc-attachment" key={item.id}>
             {this.displayIcon(item)}
-            <span onClick={this.downloadFile.bind(this,item)}>
+            <span onClick={this.downloadFile.bind(this, item)}>
                 <h4 className='attachment-title'>{item.title}</h4>
                 {this.displayCollateralsMeta(item)}
+                {/*<h4 className='attachment-collaterals-meta'> </h4>*/}
                 <h4>
                     <mrc-datetime class="datetime">{item.uploadTimestamp}</mrc-datetime>
                     <span className="author">{' '}{item.uploaderPrincipalName} ({item.uploaderPosition}) {' '}</span>
@@ -158,55 +172,56 @@ export default class AttachmentsRows extends Component {
         </div>;
     };
 
+    displayIcon(item) {
+        return <img className="mrc-icon-large" src={this.getIcon(item).src}
+                    alt={this.getIcon(item).extension + ' File'}/>;
+    }
 
     displayCollateralsMeta(item) {
         if (item.amount && item.expiryDate) {
             var d = new Date(Date.parse(item.expiryDate));
-            var dateString = (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear();
-            return <h4 className='attachment-collaterals-meta'> {lookup('mrc.attachment.expiryDateLabel')}: {dateString}; {lookup('mrc.attachment.amountLabel')}: {item.amount} </h4>
+            var dateString = (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear();
+            return <h4
+                className='attachment-collaterals-meta'> {lookup('mrc.attachment.expiryDateLabel')}: {dateString}; {lookup('mrc.attachment.amountLabel')}: {item.amount} </h4>
         } else {
             return;
         }
     }
 
 
-    displayIcon(item){
-        return <img className="mrc-icon-large" src={this.getIcon(item).src} alt={this.getIcon(item).extension + ' File'} />;
-    }
-
-    downloadFile(item){
+    downloadFile(item) {
         window.open(
-          item.contentUri,
-          '_blank'
+            item.contentUri,
+            '_blank'
         );
     }
 
     getIcon(item) {
         const re = /(?:\.([^.]+))?$/;
         const extension = re.exec(item.filename)[1];
-        if(extension == 'doc' || extension == 'docx'){
-            return {src:DocIcon, extension : extension};
+        if (extension == 'doc' || extension == 'docx') {
+            return {src: DocIcon, extension: extension};
         }
-        else if(extension == 'pdf'){
-            return {src:PdfIcon, extension : extension};
+        else if (extension == 'pdf') {
+            return {src: PdfIcon, extension: extension};
         }
-        else if(extension == 'csv'){
-            return {src:CsvIcon, extension : extension};
+        else if (extension == 'csv') {
+            return {src: CsvIcon, extension: extension};
         }
-        else if(extension == 'xls' || extension == 'xlsx'){
-            return {src:XlsIcon, extension : extension};
+        else if (extension == 'xls' || extension == 'xlsx') {
+            return {src: XlsIcon, extension: extension};
         }
-        else if(extension == 'tif'){
-            return {src:TifIcon, extension : extension};
+        else if (extension == 'tif') {
+            return {src: TifIcon, extension: extension};
         }
-        else if(extension == 'png'){
-            return {src:PngIcon, extension : extension};
+        else if (extension == 'png') {
+            return {src: PngIcon, extension: extension};
         }
-        else if(extension == 'jpg'){
-            return {src:JpgIcon, extension : extension};
+        else if (extension == 'jpg') {
+            return {src: JpgIcon, extension: extension};
         }
-        else{ //We need an icon for unknown file types.
-            return {src:UnknownIcon, extension: extension};
+        else { //We need an icon for unknown file types.
+            return {src: UnknownIcon, extension: extension};
         }
 
     }
@@ -227,11 +242,18 @@ export default class AttachmentsRows extends Component {
 
     sendFile = () => {
         let fileType = this.state.fileType;
-        if(fileType === null)
+        if (fileType === null)
             fileType = this.props.fileTypes[0];
         this.props.addAttachment(this.state.file, this.state.title, fileType, this.state.attachmentExpiryDate, this.state.attachmentAmount);
 
-        this.setState({title: '', file: null, fileType: null, showCollateralMeta: false, attachmentAmount: 0, attachmentExpiryDate: null});
+        this.setState({
+            title: '',
+            file: null,
+            fileType: null,
+            showCollateralMeta: false,
+            attachmentAmount: 0,
+            attachmentExpiryDate: null
+        });
     };
 
     updateTitle = (evt) => {
@@ -241,9 +263,8 @@ export default class AttachmentsRows extends Component {
 
     handleFileTypeChange = (event) => {
         this.checkForCollateralTypes(event.target.value);
-        this.setState({...this.state, fileType: event.target.value});
+        this.setState({fileType: event.target.value});
     };
-
     handleAttachmentAmountChange = (amount) => {
         this.setState({attachmentAmount: parseFloat(amount)});
     };
@@ -261,11 +282,10 @@ export default class AttachmentsRows extends Component {
             this.setState({...this.state, attachmentExpiryDate: date});
     };
 
-
 }
 
 AttachmentsRows.propTypes = {
     addAttachment: PropTypes.func.isRequired,
     data: PropTypes.array,
-    readonly : PropTypes.bool,
+    readonly: PropTypes.bool,
 };
