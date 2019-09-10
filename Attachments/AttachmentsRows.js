@@ -178,14 +178,13 @@ export default class AttachmentsRows extends Component {
     }
 
     displayCollateralsMeta(item) {
-        if (item.amount && item.expiryDate) {
-            var d = new Date(Date.parse(item.expiryDate));
-            var dateString = (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear();
-            return <h4
-                className='attachment-collaterals-meta'> {lookup('mrc.attachment.expiryDateLabel')}: {dateString}; {lookup('mrc.attachment.amountLabel')}: {item.amount} </h4>
-        } else {
-            return;
-        }
+        var d = new Date(Date.parse(item.expiryDate));
+        var dateString = (d.getDate() + 1) + "/" + d.getMonth() + "/" + d.getFullYear();
+        return <h4
+            className='attachment-collaterals-meta'>
+            {item.expiryDate ? <span>{lookup('mrc.attachment.expiryDateLabel')} : {dateString}</span>: null}
+            {item.amount ? <span>{lookup('mrc.attachment.amountLabel')}: {item.amount}</span> : null}
+        </h4>
     }
 
 
