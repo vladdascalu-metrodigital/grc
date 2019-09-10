@@ -3,7 +3,6 @@ import './index.scss';
 import './attachments.scss';
 import AttachmentsRows from './AttachmentsRows';
 import PropTypes from 'prop-types';
-import {lookup} from '../Util/translations.js';
 
 export default class Attachments extends Component {
 
@@ -16,7 +15,7 @@ export default class Attachments extends Component {
         const {data, readonly, fileTypes, addAttachment} = this.props;  
         return <AttachmentsRows data={this.props.data}
                     readonly = {this.props.readonly} addAttachment = {this.props.addAttachment}
-                    fileTypes = {this.props.fileTypes} />;
+                    fileTypes = {this.props.fileTypes} collaterals = {this.props.collaterals} />;
     }
 
 }
