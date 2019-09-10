@@ -111,14 +111,6 @@ export default class AttachmentsRows extends Component {
         if (this.state.showCollateralMeta) {
             return <div className='row'>
                 <div className='column'>
-                    <label name='attachement-amount'
-                           className='selected-file'>{lookup('mrc.attachements.amount')}</label><br/>
-                    <NumberInput className='m-input-element' name='attachment-amount'
-                                 value={this.state.attachmentAmount}
-                                 onChange={this.handleAttachmentAmountChange}
-                                 id="attachement-amount"/>
-                </div>
-                <div className='column'>
                     <label name='attachement-expiry-date'
                            className='selected-file'>{lookup('mrc.attachements.expiry-date')}</label><br/>
                     <MrcDatePickerInput className="m-input-element"
@@ -130,6 +122,14 @@ export default class AttachmentsRows extends Component {
                                         dateFormat={"DD.MM.YYYY"}
                                         placeholderText={"DD.MM.YYYY"}
                                         id="attachement-expiry-date"/>
+                </div>
+                <div className='column'>
+                    <label name='attachement-amount'
+                           className='selected-file'>{lookup('mrc.attachements.amount')}</label><br/>
+                    <NumberInput className='m-input-element' name='attachment-amount'
+                                 value={this.state.attachmentAmount}
+                                 onChange={this.handleAttachmentAmountChange}
+                                 id="attachement-amount"/>
                 </div>
             </div>
         } else {
