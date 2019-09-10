@@ -182,7 +182,7 @@ export default class AttachmentsRows extends Component {
         var dateString = (d.getDate() + 1) + "/" + d.getMonth() + "/" + d.getFullYear();
         return <h4
             className='attachment-collaterals-meta'>
-            {item.expiryDate ? <span>{lookup('mrc.attachment.expiryDateLabel')} : {dateString}</span>: null}
+            {item.expiryDate ? <span>{lookup('mrc.attachment.expiryDateLabel')}: {dateString} </span>: null}
             {item.amount ? <span>{lookup('mrc.attachment.amountLabel')}: {item.amount}</span> : null}
         </h4>
     }
