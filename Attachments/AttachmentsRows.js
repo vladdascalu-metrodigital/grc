@@ -31,6 +31,8 @@ export default class AttachmentsRows extends Component {
             attachmentAmount: null
         };
         this.FILE_TYPES_TRANSLATION_KEYS = props.fileTypes;
+        this.handleDatePickerChange = this.handleDatePickerChange.bind(this);
+        this.handleDatePickerOnBlur = this.handleDatePickerOnBlur.bind(this);
     }
 
     render() {
@@ -115,7 +117,7 @@ export default class AttachmentsRows extends Component {
                            className='selected-file'>{lookup('mrc.attachements.expiry-date')}</label><br/>
                     <MrcDatePickerInput className="m-input-element"
                                         onChange={this.handleDatePickerChange}
-                        // onBlur={this.handleLimitExpiryDateOnBlur}
+                                        onBlur={this.handleDatePickerOnBlur}
                                         selected={this.state.attachmentExpiryDate == null ? null : moment(this.state.attachmentExpiryDate)}
                                         minDate={moment().add(1, 'days')}
                                         showYearDropdown={true}
@@ -276,9 +278,18 @@ export default class AttachmentsRows extends Component {
     }
 
     handleDatePickerChange = (date) => {
-        if (date)
+        // if (date)
             this.setState({...this.state, attachmentExpiryDate: date});
     };
+
+    handleDatePickerOnBlur(event) {
+        const date = moment(event.target.value, "DD.MM.YYYY");
+        if (date.isValid() && date >= moment().add(1, 'days')) {
+            this.handleDatePickerChange(date);
+        } else {
+            this.handleDatePickerChange(this.state.attachmentExpiryDate == null ? null : moment(this.state.attachmentExpiryDate));
+        }
+    }
 
 }
 
