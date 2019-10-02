@@ -270,7 +270,7 @@ export default class AttachmentsRows extends Component {
     };
 
     checkForCollateralTypes(value) {
-        if (this.props.collaterals.includes(value)) {
+        if (this.props.collaterals && this.props.collaterals.includes(value)) {
             this.setState({showCollateralMeta: true});
         } else {
             this.setState({showCollateralMeta: false});
