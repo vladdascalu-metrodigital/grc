@@ -4,7 +4,7 @@ export class NumberInput extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {value: props.initialValue ? props.initialValue + '' : '',
+        this.state = {value: isNaN(props.initialValue) ? '' : props.initialValue + '',
                 changed : false};
         if (props.value) {
             console.log('NumberInput should not be passed a value prop (will be ignored)');
