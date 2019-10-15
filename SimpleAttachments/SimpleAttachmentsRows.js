@@ -217,7 +217,7 @@ export default class SimpleAttachmentsRows extends Component {
     };
 }
 
-AttachmentsRows.propTypes = {
+SimpleAttachmentsRows.propTypes = {
     addAttachment: PropTypes.func.isRequired,
     data: PropTypes.array,
     readonly: PropTypes.bool
