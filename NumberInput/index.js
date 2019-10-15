@@ -19,9 +19,9 @@ export class NumberInput extends Component {
     }
     
     componentDidUpdate(){
-        if(this.props.shouldBePrefilledWith && !this.state.changed){
+        if(!Number.isNaN(this.props.shouldBePrefilledWith) && !this.state.changed){
             this.handleChangeAmount(this.props.shouldBePrefilledWith);
-    }
+        }
         if(this.props.shouldBePrefilledWith == null && this.state.changed){
             this.handleChangeAmount('');
         }
