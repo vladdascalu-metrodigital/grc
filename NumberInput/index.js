@@ -4,7 +4,7 @@ export class NumberInput extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {value: isNaN(props.initialValue) ? '' : props.initialValue + '',
+        this.state = {value: props.initialValue == null || isNaN(props.initialValue) ? '' : props.initialValue + '',
                 changed : false};
         if (props.value) {
             console.log('NumberInput should not be passed a value prop (will be ignored)');
@@ -19,7 +19,7 @@ export class NumberInput extends Component {
     }
     
     componentDidUpdate(){
-        if(!Number.isNaN(this.props.shouldBePrefilledWith) && !this.state.changed){
+        if(this.props.shouldBePrefilledWith != null && !Number.isNaN(this.props.shouldBePrefilledWith) && !this.state.changed){
             this.handleChangeAmount(this.props.shouldBePrefilledWith);
         }
         if(this.props.shouldBePrefilledWith == null && this.state.changed){
