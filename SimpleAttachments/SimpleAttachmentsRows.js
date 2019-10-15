@@ -14,7 +14,7 @@ import PngIcon from '../icons/png.svg';
 import JpgIcon from '../icons/jpg.svg';
 import UnknownIcon from '../icons/doc.svg'; //TODO : need to replace this with an general 'unknown' icon.
 
-export default class AttachmentsRows extends Component {
+export default class SimpleAttachmentsRows extends Component {
 
 
     constructor(props) {
