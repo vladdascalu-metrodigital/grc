@@ -29,12 +29,16 @@ export default class CustomerTrigger extends Component {
     }
 
     evaluateCreatedFromAndShowSeparateView() {
-        if (this.props.current || this.props.requested) {
+        if (this.isValidAmount(this.props.current) || this.isValidAmount(this.props.requested)) {
             return (<div className='previousAmounts'>
                 <div> {lookup('mrc.creditdetails.current') + ':'} {this.asNumber(this.props.current, this.props.customer.country)}</div>
                 <div> {lookup('mrc.creditdetails.requested') + ':'} {this.asNumber(this.props.requested, this.props.customer.country)}</div>
             </div>);
         }
+    }
+
+    isValidAmount(value) {
+        return (value !== null && value !== '' && !Number.isNaN(value)) || value === 0;
     }
 }
 
