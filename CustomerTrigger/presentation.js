@@ -38,7 +38,7 @@ export default class CustomerTrigger extends Component {
     }
 
     isValidAmount(value) {
-        return (value !== null && value !== '' && !Number.isNaN(value)) || value === 0;
+        return (value !== undefined && value !== null && value !== '' && !Number.isNaN(value)) || value === 0;
     }
 }
 
