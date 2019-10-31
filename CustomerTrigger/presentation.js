@@ -24,6 +24,10 @@ export default class CustomerTrigger extends Component {
     render() {
         return (<div className='mrc-customer-trigger'>
             <span>{this.props.customer.requestedCustomer ? '*' : ''} {this.props.customer.storeNumber + '/' + this.props.customer.customerNumber} {this.displayName()}</span>
+            if(this.props.customer.activationStatus !== undefined && this.props.customer.activationStatus !== null && this.props.customer.activationStatus !== '') {
+                const statusClass = this.props.customer.activationResult !== undefined && this.props.customer.activationResult !== null && this.props.customer.activationResult === 'ok' ? 'span-success' : 'span-error';
+                <span className={statusClass}>{this.props.customer.activationStatus}</span>
+            }
             {this.evaluateCreatedFromAndShowSeparateView()}
         </div>);
     }
