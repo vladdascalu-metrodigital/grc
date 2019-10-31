@@ -24,10 +24,7 @@ export default class CustomerTrigger extends Component {
     render() {
         return (<div className='mrc-customer-trigger'>
             <span>{this.props.customer.requestedCustomer ? '*' : ''} {this.props.customer.storeNumber + '/' + this.props.customer.customerNumber} {this.displayName()}</span>
-            if(this.props.customer.activationStatus !== undefined && this.props.customer.activationStatus !== null && this.props.customer.activationStatus !== '') {
-                const statusClass = this.props.customer.activationResult !== undefined && this.props.customer.activationResult !== null && this.props.customer.activationResult === 'ok' ? 'span-success' : 'span-error';
-                <span className={statusClass}>{this.props.customer.activationStatus}</span>
-            }
+            {this.displayActivation()}
             {this.evaluateCreatedFromAndShowSeparateView()}
         </div>);
     }
@@ -43,6 +40,14 @@ export default class CustomerTrigger extends Component {
 
     isValidAmount(value) {
         return (value !== undefined && value !== null && value !== '' && !Number.isNaN(value)) || value === 0;
+    }
+
+    displayActivation() {
+        if(this.props.customer.activationStatus !== undefined && this.props.customer.activationStatus !== null && this.props.customer.activationStatus !== '') {
+            const statusClass = this.props.customer.activationResult !== undefined && this.props.customer.activationResult !== null && this.props.customer.activationResult === 'ok' ? 'span-success' : 'span-error';
+            return (<span className={statusClass}>{this.props.customer.activationStatus}</span>);
+        }
+        return null;
     }
 }
 
