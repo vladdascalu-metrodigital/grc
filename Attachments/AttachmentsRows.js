@@ -183,8 +183,8 @@ export default class AttachmentsRows extends Component {
         var dateString = item.expiryDate == null ? '' : new Date(item.expiryDate).toLocaleDateString();
         return <h4
             className='attachment-collaterals-meta'>
-            {item.expiryDate && item.expiryDate != null ? <span>{lookup('mrc.attachment.expiryDateLabel')}: {dateString} </span> : null}
-            {item.amount ? <span>{lookup('mrc.attachment.amountLabel')}: {item.amount}</span> : null}
+            {item.expiryDate && item.expiryDate != null ? <span>{lookup('mrc.attachment.expiry-date')}: {dateString} </span> : null}
+            {item.amount ? <span>{lookup('mrc.attachment.amount')}: {item.amount}</span> : null}
         </h4>
     }
 
