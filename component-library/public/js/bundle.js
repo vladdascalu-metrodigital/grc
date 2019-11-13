@@ -478,7 +478,8 @@ customElements.define('mrc-datetime', MrcDatetime);
         'ES':'EUR',
         'PT':'EUR',
         'AT':'EUR',
-        'PK':'PKR' //Pakistan Rupee
+        'PK':'PKR', //Pakistan Rupee
+        'PL':'PLN'
     };
 
     var MrcNumber = function (_HTMLElement) {
