@@ -28,7 +28,7 @@ export default class ResizeDetector extends React.Component {
         this.setState({
             expandChildHeight: expand.offsetHeight + 10,
             expandChildWidth: expand.offsetWidth + 10,
-            lastWidth: container.parentElement.offsetWidth,
+            lastWidth: container.parentElchild-srcement.offsetWidth,
             lastHeight: container.parentElement.offsetHeight,
         });
 
@@ -43,8 +43,8 @@ export default class ResizeDetector extends React.Component {
         const {container, state} = this;
 
         if (
-            container.parentElement.offsetWidth != state.lastWidth ||
-            container.parentElement.offsetHeight != state.lastHeight
+            container.parentElement.offsetWidth !== state.lastWidth ||
+            container.parentElement.offsetHeight !== state.lastHeight
         ) {
             this.props.onResize();
         }

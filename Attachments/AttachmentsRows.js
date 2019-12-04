@@ -6,7 +6,6 @@ import {lookup} from '../Util/translations.js';
 import FileUpload from '../FileUpload';
 import {NumberInput} from '../NumberInput/index';
 import MrcDatePickerInput from '../DatePicker/index';
-import moment from "moment";
 //icons:
 import DocIcon from '../icons/doc.svg';
 import PdfIcon from '../icons/pdf.svg';
@@ -94,9 +93,9 @@ export default class AttachmentsRows extends Component {
                     <label name='selected-file-type'
                            className='selected-file'>{lookup('mrc.attachments.fields.fileType')}: </label><br/>
                     <select name='file-type' id='select-file-type'
-                            value={(this.state.fileType == null || this.state.fileType == '') ? '' : this.state.fileType}
+                            value={(this.state.fileType == null || this.state.fileType === '') ? '' : this.state.fileType}
                             onChange={this.handleFileTypeChange}
-                            disabled={this.props.readonly || (this.props.fileTypes && this.props.fileTypes.length === 1 ? true : false)}
+                            disabled={this.props.readonly || (this.props.fileTypes && this.props.fileTypes.length === 1)}
                             placeholder="File Type">
                         {this.createFileTypeOptions()}
                     </select>
@@ -117,12 +116,11 @@ export default class AttachmentsRows extends Component {
                            className='selected-file'>{lookup('mrc.attachements.expiry-date')}</label><br/>
                     <MrcDatePickerInput className="m-input-element"
                                         onChange={this.handleDatePickerChange}
-                                        onBlur={this.handleDatePickerOnBlur}
-                                        selected={this.state.attachmentExpiryDate == null ? null : moment(this.state.attachmentExpiryDate)}
-                                        minDate={moment().add(1, 'days')}
+                                        selected={this.state.attachmentExpiryDate == null ? null : new Date(this.state.attachmentExpiryDate)}
+                                        minDate={new Date(new Date().getTime() + 86400000)} // + 1 day in ms
                                         showYearDropdown={true}
-                                        dateFormat={"DD.MM.YYYY"}
-                                        placeholderText={"DD.MM.YYYY"}
+                                        dateFormat={"dd.MM.yyyy"}
+                                        placeholderText={"dd.MM.yyyy"}
                                         id="attachement-expiry-date"/>
                 </div>
                 <div className='column'>
@@ -183,7 +181,7 @@ export default class AttachmentsRows extends Component {
         var dateString = item.expiryDate == null ? '' : new Date(item.expiryDate).toLocaleDateString();
         return <h4
             className='attachment-collaterals-meta'>
-            {item.expiryDate && item.expiryDate != null ? <span>{lookup('mrc.attachment.expiry-date')}: {dateString} </span> : null}
+            {item.expiryDate && true ? <span>{lookup('mrc.attachment.expiry-date')}: {dateString} </span> : null}
             {item.amount ? <span>{lookup('mrc.attachment.amount')}: {item.amount}</span> : null}
         </h4>
     }
@@ -199,25 +197,25 @@ export default class AttachmentsRows extends Component {
     getIcon(item) {
         const re = /(?:\.([^.]+))?$/;
         const extension = re.exec(item.filename)[1];
-        if (extension == 'doc' || extension == 'docx') {
+        if (extension === 'doc' || extension === 'docx') {
             return {src: DocIcon, extension: extension};
         }
-        else if (extension == 'pdf') {
+        else if (extension === 'pdf') {
             return {src: PdfIcon, extension: extension};
         }
-        else if (extension == 'csv') {
+        else if (extension === 'csv') {
             return {src: CsvIcon, extension: extension};
         }
-        else if (extension == 'xls' || extension == 'xlsx') {
+        else if (extension === 'xls' || extension === 'xlsx') {
             return {src: XlsIcon, extension: extension};
         }
-        else if (extension == 'tif') {
+        else if (extension === 'tif') {
             return {src: TifIcon, extension: extension};
         }
-        else if (extension == 'png') {
+        else if (extension === 'png') {
             return {src: PngIcon, extension: extension};
         }
-        else if (extension == 'jpg') {
+        else if (extension === 'jpg') {
             return {src: JpgIcon, extension: extension};
         }
         else { //We need an icon for unknown file types.
@@ -283,11 +281,11 @@ export default class AttachmentsRows extends Component {
     };
 
     handleDatePickerOnBlur(event) {
-        const date = moment(event.target.value, "DD.MM.YYYY");
-        if (date.isValid() && date >= moment().add(1, 'days')) {
+        const date = new Date(event.target.value);
+        if (date >= new Date() + 1) {
             this.handleDatePickerChange(date);
         } else {
-            this.handleDatePickerChange(this.state.attachmentExpiryDate == null ? null : moment(this.state.attachmentExpiryDate));
+            this.handleDatePickerChange(this.state.attachmentExpiryDate == null ? null : new Date(this.state.attachmentExpiryDate));
         }
     }
 
