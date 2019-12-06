@@ -3,7 +3,7 @@
   "version": "1.0.75",
   "description": "MRC collection of reusable frontend react components",
   "publishConfig": {
-    "registry": "https://nexus-dst.metrosystems.net/repository/npm-mrc-component-libraries/"
+    "registry": "https://dx-nexus.metroscales.io/repository/npm-mrc-hosted/"
   },
   "author": "MRC4-Team",
   "devDependencies": {
@@ -19,7 +19,7 @@
     "style-loader": "^1.0.1"
   },
   "dependencies": {
-    "mrc-component-library": "1.0.32"
+    "mrc-component-library": "1.0.37"
   },
   "scripts": {
     "storybook": "start-storybook -p 6006",
