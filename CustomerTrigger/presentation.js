@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {displayName} from '../Util';
 import {lookup} from '../Util/translations';
+import Attention from '../icons/attention.svg';
 
 
 export default class CustomerTrigger extends Component {
@@ -21,8 +22,15 @@ export default class CustomerTrigger extends Component {
         else return this.PLACEHOLDER;
     }
 
+    displayCustomerWarnings() {
+        if (this.props.isWithWarning != undefined && this.props.isWithWarning != null && this.props.isWithWarning == true) {
+            return (<img className="attention" src={Attention} alt="Blocked"></img>);
+        }
+    }
+
     render() {
         return (<div className='mrc-customer-trigger'>
+            {this.displayCustomerWarnings()}
             <span>{this.props.customer.requestedCustomer ? '*' : ''} {this.props.customer.storeNumber + '/' + this.props.customer.customerNumber} {this.displayName()}</span>
             {this.displayActivation()}
             {this.evaluateCreatedFromAndShowSeparateView()}
@@ -55,5 +63,6 @@ export default class CustomerTrigger extends Component {
 CustomerTrigger.propTypes = {
     customer: PropTypes.object.isRequired,
     current: PropTypes.number,
-    requested: PropTypes.number
+    requested: PropTypes.number,
+    isWithWarning: PropTypes.bool
 };
