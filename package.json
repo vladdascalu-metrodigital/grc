@@ -1,6 +1,6 @@
 {
   "name": "global-react-components",
-  "version": "1.0.88",
+  "version": "1.0.89",
   "description": "MRC collection of reusable frontend react components",
   "publishConfig": {
     "registry": "https://dx-nexus.metroscales.io/repository/npm-mrc-hosted/"
@@ -19,7 +19,7 @@
     "style-loader": "^1.0.1"
   },
   "dependencies": {
-    "mrc-component-library": "1.0.45"
+    "mrc-component-library": "1.0.46"
   },
   "scripts": {
     "storybook": "start-storybook -p 6006",
