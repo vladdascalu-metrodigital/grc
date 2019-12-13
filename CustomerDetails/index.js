@@ -56,6 +56,7 @@ export default class CustomerDetails extends Component {
 
     render() {
         const c = this.props.customer;
+        const blockingContent = this.props.blockingContent;
         if (!c) return null;
         return (<div className='mrc-customer-details' id={c.storeNumber+'/'+c.customerNumber}>
                 <section className='mrc-detail'>
@@ -72,12 +73,9 @@ export default class CustomerDetails extends Component {
                         {lookup('mrc.customerdetails.fields.registration')+':'} {this.printDate(c.registrationDate)}
                     </div>
                     <br key='br'/>
-                     {/*<dl>
-                        {c.blockingReason && this.describeTerm('mrc.blockingReason', lookup('mrc.blockingReason.message.'+c.blockingReason))}
-                        {c.checkoutCheckCode && this.describeTerm('mrc.checkoutCheckCode', lookup('mrc.checkoutCheckCode.message.'+c.checkoutCheckCode))}
-                    </dl>*/}
-					  	  
-                     {c.country && c.country=='DE' &&
+                    {blockingContent}
+
+                    {c.country && c.country=='DE' &&
                     (
                     <dl>
                         {c.branchId && lookup('mrc.customerdetails.fields.branchid')+':'} {this.printAndBr(c.branchId)}
@@ -94,6 +92,7 @@ export default class CustomerDetails extends Component {
 
 CustomerDetails.propTypes = {
     customer: PropTypes.object,
+    blockingContent: PropTypes.object
 };
 
 
