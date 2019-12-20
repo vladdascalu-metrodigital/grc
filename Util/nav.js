@@ -51,9 +51,6 @@ export function createNav(btnConf, translations) {
     const title = translations[`mrc.apps.${service}`];
     const icon = iconMap[service];
     const href = createHref(btnConf.template, btnConf.roleKey);
-    if (!icon || !title) {
-        console.warn('Missing icon or title translation to render sidebar nav. Data:', btnConf);
-    }
     return {
         key: btnConf.roleKey,
         title: title || btnConf.title || btnConf.roleKey,
