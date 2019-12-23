@@ -42,6 +42,7 @@ export default class CustomerTrigger extends Component {
             return (<div className='previousAmounts'>
                 <div> {lookup('mrc.creditdetails.current') + ':'} {this.asNumber(this.props.current, this.props.customer.country)}</div>
                 <div> {lookup('mrc.creditdetails.requested') + ':'} {this.asNumber(this.props.requested, this.props.customer.country)}</div>
+                {this.displayApprovedLimit()}
             </div>);
         }
     }
@@ -50,6 +51,11 @@ export default class CustomerTrigger extends Component {
         return (value !== undefined && value !== null && value !== '' && !Number.isNaN(value)) || value === 0;
     }
 
+    displayApprovedLimit() {
+        if(this.isValidAmount(this.props.approved)) {
+            return (<div> {lookup('mrc.creditdetails.approved') + ':'} {this.asNumber(this.props.approved, this.props.customer.country)}</div>);
+        }
+    }
     displayActivation() {
         if(this.props.customer.activationStatus !== undefined && this.props.customer.activationStatus !== null && this.props.customer.activationStatus !== '') {
             const statusClass = this.props.customer.activationResult !== undefined && this.props.customer.activationResult !== null && this.props.customer.activationResult === 'ok' ? 'span-success' : 'span-error';
@@ -64,5 +70,6 @@ CustomerTrigger.propTypes = {
     customer: PropTypes.object.isRequired,
     current: PropTypes.number,
     requested: PropTypes.number,
+    approved: PropTypes.number,
     isWithWarning: PropTypes.bool
 };
