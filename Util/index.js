@@ -87,6 +87,7 @@ export function displayName(customer, fallback = 'Unknown') {
         || extractJoinedProps(customer, 'firstName', 'lastName')
         || extractJoinedProps(customer, 'customerFirstName', 'customerLastName')
         || extractJoinedProps(customer, 'companyOwnerFirstName', 'companyOwnerLastName')
+        || displayName
         || fallback;
 }
 
