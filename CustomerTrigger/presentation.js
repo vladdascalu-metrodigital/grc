@@ -53,7 +53,7 @@ export default class CustomerTrigger extends Component {
 
     displayApprovedLimit() {
         if(this.isValidAmount(this.props.approved)) {
-            return (<div> {lookup('mrc.creditdetails.approved') + ':'} {this.asNumber(this.props.approved, this.props.customer.country)}</div>);
+            return (<div> {lookup('mrc.creditdetails.applied') + ':'} {this.asNumber(this.props.approved, this.props.customer.country)}</div>);
         }
     }
     displayActivation() {
