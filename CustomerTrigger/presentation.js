@@ -18,7 +18,7 @@ export default class CustomerTrigger extends Component {
     }
 
     asNumber = (value, country) => {
-        if (this.isValidAmount(value)) return <mrc-number show-currency-for-country={country}>{value}</mrc-number>;
+        if (this.isValidAmount(value)) return <mrc-number dynamic={value} show-currency-for-country={country}>{value}</mrc-number>;
         else return this.PLACEHOLDER;
     }
 
