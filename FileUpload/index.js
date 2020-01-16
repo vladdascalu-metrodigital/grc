@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './index.scss';
 import PropTypes from 'prop-types';
+import {lookup} from '../Util/translations.js';
 import classNames from 'classnames';
 import FileUploadIcon from '../icons/file-upload.svg';
 
