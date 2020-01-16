@@ -69,6 +69,7 @@ export default class SimpleAttachmentsRows extends Component {
         const maxFileNameLength = 50;
 
         const readyToSend = this.state.title.trim().length > 0 && this.state.file !== null && ((this.state.fileType !== null && this.state.fileType !== '') || (this.props.fileTypes !== null && this.props.fileTypes.length === 1));
+        const classNameOfTypeOptions = this.props.fileTypes && this.props.fileTypes.length > 1 ? 'column' : 'hiddenColumn';
         return <div className="mrc-add-attachment">
             <FileUpload labelSelect={lookup('mrc.file.select')}
                         updateFile={this.updateFile}
@@ -84,7 +85,7 @@ export default class SimpleAttachmentsRows extends Component {
                            value={this.shortenFileName(this.state.title, maxFileNameLength)} onChange={this.updateTitle}
                            disabled={this.props.readonly} placeholder="Title"/>
                 </div>
-                <div className='column'>
+                <div className={classNameOfTypeOptions}>
                     <label name='selected-file-type'
                            className='selected-file'>{lookup('mrc.attachments.fields.fileType')}: </label><br/>
                     <select name='file-type' id='select-file-type'
