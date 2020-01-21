@@ -1,0 +1,20 @@
+.definition-list dd {
+  display: inline
+}
+
+.definition-list dl {
+  margin-bottom: 1em;
+}
+
+.definition-list dt {
+  display: inline;
+}
+
+.definition-list dt:after {
+  content: ': ';
+}
+
+.definition-list dt:before {
+  content: '';
+  display: block;
+}
