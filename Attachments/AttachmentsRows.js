@@ -74,7 +74,6 @@ export default class AttachmentsRows extends Component {
         const maxFileNameLength = 50;
 
         const readyToSend = this.state.title.trim().length > 0 && this.state.file !== null && ((this.state.fileType !== null && this.state.fileType !== '') || (this.props.fileTypes !== null && this.props.fileTypes.length === 1));
-        const classNameOfTypeOptions = this.props.fileTypes && this.props.fileTypes.length > 1 ? 'column' : 'hiddenColumn';
         return <div className="mrc-add-attachment">
             <FileUpload labelSelect={lookup('mrc.file.select')}
                         updateFile={this.updateFile}
@@ -90,7 +89,7 @@ export default class AttachmentsRows extends Component {
                            value={this.shortenFileName(this.state.title, maxFileNameLength)} onChange={this.updateTitle}
                            disabled={this.props.readonly} placeholder="Title"/>
                 </div>
-                <div className={classNameOfTypeOptions}>
+                <div className='column'>
                     <label name='selected-file-type'
                            className='selected-file'>{lookup('mrc.attachments.fields.fileType')}: </label><br/>
                     <select name='file-type' id='select-file-type'
@@ -103,6 +102,7 @@ export default class AttachmentsRows extends Component {
                 </div>
             </div>
             <div>{this.createCollateralsFields()} </div>
+            <div>{this.crateAttachmentTypesFields()} </div>
 
             <button className="mrc-btn mrc-secondary-button" type='button' name='upload-button' onClick={this.sendFile}
                     disabled={!readyToSend}>{lookup('mrc.file.upload')}</button>
@@ -137,6 +137,126 @@ export default class AttachmentsRows extends Component {
             return <div></div>;
         }
     }
+
+
+
+
+    crateAttachmentTypesFields() {
+        if (this.state.showCollateralMeta) {
+
+            let attachmentTypeString = '{"country":"DE","type":"contract","label":"mrc.attachments.types.contract","remark":"Digital version to improve efficiency","fields":[{"field_label":"mrc.attachments.fields.start_date","data_type":"Date","mandatory":true,"validation_operation":"LESS_THAN_AND_EQUALS","validation_argument":"TODAY"},{"field_label": "mrc.attachments.fields.amount","data_type": "Double","mandatory": true,"field_in_db": "amount"},{"field_label":"mrc.attachments.fields.expiration_date","data_type":"Date","mandatory":true,"field_in_db":"expiry_date","validation_operation":"GREATER_THAN_AND_EQUALS","validation_argument":"TODAY"}]}';
+            let attachmentType = JSON.parse(attachmentTypeString);
+
+            if (!attachmentType)
+                return;
+            let fields = [];
+
+
+            for( let i = 0; i<attachmentType.fields.length; i++) {
+                fields[i] = this.createMetadataRow(attachmentType.fields[i], attachmentType.fields[i+1]);
+                i++;
+            }
+
+            return fields;
+        }
+        return null;
+    }
+
+    createMetadataRow(field1, field2){
+        return
+        <div className='row'>
+            {this.createMetadataField(field1)}
+            {this.createMetadataField(field2)}
+        </div>
+    }
+
+    createMetadataField(field) {
+        if (field.data_type.toLowerCase() === "date") {
+            let minDate = null, maxDate = null;
+            if (field.validation_operation.toLowerCase("less_than_or_equals"))
+                maxDate = new Date();
+            else if (field.validation_operation.toLowerCase("greater_than_or_equals"))
+                minDate = new Date();
+            reactField = this.createDatePicker(i, minDate, maxDate)
+
+        } else if (field.data_type.toLowerCase() === "double")
+            reactField = this.createNumberInput(i)
+        return reactField;
+    }
+
+    createDatePicker(contor, minDate, maxDate) {
+
+        if(minDate)
+            minDate = new Date(minDate.getTime() + 86400000); // + 1 day in ms
+        else
+            minDate = null;
+
+        return <div className='column'>
+            <label name='attachement-expiry-date'
+                   className='selected-file'>{lookup('mrc.attachements.expiry-date')}</label><br/>
+            <MrcDatePickerInput className="m-input-element"
+                                onChange={this.handleDatePickerChange}
+                                selected={this.state.attachmentExpiryDate == null ? null : new Date(this.state.attachmentExpiryDate)}
+                                minDate={minDate}
+                                maxDate={maxdate}
+                                showYearDropdown={true}
+                                dateFormat={"dd.MM.yyyy"}
+                                placeholderText={"dd.MM.yyyy"}
+                                id="attachement-expiry-date"/>
+        </div>
+
+    }
+
+    createNumberInput(contor) {
+        return <div className='column'>
+            <label name='attachement-amount'
+                   className='selected-file'>{lookup('mrc.attachements.amount')}</label><br/>
+            <NumberInput className='m-input-element' name='attachment-amount'
+                         value={this.state.attachmentAmount}
+                         onChange={this.handleAttachmentAmountChange}
+                         id="attachement-amount"/>
+        </div>
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     createFileTypeOptions() {
         if (this.props.fileTypes && this.props.fileTypes.length > 0) {
@@ -278,7 +398,7 @@ export default class AttachmentsRows extends Component {
 
     handleDatePickerChange = (date) => {
         // if (date)
-            this.setState({...this.state, attachmentExpiryDate: date});
+        this.setState({...this.state, attachmentExpiryDate: date});
     };
 
     handleDatePickerOnBlur(event) {
