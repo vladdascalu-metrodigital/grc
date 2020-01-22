@@ -32,6 +32,10 @@ export default class AttachmentsRows extends Component {
         this.FILE_TYPES_TRANSLATION_KEYS = props.fileTypes;
         this.handleDatePickerChange = this.handleDatePickerChange.bind(this);
         this.handleDatePickerOnBlur = this.handleDatePickerOnBlur.bind(this);
+        this.ALL_ATTACHMENT_TYPES_JSON = JSON.parse('{"attachment_types": [{"country": "ALL","type": "general","label": "mrc.attachments.types.general","remark": "General"},{"country": "DE","type": "contract","label": "mrc.attachments.types.contract","remark": "Digital version to improve efficiency","fields": [{"field_label": "mrc.attachments.fields.start_date","data_type": "Date","mandatory": true,"validation_operation": "LESS_THAN_AND_EQUALS","validation_argument": "TODAY"},{"field_label": "mrc.attachments.fields.expiration_date","data_type": "Date","mandatory": true,"field_in_db": "expiry_date","validation_operation": "GREATER_THAN_AND_EQUALS","validation_argument": "TODAY"}]},{"country": "DE","type": "bank_guarantee","label": "mrc.attachments.types.bank_guarantee","remark": "Collaterals","is_collateral": true,"fields": [{"field_label": "mrc.attachments.fields.amount","data_type": "Double","mandatory": true,"field_in_db": "amount"},{"field_label": "mrc.attachments.fields.validity_date","data_type": "Date","mandatory": true,"field_in_db": "expiry_date","validation_operation": "GREATER_THAN_AND_EQUALS","validation_argument": "TODAY"}]},{"country": "DE","type": "warenkreditversicherung","label": "mrc.attachments.types.Warenkreditversicherung","remark": "Collaterals","is_collateral": true,"fields": [{"field_label": "mrc.attachments.fields.amount","data_type": "Double","mandatory": true,"field_in_db": "amount"},{"field_label": "mrc.attachments.fields.validity_date","data_type": "Date","mandatory": true,"field_in_db": "expiry_date","validation_operation": "GREATER_THAN_AND_EQUALS","validation_argument": "TODAY"}]},{"country": "DE","type": "bürgschaft","label": "mrc.attachments.types.Bürgschaft","remark": "Collaterals","is_collateral": true,"fields": [{"field_label": "mrc.attachments.fields.amount","data_type": "Double","mandatory": true,"field_in_db": "amount"},{"field_label": "mrc.attachments.fields.validity_date","data_type": "Date","mandatory": true,"field_in_db": "expiry_date","validation_operation": "GREATER_THAN_AND_EQUALS","validation_argument": "TODAY"}]},{"country": "DE","type": "delkredere","label": "mrc.attachments.types.Delkredere","remark": "Collaterals","is_collateral": true,"fields": [{"field_label": "mrc.attachments.fields.amount","data_type": "Double","mandatory": true,"field_in_db": "amount"},{"field_label": "mrc.attachments.fields.validity_date","data_type": "Date","mandatory": true,"field_in_db": "expiry_date","validation_operation": "GREATER_THAN_AND_EQUALS","validation_argument": "TODAY"}]},{"country": "DE","type": "andere_sicherheiten","label": "mrc.attachments.types.Andere_Sicherheiten","remark": "Collaterals","is_collateral": true,"fields": [{"field_label": "mrc.attachments.fields.amount","data_type": "Double","mandatory": true,"field_in_db": "amount"},{"field_label": "mrc.attachments.fields.validity_date","data_type": "Date","mandatory": true,"field_in_db": "expiry_date","validation_operation": "GREATER_THAN_AND_EQUALS","validation_argument": "TODAY"}]},{"country": "DE","type": "bill_of_exchange","label": "mrc.attachments.types.bill_of_exchange","remark": "Bill of exchange","fields": [{"field_label": "mrc.attachments.fields.date_of_registration","data_type": "Date","mandatory": true,"validation_operation": "LESS_THAN_AND_EQUALS","validation_argument": "TODAY"},{"field_label": "mrc.attachments.fields.validity_date","data_type": "Date","mandatory": true,"field_in_db": "expiry_date","validation_operation": "GREATER_THAN_AND_EQUALS","validation_argument": "TODAY"}]}]}');
+        this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY = this.ALL_ATTACHMENT_TYPES_JSON.attachment_types
+            .filter(attType => attType.country.toLowerCase() === "de" || attType.country.toLowerCase() === "all")
+            .map(attType => attType.label);
     }
 
     render() {
@@ -109,34 +113,34 @@ export default class AttachmentsRows extends Component {
         </div>;
     }
 
-    createCollateralsFields() {
-        if (this.state.showCollateralMeta) {
-            return <div className='row'>
-                <div className='column'>
-                    <label name='attachement-expiry-date'
-                           className='selected-file'>{lookup('mrc.attachements.expiry-date')}</label><br/>
-                    <MrcDatePickerInput className="m-input-element"
-                                        onChange={this.handleDatePickerChange}
-                                        selected={this.state.attachmentExpiryDate == null ? null : new Date(this.state.attachmentExpiryDate)}
-                                        minDate={new Date(new Date().getTime() + 86400000)} // + 1 day in ms
-                                        showYearDropdown={true}
-                                        dateFormat={"dd.MM.yyyy"}
-                                        placeholderText={"dd.MM.yyyy"}
-                                        id="attachement-expiry-date"/>
-                </div>
-                <div className='column'>
-                    <label name='attachement-amount'
-                           className='selected-file'>{lookup('mrc.attachements.amount')}</label><br/>
-                    <NumberInput className='m-input-element' name='attachment-amount'
-                                 value={this.state.attachmentAmount}
-                                 onChange={this.handleAttachmentAmountChange}
-                                 id="attachement-amount"/>
-                </div>
-            </div>
-        } else {
-            return <div></div>;
-        }
-    }
+    // createCollateralsFields() {
+    //     if (this.state.showCollateralMeta) {
+    //         return <div className='row'>
+    //             <div className='column'>
+    //                 <label name='attachement-expiry-date'
+    //                        className='selected-file'>{lookup('mrc.attachements.expiry-date')}</label><br/>
+    //                 <MrcDatePickerInput className="m-input-element"
+    //                                     onChange={this.handleDatePickerChange}
+    //                                     selected={this.state.attachmentExpiryDate == null ? null : new Date(this.state.attachmentExpiryDate)}
+    //                                     minDate={new Date(new Date().getTime() + 86400000)} // + 1 day in ms
+    //                                     showYearDropdown={true}
+    //                                     dateFormat={"dd.MM.yyyy"}
+    //                                     placeholderText={"dd.MM.yyyy"}
+    //                                     id="attachement-expiry-date"/>
+    //             </div>
+    //             <div className='column'>
+    //                 <label name='attachement-amount'
+    //                        className='selected-file'>{lookup('mrc.attachements.amount')}</label><br/>
+    //                 <NumberInput className='m-input-element' name='attachment-amount'
+    //                              value={this.state.attachmentAmount}
+    //                              onChange={this.handleAttachmentAmountChange}
+    //                              id="attachement-amount"/>
+    //             </div>
+    //         </div>
+    //     } else {
+    //         return <div></div>;
+    //     }
+    // }
 
     crateAttachmentTypesFields() {
         if (this.state.showCollateralMeta) {
@@ -220,52 +224,12 @@ export default class AttachmentsRows extends Component {
         </div>
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     createFileTypeOptions() {
-        if (this.props.fileTypes && this.props.fileTypes.length > 0) {
-            if (this.props.fileTypes && this.props.fileTypes.length === 1 || this.state.fileType != null) {
-                return this.props.fileTypes.map(this.toOption);
+        if (this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY && this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.length > 0) {
+            if (this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY && this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.length === 1 || this.state.fileType != null) {
+                return this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.map(this.toOption);
             } else {
-                return [<option key='null'>Please Choose...</option>].concat(this.props.fileTypes.map(this.toOption));
+                return [<option key='null'>Please Choose...</option>].concat(this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.map(this.toOption));
             }
         } else {
             return null;
@@ -300,14 +264,14 @@ export default class AttachmentsRows extends Component {
                     alt={this.getIcon(item).extension + ' File'}/>;
     }
 
-    displayCollateralsMeta(item) {
-        var dateString = item.expiryDate == null ? '' : new Date(item.expiryDate).toLocaleDateString();
-        return <h4
-            className='attachment-collaterals-meta'>
-            {item.expiryDate && true ? <span>{lookup('mrc.attachment.expiry-date')}: {dateString} </span> : null}
-            {item.amount ? <span>{lookup('mrc.attachment.amount')}: {item.amount}</span> : null}
-        </h4>
-    }
+    // displayCollateralsMeta(item) {
+    //     var dateString = item.expiryDate == null ? '' : new Date(item.expiryDate).toLocaleDateString();
+    //     return <h4
+    //         className='attachment-collaterals-meta'>
+    //         {item.expiryDate && true ? <span>{lookup('mrc.attachment.expiry-date')}: {dateString} </span> : null}
+    //         {item.amount ? <span>{lookup('mrc.attachment.amount')}: {item.amount}</span> : null}
+    //     </h4>
+    // }
 
 
     downloadFile(item) {
