@@ -101,8 +101,8 @@ export default class AttachmentsRows extends Component {
                     </select>
                 </div>
             </div>
-            <div>{this.createCollateralsFields()} </div>
-            <div>{this.crateAttachmentTypesFields()} </div>
+            {/*<div>{this.createCollateralsFields()}</div>*/}
+            <div>{this.crateAttachmentTypesFields()}</div>
 
             <button className="mrc-btn mrc-secondary-button" type='button' name='upload-button' onClick={this.sendFile}
                     disabled={!readyToSend}>{lookup('mrc.file.upload')}</button>
@@ -138,83 +138,85 @@ export default class AttachmentsRows extends Component {
         }
     }
 
-
-
-
     crateAttachmentTypesFields() {
         if (this.state.showCollateralMeta) {
-
             let attachmentTypeString = '{"country":"DE","type":"contract","label":"mrc.attachments.types.contract","remark":"Digital version to improve efficiency","fields":[{"field_label":"mrc.attachments.fields.start_date","data_type":"Date","mandatory":true,"validation_operation":"LESS_THAN_AND_EQUALS","validation_argument":"TODAY"},{"field_label": "mrc.attachments.fields.amount","data_type": "Double","mandatory": true,"field_in_db": "amount"},{"field_label":"mrc.attachments.fields.expiration_date","data_type":"Date","mandatory":true,"field_in_db":"expiry_date","validation_operation":"GREATER_THAN_AND_EQUALS","validation_argument":"TODAY"}]}';
             let attachmentType = JSON.parse(attachmentTypeString);
 
             if (!attachmentType)
                 return;
+
             let fields = [];
-
-
-            for( let i = 0; i<attachmentType.fields.length; i++) {
-                fields[i] = this.createMetadataRow(attachmentType.fields[i], attachmentType.fields[i+1]);
-                i++;
+            var i, j = 0;
+            for( i = 0; i<attachmentType.fields.length; i++) {
+                if (i % 2 === 0) {
+                    fields[j] = this.createMetadataRow(attachmentType.fields[i], i, attachmentType.fields[i + 1], i+1);
+                    j++;
+                }
             }
-
             return fields;
         }
         return null;
     }
 
-    createMetadataRow(field1, field2){
-        return
-        <div className='row'>
-            {this.createMetadataField(field1)}
-            {this.createMetadataField(field2)}
+    createMetadataRow(field1, id1, field2, id2){
+        let returnValue = [];
+        returnValue[0] = this.createMetadataField(field1, id1);
+        returnValue[1] = this.createMetadataField(field2, id2);
+        return <div className='row'>
+            {returnValue}
         </div>
     }
 
-    createMetadataField(field) {
-        if (field.data_type.toLowerCase() === "date") {
-            let minDate = null, maxDate = null;
-            if (field.validation_operation.toLowerCase("less_than_or_equals"))
-                maxDate = new Date();
-            else if (field.validation_operation.toLowerCase("greater_than_or_equals"))
-                minDate = new Date();
-            reactField = this.createDatePicker(i, minDate, maxDate)
+    createMetadataField(field, id) {
+        if (field) {
+            var reactField;
+            if (field.data_type.toLowerCase() === "date") {
+                let minDate = null, maxDate = null;
+                if (field.validation_operation.toLowerCase() === "less_than_and_equals")
+                    maxDate = new Date();
+                else if (field.validation_operation.toLowerCase() === "greater_than_and_equals")
+                    minDate = new Date();
+                reactField = this.createDatePicker(id, minDate, maxDate, field)
 
-        } else if (field.data_type.toLowerCase() === "double")
-            reactField = this.createNumberInput(i)
-        return reactField;
+            } else if (field.data_type.toLowerCase() === "double")
+                reactField = this.createNumberInput(id, field)
+            return reactField;
+        } else {
+            return null;
+        }
     }
 
-    createDatePicker(contor, minDate, maxDate) {
-
+    createDatePicker(id, minDate, maxDate, field) {
         if(minDate)
-            minDate = new Date(minDate.getTime() + 86400000); // + 1 day in ms
+            minDate = new Date(minDate.getTime() + 86400000); // add 1 day in ms
         else
             minDate = null;
 
-        return <div className='column'>
-            <label name='attachement-expiry-date'
-                   className='selected-file'>{lookup('mrc.attachements.expiry-date')}</label><br/>
+        return <div className='column' key={id}>
+            <label name={field.field_label}
+                   className='selected-file'>{lookup(field.field_label)}</label><br/>
             <MrcDatePickerInput className="m-input-element"
                                 onChange={this.handleDatePickerChange}
-                                selected={this.state.attachmentExpiryDate == null ? null : new Date(this.state.attachmentExpiryDate)}
+                                selected={this.state.attachmentExpiryDate ? new Date(this.state.attachmentExpiryDate) : null} //to check this
                                 minDate={minDate}
-                                maxDate={maxdate}
+                                maxDate={maxDate}
                                 showYearDropdown={true}
                                 dateFormat={"dd.MM.yyyy"}
                                 placeholderText={"dd.MM.yyyy"}
-                                id="attachement-expiry-date"/>
+                                id={id}/>
         </div>
 
     }
 
-    createNumberInput(contor) {
-        return <div className='column'>
-            <label name='attachement-amount'
-                   className='selected-file'>{lookup('mrc.attachements.amount')}</label><br/>
+    createNumberInput(id, field) {
+        return <div className='column' key={id}>
+            <label name={field.field_label}
+                   className='selected-file'>{lookup(field.field_label)}</label><br/>
             <NumberInput className='m-input-element' name='attachment-amount'
                          value={this.state.attachmentAmount}
                          onChange={this.handleAttachmentAmountChange}
-                         id="attachement-amount"/>
+                         id={id}/>
         </div>
     }
 
