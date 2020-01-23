@@ -100,6 +100,12 @@ export default class AttachmentsRows extends Component {
             "               \"field_in_db\":\"amount\"\n" +
             "            },\n" +
             "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.amount_1\",\n" +
+            "               \"data_type\":\"Double\",\n" +
+            "               \"mandatory\":true,\n" +
+            "               \"field_in_db\":\"amount\"\n" +
+            "            },\n" +
+            "            { \n" +
             "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
             "               \"data_type\":\"Date\",\n" +
             "               \"mandatory\":true,\n" +
@@ -118,6 +124,12 @@ export default class AttachmentsRows extends Component {
             "         \"fields\":[ \n" +
             "            { \n" +
             "               \"field_label\":\"mrc.attachments.fields.amount\",\n" +
+            "               \"data_type\":\"Double\",\n" +
+            "               \"mandatory\":true,\n" +
+            "               \"field_in_db\":\"amount\"\n" +
+            "            },\n" +
+            "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.amount_1\",\n" +
             "               \"data_type\":\"Double\",\n" +
             "               \"mandatory\":true,\n" +
             "               \"field_in_db\":\"amount\"\n" +
@@ -152,6 +164,14 @@ export default class AttachmentsRows extends Component {
             "               \"field_in_db\":\"expiry_date\",\n" +
             "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
             "               \"validation_argument\":\"TODAY\"\n" +
+            "            },\n" +
+            "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.validity_date_1\",\n" +
+            "               \"data_type\":\"Date\",\n" +
+            "               \"mandatory\":true,\n" +
+            "               \"field_in_db\":\"expiry_date\",\n" +
+            "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
+            "               \"validation_argument\":\"TODAY\"\n" +
             "            }\n" +
             "         ]\n" +
             "      },\n" +
@@ -169,7 +189,21 @@ export default class AttachmentsRows extends Component {
             "               \"field_in_db\":\"amount\"\n" +
             "            },\n" +
             "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.amount_1\",\n" +
+            "               \"data_type\":\"Double\",\n" +
+            "               \"mandatory\":true,\n" +
+            "               \"field_in_db\":\"amount\"\n" +
+            "            },\n" +
+            "            { \n" +
             "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
+            "               \"data_type\":\"Date\",\n" +
+            "               \"mandatory\":true,\n" +
+            "               \"field_in_db\":\"expiry_date\",\n" +
+            "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
+            "               \"validation_argument\":\"TODAY\"\n" +
+            "            },\n" +
+            "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.validity_date_1\",\n" +
             "               \"data_type\":\"Date\",\n" +
             "               \"mandatory\":true,\n" +
             "               \"field_in_db\":\"expiry_date\",\n" +
@@ -192,6 +226,19 @@ export default class AttachmentsRows extends Component {
             "               \"validation_argument\":\"TODAY\"\n" +
             "            },\n" +
             "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.amount_1\",\n" +
+            "               \"data_type\":\"Double\",\n" +
+            "               \"mandatory\":true,\n" +
+            "               \"field_in_db\":\"amount\"\n" +
+            "            },\n" +
+            "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.date_of_registration_1\",\n" +
+            "               \"data_type\":\"Date\",\n" +
+            "               \"mandatory\":true,\n" +
+            "               \"validation_operation\":\"LESS_THAN_AND_EQUALS\",\n" +
+            "               \"validation_argument\":\"TODAY\"\n" +
+            "            },\n" +
+            "            { \n" +
             "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
             "               \"data_type\":\"Date\",\n" +
             "               \"mandatory\":true,\n" +
@@ -203,10 +250,18 @@ export default class AttachmentsRows extends Component {
             "      }\n" +
             "   ]\n" +
             "}");
-        this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY = this.ALL_ATTACHMENT_TYPES_JSON.attachment_types
+        this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY = this.ALL_ATTACHMENT_TYPES_JSON.attachment_types
             .filter(attType => attType.country.toLowerCase() === "de" || attType.country.toLowerCase() === "all")
             .map(attType => attType.label);
+        this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY = this.ALL_ATTACHMENT_TYPES_JSON.attachment_types
+            .filter(attType => attType.country.toLowerCase() === "de" || attType.country.toLowerCase() === "all");
     }
+
+    // fieldsByAttachmentType = (attachmentType)  => {
+    //     let fieldsAttr = this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY
+    //             .filter(attType => attType.type.toLowerCase() === attachmentType.toLowerCase());
+    //     return fieldsAttr[0].fields;
+    // }
 
     render() {
         const noAttachmentsGiven = !(this.props.data && this.props.data.length > 0);
@@ -314,17 +369,18 @@ export default class AttachmentsRows extends Component {
 
     crateAttachmentTypesFields() {
         if (this.state.showCollateralMeta) {
-            let attachmentTypeString = '{"country":"DE","type":"contract","label":"mrc.attachments.types.contract","remark":"Digital version to improve efficiency","fields":[{"field_label":"mrc.attachments.fields.start_date","data_type":"Date","mandatory":true,"validation_operation":"LESS_THAN_AND_EQUALS","validation_argument":"TODAY"},{"field_label": "mrc.attachments.fields.amount","data_type": "Double","mandatory": true,"field_in_db": "amount"},{"field_label":"mrc.attachments.fields.expiration_date","data_type":"Date","mandatory":true,"field_in_db":"expiry_date","validation_operation":"GREATER_THAN_AND_EQUALS","validation_argument":"TODAY"}]}';
-            let attachmentType = JSON.parse(attachmentTypeString);
+            //let attachmentTypeString = '{"country":"DE","type":"contract","label":"mrc.attachments.types.contract","remark":"Digital version to improve efficiency","fields":[{"field_label":"mrc.attachments.fields.start_date","data_type":"Date","mandatory":true,"validation_operation":"LESS_THAN_AND_EQUALS","validation_argument":"TODAY"},{"field_label": "mrc.attachments.fields.amount","data_type": "Double","mandatory": true,"field_in_db": "amount"},{"field_label":"mrc.attachments.fields.expiration_date","data_type":"Date","mandatory":true,"field_in_db":"expiry_date","validation_operation":"GREATER_THAN_AND_EQUALS","validation_argument":"TODAY"}]}';
+            //let attachmentType = JSON.parse(attachmentTypeString);
+            let allFields = this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.filter(attType => attType.label.toLowerCase() === this.state.fileType)[0].fields;
 
-            if (!attachmentType)
+            if (!allFields)
                 return;
 
             let fields = [];
-            var i, j = 0;
-            for( i = 0; i<attachmentType.fields.length; i++) {
+            var i , j = 0;
+            for (i = 0; i < allFields.length; i++) {
                 if (i % 2 === 0) {
-                    fields[j] = this.createMetadataRow(attachmentType.fields[i], i, attachmentType.fields[i + 1], i+1);
+                    fields[j] = this.createMetadataRow(allFields[i], i, allFields[i + 1], i + 1);
                     j++;
                 }
             }
@@ -333,11 +389,11 @@ export default class AttachmentsRows extends Component {
         return null;
     }
 
-    createMetadataRow(field1, id1, field2, id2){
+    createMetadataRow(field1, id1, field2, id2) {
         let returnValue = [];
         returnValue[0] = this.createMetadataField(field1, id1);
         returnValue[1] = this.createMetadataField(field2, id2);
-        return <div className='row'>
+        return <div className='row'  key={id1 + "_" + id2}>
             {returnValue}
         </div>
     }
@@ -362,12 +418,12 @@ export default class AttachmentsRows extends Component {
     }
 
     createDatePicker(id, minDate, maxDate, field) {
-        if(minDate)
+        if (minDate)
             minDate = new Date(minDate.getTime() + 86400000); // add 1 day in ms
         else
             minDate = null;
 
-        return <div className='column' key={id}>
+        return <div className='column' key={field.field_label + "_" + id}>
             <label name={field.field_label}
                    className='selected-file'>{lookup(field.field_label)}</label><br/>
             <MrcDatePickerInput className="m-input-element"
@@ -384,7 +440,7 @@ export default class AttachmentsRows extends Component {
     }
 
     createNumberInput(id, field) {
-        return <div className='column' key={id}>
+        return <div className='column' key={field.field_label + "_"+ id}>
             <label name={field.field_label}
                    className='selected-file'>{lookup(field.field_label)}</label><br/>
             <NumberInput className='m-input-element' name='attachment-amount'
@@ -395,11 +451,12 @@ export default class AttachmentsRows extends Component {
     }
 
     createFileTypeOptions() {
-        if (this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY && this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.length > 0) {
-            if (this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY && this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.length === 1 || this.state.fileType != null) {
-                return this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.map(this.toOption);
+        if (this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY && this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY.length > 0) {
+            if (this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY && this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY.length === 1 || this.state.fileType != null) {
+                return this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY.map(this.toOption);
             } else {
-                return [<option key='null'>Please Choose...</option>].concat(this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.map(this.toOption));
+                return [<option key='null'>Please
+                    Choose...</option>].concat(this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY.map(this.toOption));
             }
         } else {
             return null;
@@ -423,7 +480,7 @@ export default class AttachmentsRows extends Component {
                 <h4>
                     <mrc-datetime class="datetime">{item.uploadTimestamp}</mrc-datetime>
                     <span className="author">{' '}{item.uploaderPrincipalName} ({item.uploaderPosition}) {' '}</span>
-					<span className="fileType">{item.fileType}</span>
+ 				<span className="fileType">{item.fileType}</span>
                 </h4>
             </span>
         </div>;
@@ -456,26 +513,19 @@ export default class AttachmentsRows extends Component {
         const extension = re.exec(item.filename)[1];
         if (extension === 'doc' || extension === 'docx') {
             return {src: DocIcon, extension: extension};
-        }
-        else if (extension === 'pdf') {
+        } else if (extension === 'pdf') {
             return {src: PdfIcon, extension: extension};
-        }
-        else if (extension === 'csv') {
+        } else if (extension === 'csv') {
             return {src: CsvIcon, extension: extension};
-        }
-        else if (extension === 'xls' || extension === 'xlsx') {
+        } else if (extension === 'xls' || extension === 'xlsx') {
             return {src: XlsIcon, extension: extension};
-        }
-        else if (extension === 'tif') {
+        } else if (extension === 'tif') {
             return {src: TifIcon, extension: extension};
-        }
-        else if (extension === 'png') {
+        } else if (extension === 'png') {
             return {src: PngIcon, extension: extension};
-        }
-        else if (extension === 'jpg') {
+        } else if (extension === 'jpg') {
             return {src: JpgIcon, extension: extension};
-        }
-        else { //We need an icon for unknown file types.
+        } else { //We need an icon for unknown file types.
             return {src: UnknownIcon, extension: extension};
         }
 
@@ -517,12 +567,13 @@ export default class AttachmentsRows extends Component {
     };
 
     handleFileTypeChange = (event) => {
-        let attachment = this.ALL_ATTACHMENT_TYPES_JSON.attachment_types.filter(attachment => attachment.label.toLowerCase() == event.target.value)[0];
+
+        let attachment = this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.filter(attachment => attachment.label.toLowerCase() == event.target.value)[0];
 
         var showCollateralMeta = false;
-        if(attachment.fields)
+        if (attachment.fields)
             showCollateralMeta = true;
-        this.setState({fileType: event.target.value, showCollateralMeta:showCollateralMeta});
+        this.setState({fileType: event.target.value, showCollateralMeta: showCollateralMeta});
     };
 
     handleAttachmentAmountChange = (amount) => {
@@ -530,7 +581,7 @@ export default class AttachmentsRows extends Component {
     };
 
     checkForCollateralTypes(value) {
-        if (this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY && this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.includes(value)) {
+        if (this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY && this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY.includes(value)) {
             this.setState({showCollateralMeta: true});
         } else {
             this.setState({showCollateralMeta: false});
