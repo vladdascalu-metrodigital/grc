@@ -28,12 +28,12 @@ export default class AttachmentsRows extends Component {
             attachmentExpiryDate: null,
             showCollateralMeta: false,
             attachmentAmount: null,
-            attachmentType: null,
-            isUploadButtonAvailable: false
+            attachmentType: null
         };
         this.FILE_TYPES_TRANSLATION_KEYS = props.fileTypes;
         this.handleDatePickerChange = this.handleDatePickerChange.bind(this);
         this.handleDatePickerOnBlur = this.handleDatePickerOnBlur.bind(this);
+        // this.handleAttachmentAmountOnBlur = this.handleAttachmentAmountOnBlur.bind(this);
         this.ALL_ATTACHMENT_TYPES_JSON = JSON.parse("{ \n" +
             "   \"attachment_types\":[ \n" +
             "      { \n" +
@@ -253,178 +253,6 @@ export default class AttachmentsRows extends Component {
             "   ]\n" +
             "}");
 
-        // this.ALL_ATTACHMENT_TYPES_JSON = JSON.parse("{ \n" +
-        //     "   \"attachment_types\":[ \n" +
-        //     "      { \n" +
-        //     "         \"country\":\"ALL\",\n" +
-        //     "         \"type\":\"general\",\n" +
-        //     "         \"label\":\"mrc.attachments.types.general\",\n" +
-        //     "         \"remark\":\"General\"\n" +
-        //     "      },\n" +
-        //     "      { \n" +
-        //     "         \"country\":\"DE\",\n" +
-        //     "         \"type\":\"contract\",\n" +
-        //     "         \"label\":\"mrc.attachments.types.contract\",\n" +
-        //     "         \"remark\":\"Digital version to improve efficiency\",\n" +
-        //     "         \"fields\":[ \n" +
-        //     "            { \n" +
-        //     "               \"field_label\":\"mrc.attachments.fields.start_date\",\n" +
-        //     "               \"data_type\":\"Date\",\n" +
-        //     "               \"mandatory\":true,\n" +
-        //     "               \"validation_operation\":\"LESS_THAN_AND_EQUALS\",\n" +
-        //     "               \"validation_argument\":\"TODAY\"\n" +
-        //     "            },\n" +
-        //     "            { \n" +
-        //     "               \"field_label\":\"mrc.attachments.fields.expiration_date\",\n" +
-        //     "               \"data_type\":\"Date\",\n" +
-        //     "               \"mandatory\":true,\n" +
-        //     "               \"field_in_db\":\"expiry_date\",\n" +
-        //     "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
-        //     "               \"validation_argument\":\"TODAY\"\n" +
-        //     "            }\n" +
-        //     "         ]\n" +
-        //     "      },\n" +
-        //     "      { \n" +
-        //     "         \"country\":\"DE\",\n" +
-        //     "         \"type\":\"bank_guarantee\",\n" +
-        //     "         \"label\":\"mrc.attachments.types.bank_guarantee\",\n" +
-        //     "         \"remark\":\"Collaterals\",\n" +
-        //     "         \"is_collateral\":true,\n" +
-        //     "         \"fields\":[ \n" +
-        //     "            { \n" +
-        //     "               \"field_label\":\"mrc.attachments.fields.amount\",\n" +
-        //     "               \"data_type\":\"Double\",\n" +
-        //     "               \"mandatory\":true,\n" +
-        //     "               \"field_in_db\":\"amount\"\n" +
-        //     "            },\n" +
-        //     "            { \n" +
-        //     "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
-        //     "               \"data_type\":\"Date\",\n" +
-        //     "               \"mandatory\":true,\n" +
-        //     "               \"field_in_db\":\"expiry_date\",\n" +
-        //     "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
-        //     "               \"validation_argument\":\"TODAY\"\n" +
-        //     "            }\n" +
-        //     "         ]\n" +
-        //     "      },\n" +
-        //     "      { \n" +
-        //     "         \"country\":\"DE\",\n" +
-        //     "         \"type\":\"warenkreditversicherung\",\n" +
-        //     "         \"label\":\"mrc.attachments.types.Warenkreditversicherung\",\n" +
-        //     "         \"remark\":\"Collaterals\",\n" +
-        //     "         \"is_collateral\":true,\n" +
-        //     "         \"fields\":[ \n" +
-        //     "            { \n" +
-        //     "               \"field_label\":\"mrc.attachments.fields.amount\",\n" +
-        //     "               \"data_type\":\"Double\",\n" +
-        //     "               \"mandatory\":true,\n" +
-        //     "               \"field_in_db\":\"amount\"\n" +
-        //     "            },\n" +
-        //     "            { \n" +
-        //     "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
-        //     "               \"data_type\":\"Date\",\n" +
-        //     "               \"mandatory\":true,\n" +
-        //     "               \"field_in_db\":\"expiry_date\",\n" +
-        //     "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
-        //     "               \"validation_argument\":\"TODAY\"\n" +
-        //     "            }\n" +
-        //     "         ]\n" +
-        //     "      },\n" +
-        //     "      { \n" +
-        //     "         \"country\":\"DE\",\n" +
-        //     "         \"type\":\"bürgschaft\",\n" +
-        //     "         \"label\":\"mrc.attachments.types.Bürgschaft\",\n" +
-        //     "         \"remark\":\"Collaterals\",\n" +
-        //     "         \"is_collateral\":true,\n" +
-        //     "         \"fields\":[ \n" +
-        //     "            { \n" +
-        //     "               \"field_label\":\"mrc.attachments.fields.amount\",\n" +
-        //     "               \"data_type\":\"Double\",\n" +
-        //     "               \"mandatory\":true,\n" +
-        //     "               \"field_in_db\":\"amount\"\n" +
-        //     "            },\n" +
-        //     "            { \n" +
-        //     "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
-        //     "               \"data_type\":\"Date\",\n" +
-        //     "               \"mandatory\":true,\n" +
-        //     "               \"field_in_db\":\"expiry_date\",\n" +
-        //     "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
-        //     "               \"validation_argument\":\"TODAY\"\n" +
-        //     "            }\n" +
-        //     "         ]\n" +
-        //     "      },\n" +
-        //     "      { \n" +
-        //     "         \"country\":\"DE\",\n" +
-        //     "         \"type\":\"delkredere\",\n" +
-        //     "         \"label\":\"mrc.attachments.types.Delkredere\",\n" +
-        //     "         \"remark\":\"Collaterals\",\n" +
-        //     "         \"is_collateral\":true,\n" +
-        //     "         \"fields\":[ \n" +
-        //     "            { \n" +
-        //     "               \"field_label\":\"mrc.attachments.fields.amount\",\n" +
-        //     "               \"data_type\":\"Double\",\n" +
-        //     "               \"mandatory\":true,\n" +
-        //     "               \"field_in_db\":\"amount\"\n" +
-        //     "            },\n" +
-        //     "            { \n" +
-        //     "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
-        //     "               \"data_type\":\"Date\",\n" +
-        //     "               \"mandatory\":true,\n" +
-        //     "               \"field_in_db\":\"expiry_date\",\n" +
-        //     "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
-        //     "               \"validation_argument\":\"TODAY\"\n" +
-        //     "            }\n" +
-        //     "         ]\n" +
-        //     "      },\n" +
-        //     "      { \n" +
-        //     "         \"country\":\"DE\",\n" +
-        //     "         \"type\":\"andere_sicherheiten\",\n" +
-        //     "         \"label\":\"mrc.attachments.types.Andere_Sicherheiten\",\n" +
-        //     "         \"remark\":\"Collaterals\",\n" +
-        //     "         \"is_collateral\":true,\n" +
-        //     "         \"fields\":[ \n" +
-        //     "            { \n" +
-        //     "               \"field_label\":\"mrc.attachments.fields.amount\",\n" +
-        //     "               \"data_type\":\"Double\",\n" +
-        //     "               \"mandatory\":true,\n" +
-        //     "               \"field_in_db\":\"amount\"\n" +
-        //     "            },\n" +
-        //     "            { \n" +
-        //     "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
-        //     "               \"data_type\":\"Date\",\n" +
-        //     "               \"mandatory\":true,\n" +
-        //     "               \"field_in_db\":\"expiry_date\",\n" +
-        //     "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
-        //     "               \"validation_argument\":\"TODAY\"\n" +
-        //     "            }\n" +
-        //     "         ]\n" +
-        //     "      },\n" +
-        //     "      { \n" +
-        //     "         \"country\":\"DE\",\n" +
-        //     "         \"type\":\"bill_of_exchange\",\n" +
-        //     "         \"label\":\"mrc.attachments.types.bill_of_exchange\",\n" +
-        //     "         \"remark\":\"Bill of exchange\",\n" +
-        //     "         \"fields\":[ \n" +
-        //     "            { \n" +
-        //     "               \"field_label\":\"mrc.attachments.fields.date_of_registration\",\n" +
-        //     "               \"data_type\":\"Date\",\n" +
-        //     "               \"mandatory\":true,\n" +
-        //     "               \"validation_operation\":\"LESS_THAN_AND_EQUALS\",\n" +
-        //     "               \"validation_argument\":\"TODAY\"\n" +
-        //     "            },\n" +
-        //     "            { \n" +
-        //     "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
-        //     "               \"data_type\":\"Date\",\n" +
-        //     "               \"mandatory\":true,\n" +
-        //     "               \"field_in_db\":\"expiry_date\",\n" +
-        //     "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
-        //     "               \"validation_argument\":\"TODAY\"\n" +
-        //     "            }\n" +
-        //     "         ]\n" +
-        //     "      }\n" +
-        //     "   ]\n" +
-        //     "}");
-
         this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY = this.ALL_ATTACHMENT_TYPES_JSON.attachment_types
             .filter(attType => attType.country.toLowerCase() === "de" || attType.country.toLowerCase() === "all")
             .map(attType => attType.label);
@@ -472,15 +300,17 @@ export default class AttachmentsRows extends Component {
         const maxFileNameLength = 50;
 
         let readyToSend = this.state.title.trim().length > 0 && this.state.file !== null && ((this.state.fileType !== null && this.state.fileType !== '') || (this.props.fileTypes !== null && this.props.fileTypes.length === 1));
-        let isButtonAvailable = this.state.isUploadButtonAvailable && readyToSend;
-        // this.setState(...this.state, isUploadButtonAvailable: isButtonAvailable)
+        let isEveryMandatoryFieldValidated;
+        if (this.state.attachmentType && this.state.attachmentType.type.toLowerCase() != 'general')
+            isEveryMandatoryFieldValidated = this.state.attachmentType.fields.map(field => { if (field.mandatory && !field.isValidated) return false;})[0] === undefined ? true : false;
+        console.log(isEveryMandatoryFieldValidated)
+        console.log(this.state.attachmentType);
 
         return <div className="mrc-add-attachment">
             <FileUpload labelSelect={lookup('mrc.file.select')}
                         updateFile={this.updateFile}
                         selectDisabled={this.props.readonly}
                         uploadDisabled={!readyToSend}/>
-
 
             <div className='row'>
                 <div className='column'>
@@ -505,13 +335,12 @@ export default class AttachmentsRows extends Component {
             <div>{this.crateAttachmentTypesFields()}</div>
 
             <button className="mrc-btn mrc-secondary-button" type='button' name='upload-button' onClick={this.sendFile}
-                    disabled={/*!this.state.isUploadButtonAvailable*/false}>{lookup('mrc.file.upload')}</button>
+                    disabled={!isEveryMandatoryFieldValidated}>{lookup('mrc.file.upload')}</button>
         </div>;
     }
 
     crateAttachmentTypesFields() {
         if (this.state.showCollateralMeta) {
-            // let allFields = this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.filter(attType => attType.label.toLowerCase() === this.state.fileType)[0].fields;
             let allFields = this.state.attachmentType.fields;
             if (!allFields)
                 return;
@@ -540,9 +369,6 @@ export default class AttachmentsRows extends Component {
 
     createMetadataField(field, id) {
         if (field) {
-
-            // this.setState(...this.state, mandatoryFields: {...this.state.mandatoryFields, })
-
             var reactField;
             if (field.data_type.toLowerCase() === "date") {
                 let minDate = null, maxDate = null;
@@ -589,6 +415,7 @@ export default class AttachmentsRows extends Component {
                    className='selected-file'>{lookup(field.field_label)}</label><br/>
             <NumberInput className='m-input-element' name='attachment-amount'
                          value={this.state.attachmentAmount}
+                         onBlur={(event) => this.handleAttachmentAmountOnBlur(event, field)}
                          onChange={this.handleAttachmentAmountChange}
                          id={id}/>
         </div>
@@ -643,7 +470,6 @@ export default class AttachmentsRows extends Component {
             {item.amount ? <span>{lookup('mrc.attachment.amount')}: {item.amount}</span> : null}
         </h4>
     }
-
 
     downloadFile(item) {
         window.open(
@@ -716,12 +542,17 @@ export default class AttachmentsRows extends Component {
         var showCollateralMeta = false;
         if (attachment.fields)
             showCollateralMeta = true;
-        this.setState({fileType: event.target.value, showCollateralMeta: showCollateralMeta, attachmentType: attachment});
+        this.setState({...this.state, fileType: event.target.value, showCollateralMeta: showCollateralMeta, attachmentType: attachment});
     };
 
     handleAttachmentAmountChange = (amount) => {
         this.setState({attachmentAmount: parseFloat(amount)});
     };
+
+    handleAttachmentAmountOnBlur = (event, field) => {
+        let isValidated = !event.target.value || event.target.value == '0' || event.target.value == ' ' ? false : true;
+        this.validateOrInvalidateField(isValidated, field.field_label);
+    }
 
     checkForCollateralTypes(value) {
         if (this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY && this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY.includes(value)) {
@@ -738,13 +569,26 @@ export default class AttachmentsRows extends Component {
 
     handleDatePickerOnBlur(event, fieldLabel) {
         const date = new Date(event.target.value);
-        console.log(fieldLabel);
+
+        let isValidated = event.target.value ? true : false;
+        this.validateOrInvalidateField(isValidated, fieldLabel);
 
         if (date >= new Date() + 1) {
             this.handleDatePickerChange(date);
         } else {
             this.handleDatePickerChange(this.state.attachmentExpiryDate == null ? null : new Date(this.state.attachmentExpiryDate));
         }
+    }
+
+    validateOrInvalidateField(isValidated, fieldLabel) {
+        let attachmentType = this.state.attachmentType;
+        let fields = attachmentType.fields;
+        let selectedField = fields.filter(field => field.field_label === fieldLabel)[0];
+        fields.splice(fields.indexOf(selectedField), 1 );
+        selectedField = {...selectedField, isValidated: isValidated};
+        fields.push(selectedField);
+        attachmentType = {...attachmentType, fields: fields}
+        this.setState({...this.state, attachmentType});
     }
 }
 
