@@ -29,230 +29,12 @@ export default class AttachmentsRows extends Component {
             showCollateralMeta: false,
             attachmentAmount: null,
             attachmentType: null,
-            isUploadButtonAvailable: false
+            validatedFields: []
         };
+
         this.FILE_TYPES_TRANSLATION_KEYS = props.fileTypes;
         this.handleDatePickerChange = this.handleDatePickerChange.bind(this);
         this.handleDatePickerOnBlur = this.handleDatePickerOnBlur.bind(this);
-        this.ALL_ATTACHMENT_TYPES_JSON = JSON.parse("{ \n" +
-            "   \"attachment_types\":[ \n" +
-            "      { \n" +
-            "         \"country\":\"ALL\",\n" +
-            "         \"type\":\"general\",\n" +
-            "         \"label\":\"mrc.attachments.types.general\",\n" +
-            "         \"remark\":\"General\"\n" +
-            "      },\n" +
-            "      { \n" +
-            "         \"country\":\"DE\",\n" +
-            "         \"type\":\"contract\",\n" +
-            "         \"label\":\"mrc.attachments.types.contract\",\n" +
-            "         \"remark\":\"Digital version to improve efficiency\",\n" +
-            "         \"fields\":[ \n" +
-            "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.start_date\",\n" +
-            "               \"data_type\":\"Date\",\n" +
-            "               \"mandatory\":true,\n" +
-            "               \"validation_operation\":\"LESS_THAN_AND_EQUALS\",\n" +
-            "               \"validation_argument\":\"TODAY\"\n" +
-            "            },\n" +
-            "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.expiration_date\",\n" +
-            "               \"data_type\":\"Date\",\n" +
-            "               \"mandatory\":true,\n" +
-            "               \"field_in_db\":\"expiry_date\",\n" +
-            "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
-            "               \"validation_argument\":\"TODAY\"\n" +
-            "            }\n" +
-            "         ]\n" +
-            "      },\n" +
-            "      { \n" +
-            "         \"country\":\"DE\",\n" +
-            "         \"type\":\"bank_guarantee\",\n" +
-            "         \"label\":\"mrc.attachments.types.bank_guarantee\",\n" +
-            "         \"remark\":\"Collaterals\",\n" +
-            "         \"is_collateral\":true,\n" +
-            "         \"fields\":[ \n" +
-            "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.amount\",\n" +
-            "               \"data_type\":\"Double\",\n" +
-            "               \"mandatory\":true,\n" +
-            "               \"field_in_db\":\"amount\"\n" +
-            "            },\n" +
-            "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
-            "               \"data_type\":\"Date\",\n" +
-            "               \"mandatory\":true,\n" +
-            "               \"field_in_db\":\"expiry_date\",\n" +
-            "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
-            "               \"validation_argument\":\"TODAY\"\n" +
-            "            }\n" +
-            "         ]\n" +
-            "      },\n" +
-            "      { \n" +
-            "         \"country\":\"DE\",\n" +
-            "         \"type\":\"warenkreditversicherung\",\n" +
-            "         \"label\":\"mrc.attachments.types.Warenkreditversicherung\",\n" +
-            "         \"remark\":\"Collaterals\",\n" +
-            "         \"is_collateral\":true,\n" +
-            "         \"fields\":[ \n" +
-            "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.amount\",\n" +
-            "               \"data_type\":\"Double\",\n" +
-            "               \"mandatory\":true,\n" +
-            "               \"field_in_db\":\"amount\"\n" +
-            "            },\n" +
-            "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.amount_1\",\n" +
-            "               \"data_type\":\"Double\",\n" +
-            "               \"mandatory\":true,\n" +
-            "               \"field_in_db\":\"amount\"\n" +
-            "            },\n" +
-            "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
-            "               \"data_type\":\"Date\",\n" +
-            "               \"mandatory\":true,\n" +
-            "               \"field_in_db\":\"expiry_date\",\n" +
-            "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
-            "               \"validation_argument\":\"TODAY\"\n" +
-            "            }\n" +
-            "         ]\n" +
-            "      },\n" +
-            "      { \n" +
-            "         \"country\":\"DE\",\n" +
-            "         \"type\":\"bürgschaft\",\n" +
-            "         \"label\":\"mrc.attachments.types.Bürgschaft\",\n" +
-            "         \"remark\":\"Collaterals\",\n" +
-            "         \"is_collateral\":true,\n" +
-            "         \"fields\":[ \n" +
-            "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.amount\",\n" +
-            "               \"data_type\":\"Double\",\n" +
-            "               \"mandatory\":true,\n" +
-            "               \"field_in_db\":\"amount\"\n" +
-            "            },\n" +
-            "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.amount_1\",\n" +
-            "               \"data_type\":\"Double\",\n" +
-            "               \"mandatory\":true,\n" +
-            "               \"field_in_db\":\"amount\"\n" +
-            "            },\n" +
-            "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
-            "               \"data_type\":\"Date\",\n" +
-            "               \"mandatory\":true,\n" +
-            "               \"field_in_db\":\"expiry_date\",\n" +
-            "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
-            "               \"validation_argument\":\"TODAY\"\n" +
-            "            }\n" +
-            "         ]\n" +
-            "      },\n" +
-            "      { \n" +
-            "         \"country\":\"DE\",\n" +
-            "         \"type\":\"delkredere\",\n" +
-            "         \"label\":\"mrc.attachments.types.Delkredere\",\n" +
-            "         \"remark\":\"Collaterals\",\n" +
-            "         \"is_collateral\":true,\n" +
-            "         \"fields\":[ \n" +
-            "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.amount\",\n" +
-            "               \"data_type\":\"Double\",\n" +
-            "               \"mandatory\":true,\n" +
-            "               \"field_in_db\":\"amount\"\n" +
-            "            },\n" +
-            "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
-            "               \"data_type\":\"Date\",\n" +
-            "               \"mandatory\":true,\n" +
-            "               \"field_in_db\":\"expiry_date\",\n" +
-            "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
-            "               \"validation_argument\":\"TODAY\"\n" +
-            "            },\n" +
-            "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.validity_date_1\",\n" +
-            "               \"data_type\":\"Date\",\n" +
-            "               \"mandatory\":true,\n" +
-            "               \"field_in_db\":\"expiry_date\",\n" +
-            "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
-            "               \"validation_argument\":\"TODAY\"\n" +
-            "            }\n" +
-            "         ]\n" +
-            "      },\n" +
-            "      { \n" +
-            "         \"country\":\"DE\",\n" +
-            "         \"type\":\"andere_sicherheiten\",\n" +
-            "         \"label\":\"mrc.attachments.types.Andere_Sicherheiten\",\n" +
-            "         \"remark\":\"Collaterals\",\n" +
-            "         \"is_collateral\":true,\n" +
-            "         \"fields\":[ \n" +
-            "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.amount\",\n" +
-            "               \"data_type\":\"Double\",\n" +
-            "               \"mandatory\":true,\n" +
-            "               \"field_in_db\":\"amount\"\n" +
-            "            },\n" +
-            "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.amount_1\",\n" +
-            "               \"data_type\":\"Double\",\n" +
-            "               \"mandatory\":true,\n" +
-            "               \"field_in_db\":\"amount\"\n" +
-            "            },\n" +
-            "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
-            "               \"data_type\":\"Date\",\n" +
-            "               \"mandatory\":true,\n" +
-            "               \"field_in_db\":\"expiry_date\",\n" +
-            "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
-            "               \"validation_argument\":\"TODAY\"\n" +
-            "            },\n" +
-            "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.validity_date_1\",\n" +
-            "               \"data_type\":\"Date\",\n" +
-            "               \"mandatory\":true,\n" +
-            "               \"field_in_db\":\"expiry_date\",\n" +
-            "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
-            "               \"validation_argument\":\"TODAY\"\n" +
-            "            }\n" +
-            "         ]\n" +
-            "      },\n" +
-            "      { \n" +
-            "         \"country\":\"DE\",\n" +
-            "         \"type\":\"bill_of_exchange\",\n" +
-            "         \"label\":\"mrc.attachments.types.bill_of_exchange\",\n" +
-            "         \"remark\":\"Bill of exchange\",\n" +
-            "         \"fields\":[ \n" +
-            "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.date_of_registration\",\n" +
-            "               \"data_type\":\"Date\",\n" +
-            "               \"mandatory\":true,\n" +
-            "               \"validation_operation\":\"LESS_THAN_AND_EQUALS\",\n" +
-            "               \"validation_argument\":\"TODAY\"\n" +
-            "            },\n" +
-            "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.amount_1\",\n" +
-            "               \"data_type\":\"Double\",\n" +
-            "               \"mandatory\":true,\n" +
-            "               \"field_in_db\":\"amount\"\n" +
-            "            },\n" +
-            "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.date_of_registration_1\",\n" +
-            "               \"data_type\":\"Date\",\n" +
-            "               \"mandatory\":true,\n" +
-            "               \"validation_operation\":\"LESS_THAN_AND_EQUALS\",\n" +
-            "               \"validation_argument\":\"TODAY\"\n" +
-            "            },\n" +
-            "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
-            "               \"data_type\":\"Date\",\n" +
-            "               \"mandatory\":true,\n" +
-            "               \"field_in_db\":\"expiry_date\",\n" +
-            "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
-            "               \"validation_argument\":\"TODAY\"\n" +
-            "            }\n" +
-            "         ]\n" +
-            "      }\n" +
-            "   ]\n" +
-            "}");
-
         // this.ALL_ATTACHMENT_TYPES_JSON = JSON.parse("{ \n" +
         //     "   \"attachment_types\":[ \n" +
         //     "      { \n" +
@@ -321,6 +103,12 @@ export default class AttachmentsRows extends Component {
         //     "               \"field_in_db\":\"amount\"\n" +
         //     "            },\n" +
         //     "            { \n" +
+        //     "               \"field_label\":\"mrc.attachments.fields.amount_1\",\n" +
+        //     "               \"data_type\":\"Double\",\n" +
+        //     "               \"mandatory\":true,\n" +
+        //     "               \"field_in_db\":\"amount\"\n" +
+        //     "            },\n" +
+        //     "            { \n" +
         //     "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
         //     "               \"data_type\":\"Date\",\n" +
         //     "               \"mandatory\":true,\n" +
@@ -339,6 +127,12 @@ export default class AttachmentsRows extends Component {
         //     "         \"fields\":[ \n" +
         //     "            { \n" +
         //     "               \"field_label\":\"mrc.attachments.fields.amount\",\n" +
+        //     "               \"data_type\":\"Double\",\n" +
+        //     "               \"mandatory\":true,\n" +
+        //     "               \"field_in_db\":\"amount\"\n" +
+        //     "            },\n" +
+        //     "            { \n" +
+        //     "               \"field_label\":\"mrc.attachments.fields.amount_1\",\n" +
         //     "               \"data_type\":\"Double\",\n" +
         //     "               \"mandatory\":true,\n" +
         //     "               \"field_in_db\":\"amount\"\n" +
@@ -373,6 +167,14 @@ export default class AttachmentsRows extends Component {
         //     "               \"field_in_db\":\"expiry_date\",\n" +
         //     "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
         //     "               \"validation_argument\":\"TODAY\"\n" +
+        //     "            },\n" +
+        //     "            { \n" +
+        //     "               \"field_label\":\"mrc.attachments.fields.validity_date_1\",\n" +
+        //     "               \"data_type\":\"Date\",\n" +
+        //     "               \"mandatory\":true,\n" +
+        //     "               \"field_in_db\":\"expiry_date\",\n" +
+        //     "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
+        //     "               \"validation_argument\":\"TODAY\"\n" +
         //     "            }\n" +
         //     "         ]\n" +
         //     "      },\n" +
@@ -390,7 +192,21 @@ export default class AttachmentsRows extends Component {
         //     "               \"field_in_db\":\"amount\"\n" +
         //     "            },\n" +
         //     "            { \n" +
+        //     "               \"field_label\":\"mrc.attachments.fields.amount_1\",\n" +
+        //     "               \"data_type\":\"Double\",\n" +
+        //     "               \"mandatory\":true,\n" +
+        //     "               \"field_in_db\":\"amount\"\n" +
+        //     "            },\n" +
+        //     "            { \n" +
         //     "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
+        //     "               \"data_type\":\"Date\",\n" +
+        //     "               \"mandatory\":true,\n" +
+        //     "               \"field_in_db\":\"expiry_date\",\n" +
+        //     "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
+        //     "               \"validation_argument\":\"TODAY\"\n" +
+        //     "            },\n" +
+        //     "            { \n" +
+        //     "               \"field_label\":\"mrc.attachments.fields.validity_date_1\",\n" +
         //     "               \"data_type\":\"Date\",\n" +
         //     "               \"mandatory\":true,\n" +
         //     "               \"field_in_db\":\"expiry_date\",\n" +
@@ -413,6 +229,19 @@ export default class AttachmentsRows extends Component {
         //     "               \"validation_argument\":\"TODAY\"\n" +
         //     "            },\n" +
         //     "            { \n" +
+        //     "               \"field_label\":\"mrc.attachments.fields.amount_1\",\n" +
+        //     "               \"data_type\":\"Double\",\n" +
+        //     "               \"mandatory\":true,\n" +
+        //     "               \"field_in_db\":\"amount\"\n" +
+        //     "            },\n" +
+        //     "            { \n" +
+        //     "               \"field_label\":\"mrc.attachments.fields.date_of_registration_1\",\n" +
+        //     "               \"data_type\":\"Date\",\n" +
+        //     "               \"mandatory\":true,\n" +
+        //     "               \"validation_operation\":\"LESS_THAN_AND_EQUALS\",\n" +
+        //     "               \"validation_argument\":\"TODAY\"\n" +
+        //     "            },\n" +
+        //     "            { \n" +
         //     "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
         //     "               \"data_type\":\"Date\",\n" +
         //     "               \"mandatory\":true,\n" +
@@ -424,6 +253,178 @@ export default class AttachmentsRows extends Component {
         //     "      }\n" +
         //     "   ]\n" +
         //     "}");
+
+        this.ALL_ATTACHMENT_TYPES_JSON = JSON.parse("{ \n" +
+            "   \"attachment_types\":[ \n" +
+            "      { \n" +
+            "         \"country\":\"ALL\",\n" +
+            "         \"type\":\"general\",\n" +
+            "         \"label\":\"mrc.attachments.types.general\",\n" +
+            "         \"remark\":\"General\"\n" +
+            "      },\n" +
+            "      { \n" +
+            "         \"country\":\"DE\",\n" +
+            "         \"type\":\"contract\",\n" +
+            "         \"label\":\"mrc.attachments.types.contract\",\n" +
+            "         \"remark\":\"Digital version to improve efficiency\",\n" +
+            "         \"fields\":[ \n" +
+            "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.start_date\",\n" +
+            "               \"data_type\":\"Date\",\n" +
+            "               \"mandatory\":true,\n" +
+            "               \"validation_operation\":\"LESS_THAN_AND_EQUALS\",\n" +
+            "               \"validation_argument\":\"TODAY\"\n" +
+            "            },\n" +
+            "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.expiration_date\",\n" +
+            "               \"data_type\":\"Date\",\n" +
+            "               \"mandatory\":true,\n" +
+            "               \"field_in_db\":\"expiry_date\",\n" +
+            "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
+            "               \"validation_argument\":\"TODAY\"\n" +
+            "            }\n" +
+            "         ]\n" +
+            "      },\n" +
+            "      { \n" +
+            "         \"country\":\"DE\",\n" +
+            "         \"type\":\"bank_guarantee\",\n" +
+            "         \"label\":\"mrc.attachments.types.bank_guarantee\",\n" +
+            "         \"remark\":\"Collaterals\",\n" +
+            "         \"is_collateral\":true,\n" +
+            "         \"fields\":[ \n" +
+            "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.amount\",\n" +
+            "               \"data_type\":\"Double\",\n" +
+            "               \"mandatory\":true,\n" +
+            "               \"field_in_db\":\"amount\"\n" +
+            "            },\n" +
+            "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
+            "               \"data_type\":\"Date\",\n" +
+            "               \"mandatory\":true,\n" +
+            "               \"field_in_db\":\"expiry_date\",\n" +
+            "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
+            "               \"validation_argument\":\"TODAY\"\n" +
+            "            }\n" +
+            "         ]\n" +
+            "      },\n" +
+            "      { \n" +
+            "         \"country\":\"DE\",\n" +
+            "         \"type\":\"warenkreditversicherung\",\n" +
+            "         \"label\":\"mrc.attachments.types.Warenkreditversicherung\",\n" +
+            "         \"remark\":\"Collaterals\",\n" +
+            "         \"is_collateral\":true,\n" +
+            "         \"fields\":[ \n" +
+            "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.amount\",\n" +
+            "               \"data_type\":\"Double\",\n" +
+            "               \"mandatory\":true,\n" +
+            "               \"field_in_db\":\"amount\"\n" +
+            "            },\n" +
+            "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
+            "               \"data_type\":\"Date\",\n" +
+            "               \"mandatory\":true,\n" +
+            "               \"field_in_db\":\"expiry_date\",\n" +
+            "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
+            "               \"validation_argument\":\"TODAY\"\n" +
+            "            }\n" +
+            "         ]\n" +
+            "      },\n" +
+            "      { \n" +
+            "         \"country\":\"DE\",\n" +
+            "         \"type\":\"bürgschaft\",\n" +
+            "         \"label\":\"mrc.attachments.types.Bürgschaft\",\n" +
+            "         \"remark\":\"Collaterals\",\n" +
+            "         \"is_collateral\":true,\n" +
+            "         \"fields\":[ \n" +
+            "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.amount\",\n" +
+            "               \"data_type\":\"Double\",\n" +
+            "               \"mandatory\":true,\n" +
+            "               \"field_in_db\":\"amount\"\n" +
+            "            },\n" +
+            "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
+            "               \"data_type\":\"Date\",\n" +
+            "               \"mandatory\":true,\n" +
+            "               \"field_in_db\":\"expiry_date\",\n" +
+            "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
+            "               \"validation_argument\":\"TODAY\"\n" +
+            "            }\n" +
+            "         ]\n" +
+            "      },\n" +
+            "      { \n" +
+            "         \"country\":\"DE\",\n" +
+            "         \"type\":\"delkredere\",\n" +
+            "         \"label\":\"mrc.attachments.types.Delkredere\",\n" +
+            "         \"remark\":\"Collaterals\",\n" +
+            "         \"is_collateral\":true,\n" +
+            "         \"fields\":[ \n" +
+            "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.amount\",\n" +
+            "               \"data_type\":\"Double\",\n" +
+            "               \"mandatory\":true,\n" +
+            "               \"field_in_db\":\"amount\"\n" +
+            "            },\n" +
+            "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
+            "               \"data_type\":\"Date\",\n" +
+            "               \"mandatory\":true,\n" +
+            "               \"field_in_db\":\"expiry_date\",\n" +
+            "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
+            "               \"validation_argument\":\"TODAY\"\n" +
+            "            }\n" +
+            "         ]\n" +
+            "      },\n" +
+            "      { \n" +
+            "         \"country\":\"DE\",\n" +
+            "         \"type\":\"andere_sicherheiten\",\n" +
+            "         \"label\":\"mrc.attachments.types.Andere_Sicherheiten\",\n" +
+            "         \"remark\":\"Collaterals\",\n" +
+            "         \"is_collateral\":true,\n" +
+            "         \"fields\":[ \n" +
+            "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.amount\",\n" +
+            "               \"data_type\":\"Double\",\n" +
+            "               \"mandatory\":true,\n" +
+            "               \"field_in_db\":\"amount\"\n" +
+            "            },\n" +
+            "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
+            "               \"data_type\":\"Date\",\n" +
+            "               \"mandatory\":true,\n" +
+            "               \"field_in_db\":\"expiry_date\",\n" +
+            "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
+            "               \"validation_argument\":\"TODAY\"\n" +
+            "            }\n" +
+            "         ]\n" +
+            "      },\n" +
+            "      { \n" +
+            "         \"country\":\"DE\",\n" +
+            "         \"type\":\"bill_of_exchange\",\n" +
+            "         \"label\":\"mrc.attachments.types.bill_of_exchange\",\n" +
+            "         \"remark\":\"Bill of exchange\",\n" +
+            "         \"fields\":[ \n" +
+            "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.date_of_registration\",\n" +
+            "               \"data_type\":\"Date\",\n" +
+            "               \"mandatory\":true,\n" +
+            "               \"validation_operation\":\"LESS_THAN_AND_EQUALS\",\n" +
+            "               \"validation_argument\":\"TODAY\"\n" +
+            "            },\n" +
+            "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
+            "               \"data_type\":\"Date\",\n" +
+            "               \"mandatory\":true,\n" +
+            "               \"field_in_db\":\"expiry_date\",\n" +
+            "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
+            "               \"validation_argument\":\"TODAY\"\n" +
+            "            }\n" +
+            "         ]\n" +
+            "      }\n" +
+            "   ]\n" +
+            "}");
 
         this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY = this.ALL_ATTACHMENT_TYPES_JSON.attachment_types
             .filter(attType => attType.country.toLowerCase() === "de" || attType.country.toLowerCase() === "all")
@@ -470,10 +471,8 @@ export default class AttachmentsRows extends Component {
 
     createUploader() {
         const maxFileNameLength = 50;
-
-        let readyToSend = this.state.title.trim().length > 0 && this.state.file !== null && ((this.state.fileType !== null && this.state.fileType !== '') || (this.props.fileTypes !== null && this.props.fileTypes.length === 1));
-        let isButtonAvailable = this.state.isUploadButtonAvailable && readyToSend;
-        // this.setState(...this.state, isUploadButtonAvailable: isButtonAvailable)
+        let mandatoryFields = this.checkMandatoryFields();
+        let readyToSend = this.state.title.trim().length > 0 && this.state.file !== null && ((this.state.fileType !== null && this.state.fileType !== '') || (this.props.fileTypes !== null && this.props.fileTypes.length === 1)) && mandatoryFields;
 
         return <div className="mrc-add-attachment">
             <FileUpload labelSelect={lookup('mrc.file.select')}
@@ -505,19 +504,18 @@ export default class AttachmentsRows extends Component {
             <div>{this.crateAttachmentTypesFields()}</div>
 
             <button className="mrc-btn mrc-secondary-button" type='button' name='upload-button' onClick={this.sendFile}
-                    disabled={/*!this.state.isUploadButtonAvailable*/false}>{lookup('mrc.file.upload')}</button>
+                    disabled={!readyToSend}>{lookup('mrc.file.upload')}</button>
         </div>;
     }
 
     crateAttachmentTypesFields() {
         if (this.state.showCollateralMeta) {
-            // let allFields = this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.filter(attType => attType.label.toLowerCase() === this.state.fileType)[0].fields;
             let allFields = this.state.attachmentType.fields;
             if (!allFields)
                 return;
 
             let fields = [];
-            var i , j = 0;
+            var i, j = 0;
             for (i = 0; i < allFields.length; i++) {
                 if (i % 2 === 0) {
                     fields[j] = this.createMetadataRow(allFields[i], i, allFields[i + 1], i + 1);
@@ -533,16 +531,13 @@ export default class AttachmentsRows extends Component {
         let returnValue = [];
         returnValue[0] = this.createMetadataField(field1, id1);
         returnValue[1] = this.createMetadataField(field2, id2);
-        return <div className='row'  key={id1 + "_" + id2}>
+        return <div className='row' key={id1 + "_" + id2}>
             {returnValue}
         </div>
     }
 
     createMetadataField(field, id) {
         if (field) {
-
-            // this.setState(...this.state, mandatoryFields: {...this.state.mandatoryFields, })
-
             var reactField;
             if (field.data_type.toLowerCase() === "date") {
                 let minDate = null, maxDate = null;
@@ -571,7 +566,7 @@ export default class AttachmentsRows extends Component {
                    className='selected-file'>{lookup(field.field_label)}</label><br/>
             <MrcDatePickerInput className="m-input-element"
                                 onChange={this.handleDatePickerChange}
-                                onBlur={(event) => this.handleDatePickerOnBlur(event, field.field_label)}
+                                onBlur={(event) => this.handleDatePickerOnBlur(event, field)}
                                 selected={this.state.attachmentExpiryDate ? new Date(this.state.attachmentExpiryDate) : null} //to check this
                                 minDate={minDate}
                                 maxDate={maxDate}
@@ -584,11 +579,12 @@ export default class AttachmentsRows extends Component {
     }
 
     createNumberInput(id, field) {
-        return <div className='column' key={field.field_label + "_"+ id}>
+        return <div className='column' key={field.field_label + "_" + id}>
             <label name={field.field_label}
                    className='selected-file'>{lookup(field.field_label)}</label><br/>
             <NumberInput className='m-input-element' name='attachment-amount'
                          value={this.state.attachmentAmount}
+                         onBlur={(event) => this.handleAttachmentAmountChangeOnBlur(event, field)}
                          onChange={this.handleAttachmentAmountChange}
                          id={id}/>
         </div>
@@ -716,8 +712,17 @@ export default class AttachmentsRows extends Component {
         var showCollateralMeta = false;
         if (attachment.fields)
             showCollateralMeta = true;
-        this.setState({fileType: event.target.value, showCollateralMeta: showCollateralMeta, attachmentType: attachment});
+
+        this.setState({
+            fileType: event.target.value,
+            showCollateralMeta: showCollateralMeta,
+            attachmentType: attachment
+        });
     };
+
+    handleAttachmentAmountChangeOnBlur = (event, field) => {
+        this.addFieldOnStateValidatedFields(event.target.value, field);
+    }
 
     handleAttachmentAmountChange = (amount) => {
         this.setState({attachmentAmount: parseFloat(amount)});
@@ -732,19 +737,46 @@ export default class AttachmentsRows extends Component {
     }
 
     handleDatePickerChange = (date) => {
-        // if (date)
         this.setState({...this.state, attachmentExpiryDate: date});
     };
 
-    handleDatePickerOnBlur(event, fieldLabel) {
+    handleDatePickerOnBlur(event, field) {
         const date = new Date(event.target.value);
-        console.log(fieldLabel);
 
         if (date >= new Date() + 1) {
             this.handleDatePickerChange(date);
         } else {
             this.handleDatePickerChange(this.state.attachmentExpiryDate == null ? null : new Date(this.state.attachmentExpiryDate));
         }
+        this.addFieldOnStateValidatedFields(event.target.value, field);
+    }
+
+    addFieldOnStateValidatedFields = (value, field) => {
+        let arrElements = this.state.validatedFields;
+        if (value) {
+            if (arrElements.indexOf(field) == -1)
+                arrElements.push(field);
+        } else {
+            arrElements.splice(arrElements.indexOf(field), 1);
+        }
+        this.setState({...this.state, validatedFields: arrElements});
+        this.checkMandatoryFields();
+    }
+
+    checkMandatoryFields = () => {
+        let fieldsWithValueArr = this.state.validatedFields;
+        let fieldsToCheckArr = this.state.attachmentType &&  this.state.attachmentType.fields
+            && this.state.attachmentType.fields.filter(elem => elem.mandatory === true);
+
+        let isValid = true;
+
+        if (fieldsToCheckArr && fieldsToCheckArr.length > 0) {
+            for (let i = 0; i < fieldsToCheckArr.length; i ++) {
+                if (fieldsWithValueArr.indexOf(fieldsToCheckArr[i]) == -1)
+                    isValid = false;
+            }
+        }
+        return isValid;
     }
 }
 
