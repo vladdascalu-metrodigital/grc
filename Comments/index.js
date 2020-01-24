@@ -19,7 +19,7 @@ export default class Comments extends Component {
                 {comments.map(comment => {
                     return (<div key={comment.id} className='mrc-comment'>
                         <mrc-datetime class='datetime'>{comment.uploadTimestamp}</mrc-datetime> <span className='author'>{comment.uploaderPrincipalName} ({comment.uploaderPosition})</span>
-                        <div className='content long-text'>
+                        <div className='content'>
                             {lookup(comment.comment)}&nbsp;
                             {(comment.comment === 'strategy.decision.blocked' || comment.comment === 'strategy.decision.rejected' ) && this.props.timeoutDate != undefined && this.props.timeoutDate != null
                                 ? <mrc-datetime className='datetime'>{this.props.timeoutDate}</mrc-datetime> : ''}
