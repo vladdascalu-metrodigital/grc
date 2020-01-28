@@ -34,7 +34,8 @@ export default class AttachmentsRows extends Component {
 
         this.FILE_TYPES_TRANSLATION_KEYS = props.fileTypes;
         this.handleDatePickerChange = this.handleDatePickerChange.bind(this);
-        this.handleDatePickerOnBlur = this.handleDatePickerOnBlur.bind(this);
+        //this.handleDatePickerOnBlur = this.handleDatePickerOnBlur.bind(this);
+
         // this.ALL_ATTACHMENT_TYPES_JSON = JSON.parse("{ \n" +
         //     "   \"attachment_types\":[ \n" +
         //     "      { \n" +
@@ -368,6 +369,12 @@ export default class AttachmentsRows extends Component {
             "               \"field_in_db\":\"amount\"\n" +
             "            },\n" +
             "            { \n" +
+            "               \"field_label\":\"mrc.attachments.fields.amount_1\",\n" +
+            "               \"data_type\":\"Double\",\n" +
+            "               \"mandatory\":false,\n" +
+            "               \"field_in_db\":\"amount\"\n" +
+            "            },\n" +
+            "            { \n" +
             "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
             "               \"data_type\":\"Date\",\n" +
             "               \"mandatory\":true,\n" +
@@ -407,14 +414,14 @@ export default class AttachmentsRows extends Component {
             "         \"remark\":\"Bill of exchange\",\n" +
             "         \"fields\":[ \n" +
             "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.date_of_registration\",\n" +
+            "               \"field_label\":\"mrc.attachments.bill_of_exchange.fields.date_of_registration\",\n" +
             "               \"data_type\":\"Date\",\n" +
             "               \"mandatory\":true,\n" +
             "               \"validation_operation\":\"LESS_THAN_AND_EQUALS\",\n" +
             "               \"validation_argument\":\"TODAY\"\n" +
             "            },\n" +
             "            { \n" +
-            "               \"field_label\":\"mrc.attachments.fields.validity_date\",\n" +
+            "               \"field_label\":\"mrc.attachments.bill_of_exchange.fields.validity_date\",\n" +
             "               \"data_type\":\"Date\",\n" +
             "               \"mandatory\":true,\n" +
             "               \"field_in_db\":\"expiry_date\",\n" +
@@ -515,7 +522,7 @@ export default class AttachmentsRows extends Component {
                 return;
 
             let fields = [];
-            var i, j = 0;
+            let i, j = 0;
             for (i = 0; i < allFields.length; i++) {
                 if (i % 2 === 0) {
                     fields[j] = this.createMetadataRow(allFields[i], i, allFields[i + 1], i + 1);
@@ -538,7 +545,7 @@ export default class AttachmentsRows extends Component {
 
     createMetadataField(field, id) {
         if (field) {
-            var reactField;
+            let reactField;
             if (field.data_type.toLowerCase() === "date") {
                 let minDate = null, maxDate = null;
                 if (field.validation_operation.toLowerCase() === "less_than_and_equals")
@@ -561,7 +568,7 @@ export default class AttachmentsRows extends Component {
         else
             minDate = null;
 
-        return <div className='column' key={field.field_label + "_" + id}>
+        return <div className='column' key={this.state.attachmentType.type + "." + field.field_label + "_" + id}>
             <label name={field.field_label}
                    className='selected-file'>{lookup(field.field_label)}</label><br/>
             <MrcDatePickerInput className="m-input-element"
@@ -579,11 +586,11 @@ export default class AttachmentsRows extends Component {
     }
 
     createNumberInput(id, field) {
-        return <div className='column' key={field.field_label + "_" + id}>
+        return <div className='column' key={this.state.attachmentType.type + "." + field.field_label + "_" + id}>
             <label name={field.field_label}
                    className='selected-file'>{lookup(field.field_label)}</label><br/>
             <NumberInput className='m-input-element' name='attachment-amount'
-                         value={this.state.attachmentAmount}
+                //value={this.state.attachmentAmount ? this.state.attachmentAmount : null}
                          onBlur={(event) => this.handleAttachmentAmountChangeOnBlur(event, field)}
                          onChange={this.handleAttachmentAmountChange}
                          id={id}/>
@@ -640,7 +647,6 @@ export default class AttachmentsRows extends Component {
         </h4>
     }
 
-
     downloadFile(item) {
         window.open(
             item.contentUri,
@@ -668,7 +674,6 @@ export default class AttachmentsRows extends Component {
         } else { //We need an icon for unknown file types.
             return {src: UnknownIcon, extension: extension};
         }
-
     }
 
     createTs(ts) {
@@ -697,7 +702,9 @@ export default class AttachmentsRows extends Component {
             fileType: null,
             showCollateralMeta: false,
             attachmentAmount: 0,
-            attachmentExpiryDate: null
+            attachmentExpiryDate: null,
+            attachmentType: null,
+            validatedFields: []
         });
     };
 
@@ -707,16 +714,19 @@ export default class AttachmentsRows extends Component {
     };
 
     handleFileTypeChange = (event) => {
-        let attachment = this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.filter(attachment => attachment.label.toLowerCase() == event.target.value)[0];
+        let attachment = this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.filter(attachment => attachment.label.toLowerCase() === event.target.value)[0];
 
-        var showCollateralMeta = false;
+        let showCollateralMeta = false;
         if (attachment.fields)
             showCollateralMeta = true;
 
         this.setState({
             fileType: event.target.value,
             showCollateralMeta: showCollateralMeta,
-            attachmentType: attachment
+            attachmentType: attachment,
+            attachmentExpiryDate: null,
+            attachmentAmount: null,
+            validatedFields: null
         });
     };
 
@@ -752,28 +762,29 @@ export default class AttachmentsRows extends Component {
     }
 
     addFieldOnStateValidatedFields = (value, field) => {
-        let arrElements = this.state.validatedFields;
-        if (value) {
-            if (arrElements.indexOf(field) == -1)
-                arrElements.push(field);
-        } else {
+        let arrElements = this.state.validatedFields ? this.state.validatedFields : [];
+
+        if (value && arrElements.indexOf(field) === -1)
+            arrElements.push(field);
+        else if (arrElements && !value)
             arrElements.splice(arrElements.indexOf(field), 1);
-        }
+
         this.setState({...this.state, validatedFields: arrElements});
-        this.checkMandatoryFields();
     }
 
     checkMandatoryFields = () => {
-        let fieldsWithValueArr = this.state.validatedFields;
-        let fieldsToCheckArr = this.state.attachmentType &&  this.state.attachmentType.fields
+        let fieldsWithValueArr = this.state.validatedFields ? this.state.validatedFields : [];
+        let fieldsToCheckArr = this.state.attachmentType && this.state.attachmentType.fields
             && this.state.attachmentType.fields.filter(elem => elem.mandatory === true);
 
-        let isValid = true;
+        let isValid = fieldsToCheckArr && fieldsToCheckArr.length > 0 ? false : true;
 
-        if (fieldsToCheckArr && fieldsToCheckArr.length > 0) {
-            for (let i = 0; i < fieldsToCheckArr.length; i ++) {
-                if (fieldsWithValueArr.indexOf(fieldsToCheckArr[i]) == -1)
-                    isValid = false;
+        for (let i = 0; fieldsToCheckArr && i < fieldsToCheckArr.length; i++) {
+            if (fieldsWithValueArr && fieldsWithValueArr.indexOf(fieldsToCheckArr[i]) === -1) {
+                isValid = false;
+                break;
+            } else {
+                isValid = true;
             }
         }
         return isValid;
