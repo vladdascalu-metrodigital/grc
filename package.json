@@ -26,6 +26,7 @@
     "eslint-plugin-react": "^7.18.0",
     "mrc-component-library": "1.0.52",
     "prettier": "^1.19.1",
+    "react-router-dom": "^5.1.2",
     "react-table": "^7.0.0-rc.15"
   },
   "scripts": {
