@@ -1,5 +1,5 @@
 import React from 'react';
-import {createUriPath} from './util';
+import { createUriPath } from './util';
 import LaunchpadIcon from '../icons/menu.svg';
 import InboxIcon from '../icons/inbox.svg';
 import LimitcheckIcon from '../icons/credit-request.svg';
@@ -7,40 +7,29 @@ import HistoryIcon from '../icons/history.svg';
 import QuickcheckIcon from '../icons/quick-check.svg';
 import CreditcorrectionIcon from '../icons/credit-correction-white.svg';
 
-
 const iconMap = {
     launchpad: LaunchpadIcon, // Will not be part of the config, just for here
     limitcheck: LimitcheckIcon,
     history: HistoryIcon,
-    inbox:  InboxIcon,
+    inbox: InboxIcon,
     quickcheck: QuickcheckIcon,
-    creditcorrection:CreditcorrectionIcon
-
+    creditcorrection: CreditcorrectionIcon,
 };
-const sortMap = [
-    'launchpad',
-    'inbox',
-    'limitcheck',
-    'quickcheck',
-    'creditcorrection',
-    'history'
-];
+const sortMap = ['launchpad', 'inbox', 'limitcheck', 'quickcheck', 'creditcorrection', 'history'];
 
 function sortNavs(navs, sortMap) {
-    return navs.sort((a,b) => sortMap.indexOf(a.roleKey.toLowerCase()) - sortMap.indexOf(b.roleKey.toLowerCase()));
+    return navs.sort((a, b) => sortMap.indexOf(a.roleKey.toLowerCase()) - sortMap.indexOf(b.roleKey.toLowerCase()));
 }
 
 function createHref(template, roleKey) {
     if (!template) return '/';
-    return template.indexOf('{') < 0
-        ? template
-        : createUriPath('search', roleKey, template);
+    return template.indexOf('{') < 0 ? template : createUriPath('search', roleKey, template);
 }
 
 export function extractNavsFromQuickNav(navConfigs) {
     if (!navConfigs) return null;
     const navs = Object.keys(navConfigs).reduce((result, nav) => {
-        if (navConfigs[nav].show) result.push({...navConfigs[nav], roleKey: nav, template: navConfigs[nav].url});
+        if (navConfigs[nav].show) result.push({ ...navConfigs[nav], roleKey: nav, template: navConfigs[nav].url });
         return result;
     }, []);
     return sortNavs(navs, sortMap);
@@ -53,10 +42,11 @@ export function createNav(btnConf, translations) {
     const href = createHref(btnConf.template, btnConf.roleKey);
     return {
         key: btnConf.roleKey,
+        highlight: btnConf.highlight,
         title: title || btnConf.title || btnConf.roleKey,
         icon: icon,
         href: href,
         isAbsolute: href.startsWith('http'),
-        imgEl: <img className={'mrc-icon-base ' + service} src={icon} alt={title}/>
+        imgEl: <img className={'mrc-icon-base ' + service} src={icon} alt={title} />,
     };
 }
