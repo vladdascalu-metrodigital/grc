@@ -15,5 +15,9 @@
     &:hover, &:focus {
       background-color: transparent;
     }
+
+    .selected {
+        background-color: $mrc-blue
+    }
   }
 }
