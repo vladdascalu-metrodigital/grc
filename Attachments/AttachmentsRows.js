@@ -18,7 +18,6 @@ import UnknownIcon from '../icons/doc.svg'; //TODO : need to replace this with a
 
 export default class AttachmentsRows extends Component {
 
-
     constructor(props) {
         super(props);
         this.state = {
@@ -567,14 +566,20 @@ export default class AttachmentsRows extends Component {
             minDate = new Date(minDate.getTime() + 86400000); // add 1 day in ms
         else
             minDate = null;
-        let value = this.getFieldValueFromAttachmentType(field);
 
+        let value = this.getFieldValueFromAttachmentType(field);
+        let selectedDate = value;
+        // let dateParser;
+        // if (value) {
+        //     dateParser = value.split('.');
+        //     selectedDate = new Date(dateParser[2], dateParser[1] - 1, dateParser[0]);
+        // }
         return <div className='column' key={this.state.attachmentType.type + "." + field.field_label + "_" + id}>
             <label name={field.field_label}
                    className='selected-file'>{lookup(field.field_label)}</label><br/>
             <MrcDatePickerInput className="m-input-element"
                                 onChange={(event) => this.handleDatePickerChange(event, field)}
-                                selected={value ? new Date(value) : null} //to check this
+                                selected={selectedDate ? new Date(selectedDate) : null} //to check this
                                 minDate={minDate}
                                 maxDate={maxDate}
                                 showYearDropdown={true}
@@ -713,7 +718,7 @@ export default class AttachmentsRows extends Component {
     };
 
     handleFileTypeChange = (event) => {
-        let attachment = this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.filter(attachment => attachment.label.toLowerCase() == event.target.value)[0];
+        let attachment = this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.filter(attachment => attachment.label.toLowerCase() === event.target.value)[0];
 
         let showCollateralMeta = false;
         if (attachment.fields)
@@ -729,57 +734,39 @@ export default class AttachmentsRows extends Component {
     };
 
     handleAttachmentAmountChangeOnBlur = (event, field) => {
-        if (field.field_in_db && field.field_in_db.toLowerCase() === 'amount') { //can be only one field_in_db = amount per attachment type
-            this.setState({...this.state, attachmentAmount: parseFloat(event.target.value)});
-            //this.state.attachmentAmount = parseFloat(event.target.value);
-        }
-        this.addFieldValueOnState(event.target.value, field);
+        this.addFieldValueOnState(parseFloat(event.target.value), field);
     }
 
     handleAttachmentAmountChange = (amount) => {
-        null; //this.setState({attachmentAmount: parseFloat(amount)});
+        null;
     };
-
-    checkForCollateralTypes(value) {
-        if (this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY && this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY.includes(value)) {
-            this.setState({showCollateralMeta: true});
-        } else {
-            this.setState({showCollateralMeta: false});
-        }
-    }
 
     handleDatePickerChange = (event, field) => {
-        if (field.field_in_db && field.field_in_db.toLowerCase() === 'expiry_date') {//can be only one field_in_db = expiry_date per attachment type
-            this.setState({...this.state, attachmentExpiryDate: event});
-        }
-        this.addFieldValueOnState(event, field);
+        let formattedDate = event;// && this.appendLeadingZeroes(event.getDate()) + "." + this.appendLeadingZeroes(event.getMonth() + 1) + "." + event.getFullYear();
+        this.addFieldValueOnState(formattedDate, field);
     };
-
-    // handleDatePickerOnBlur(event) {
-    //     const date = new Date(event.target.value);
-    //     if (date >= new Date() + 1) {
-    //         this.handleDatePickerChange(date);
-    //     } else {
-    //         this.handleDatePickerChange(this.state.attachmentExpiryDate == null ? null : new Date(this.state.attachmentExpiryDate));
-    //     }
-    // }
 
     addFieldValueOnState = (value, field) => {
 
         let attachmentTypeArr = this.state.attachmentType || [];
-        let newValue = value;
-
-        // if (field.data_type.toLowerCase() === 'double') {
-        //     newValue = parseFloat(value);
-        // } else if (field.data_type.toLowerCase() === 'date') {
-        //     newValue = new Date(value);// Atention new Date(value) is in Locale value!!!
-        // }
         let index = attachmentTypeArr.fields.indexOf(field);
-
+        let expiryDate = this.state.attachmentExpiryDate;
+        let attachmentAmount = this.state.attachmentAmount;
         if (index > -1) {
-            attachmentTypeArr.fields[index].value = newValue;
+            attachmentTypeArr.fields[index].value = value;
         }
-        this.setState({...this.state, attachmentType: attachmentTypeArr});
+
+        if (field.field_in_db && field.field_in_db === 'expiry_date') {//can be only one field_in_db = expiry_date per attachment type
+            expiryDate = value;
+        } else if (field.field_in_db && field.field_in_db === 'amount') {//can be only one field_in_db = amount per attachment type
+            attachmentAmount = parseFloat(value);
+        }
+        this.setState({
+            ...this.state,
+            attachmentType: attachmentTypeArr,
+            attachmentExpiryDate: expiryDate,
+            attachmentAmount: attachmentAmount
+        });
     }
 
     checkMandatoryFields = () => {
@@ -797,6 +784,13 @@ export default class AttachmentsRows extends Component {
     getFieldValueFromAttachmentType = (field) => {
         let index = this.state.attachmentType.fields.indexOf(field);
         return this.state.attachmentType.fields[index].value;
+    }
+
+    appendLeadingZeroes = (n) => {
+        if (n <= 9) {
+            return "0" + n;
+        }
+        return n
     }
 }
 
