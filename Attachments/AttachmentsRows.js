@@ -32,7 +32,6 @@ export default class AttachmentsRows extends Component {
 
         this.FILE_TYPES_TRANSLATION_KEYS = props.fileTypes;
         this.handleDatePickerChange = this.handleDatePickerChange.bind(this);
-        //this.handleDatePickerOnBlur = this.handleDatePickerOnBlur.bind(this);
 
         // this.ALL_ATTACHMENT_TYPES_JSON = JSON.parse("{ \n" +
         //     "   \"attachment_types\":[ \n" +
@@ -718,16 +717,23 @@ export default class AttachmentsRows extends Component {
     };
 
     handleFileTypeChange = (event) => {
-        let attachment = this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.filter(attachment => attachment.label.toLowerCase() === event.target.value)[0];
+        let attachmentFromJson = this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.filter(att => att.label.toLowerCase() === event.target.value)[0];
 
         let showCollateralMeta = false;
-        if (attachment.fields)
+        if (attachmentFromJson.fields)
             showCollateralMeta = true;
 
+        for (let i = 0; attachmentFromJson.fields && i < attachmentFromJson.fields.length; i++) {
+            if (attachmentFromJson.fields[i].value) {
+                attachmentFromJson.fields[i].value = null;
+            }
+        }
+
         this.setState({
+            ...this.state,
             fileType: event.target.value,
             showCollateralMeta: showCollateralMeta,
-            attachmentType: attachment,
+            attachmentType: attachmentFromJson,
             attachmentExpiryDate: null,
             attachmentAmount: null
         });
@@ -759,7 +765,7 @@ export default class AttachmentsRows extends Component {
         if (field.field_in_db && field.field_in_db === 'expiry_date') {//can be only one field_in_db = expiry_date per attachment type
             expiryDate = value;
         } else if (field.field_in_db && field.field_in_db === 'amount') {//can be only one field_in_db = amount per attachment type
-            attachmentAmount = parseFloat(value);
+            attachmentAmount = value;
         }
         this.setState({
             ...this.state,
