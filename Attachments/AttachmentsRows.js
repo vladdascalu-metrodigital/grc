@@ -305,7 +305,14 @@ export default class AttachmentsRows extends Component {
         let fileType = this.state.fileType;
         if (fileType === null)
             fileType = this.props.fileTypes[0];
-        this.props.addAttachment(this.state.file, this.state.title, fileType, this.state.attachmentExpiryDate, this.state.attachmentAmount, this.state.attachmentType);
+
+        // let fieldsForBackEnd = [];
+        // let fieldsInState = this.state.attachmentType.fields;
+        // for (let i = 0; i < fieldsInState.length; i++) {
+        //     fieldsForBackEnd [i] = {value: fieldsInState[i].value, data_type: fieldsInState[i].data_type};
+        // }
+
+        this.props.addAttachment(this.state.file, this.state.title, fileType, this.state.attachmentAmount, this.state.attachmentExpiryDate,  this.state.attachmentType);
 
         this.setState({
             title: '',
@@ -338,7 +345,7 @@ export default class AttachmentsRows extends Component {
 
         this.setState({
             ...this.state,
-            fileType: event.target.value,
+            fileType: attachmentFromJson.type,
             showCollateralMeta: showCollateralMeta,
             attachmentType: attachmentFromJson,
             attachmentExpiryDate: null,
