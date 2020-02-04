@@ -31,17 +31,13 @@ export default class AttachmentsRows extends Component {
             attachmentAmount: null,
             attachmentType: null
         };
-
         //this.FILE_TYPES_TRANSLATION_KEYS = props.fileTypes;
-
         this.handleDatePickerChange = this.handleDatePickerChange.bind(this);
+    }
 
+    componentDidMount() {
         this.ALL_ATTACHMENT_TYPES_JSON = JSON.parse(Constants.ALL_ATTACHMENT_TYPES_JSON);
 
-        this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY = this.ALL_ATTACHMENT_TYPES_JSON.attachment_types
-            .filter(attType => attType.country.toLowerCase() === this.props.country.toLowerCase() || attType.country.toLowerCase() === "all")
-            .filter(attType => this.props.fileTypes.includes(attType.type.toLowerCase()))
-            .map(attType => attType.label);
         this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY = this.ALL_ATTACHMENT_TYPES_JSON.attachment_types
             .filter(attType => attType.country.toLowerCase() === this.props.country.toLowerCase() || attType.country.toLowerCase() === "all")
             .filter(attType => this.props.fileTypes.includes(attType.type.toLowerCase()));
@@ -209,12 +205,12 @@ export default class AttachmentsRows extends Component {
     }
 
     createFileTypeOptions() {
-        if (this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY && this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY.length > 0) {
-            if (this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY && this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY.length === 1 || this.state.fileType != null) {
-                return this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY.map(this.toOption);
+        if (this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY && this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.length > 0) {
+            if (this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY && this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.length === 1 || this.state.fileType != null) {
+                return this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.map(this.toOption);
             } else {
                 return [<option key='null'>Please
-                    Choose...</option>].concat(this.AVAILABLE_ATTACHMENT_TYPES_LABELS_FOR_COUNTRY.map(this.toOption));
+                    Choose...</option>].concat(this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.map(this.toOption));
             }
         } else {
             return null;
@@ -222,7 +218,7 @@ export default class AttachmentsRows extends Component {
     }
 
     toOption(t) {
-        return <option key={t} value={t.toLowerCase()}>{lookup(t)}</option>;
+        return <option key={t.type} value={t.type.toLowerCase()}>{lookup(t.label)}</option>;
     }
 
     createRow = (item) => {
@@ -312,7 +308,7 @@ export default class AttachmentsRows extends Component {
         //     fieldsForBackEnd [i] = {value: fieldsInState[i].value, data_type: fieldsInState[i].data_type};
         // }
 
-        this.props.addAttachment(this.state.file, this.state.title, fileType, this.state.attachmentAmount, this.state.attachmentExpiryDate,  this.state.attachmentType);
+        this.props.addAttachment(this.state.file, this.state.title, fileType, this.state.attachmentAmount, this.state.attachmentExpiryDate, this.state.attachmentType);
 
         this.setState({
             title: '',
@@ -331,7 +327,7 @@ export default class AttachmentsRows extends Component {
     };
 
     handleFileTypeChange = (event) => {
-        let attachmentFromJson = this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.filter(att => att.label.toLowerCase() === event.target.value)[0];
+        let attachmentFromJson = this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.filter(att => att.type.toLowerCase() === event.target.value)[0];
 
         let showCollateralMeta = false;
         if (attachmentFromJson.fields)
