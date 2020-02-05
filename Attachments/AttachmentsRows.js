@@ -234,7 +234,7 @@ export default class AttachmentsRows extends Component {
                 <h4>
                     <mrc-datetime class="datetime">{item.uploadTimestamp}</mrc-datetime>
                     <span className="author">{' '}{item.uploaderPrincipalName} ({item.uploaderPosition}) {' '}</span>
- 				<span className="fileType">{item.fileType}</span>
+ 				<span className="fileType">{lookup('mrc.attachments.types.' + item.fileType)}</span>
                 </h4>
                 {this.displayMetadataJson(item)}
             </span>
