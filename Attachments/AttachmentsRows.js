@@ -236,6 +236,7 @@ export default class AttachmentsRows extends Component {
                     <span className="author">{' '}{item.uploaderPrincipalName} ({item.uploaderPosition}) {' '}</span>
  				<span className="fileType">{item.fileType}</span>
                 </h4>
+                {this.displayMetadataJson(item)}
             </span>
         </div>;
     };
@@ -252,6 +253,27 @@ export default class AttachmentsRows extends Component {
             {item.expiryDate && true ? <span>{lookup('mrc.attachment.expiry-date')}: {dateString} </span> : null}
             {item.amount ? <span>{lookup('mrc.attachment.amount')}: {item.amount}</span> : null}
         </h4>
+    }
+
+    displayMetadataJson(item) {
+        let rez = [];
+        if (item.metadataJson != undefined && item.metadataJson != null) {
+            let metadataObject = JSON.parse(item.metadataJson);
+            if (metadataObject != undefined && metadataObject != null
+                && metadataObject.fields != undefined && metadataObject.fields != null && metadataObject.fields.length != null && metadataObject.fields.length > 0) {
+
+                metadataObject.fields
+                    .filter(field => field.field_in_db === undefined || (field.field_in_db !== null && field.field_in_db == 'metadata_json'))
+                    .forEach(field => rez.push(this.displayFieldMetadata(field)));
+            }
+        }
+        return rez;
+    }
+
+    displayFieldMetadata(field) {
+        return <h4 className='attachment-collaterals-meta' key={field.field_label}>
+            {field.value ? <span>{lookup(field.field_label)}: {field.value}</span> : null}
+        </h4>;
     }
 
     downloadFile(item) {
