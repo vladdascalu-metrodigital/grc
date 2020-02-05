@@ -330,7 +330,7 @@ export default class AttachmentsRows extends Component {
         //     fieldsForBackEnd [i] = {value: fieldsInState[i].value, data_type: fieldsInState[i].data_type};
         // }
 
-        this.props.addAttachment(this.state.file, this.state.title, fileType, this.state.attachmentAmount, this.state.attachmentExpiryDate, this.state.attachmentType);
+        this.props.addAttachment(this.state.file, this.state.title, fileType, this.state.attachmentExpiryDate, this.state.attachmentAmount, this.state.attachmentType);
 
         this.setState({
             title: '',
