@@ -258,7 +258,7 @@ export default class AttachmentsRows extends Component {
 
     displayMetadataJson(item) {
         let rez = [];
-        if (item.metadataJson != undefined && item.metadataJson != null) {
+        if (item.metadataJson != undefined && item.metadataJson != null && item.metadataJson !== '') {
             let metadataObject = JSON.parse(item.metadataJson);
             if (metadataObject != undefined && metadataObject != null
                 && metadataObject.fields != undefined && metadataObject.fields != null && metadataObject.fields.length != null && metadataObject.fields.length > 0) {
