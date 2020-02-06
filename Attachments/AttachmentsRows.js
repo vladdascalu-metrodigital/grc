@@ -81,6 +81,7 @@ export default class AttachmentsRows extends Component {
 
     createUploader() {
         const maxFileNameLength = 50;
+        const classNameOfTypeOptions = this.props.fileTypes && this.props.fileTypes.length > 1 ? 'column' : 'hiddenColumn';
         let mandatoryFields = this.checkMandatoryFields();
         let readyToSend = this.state.title.trim().length > 0 && this.state.file !== null && ((this.state.fileType !== null && this.state.fileType !== '') || (this.props.fileTypes !== null && this.props.fileTypes.length === 1)) && mandatoryFields;
 
@@ -99,7 +100,7 @@ export default class AttachmentsRows extends Component {
                            value={this.shortenFileName(this.state.title, maxFileNameLength)} onChange={this.updateTitle}
                            disabled={this.props.readonly} placeholder="Title"/>
                 </div>
-                <div className='column'>
+                <div className={classNameOfTypeOptions}>
                     <label name='selected-file-type'
                            className='selected-file'>{lookup('mrc.attachments.fields.fileType')}: </label><br/>
                     <select name='file-type' id='select-file-type'
