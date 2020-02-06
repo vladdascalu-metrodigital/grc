@@ -271,8 +271,9 @@ export default class AttachmentsRows extends Component {
     }
 
     displayFieldMetadata(field) {
+        let fieldValueString = field.data_type && field.data_type.toLowerCase() == 'date' ? new Date(field.value).toLocaleDateString() : field.value;
         return <h4 className='attachment-collaterals-meta' key={field.field_label}>
-            {field.value ? <span>{lookup(field.field_label)}: {field.value}</span> : null}
+            {field.value ? <span>{lookup(field.field_label)}: {fieldValueString}</span> : null}
         </h4>;
     }
 
@@ -391,7 +392,7 @@ export default class AttachmentsRows extends Component {
         let expiryDate = this.state.attachmentExpiryDate;
         let attachmentAmount = this.state.attachmentAmount;
         if (index > -1) {
-            attachmentTypeArr.fields[index].value = value;
+            attachmentTypeArr.fields[index].value = field.data_type && field.data_type.toLowerCase() === 'date' ? value.valueOf() : value;
         }
 
         if (field.field_in_db && field.field_in_db === 'expiry_date') {//can be only one field_in_db = expiry_date per attachment type
