@@ -20,10 +20,11 @@ export default class NavigationLayout extends Component {
     };
 
     renderSidebarNavigation = () => {
-        if (this.props.config.loading) return null;
+        const { active, config, updateActiveItem } = this.props;
+        if (config.loading) return null;
         return <div className='mrc-sidebar-wrapper'>
             <div className='mrc-sidebar'>
-                <SidebarNavigation config={this.props.config}/>
+                <SidebarNavigation highlight={active} config={config} updateActiveItem={updateActiveItem} />
                 <div className='secondary-actions'>
                     <ul>
                         <li className='lang-setting'>
@@ -46,13 +47,14 @@ export default class NavigationLayout extends Component {
     }
 
     renderBottomToolbarLayout = () => {
+        const { active, config, displayBottomToolbar, displayMenu, updateActiveItem } = this.props;
         let classes = 'mrc-bottom-navigation';
-        if (this.props.displayBottomToolbar) classes += ' bottom-toolbar';
+        if (displayBottomToolbar) classes += ' bottom-toolbar';
 
         let btnBurgerMenuClasses = 'btn mrc-burger-menu';
-        if (this.props.displayMenu) btnBurgerMenuClasses += ' active';
+        if (displayMenu) btnBurgerMenuClasses += ' active';
 
-        // if (!this.props.displayBottomToolbar) return null;
+        // if (!displayBottomToolbar) return null;
 
         // TODO Move Burger Menu stuff to BurgerMenuLayout and rename that to BurgerMenu
         return (
@@ -61,8 +63,10 @@ export default class NavigationLayout extends Component {
                 <a className={btnBurgerMenuClasses} onClick={this.toggleBurgerMenu}>
                     <img src={BurgerMenu} alt='menu'/>
                 </a>
-                <BurgerMenuLayout isExpanded={this.props.displayMenu}
-                                  config={this.props.config}
+                <BurgerMenuLayout highlight={active}
+                                  updateActiveItem={updateActiveItem}
+                                  isExpanded={displayMenu}
+                                  config={config}
                                   hideBurgerMenu={this.hideBurgerMenu}/>
             </nav>
         );
@@ -74,10 +78,12 @@ export default class NavigationLayout extends Component {
 }
 
 NavigationLayout.propTypes = {
+    active: PropTypes.string,
     tablet: PropTypes.bool,
     config: PropTypes.object.isRequired,
     displayMenu: PropTypes.bool.isRequired,
     displayBottomToolbar: PropTypes.bool.isRequired,
     displayBackButton: PropTypes.bool.isRequired,
+    updateActiveItem: PropTypes.func,
     updateBurgerMenuExpended: PropTypes.func // FIXME Typo: expended -> expanded
 };
