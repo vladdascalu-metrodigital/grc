@@ -156,6 +156,10 @@ export default class AttachmentsRows extends Component {
                     maxDate = new Date();
                 } else if (field.validation_operation.toLowerCase() === "greater_than_and_equals") {
                     minDate = new Date(); //new Date(minDate.getTime() + 86400000); // add 1 day in ms
+                } else if (field.validation_operation.toLowerCase() === "greater_than") {
+                    minDate = new Date(new Date().getTime() + 86400000); // add 1 day in ms
+                } else if (field.validation_operation.toLowerCase() === "less_than") {
+                    maxDate = new Date(new Date().getTime() - 86400000);
                 }
                 reactField = this.createDatePicker(id, minDate, maxDate, field)
 
@@ -177,7 +181,7 @@ export default class AttachmentsRows extends Component {
         //     dateParser = value.split('.');
         //     selectedDate = new Date(dateParser[2], dateParser[1] - 1, dateParser[0]);
         // }
-        return <div className='column' key={this.state.attachmentType.type + "." + field.field_label + "_" + id}>
+        return <div className='column attachments-date-picker' key={this.state.attachmentType.type + "." + field.field_label + "_" + id}>
             <label name={field.field_label}
                    className='selected-file'>{lookup(field.field_label)}</label><br/>
             <MrcDatePickerInput className="m-input-element"
