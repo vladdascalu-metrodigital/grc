@@ -5,17 +5,21 @@ import PropTypes from 'prop-types';
 import {createNav, extractNavsFromQuickNav} from '../Util/nav';
 
 export default class SidebarNavigation extends Component {
-
     createNavWithWrapper = (btnConf) => {
-        return <li key={btnConf.roleKey}>{this.createNavElement(btnConf)}</li>;
+        const service = btnConf.roleKey;
+        return <li className={this.props.highlight === service ? 'mrc-highlighted-li' : null} key={service}>
+                    {this.createNavElement(btnConf)}
+                </li>;
     };
 
     createNavElement(btnConf) {
+        const { updateActiveItem } = this.props;
         const conf = createNav(btnConf, this.props.config.data.translations);
+        const service = btnConf.roleKey;
         if(conf.isAbsolute) {
-            return <a href={conf.href}>{conf.imgEl}</a>;
+            return <a onClick={updateActiveItem.bind(this, service)} href={conf.href}>{conf.imgEl}</a>;
         } else {
-            return <Link to={conf.href}>{conf.imgEl}</Link>;
+            return <Link onClick={updateActiveItem.bind(this, service)} to={conf.href}>{conf.imgEl}</Link>;
         }
     }
 
@@ -32,5 +36,7 @@ export default class SidebarNavigation extends Component {
 }
 
 SidebarNavigation.propTypes = {
+    highlight: PropTypes.string,
+    updateActiveItem: PropTypes.func,
     config: PropTypes.object.isRequired
 };

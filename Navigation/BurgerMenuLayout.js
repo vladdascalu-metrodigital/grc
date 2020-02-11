@@ -18,5 +18,6 @@ export default class BurgerMenuLayout extends Component {
 BurgerMenuLayout.propTypes = {
     isExpanded: PropTypes.bool,
     hideBurgerMenu: PropTypes.func.isRequired,
+    updateActiveItem: PropTypes.func,
     config: PropTypes.object.isRequired
 };

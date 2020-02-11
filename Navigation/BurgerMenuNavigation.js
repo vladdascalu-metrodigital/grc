@@ -15,12 +15,22 @@ export default class BurgerMenuNavigation extends Component {
     }
 
     createNavElement(btnConf) {
-        const conf = createNav(btnConf, this.props.config.data.translations);
+        const { config, highlight } = this.props;
+        const conf = createNav(btnConf, config.data.translations);
+        const service = btnConf.roleKey;
+        const active = highlight === service;
+
         if(conf.isAbsolute) {
-            return <a href={conf.href} key={conf.key} className={BurgerMenuNavigation.classMenuEntry} onClick={this.props.hideBurgerMenu}>{conf.title}</a>;
+            return <a onClick={this.handleClick.bind(this, service)} href={conf.href} key={conf.key} className={BurgerMenuNavigation.classMenuEntry + (active ? ' mrc-contextual-menu-button-isSelected' : '')}>{conf.title}</a>;
         } else {
-            return <Link to={conf.href} key={conf.key} className={BurgerMenuNavigation.classMenuEntry} onClick={this.props.hideBurgerMenu}>{conf.title}</Link>;
+            return <Link onClick={this.handleClick.bind(this, service)} to={conf.href} key={conf.key} className={BurgerMenuNavigation.classMenuEntry + (active ? ' mrc-contextual-menu-button-isSelected' : '')}>{conf.title}</Link>;
         }
+    }
+
+    handleClick(service, e) {
+        const { hideBurgerMenu, updateActiveItem } = this.props;
+        updateActiveItem(service);
+        hideBurgerMenu();
     }
 
     render() {
@@ -38,6 +48,8 @@ export default class BurgerMenuNavigation extends Component {
 
 
 BurgerMenuNavigation.propTypes = {
+    highlight: PropTypes.string,
     hideBurgerMenu: PropTypes.func.isRequired,
+    updateActiveItem: PropTypes.func,
     config: PropTypes.object.isRequired
 };
