@@ -8,52 +8,6 @@ export const ALL_ATTACHMENT_TYPES_JSON = "{ \n" +
     "      },\n" +
     "      { \n" +
     "         \"country\":\"DE\",\n" +
-    "         \"type\":\"contract\",\n" +
-    "         \"label\":\"mrc.attachments.types.contract\",\n" +
-    "         \"remark\":\"Digital version to improve efficiency\",\n" +
-    "         \"fields\":[ \n" +
-    "            { \n" +
-    "               \"field_label\":\"mrc.attachments.fields.contract.start_date\",\n" +
-    "               \"data_type\":\"Date\",\n" +
-    "               \"mandatory\":true,\n" +
-    "               \"validation_operation\":\"LESS_THAN_AND_EQUALS\",\n" +
-    "               \"validation_argument\":\"TODAY\"\n" +
-    "            },\n" +
-    "            { \n" +
-    "               \"field_label\":\"mrc.attachments.fields.contract.expiration_date\",\n" +
-    "               \"data_type\":\"Date\",\n" +
-    "               \"mandatory\":true,\n" +
-    "               \"field_in_db\":\"expiry_date\",\n" +
-    "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
-    "               \"validation_argument\":\"TODAY\"\n" +
-    "            }\n" +
-    "         ]\n" +
-    "      },\n" +
-    "      { \n" +
-    "         \"country\":\"DE\",\n" +
-    "         \"type\":\"bank_guarantee\",\n" +
-    "         \"label\":\"mrc.attachments.types.bank_guarantee\",\n" +
-    "         \"remark\":\"Collaterals\",\n" +
-    "         \"is_collateral\":true,\n" +
-    "         \"fields\":[ \n" +
-    "            { \n" +
-    "               \"field_label\":\"mrc.attachments.fields.bank_guarantee.amount\",\n" +
-    "               \"data_type\":\"Double\",\n" +
-    "               \"mandatory\":true,\n" +
-    "               \"field_in_db\":\"amount\"\n" +
-    "            },\n" +
-    "            { \n" +
-    "               \"field_label\":\"mrc.attachments.fields.bank_guarantee.validity_date\",\n" +
-    "               \"data_type\":\"Date\",\n" +
-    "               \"mandatory\":true,\n" +
-    "               \"field_in_db\":\"expiry_date\",\n" +
-    "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
-    "               \"validation_argument\":\"TODAY\"\n" +
-    "            }\n" +
-    "         ]\n" +
-    "      },\n" +
-    "      { \n" +
-    "         \"country\":\"DE\",\n" +
     "         \"type\":\"warenkreditversicherung\",\n" +
     "         \"label\":\"mrc.attachments.types.warenkreditversicherung\",\n" +
     "         \"remark\":\"Collaterals\",\n" +
@@ -145,7 +99,53 @@ export const ALL_ATTACHMENT_TYPES_JSON = "{ \n" +
     "         ]\n" +
     "      },\n" +
     "      { \n" +
-    "         \"country\":\"DE\",\n" +
+    "         \"country\":\"RS\",\n" +
+    "         \"type\":\"contract\",\n" +
+    "         \"label\":\"mrc.attachments.types.contract\",\n" +
+    "         \"remark\":\"Digital version to improve efficiency\",\n" +
+    "         \"fields\":[ \n" +
+    "            { \n" +
+    "               \"field_label\":\"mrc.attachments.fields.contract.start_date\",\n" +
+    "               \"data_type\":\"Date\",\n" +
+    "               \"mandatory\":true,\n" +
+    "               \"validation_operation\":\"LESS_THAN_AND_EQUALS\",\n" +
+    "               \"validation_argument\":\"TODAY\"\n" +
+    "            },\n" +
+    "            { \n" +
+    "               \"field_label\":\"mrc.attachments.fields.contract.expiration_date\",\n" +
+    "               \"data_type\":\"Date\",\n" +
+    "               \"mandatory\":true,\n" +
+    "               \"field_in_db\":\"expiry_date\",\n" +
+    "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
+    "               \"validation_argument\":\"TODAY\"\n" +
+    "            }\n" +
+    "         ]\n" +
+    "      },\n" +
+    "      { \n" +
+    "         \"country\":\"RS\",\n" +
+    "         \"type\":\"bank_guarantee\",\n" +
+    "         \"label\":\"mrc.attachments.types.bank_guarantee\",\n" +
+    "         \"remark\":\"Collaterals\",\n" +
+    "         \"is_collateral\":true,\n" +
+    "         \"fields\":[ \n" +
+    "            { \n" +
+    "               \"field_label\":\"mrc.attachments.fields.bank_guarantee.amount\",\n" +
+    "               \"data_type\":\"Double\",\n" +
+    "               \"mandatory\":true,\n" +
+    "               \"field_in_db\":\"amount\"\n" +
+    "            },\n" +
+    "            { \n" +
+    "               \"field_label\":\"mrc.attachments.fields.bank_guarantee.validity_date\",\n" +
+    "               \"data_type\":\"Date\",\n" +
+    "               \"mandatory\":true,\n" +
+    "               \"field_in_db\":\"expiry_date\",\n" +
+    "               \"validation_operation\":\"GREATER_THAN_AND_EQUALS\",\n" +
+    "               \"validation_argument\":\"TODAY\"\n" +
+    "            }\n" +
+    "         ]\n" +
+    "      },\n" +
+    "      { \n" +
+    "         \"country\":\"RS\",\n" +
     "         \"type\":\"bill_of_exchange\",\n" +
     "         \"label\":\"mrc.attachments.types.bill_of_exchange\",\n" +
     "         \"remark\":\"Bill of exchange\",\n" +
