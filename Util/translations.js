@@ -66,5 +66,3 @@ const request = {
     body: JSON.stringify(Object.keys(translations)),
     credentials: 'include'
 };
-// it doesn't matter if this fails because it will automatically be retried more than often enough
-fetch('/creditlimit/api/requestedtranslations', request);
