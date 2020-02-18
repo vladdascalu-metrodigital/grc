@@ -15,8 +15,7 @@ export default class Attachments extends Component {
         const {data, readonly, country, fileTypes, addAttachment} = this.props;
         return <AttachmentsRows data={this.props.data}
                                 readonly={this.props.readonly} addAttachment={this.props.addAttachment}
-                                fileTypes = {this.props.fileTypes} //collaterals = {this.props.collaterals}
-                                country={this.props.country}
+                                fileTypes = {this.props.fileTypes} country={this.props.country}
         />;
     }
 

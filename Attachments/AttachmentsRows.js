@@ -31,7 +31,6 @@ export default class AttachmentsRows extends Component {
             attachmentAmount: null,
             attachmentType: null
         };
-        //this.FILE_TYPES_TRANSLATION_KEYS = props.fileTypes;
         this.handleDatePickerChange = this.handleDatePickerChange.bind(this);
     }
 
@@ -330,12 +329,6 @@ export default class AttachmentsRows extends Component {
         if (fileType === null)
             fileType = this.props.fileTypes[0];
 
-        // let fieldsForBackEnd = [];
-        // let fieldsInState = this.state.attachmentType.fields;
-        // for (let i = 0; i < fieldsInState.length; i++) {
-        //     fieldsForBackEnd [i] = {value: fieldsInState[i].value, data_type: fieldsInState[i].data_type};
-        // }
-
         this.props.addAttachment(this.state.file, this.state.title, fileType, this.state.attachmentExpiryDate, this.state.attachmentAmount, this.state.attachmentType);
 
         this.setState({
@@ -378,7 +371,8 @@ export default class AttachmentsRows extends Component {
     };
 
     handleAttachmentAmountChangeOnBlur = (event, field) => {
-        this.addFieldValueOnState(parseFloat(event.target.value), field);
+        let parsedValue = event.target.value === '' ? null : parseFloat(event.target.value);
+        this.addFieldValueOnState(parsedValue, field);
     }
 
     handleAttachmentAmountChange = (amount) => {
@@ -397,7 +391,11 @@ export default class AttachmentsRows extends Component {
         let expiryDate = this.state.attachmentExpiryDate;
         let attachmentAmount = this.state.attachmentAmount;
         if (index > -1) {
-            attachmentTypeArr.fields[index].value = field.data_type && field.data_type.toLowerCase() === 'date' ? value.valueOf() : value;
+            if (field.data_type && field.data_type.toLowerCase() === 'date') {
+                attachmentTypeArr.fields[index].value = value !== null ? value.valueOf() : null;
+            } else {
+                attachmentTypeArr.fields[index].value = value;
+            }
         }
 
         if (field.field_in_db && field.field_in_db === 'expiry_date') {//can be only one field_in_db = expiry_date per attachment type
