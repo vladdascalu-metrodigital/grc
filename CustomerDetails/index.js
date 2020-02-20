@@ -37,55 +37,65 @@ export default class CustomerDetails extends Component {
     }
 
     displayCustomerBasicDetails(c) {
-        if (c.country && c.country=='DE' && c.legalFormDescription) {
+        if (c.country && c.country == 'DE' && c.legalFormDescription) {
             return (<dl>
-                    {this.describeTerm('mrc.customerdetails.fields.customernumber', `${c.storeNumber}/${c.customerNumber}`)}
-                        {this.describeTerm('mrc.customerdetails.fields.taxnumber', c.vatSpecNumber)}
-                    {this.describeTerm('mrc.customerdetails.fields.vateunumber', c.vatEuNumber)}
-                    {this.describeTerm('mrc.customerdetails.fields.legalform', c.legalForm)}
-                    {this.describeTerm('mrc.customerdetails.fields.legalformdescription', c.legalFormDescription)}
-                </dl>);
-        }
-        return (<dl>
                 {this.describeTerm('mrc.customerdetails.fields.customernumber', `${c.storeNumber}/${c.customerNumber}`)}
                 {this.describeTerm('mrc.customerdetails.fields.taxnumber', c.vatSpecNumber)}
                 {this.describeTerm('mrc.customerdetails.fields.vateunumber', c.vatEuNumber)}
                 {this.describeTerm('mrc.customerdetails.fields.legalform', c.legalForm)}
+                {this.describeTerm('mrc.customerdetails.fields.legalformdescription', c.legalFormDescription)}
             </dl>);
+        }
+        return (<dl>
+            {this.describeTerm('mrc.customerdetails.fields.customernumber', `${c.storeNumber}/${c.customerNumber}`)}
+            {this.describeTerm('mrc.customerdetails.fields.taxnumber', c.vatSpecNumber)}
+            {this.describeTerm('mrc.customerdetails.fields.vateunumber', c.vatEuNumber)}
+            {this.describeTerm('mrc.customerdetails.fields.legalform', c.legalForm)}
+        </dl>);
     }
 
     render() {
         const c = this.props.customer;
         const blockingContent = this.props.blockingContent;
         if (!c) return null;
-        return (<div className='mrc-customer-details' id={c.storeNumber+'/'+c.customerNumber}>
-                <section className='mrc-detail'>
-                    {this.displayCustomerBasicDetails(c)}
-                    <address>
-                        {lookup('mrc.customerdetails.fields.email')+':'} {this.printAndBr(c.email)}
-                        {lookup('mrc.customerdetails.fields.phone')+':'} {this.printAndBr(c.phoneNumber)}
-                        {lookup('mrc.customerdetails.fields.mobile')+':'} {this.printAndBr(c.mobilePhoneNumber)}
-                        <br/>
-                        {lookup('mrc.customerdetails.fields.street')+':'} {this.printAndBr(c.street, c.houseNumber)}
-                        {lookup('mrc.customerdetails.fields.zipcity')+':'} <abbr title='ZIP'>{c.zipCode}</abbr> <abbr title='City'>{c.city}</abbr>
-                    </address>
-                    <div>
-                        {lookup('mrc.customerdetails.fields.registration')+':'} {this.printDate(c.registrationDate)}
-                    </div>
-                    <br key='br'/>
-                    {blockingContent}
+        return (<div className='mrc-customer-details' id={c.storeNumber + '/' + c.customerNumber}>
+            <section className='mrc-detail'>
 
-                    {c.country && c.country=='DE' &&
-                    (
+                {this.displayCustomerBasicDetails(c)}
+                {c.country && c.country == 'DE' &&
+                (
                     <dl>
-                        {c.branchId && lookup('mrc.customerdetails.fields.branchid')+':'} {this.printAndBr(c.branchId)}
-						 {c.branchDescription && lookup('mrc.customerdetails.fields.branchdescription')+':'} {this.printAndBr(c.branchDescription)}
-                         {c.segment && lookup('mrc.customerdetails.fields.segment')+':'}  {this.printAndBr(c.segment)}
-                         {c.companyFoundationDate && lookup('mrc.customerdetails.fields.companyfoundationdate')+':'} 
-                         {this.printDate(c.companyFoundationDate)}
-					</dl>
-                     )}    
-                </section>
+                        {c.customerFirstName && lookup('mrc.customerdetails.fields.customerFirstName') + ':'} {this.printAndBr(c.customerFirstName)}
+                        {c.customerLastName && lookup('mrc.customerdetails.fields.customerLastName') + ':'} {this.printAndBr(c.customerLastName)}
+                        {c.birthDay && lookup('mrc.customerdetails.fields.birthDay') + ':'} {this.printDate(c.birthDay)}
+                    </dl>
+                )}
+                <address>
+                    {lookup('mrc.customerdetails.fields.email') + ':'} {this.printAndBr(c.email)}
+                    {lookup('mrc.customerdetails.fields.phone') + ':'} {this.printAndBr(c.phoneNumber)}
+                    {lookup('mrc.customerdetails.fields.mobile') + ':'} {this.printAndBr(c.mobilePhoneNumber)}
+                    <br/>
+                    {lookup('mrc.customerdetails.fields.street') + ':'} {this.printAndBr(c.street, c.houseNumber)}
+                    {lookup('mrc.customerdetails.fields.zipcity') + ':'} <abbr title='ZIP'>{c.zipCode}</abbr> <abbr
+                    title='City'>{c.city}</abbr>
+                </address>
+                <div>
+                    {lookup('mrc.customerdetails.fields.registration') + ':'} {this.printDate(c.registrationDate)}
+                </div>
+                <br key='br'/>
+                {blockingContent}
+
+                {c.country && c.country == 'DE' &&
+                (
+                    <dl>
+                        {c.branchId && lookup('mrc.customerdetails.fields.branchid') + ':'} {this.printAndBr(c.branchId)}
+                        {c.branchDescription && lookup('mrc.customerdetails.fields.branchdescription') + ':'} {this.printAndBr(c.branchDescription)}
+                        {c.segment && lookup('mrc.customerdetails.fields.segment') + ':'} {this.printAndBr(c.segment)}
+                        {c.companyFoundationDate && lookup('mrc.customerdetails.fields.companyfoundationdate') + ':'}
+                        {this.printDate(c.companyFoundationDate)}
+                    </dl>
+                )}
+            </section>
         </div>);
     }
 }
