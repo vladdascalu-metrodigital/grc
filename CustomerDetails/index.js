@@ -32,6 +32,17 @@ export default class CustomerDetails extends Component {
         );
     }
 
+    printBirthDate(date, withRelative = true) {
+        if (!date) {
+            return null;
+        }
+        return (
+            <div className='registration-date'>
+                <Moment className='absolute' format='LL'>{date}</Moment>
+            </div>
+        );
+    }
+
     displayName() {
         return displayName(this.props.customer);
     }
@@ -62,15 +73,16 @@ export default class CustomerDetails extends Component {
             <section className='mrc-detail'>
 
                 {this.displayCustomerBasicDetails(c)}
-                {c.country && c.country == 'DE' &&
-                (
-                    <dl>
-                        {c.customerFirstName && lookup('mrc.customerdetails.fields.customerFirstName') + ':'} {this.printAndBr(c.customerFirstName)}
-                        {c.customerLastName && lookup('mrc.customerdetails.fields.customerLastName') + ':'} {this.printAndBr(c.customerLastName)}
-                        {c.birthDay && lookup('mrc.customerdetails.fields.birthDay') + ':'} {this.printDate(c.birthDay)}
-                    </dl>
-                )}
+
                 <address>
+                    {c.country && c.country == 'DE' &&
+                    (
+                        <dl>
+                            {c.customerFirstName && lookup('mrc.customerdetails.fields.customerFirstName') + ':'} {this.printAndBr(c.customerFirstName)}
+                            {c.customerLastName && lookup('mrc.customerdetails.fields.customerLastName') + ':'} {this.printAndBr(c.customerLastName)}
+                            {c.birthDay && lookup('mrc.customerdetails.fields.birthDay') + ':'} {this.printBirthDate(c.birthDay)}
+                        </dl>
+                    )}
                     {lookup('mrc.customerdetails.fields.email') + ':'} {this.printAndBr(c.email)}
                     {lookup('mrc.customerdetails.fields.phone') + ':'} {this.printAndBr(c.phoneNumber)}
                     {lookup('mrc.customerdetails.fields.mobile') + ':'} {this.printAndBr(c.mobilePhoneNumber)}
