@@ -58,9 +58,11 @@ export default class Sales extends Component {
     }
 
     componentDidMount() {
-        this.props.getMdwData().then(result => {
-            this.setState({ mdwData: result });
-        });
+        if (!this.props.mdwData && this.props.getMdwData) {
+            this.props.getMdwData().then(result => {
+                this.setState({ mdwData: result });
+            });
+        }
     }
 
     wrapCurrency(value, sales) {
@@ -162,15 +164,18 @@ export default class Sales extends Component {
     }
 
     render() {
+        const mdwData = this.props.mdwData || this.state.mdwData;
+
         if (this.props.createdFrom == 'creditlimit') {
             return null;
         }
-        if (this.state.mdwData == null || this.state.mdwData.length == 0) {
-            return <h4 className="not-found">{lookup('mrc.mdw.nodataavailable')}</h4>;
+
+        if (mdwData == null || mdwData.length == 0) {
+            return <h4 classNam="not-found">{lookup('mrc.mdw.nodataavailable')}</h4>;
         }
 
         //For group
-        const collapsibles = this.state.mdwData.map(mdwCustomer => {
+        const collapsibles = mdwData.map(mdwCustomer => {
             const key =
                 mdwCustomer.customerCreditData.storeNumber + '/' + mdwCustomer.customerCreditData.customerNumber;
             const trigger = (
@@ -181,18 +186,18 @@ export default class Sales extends Component {
                 />
             );
             return (
-                <Collapsible open={this.state.mdwData.length === 0} key={key} trigger={trigger}>
+                <Collapsible open={mdwData.length === 0} key={key} trigger={trigger}>
                     {this.createOneSalesView(mdwCustomer)}
                 </Collapsible>
             );
         });
 
         let accordion;
-        if (this.state.mdwData.length > 1) {
+        if (mdwData.length > 1) {
             accordion = (
                 <Accordion className="mrc-sales-accordion">
                     <Collapsible open={true} trigger={lookup('mrc.mdw.consolidatedturnover')}>
-                        {this.createConsolidatedSalesView(this.state.mdwData)}
+                        {this.createConsolidatedSalesView(mdwData)}
                     </Collapsible>
                     {collapsibles}
                 </Accordion>
@@ -222,4 +227,5 @@ Sales.propTypes = {
     limitRequestId: PropTypes.string,
     getMdwData: PropTypes.func,
     createdFrom: PropTypes.string,
+    mdwData: PropTypes.array,
 };
