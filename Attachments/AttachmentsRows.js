@@ -87,7 +87,7 @@ export default class AttachmentsRows extends Component {
     }
 
     fileSelection(currentApprover) {
-        if (currentApprover === 'CC' && !this.state.attachmentType) {
+        if (currentApprover === 'CC' && !this.state.fileType) {
             this.setState({
                 fileType: 'general',
                 attachmentType: { type: 'general' },
