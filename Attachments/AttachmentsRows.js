@@ -94,12 +94,7 @@ export default class AttachmentsRows extends Component {
             });
         }
         if (currentApprover === 'CC') {
-            return (
-                <div>
-                    {lookup('mrc.attachments.types.general')}
-                    <input type="hidden" />
-                </div>
-            );
+            return lookup('mrc.attachments.types.general');
         } else {
             return (
                 <select
