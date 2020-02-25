@@ -28,7 +28,6 @@ export default class CustomerDetails extends Component {
             <div className='registration-date'>
                 <Moment className='absolute' format='LL'>{date}</Moment>
                 {withRelative && <Moment className='relative' fromNow={true}>{date}</Moment>}
-                <br></br>
             </div>
         );
     }
@@ -81,12 +80,12 @@ export default class CustomerDetails extends Component {
                         <dd>
                             {c.customerFirstName && lookup('mrc.customerdetails.fields.customerFirstName') + ':'} {this.printAndBr(c.customerFirstName)}
                             {c.customerLastName && lookup('mrc.customerdetails.fields.customerLastName') + ':'} {this.printAndBr(c.customerLastName)}
-                            {c.birthDay && lookup('mrc.customerdetails.fields.birthDay') + ':'} {this.printBirthDate(c.birthDay)}
+                            {c.birthDay && lookup('mrc.customerdetails.fields.birthDay') + ':'} {this.printBirthDate(c.birthDay)} <br></br>
                         </dd>
                     )}
-                    {lookup('mrc.customerdetails.fields.email') + ':'} {this.printAndBr(c.email)}
-                    {lookup('mrc.customerdetails.fields.phone') + ':'} {this.printAndBr(c.phoneNumber)}
-                    {lookup('mrc.customerdetails.fields.mobile') + ':'} {this.printAndBr(c.mobilePhoneNumber)}
+                    {c.email && lookup('mrc.customerdetails.fields.email') + ':'} {this.printAndBr(c.email)}
+                    {c.phoneNumber && lookup('mrc.customerdetails.fields.phone') + ':'} {this.printAndBr(c.phoneNumber)}
+                    {c.mobilePhoneNumber && lookup('mrc.customerdetails.fields.mobile') + ':'} {this.printAndBr(c.mobilePhoneNumber)}
                     <br/>
                     {lookup('mrc.customerdetails.fields.street') + ':'} {this.printAndBr(c.street, c.houseNumber)}
                     {lookup('mrc.customerdetails.fields.zipcity') + ':'} <abbr title='ZIP'>{c.zipCode}</abbr> <abbr
