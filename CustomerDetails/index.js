@@ -28,6 +28,7 @@ export default class CustomerDetails extends Component {
             <div className='registration-date'>
                 <Moment className='absolute' format='LL'>{date}</Moment>
                 {withRelative && <Moment className='relative' fromNow={true}>{date}</Moment>}
+                <br></br>
             </div>
         );
     }
@@ -37,9 +38,9 @@ export default class CustomerDetails extends Component {
             return null;
         }
         return (
-            <div className='registration-date'>
+            <dd className='birth-date'>
                 <Moment className='absolute' format='LL'>{date}</Moment>
-            </div>
+            </dd>
         );
     }
 
@@ -77,11 +78,11 @@ export default class CustomerDetails extends Component {
                 <address>
                     {c.country && c.country == 'DE' &&
                     (
-                        <dl>
+                        <dd>
                             {c.customerFirstName && lookup('mrc.customerdetails.fields.customerFirstName') + ':'} {this.printAndBr(c.customerFirstName)}
                             {c.customerLastName && lookup('mrc.customerdetails.fields.customerLastName') + ':'} {this.printAndBr(c.customerLastName)}
                             {c.birthDay && lookup('mrc.customerdetails.fields.birthDay') + ':'} {this.printBirthDate(c.birthDay)}
-                        </dl>
+                        </dd>
                     )}
                     {lookup('mrc.customerdetails.fields.email') + ':'} {this.printAndBr(c.email)}
                     {lookup('mrc.customerdetails.fields.phone') + ':'} {this.printAndBr(c.phoneNumber)}
