@@ -98,21 +98,21 @@ export default class DetailedCustomerTrigger extends Component {
 
     getDebitTypeColumn(debitTypeValue) {
         if (this.isAnyValuePresent(this.props.cDebitType, this.props.rDebitType, this.props.aDebitType)) {
-            return (<td className={this.getDebitTypeFontClassName()}>{debitTypeValue}</td>);
+            return (<td className={this.getDebitTypeFontClassName()}>{lookup(debitTypeValue)}</td>);
         }
         return '';
     }
 
     getPeriodColumn(periodValue) {
         if (this.isAnyValuePresent(this.props.cPeriod, this.props.rPeriod, this.props.aPeriod)) {
-            return (<td className={this.getPeriodFontClassName()}>{periodValue}</td>);
+            return (<td className={this.getPeriodFontClassName()}>{lookup(periodValue)}</td>);
         }
         return '';
     }
 
     getProductColumn(productValue) {
         if (this.isAnyValuePresent(this.props.cProduct, this.props.rProduct, this.props.aProduct)) {
-            return (<td className={this.getProductFontClassName()}>{productValue}</td>);
+            return (<td className={this.getProductFontClassName()}>{lookup(productValue)}</td>);
         }
         return '';
     }
