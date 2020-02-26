@@ -12,10 +12,11 @@ export default class Attachments extends Component {
     }
 
     render() {
-        const {data, readonly, country, fileTypes, addAttachment} = this.props;
+        const hideUploader = this.props.hideUploader !== undefined && this.props.hideUploader !== null && this.props.hideUploader === true;
         return <AttachmentsRows data={this.props.data}
                                 readonly={this.props.readonly} addAttachment={this.props.addAttachment}
                                 fileTypes = {this.props.fileTypes} country={this.props.country}
+                                hideUploader={hideUploader}
         />;
     }
 
@@ -24,5 +25,6 @@ export default class Attachments extends Component {
 Attachments.propTypes = {
     addAttachment: PropTypes.func.isRequired,
     data: PropTypes.array,
-    readonly: PropTypes.bool
+    readonly: PropTypes.bool,
+    hideUploader: PropTypes.bool,
 };

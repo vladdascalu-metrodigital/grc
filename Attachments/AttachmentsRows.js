@@ -79,6 +79,9 @@ export default class AttachmentsRows extends Component {
     }
 
     createUploader() {
+        if (this.props.hideUploader !== undefined && this.props.hideUploader !== null && this.props.hideUploader === true) {
+            return null;
+        }
         const maxFileNameLength = 50;
         const classNameOfTypeOptions = this.props.fileTypes && this.props.fileTypes.length > 1 ? 'column' : 'hiddenColumn';
         let mandatoryFields = this.checkMandatoryFields();
@@ -232,13 +235,12 @@ export default class AttachmentsRows extends Component {
         return <div className="mrc-attachment" key={item.id}>
             {this.displayIcon(item)}
             <span onClick={this.downloadFile.bind(this, item)}>
-                <h4 className='attachment-title'>{item.title}</h4>
+                <h4 className='attachment-title'><span className="fileType">{lookup('mrc.attachments.types.' + item.fileType.toLowerCase().replace(' ','_'))}</span> <span>{item.title}</span></h4>
                 {this.displayCollateralsMeta(item)}
                 <h4 className='attachment-collaterals-meta'> </h4>
                 <h4>
                     <mrc-datetime class="datetime">{item.uploadTimestamp}</mrc-datetime>
                     <span className="author">{' '}{item.uploaderPrincipalName} ({item.uploaderPosition}) {' '}</span>
- 				<span className="fileType">{lookup('mrc.attachments.types.' + item.fileType.toLowerCase().replace(' ','_'))}</span>
                 </h4>
                 {this.displayMetadataJson(item)}
             </span>
@@ -440,4 +442,5 @@ AttachmentsRows.propTypes = {
     addAttachment: PropTypes.func.isRequired,
     data: PropTypes.array,
     readonly: PropTypes.bool,
+    hideUploader: PropTypes.bool,
 };
