@@ -322,7 +322,7 @@ export default class AttachmentsRows extends Component {
                     <h4 className="attachment-title">
                         <span className="fileType">
                             {lookup('mrc.attachments.types.' + item.fileType.toLowerCase().replace(' ', '_'))}
-                        </span>
+                        </span>{' '}
                         <span>{item.title}</span>
                     </h4>
                     {this.displayCollateralsMeta(item)}
