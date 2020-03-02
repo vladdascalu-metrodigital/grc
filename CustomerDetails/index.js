@@ -37,9 +37,9 @@ export default class CustomerDetails extends Component {
             return null;
         }
         return (
-            <div className='registration-date'>
+            <dd className='birth-date'>
                 <Moment className='absolute' format='LL'>{date}</Moment>
-            </div>
+            </dd>
         );
     }
 
@@ -77,15 +77,15 @@ export default class CustomerDetails extends Component {
                 <address>
                     {c.country && c.country == 'DE' &&
                     (
-                        <dl>
+                        <dd>
                             {c.customerFirstName && lookup('mrc.customerdetails.fields.customerFirstName') + ':'} {this.printAndBr(c.customerFirstName)}
                             {c.customerLastName && lookup('mrc.customerdetails.fields.customerLastName') + ':'} {this.printAndBr(c.customerLastName)}
-                            {c.birthDay && lookup('mrc.customerdetails.fields.birthDay') + ':'} {this.printBirthDate(c.birthDay)}
-                        </dl>
+                            {c.birthDay && lookup('mrc.customerdetails.fields.birthDay') + ':'} {this.printBirthDate(c.birthDay)} <br></br>
+                        </dd>
                     )}
-                    {lookup('mrc.customerdetails.fields.email') + ':'} {this.printAndBr(c.email)}
-                    {lookup('mrc.customerdetails.fields.phone') + ':'} {this.printAndBr(c.phoneNumber)}
-                    {lookup('mrc.customerdetails.fields.mobile') + ':'} {this.printAndBr(c.mobilePhoneNumber)}
+                    {c.email && lookup('mrc.customerdetails.fields.email') + ':'} {this.printAndBr(c.email)}
+                    {c.phoneNumber && lookup('mrc.customerdetails.fields.phone') + ':'} {this.printAndBr(c.phoneNumber)}
+                    {c.mobilePhoneNumber && lookup('mrc.customerdetails.fields.mobile') + ':'} {this.printAndBr(c.mobilePhoneNumber)}
                     <br/>
                     {lookup('mrc.customerdetails.fields.street') + ':'} {this.printAndBr(c.street, c.houseNumber)}
                     {lookup('mrc.customerdetails.fields.zipcity') + ':'} <abbr title='ZIP'>{c.zipCode}</abbr> <abbr
