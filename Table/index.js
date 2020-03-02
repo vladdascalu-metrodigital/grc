@@ -28,10 +28,14 @@ export function Table({ columns, data, title, className }) {
                     ))}
                 </thead>
                 <tbody {...getTableBodyProps()}>
-                    {rows.map(row => {
+                    {rows.map((row, i) => {
                         prepareRow(row);
                         return (
-                            <tr key={row.getRowProps().key} {...row.getRowProps()}>
+                            <tr
+                                className={i % 2 === 0 ? 'mrc-table-row-even' : 'mrc-table-row-odd'}
+                                key={row.getRowProps().key}
+                                {...row.getRowProps()}
+                            >
                                 {row.cells.map((cell, i) => {
                                     const cellContent =
                                         cell.column && cell.column.renderFn
