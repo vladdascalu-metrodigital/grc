@@ -257,7 +257,7 @@ export default class AttachmentsRows extends Component {
         return <h4
             className='attachment-collaterals-meta'>
             {item.expiryDate && true ? <span>{lookup('mrc.attachment.expiry-date')}: {dateString} </span> : null}
-            {item.amount ? <span>{lookup('mrc.attachment.amount')}: {item.amount}</span> : null}
+            {item.amount ? <span>{lookup('mrc.attachment.amount')}: <mrc-number dynamic={true} show-currency-for-country={this.props.country}>{item.amount}</mrc-number></span> : null}
         </h4>
     }
 
