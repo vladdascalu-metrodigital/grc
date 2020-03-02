@@ -166,8 +166,8 @@ export const ALL_ATTACHMENT_TYPES_JSON = "{ \n" +
     "               \"validation_argument\":\"TODAY\"\n" +
     "            }\n" +
     "         ]\n" +
-    "      }\n" +
-//Attachements for Croatia
+    "      },\n" +
+    //Attachements for Croatia
     "      { \n" +
     "         \"country\":\"HR\",\n" +
     "         \"type\":\"contract\",\n" +
@@ -236,8 +236,7 @@ export const ALL_ATTACHMENT_TYPES_JSON = "{ \n" +
     "               \"validation_argument\":\"TODAY\"\n" +
     "            }\n" +
     "         ]\n" +
-    "      }\n" +
-
+    "      },\n" +
     "      { \n" +
     "         \"country\":\"HR\",\n" +
     "         \"type\":\"debenture_note\",\n" +
@@ -259,6 +258,6 @@ export const ALL_ATTACHMENT_TYPES_JSON = "{ \n" +
     "               \"validation_argument\":\"TODAY\"\n" +
     "            }\n" +
     "         ]\n" +
-    "      },\n" +
+    "      }\n" +
     "   ]\n" +
     "}";
