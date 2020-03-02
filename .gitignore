@@ -1,4 +1,4 @@
 .idea
 global-react-components.iml
 node_modules
-
+*.tgz

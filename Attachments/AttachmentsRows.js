@@ -355,7 +355,10 @@ export default class AttachmentsRows extends Component {
                 ) : null}
                 {item.amount ? (
                     <span>
-                        {lookup('mrc.attachment.amount')}: {item.amount}
+                        {lookup('mrc.attachment.amount')}:{' '}
+                        <mrc-number dynamic={true} show-currency-for-country={this.props.country}>
+                            {item.amount}
+                        </mrc-number>
                     </span>
                 ) : null}
             </h4>
