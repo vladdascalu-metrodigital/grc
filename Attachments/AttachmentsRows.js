@@ -94,7 +94,7 @@ export default class AttachmentsRows extends Component {
             });
         }
         if (currentApprover === 'CC') {
-            return lookup('mrc.attachments.types.general');
+            return null;
         } else {
             return (
                 <select
@@ -155,13 +155,15 @@ export default class AttachmentsRows extends Component {
                             placeholder="Title"
                         />
                     </div>
-                    <div className={classNameOfTypeOptions}>
-                        <label name="selected-file-type" className="selected-file">
-                            {lookup('mrc.attachments.fields.fileType')}:{' '}
-                        </label>
-                        <br />
-                        {this.fileSelection(currentApprover)}
-                    </div>
+                    {currentApprover == 'CC' ? null : (
+                        <div className={classNameOfTypeOptions}>
+                            <label name="selected-file-type" className="selected-file">
+                                {lookup('mrc.attachments.fields.fileType')}:{' '}
+                            </label>
+                            <br />
+                            {this.fileSelection(currentApprover)}
+                        </div>
+                    )}
                 </div>
                 <div>{this.crateAttachmentTypesFields()}</div>
 
