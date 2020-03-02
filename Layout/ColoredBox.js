@@ -1,0 +1,36 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
+
+import './ColoredBox.scss';
+
+const ColoredBox = ({children, color, emphasis}) => {
+        const classes = classnames('mrc-colored-box', color, emphasis);
+        return (
+            <div className={classes}>{children}</div>
+        );
+};
+
+const COLORS = {
+    'GREEN': 'mrc-green',
+    'GREY_DARK': 'mrc-grey-dark',
+    'GREY_LIGHT': 'mrc-grey-light',
+};
+
+const EMPHASIS = {
+    'PRIMARY': 'cb-primary',
+    'SECONDARY': 'cb-secondary',
+    'TERTIARY': 'cb-tertiary',
+};
+
+ColoredBox.propTypes = {
+    children: PropTypes.oneOfType([
+        PropTypes.node,
+        PropTypes.arrayOf(PropTypes.node)
+    ]),
+    color: PropTypes.oneOfType(COLORS),
+    emphasis: PropTypes.oneOfType(EMPHASIS),
+};
+
+export default ColoredBox;
+export { COLORS, EMPHASIS };

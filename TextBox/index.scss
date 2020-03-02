@@ -1,0 +1,54 @@
+// @import "../../../../../node_modules/global-react-components/settings";
+$grey: #001432;
+$grey-tint-20: #33435B;
+$grey-tint-40: #667284;
+$grey-tint-60: #99A1AD;
+$grey-tint-80: #CCD0D6;
+$grey-tint-90: #E6E8EB;
+$grey-tint-95: #F2F3F5;
+
+
+$green: #34C082;
+$green-tint-60: #AEE6CD;
+$green-tint-80: #D6F2E6;
+$green-tint-90: #EBF9F3;
+
+
+.cb-secondary {
+  .tb-wrapper { padding: 0.5em 1em; }
+  .tb-header { margin-bottom: 0.25em; }
+}
+.cb-tertiary {
+  .tb-wrapper { padding: 0.25em 1em; }
+  .tb-header { margin-bottom: 0em; }
+}
+
+.tb-wrapper {
+    padding: 1em;
+}
+
+.tb-content {
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.tb-suffix {
+    margin-left: 0.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: $grey-tint-40;
+}
+
+.tb-header {
+    margin-bottom: 0.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: $grey-tint-60;
+}
+
+.tb-footer {
+    margin-top: 0.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: $grey-tint-40;
+}

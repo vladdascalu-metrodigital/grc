@@ -1,0 +1,20 @@
+$green: #34C082;
+$grey: #001432;
+$grey-tint-20: #33435B;
+$grey-tint-60: #99A1AD;
+$metro-blue: #002D72;
+
+.t-text {
+  text-transform: none;
+  &.t-size-s { font-size: 75%; }
+  &.t-size-m { font-size: 150%; }
+  &.t-size-l { font-size: 200%; }
+  &.t-size-xl { font-size: 250%; }
+  &.t-color-grey-dark { color: $grey-tint-20; }
+  &.t-color-grey-light { color: $grey-tint-60; }
+  &.t-color-green { color: $green; }
+  &.t-color-blue { color: $metro-blue; }
+  &.t-color-white { color: #FFFFFF; }
+  &.t-uppercase { text-transform: uppercase; }
+}
+

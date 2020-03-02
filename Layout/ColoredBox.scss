@@ -1,0 +1,16 @@
+$green: #34C082;
+
+$grey-tint-90: #E6E8EB;
+$grey-tint-95: #F2F3F5;
+
+.mrc-colored-box {
+  display: inline-flex;
+  flex-direction: column;
+  margin: 0 1em 1em;
+  &.cb-primary { width: calc(100% - 2em); }
+  &.cb-secondary { width: calc(75% - 2em); }
+}
+
+.mrc-grey-dark { background-color: $grey-tint-90; }
+.mrc-grey-light { background-color: $grey-tint-95; }
+.mrc-green { background-color: $green; }
