@@ -186,7 +186,7 @@ export default class Sales extends Component {
                 />
             );
             return (
-                <Collapsible open={mdwData.length === 0} key={key} trigger={trigger}>
+                <Collapsible open={mdwData.length === 1} key={key} trigger={trigger}>
                     {this.createOneSalesView(mdwCustomer)}
                 </Collapsible>
             );
