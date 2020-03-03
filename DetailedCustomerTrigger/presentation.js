@@ -42,23 +42,25 @@ export default class DetailedCustomerTrigger extends Component {
         if (this.isValidAmount(this.props.current) || this.isValidAmount(this.props.requested)) {
             return (<div>
                 <table className={this.getTableClassName()}>
-                    <tr key='current'>
-                        <td>{lookup('mrc.creditdetails.current') + ': '}</td>
-                        <td className={this.getLimitFontClassName()}>{this.asNumber(this.props.current, this.props.customer.country)}</td>
-                        {this.getProductColumn(this.props.cProduct)}
-                        {this.getPeriodColumn(this.props.cPeriod)}
-                        {this.getDebitTypeColumn(this.props.cDebitType)}
-                        {this.getLimitExpiryColumn(this.props.cLimitExpiryDate)}
-                    </tr>
-                    <tr key='requested'>
-                        <td>{lookup('mrc.creditdetails.requested') + ': '}</td>
-                        <td className={this.getLimitFontClassName()}>{this.asNumber(this.props.requested, this.props.customer.country)}</td>
-                        {this.getProductColumn(this.props.rProduct)}
-                        {this.getPeriodColumn(this.props.rPeriod)}
-                        {this.getDebitTypeColumn(this.props.rDebitType)}
-                        {this.getLimitExpiryColumn(this.props.rLimitExpiryDate)}
-                    </tr>
-                    {this.displayApprovedLimit()}
+                    <tbody>
+                        <tr key='current'>
+                            <td>{lookup('mrc.creditdetails.current') + ': '}</td>
+                            <td className={this.getLimitFontClassName()}>{this.asNumber(this.props.current, this.props.customer.country)}</td>
+                            {this.getProductColumn(this.props.cProduct)}
+                            {this.getPeriodColumn(this.props.cPeriod)}
+                            {this.getDebitTypeColumn(this.props.cDebitType)}
+                            {this.getLimitExpiryColumn(this.props.cLimitExpiryDate)}
+                        </tr>
+                        <tr key='requested'>
+                            <td>{lookup('mrc.creditdetails.requested') + ': '}</td>
+                            <td className={this.getLimitFontClassName()}>{this.asNumber(this.props.requested, this.props.customer.country)}</td>
+                            {this.getProductColumn(this.props.rProduct)}
+                            {this.getPeriodColumn(this.props.rPeriod)}
+                            {this.getDebitTypeColumn(this.props.rDebitType)}
+                            {this.getLimitExpiryColumn(this.props.rLimitExpiryDate)}
+                        </tr>
+                        {this.displayApprovedLimit()}
+                    </tbody>
                 </table>
             </div>);
         }
@@ -93,28 +95,28 @@ export default class DetailedCustomerTrigger extends Component {
         if (limitExpiry !== undefined && limitExpiry !== null) {
             return (<td><mrc-date>{limitExpiry}</mrc-date></td>);
         }
-        return '';
+        return null;
     }
 
     getDebitTypeColumn(debitTypeValue) {
         if (this.isAnyValuePresent(this.props.cDebitType, this.props.rDebitType, this.props.aDebitType)) {
             return (<td className={this.getDebitTypeFontClassName()}>{lookup(debitTypeValue)}</td>);
         }
-        return '';
+        return null;
     }
 
     getPeriodColumn(periodValue) {
         if (this.isAnyValuePresent(this.props.cPeriod, this.props.rPeriod, this.props.aPeriod)) {
             return (<td className={this.getPeriodFontClassName()}>{lookup(periodValue)}</td>);
         }
-        return '';
+        return null;
     }
 
     getProductColumn(productValue) {
         if (this.isAnyValuePresent(this.props.cProduct, this.props.rProduct, this.props.aProduct)) {
             return (<td className={this.getProductFontClassName()}>{lookup(productValue)}</td>);
         }
-        return '';
+        return null;
     }
 
     getLimitFontClassName() {

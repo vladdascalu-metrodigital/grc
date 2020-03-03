@@ -82,6 +82,7 @@ export function createLoadingHelpers(prefix, name, createUrl, optional = false, 
                 .then(([json, resp]) => {
                     if (resp.ok || resp.status === 404) {
                         dispatch(loadingComplete(json));
+                        return json;
                     } else {
                         const msg = json && json.errormessage;
                         throw new Error(msg);

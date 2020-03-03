@@ -171,7 +171,7 @@ export default class Sales extends Component {
         }
 
         if (mdwData == null || mdwData.length == 0) {
-            return <h4 classNam="not-found">{lookup('mrc.mdw.nodataavailable')}</h4>;
+            return <h4 className="not-found">{lookup('mrc.mdw.nodataavailable')}</h4>;
         }
 
         //For group
