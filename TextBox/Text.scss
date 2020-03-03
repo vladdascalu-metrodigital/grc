@@ -6,10 +6,18 @@ $metro-blue: #002D72;
 
 .t-text {
   text-transform: none;
-  &.t-size-s { font-size: 75%; }
-  &.t-size-m { font-size: 150%; }
-  &.t-size-l { font-size: 200%; }
-  &.t-size-xl { font-size: 250%; }
+
+  &.t-size-1 { font-size: 160%; }
+  &.t-size-2 { font-size: 170%; }
+  &.t-size-3 { font-size: 180%; }
+  &.t-size-4 { font-size: 190%; }
+  &.t-size-5 { font-size: 200%; }
+  &.t-size-6 { font-size: 210%; }
+  &.t-size-7 { font-size: 220%; }
+  &.t-size-8 { font-size: 230%; }
+  &.t-size-9 { font-size: 240%; }
+  &.t-size-10{ font-size: 250%; }
+
   &.t-color-grey-dark { color: $grey-tint-20; }
   &.t-color-grey-light { color: $grey-tint-60; }
   &.t-color-green { color: $green; }

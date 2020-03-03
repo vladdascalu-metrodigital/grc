@@ -5,24 +5,30 @@ import './Text.scss';
 import classnames from 'classnames';
 
 const Text = ({ children, color, size, uppercase }) => {
-    const classes = classnames('t-text', color, size, { 't-uppercase': uppercase });
+    const classes = classnames('t-text', COLORS[color], SIZES[size], { 't-uppercase': uppercase });
     return <span className={classes}>{children}</span>;
 };
 
 const COLORS = {
-    GREEN: 't-color-green',
-    RED: 't-color-red',
-    GREY_DARK: 't-color-grey-dark',
-    GREY_LIGHT: 't-color-grey-light',
-    WHITE: 't-color-white',
-    BLUE: 't-color-blue',
+    green: 't-color-green',
+    red: 't-color-red',
+    dark_grey: 't-color-grey-dark',
+    light_grey: 't-color-grey-light',
+    white: 't-color-white',
+    blue: 't-color-blue',
 };
 
 const SIZES = {
-    XL: 't-size-xl',
-    L: 't-size-l',
-    M: 't-size-m',
-    S: 't-size-s',
+    1: 't-size-1',
+    2: 't-size-2',
+    3: 't-size-3',
+    4: 't-size-4',
+    5: 't-size-5',
+    6: 't-size-6',
+    7: 't-size-7',
+    8: 't-size-8',
+    9: 't-size-9',
+    10: 't-size-10',
 };
 
 Text.propTypes = {
