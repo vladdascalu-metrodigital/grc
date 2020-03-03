@@ -258,6 +258,99 @@ export const ALL_ATTACHMENT_TYPES_JSON = "{ \n" +
     "               \"validation_argument\":\"TODAY\"\n" +
     "            }\n" +
     "         ]\n" +
+    "      },\n" +
+    "      { \n" +
+    "         \"country\":\"PL\",\n" +
+    "         \"type\":\"bank_guarantee\",\n" +
+    "         \"label\":\"mrc.attachments.types.bank_guarantee\",\n" +
+    "         \"remark\":\"Collaterals\",\n" +
+    "         \"is_collateral\":true,\n" +
+    "         \"fields\":[ \n" +
+    "            { \n" +
+    "               \"field_label\":\"mrc.attachments.fields.bank_guarantee.amount\",\n" +
+    "               \"data_type\":\"Double\",\n" +
+    "               \"mandatory\":true,\n" +
+    "               \"field_in_db\":\"amount\"\n" +
+    "            },\n" +
+    "            { \n" +
+    "               \"field_label\":\"mrc.attachments.fields.bank_guarantee.validity_date\",\n" +
+    "               \"data_type\":\"Date\",\n" +
+    "               \"mandatory\":true,\n" +
+    "               \"field_in_db\":\"expiry_date\",\n" +
+    "               \"validation_operation\":\"GREATER_THAN\",\n" +
+    "               \"validation_argument\":\"TODAY\"\n" +
+    "            }\n" +
+    "         ]\n" +
+    "      },\n" +
+    "      { \n" +
+    "         \"country\":\"PL\",\n" +
+    "         \"type\":\"insurance\",\n" +
+    "         \"label\":\"mrc.attachments.types.insurance\",\n" +
+    "         \"remark\":\"Insurance\",\n" +
+    "         \"is_collateral\":true,\n" +
+    "         \"fields\":[ \n" +
+    "            { \n" +
+    "               \"field_label\":\"mrc.attachments.fields.insurance.amount\",\n" +
+    "               \"data_type\":\"Double\",\n" +
+    "               \"mandatory\":true,\n" +
+    "               \"field_in_db\":\"amount\"\n" +
+    "            },\n" +
+    "            { \n" +
+    "               \"field_label\":\"mrc.attachments.fields.insurance.validity_date\",\n" +
+    "               \"data_type\":\"Date\",\n" +
+    "               \"mandatory\":true,\n" +
+    "               \"field_in_db\":\"expiry_date\",\n" +
+    "               \"validation_operation\":\"GREATER_THAN\",\n" +
+    "               \"validation_argument\":\"TODAY\"\n" +
+    "            }\n" +
+    "         ]\n" +
+    "      },\n" +
+    "      { \n" +
+    "         \"country\":\"PL\",\n" +
+    "         \"type\":\"bill_of_exchange\",\n" +
+    "         \"label\":\"mrc.attachments.types.bill_of_exchange\",\n" +
+    "         \"remark\":\"Bill of exchange\",\n" +
+    "         \"is_collateral\":true,\n" +
+    "         \"fields\":[ \n" +
+    "            { \n" +
+    "               \"field_label\":\"mrc.attachments.bill_of_exchange.amount\",\n" +
+    "               \"data_type\":\"Double\",\n" +
+    "               \"mandatory\":true,\n" +
+    "               \"field_in_db\":\"amount\"\n" +
+    "            },\n" +
+    "            { \n" +
+    "               \"field_label\":\"mrc.attachments.fields.bill_of_exchange.validity_date\",\n" +
+    "               \"data_type\":\"Date\",\n" +
+    "               \"mandatory\":true,\n" +
+    "               \"field_in_db\":\"expiry_date\",\n" +
+    "               \"validation_operation\":\"GREATER_THAN\",\n" +
+    "               \"validation_argument\":\"TODAY\"\n" +
+    "            }\n" +
+    "         ]\n" +
+    "      },\n" +
+    "      { \n" +
+    "         \"country\":\"PL\",\n" +
+    "         \"type\":\"other_collaterals\",\n" +
+    "         \"label\":\"mrc.attachments.types.other_collaterals\",\n" +
+    "         \"remark\":\"Other Collaterals\",\n" +
+    "         \"is_collateral\":true,\n" +
+    "         \"fields\":[ \n" +
+    "            { \n" +
+    "               \"field_label\":\"mrc.attachments.fields.other_collaterals.amount\",\n" +
+    "               \"data_type\":\"Double\",\n" +
+    "               \"mandatory\":true,\n" +
+    "               \"field_in_db\":\"amount\"\n" +
+    "            },\n" +
+    "            { \n" +
+    "               \"field_label\":\"mrc.attachments.fields.other_collaterals.validity_date\",\n" +
+    "               \"data_type\":\"Date\",\n" +
+    "               \"mandatory\":true,\n" +
+    "               \"field_in_db\":\"expiry_date\",\n" +
+    "               \"validation_operation\":\"GREATER_THAN\",\n" +
+    "               \"validation_argument\":\"TODAY\"\n" +
+    "            }\n" +
+    "         ]\n" +
     "      }\n" +
     "   ]\n" +
     "}";
+
