@@ -1,4 +1,3 @@
-// @import "../../../../../node_modules/global-react-components/settings";
 $grey: #001432;
 $grey-tint-20: #33435B;
 $grey-tint-40: #667284;
@@ -13,12 +12,12 @@ $green-tint-60: #AEE6CD;
 $green-tint-80: #D6F2E6;
 $green-tint-90: #EBF9F3;
 
-
-.cb-secondary {
+.cb-medium {
   .tb-wrapper { padding: 0.5em 1em; }
   .tb-header { margin-bottom: 0.25em; }
 }
-.cb-tertiary {
+
+.cb-small {
   .tb-wrapper { padding: 0.25em 1em; }
   .tb-header { margin-bottom: 0em; }
 }

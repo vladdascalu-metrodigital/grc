@@ -7,8 +7,9 @@ $grey-tint-95: #F2F3F5;
   display: inline-flex;
   flex-direction: column;
   margin: 0 1em 1em;
-  &.cb-primary { width: calc(100% - 2em); }
-  &.cb-secondary { width: calc(75% - 2em); }
+  &.cb-large { width: calc(100% - 2em); }
+  &.cb-medium { width: calc(75% - 2em); }
+  &.cb-small { width: calc(50% - 2em); }
 }
 
 .mrc-grey-dark { background-color: $grey-tint-90; }
