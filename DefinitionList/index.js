@@ -3,7 +3,7 @@ import {lookup} from 'global-react-components/Util/translations';
 import './index.css';
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';
-
+import * as _ from 'lodash';
 
 export default class DefinitionList extends Component {
 
@@ -21,8 +21,8 @@ export default class DefinitionList extends Component {
         const className = this.props.className ? ('definition-list ' + this.props.className) : 'definition-list';
 
         return (<div className={className}>
-              {title}
-              <dl>{items}</dl>
+                {title}
+                {!_.isEmpty(items) ? <dl>{items}</dl> : null}
             </div>);
     }
 }

@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';
-import Moment from 'react-moment';
 import './index.scss';
 import {displayName} from '../Util/index';
 import {lookup} from '../Util/translations';
+import DefinitionList from '../DefinitionList';
+import printDate from '../Util/DateUtils';
+import * as _ from 'lodash';
 
 export default class CustomerDetails extends Component {
 
@@ -20,95 +22,99 @@ export default class CustomerDetails extends Component {
             : null;
     }
 
-    printDate(date, withRelative = true) {
-        if (!date) {
-            return null;
-        }
-        return (
-            <div className='registration-date'>
-                <Moment className='absolute' format='LL'>{date}</Moment>
-                {withRelative && <Moment className='relative' fromNow={true}>{date}</Moment>}
-            </div>
-        );
-    }
-
-    printBirthDate(date, withRelative = true) {
-        if (!date) {
-            return null;
-        }
-        return (
-            <dd className='birth-date'>
-                <Moment className='absolute' format='LL'>{date}</Moment>
-            </dd>
-        );
-    }
-
     displayName() {
         return displayName(this.props.customer);
     }
 
-    displayCustomerBasicDetails(c) {
-        if (c.country && c.country == 'DE' && c.legalFormDescription) {
-            return (<dl>
-                {this.describeTerm('mrc.customerdetails.fields.customernumber', `${c.storeNumber}/${c.customerNumber}`)}
-                {this.describeTerm('mrc.customerdetails.fields.taxnumber', c.vatSpecNumber)}
-                {this.describeTerm('mrc.customerdetails.fields.vateunumber', c.vatEuNumber)}
-                {this.describeTerm('mrc.customerdetails.fields.legalform', c.legalForm)}
-                {this.describeTerm('mrc.customerdetails.fields.legalformdescription', c.legalFormDescription)}
-            </dl>);
+    displayCustomerBasicDetails(country, storeNumber, customerNumber, vatSpecNumber, vatEuNumber, legalForm, legalFormDescription) {
+        const list = [];
+        (_.isEmpty(storeNumber) || !_.isEmpty(customerNumber)) && list.push({term: 'mrc.customerdetails.fields.customernumber', description: `${storeNumber}/${customerNumber}`});
+        list.push({term: 'mrc.customerdetails.fields.taxnumber', description: vatSpecNumber});
+        list.push({term: 'mrc.customerdetails.fields.vateunumber', description: vatEuNumber});
+        list.push({term: 'mrc.customerdetails.fields.legalform', description: legalForm});
+        list.push({term: 'mrc.customerdetails.fields.legalformdescription', description: legalFormDescription});
+
+        return !_.isEmpty(list) ? <DefinitionList list={list}/> : null;
+    }
+
+    displayNaturalPersonDetails(companyOwnerLastName, companyOwnerFirstName, birthDay) {
+        const list = [];
+        !_.isEmpty(companyOwnerLastName) && list.push({term: 'mrc.customerdetails.fields.companyOwnerLastName', description: companyOwnerLastName});
+        !_.isEmpty(companyOwnerFirstName) && list.push({term: 'mrc.customerdetails.fields.companyOwnerFirstName', description: companyOwnerFirstName});
+        !_.isEmpty(birthDay) && list.push({
+            term: 'mrc.customerdetails.fields.birthDay',
+            description: <mrc-date>{birthDay}</mrc-date>
+        });
+
+        return !_.isEmpty(list) ? <DefinitionList list={list}/> : null;
+    }
+
+    displayContacts(email, phoneNumber, mobilePhoneNumber) {
+        return (
+            <DefinitionList
+                list={[
+                    { term: 'mrc.customerdetails.fields.email', description: email },
+                    { term: 'mrc.customerdetails.fields.phone', description: phoneNumber },
+                    { term: 'mrc.customerdetails.fields.mobile', description: mobilePhoneNumber },
+                ]}
+            />
+        );
+    }
+
+    displayAddress(street, houseNumber, zipCode, city) {
+        const list = [];
+        (!_.isEmpty(street) || !_.isEmpty(houseNumber)) && list.push({ term: 'history.street', description: street + ' ' + houseNumber });
+        (!_.isEmpty(zipCode) || !_.isEmpty(city)) && list.push({
+            term: <span>{lookup('history.zipCode') + '/' + lookup('history.city')}</span>,
+            description: zipCode + ' ' + city});
+
+        return <DefinitionList list={list}/>;
+    }
+
+    displayRegistrationDate(registrationDate) {
+        if (_.isEmpty(registrationDate)) {
+            return null;
         }
-        return (<dl>
-            {this.describeTerm('mrc.customerdetails.fields.customernumber', `${c.storeNumber}/${c.customerNumber}`)}
-            {this.describeTerm('mrc.customerdetails.fields.taxnumber', c.vatSpecNumber)}
-            {this.describeTerm('mrc.customerdetails.fields.vateunumber', c.vatEuNumber)}
-            {this.describeTerm('mrc.customerdetails.fields.legalform', c.legalForm)}
-        </dl>);
+        return (
+            <DefinitionList
+                list={[{
+                    term: 'mrc.customerdetails.fields.registration',
+                    description: printDate(registrationDate, true)
+                }]}
+            />
+        );
+    }
+
+    displayCompanyDetails(branchId, branchDescription, segment, companyFoundationDate) {
+        const list = [];
+        list.push({term: 'mrc.customerdetails.fields.branchid', description: branchId});
+        list.push({term: 'mrc.customerdetails.fields.branchdescription', description: branchDescription});
+        list.push({term: 'mrc.customerdetails.fields.segment', description: segment});
+        !_.isEmpty(companyFoundationDate) && list.push({
+            term: 'mrc.customerdetails.fields.companyfoundationdate',
+            description: printDate(companyFoundationDate)
+        });
+
+        return !_.isEmpty(list) ? <DefinitionList list={list}/> : null;
     }
 
     render() {
         const c = this.props.customer;
         const blockingContent = this.props.blockingContent;
         if (!c) return null;
-        return (<div className='mrc-customer-details' id={c.storeNumber + '/' + c.customerNumber}>
-            <section className='mrc-detail'>
-
-                {this.displayCustomerBasicDetails(c)}
-
-                <address>
-                    {c.country && c.country == 'DE' &&
-                    (
-                        <dd>
-                            {c.customerFirstName && lookup('mrc.customerdetails.fields.customerFirstName') + ':'} {this.printAndBr(c.customerFirstName)}
-                            {c.customerLastName && lookup('mrc.customerdetails.fields.customerLastName') + ':'} {this.printAndBr(c.customerLastName)}
-                            {c.birthDay && lookup('mrc.customerdetails.fields.birthDay') + ':'} {this.printBirthDate(c.birthDay)} <br></br>
-                        </dd>
-                    )}
-                    {c.email && lookup('mrc.customerdetails.fields.email') + ':'} {this.printAndBr(c.email)}
-                    {c.phoneNumber && lookup('mrc.customerdetails.fields.phone') + ':'} {this.printAndBr(c.phoneNumber)}
-                    {c.mobilePhoneNumber && lookup('mrc.customerdetails.fields.mobile') + ':'} {this.printAndBr(c.mobilePhoneNumber)}
-                    <br/>
-                    {lookup('mrc.customerdetails.fields.street') + ':'} {this.printAndBr(c.street, c.houseNumber)}
-                    {lookup('mrc.customerdetails.fields.zipcity') + ':'} <abbr title='ZIP'>{c.zipCode}</abbr> <abbr
-                    title='City'>{c.city}</abbr>
-                </address>
-                <div>
-                    {lookup('mrc.customerdetails.fields.registration') + ':'} {this.printDate(c.registrationDate)}
-                </div>
-                <br key='br'/>
-                {blockingContent}
-
-                {c.country && c.country == 'DE' &&
-                (
-                    <dl>
-                        {c.branchId && lookup('mrc.customerdetails.fields.branchid') + ':'} {this.printAndBr(c.branchId)}
-                        {c.branchDescription && lookup('mrc.customerdetails.fields.branchdescription') + ':'} {this.printAndBr(c.branchDescription)}
-                        {c.segment && lookup('mrc.customerdetails.fields.segment') + ':'} {this.printAndBr(c.segment)}
-                        {c.companyFoundationDate && lookup('mrc.customerdetails.fields.companyfoundationdate') + ':'}
-                        {this.printDate(c.companyFoundationDate)}
-                    </dl>
-                )}
-            </section>
-        </div>);
+        return (
+            <div className='mrc-customer-details' id={c.storeNumber + '/' + c.customerNumber}>
+                <section className='mrc-detail'>
+                    {this.displayCustomerBasicDetails(c.country, c.storeNumber, c.customerNumber, c.vatSpecNumber, c.vatEuNumber, c.legalForm, c.legalFormDescription)}
+                    {this.displayNaturalPersonDetails(c.companyOwnerLastName, c.companyOwnerFirstName, c.birthDay)}
+                    {this.displayContacts(c.email, c.phoneNumber, c.mobilePhoneNumber)}
+                    {this.displayAddress(c.street, c.houseNumber, c.zipCode, c.city)}
+                    {this.displayRegistrationDate(c.registrationDate)}
+                    {blockingContent}
+                    {this.displayCompanyDetails(c.branchId, c.branchDescription, c.segment, c.companyFoundationDate)}
+                </section>
+            </div>
+        );
     }
 }
 
@@ -116,5 +122,3 @@ CustomerDetails.propTypes = {
     customer: PropTypes.object,
     blockingContent: PropTypes.object
 };
-
-
