@@ -31,8 +31,8 @@ export default class Attachments extends Component {
 }
 
 Attachments.propTypes = {
-    country: PropTypes.String,
-    fileTypes: PropTypes.Array,
+    country: PropTypes.string,
+    fileTypes: PropTypes.array,
     addAttachment: PropTypes.func.isRequired,
     data: PropTypes.array,
     readonly: PropTypes.bool,

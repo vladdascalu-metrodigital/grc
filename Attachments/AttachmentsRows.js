@@ -584,6 +584,6 @@ AttachmentsRows.propTypes = {
     readonly: PropTypes.bool,
     currentApprover: PropTypes.string,
     fileTypes: PropTypes.Array,
-    country: PropTypes.String,
+    country: PropTypes.string,
     hideUploader: PropTypes.bool,
 };
