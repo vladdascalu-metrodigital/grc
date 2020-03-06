@@ -30,8 +30,8 @@ const SIZES = {
 
 ColoredBox.propTypes = {
     children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]),
-    color: PropTypes.oneOfType(COLORS),
-    size: PropTypes.oneOfType(SIZES),
+    color: PropTypes.string,
+    size: PropTypes.string,
 };
 
 export default ColoredBox;

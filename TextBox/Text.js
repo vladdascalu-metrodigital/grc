@@ -32,8 +32,8 @@ const SIZES = {
 };
 
 Text.propTypes = {
-    color: PropTypes.oneOfType(COLORS),
-    size: PropTypes.oneOfType(SIZES),
+    color: PropTypes.string,
+    size: PropTypes.string,
     children: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
     uppercase: PropTypes.bool,
 };
