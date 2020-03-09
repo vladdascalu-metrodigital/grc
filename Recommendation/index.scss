@@ -1,0 +1,45 @@
+$grey-tint-95: #F2F3F5;
+$grey-tint-60: #99A1AD;
+$white: #FFFFFF;
+
+.mrc-recommendation-odd {
+    background-color: $grey-tint-95;
+
+    .recommendation-text {
+        padding: 1rem;
+        background-color: $white;
+        border: 1px solid $grey-tint-60;
+    }
+}
+
+.mrc-recommendation-even {
+    background-color: $white;
+}
+
+.mrc-recommendation {
+
+    padding: 1rem;
+    border: 1px solid $grey-tint-60;
+
+    *.desktop {
+        margin-left: 5rem;
+        margin-right: 5rem;
+    }
+
+    .recommendation-text {
+        margin-top: 1rem;
+    }
+
+    .uploader-position {
+        color: $grey-tint-60;
+    }
+
+    .uploader-name.desktop {
+        margin-top: 5rem;
+    }
+
+    .uploader-name.mobile {
+        margin-top: 1rem;
+    }
+}
+
