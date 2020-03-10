@@ -1,13 +1,7 @@
 @import "../settings";
 
 .mrc-recommendation-odd {
-    background-color: $grey-tint-95;
-
-    .recommendation-text {
-        padding: 1rem;
-        background-color: white;
-        border: 1px solid $grey-tint-60;
-    }
+    background-color: white;
 }
 
 .mrc-recommendation-even {
