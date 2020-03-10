@@ -52,7 +52,7 @@ a.active { pointer-events: auto; }
   // Phone is not supported
   /*@include respond-to('phone') {
       height: auto;
-  }*/
+  // }*/
 
   @include respond-to('tablet') {
     height: auto;
