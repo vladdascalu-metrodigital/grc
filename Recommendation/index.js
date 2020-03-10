@@ -86,22 +86,28 @@ export default class Recommendation extends Component {
                     <p className={this.withDeviceClass(null)}>Rating: {this.props.rating}</p>
                     <br />
                     <div className={this.withDeviceClass('recommendation-text')}>{this.props.content}</div>
-                    {this.props.editableByCurrentUser ? (
-                        <div className="mrc-btn-group">
-                            <Button
-                                text={lookup('mrc.recommendations.deleterecommendation')}
-                                status="error"
-                                onClick={() => this.props.deleteRecommendation(this.props.id)}
-                            />
-                            <Button
-                                text={lookup('mrc.recommendations.editrecommendation')}
-                                status="primary"
-                                onClick={() =>
-                                    this.props.editRecommendation(this.props.id, this.props.content, this.props.rating)
-                                }
-                            />
-                        </div>
-                    ) : null}
+                    <div className={this.withDeviceClass('recommendation-footer')}>
+                        {this.props.editableByCurrentUser ? (
+                            <div className="mrc-btn-group">
+                                <Button
+                                    text={lookup('mrc.recommendations.deleterecommendation')}
+                                    status="error"
+                                    onClick={() => this.props.deleteRecommendation(this.props.id)}
+                                />
+                                <Button
+                                    text={lookup('mrc.recommendations.editrecommendation')}
+                                    status="primary"
+                                    onClick={() =>
+                                        this.props.editRecommendation(
+                                            this.props.id,
+                                            this.props.content,
+                                            this.props.rating
+                                        )
+                                    }
+                                />
+                            </div>
+                        ) : null}
+                    </div>
                 </div>
             );
         }

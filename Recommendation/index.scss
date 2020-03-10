@@ -1,19 +1,17 @@
-$grey-tint-95: #F2F3F5;
-$grey-tint-60: #99A1AD;
-$white: #FFFFFF;
+@import "../settings";
 
 .mrc-recommendation-odd {
     background-color: $grey-tint-95;
 
     .recommendation-text {
         padding: 1rem;
-        background-color: $white;
+        background-color: white;
         border: 1px solid $grey-tint-60;
     }
 }
 
 .mrc-recommendation-even {
-    background-color: $white;
+    background-color: white;
 }
 
 .mrc-recommendation {
@@ -41,5 +39,62 @@ $white: #FFFFFF;
     .uploader-name.mobile {
         margin-top: 1rem;
     }
+
+    .mrc-btn-group {
+        justify-content: right;
+    }
+
+    .recommendation-footer.desktop {
+        margin-bottom: 5rem;
+    }
+    .mrc-primary-button {
+        background-color: $mrc-blue
+    }
+
+    .mrc-error-button {
+        color: $warning-orange;
+        background-color: white;
+        border: 2px solid $warning-orange;
+    }
+
+    .mrc-error-button:hover {
+        color: $warning-orange-light;
+        background-color: white;
+        border: 2px solid $warning-orange-light;
+    }
 }
 
+.new-recommendation {
+    p {
+        color: $grey-tint-40;
+    }
+
+    .description {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    border: 1px solid $grey-tint-60;
+    background-color: $grey-tint-95;
+
+    .recommendation {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .add-recommendation {
+        padding-top: 3rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid $grey-tint-60;
+    }
+}
+
+.new-recommendation.mobile {
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.new-recommendation.desktop {
+    padding: 5rem;
+    margin-bottom: 1rem;
+}
