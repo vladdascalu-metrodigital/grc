@@ -41,7 +41,28 @@
 
     .third {
       height: 100%;
-      width: calc(100% /3);
+      width: calc(100% / 3);
     }
-  }
+
+    .split-4 {
+      height: 100%;
+      width: calc(100% / 4);
+    }
+
+    .split-4-first {
+      background-color: $light-blue;
+    }
+
+    .split-4-second {
+      background-color: $middle-blue;
+    }
+
+    .split-4-third {
+      background-color: $sky-blue;
+    }
+
+    .split-4-forth {
+      background-color: $dark-blue;
+    }
+}
 }
