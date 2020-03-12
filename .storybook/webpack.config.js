@@ -7,11 +7,31 @@ module.exports = async ({ config, mode }) => {
   // 'PRODUCTION' is used when building the static version of storybook.
 
   // Make whatever fine-grained changes you need
-  config.module.rules.push({
-    test: /\.scss$/,
-    loaders: ['style-loader', 'css-loader', 'sass-loader'],
-    include: [path.resolve(__dirname, '../')]
-  });
+  config.module.rules.push(
+    {
+      test: /\.scss$/,
+      loaders: ['style-loader', 'css-loader', 'sass-loader'],
+      include: [path.resolve(__dirname, '../')]
+    },
+    {
+      test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+      loaders: ['file-loader'],
+      include: path.resolve(__dirname, '../src/asstes/fonts')
+    }
+  );
+  
+  // config.module.rules.push({
+  //     test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+  //     use: [
+  //       {
+  //         loader: 'file-loader',
+  //         query: {
+  //           name: '[name].[ext]'
+  //         }
+  //       }
+  //     ],
+  //     include: path.resolve(__dirname, '../')
+  //   });
 
   // Return the altered config
   return config;

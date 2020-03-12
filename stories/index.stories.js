@@ -8,6 +8,8 @@ import { Welcome } from '@storybook/react/demo';
 import Button from '../Button';
 import FileUpload from '../FileUpload';
 
+import Recommendations from '../Recommendations';
+
 import { HashRouter, NavLink } from 'react-router-dom';
 
 import '../node_modules/mrc-component-library/public/css/bundle.css';
@@ -19,6 +21,9 @@ storiesOf('Button', module)
   .add('Error', () => <Button status="error" onClick={action('clicked')} text="Approve" />)
   .add('Secondary', () => <Button status="secondary" onClick={action('clicked')} text="Approve" />)
   .add('Success', () => <Button status="success" onClick={action('clicked')} text="Approve" />);
+
+storiesOf('Recommendations', module)
+  .add('standard', () => <Recommendations />);
 
 storiesOf('FileUpload', module)
   .add('standard', () => <FileUpload labelSelect={"select file"} updateFile={action('uploadAttachment')} selectDisabled={false} uploadDisabled={false}/>);

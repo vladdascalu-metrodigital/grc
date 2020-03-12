@@ -1,0 +1,124 @@
+@import '../lib/scss/main.scss';
+
+.mrc-ui-add-recommendation-button {
+  width: auto !important;
+  padding: $spacing-none $spacing-extra-large !important;
+  margin: $spacing-large auto $spacing-large auto !important;
+}
+
+.mrc-ui-recommendations-headline {
+  margin-bottom: $spacing-extra-small;
+  padding: $spacing-extra-small $spacing-medium;
+  color: $color-brand-primary-default;
+}
+
+.mrc-ui-recommendation {
+  padding: $spacing-medium;
+  margin: $spacing-none auto !important;  
+}
+
+.mrc-ui-recommendation-text {
+  white-space: pre-line;
+  line-height: $line-height-copy;
+  color: $color-palette-grey-tint-20;
+  -ms-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.mrc-ui-recommendation-metainfo-component {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: $spacing-small;
+}
+
+.mrc-ui-recommendation-author-text {
+  margin-right: $spacing-small;
+}
+
+.mrc-ui-recommendation-star-rating {
+  margin: $spacing-medium $spacing-none;
+}
+
+.mrc-ui-recommendation-author-email {
+  color: $color-brand-primary-default;
+  font-weight: bold;
+}
+
+.mrc-ui-recommendation-author-title-time {
+  color: $color-palette-grey-tint-50;
+  font-size: $font-size-8;
+  font-weight: 600;
+}
+
+.mrc-ui-recommendation-author-icon{
+  margin-right: $spacing-small;
+  width: $width-3;
+}
+
+@media #{$breakpoint-not-small} {
+  .mrc-ui-recommendation-star-rating {
+    margin-left: auto;
+  }
+}
+
+.mrc-ui-recommendation-list {
+  background: $color-contrast-white;
+  
+}
+
+.mrc-ui-recommendation-divider {
+  border-color: $color-palette-grey-tint-80;
+}
+
+@media #{$breakpoint-medium} {
+  .mrc-ui-recommendation-list {
+    border: $border-width-thin solid $color-palette-grey-tint-80;
+    border-radius: $border-radius-small;
+    -webkit-box-shadow: 0px 4px 12px 0px rgba(0,0,0,0.12);
+    -moz-box-shadow: 0px 4px 12px 0px rgba(0,0,0,0.12);
+    box-shadow: 0px 4px 12px 0px rgba(0,0,0,0.12);
+    padding: 2rem 0rem !important;
+  }
+  
+  .mrc-ui-recommendation {
+    padding: $spacing-medium 4rem !important;
+  }
+  
+  .mrc-ui-recommendation-star-rating {
+    margin-left: auto;
+  }
+}
+
+@media #{$breakpoint-large} {
+  .mrc-ui-recommendation-list {
+    border: $border-width-thin solid $color-palette-grey-tint-80;
+    border-radius: $border-radius-small;
+    -webkit-box-shadow: 0px 4px 12px 0px rgba(0,0,0,0.12);
+    -moz-box-shadow: 0px 4px 12px 0px rgba(0,0,0,0.12);
+    box-shadow: 0px 4px 12px 0px rgba(0,0,0,0.12);
+    padding: 2rem 0rem !important;
+  }
+  .mrc-ui-recommendation {
+    padding: $spacing-medium 4rem !important;
+  }
+  
+  .mrc-ui-recommendation-star-rating {
+    margin-left: auto;
+  }
+}
+
+@media #{$breakpoint-medium} {
+  .mrc-ui-recommendations {
+    max-width: 44rem;
+    margin: $spacing-none auto $spacing-none auto !important;
+  }
+}
+
+@media #{$breakpoint-large} {
+  .mrc-ui-recommendations {
+    max-width: 48rem;
+    margin: $spacing-none auto $spacing-none auto !important;
+  }
+}
