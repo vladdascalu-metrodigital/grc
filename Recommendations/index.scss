@@ -1,5 +1,10 @@
 @import '../lib/scss/main.scss';
 
+
+.mrc-ui-recommendation-component {
+  margin-bottom: $spacing-large;
+}
+
 .mrc-ui-add-recommendation-button {
   width: auto !important;
   padding: $spacing-none $spacing-extra-large !important;
@@ -91,6 +96,22 @@
   }
 }
 
+.mrc-ui-recommendation-star-rating {
+  background-color: $color-brand-primary-tint-10;
+  padding: $spacing-extra-small $spacing-medium;
+  border-radius: $border-radius-pill;
+}
+
+.mrc-ui-filled-star {
+  color: $color-brand-secondary-default;
+  margin-right: $spacing-extra-extra-small;
+}
+
+.mrc-ui-star-placeholder {
+  color: $color-brand-secondary-shade-20;
+  margin-right: $spacing-extra-extra-small;;
+}
+
 @media #{$breakpoint-large} {
   .mrc-ui-recommendation-list {
     border: $border-width-thin solid $color-palette-grey-tint-80;
@@ -121,4 +142,101 @@
     max-width: 48rem;
     margin: $spacing-none auto $spacing-none auto !important;
   }
+}
+
+// modal dialog
+
+.mrc-ui-modal {
+    /* This way it could be display flex or grid or whatever also. */
+    display: block;
+  
+    /* Probably need media queries here */
+
+    width: 100%;
+    height: 100%;
+    
+    position: fixed;
+  
+    z-index: 1010;
+  
+    left: 50%;
+    top: 30%;
+  
+    /* Use this for centering if unknown width/height */
+    transform: translate(-50%, -30%);
+  
+    /* If known, negative margins are probably better (less chance of blurry text). */
+    /* margin: -200px 0 0 -200px; */
+    background-color: $color-palette-grey-tint-95;
+    
+}
+
+.mrc-ui-modal-title {
+  font-size: $font-size-6;
+  text-align: center;
+  margin: $spacing-none;
+  background-color: $color-contrast-white;
+  border-bottom: $border-width-thin solid $color-palette-grey-tint-80;
+  padding: $spacing-medium;
+}
+
+.mrc-ui-modal-content {
+  padding: $spacing-medium $spacing-medium;
+
+  border: 2px solid red;
+  overflow: auto;
+}
+
+
+@media #{$breakpoint-medium} {
+  
+  .mrc-ui-modal-title {
+    border-top-left-radius: $border-radius-small;
+    border-top-right-radius: $border-radius-small;
+  }
+  .mrc-ui-modal {
+    border-radius: $border-radius-small;
+    max-width: 44rem;
+    height: 400px;
+      max-height: 345px;
+  }
+}
+
+@media #{$breakpoint-large} {
+  .mrc-ui-modal-title {
+    border-top-left-radius: $border-radius-small;
+    border-top-right-radius: $border-radius-small;
+  }
+  .mrc-ui-modal {
+    border-radius: $border-radius-small;
+    max-width: 44rem;
+    height: 400px;
+    max-height: 345px;
+  }
+}
+
+.mrc-ui-modal .close-button {
+  position: absolute;
+  
+  /* don't need to go crazy with z-index here, just sits over .modal-guts */
+  z-index: 1;
+  
+  top: 100px;
+  
+  /* needs to look OK with or without scrollbar */
+  right: 20px;
+
+  border: 0;
+  padding: 5px 10px;
+}
+
+.mrc-ui-modal-overlay {
+  background-color: $color-contrast-black;
+  opacity: 0.4;
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
