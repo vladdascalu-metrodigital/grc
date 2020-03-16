@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './AttachmentsRows.scss';
 import './attachments.scss';
 import PropTypes from 'prop-types';
-import { lookup } from '../Util/translations.js';
+import {lookup} from '../Util/translations.js';
 import FileUpload from '../FileUpload';
-import { NumberInput } from '../NumberInput/index';
+import {NumberInput} from '../NumberInput/index';
 import MrcDatePickerInput from '../DatePicker/index';
 //icons:
 import DocIcon from '../icons/doc.svg';
@@ -86,29 +86,19 @@ export default class AttachmentsRows extends Component {
         return result;
     }
 
-    fileSelection(currentApprover) {
-        if (currentApprover === 'CC' && !this.state.fileType) {
-            this.setState({
-                fileType: 'general',
-                attachmentType: { type: 'general' },
-            });
-        }
-        if (currentApprover === 'CC') {
-            return null;
-        } else {
-            return (
-                <select
-                    name="file-type"
-                    id="select-file-type"
-                    value={this.state.fileType == null || this.state.fileType === '' ? '' : this.state.fileType}
-                    onChange={this.handleFileTypeChange}
-                    disabled={this.props.readonly || (this.props.fileTypes && this.props.fileTypes.length === 1)}
-                    placeholder="File Type"
-                >
-                    {this.createFileTypeOptions()}
-                </select>
-            );
-        }
+    fileSelection() {
+        return (
+            <select
+                name="file-type"
+                id="select-file-type"
+                value={this.state.fileType == null || this.state.fileType === '' ? '' : this.state.fileType}
+                onChange={this.handleFileTypeChange}
+                disabled={this.props.readonly || (this.props.fileTypes && this.props.fileTypes.length === 1)}
+                placeholder="File Type"
+            >
+                {this.createFileTypeOptions()}
+            </select>
+        );
     }
 
     createUploader(currentApprover) {
@@ -129,6 +119,8 @@ export default class AttachmentsRows extends Component {
             ((this.state.fileType !== null && this.state.fileType !== '') ||
                 (this.props.fileTypes !== null && this.props.fileTypes.length === 1)) &&
             mandatoryFields;
+        let isCcWithOnlyGeneral = currentApprover === 'CC' && this.checkForOnlyGeneralFileType();
+
         return (
             <div className="mrc-add-attachment">
                 <FileUpload
@@ -143,7 +135,7 @@ export default class AttachmentsRows extends Component {
                         <label name="selected-file" className="selected-file">
                             {lookup('mrc.attachments.fields.file')}: {this.state.file && this.state.file.name}
                         </label>
-                        <br />
+                        <br/>
                         <input
                             maxLength={maxFileNameLength}
                             className="m-input-element"
@@ -155,13 +147,13 @@ export default class AttachmentsRows extends Component {
                             placeholder="Title"
                         />
                     </div>
-                    {currentApprover == 'CC' ? null : (
+                    {isCcWithOnlyGeneral ? this.createStateForCC(currentApprover) : (
                         <div className={classNameOfTypeOptions}>
                             <label name="selected-file-type" className="selected-file">
                                 {lookup('mrc.attachments.fields.fileType')}:{' '}
                             </label>
-                            <br />
-                            {this.fileSelection(currentApprover)}
+                            <br/>
+                            {this.fileSelection()}
                         </div>
                     )}
                 </div>
@@ -179,6 +171,21 @@ export default class AttachmentsRows extends Component {
             </div>
         );
     }
+
+    checkForOnlyGeneralFileType = () => {
+        return this.props.fileTypesForCC && this.props.fileTypesForCC.length === 1
+            && this.props.fileTypesForCC == 'general';
+    };
+
+    //when send back to CC from approval-service
+    createStateForCC = (approver) => {
+        if (!this.state.fileType) {
+            this.setState({
+                fileType: 'general',
+                attachmentType: {type: 'general'}
+            });
+        }
+    };
 
     crateAttachmentTypesFields() {
         if (this.state.showCollateralMeta) {
@@ -251,7 +258,7 @@ export default class AttachmentsRows extends Component {
                 <label name={field.field_label} className="selected-file">
                     {lookup(field.field_label)}
                 </label>
-                <br />
+                <br/>
                 <MrcDatePickerInput
                     className="m-input-element"
                     onChange={event => this.handleDatePickerChange(event, field)}
@@ -273,7 +280,7 @@ export default class AttachmentsRows extends Component {
                 <label name={field.field_label} className="selected-file">
                     {lookup(field.field_label)}
                 </label>
-                <br />
+                <br/>
                 <NumberInput
                     className="m-input-element"
                     name="attachment-amount"
@@ -294,7 +301,7 @@ export default class AttachmentsRows extends Component {
             ) {
                 return this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.map(this.toOption);
             } else {
-                return [<option key="null">Please Choose...</option>].concat(
+                return [<option key="null">{lookup('mrc.attachments.choose')}</option>].concat(
                     this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.map(this.toOption)
                 );
             }
@@ -342,7 +349,7 @@ export default class AttachmentsRows extends Component {
 
     displayIcon(item) {
         return (
-            <img className="mrc-icon-large" src={this.getIcon(item).src} alt={this.getIcon(item).extension + ' File'} />
+            <img className="mrc-icon-large" src={this.getIcon(item).src} alt={this.getIcon(item).extension + ' File'}/>
         );
     }
 
@@ -415,22 +422,22 @@ export default class AttachmentsRows extends Component {
         const re = /(?:\.([^.]+))?$/;
         const extension = re.exec(item.filename)[1];
         if (extension === 'doc' || extension === 'docx') {
-            return { src: DocIcon, extension: extension };
+            return {src: DocIcon, extension: extension};
         } else if (extension === 'pdf') {
-            return { src: PdfIcon, extension: extension };
+            return {src: PdfIcon, extension: extension};
         } else if (extension === 'csv') {
-            return { src: CsvIcon, extension: extension };
+            return {src: CsvIcon, extension: extension};
         } else if (extension === 'xls' || extension === 'xlsx') {
-            return { src: XlsIcon, extension: extension };
+            return {src: XlsIcon, extension: extension};
         } else if (extension === 'tif') {
-            return { src: TifIcon, extension: extension };
+            return {src: TifIcon, extension: extension};
         } else if (extension === 'png') {
-            return { src: PngIcon, extension: extension };
+            return {src: PngIcon, extension: extension};
         } else if (extension === 'jpg') {
-            return { src: JpgIcon, extension: extension };
+            return {src: JpgIcon, extension: extension};
         } else {
             //We need an icon for unknown file types.
-            return { src: UnknownIcon, extension: extension };
+            return {src: UnknownIcon, extension: extension};
         }
     }
 
@@ -444,9 +451,9 @@ export default class AttachmentsRows extends Component {
 
     updateFile = file => {
         if (this.state.title.trim().length > 0) {
-            this.setState({ ...this.state, file: file });
+            this.setState({...this.state, file: file});
         } else {
-            this.setState({ ...this.state, title: file.name, file: file });
+            this.setState({...this.state, title: file.name, file: file});
         }
     };
 
@@ -482,13 +489,12 @@ export default class AttachmentsRows extends Component {
 
     updateTitle = evt => {
         evt.preventDefault();
-        this.setState({ ...this.state, title: evt.target.value });
+        this.setState({...this.state, title: evt.target.value});
     };
 
     handleFileTypeChange = event => {
         let attachmentFromJson = this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.filter(
-            att => att.type.toLowerCase() === event.target.value
-        )[0];
+            att => att.type.toLowerCase() === event.target.value)[0];
 
         let showCollateralMeta = false;
         if (attachmentFromJson.fields) showCollateralMeta = true;
