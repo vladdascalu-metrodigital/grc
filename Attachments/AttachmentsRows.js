@@ -46,6 +46,12 @@ export default class AttachmentsRows extends Component {
             .filter(attType => this.props.fileTypes.includes(attType.type.toLowerCase()));
     }
 
+    UNSAFE_componentWillReceiveProps () {
+        if (this.props.currentApprover === 'CC' && this.checkForOnlyGeneralFileType()) {
+            this.createStateForCC();
+        }
+    }
+
     render() {
         const noAttachmentsGiven = !(this.props.data && this.props.data.length > 0);
         if (noAttachmentsGiven) {
@@ -147,7 +153,7 @@ export default class AttachmentsRows extends Component {
                             placeholder="Title"
                         />
                     </div>
-                    {isCcWithOnlyGeneral ? this.createStateForCC(currentApprover) : (
+                    {isCcWithOnlyGeneral ? null : (
                         <div className={classNameOfTypeOptions}>
                             <label name="selected-file-type" className="selected-file">
                                 {lookup('mrc.attachments.fields.fileType')}:{' '}
@@ -178,7 +184,7 @@ export default class AttachmentsRows extends Component {
     };
 
     //when send back to CC from approval-service
-    createStateForCC = (approver) => {
+    createStateForCC = () => {
         if (!this.state.fileType) {
             this.setState({
                 fileType: 'general',
