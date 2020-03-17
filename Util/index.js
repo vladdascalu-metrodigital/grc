@@ -1,11 +1,11 @@
-import {extractJoinedProps} from './util';
-import {createLoadingHelpers, enhanceReducer} from './reduxHelpers';
+import { extractJoinedProps } from './util';
+import { createLoadingHelpers, enhanceReducer } from './reduxHelpers';
 
 export const utilFactory = configUrl => {
     const configLoadingHelpers = createLoadingHelpers('UI', 'CONFIG', () => configUrl);
     return {
         configLoadingHelpers: configLoadingHelpers,
-        uiReducer: {ui: enhanceReducer(reducerFn, {config: configLoadingHelpers.reducer})}
+        uiReducer: { ui: enhanceReducer(reducerFn, { config: configLoadingHelpers.reducer }) },
     };
 };
 
@@ -17,22 +17,22 @@ const allowedTransitions = {
     disappear: ['show'],
 };
 
-function reducerFn(state = {pageTitle: 'Launch Pad', navFlyoutVisible: 'hide', auxControls: {}}, action) {
+function reducerFn(state = { pageTitle: 'Launch Pad', navFlyoutVisible: 'hide', auxControls: {} }, action) {
     const currentState = state.navFlyoutVisible;
     const newState = action.visibilityState;
     switch (action.type) {
         case 'CURRENT_UI_PAGE_TITLE':
-            return Object.assign({}, state, {pageTitle: action.text});
+            return Object.assign({}, state, { pageTitle: action.text });
         case 'RESIZE':
-            return Object.assign({}, state, {tablet: action.tablet, desktop: action.desktop});
+            return Object.assign({}, state, { tablet: action.tablet, desktop: action.desktop });
         case 'NAV_FLYOUT_VISIBILITY_CHANGE':
             if (allowedTransitions[currentState].includes(newState)) {
-                return Object.assign({}, state, {navFlyoutVisible: action.visibilityState});
+                return Object.assign({}, state, { navFlyoutVisible: action.visibilityState });
             } else {
                 return state;
             }
         case 'NOTIFICATION':
-            return Object.assign({}, state, {message: action.message, messageType: action.messageType});
+            return Object.assign({}, state, { message: action.message, messageType: action.messageType });
         case 'AUX_CONTROL_EVENT':
             return handleAuxControlState(action, state);
         default:
@@ -48,7 +48,7 @@ function handleAuxControlState(action, state) {
     } else if (paramType === 'object') {
         auxControls = Object.assign(auxControls, action.value);
     }
-    return Object.assign({}, state, {auxControls});
+    return Object.assign({}, state, { auxControls });
 }
 
 let debounceTimeout;
@@ -78,17 +78,21 @@ export function debounce(fn, wait, immediate) {
  */
 export function filterObjectByPrefix(creditData, prefix = '_') {
     const creditDataFiltered = {};
-    Object.keys(creditData).filter(k => !k.startsWith(prefix)).forEach((k) => creditDataFiltered[k] = creditData[k]);
+    Object.keys(creditData)
+        .filter(k => !k.startsWith(prefix))
+        .forEach(k => (creditDataFiltered[k] = creditData[k]));
     return creditDataFiltered;
 }
 
 export function displayName(customer, fallback = 'Unknown') {
-    return extractJoinedProps(customer, 'companyName')
-        || extractJoinedProps(customer, 'firstName', 'lastName')
-        || extractJoinedProps(customer, 'customerFirstName', 'customerLastName')
-        || extractJoinedProps(customer, 'companyOwnerFirstName', 'companyOwnerLastName')
-        || customer.displayName
-        || fallback;
+    return (
+        extractJoinedProps(customer, 'companyName') ||
+        extractJoinedProps(customer, 'firstName', 'lastName') ||
+        extractJoinedProps(customer, 'customerFirstName', 'customerLastName') ||
+        extractJoinedProps(customer, 'companyOwnerFirstName', 'companyOwnerLastName') ||
+        customer.displayName ||
+        fallback
+    );
 }
 
 export const checkResponseIsOk = resp => {

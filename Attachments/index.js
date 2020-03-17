@@ -11,7 +11,7 @@ export default class Attachments extends Component {
     }
 
     render() {
-        const { data, readonly, country, fileTypes, addAttachment, currentApprover, fileTypesForCC} = this.props;
+        const { data, readonly, country, fileTypes, addAttachment, currentApprover, fileTypesForCC } = this.props;
         const hideUploader =
             this.props.hideUploader !== undefined &&
             this.props.hideUploader !== null &&
@@ -39,4 +39,5 @@ Attachments.propTypes = {
     readonly: PropTypes.bool,
     currentApprover: PropTypes.string,
     hideUploader: PropTypes.bool,
+    fileTypesForCC: PropTypes.array,
 };

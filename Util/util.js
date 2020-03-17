@@ -63,6 +63,6 @@ const processJobs = () => {
 processJobs();
 export const fetchSequentially = (uri, request) => {
     return new Promise((resolve, reject) => {
-        jobs.push({uri, request, resolve, reject});
+        jobs.push({ uri, request, resolve, reject });
     });
 };

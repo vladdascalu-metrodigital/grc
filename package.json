@@ -14,23 +14,34 @@
         "@storybook/react": "5.2.8",
         "babel-loader": "^8.0.6",
         "css-loader": "^3.2.1",
+        "eslint": "^6.8.0",
+        "husky": "^4.2.3",
+        "lint-staged": "^10.0.8",
         "node-sass": "^4.13.0",
+        "prettier": "^1.19.1",
         "sass-loader": "^7.1.0",
         "style-loader": "^1.0.1"
     },
     "dependencies": {
         "babel-eslint": "^10.0.3",
-        "eslint": "^6.8.0",
         "eslint-config-prettier": "^6.9.0",
         "eslint-plugin-prettier": "^3.1.2",
         "eslint-plugin-react": "^7.18.0",
         "mrc-component-library": "1.0.57",
-        "prettier": "^1.19.1",
         "react-router-dom": "^5.1.2",
         "react-table": "^7.0.0-rc.15"
     },
     "scripts": {
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.js": "eslint --cache --fix",
+        "*.{js,css,md}": "prettier --write"
     }
 }

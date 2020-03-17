@@ -1,10 +1,9 @@
 import './index.scss';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {displayName} from '../Util';
-import {lookup} from '../Util/translations';
+import { displayName } from '../Util';
+import { lookup } from '../Util/translations';
 import Attention from '../icons/attention.svg';
-
 
 export default class DetailedCustomerTrigger extends Component {
     PLACEHOLDER = '-';
@@ -18,71 +17,98 @@ export default class DetailedCustomerTrigger extends Component {
     }
 
     asNumber = (value, country) => {
-        if (this.isValidAmount(value)) return <mrc-number dynamic={value}
-                                                          show-currency-for-country={country}>{value}</mrc-number>;
+        if (this.isValidAmount(value))
+            return (
+                <mrc-number dynamic={value} show-currency-for-country={country}>
+                    {value}
+                </mrc-number>
+            );
         else return this.PLACEHOLDER;
-    }
+    };
 
     displayCustomerWarnings() {
         if (this.props.isWithWarning !== undefined && this.props.isWithWarning === true) {
-            return (<img className="attention" src={Attention} alt="Blocked"/>);
+            return <img className="attention" src={Attention} alt="Blocked" />;
         }
     }
 
     render() {
-        return (<div className={this.getTriggerClassName()}>
-            {this.displayCustomerWarnings()}
-            <span>{this.props.customer.requestedCustomer ? '*' : ''} {this.props.customer.storeNumber + '/' + this.props.customer.customerNumber} {this.displayName()}</span>
-            {this.displayActivation()}
-            {this.evaluateCreatedFromAndShowSeparateView()}
-        </div>);
+        return (
+            <div className={this.getTriggerClassName()}>
+                {this.displayCustomerWarnings()}
+                <span>
+                    {this.props.customer.requestedCustomer ? '*' : ''}{' '}
+                    {this.props.customer.storeNumber + '/' + this.props.customer.customerNumber} {this.displayName()}
+                </span>
+                {this.displayActivation()}
+                {this.evaluateCreatedFromAndShowSeparateView()}
+            </div>
+        );
     }
 
     evaluateCreatedFromAndShowSeparateView() {
         if (this.isValidAmount(this.props.current) || this.isValidAmount(this.props.requested)) {
-            return (<div>
-                <table className={this.getTableClassName()}>
-                    <tbody>
-                        <tr key='current'>
-                            <td>{lookup('mrc.creditdetails.current') + ': '}</td>
-                            <td className={this.getLimitFontClassName()}>{this.asNumber(this.props.current, this.props.customer.country)}</td>
-                            {this.getProductColumn(this.props.cProduct)}
-                            {this.getPeriodColumn(this.props.cPeriod)}
-                            {this.getDebitTypeColumn(this.props.cDebitType)}
-                            {this.getLimitExpiryColumn(this.props.cLimitExpiryDate)}
-                        </tr>
-                        <tr key='requested'>
-                            <td>{lookup('mrc.creditdetails.requested') + ': '}</td>
-                            <td className={this.getLimitFontClassName()}>{this.asNumber(this.props.requested, this.props.customer.country)}</td>
-                            {this.getProductColumn(this.props.rProduct)}
-                            {this.getPeriodColumn(this.props.rPeriod)}
-                            {this.getDebitTypeColumn(this.props.rDebitType)}
-                            {this.getLimitExpiryColumn(this.props.rLimitExpiryDate)}
-                        </tr>
-                        {this.displayApprovedLimit()}
-                    </tbody>
-                </table>
-            </div>);
+            return (
+                <div>
+                    <table className={this.getTableClassName()}>
+                        <tbody>
+                            <tr key="current">
+                                <td>{lookup('mrc.creditdetails.current') + ': '}</td>
+                                <td className={this.getLimitFontClassName()}>
+                                    {this.asNumber(this.props.current, this.props.customer.country)}
+                                </td>
+                                {this.getProductColumn(this.props.cProduct)}
+                                {this.getPeriodColumn(this.props.cPeriod)}
+                                {this.getDebitTypeColumn(this.props.cDebitType)}
+                                {this.getLimitExpiryColumn(this.props.cLimitExpiryDate)}
+                            </tr>
+                            <tr key="requested">
+                                <td>{lookup('mrc.creditdetails.requested') + ': '}</td>
+                                <td className={this.getLimitFontClassName()}>
+                                    {this.asNumber(this.props.requested, this.props.customer.country)}
+                                </td>
+                                {this.getProductColumn(this.props.rProduct)}
+                                {this.getPeriodColumn(this.props.rPeriod)}
+                                {this.getDebitTypeColumn(this.props.rDebitType)}
+                                {this.getLimitExpiryColumn(this.props.rLimitExpiryDate)}
+                            </tr>
+                            {this.displayApprovedLimit()}
+                        </tbody>
+                    </table>
+                </div>
+            );
         }
     }
 
     displayApprovedLimit() {
         if (this.isValidAmount(this.props.approved)) {
             return (
-                <tr key='approved'>
+                <tr key="approved">
                     <td>{lookup('mrc.creditdetails.applied') + ': '}</td>
-                    <td className={this.getLimitFontClassName()}>{this.asNumber(this.props.approved, this.props.customer.country)}</td>
+                    <td className={this.getLimitFontClassName()}>
+                        {this.asNumber(this.props.approved, this.props.customer.country)}
+                    </td>
                     {this.getProductColumn(this.props.aProduct)}
                     {this.getPeriodColumn(this.props.aPeriod)}
                     {this.getDebitTypeColumn(this.props.aDebitType)}
-                </tr>);
+                </tr>
+            );
         }
     }
 
     displayActivation() {
-        if (this.props.customer.activationStatus !== undefined && this.props.customer.activationStatus !== null && this.props.customer.activationStatus !== '') {
-            const statusClass = this.props.customer.activationResult !== undefined && this.props.customer.activationResult !== null && this.props.customer.activationResult === 'ok' ? 'span-success' : 'span-error';
-            return (<span className={statusClass}>{this.props.customer.activationStatus}</span>);
+        if (
+            this.props.customer.activationStatus !== undefined &&
+            this.props.customer.activationStatus !== null &&
+            this.props.customer.activationStatus !== ''
+        ) {
+            const statusClass =
+                this.props.customer.activationResult !== undefined &&
+                this.props.customer.activationResult !== null &&
+                this.props.customer.activationResult === 'ok'
+                    ? 'span-success'
+                    : 'span-error';
+            return <span className={statusClass}>{this.props.customer.activationStatus}</span>;
         }
         return null;
     }
@@ -91,30 +117,34 @@ export default class DetailedCustomerTrigger extends Component {
         return (value !== undefined && value !== null && value !== '' && !Number.isNaN(value)) || value === 0;
     }
 
-     getLimitExpiryColumn(limitExpiry) {
+    getLimitExpiryColumn(limitExpiry) {
         if (limitExpiry !== undefined && limitExpiry !== null) {
-            return (<td><mrc-date>{limitExpiry}</mrc-date></td>);
+            return (
+                <td>
+                    <mrc-date>{limitExpiry}</mrc-date>
+                </td>
+            );
         }
         return null;
     }
 
     getDebitTypeColumn(debitTypeValue) {
         if (this.isAnyValuePresent(this.props.cDebitType, this.props.rDebitType, this.props.aDebitType)) {
-            return (<td className={this.getDebitTypeFontClassName()}>{lookup(debitTypeValue)}</td>);
+            return <td className={this.getDebitTypeFontClassName()}>{lookup(debitTypeValue)}</td>;
         }
         return null;
     }
 
     getPeriodColumn(periodValue) {
         if (this.isAnyValuePresent(this.props.cPeriod, this.props.rPeriod, this.props.aPeriod)) {
-            return (<td className={this.getPeriodFontClassName()}>{lookup(periodValue)}</td>);
+            return <td className={this.getPeriodFontClassName()}>{lookup(periodValue)}</td>;
         }
         return null;
     }
 
     getProductColumn(productValue) {
         if (this.isAnyValuePresent(this.props.cProduct, this.props.rProduct, this.props.aProduct)) {
-            return (<td className={this.getProductFontClassName()}>{lookup(productValue)}</td>);
+            return <td className={this.getProductFontClassName()}>{lookup(productValue)}</td>;
         }
         return null;
     }
@@ -162,14 +192,15 @@ export default class DetailedCustomerTrigger extends Component {
     }
 
     isAnyValuePresent(value1, value2, value3) {
-        return ((value1 !== undefined && value1 !== null)
-            || (value2 !== undefined && value2 !== null)
-            || (value3 !== undefined && value3 !== null));
+        return (
+            (value1 !== undefined && value1 !== null) ||
+            (value2 !== undefined && value2 !== null) ||
+            (value3 !== undefined && value3 !== null)
+        );
     }
 
     bothValuesArePresentOrNot(value1, value2) {
-        return ((value1 !== undefined && value2 !== undefined)
-            || (value1 !== null && value2 !== null));
+        return (value1 !== undefined && value2 !== undefined) || (value1 !== null && value2 !== null);
     }
 
     isValueChanged(value1, value2) {
@@ -178,19 +209,26 @@ export default class DetailedCustomerTrigger extends Component {
 
     // approvedValue could be null if approve stage is not finished
     isAnyValueChanged(ifValueIsNullThenEquals, value1, value2) {
-        return (this.bothValuesArePresentOrNot(value1, value2) && value1 !== value2)
-            || (ifValueIsNullThenEquals !== null && ifValueIsNullThenEquals !== undefined && value2 !== ifValueIsNullThenEquals)
-            || (ifValueIsNullThenEquals !== null && ifValueIsNullThenEquals !== undefined && value1 !== ifValueIsNullThenEquals);
+        return (
+            (this.bothValuesArePresentOrNot(value1, value2) && value1 !== value2) ||
+            (ifValueIsNullThenEquals !== null &&
+                ifValueIsNullThenEquals !== undefined &&
+                value2 !== ifValueIsNullThenEquals) ||
+            (ifValueIsNullThenEquals !== null &&
+                ifValueIsNullThenEquals !== undefined &&
+                value1 !== ifValueIsNullThenEquals)
+        );
     }
 
     areThereChanges() {
-        return (this.isAnyValueChanged(this.props.approved, this.props.current, this.props.requested)
-            || this.isAnyValueChanged(this.props.aProduct, this.props.cProduct, this.props.rProduct)
-            || this.isAnyValueChanged(this.props.aPeriod, this.props.cPeriod, this.props.rPeriod)
-            || this.isAnyValueChanged(this.props.aDebitType, this.props.cDebitType, this.props.rDebitType));
+        return (
+            this.isAnyValueChanged(this.props.approved, this.props.current, this.props.requested) ||
+            this.isAnyValueChanged(this.props.aProduct, this.props.cProduct, this.props.rProduct) ||
+            this.isAnyValueChanged(this.props.aPeriod, this.props.cPeriod, this.props.rPeriod) ||
+            this.isAnyValueChanged(this.props.aDebitType, this.props.cDebitType, this.props.rDebitType)
+        );
     }
 }
-
 
 DetailedCustomerTrigger.propTypes = {
     customer: PropTypes.object.isRequired,
@@ -208,5 +246,5 @@ DetailedCustomerTrigger.propTypes = {
     rPeriod: PropTypes.string,
     cLimitExpiryDate: PropTypes.object,
     rLimitExpiryDate: PropTypes.object,
-    isWithWarning: PropTypes.bool
+    isWithWarning: PropTypes.bool,
 };

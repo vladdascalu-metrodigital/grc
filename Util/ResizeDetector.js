@@ -2,7 +2,6 @@ import React from 'react';
 
 // see https://codepen.io/maslianok/pen/NGOEJx
 export default class ResizeDetector extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -23,7 +22,7 @@ export default class ResizeDetector extends React.Component {
     }
 
     reset() {
-        const {expand, shrink, container} = this;
+        const { expand, shrink, container } = this;
 
         this.setState({
             expandChildHeight: expand.offsetHeight + 10,
@@ -40,7 +39,7 @@ export default class ResizeDetector extends React.Component {
     }
 
     handleScroll = () => {
-        const {container, state} = this;
+        const { container, state } = this;
 
         if (
             container.parentElement.offsetWidth !== state.lastWidth ||
@@ -50,10 +49,10 @@ export default class ResizeDetector extends React.Component {
         }
 
         this.reset();
-    }
+    };
 
     render() {
-        const {state} = this;
+        const { state } = this;
 
         const parentStyle = {
             position: 'absolute',
@@ -72,34 +71,29 @@ export default class ResizeDetector extends React.Component {
             top: 0,
         };
 
-        const expandChildStyle = Object.assign({
-            width: state.expandChildWidth,
-            height: state.expandChildHeight,
-        }, childStyle);
+        const expandChildStyle = Object.assign(
+            {
+                width: state.expandChildWidth,
+                height: state.expandChildHeight,
+            },
+            childStyle
+        );
 
-        const shrinkChildStyle = Object.assign({
-            width: '200%',
-            height: '200%',
-        }, childStyle);
+        const shrinkChildStyle = Object.assign(
+            {
+                width: '200%',
+                height: '200%',
+            },
+            childStyle
+        );
 
         return (
-            <resize-sensor
-                style={parentStyle}
-                ref={ref => this.container = ref}
-            >
-                <expand
-                    style={parentStyle}
-                    ref={ref => this.expand = ref}
-                    onScroll={this.handleScroll}
-                >
-                    <expand-child style={expandChildStyle}/>
+            <resize-sensor style={parentStyle} ref={ref => (this.container = ref)}>
+                <expand style={parentStyle} ref={ref => (this.expand = ref)} onScroll={this.handleScroll}>
+                    <expand-child style={expandChildStyle} />
                 </expand>
-                <shrink
-                    style={parentStyle}
-                    onScroll={this.handleScroll}
-                    ref={ref => this.shrink = ref}
-                >
-                    <shrink-child style={shrinkChildStyle}/>
+                <shrink style={parentStyle} onScroll={this.handleScroll} ref={ref => (this.shrink = ref)}>
+                    <shrink-child style={shrinkChildStyle} />
                 </shrink>
             </resize-sensor>
         );

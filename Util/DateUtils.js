@@ -8,9 +8,16 @@ export default function printDate(date, withRelative = true) {
         return null;
     }
     return (
-        <span className='date-util-style'>
-            <Moment className='absolute' format='LL'>{date}</Moment>&nbsp;
-            {withRelative && <Moment className='relative' fromNow={true}>{date}</Moment>}
+        <span className="date-util-style">
+            <Moment className="absolute" format="LL">
+                {date}
+            </Moment>
+            &nbsp;
+            {withRelative && (
+                <Moment className="relative" fromNow={true}>
+                    {date}
+                </Moment>
+            )}
         </span>
     );
 }

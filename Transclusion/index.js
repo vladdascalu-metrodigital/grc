@@ -1,10 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 export default class Transclusion extends Component {
-
     constructor(props) {
         super(props);
-        this.state = {iFrameHeight: '0px'};
+        this.state = { iFrameHeight: '0px' };
     }
 
     componentDidMount() {
@@ -22,21 +21,28 @@ export default class Transclusion extends Component {
     adjustIFrameHeight() {
         const iFrameDocument = this.iFrame.contentWindow.document;
         const successIndicator = 'data-fragment-loaded'; // the iframe is only visible if the loaded body element contains this string
-        if (iFrameDocument && iFrameDocument.body && iFrameDocument.body.outerHTML && iFrameDocument.body.outerHTML.includes(successIndicator)) {
-            this.setState({iFrameHeight: this.calculateIFrameContentHeight() + 'px'});
+        if (
+            iFrameDocument &&
+            iFrameDocument.body &&
+            iFrameDocument.body.outerHTML &&
+            iFrameDocument.body.outerHTML.includes(successIndicator)
+        ) {
+            this.setState({ iFrameHeight: this.calculateIFrameContentHeight() + 'px' });
         } else {
-            this.setState({iFrameHeight: '0px'});
+            this.setState({ iFrameHeight: '0px' });
         }
     }
 
     render() {
         return (
-            <iFrame ref={iFrame => this.iFrame = iFrame}
-                    width='100%'
-                    height={this.state.iFrameHeight}
-                    scrolling='no'
-                    frameBorder='0'
-                    {...this.props} />
+            <iFrame
+                ref={iFrame => (this.iFrame = iFrame)}
+                width="100%"
+                height={this.state.iFrameHeight}
+                scrolling="no"
+                frameBorder="0"
+                {...this.props}
+            />
         );
     }
 }

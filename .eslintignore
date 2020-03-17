@@ -2,3 +2,5 @@ src/test/js/**
 webpack.*
 postcss.*
 karma.*
+publish.js
+*/index.stories.js
