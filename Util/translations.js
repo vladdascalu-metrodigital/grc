@@ -1,4 +1,4 @@
-import {addCsrfToken} from './csrf';
+import { addCsrfToken } from './csrf';
 
 // the values defined here are only used for development
 // only add entries that are used in global-react-components, other translations are defined in services themselves
@@ -24,33 +24,33 @@ let translations = {
     'mrc.customerdetails.fields.legalformdescription': 'Legal Form Description',
 };
 
-export const addTranslations = (update) => {
+export const addTranslations = update => {
     if (update) {
         translations = Object.assign({}, translations, update);
     }
 };
 
-export const lookup = (key) => {
+export const lookup = key => {
     const translation = translations[key];
-    if (translation) { return translation;}
-    else {
+    if (translation) {
+        return translation;
+    } else {
         let newTranslation = {};
         newTranslation[key] = key;
         translations = Object.assign({}, translations, newTranslation);
         return key;
     }
 };
-export const reverseLookup = (translation) => {
+export const reverseLookup = translation => {
     let result = translation;
-    const FoundException={};
+    const FoundException = {};
     try {
-        Object.keys(translations)
-            .forEach(function eachKey(key) {
-                if (translations[key] === translation) {
-                    result = key;
-                    throw FoundException;
-                }
-            });
+        Object.keys(translations).forEach(function eachKey(key) {
+            if (translations[key] === translation) {
+                result = key;
+                throw FoundException;
+            }
+        });
     } catch (e) {
         return result;
     }
@@ -60,9 +60,11 @@ export const reverseLookup = (translation) => {
 const headers = new Headers();
 headers.append('Content-Type', 'application/json;charset=UTF-8');
 addCsrfToken(headers);
+/* eslint-disable */
 const request = {
     method: 'POST',
     headers: headers,
     body: JSON.stringify(Object.keys(translations)),
-    credentials: 'include'
+    credentials: 'include',
 };
+/* eslint-enable */

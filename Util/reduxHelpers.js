@@ -1,5 +1,5 @@
-import {combineReducers} from 'redux';
-import {showError} from './events';
+import { combineReducers } from 'redux';
+import { showError } from './events';
 
 // - takes a 'reducer' that manages its state as a map and 'enhancements'
 // - 'enhancements' is an object that has reducers as values
@@ -16,12 +16,11 @@ export function enhanceReducer(reducer, enhancements) {
             return comb;
         }, {});
 
-        return reducer({...state, ...cr(comb, action)}, action);
+        return reducer({ ...state, ...cr(comb, action) }, action);
     };
 }
 
 export function createLoadingHelpers(prefix, name, createUrl, optional = false, errorMessageExpected = false) {
-
     // action types
     const LOADING = `${prefix}_LOAD_${name}_IN_PROGRESS`;
     const COMPLETE = `${prefix}_LOAD_${name}_COMPLETE`;
@@ -30,27 +29,27 @@ export function createLoadingHelpers(prefix, name, createUrl, optional = false, 
 
     // actions
     const loadingInProgress = () => {
-        return {type: LOADING};
+        return { type: LOADING };
     };
-    const loadingComplete = (data) => {
-        return {type: COMPLETE, data};
+    const loadingComplete = data => {
+        return { type: COMPLETE, data };
     };
     const loadingError = () => {
-        return {type: ERROR};
+        return { type: ERROR };
     };
     const cleanup = () => {
-        return {type: CLEANUP};
+        return { type: CLEANUP };
     };
 
     // reducer function
     const reducer = (state = {}, action) => {
         switch (action.type) {
             case LOADING:
-                return {...state, loading: true};
+                return { ...state, loading: true };
             case COMPLETE:
-                return {...state, loading: false, data: action.data};
+                return { ...state, loading: false, data: action.data };
             case ERROR:
-                return {...state, loading: false, error: true};
+                return { ...state, loading: false, error: true };
             case CLEANUP:
                 return {};
             default:
@@ -59,51 +58,47 @@ export function createLoadingHelpers(prefix, name, createUrl, optional = false, 
     };
 
     // loading
-    const createLoader = (dispatch) =>
-        (...args) => {
-            const url = createUrl.apply(null, args);
-            dispatch(loadingInProgress());
-            return fetch(url, {credentials: 'include', method: 'GET'})
-                .then(resp => {
-                        if (resp.ok) {
-                            return resp;
-                        } else if (optional && resp.status === 404) {
-                            return resp;
-                        } else if (errorMessageExpected && resp.status === 400) {
-                            return resp;
-                        } else {
-                            throw new Error();
-                        }
-                    }
-                )
-                .then(resp => (resp.status === 404)
-                    ? [null, resp]
-                    : resp.json().then(json => [json, resp]))
-                .then(([json, resp]) => {
-                    if (resp.ok || resp.status === 404) {
-                        dispatch(loadingComplete(json));
-                        return json;
-                    } else {
-                        const msg = json && json.errormessage;
-                        throw new Error(msg);
-                    }
-                })
-                .catch(error => {
-                    const msg = error.message || `Error loading ${name.toLowerCase()}`;
-                    console.error(msg, error);
-                    dispatch(loadingError());
-                    dispatch(showError(msg));
-                });
-        };
+    const createLoader = dispatch => (...args) => {
+        const url = createUrl.apply(null, args);
+        dispatch(loadingInProgress());
+        return fetch(url, { credentials: 'include', method: 'GET' })
+            .then(resp => {
+                if (resp.ok) {
+                    return resp;
+                } else if (optional && resp.status === 404) {
+                    return resp;
+                } else if (errorMessageExpected && resp.status === 400) {
+                    return resp;
+                } else {
+                    throw new Error();
+                }
+            })
+            .then(resp => (resp.status === 404 ? [null, resp] : resp.json().then(json => [json, resp])))
+            .then(([json, resp]) => {
+                if (resp.ok || resp.status === 404) {
+                    dispatch(loadingComplete(json));
+                    return json;
+                } else {
+                    const msg = json && json.errormessage;
+                    throw new Error(msg);
+                }
+            })
+            .catch(error => {
+                const msg = error.message || `Error loading ${name.toLowerCase()}`;
+                console.error(msg, error);
+                dispatch(loadingError());
+                dispatch(showError(msg));
+            });
+    };
 
     // cleaning up
-    const createCleanup = (dispatch) => () => dispatch(cleanup());
+    const createCleanup = dispatch => () => dispatch(cleanup());
 
     // updating data
-    const createUpdater = (dispatch) => ({
+    const createUpdater = dispatch => ({
         start: () => dispatch(loadingInProgress()),
-        done: (data) => dispatch(loadingComplete(data))
+        done: data => dispatch(loadingComplete(data)),
     });
 
-    return {reducer, createLoader, createCleanup, createUpdater};
+    return { reducer, createLoader, createCleanup, createUpdater };
 }

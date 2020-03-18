@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import SidebarNavigation from './SidebarNavigation';
 import BurgerMenuLayout from './BurgerMenuLayout';
 import PropTypes from 'prop-types';
@@ -9,8 +9,7 @@ import './bottommenu.scss';
 import classNames from 'classnames';
 
 export default class NavigationLayout extends Component {
-
-    toggleBurgerMenu = (event) => {
+    toggleBurgerMenu = event => {
         event.preventDefault();
         this.props.updateBurgerMenuExpended(!this.props.displayMenu);
     };
@@ -22,26 +21,28 @@ export default class NavigationLayout extends Component {
     renderSidebarNavigation = () => {
         const { active, config, updateActiveItem } = this.props;
         if (config.loading) return null;
-        return <div className='mrc-sidebar-wrapper'>
-            <div className='mrc-sidebar'>
-                <SidebarNavigation highlight={active} config={config} updateActiveItem={updateActiveItem} />
-                <div className='secondary-actions'>
-                    <ul>
-                        <li className='lang-setting'>
-                            <SelectLanguage />
-                        </li>
-                    </ul>
+        return (
+            <div className="mrc-sidebar-wrapper">
+                <div className="mrc-sidebar">
+                    <SidebarNavigation highlight={active} config={config} updateActiveItem={updateActiveItem} />
+                    <div className="secondary-actions">
+                        <ul>
+                            <li className="lang-setting">
+                                <SelectLanguage />
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>;
+        );
     };
 
     createBackBtn() {
         // BackBtn not removed from dom but only set to 'invisible' to make sure that the onMouseEnter event is not
         // triggered on the <ul> when the back button is clicked
         return (
-            <li className={classNames('back-action', {hidden: !this.props.displayBackButton})}>
-                <BackBtn/>
+            <li className={classNames('back-action', { hidden: !this.props.displayBackButton })}>
+                <BackBtn />
             </li>
         );
     }
@@ -59,15 +60,17 @@ export default class NavigationLayout extends Component {
         // TODO Move Burger Menu stuff to BurgerMenuLayout and rename that to BurgerMenu
         return (
             <nav className={classes}>
-                <BackBtn/>
+                <BackBtn />
                 <a className={btnBurgerMenuClasses} onClick={this.toggleBurgerMenu}>
-                    <img src={BurgerMenu} alt='menu'/>
+                    <img src={BurgerMenu} alt="menu" />
                 </a>
-                <BurgerMenuLayout highlight={active}
-                                  updateActiveItem={updateActiveItem}
-                                  isExpanded={displayMenu}
-                                  config={config}
-                                  hideBurgerMenu={this.hideBurgerMenu}/>
+                <BurgerMenuLayout
+                    highlight={active}
+                    updateActiveItem={updateActiveItem}
+                    isExpanded={displayMenu}
+                    config={config}
+                    hideBurgerMenu={this.hideBurgerMenu}
+                />
             </nav>
         );
     };
@@ -85,5 +88,5 @@ NavigationLayout.propTypes = {
     displayBottomToolbar: PropTypes.bool.isRequired,
     displayBackButton: PropTypes.bool.isRequired,
     updateActiveItem: PropTypes.func,
-    updateBurgerMenuExpended: PropTypes.func // FIXME Typo: expended -> expanded
+    updateBurgerMenuExpended: PropTypes.func, // FIXME Typo: expended -> expanded
 };

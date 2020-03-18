@@ -18,12 +18,12 @@ export default class TextBox extends Component {
 
         return (
             <div className={classnames('tb-wrapper', display)}>
-                <div className='tb-header'>{header}</div>
+                <div className="tb-header">{header}</div>
                 <div>
-                    <span className='tb-content'>{children}</span>
-                    <span className='tb-suffix'>{suffix}</span>
+                    <span className="tb-content">{children}</span>
+                    <span className="tb-suffix">{suffix}</span>
                 </div>
-                {footer && <div className='tb-footer'>{footer}</div>}
+                {footer && <div className="tb-footer">{footer}</div>}
             </div>
         );
     }
