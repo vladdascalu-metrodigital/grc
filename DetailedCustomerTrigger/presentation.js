@@ -132,7 +132,7 @@ export default class DetailedCustomerTrigger extends Component {
 
     getLimitExpiryValueColumn(limitExpiry) {
         if (limitExpiry !== undefined && limitExpiry !== null) {
-            return <td>{limitExpiry}</td>;
+            return <td>{this.asNumber(limitExpiry, this.props.customer.country)}</td>;
         }
         return null;
     }
