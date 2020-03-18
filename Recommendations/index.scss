@@ -77,7 +77,7 @@
   border-color: $color-palette-grey-tint-80;
 }
 
-@media #{$breakpoint-medium} {
+@media #{$breakpoint-not-small} {
   .mrc-ui-recommendation-list {
     border: $border-width-thin solid $color-palette-grey-tint-80;
     border-radius: $border-radius-small;
@@ -110,24 +110,6 @@
 .mrc-ui-star-placeholder {
   color: $color-brand-secondary-shade-20;
   margin-right: $spacing-extra-extra-small;;
-}
-
-@media #{$breakpoint-large} {
-  .mrc-ui-recommendation-list {
-    border: $border-width-thin solid $color-palette-grey-tint-80;
-    border-radius: $border-radius-small;
-    -webkit-box-shadow: 0px 4px 12px 0px rgba(0,0,0,0.12);
-    -moz-box-shadow: 0px 4px 12px 0px rgba(0,0,0,0.12);
-    box-shadow: 0px 4px 12px 0px rgba(0,0,0,0.12);
-    padding: 2rem 0rem !important;
-  }
-  .mrc-ui-recommendation {
-    padding: $spacing-medium 4rem !important;
-  }
-  
-  .mrc-ui-recommendation-star-rating {
-    margin-left: auto;
-  }
 }
 
 @media #{$breakpoint-medium} {
@@ -182,13 +164,45 @@
 
 .mrc-ui-modal-content {
   padding: $spacing-medium $spacing-medium;
-
-  border: 2px solid red;
   overflow: auto;
 }
 
+// mrc ui forms
 
-@media #{$breakpoint-medium} {
+.mrc-ui-form-text {
+  color: $color-palette-grey-tint-50;
+  font-size: $font-size-8;
+  margin-bottom: $spacing-small;
+}
+
+.mrc-ui-textarea {
+  width: 100%;
+  min-height: $spacing-extra-extra-extra-large;
+  padding: $spacing-extra-small;
+  font-size: $font-size-8;
+}
+
+.mrc-ui-button-secondary {
+  background-color: $color-contrast-white !important;
+  color: $color-palette-blue-default !important;
+  height: 38px !important;
+  border: $border-width-thin solid $color-palette-blue-default !important;
+}
+
+.mrc-ui-button-small {
+  min-height: 0 !important;
+  border-radius: $border-radius-medium !important;
+  margin: $spacing-small $spacing-small !important;
+  max-width: 12rem !important;
+}
+
+@media #{$breakpoint-not-small} {
+  .mrc-ui-button-secondary {
+    order: -1;
+  }
+}
+
+@media #{$breakpoint-not-small} {
   
   .mrc-ui-modal-title {
     border-top-left-radius: $border-radius-small;
@@ -197,37 +211,26 @@
   .mrc-ui-modal {
     border-radius: $border-radius-small;
     max-width: 44rem;
-    height: 400px;
-      max-height: 345px;
+    height: auto;
   }
 }
 
-@media #{$breakpoint-large} {
-  .mrc-ui-modal-title {
-    border-top-left-radius: $border-radius-small;
-    border-top-right-radius: $border-radius-small;
-  }
-  .mrc-ui-modal {
-    border-radius: $border-radius-small;
-    max-width: 44rem;
-    height: 400px;
-    max-height: 345px;
-  }
-}
-
-.mrc-ui-modal .close-button {
+.mrc-ui-close-button {
   position: absolute;
   
   /* don't need to go crazy with z-index here, just sits over .modal-guts */
-  z-index: 1;
+  z-index: 1000;
   
-  top: 100px;
+  
+  height: 55px;
+  right: $spacing-extra-small;
   
   /* needs to look OK with or without scrollbar */
-  right: 20px;
+  margin: $spacing-none;
 
-  border: 0;
-  padding: 5px 10px;
+  border: $spacing-none;
+  padding: $spacing-none;
+
 }
 
 .mrc-ui-modal-overlay {
@@ -239,4 +242,83 @@
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.hidden {
+  display:none;
+}
+
+
+.mrc-ui-input-star-rating {
+    float: left;
+    background-color: $color-brand-primary-tint-10;
+    padding: $spacing-extra-small $spacing-medium;
+    border-radius: $border-radius-pill;
+    margin: $spacing-small $spacing-none;
+}
+.mrc-ui-input-star-rating:not(:checked) > input {
+    position: absolute;
+    top:-9999px;
+}
+.mrc-ui-input-star-rating:not(:checked) > label {
+    float: right;
+    width: 1em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 1rem;
+    color: $color-brand-secondary-shade-20;
+}
+
+.mrc-ui-input-star-rating:not(:checked) > label:before {
+    content: '☆ ';
+}
+
+
+.mrc-ui-input-star-rating > input:checked ~ label:before {
+  content: '★ ';
+}
+
+
+.mrc-ui-input-star-rating > input:checked ~ label {
+  color: $color-brand-secondary-default;
+}
+
+.mrc-ui-input-star-rating:not(:checked) > label:hover,
+.mrc-ui-input-star-rating:not(:checked) > label:hover ~ label {
+  color: $color-brand-secondary-default;
+}
+
+.mrc-ui-input-star-rating:not(:checked) > label:hover:before,
+.mrc-ui-input-star-rating:not(:checked) > label:hover ~ label:before {
+    content: '★ ';
+}
+
+.mrc-ui-input-star-rating > input:checked + label:hover,
+.mrc-ui-input-star-rating > input:checked + label:hover ~ label,
+.mrc-ui-input-star-rating > input:checked ~ label:hover,
+.mrc-ui-input-star-rating > input:checked ~ label:hover ~ label,
+.mrc-ui-input-star-rating > label:hover ~ input:checked ~ label {
+  color: $color-brand-secondary-default;
+}
+
+.mrc-ui-input-label {
+  color: $color-brand-primary-default;
+  display: block;
+  clear:both;
+}
+
+.mrc-ui-input-star-rating-component {
+  width: 100%;
+  height: auto;
+  clear: both;
+}
+
+.clearspace {
+  clear: both;
+}
+
+.mrc-ui-input {
+  margin: $spacing-medium $spacing-none;
+  height: auto;
 }
