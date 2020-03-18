@@ -73,7 +73,9 @@ export default class Recommendations extends Component {
             </div>
           </div>
         </div>
-        <div className={`mrc-ui-modal-component ${this.state.isModalVisible ? "" : "hidden"}`}>
+      {
+        this.state.isModalVisible ? 
+        (<div className="mrc-ui-modal-component">
           <div className="mrc-ui-modal-overlay"></div>
           <div className="mrc-ui-modal">
       
@@ -111,7 +113,8 @@ export default class Recommendations extends Component {
             </div>
           </div>
         </div>
-      </div>
+        ) : null }
+    </div>
     );
   }
 }
