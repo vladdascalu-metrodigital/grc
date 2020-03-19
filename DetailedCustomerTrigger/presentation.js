@@ -61,6 +61,7 @@ export default class DetailedCustomerTrigger extends Component {
                                 {this.getPeriodColumn(this.props.cPeriod)}
                                 {this.getDebitTypeColumn(this.props.cDebitType)}
                                 {this.getLimitExpiryColumn(this.props.cLimitExpiryDate)}
+                                {this.getLimitExpiryValueColumn(this.props.cLimitExpiryValue)}
                             </tr>
                             <tr key="requested">
                                 <td>{lookup('mrc.creditdetails.requested') + ': '}</td>
@@ -71,6 +72,7 @@ export default class DetailedCustomerTrigger extends Component {
                                 {this.getPeriodColumn(this.props.rPeriod)}
                                 {this.getDebitTypeColumn(this.props.rDebitType)}
                                 {this.getLimitExpiryColumn(this.props.rLimitExpiryDate)}
+                                {this.getLimitExpiryValueColumn(this.props.rLimitExpiryValue)}
                             </tr>
                             {this.displayApprovedLimit()}
                         </tbody>
@@ -124,6 +126,13 @@ export default class DetailedCustomerTrigger extends Component {
                     <mrc-date>{limitExpiry}</mrc-date>
                 </td>
             );
+        }
+        return null;
+    }
+
+    getLimitExpiryValueColumn(limitExpiry) {
+        if (limitExpiry !== undefined && limitExpiry !== null) {
+            return <td>{this.asNumber(limitExpiry, this.props.customer.country)}</td>;
         }
         return null;
     }
@@ -246,5 +255,7 @@ DetailedCustomerTrigger.propTypes = {
     rPeriod: PropTypes.string,
     cLimitExpiryDate: PropTypes.object,
     rLimitExpiryDate: PropTypes.object,
+    cLimitExpiryValue: PropTypes.object,
+    rLimitExpiryValue: PropTypes.object,
     isWithWarning: PropTypes.bool,
 };
