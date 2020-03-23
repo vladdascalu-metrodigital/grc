@@ -3,8 +3,9 @@
 This repo is used to share react components and styles between multiple MRC services.
 
 # Using Storybook for local development
-* npm install
-* npm run storybook
+
+-   npm install
+-   npm run storybook
 
 On http://localhost:6006 you should now be able to see a UI having links to some components. Also changes on your local files should be watched and updated into your browser.
 
@@ -13,9 +14,8 @@ On http://localhost:6006 you should now be able to see a UI having links to some
 1.  make your changes in the component (global-react-components or component-library)
 1.  change version locally only
 1.  npm install
-1.  npm pack  (it will show you archived component name)
+1.  npm pack (it will show you archived component name)
 1.  in service (e.g. credit-limit) in package.json file change
-
 
 `"global-react-components": "1.0.46"`
 

@@ -46,7 +46,7 @@ export default class AttachmentsRows extends Component {
             .filter(attType => this.props.fileTypes.includes(attType.type.toLowerCase()));
     }
 
-    componentDidUpdate () {
+    componentDidUpdate() {
         if (this.props.currentApprover === 'CC' && this.checkForOnlyGeneralFileType()) {
             this.createStateForCC();
         }
@@ -179,8 +179,11 @@ export default class AttachmentsRows extends Component {
     }
 
     checkForOnlyGeneralFileType = () => {
-        return this.props.fileTypesForCC && this.props.fileTypesForCC.length === 1
-            && this.props.fileTypesForCC[0] === 'general';
+        return (
+            this.props.fileTypesForCC &&
+            this.props.fileTypesForCC.length === 1 &&
+            this.props.fileTypesForCC[0] === 'general'
+        );
     };
 
     //when send back to CC from approval-service
@@ -596,7 +599,7 @@ AttachmentsRows.propTypes = {
     data: PropTypes.array,
     readonly: PropTypes.bool,
     currentApprover: PropTypes.string,
-    fileTypes: PropTypes.Array,
+    fileTypes: PropTypes.array,
     country: PropTypes.string,
     hideUploader: PropTypes.bool,
     fileTypesForCC: PropTypes.array,

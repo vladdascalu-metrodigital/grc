@@ -25,7 +25,7 @@ const LAYOUT_TYPES = {
 
 Layout.propTypes = {
     children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]),
-    type: PropTypes.oneOfType(LAYOUT_TYPES),
+    type: PropTypes.string,
 };
 
 export default Layout;
