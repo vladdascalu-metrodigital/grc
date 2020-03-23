@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-//import './index.scss';
+import './index.scss';
 import closeModalImageFile from '../icons/modal-close.svg';
 
 export default class ModalDialog extends Component {
@@ -9,7 +9,7 @@ export default class ModalDialog extends Component {
             <div className="mrc-ui-modal-component">
                 <div className="mrc-ui-modal-overlay"></div>
                 <div className="mrc-ui-modal">
-                    <button className="mrc-ui-close-button" onClick={this.props.toggle}>
+                    <button className="mrc-ui-modal-close-button" onClick={this.props.toggle}>
                         <img src={closeModalImageFile} alt="Close" />
                     </button>
                     <h3 className="mrc-ui-modal-title">Add Recommendation</h3>

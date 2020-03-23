@@ -1,0 +1,28 @@
+@import '../lib/scss/main.scss';
+
+.mrc-ui-author-component {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: $spacing-small;
+}
+
+.mrc-ui-author-icon{
+  margin-right: $spacing-small;
+  width: $width-3;
+}
+
+.mrc-ui-author-text {
+  margin-right: $spacing-small;
+}
+
+.mrc-ui-author-email {
+  color: $color-brand-primary-default;
+  font-weight: bold;
+}
+
+.mrc-ui-author-title-time {
+  color: $color-palette-grey-tint-50;
+  font-size: $font-size-8;
+  font-weight: 600;
+}

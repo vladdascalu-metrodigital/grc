@@ -1,0 +1,36 @@
+.mrc-ui-form-text {
+  color: $color-palette-grey-tint-50;
+  font-size: $font-size-8;
+  margin-bottom: $spacing-small;
+}
+
+.mrc-ui-textarea {
+  width: 100%;
+  min-height: $spacing-extra-extra-extra-large;
+  padding: $spacing-extra-small;
+  font-size: $font-size-8;
+}
+
+.mrc-ui-button-secondary {
+  background-color: $color-contrast-white !important;
+  color: $color-palette-blue-default !important;
+  height: 38px !important;
+  border: $border-width-thin solid $color-palette-blue-default !important;
+}
+
+.mrc-ui-button-small {
+  min-height: 0 !important;
+  border-radius: $border-radius-medium !important;
+  margin: $spacing-small $spacing-small !important;
+  max-width: 12rem !important;
+}
+
+.mrc-ui-label {
+  color: $color-brand-primary-default;
+  display: block;
+}
+
+.mrc-ui-input {
+  margin: $spacing-medium $spacing-none;
+  height: auto;
+}

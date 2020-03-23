@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ModalDialog from '../ModalDialog';
+import Author from '../Author';
 import './index.scss';
-import profileImageFile from '../icons/profile.svg';
 
 export default class Recommendations extends Component {
     toggleModal = () => {
@@ -24,7 +24,7 @@ export default class Recommendations extends Component {
                 </p>
 
                 <div className="mrc-ui-input-star-rating-component mrc-ui-input">
-                    <label className="mrc-ui-input-label">Star rating</label>
+                    <label className="mrc-ui-label">Star rating</label>
                     <div className="mrc-ui-input-star-rating">
                         <input type="radio" id="star1" name="rate" value="1" />
                         <label htmlFor="star1" title="text">
@@ -48,8 +48,8 @@ export default class Recommendations extends Component {
                         </label>
                     </div>
                 </div>
-                <div className="mrc-ui-input">
-                    <label className="mrc-ui-input-label">Text</label>
+                <div className="mrc-ui-input clear-both">
+                    <label className="mrc-ui-label">Text</label>
                     <textarea className="mrc-ui-textarea" />
                 </div>
 
@@ -69,6 +69,18 @@ export default class Recommendations extends Component {
         );
     }
 
+    starRatingResult() {
+        return (
+            <div className="mrc-ui-recommendation-star-rating">
+                <span className="mrc-ui-filled-star">★</span>
+                <span className="mrc-ui-filled-star">★</span>
+                <span className="mrc-ui-filled-star">★</span>
+                <span className="mrc-ui-star-placeholder">☆</span>
+                <span className="mrc-ui-star-placeholder">☆</span>
+            </div>
+        );
+    }
+
     render() {
         return (
             <div className="mrc-ui-recommendation-component">
@@ -81,28 +93,9 @@ export default class Recommendations extends Component {
                 </button>
                 <div className="mrc-ui-recommendations">
                     <h3 className="mrc-ui-recommendations-headline">Recommendations</h3>
-                    <div className="mrc-ui-recommendation-list">
+                    <div className="mrc-ui-recommendations-list">
                         <div className="mrc-ui-recommendation">
-                            <div className="mrc-ui-recommendation-metainfo-component">
-                                <img
-                                    className="mrc-ui-recommendation-author-icon"
-                                    src={profileImageFile}
-                                    alt="Profileimage"
-                                />
-                                <div className="mrc-ui-recommendation-author-text">
-                                    <div className="mrc-ui-recommendation-author-email">peter.parker@metronom.com</div>
-                                    <div className="mrc-ui-recommendation-author-title-time">
-                                        Head of Treasuary, 20.04.2020, 15:34 Uhr
-                                    </div>
-                                </div>
-                                <div className="mrc-ui-recommendation-star-rating">
-                                    <span className="mrc-ui-filled-star">★</span>
-                                    <span className="mrc-ui-filled-star">★</span>
-                                    <span className="mrc-ui-filled-star">★</span>
-                                    <span className="mrc-ui-star-placeholder">☆</span>
-                                    <span className="mrc-ui-star-placeholder">☆</span>
-                                </div>
-                            </div>
+                            <Author additionalContent={this.starRatingResult()} />
                             <div className="mrc-ui-recommendation-text">
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
                                 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
@@ -114,26 +107,7 @@ export default class Recommendations extends Component {
                         </div>
                         <hr className="mrc-ui-recommendation-divider" />
                         <div className="mrc-ui-recommendation">
-                            <div className="mrc-ui-recommendation-metainfo-component">
-                                <img
-                                    className="mrc-ui-recommendation-author-icon"
-                                    src={profileImageFile}
-                                    alt="Profileimage"
-                                />
-                                <div className="mrc-ui-recommendation-author-text">
-                                    <div className="mrc-ui-recommendation-author-email">peter.parker@metronom.com</div>
-                                    <div className="mrc-ui-recommendation-author-title-time">
-                                        Head of Treasuary, 20.04.2020, 15:34 Uhr
-                                    </div>
-                                </div>
-                                <div className="mrc-ui-recommendation-star-rating">
-                                    <span className="mrc-ui-filled-star">★</span>
-                                    <span className="mrc-ui-filled-star">★</span>
-                                    <span className="mrc-ui-filled-star">★</span>
-                                    <span className="mrc-ui-filled-star">★</span>
-                                    <span className="mrc-ui-star-placeholder">☆</span>
-                                </div>
-                            </div>
+                            <Author additionalContent={this.starRatingResult()} />
                             <div className="mrc-ui-recommendation-text">
                                 At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no
                                 sea takimata sanctus est Lorem ipsum dolor sit amet. - vero eos et accusam et justo -

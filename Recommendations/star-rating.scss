@@ -1,0 +1,84 @@
+// Star Rating
+.mrc-ui-recommendation-star-rating {
+  margin: $spacing-medium $spacing-none;
+  background-color: $color-brand-primary-tint-10;
+  padding: $spacing-extra-small $spacing-medium;
+  border-radius: $border-radius-pill;
+}
+
+@media #{$breakpoint-not-small} {
+  .mrc-ui-recommendation-star-rating {
+    margin-left: auto;
+  }
+}
+
+.mrc-ui-filled-star {
+  color: $color-brand-secondary-default;
+  margin-right: $spacing-extra-extra-small;
+}
+
+.mrc-ui-star-placeholder {
+  color: $color-brand-secondary-shade-20;
+  margin-right: $spacing-extra-extra-small;;
+}
+
+
+// Star Rating Input
+
+
+.mrc-ui-input-star-rating {
+    float: left;
+    background-color: $color-brand-primary-tint-10;
+    padding: $spacing-extra-small $spacing-medium;
+    border-radius: $border-radius-pill;
+    margin: $spacing-small $spacing-none;
+}
+.mrc-ui-input-star-rating:not(:checked) > input {
+    position: absolute;
+    top:-9999px;
+}
+.mrc-ui-input-star-rating:not(:checked) > label {
+    float: right;
+    width: 1em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 1rem;
+    color: $color-brand-secondary-shade-20;
+}
+
+.mrc-ui-input-star-rating:not(:checked) > label:before {
+    content: '☆ ';
+}
+
+.mrc-ui-input-star-rating > input:checked ~ label:before {
+  content: '★ ';
+}
+
+.mrc-ui-input-star-rating > input:checked ~ label {
+  color: $color-brand-secondary-default;
+}
+
+.mrc-ui-input-star-rating:not(:checked) > label:hover,
+.mrc-ui-input-star-rating:not(:checked) > label:hover ~ label {
+  color: $color-brand-secondary-default;
+}
+
+.mrc-ui-input-star-rating:not(:checked) > label:hover:before,
+.mrc-ui-input-star-rating:not(:checked) > label:hover ~ label:before {
+    content: '★ ';
+}
+
+.mrc-ui-input-star-rating > input:checked + label:hover,
+.mrc-ui-input-star-rating > input:checked + label:hover ~ label,
+.mrc-ui-input-star-rating > input:checked ~ label:hover,
+.mrc-ui-input-star-rating > input:checked ~ label:hover ~ label,
+.mrc-ui-input-star-rating > label:hover ~ input:checked ~ label {
+  color: $color-brand-secondary-default;
+}
+
+.mrc-ui-input-star-rating-component {
+  width: 100%;
+  height: auto;
+  clear: both;
+}

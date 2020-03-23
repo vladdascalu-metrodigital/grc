@@ -1,5 +1,5 @@
 @import '../lib/scss/main.scss';
-
+@import 'star-rating.scss';
 
 .mrc-ui-recommendation-component {
   margin-bottom: $spacing-large;
@@ -22,6 +22,12 @@
   margin: $spacing-none auto !important;  
 }
 
+@media #{$breakpoint-not-small} {  
+  .mrc-ui-recommendation {
+    padding: $spacing-medium 4rem !important;
+  }
+}
+
 .mrc-ui-recommendation-text {
   white-space: pre-line;
   line-height: $line-height-copy;
@@ -31,54 +37,16 @@
   hyphens: auto;
 }
 
-.mrc-ui-recommendation-metainfo-component {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-bottom: $spacing-small;
-}
-
-.mrc-ui-recommendation-author-text {
-  margin-right: $spacing-small;
-}
-
-.mrc-ui-recommendation-star-rating {
-  margin: $spacing-medium $spacing-none;
-}
-
-.mrc-ui-recommendation-author-email {
-  color: $color-brand-primary-default;
-  font-weight: bold;
-}
-
-.mrc-ui-recommendation-author-title-time {
-  color: $color-palette-grey-tint-50;
-  font-size: $font-size-8;
-  font-weight: 600;
-}
-
-.mrc-ui-recommendation-author-icon{
-  margin-right: $spacing-small;
-  width: $width-3;
-}
-
-@media #{$breakpoint-not-small} {
-  .mrc-ui-recommendation-star-rating {
-    margin-left: auto;
-  }
-}
-
-.mrc-ui-recommendation-list {
-  background: $color-contrast-white;
-  
-}
-
 .mrc-ui-recommendation-divider {
   border-color: $color-palette-grey-tint-80;
 }
 
+.mrc-ui-recommendations-list {
+  background: $color-contrast-white; 
+}
+
 @media #{$breakpoint-not-small} {
-  .mrc-ui-recommendation-list {
+  .mrc-ui-recommendations-list {
     border: $border-width-thin solid $color-palette-grey-tint-80;
     border-radius: $border-radius-small;
     -webkit-box-shadow: 0px 4px 12px 0px rgba(0,0,0,0.12);
@@ -86,30 +54,6 @@
     box-shadow: 0px 4px 12px 0px rgba(0,0,0,0.12);
     padding: 2rem 0rem !important;
   }
-  
-  .mrc-ui-recommendation {
-    padding: $spacing-medium 4rem !important;
-  }
-  
-  .mrc-ui-recommendation-star-rating {
-    margin-left: auto;
-  }
-}
-
-.mrc-ui-recommendation-star-rating {
-  background-color: $color-brand-primary-tint-10;
-  padding: $spacing-extra-small $spacing-medium;
-  border-radius: $border-radius-pill;
-}
-
-.mrc-ui-filled-star {
-  color: $color-brand-secondary-default;
-  margin-right: $spacing-extra-extra-small;
-}
-
-.mrc-ui-star-placeholder {
-  color: $color-brand-secondary-shade-20;
-  margin-right: $spacing-extra-extra-small;;
 }
 
 @media #{$breakpoint-medium} {
@@ -124,201 +68,4 @@
     max-width: 48rem;
     margin: $spacing-none auto $spacing-none auto !important;
   }
-}
-
-// modal dialog
-
-.mrc-ui-modal {
-    /* This way it could be display flex or grid or whatever also. */
-    display: block;
-  
-    /* Probably need media queries here */
-
-    width: 100%;
-    height: 100%;
-    
-    position: fixed;
-  
-    z-index: 1010;
-  
-    left: 50%;
-    top: 30%;
-  
-    /* Use this for centering if unknown width/height */
-    transform: translate(-50%, -30%);
-  
-    /* If known, negative margins are probably better (less chance of blurry text). */
-    /* margin: -200px 0 0 -200px; */
-    background-color: $color-palette-grey-tint-95;
-    
-}
-
-.mrc-ui-modal-title {
-  font-size: $font-size-6;
-  text-align: center;
-  margin: $spacing-none;
-  background-color: $color-contrast-white;
-  border-bottom: $border-width-thin solid $color-palette-grey-tint-80;
-  padding: $spacing-medium;
-}
-
-.mrc-ui-modal-content {
-  padding: $spacing-medium $spacing-medium;
-  overflow: auto;
-}
-
-// mrc ui forms
-
-.mrc-ui-form-text {
-  color: $color-palette-grey-tint-50;
-  font-size: $font-size-8;
-  margin-bottom: $spacing-small;
-}
-
-.mrc-ui-textarea {
-  width: 100%;
-  min-height: $spacing-extra-extra-extra-large;
-  padding: $spacing-extra-small;
-  font-size: $font-size-8;
-}
-
-.mrc-ui-button-secondary {
-  background-color: $color-contrast-white !important;
-  color: $color-palette-blue-default !important;
-  height: 38px !important;
-  border: $border-width-thin solid $color-palette-blue-default !important;
-}
-
-.mrc-ui-button-small {
-  min-height: 0 !important;
-  border-radius: $border-radius-medium !important;
-  margin: $spacing-small $spacing-small !important;
-  max-width: 12rem !important;
-}
-
-@media #{$breakpoint-not-small} {
-  .mrc-ui-button-secondary {
-    order: -1;
-  }
-}
-
-@media #{$breakpoint-not-small} {
-  
-  .mrc-ui-modal-title {
-    border-top-left-radius: $border-radius-small;
-    border-top-right-radius: $border-radius-small;
-  }
-  .mrc-ui-modal {
-    border-radius: $border-radius-small;
-    max-width: 44rem;
-    height: auto;
-  }
-}
-
-.mrc-ui-close-button {
-  position: absolute;
-  
-  /* don't need to go crazy with z-index here, just sits over .modal-guts */
-  z-index: 1000;
-  
-  
-  height: 55px;
-  right: $spacing-extra-small;
-  
-  /* needs to look OK with or without scrollbar */
-  margin: $spacing-none;
-
-  border: $spacing-none;
-  padding: $spacing-none;
-
-}
-
-.mrc-ui-modal-overlay {
-  background-color: $color-contrast-black;
-  opacity: 0.4;
-  z-index: 1000;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.hidden {
-  display:none;
-}
-
-
-.mrc-ui-input-star-rating {
-    float: left;
-    background-color: $color-brand-primary-tint-10;
-    padding: $spacing-extra-small $spacing-medium;
-    border-radius: $border-radius-pill;
-    margin: $spacing-small $spacing-none;
-}
-.mrc-ui-input-star-rating:not(:checked) > input {
-    position: absolute;
-    top:-9999px;
-}
-.mrc-ui-input-star-rating:not(:checked) > label {
-    float: right;
-    width: 1em;
-    overflow: hidden;
-    white-space: nowrap;
-    cursor: pointer;
-    font-size: 1rem;
-    color: $color-brand-secondary-shade-20;
-}
-
-.mrc-ui-input-star-rating:not(:checked) > label:before {
-    content: '☆ ';
-}
-
-
-.mrc-ui-input-star-rating > input:checked ~ label:before {
-  content: '★ ';
-}
-
-
-.mrc-ui-input-star-rating > input:checked ~ label {
-  color: $color-brand-secondary-default;
-}
-
-.mrc-ui-input-star-rating:not(:checked) > label:hover,
-.mrc-ui-input-star-rating:not(:checked) > label:hover ~ label {
-  color: $color-brand-secondary-default;
-}
-
-.mrc-ui-input-star-rating:not(:checked) > label:hover:before,
-.mrc-ui-input-star-rating:not(:checked) > label:hover ~ label:before {
-    content: '★ ';
-}
-
-.mrc-ui-input-star-rating > input:checked + label:hover,
-.mrc-ui-input-star-rating > input:checked + label:hover ~ label,
-.mrc-ui-input-star-rating > input:checked ~ label:hover,
-.mrc-ui-input-star-rating > input:checked ~ label:hover ~ label,
-.mrc-ui-input-star-rating > label:hover ~ input:checked ~ label {
-  color: $color-brand-secondary-default;
-}
-
-.mrc-ui-input-label {
-  color: $color-brand-primary-default;
-  display: block;
-  clear:both;
-}
-
-.mrc-ui-input-star-rating-component {
-  width: 100%;
-  height: auto;
-  clear: both;
-}
-
-.clearspace {
-  clear: both;
-}
-
-.mrc-ui-input {
-  margin: $spacing-medium $spacing-none;
-  height: auto;
 }
