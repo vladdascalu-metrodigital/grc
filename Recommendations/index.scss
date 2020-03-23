@@ -19,10 +19,10 @@
 
 .mrc-ui-recommendation {
   padding: $spacing-medium;
-  margin: $spacing-none auto !important;  
+  margin: $spacing-none auto !important;
 }
 
-@media #{$breakpoint-not-small} {  
+@media #{$breakpoint-not-small} {
   .mrc-ui-recommendation {
     padding: $spacing-medium 4rem !important;
   }
@@ -42,7 +42,7 @@
 }
 
 .mrc-ui-recommendations-list {
-  background: $color-contrast-white; 
+  background: $color-contrast-white;
 }
 
 @media #{$breakpoint-not-small} {
