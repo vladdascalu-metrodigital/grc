@@ -17,20 +17,35 @@ import '../node_modules/mrc-component-library/public/css/bundle.css';
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
 storiesOf('Button', module)
+    .add('Primary', () => <Button status="primary" onClick={action('clicked')} text="Approve" />)
+    .add('Error', () => <Button status="error" onClick={action('clicked')} text="Approve" />)
+    .add('Secondary', () => <Button status="secondary" onClick={action('clicked')} text="Approve" />)
+    .add('Success', () => <Button status="success" onClick={action('clicked')} text="Approve" />);
 
-  .add('Primary', () => <Button status="primary" onClick={action('clicked')} text="Approve" />)
-  .add('Error', () => <Button status="error" onClick={action('clicked')} text="Approve" />)
-  .add('Secondary', () => <Button status="secondary" onClick={action('clicked')} text="Approve" />)
-  .add('Success', () => <Button status="success" onClick={action('clicked')} text="Approve" />);
+storiesOf('Recommendations', module).add('standard', () => (
+    <Recommendations
+        recommendations={[
+            {
+                content: 'foo',
+                rating: '5',
+                uploaderName: 'John Doe',
+                uploaderPosition: 'HOT',
+                uploadTime: '2019-02-02',
+            },
+        ]}
+    />
+));
 
-storiesOf('Recommendations', module)
-  .add('standard', () => <Recommendations />);
+storiesOf('FileUpload', module).add('standard', () => (
+    <FileUpload
+        labelSelect={'select file'}
+        updateFile={action('uploadAttachment')}
+        selectDisabled={false}
+        uploadDisabled={false}
+    />
+));
 
-storiesOf('FileUpload', module)
-  .add('standard', () => <FileUpload labelSelect={"select file"} updateFile={action('uploadAttachment')} selectDisabled={false} uploadDisabled={false}/>);
-
-storiesOf('NavLink', module)
-  .add('MRC-3820', () => {
+storiesOf('NavLink', module).add('MRC-3820', () => {
     const activeLinkFilter = (match, pathToCheck, location) => {
         // 1. for some reason match was always false and location had no values for its entries
         // soo we have to take the real window location url for testing..
