@@ -3,6 +3,7 @@ import ModalDialog from '../ModalDialog';
 import Author from '../Author';
 import './index.scss';
 import * as _ from 'lodash';
+import { PropTypes } from 'prop-types';
 
 const intersperse = (xs, e) => _.initial(_.reduce(xs, (acc, x) => _.concat(acc, [x, e]), []));
 
@@ -15,8 +16,6 @@ export default class Recommendations extends Component {
         super(props);
         this.state = {
             isModalVisible: false,
-            content: '',
-            rating: 0,
         };
     }
 
@@ -31,38 +30,75 @@ export default class Recommendations extends Component {
                 <div className="mrc-ui-input-star-rating-component mrc-ui-input">
                     <label className="mrc-ui-label">Star rating</label>
                     <div className="mrc-ui-input-star-rating">
-                        <input type="radio" id="star1" name="rate" value="1" />
-                        <label htmlFor="star1" title="text">
+                        <input
+                            type="radio"
+                            id="star5"
+                            name="rate"
+                            value="5"
+                            onClick={() => this.props.onRatingChange('5')}
+                        />
+                        <label htmlFor="star5" title="text">
                             1 star
                         </label>
-                        <input type="radio" id="star2" name="rate" value="2" />
-                        <label htmlFor="star2" title="text">
+                        <input
+                            type="radio"
+                            id="star4"
+                            name="rate"
+                            value="4"
+                            onClick={() => this.props.onRatingChange('4')}
+                        />
+                        <label htmlFor="star4" title="text">
                             2 stars
                         </label>
-                        <input type="radio" id="star3" name="rate" value="3" />
+                        <input
+                            type="radio"
+                            id="star3"
+                            name="rate"
+                            value="3"
+                            onClick={() => this.props.onRatingChange('3')}
+                        />
                         <label htmlFor="star3" title="text">
                             3 stars
                         </label>
-                        <input type="radio" id="star4" name="rate" value="4" />
-                        <label htmlFor="star4" title="text">
+                        <input
+                            type="radio"
+                            id="star2"
+                            name="rate"
+                            value="2"
+                            onClick={() => this.props.onRatingChange('2')}
+                        />
+                        <label htmlFor="star2" title="text">
                             4 stars
                         </label>
-                        <input type="radio" id="star5" name="rate" value="5" />
-                        <label htmlFor="star5" title="text">
+                        <input
+                            type="radio"
+                            id="star1"
+                            name="rate"
+                            value="1"
+                            onClick={() => this.props.onRatingChange('1')}
+                        />
+                        <label htmlFor="star1" title="text">
                             5 stars
                         </label>
                     </div>
                 </div>
                 <div className="mrc-ui-input clear-both">
                     <label className="mrc-ui-label">Text</label>
-                    <textarea className="mrc-ui-textarea">{this.state.text}</textarea>
+                    <textarea
+                        className="mrc-ui-textarea"
+                        value={this.props.newContent}
+                        onChange={e => this.props.onContentChange(e.target.value)}
+                    ></textarea>
                 </div>
 
                 <div className="mrc-btn-group">
                     <button
                         type="button"
                         className="mrc-btn mrc-primary-button mrc-ui-button-small"
-                        onClick={this.props.onSave(this.state.text, this.state.rating)}
+                        onClick={() => {
+                            this.props.onSave(this.props.newContent, this.props.newRating);
+                            this.toggleModal();
+                        }}
                     >
                         Speichern
                     </button>
@@ -90,7 +126,6 @@ export default class Recommendations extends Component {
     }
 
     render() {
-        console.log('foo');
         let recommendations = null;
         if (this.props.contents && this.props.ratings) {
             const ratings = this.props.ratings;
@@ -131,3 +166,13 @@ export default class Recommendations extends Component {
         );
     }
 }
+
+Recommendations.propTypes = {
+    onContentChange: PropTypes.func,
+    onRatingChange: PropTypes.func,
+    onSave: PropTypes.func,
+    ratings: PropTypes.array,
+    contents: PropTypes.array,
+    newContent: PropTypes.string,
+    newRating: PropTypes.string,
+};
