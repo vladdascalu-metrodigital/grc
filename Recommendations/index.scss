@@ -2,7 +2,8 @@
 @import 'star-rating.scss';
 
 .mrc-ui-recommendation-component {
-  padding-bottom: $spacing-large;
+  padding: $spacing-large 0;
+  background-color: $color-palette-grey-tint-95;
 }
 
 .mrc-ui-add-recommendation-button {
