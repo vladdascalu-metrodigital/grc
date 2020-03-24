@@ -124,24 +124,17 @@ export default class Recommendations extends Component {
     }
 
     render() {
-        let recommendations = null;
-        if (this.props.contents && this.props.ratings) {
-            const ratings = this.props.ratings;
-            recommendations = this.props.contents
-                .map(function(x, i) {
-                    return [x, ratings[i]];
-                })
-                .map((contentAndRating, i) => {
-                    let [content, rating] = contentAndRating;
-                    return (
-                        <div key={i} className="mrc-ui-recommendation">
-                            <Author additionalContent={this.starRatingResult(rating)} />
-                            <div className="mrc-ui-recommendation-text">{content}</div>
-                        </div>
-                    );
-                });
-        }
-
+        const recommendations = this.props.recommendations.map((recommendation, i) => (
+            <div key={i} className="mrc-ui-recommendation">
+                <Author
+                    name={recommendation.uploaderName}
+                    position={recommendation.uploaderPosition}
+                    writeTime={recommendation.uploadTime}
+                    additionalContent={this.starRatingResult(recommendation.rating)}
+                />
+                <div className="mrc-ui-recommendation-text">{recommendation.content}</div>
+            </div>
+        ));
         return (
             <div className="mrc-ui-recommendation-component">
                 <button
@@ -173,8 +166,7 @@ Recommendations.propTypes = {
     onContentChange: PropTypes.func,
     onRatingChange: PropTypes.func,
     onSave: PropTypes.func,
-    ratings: PropTypes.array,
-    contents: PropTypes.array,
     newContent: PropTypes.string,
     newRating: PropTypes.string,
+    recommendations: PropTypes.array,
 };

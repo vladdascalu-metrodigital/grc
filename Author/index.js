@@ -9,8 +9,10 @@ export default class Author extends Component {
             <div className="mrc-ui-author-component">
                 <img className="mrc-ui-author-icon" src={profileImageFile} alt="Profileimage" />
                 <div className="mrc-ui-author-text">
-                    <div className="mrc-ui-author-email">peter.parker@metronom.com</div>
-                    <div className="mrc-ui-author-title-time">Head of Treasuary, 20.04.2020, 15:34 Uhr</div>
+                    <div className="mrc-ui-author-email">{this.props.name}</div>
+                    <div className="mrc-ui-author-title-time">
+                        {this.props.position}, {this.props.writeTime}
+                    </div>
                 </div>
                 {this.props.additionalContent}
             </div>
@@ -20,4 +22,7 @@ export default class Author extends Component {
 
 Author.propTypes = {
     additionalContent: PropTypes.node,
+    name: PropTypes.string,
+    position: PropTypes.string,
+    writeTime: PropTypes.string,
 };
