@@ -143,6 +143,7 @@ export default class Recommendations extends Component {
                         type="button"
                         className="mrc-primary-button mrc-ui-add-recommendation-button"
                         onClick={this.toggleModal}
+                        disabled={this.props.addNewDisabled}
                     >
                         {lookup('mrc.recommendations.addrecommendation')}
                     </button>
@@ -173,4 +174,5 @@ Recommendations.propTypes = {
     newRating: PropTypes.string,
     recommendations: PropTypes.array,
     canAddNew: PropTypes.bool,
+    addNewDisabled: PropTypes.bool,
 };
