@@ -139,11 +139,7 @@ export default class Recommendations extends Component {
         return (
             <div className="mrc-ui-recommendation-component">
                 {this.props.canAddNew ? (
-                    <button
-                        type="button"
-                        className="mrc-primary-button mrc-ui-add-recommendation-button"
-                        onClick={this.toggleModal}
-                    >
+                    <button type="button" className="mrc-primary-large-add-button" onClick={this.toggleModal}>
                         {lookup('mrc.recommendations.addrecommendation')}
                     </button>
                 ) : null}
