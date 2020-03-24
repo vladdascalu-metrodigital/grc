@@ -124,7 +124,8 @@ export default class Recommendations extends Component {
     }
 
     render() {
-        const recommendations = this.props.recommendations.map((recommendation, i) => (
+        var recommendations = this.props.recommendations;
+        recommendations = recommendations.map((recommendation, i) => (
             <div key={i} className="mrc-ui-recommendation">
                 <Author
                     name={recommendation.uploaderName}
