@@ -151,12 +151,16 @@ export default class Recommendations extends Component {
                 >
                     {lookup('mrc.recommendations.addrecommendation')}
                 </button>
-                <div className="mrc-ui-recommendations">
-                    <h3 className="mrc-ui-recommendations-headline">{lookup('mrc.recommendations.recommendations')}</h3>
-                    <div className="mrc-ui-recommendations-list">
-                        {intersperse(recommendations, <hr className="mrc-ui-recommendation-divider" />)}
+                {_.isEmpty(recommendations) ? null : (
+                    <div className="mrc-ui-recommendations">
+                        <h3 className="mrc-ui-recommendations-headline">
+                            {lookup('mrc.recommendations.recommendations')}
+                        </h3>
+                        <div className="mrc-ui-recommendations-list">
+                            {intersperse(recommendations, <hr className="mrc-ui-recommendation-divider" />)}
+                        </div>
                     </div>
-                </div>
+                )}
                 {this.state.isModalVisible ? (
                     <ModalDialog toggle={this.toggleModal} content={this.modalDialogContent()} />
                 ) : null}
