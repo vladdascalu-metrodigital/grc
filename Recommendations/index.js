@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import ModalDialog from '../ModalDialog';
 import Author from '../Author';
 import './index.scss';
+import * as _ from 'lodash';
+
+const intersperse = (xs, e) => _.initial(_.reduce(xs, (acc, x) => _.concat(acc, [x, e]), []));
 
 export default class Recommendations extends Component {
     toggleModal = () => {
@@ -11,7 +14,9 @@ export default class Recommendations extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isBoxVisible: false,
+            isModalVisible: false,
+            content: '',
+            rating: 0,
         };
     }
 
@@ -50,11 +55,15 @@ export default class Recommendations extends Component {
                 </div>
                 <div className="mrc-ui-input clear-both">
                     <label className="mrc-ui-label">Text</label>
-                    <textarea className="mrc-ui-textarea" />
+                    <textarea className="mrc-ui-textarea">{this.state.text}</textarea>
                 </div>
 
                 <div className="mrc-btn-group">
-                    <button type="button" className="mrc-btn mrc-primary-button mrc-ui-button-small">
+                    <button
+                        type="button"
+                        className="mrc-btn mrc-primary-button mrc-ui-button-small"
+                        onClick={this.props.onSave(this.state.text, this.state.rating)}
+                    >
                         Speichern
                     </button>
                     <button
@@ -69,19 +78,37 @@ export default class Recommendations extends Component {
         );
     }
 
-    starRatingResult() {
+    starRatingResult(rating) {
+        const filledStars = _.times(rating, _.constant(<span className="mrc-ui-filled-star">★</span>));
+        const unfilledStars = _.times(5 - rating, _.constant(<span className="mrc-ui-star-placeholder">☆</span>));
         return (
             <div className="mrc-ui-recommendation-star-rating">
-                <span className="mrc-ui-filled-star">★</span>
-                <span className="mrc-ui-filled-star">★</span>
-                <span className="mrc-ui-filled-star">★</span>
-                <span className="mrc-ui-star-placeholder">☆</span>
-                <span className="mrc-ui-star-placeholder">☆</span>
+                {filledStars}
+                {unfilledStars}
             </div>
         );
     }
 
     render() {
+        console.log('foo');
+        let recommendations = null;
+        if (this.props.contents && this.props.ratings) {
+            const ratings = this.props.ratings;
+            recommendations = this.props.contents
+                .map(function(x, i) {
+                    return [x, ratings[i]];
+                })
+                .map((contentAndRating, i) => {
+                    let [content, rating] = contentAndRating;
+                    return (
+                        <div key={i} className="mrc-ui-recommendation">
+                            <Author additionalContent={this.starRatingResult(rating)} />
+                            <div className="mrc-ui-recommendation-text">{content}</div>
+                        </div>
+                    );
+                });
+        }
+
         return (
             <div className="mrc-ui-recommendation-component">
                 <button
@@ -94,32 +121,7 @@ export default class Recommendations extends Component {
                 <div className="mrc-ui-recommendations">
                     <h3 className="mrc-ui-recommendations-headline">Recommendations</h3>
                     <div className="mrc-ui-recommendations-list">
-                        <div className="mrc-ui-recommendation">
-                            <Author additionalContent={this.starRatingResult()} />
-                            <div className="mrc-ui-recommendation-text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                                dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                                mollit anim id est laborum.
-                            </div>
-                        </div>
-                        <hr className="mrc-ui-recommendation-divider" />
-                        <div className="mrc-ui-recommendation">
-                            <Author additionalContent={this.starRatingResult()} />
-                            <div className="mrc-ui-recommendation-text">
-                                At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no
-                                sea takimata sanctus est Lorem ipsum dolor sit amet. - vero eos et accusam et justo -
-                                consetetur sadipscing elitr Nam liber tempor cum soluta nobis eleifend option congue
-                                nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit
-                                amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
-                                dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
-                                tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem
-                                vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum
-                                dolore eu feugiat nulla facilisis.
-                            </div>
-                        </div>
+                        {intersperse(recommendations, <hr className="mrc-ui-recommendation-divider" />)}
                     </div>
                 </div>
                 {this.state.isModalVisible ? (
