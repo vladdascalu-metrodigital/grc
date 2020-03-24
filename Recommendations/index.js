@@ -137,13 +137,15 @@ export default class Recommendations extends Component {
         ));
         return (
             <div className="mrc-ui-recommendation-component">
-                <button
-                    type="button"
-                    className="mrc-primary-button mrc-ui-add-recommendation-button"
-                    onClick={this.toggleModal}
-                >
-                    {lookup('mrc.recommendations.addrecommendation')}
-                </button>
+                {this.props.canAddNew ? (
+                    <button
+                        type="button"
+                        className="mrc-primary-button mrc-ui-add-recommendation-button"
+                        onClick={this.toggleModal}
+                    >
+                        {lookup('mrc.recommendations.addrecommendation')}
+                    </button>
+                ) : null}
                 {_.isEmpty(recommendations) ? null : (
                     <div className="mrc-ui-recommendations">
                         <h3 className="mrc-ui-recommendations-headline">
@@ -169,4 +171,5 @@ Recommendations.propTypes = {
     newContent: PropTypes.string,
     newRating: PropTypes.string,
     recommendations: PropTypes.array,
+    canAddNew: PropTypes.bool,
 };
