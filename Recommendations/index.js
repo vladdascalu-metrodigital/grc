@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { lookup } from 'global-react-components/Util/translations';
+import { lookup } from '../Util/translations';
 import ModalDialog from '../ModalDialog';
 import Author from '../Author';
 import './index.scss';
