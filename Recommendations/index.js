@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { lookup } from 'global-react-components/Util/translations';
 import ModalDialog from '../ModalDialog';
 import Author from '../Author';
 import './index.scss';
@@ -22,13 +23,10 @@ export default class Recommendations extends Component {
     modalDialogContent() {
         return (
             <div>
-                <p className="mrc-ui-form-text">
-                    Add your personal five star rating and a recommendation text, visible for Customer Consultant, Head
-                    of Treasuary and Top Management.
-                </p>
+                <p className="mrc-ui-form-text">{lookup('mrc.recommendations.description')}</p>
 
                 <div className="mrc-ui-input-star-rating-component mrc-ui-input">
-                    <label className="mrc-ui-label">Star rating</label>
+                    <label className="mrc-ui-label">{lookup('mrc.recommendations.rating')}</label>
                     <div className="mrc-ui-input-star-rating">
                         <input
                             type="radio"
@@ -83,7 +81,7 @@ export default class Recommendations extends Component {
                     </div>
                 </div>
                 <div className="mrc-ui-input clear-both">
-                    <label className="mrc-ui-label">Text</label>
+                    <label className="mrc-ui-label">{lookup('mrc.recommendations.text')}</label>
                     <textarea
                         className="mrc-ui-textarea"
                         value={this.props.newContent}
@@ -100,14 +98,14 @@ export default class Recommendations extends Component {
                             this.toggleModal();
                         }}
                     >
-                        Speichern
+                        {lookup('mrc.recommendations.save')}
                     </button>
                     <button
                         type="button"
                         className="mrc-btn mrc-secondary-button mrc-ui-button-small mrc-ui-button-secondary"
                         onClick={this.toggleModal}
                     >
-                        Abbrechen
+                        {lookup('mrc.recommendations.cancel')}
                     </button>
                 </div>
             </div>
@@ -151,10 +149,10 @@ export default class Recommendations extends Component {
                     className="mrc-primary-button mrc-ui-add-recommendation-button"
                     onClick={this.toggleModal}
                 >
-                    Add Recommendation
+                    {lookup('mrc.recommendations.addrecommendation')}
                 </button>
                 <div className="mrc-ui-recommendations">
-                    <h3 className="mrc-ui-recommendations-headline">Recommendations</h3>
+                    <h3 className="mrc-ui-recommendations-headline">{lookup('mrc.recommendations.recommendations')}</h3>
                     <div className="mrc-ui-recommendations-list">
                         {intersperse(recommendations, <hr className="mrc-ui-recommendation-divider" />)}
                     </div>
