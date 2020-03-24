@@ -1,0 +1,31 @@
+@import '../lib/scss/main.scss';
+
+.mrc-ui-attachment {
+  background-color: $color-brand-primary-tint-95;
+  color: $color-brand-primary-default;
+
+  padding: $spacing-medium;
+  width: $width-6;
+  height: $width-6;
+  
+  border: $border-width-thin solid $color-brand-primary-tint-70;
+  border-radius: $border-radius-large;
+  margin: 0 $spacing-medium $spacing-medium 0 ;
+}
+
+.mrc-ui-attachment-label {
+  color: $color-brand-primary-tint-40;
+}
+
+
+.mrc-ui-attachment-missing {
+  background-color: $color-palette-red-tint-90;
+  color: $color-palette-red-shade-40;
+  border: $border-width-thin dashed $color-palette-red-shade-40;
+}
+
+.mrc-ui-attachment-deleted {
+  background-color: $color-contrast-white;
+  color: $color-palette-grey-tint-70;
+  border: $border-width-thin dashed $color-palette-grey-tint-70;
+}

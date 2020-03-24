@@ -1,0 +1,28 @@
+@import '../lib/scss/main.scss';
+@import './attachment.scss';
+
+.mrc-ui-attachments-component {
+  background-color: $color-contrast-white;
+  padding-top: $spacing-medium;
+}
+
+.mrc-ui-add-attachment-button {
+  width: auto !important;
+  padding: $spacing-none $spacing-extra-large !important;
+  margin: $spacing-large auto $spacing-large auto !important;
+}
+
+.mrc-ui-attachments {
+  padding: 0 $spacing-extra-large $spacing-extra-large $spacing-extra-large;
+}
+
+.mrc-ui-attachments-headline {
+  margin-bottom: $spacing-extra-small;
+  padding: $spacing-extra-small $spacing-medium;
+  color: $color-brand-primary-default;
+}
+
+.mrc-ui-attachments-list {
+  display: flex;
+  flex-wrap: wrap;
+}

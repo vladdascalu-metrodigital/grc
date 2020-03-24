@@ -10,6 +10,8 @@ import FileUpload from '../FileUpload';
 
 import Recommendations from '../Recommendations';
 
+import Attachments from '../Attachment';
+
 import { HashRouter, NavLink } from 'react-router-dom';
 
 import '../node_modules/mrc-component-library/public/css/bundle.css';
@@ -17,20 +19,25 @@ import '../node_modules/mrc-component-library/public/css/bundle.css';
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
 storiesOf('Button', module)
+    .add('Primary', () => <Button status="primary" onClick={action('clicked')} text="Approve" />)
+    .add('Error', () => <Button status="error" onClick={action('clicked')} text="Approve" />)
+    .add('Secondary', () => <Button status="secondary" onClick={action('clicked')} text="Approve" />)
+    .add('Success', () => <Button status="success" onClick={action('clicked')} text="Approve" />);
 
-  .add('Primary', () => <Button status="primary" onClick={action('clicked')} text="Approve" />)
-  .add('Error', () => <Button status="error" onClick={action('clicked')} text="Approve" />)
-  .add('Secondary', () => <Button status="secondary" onClick={action('clicked')} text="Approve" />)
-  .add('Success', () => <Button status="success" onClick={action('clicked')} text="Approve" />);
+storiesOf('Recommendations', module).add('standard', () => <Recommendations />);
 
-storiesOf('Recommendations', module)
-  .add('standard', () => <Recommendations />);
+storiesOf('Attachments', module).add('standard', () => <Attachments />);
 
-storiesOf('FileUpload', module)
-  .add('standard', () => <FileUpload labelSelect={"select file"} updateFile={action('uploadAttachment')} selectDisabled={false} uploadDisabled={false}/>);
+storiesOf('FileUpload', module).add('standard', () => (
+    <FileUpload
+        labelSelect={'select file'}
+        updateFile={action('uploadAttachment')}
+        selectDisabled={false}
+        uploadDisabled={false}
+    />
+));
 
-storiesOf('NavLink', module)
-  .add('MRC-3820', () => {
+storiesOf('NavLink', module).add('MRC-3820', () => {
     const activeLinkFilter = (match, pathToCheck, location) => {
         // 1. for some reason match was always false and location had no values for its entries
         // soo we have to take the real window location url for testing..
