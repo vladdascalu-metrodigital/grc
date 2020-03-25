@@ -1,6 +1,6 @@
 {
     "name": "global-react-components",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "description": "MRC collection of reusable frontend react components",
     "publishConfig": {
         "registry": "https://dx-nexus.metroscales.io/repository/npm-mrc-hosted/"
@@ -27,6 +27,7 @@
         "eslint-config-prettier": "^6.10.0",
         "eslint-plugin-prettier": "^3.1.2",
         "eslint-plugin-react": "^7.19.0",
+        "moment": "^2.24.0",
         "mrc-component-library": "1.0.57",
         "react-router-dom": "^5.1.2",
         "react-table": "^7.0.0"

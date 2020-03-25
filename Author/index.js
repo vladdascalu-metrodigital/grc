@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import profileImageFile from '../icons/profile.svg';
 import './index.scss';
+import moment from 'moment';
 
 export default class Author extends Component {
     render() {
@@ -11,7 +12,7 @@ export default class Author extends Component {
                 <div className="mrc-ui-author-text">
                     <div className="mrc-ui-author-email">{this.props.name}</div>
                     <div className="mrc-ui-author-title-time">
-                        {this.props.position}, {this.props.writeTime}
+                        {this.props.position}, {moment(this.props.writeTime).format('LLL')}
                     </div>
                 </div>
                 {this.props.additionalContent}
