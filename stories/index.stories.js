@@ -24,9 +24,44 @@ storiesOf('Button', module)
     .add('Secondary', () => <Button status="secondary" onClick={action('clicked')} text="Approve" />)
     .add('Success', () => <Button status="success" onClick={action('clicked')} text="Approve" />);
 
-storiesOf('Recommendations', module).add('standard', () => <Recommendations />);
-
 storiesOf('Attachments', module).add('standard', () => <Attachments />);
+
+storiesOf('Recommendations', module)
+    .add('standard', () => (
+        <Recommendations
+            recommendations={[
+                {
+                    content: 'foo',
+                    rating: '5',
+                    uploaderName: 'John Doe',
+                    uploaderPosition: 'HOT',
+                    uploadTime: '2019-02-02',
+                },
+            ]}
+            canAddNew={true}
+        />
+    ))
+    .add('2-recommendations', () => (
+        <Recommendations
+            recommendations={[
+                {
+                    content: 'foo',
+                    rating: '5',
+                    uploaderName: 'John Doe',
+                    uploaderPosition: 'HOT',
+                    uploadTime: '2019-02-02',
+                },
+                {
+                    content: 'bar',
+                    rating: '5',
+                    uploaderName: 'John Doe',
+                    uploaderPosition: 'HOT',
+                    uploadTime: '2019-02-02',
+                },
+            ]}
+            canAddNew={true}
+        />
+    ));
 
 storiesOf('FileUpload', module).add('standard', () => (
     <FileUpload

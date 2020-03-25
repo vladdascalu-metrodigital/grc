@@ -34,3 +34,30 @@
   margin: $spacing-medium $spacing-none;
   height: auto;
 }
+
+.mrc-primary-large-add-button:hover {
+  background-color: $color-palette-blue-shade-20;
+};
+
+.mrc-primary-large-add-button {
+  display: block;
+  padding: $spacing-none $spacing-extra-large;
+  margin: $spacing-large auto;
+  color: $color-contrast-white;
+  background-color: $color-palette-blue-default;
+  position: relative;
+  height: $height-2-5;
+  min-height: $min-height-3;
+  vertical-align: middle;
+  color: $color-contrast-white;
+  font-weight: bold;
+  text-align: center;
+  line-height: $line-height-copy;
+  outline: none;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  transition: background-color 125ms ease,box-shadow 125ms ease;
+}

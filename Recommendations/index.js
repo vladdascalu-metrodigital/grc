@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+import { lookup } from '../Util/translations';
 import ModalDialog from '../ModalDialog';
 import Author from '../Author';
 import './index.scss';
+import * as _ from 'lodash';
+import { PropTypes } from 'prop-types';
+
+const intersperse = (xs, e) => _.initial(_.reduce(xs, (acc, x) => _.concat(acc, [x, e]), []));
 
 export default class Recommendations extends Component {
     toggleModal = () => {
@@ -11,117 +16,148 @@ export default class Recommendations extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isBoxVisible: false,
+            isModalVisible: false,
         };
     }
 
     modalDialogContent() {
         return (
             <div>
-                <p className="mrc-ui-form-text">
-                    Add your personal five star rating and a recommendation text, visible for Customer Consultant, Head
-                    of Treasuary and Top Management.
-                </p>
+                <p className="mrc-ui-form-text">{lookup('mrc.recommendations.description')}</p>
 
                 <div className="mrc-ui-input-star-rating-component mrc-ui-input">
-                    <label className="mrc-ui-label">Star rating</label>
+                    <label className="mrc-ui-label">{lookup('mrc.recommendations.rating')}</label>
                     <div className="mrc-ui-input-star-rating">
-                        <input type="radio" id="star1" name="rate" value="1" />
-                        <label htmlFor="star1" title="text">
+                        <input
+                            type="radio"
+                            id="star5"
+                            name="rate"
+                            value="5"
+                            onClick={() => this.props.onRatingChange('5')}
+                        />
+                        <label htmlFor="star5" title="text">
                             1 star
                         </label>
-                        <input type="radio" id="star2" name="rate" value="2" />
-                        <label htmlFor="star2" title="text">
+                        <input
+                            type="radio"
+                            id="star4"
+                            name="rate"
+                            value="4"
+                            onClick={() => this.props.onRatingChange('4')}
+                        />
+                        <label htmlFor="star4" title="text">
                             2 stars
                         </label>
-                        <input type="radio" id="star3" name="rate" value="3" />
+                        <input
+                            type="radio"
+                            id="star3"
+                            name="rate"
+                            value="3"
+                            onClick={() => this.props.onRatingChange('3')}
+                        />
                         <label htmlFor="star3" title="text">
                             3 stars
                         </label>
-                        <input type="radio" id="star4" name="rate" value="4" />
-                        <label htmlFor="star4" title="text">
+                        <input
+                            type="radio"
+                            id="star2"
+                            name="rate"
+                            value="2"
+                            onClick={() => this.props.onRatingChange('2')}
+                        />
+                        <label htmlFor="star2" title="text">
                             4 stars
                         </label>
-                        <input type="radio" id="star5" name="rate" value="5" />
-                        <label htmlFor="star5" title="text">
+                        <input
+                            type="radio"
+                            id="star1"
+                            name="rate"
+                            value="1"
+                            onClick={() => this.props.onRatingChange('1')}
+                        />
+                        <label htmlFor="star1" title="text">
                             5 stars
                         </label>
                     </div>
                 </div>
                 <div className="mrc-ui-input clear-both">
-                    <label className="mrc-ui-label">Text</label>
-                    <textarea className="mrc-ui-textarea" />
+                    <label className="mrc-ui-label">{lookup('mrc.recommendations.text')}</label>
+                    <textarea
+                        className="mrc-ui-textarea"
+                        value={this.props.newContent}
+                        onChange={e => this.props.onContentChange(e.target.value)}
+                    ></textarea>
                 </div>
 
                 <div className="mrc-btn-group">
-                    <button type="button" className="mrc-btn mrc-primary-button mrc-ui-button-small">
-                        Speichern
+                    <button
+                        type="button"
+                        className="mrc-btn mrc-primary-button mrc-ui-button-small"
+                        onClick={() => {
+                            this.props.onSave(this.props.newContent, this.props.newRating);
+                            this.toggleModal();
+                        }}
+                    >
+                        {lookup('mrc.recommendations.save')}
                     </button>
                     <button
                         type="button"
                         className="mrc-btn mrc-secondary-button mrc-ui-button-small mrc-ui-button-secondary"
                         onClick={this.toggleModal}
                     >
-                        Abbrechen
+                        {lookup('mrc.recommendations.cancel')}
                     </button>
                 </div>
             </div>
         );
     }
 
-    starRatingResult() {
+    starRatingResult(rating) {
+        const filledStars = _.times(rating, _.constant(<span className="mrc-ui-filled-star">★</span>));
+        const unfilledStars = _.times(5 - rating, _.constant(<span className="mrc-ui-star-placeholder">☆</span>));
         return (
             <div className="mrc-ui-recommendation-star-rating">
-                <span className="mrc-ui-filled-star">★</span>
-                <span className="mrc-ui-filled-star">★</span>
-                <span className="mrc-ui-filled-star">★</span>
-                <span className="mrc-ui-star-placeholder">☆</span>
-                <span className="mrc-ui-star-placeholder">☆</span>
+                {filledStars}
+                {unfilledStars}
             </div>
         );
     }
 
     render() {
+        const _recommendations = this.props.recommendations;
+        const recommendations = _recommendations.map((recommendation, i) => (
+            <div key={i} className="mrc-ui-recommendation">
+                <Author
+                    name={recommendation.uploaderName}
+                    position={recommendation.uploaderPosition}
+                    writeTime={recommendation.uploadTime}
+                    additionalContent={this.starRatingResult(recommendation.rating)}
+                />
+                <div className="mrc-ui-recommendation-text">{recommendation.content}</div>
+            </div>
+        ));
         return (
             <div className="mrc-ui-recommendation-component">
-                <button
-                    type="button"
-                    className="mrc-primary-button mrc-ui-add-recommendation-button"
-                    onClick={this.toggleModal}
-                >
-                    Add Recommendation
-                </button>
-                <div className="mrc-ui-recommendations">
-                    <h3 className="mrc-ui-recommendations-headline">Recommendations</h3>
-                    <div className="mrc-ui-recommendations-list">
-                        <div className="mrc-ui-recommendation">
-                            <Author additionalContent={this.starRatingResult()} />
-                            <div className="mrc-ui-recommendation-text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                                dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                                mollit anim id est laborum.
-                            </div>
-                        </div>
-                        <hr className="mrc-ui-recommendation-divider" />
-                        <div className="mrc-ui-recommendation">
-                            <Author additionalContent={this.starRatingResult()} />
-                            <div className="mrc-ui-recommendation-text">
-                                At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no
-                                sea takimata sanctus est Lorem ipsum dolor sit amet. - vero eos et accusam et justo -
-                                consetetur sadipscing elitr Nam liber tempor cum soluta nobis eleifend option congue
-                                nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit
-                                amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
-                                dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
-                                tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem
-                                vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum
-                                dolore eu feugiat nulla facilisis.
-                            </div>
+                {this.props.canAddNew ? (
+                    <button
+                        type="button"
+                        className="mrc-primary-large-add-button"
+                        onClick={this.toggleModal}
+                        disabled={this.props.addNewDisabled}
+                    >
+                        {lookup('mrc.recommendations.addrecommendation')}
+                    </button>
+                ) : null}
+                {_.isEmpty(recommendations) ? null : (
+                    <div className="mrc-ui-recommendations">
+                        <h3 className="mrc-ui-recommendations-headline">
+                            {lookup('mrc.recommendations.recommendations')}
+                        </h3>
+                        <div className="mrc-ui-recommendations-list">
+                            {intersperse(recommendations, <hr className="mrc-ui-recommendation-divider" />)}
                         </div>
                     </div>
-                </div>
+                )}
                 {this.state.isModalVisible ? (
                     <ModalDialog toggle={this.toggleModal} content={this.modalDialogContent()} />
                 ) : null}
@@ -129,3 +165,14 @@ export default class Recommendations extends Component {
         );
     }
 }
+
+Recommendations.propTypes = {
+    onContentChange: PropTypes.func,
+    onRatingChange: PropTypes.func,
+    onSave: PropTypes.func,
+    newContent: PropTypes.string,
+    newRating: PropTypes.string,
+    recommendations: PropTypes.array,
+    canAddNew: PropTypes.bool,
+    addNewDisabled: PropTypes.bool,
+};
