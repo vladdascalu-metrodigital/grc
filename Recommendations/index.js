@@ -134,6 +134,24 @@ export default class Recommendations extends Component {
                     additionalContent={this.starRatingResult(recommendation.rating)}
                 />
                 <div className="mrc-ui-recommendation-text">{recommendation.content}</div>
+                <div className="mrc-btn-group">
+                    <button
+                        type="button"
+                        className="mrc-btn mrc-primary-button mrc-ui-button-small"
+                        onClick={() => {
+                            this.toggleModal();
+                        }}
+                    >
+                        {lookup('mrc.recommendations.edit')}
+                    </button>
+                    <button
+                        type="button"
+                        className="mrc-btn mrc-secondary-button mrc-ui-button-small mrc-ui-button-secondary mrc-ui-secondary-button-small-red"
+                        onClick={null}
+                    >
+                        {lookup('mrc.recommendations.delete')}
+                    </button>
+                </div>
             </div>
         ));
         return (
@@ -142,7 +160,7 @@ export default class Recommendations extends Component {
                     <button
                         type="button"
                         className="mrc-primary-large-add-button"
-                        onClick={this.toggleModal}
+                        onClick={this.togglegleModal}
                         disabled={this.props.addNewDisabled}
                     >
                         {lookup('mrc.recommendations.addrecommendation')}
