@@ -9,14 +9,18 @@ import { PropTypes } from 'prop-types';
 const intersperse = (xs, e) => _.initial(_.reduce(xs, (acc, x) => _.concat(acc, [x, e]), []));
 
 export default class Recommendations extends Component {
-    toggleModal = () => {
-        this.setState(prevState => ({ isModalVisible: !prevState.isModalVisible }));
+    toggleModal = recommendation => {
+        this.setState(prevState => ({
+            isModalVisible: !prevState.isModalVisible,
+            editedRecommendation: recommendation ? recommendation : null,
+        }));
     };
 
     constructor(props) {
         super(props);
         this.state = {
             isModalVisible: false,
+            editedRecommendation: null,
         };
     }
 
@@ -94,7 +98,9 @@ export default class Recommendations extends Component {
                         type="button"
                         className="mrc-btn mrc-primary-button mrc-ui-button-small"
                         onClick={() => {
-                            this.props.onSave(this.props.newContent, this.props.newRating);
+                            {
+                                this.props.onSave(_.get(this.state, 'editedRecommendation.id'));
+                            }
                             this.toggleModal();
                         }}
                     >
@@ -134,24 +140,26 @@ export default class Recommendations extends Component {
                     additionalContent={this.starRatingResult(recommendation.rating)}
                 />
                 <div className="mrc-ui-recommendation-text">{recommendation.content}</div>
-                <div className="mrc-btn-group">
-                    <button
-                        type="button"
-                        className="mrc-btn mrc-primary-button mrc-ui-button-small"
-                        onClick={() => {
-                            this.toggleModal();
-                        }}
-                    >
-                        {lookup('mrc.recommendations.edit')}
-                    </button>
-                    <button
-                        type="button"
-                        className="mrc-btn mrc-secondary-button mrc-ui-button-small mrc-ui-button-secondary mrc-ui-secondary-button-small-red"
-                        onClick={null}
-                    >
-                        {lookup('mrc.recommendations.delete')}
-                    </button>
-                </div>
+                {this.props.canEdit ? (
+                    <div className="mrc-btn-group">
+                        <button
+                            type="button"
+                            className="mrc-btn mrc-primary-button mrc-ui-button-small"
+                            onClick={() => {
+                                this.toggleModal(recommendation);
+                            }}
+                        >
+                            {lookup('mrc.recommendations.editrecommendation')}
+                        </button>
+                        <button
+                            type="button"
+                            className="mrc-btn mrc-secondary-button mrc-ui-button-small mrc-ui-button-secondary mrc-ui-secondary-button-small-red"
+                            onClick={() => this.props.onDelete(recommendation.id)}
+                        >
+                            {lookup('mrc.recommendations.deleterecommendation')}
+                        </button>
+                    </div>
+                ) : null}
             </div>
         ));
         return (
@@ -160,7 +168,7 @@ export default class Recommendations extends Component {
                     <button
                         type="button"
                         className="mrc-primary-large-add-button"
-                        onClick={this.togglegleModal}
+                        onClick={this.toggleModal}
                         disabled={this.props.addNewDisabled}
                     >
                         {lookup('mrc.recommendations.addrecommendation')}
@@ -188,9 +196,11 @@ Recommendations.propTypes = {
     onContentChange: PropTypes.func,
     onRatingChange: PropTypes.func,
     onSave: PropTypes.func,
+    onDelete: PropTypes.func,
     newContent: PropTypes.string,
     newRating: PropTypes.string,
     recommendations: PropTypes.array,
     canAddNew: PropTypes.bool,
+    canEdit: PropTypes.bool,
     addNewDisabled: PropTypes.bool,
 };
