@@ -140,7 +140,7 @@ export default class Recommendations extends Component {
                     additionalContent={this.starRatingResult(recommendation.rating)}
                 />
                 <div className="mrc-ui-recommendation-text">{recommendation.content}</div>
-                {this.props.canEdit ? (
+                {recommendation.canEdit ? (
                     <div className="mrc-btn-group">
                         <button
                             type="button"
