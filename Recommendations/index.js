@@ -28,7 +28,6 @@ export default class Recommendations extends Component {
         return (
             <div>
                 <p className="mrc-ui-form-text">{lookup('mrc.recommendations.description')}</p>
-
                 <div className="mrc-ui-input-star-rating-component mrc-ui-input">
                     <label className="mrc-ui-label">{lookup('mrc.recommendations.rating')}</label>
                     <div className="mrc-ui-input-star-rating">
@@ -88,7 +87,11 @@ export default class Recommendations extends Component {
                     <label className="mrc-ui-label">{lookup('mrc.recommendations.text')}</label>
                     <textarea
                         className="mrc-ui-textarea"
-                        value={this.props.newContent}
+                        value={
+                            this.state.editedRecommendation
+                                ? this.state.editedRecommendation.content
+                                : this.props.newContent
+                        }
                         onChange={e => this.props.onContentChange(e.target.value)}
                     ></textarea>
                 </div>
