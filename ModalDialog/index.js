@@ -12,8 +12,7 @@ export default class ModalDialog extends Component {
                     <button className="mrc-ui-modal-close-button" onClick={this.props.toggle}>
                         <img src={closeModalImageFile} alt="Close" />
                     </button>
-                    <h3 className="mrc-ui-modal-title">Add Recommendation</h3>
-
+                    <h3 className="mrc-ui-modal-title">{this.props.title}</h3>
                     <div className="mrc-ui-modal-content">{this.props.content}</div>
                 </div>
             </div>
@@ -24,4 +23,5 @@ export default class ModalDialog extends Component {
 ModalDialog.propTypes = {
     toggle: PropTypes.func,
     content: PropTypes.node,
+    title: PropTypes.string,
 };

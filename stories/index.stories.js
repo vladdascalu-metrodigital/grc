@@ -24,7 +24,55 @@ storiesOf('Button', module)
     .add('Secondary', () => <Button status="secondary" onClick={action('clicked')} text="Approve" />)
     .add('Success', () => <Button status="success" onClick={action('clicked')} text="Approve" />);
 
-storiesOf('Attachments', module).add('standard', () => <Attachments />);
+storiesOf('Attachments', module).add('standard', () => (
+    <Attachments
+        attachments={[
+            {
+                type: 'missing',
+                documenttype: 'Commercial Credit Insurance missing',
+                secondaryInteraction: 'add',
+            },
+            {
+                type: 'missing',
+                documenttype: 'Bond missing',
+                secondaryInteraction: 'delete',
+            },
+            {
+                type: 'normal',
+                title: 'LVM 203',
+                filetype: 'doc',
+                documenttype: 'Commercial Credit Insurance',
+                amount: '4000€',
+                expiry: '23.10.20',
+                author: 'joe.appleseed@metronom.com',
+                timestamp: '22.03.20, 10:56',
+                secondaryInteraction: 'delete',
+            },
+            {
+                type: 'normal',
+                title: 'Contract final',
+                filetype: 'pdf',
+                documenttype: 'General',
+                amount: '',
+                expiry: '',
+                author: 'joe.appleseed@metronom.com',
+                timestamp: '22.02.20, 14:53',
+                secondaryInteraction: 'delete',
+            },
+            {
+                type: 'deleted',
+                title: 'HJK 20',
+                filetype: 'doc',
+                documenttype: 'Commercial Credit Insurance',
+                amount: '500€',
+                expiry: '23.10.20',
+                author: 'joe.appleseed@metronom.com',
+                timestamp: '06.01.20, 16:35',
+                secondaryInteraction: 'restore',
+            },
+        ]}
+    />
+));
 
 storiesOf('Recommendations', module)
     .add('standard', () => (

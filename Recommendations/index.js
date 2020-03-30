@@ -44,6 +44,7 @@ export default class Recommendations extends Component {
                             name="rate"
                             value="4"
                             onClick={() => this.props.onRatingChange('4')}
+                            checked
                         />
                         <label htmlFor="star4" title="text">
                             2 stars
@@ -159,7 +160,11 @@ export default class Recommendations extends Component {
                     </div>
                 )}
                 {this.state.isModalVisible ? (
-                    <ModalDialog toggle={this.toggleModal} content={this.modalDialogContent()} />
+                    <ModalDialog
+                        toggle={this.toggleModal}
+                        content={this.modalDialogContent()}
+                        title={lookup('mrc.recommendations.modaltitle')}
+                    />
                 ) : null}
             </div>
         );
