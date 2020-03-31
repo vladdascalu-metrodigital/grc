@@ -32,14 +32,14 @@ export default class TextLink extends Component {
 
         if (this.props.click) {
             return (
-                <a onClick={null} className="mrc-ui-link">
+                <a onClick={this.props.onClick} className="mrc-ui-link">
                     {icon}
                     <span>{this.props.text}</span>
                 </a>
             );
         } else {
             return (
-                <a href={this.props.link} className="mrc-ui-link">
+                <a href={this.props.onClick} className="mrc-ui-link">
                     {icon}
                     <span>{this.props.text}</span>
                 </a>

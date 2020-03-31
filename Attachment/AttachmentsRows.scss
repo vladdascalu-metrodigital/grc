@@ -1,0 +1,92 @@
+@import "../lib/scss/main.scss";
+
+.m-fileDropzone {
+  min-height: $spacing-none !important;
+}
+
+.m-fileDropzone .m-icon {
+  display: none;
+}
+.m-fileDropzone br {
+  display: none;
+}
+@media #{$breakpoint-not-small} {
+  .m-fileDropzone .m-icon {
+    display: block;
+  }
+  .m-fileDropzone br {
+    display: block;
+  }
+}
+
+.mrc-add-attachment label {
+  margin-bottom: $spacing-small;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#select-file-type {
+  margin-top: 0px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.mrc-add-attachment {
+  padding: $spacing-none !important;
+  .hiddenColumn {
+    display: none;
+  }
+}
+
+// .mrc-attachments-rows {
+//   list-style: none;
+//   padding: 1.3em 0 0 0;
+
+//   li {
+//     margin-bottom: 20px;
+//   }
+
+//   .mrc-attachments-rows-info {
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: space-between;
+//     font-size: 0.8125em;
+//     font-weight: 400;
+//     flex-wrap: wrap;
+//     color: #1a3b7a;
+
+//     .mrc-attachments-rows-container {
+//       justify-content: space-between;
+//       display: inline-grid;
+//       width: 100%;
+
+//       @media #{$breakpoint-not-small} {
+//         display: flex;
+//         width: 50%;
+//       }
+//     }
+
+//     .mrc-attachments-rows-user {
+//       flex-grow: 0;
+//       line-height: 1.3em;
+//     }
+//   }
+// }
+
+.attachments-date-picker {
+  .react-datepicker-popper {
+    z-index: 100 !important;
+  }
+}

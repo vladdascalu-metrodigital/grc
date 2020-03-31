@@ -4,8 +4,7 @@ import ModalDialog from '../ModalDialog';
 import { lookup } from '../Util/translations';
 import './index.scss';
 import { PropTypes } from 'prop-types';
-import FileUpload from '../FileUpload';
-import MrcDatePickerInput from '../DatePicker';
+import AttachmentsRows from './AttachmentsRows';
 
 export default class Attachments extends Component {
     toggleModal = () => {
@@ -19,20 +18,30 @@ export default class Attachments extends Component {
         };
     }
 
+    logHelloWorld = () => {
+        console.log('Hello World');
+    };
+
     modalDialogContent() {
         return (
             <div>
-                <label>Foobar</label>
-                <FileUpload />
-                <input type="date" />
-                <MrcDatePickerInput />
+                <AttachmentsRows
+                    readonly={false}
+                    addAttachment={() => this.logHelloWorld()}
+                    fileTypes={['general', 'delkredere', 'warenkreditversicherung']}
+                    fileTypesForCC={['general', 'warenkreditversicherung']}
+                    country={'DE'}
+                    currentApprover={'CC'}
+                    hideUploader={false}
+                />
             </div>
         );
     }
 
     render() {
-        const attachments = this.props.attachments.map(attachment => (
+        const attachments = this.props.attachments.map((attachment, index) => (
             <Attachment
+                key={index}
                 type={attachment.type}
                 title={attachment.title}
                 filetype={attachment.filetype}
@@ -41,19 +50,13 @@ export default class Attachments extends Component {
                 expiry={attachment.expiry}
                 author={attachment.author}
                 timestamp={attachment.timestamp}
-                handleClick={this.toggleModal}
+                onClick={this.toggleModal}
                 secondaryInteraction={attachment.secondaryInteraction}
             />
         ));
         return (
             <div className="mrc-ui-attachments-component">
-                <button
-                    type="button"
-                    className="mrc-primary-large-add-button"
-                    onClick={() => {
-                        this.toggleModal();
-                    }}
-                >
+                <button type="button" className="mrc-primary-large-add-button" onClick={this.toggleModal}>
                     {lookup('mrc.attachments.addbutton')}
                 </button>
                 <div className="mrc-ui-attachments">

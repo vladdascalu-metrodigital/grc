@@ -18,13 +18,13 @@ export default class Attachment extends Component {
         let content;
         if (this.props.type === 'missing') {
             content = (
-                <div className="mrc-ui-attachment-content" onClick={this.props.handleClick}>
+                <div className="mrc-ui-attachment-content" onClick={this.props.onClick}>
                     <div className="mrc-ui-attachment-documenttype">{this.props.documenttype}</div>
                 </div>
             );
         } else {
             content = (
-                <div className="mrc-ui-attachment-content" onClick={this.props.handleClick}>
+                <div className="mrc-ui-attachment-content" onClick={this.props.onClick}>
                     <h2 className="mrc-ui-attachment-title">{this.props.title}</h2>
                     <div className="mrc-ui-attachment-filetype">{this.props.filetype}</div>
                     <div className="mrc-ui-attachment-documenttype">{this.props.documenttype}</div>
@@ -51,28 +51,28 @@ export default class Attachment extends Component {
             case 'delete':
                 secondaryAction = (
                     <div className="mrc-ui-attachment-interaction">
-                        <Textlink icon="trash" text={lookup('mrc.attachments.delete')} handleClick={null} />
+                        <Textlink icon="trash" text={lookup('mrc.attachments.delete')} onClick={null} />
                     </div>
                 );
                 break;
             case 'restore':
                 secondaryAction = (
                     <div className="mrc-ui-attachment-interaction">
-                        <Textlink icon="restore" text={lookup('mrc.attachments.restore')} handleClick={null} />
+                        <Textlink icon="restore" text={lookup('mrc.attachments.restore')} onClick={null} />
                     </div>
                 );
                 break;
             case 'add':
                 secondaryAction = (
                     <div className="mrc-ui-attachment-interaction">
-                        <Textlink icon="add" text={lookup('mrc.attachments.add')} handleClick={null} />
+                        <Textlink icon="add" text={lookup('mrc.attachments.add')} onClick={null} />
                     </div>
                 );
                 break;
             default:
                 secondaryAction = (
                     <div className="mrc-ui-attachment-interaction">
-                        <Textlink text={this.props.secondaryInteraction} handleClick={null} />
+                        <Textlink text={this.props.secondaryInteraction} onClick={null} />
                     </div>
                 );
                 null;
@@ -97,5 +97,5 @@ Attachment.propTypes = {
     author: PropTypes.string,
     timestamp: PropTypes.string,
     secondaryInteraction: PropTypes.string,
-    handleClick: PropTypes.function,
+    onClick: PropTypes.func,
 };
