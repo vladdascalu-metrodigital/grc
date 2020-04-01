@@ -14,9 +14,9 @@ export default class Attachment extends Component {
     }
 
     render() {
-        const classes = classnames('mrc-ui-attachment', this.classnames[this.props.type]);
+        const classes = classnames('mrc-ui-attachment', this.classnames[this.props.status]);
         let content;
-        if (this.props.type === 'missing') {
+        if (this.props.status === 'missing') {
             content = (
                 <div className="mrc-ui-attachment-content" onClick={this.props.onClick}>
                     <div className="mrc-ui-attachment-documenttype">{this.props.documenttype}</div>
@@ -88,7 +88,7 @@ export default class Attachment extends Component {
 }
 
 Attachment.propTypes = {
-    type: PropTypes.string,
+    status: PropTypes.string,
     title: PropTypes.string,
     filetype: PropTypes.string,
     documenttype: PropTypes.string,
