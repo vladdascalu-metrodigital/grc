@@ -26,6 +26,7 @@ storiesOf('Button', module)
 
 storiesOf('Attachments', module).add('standard', () => (
     <Attachments
+        disabled={false}
         attachments={[
             {
                 status: 'missing',
@@ -77,10 +78,10 @@ storiesOf('Attachments', module).add('standard', () => (
             },
         ]}
         filetypes={['general', 'delkredere', 'warenkreditversicherung']}
-        fileTypesForCC={['general', 'warenkreditversicherung']}
+        fileTypesForCC={['general', 'contracting']}
         addAttachment={() => console.log('adding file')}
         currentApprover="CC"
-        country="DE"
+        country="PL"
     />
 ));
 

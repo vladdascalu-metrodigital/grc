@@ -60,7 +60,13 @@ export default class Attachments extends Component {
         });
         return (
             <div className="mrc-ui-attachments-component">
-                <button type="button" className="mrc-primary-large-add-button" onClick={this.toggleModal}>
+                <button
+                    type="button"
+                    // TODO @Christoph change this class when disabled
+                    className="mrc-primary-large-add-button"
+                    onClick={this.toggleModal}
+                    disabled={this.props.disabled}
+                >
                     {lookup('mrc.attachments.addbutton')}
                 </button>
                 <div className="mrc-ui-attachments">
@@ -87,4 +93,5 @@ Attachments.propTypes = {
     country: PropTypes.string,
     currentApprover: PropTypes.string,
     readonly: PropTypes.bool,
+    disabled: PropTypes.bool,
 };
