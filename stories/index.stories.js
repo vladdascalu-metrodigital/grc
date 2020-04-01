@@ -71,6 +71,11 @@ storiesOf('Attachments', module).add('standard', () => (
                 secondaryInteraction: 'restore',
             },
         ]}
+        filetypes={['general', 'delkredere', 'warenkreditversicherung']}
+        fileTypesForCC={['general', 'warenkreditversicherung']}
+        addAttachment={() => console.log('adding file')}
+        currentApprover="CC"
+        country="DE"
     />
 ));
 
