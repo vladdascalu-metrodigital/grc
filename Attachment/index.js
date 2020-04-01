@@ -35,18 +35,17 @@ export default class Attachments extends Component {
     }
 
     render() {
-        console.log(this.props.attachments);
         const attachments = this.props.attachments.map((attachment, index) => (
             <Attachment
                 key={index}
                 type={attachment.type}
                 title={attachment.title}
-                filetype={attachment.filetype}
-                documenttype={attachment.documenttype}
+                filetype={attachment.fileType}
+                documenttype={attachment.contentType}
                 amount={attachment.amount}
                 expiry={attachment.expiryDate}
                 author={attachment.uploaderPrincipalName}
-                timestamp={attachment.timestamp}
+                timestamp={attachment.uploadTimestamp}
                 onClick={this.toggleModal}
                 secondaryInteraction={attachment.secondaryInteraction}
             />
