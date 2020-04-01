@@ -19,15 +19,15 @@ export default class Attachment extends Component {
         if (this.props.status === 'missing') {
             content = (
                 <div className="mrc-ui-attachment-content" onClick={this.props.onClick}>
-                    <div className="mrc-ui-attachment-documenttype">{this.props.documenttype}</div>
+                    <div className="mrc-ui-attachment-documenttype">{this.props.documentType}</div>
                 </div>
             );
         } else {
             content = (
                 <div className="mrc-ui-attachment-content" onClick={this.props.onClick}>
                     <h2 className="mrc-ui-attachment-title">{this.props.title}</h2>
-                    <div className="mrc-ui-attachment-filetype">{this.props.filetype}</div>
-                    <div className="mrc-ui-attachment-documenttype">{this.props.documenttype}</div>
+                    <div className="mrc-ui-attachment-filetype">{this.props.fileType}</div>
+                    <div className="mrc-ui-attachment-documenttype">{this.props.documentType}</div>
                     <div className="mrc-ui-attachment-info-group">
                         <div className="mrc-ui-attachment-info-label">{lookup('mrc.attachments.amount')}</div>
                         <div className="mrc-ui-attachment-info-value">
@@ -90,8 +90,8 @@ export default class Attachment extends Component {
 Attachment.propTypes = {
     status: PropTypes.string,
     title: PropTypes.string,
-    filetype: PropTypes.string,
-    documenttype: PropTypes.string,
+    fileType: PropTypes.string,
+    documentType: PropTypes.string,
     amount: PropTypes.string,
     expiry: PropTypes.string,
     author: PropTypes.string,

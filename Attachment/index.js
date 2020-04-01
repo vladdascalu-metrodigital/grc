@@ -40,8 +40,8 @@ export default class Attachments extends Component {
                 key={index}
                 status={attachment.status ? attachment.status : 'normal'}
                 title={attachment.title}
-                filetype={attachment.contentType}
-                documenttype={attachment.fileType}
+                fileType={attachment.contentType}
+                documentType={attachment.fileType}
                 amount={attachment.amount}
                 expiry={attachment.expiryDate}
                 author={attachment.uploaderPrincipalName}
