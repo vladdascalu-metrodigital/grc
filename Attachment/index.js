@@ -18,27 +18,24 @@ export default class Attachments extends Component {
         };
     }
 
-    logHelloWorld = () => {
-        console.log('Hello World');
-    };
-
     modalDialogContent() {
         return (
             <div>
                 <AttachmentsRows
-                    readonly={false}
-                    addAttachment={() => this.logHelloWorld()}
-                    fileTypes={['general', 'delkredere', 'warenkreditversicherung']}
-                    fileTypesForCC={['general', 'warenkreditversicherung']}
-                    country={'DE'}
-                    currentApprover={'CC'}
+                    readonly={this.props.readonly}
                     hideUploader={false}
+                    addAttachment={this.props.addAttachment}
+                    fileTypes={this.props.fileTypesForCC}
+                    fileTypesForCC={this.props.fileTypesForCC}
+                    country={this.props.country}
+                    currentApprover={this.props.currentApprover}
                 />
             </div>
         );
     }
 
     render() {
+        console.log(this.props.attachments);
         const attachments = this.props.attachments.map((attachment, index) => (
             <Attachment
                 key={index}
@@ -47,8 +44,8 @@ export default class Attachments extends Component {
                 filetype={attachment.filetype}
                 documenttype={attachment.documenttype}
                 amount={attachment.amount}
-                expiry={attachment.expiry}
-                author={attachment.author}
+                expiry={attachment.expiryDate}
+                author={attachment.uploaderPrincipalName}
                 timestamp={attachment.timestamp}
                 onClick={this.toggleModal}
                 secondaryInteraction={attachment.secondaryInteraction}
@@ -77,4 +74,10 @@ export default class Attachments extends Component {
 
 Attachments.propTypes = {
     attachments: PropTypes.array,
+    addAttachment: PropTypes.func,
+    fileTypes: PropTypes.array,
+    fileTypesForCC: PropTypes.array,
+    country: PropTypes.string,
+    currentApprover: PropTypes.string,
+    readonly: PropTypes.bool,
 };
