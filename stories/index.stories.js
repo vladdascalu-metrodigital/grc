@@ -55,7 +55,7 @@ storiesOf('Attachments', module).add('standard', () => (
             },
             {
                 status: 'normal',
-                title: 'Contract final',
+                title: 'awsesome_company_Contract _final_2020.pdf',
                 contentType: 'application/pdf',
                 fileType: 'General',
                 amount: '',
