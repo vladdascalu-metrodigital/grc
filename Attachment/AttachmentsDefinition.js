@@ -351,6 +351,13 @@ export const ALL_ATTACHMENT_TYPES_JSON =
     '               "validation_argument":"TODAY"\n' +
     '            }\n' +
     '         ]\n' +
+    '      },\n' +
+    '      { \n' +
+    '         "country":"PL",\n' +
+    '         "type":"contracting",\n' +
+    '         "label":"mrc.attachments.types.contracting",\n' +
+    '         "remark":"Contract",\n' +
+    '         "is_collateral":false\n' +
     '      }\n' +
     '   ]\n' +
     '}';
