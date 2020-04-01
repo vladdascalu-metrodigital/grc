@@ -51,7 +51,9 @@ export default class Attachments extends Component {
                     expiry={attachment.expiryDate}
                     author={attachment.uploaderPrincipalName}
                     timestamp={attachment.uploadTimestamp}
-                    onClick={attachment.status === 'missing' ? this.toggleModal : () => window.open(attachment.uri)}
+                    onClick={
+                        attachment.status === 'missing' ? this.toggleModal : () => window.open(attachment.contentUri)
+                    }
                     secondaryInteraction={attachment.secondaryInteraction}
                 />
             );
