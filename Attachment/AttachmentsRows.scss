@@ -1,19 +1,20 @@
 @import "../lib/scss/main.scss";
 
-.m-fileDropzone {
-  min-height: $spacing-none !important;
-}
+// .m-fileDropzone {
+//   // min-height: $spacing-none !important;
+// }
 
-.m-fileDropzone .m-icon {
-  display: none;
-}
-.m-fileDropzone br {
-  display: none;
-}
+// .m-fileDropzone .m-icon {
+//   display: none;
+// }
+// .m-fileDropzone br {
+//   display: none;
+// }
+
 @media #{$breakpoint-not-small} {
-  .m-fileDropzone .m-icon {
-    display: block;
-  }
+  // .m-fileDropzone .m-icon {
+  //   display: block;
+  // }
   .m-fileDropzone br {
     display: block;
   }

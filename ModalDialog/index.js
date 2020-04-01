@@ -3,7 +3,17 @@ import PropTypes from 'prop-types';
 import './index.scss';
 import closeModalImageFile from '../icons/modal-close.svg';
 
+const MODAL_OPEN_CLASS = 'body--modal-open';
+
 export default class ModalDialog extends Component {
+    componentDidMount() {
+        document.body.classList.add(MODAL_OPEN_CLASS);
+    }
+
+    componentWillUnmount() {
+        document.body.classList.remove(MODAL_OPEN_CLASS);
+    }
+
     render() {
         return (
             <div className="mrc-ui-modal-component">
