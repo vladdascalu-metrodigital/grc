@@ -63,7 +63,11 @@ div.mrc-ui-attachment-deleted .mrc-ui-attachment-interaction {
 .mrc-ui-attachment-title {
   font-size: $font-size-5;
   margin: $spacing-medium $spacing-none $spacing-extra-small $spacing-none;
+  width: 100%;
   text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden; 
+  white-space: nowrap;
 }
 
 .mrc-ui-attachment-filetype {

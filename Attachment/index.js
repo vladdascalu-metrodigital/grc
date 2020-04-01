@@ -38,24 +38,21 @@ export default class Attachments extends Component {
     }
 
     render() {
-        const attachments = this.props.attachments.map((attachment, index) => {
-            const status = attachment.status ? attachment.status : 'normal';
-            return (
-                <Attachment
-                    key={index}
-                    status={status}
-                    title={attachment.title}
-                    filetype={attachment.contentType}
-                    documenttype={attachment.fileType}
-                    amount={attachment.amount}
-                    expiry={attachment.expiryDate}
-                    author={attachment.uploaderPrincipalName}
-                    timestamp={attachment.uploadTimestamp}
-                    onClick={attachment.status === 'missing' ? this.toggleModal : null}
-                    secondaryInteraction={attachment.secondaryInteraction}
-                />
-            );
-        });
+        const attachments = this.props.attachments.map((attachment, index) => (
+            <Attachment
+                key={index}
+                status={attachment.status ? attachment.status : 'normal'}
+                title={attachment.title}
+                fileType={attachment.contentType}
+                documentType={attachment.fileType}
+                amount={attachment.amount}
+                expiry={attachment.expiryDate}
+                author={attachment.uploaderPrincipalName}
+                timestamp={attachment.uploadTimestamp}
+                onClick={this.toggleModal}
+                secondaryInteraction={attachment.secondaryInteraction}
+            />
+        ));
         return (
             <div className="mrc-ui-attachments-component">
                 <button type="button" className="mrc-primary-large-add-button" onClick={this.toggleModal}>
