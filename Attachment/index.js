@@ -38,7 +38,7 @@ export default class Attachments extends Component {
         const attachments = this.props.attachments.map((attachment, index) => (
             <Attachment
                 key={index}
-                status={attachment.status ? attachments.status : 'normal'}
+                status={attachment.status ? attachment.status : 'normal'}
                 title={attachment.title}
                 filetype={attachment.contentType}
                 documenttype={attachment.fileType}
