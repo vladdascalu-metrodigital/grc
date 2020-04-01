@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import Textlink from './TextLink';
 import { PropTypes } from 'prop-types';
 import { lookup } from '../Util/translations';
+import * as mime from 'react-native-mime-types';
 
 export default class Attachment extends Component {
     constructor(props) {
@@ -26,7 +27,7 @@ export default class Attachment extends Component {
             content = (
                 <div className="mrc-ui-attachment-content" onClick={this.props.onClick}>
                     <h2 className="mrc-ui-attachment-title">{this.props.title}</h2>
-                    <div className="mrc-ui-attachment-filetype">{this.props.fileType}</div>
+                    <div className="mrc-ui-attachment-filetype">{this.getFileType(this.props.fileType)}</div>
                     <div className="mrc-ui-attachment-documenttype">{this.props.documentType}</div>
                     <div className="mrc-ui-attachment-info-group">
                         <div className="mrc-ui-attachment-info-label">{lookup('mrc.attachments.amount')}</div>
@@ -84,6 +85,11 @@ export default class Attachment extends Component {
                 {secondaryAction}
             </div>
         );
+    }
+
+    getFileType(str) {
+        const fileExtension = mime.extension(str);
+        return fileExtension || lookup('mrc.attachments.unknown-mime');
     }
 }
 

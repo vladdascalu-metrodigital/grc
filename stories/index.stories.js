@@ -46,7 +46,7 @@ storiesOf('Attachments', module).add('standard', () => (
             {
                 status: 'normal',
                 title: 'LVM 203',
-                contentType: 'application/doc',
+                contentType: 'application/msword',
                 fileType: 'Commercial Credit Insurance',
                 amount: '4000€',
                 expiryDate: '23.10.20',
