@@ -14,17 +14,15 @@ export default class Attachment extends Component {
         };
     }
 
-    render() {
-        const classes = classnames('mrc-ui-attachment', this.classnames[this.props.status]);
-        let content;
+    getAttachmentContent() {
         if (this.props.status === 'missing') {
-            content = (
+            return (
                 <div className="mrc-ui-attachment-content" onClick={this.props.onClick}>
                     <div className="mrc-ui-attachment-documenttype">{this.props.documentType}</div>
                 </div>
             );
         } else {
-            content = (
+            return (
                 <div className="mrc-ui-attachment-content" onClick={this.props.onClick}>
                     <h2 className="mrc-ui-attachment-title">{this.props.title}</h2>
                     <div className="mrc-ui-attachment-filetype">{this.getFileType(this.props.fileType)}</div>
@@ -46,38 +44,41 @@ export default class Attachment extends Component {
                 </div>
             );
         }
+    }
 
-        let secondaryAction;
+    getSecondaryInteraction() {
         switch (this.props.secondaryInteraction) {
             case 'delete':
-                secondaryAction = (
+                return (
                     <div className="mrc-ui-attachment-interaction">
                         <Textlink icon="trash" text={lookup('mrc.attachments.delete')} onClick={null} />
                     </div>
                 );
-                break;
             case 'restore':
-                secondaryAction = (
+                return (
                     <div className="mrc-ui-attachment-interaction">
                         <Textlink icon="restore" text={lookup('mrc.attachments.restore')} onClick={null} />
                     </div>
                 );
-                break;
             case 'add':
-                secondaryAction = (
+                return (
                     <div className="mrc-ui-attachment-interaction">
                         <Textlink icon="add" text={lookup('mrc.attachments.add')} onClick={null} />
                     </div>
                 );
-                break;
             default:
-                secondaryAction = (
+                return (
                     <div className="mrc-ui-attachment-interaction">
                         <Textlink text={this.props.secondaryInteraction} onClick={null} />
                     </div>
                 );
-                null;
         }
+    }
+
+    render() {
+        const classes = classnames('mrc-ui-attachment', this.classnames[this.props.status]);
+        const content = this.getAttachmentContent();
+        const secondaryAction = this.getSecondaryInteraction();
 
         return (
             <div className={classes}>
@@ -87,8 +88,8 @@ export default class Attachment extends Component {
         );
     }
 
-    getFileType(str) {
-        const fileExtension = mime.extension(str);
+    getFileType(contentType) {
+        const fileExtension = mime.extension(contentType);
         return fileExtension || lookup('mrc.attachments.unknown-mime');
     }
 }
