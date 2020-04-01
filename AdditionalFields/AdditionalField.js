@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
-import { lookup } from '../../Util/translations';
+import { lookup } from '../Util/translations';
 import { additionalFieldIsValid, additionalFieldMandatoryIsValid } from './additionalFieldsValidation';
 import { RequestFieldPropTypes } from './AdditionalFieldsPropTypes';
 import { FieldNumber } from './Fields/FieldNumber';
