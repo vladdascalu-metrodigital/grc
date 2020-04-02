@@ -26,6 +26,16 @@ export default class CustomerTrigger extends Component {
         else return this.PLACEHOLDER;
     };
 
+    asNumberForAvailable = (value1, value2, country) => {
+        if (this.isValidAmount(value1))
+            return (
+                <mrc-number dynamic={value1} show-currency-for-country={country}>
+                    {value1 - value2}
+                </mrc-number>
+            );
+        else return this.PLACEHOLDER;
+    };
+
     displayCustomerWarnings() {
         if (
             this.props.isWithWarning != undefined &&
@@ -54,17 +64,53 @@ export default class CustomerTrigger extends Component {
         if (this.isValidAmount(this.props.current) || this.isValidAmount(this.props.requested)) {
             return (
                 <div className="previousAmounts">
-                    <div>
-                        {' '}
-                        {lookup('mrc.creditdetails.current') + ':'}{' '}
-                        {this.asNumber(this.props.current, this.props.customer.country)}
-                    </div>
-                    <div>
-                        {' '}
-                        {lookup('mrc.creditdetails.requested') + ':'}{' '}
-                        {this.asNumber(this.props.requested, this.props.customer.country)}
-                    </div>
-                    {this.displayApprovedLimit()}
+                    <table className="tableLimit">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div>
+                                        {' '}
+                                        {lookup('mrc.creditdetails.available') + ':'}{' '}
+                                        {this.asNumberForAvailable(
+                                            this.props.current,
+                                            this.props.customer.limitExhaustion,
+                                            this.props.customer.country
+                                        )}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {' '}
+                                        {lookup('mrc.creditdetails.current') + ':'}{' '}
+                                        {this.asNumber(this.props.current, this.props.customer.country)}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                        {' '}
+                                        {lookup('mrc.creditdetails.limitExhaustion') + ':'}{' '}
+                                        {this.asNumber(
+                                            this.props.customer.limitExhaustion,
+                                            this.props.customer.country
+                                        )}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {' '}
+                                        {lookup('mrc.creditdetails.requested') + ':'}{' '}
+                                        {this.asNumber(this.props.requested, this.props.customer.country)}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>{this.displayApprovedLimit()}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             );
         }

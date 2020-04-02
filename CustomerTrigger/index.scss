@@ -18,4 +18,19 @@
     vertical-align: middle;
   }
 
+  .tableLimit {
+    width: auto;
+    float: right;
+    text-align: right;
+    font-size: 13px;
+    font-weight: 400;
+    top: 0.6em;
+    margin-bottom: -4em;
+    position: relative;
+  }
+  .td {
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+
 }
