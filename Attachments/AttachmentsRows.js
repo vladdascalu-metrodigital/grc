@@ -20,14 +20,14 @@ export default class AttachmentsRows extends Component {
             showCollateralMeta: false,
             attachmentAmount: null,
             attachmentType: null,
+            attachmentTypesLoaded: false,
         };
         //this.FILE_TYPES_TRANSLATION_KEYS = props.fileTypes;
         this.handleDatePickerChange = this.handleDatePickerChange.bind(this);
     }
 
-    componentDidMount() {
+    loadAttachmentTypes() {
         this.ALL_ATTACHMENT_TYPES_JSON = JSON.parse(Constants.ALL_ATTACHMENT_TYPES_JSON);
-
         this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY = this.ALL_ATTACHMENT_TYPES_JSON.attachment_types
             .filter(
                 attType =>
@@ -35,6 +35,11 @@ export default class AttachmentsRows extends Component {
                     attType.country.toLowerCase() === 'all'
             )
             .filter(attType => this.props.fileTypes.includes(attType.type.toLowerCase()));
+        this.setState({ attachmentTypesLoaded: true });
+    }
+
+    componentDidMount() {
+        !this.state.attachmentTypesLoaded ? this.loadAttachmentTypes() : null;
     }
 
     componentDidUpdate() {
@@ -69,6 +74,7 @@ export default class AttachmentsRows extends Component {
     }
 
     fileSelection() {
+        !this.state.attachmentTypesLoaded ? this.loadAttachmentTypes() : null;
         return (
             <select
                 name="file-type"
