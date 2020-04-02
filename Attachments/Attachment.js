@@ -17,13 +17,13 @@ export default class Attachment extends Component {
     getAttachmentContent() {
         if (this.props.status === 'missing') {
             return (
-                <div className="mrc-ui-attachment-content" onClick={this.props.onClick}>
+                <div className="mrc-ui-attachment-content" onClick={this.props.handlePrimaryAction}>
                     <div className="mrc-ui-attachment-documenttype">{this.props.documentType}</div>
                 </div>
             );
         } else {
             return (
-                <div className="mrc-ui-attachment-content" onClick={this.props.onClick}>
+                <div className="mrc-ui-attachment-content" onClick={this.props.handlePrimaryAction}>
                     <h2 className="mrc-ui-attachment-title">{this.props.title}</h2>
                     <div className="mrc-ui-attachment-filetype">{this.getFileType(this.props.fileType)}</div>
                     <div className="mrc-ui-attachment-documenttype">{this.props.documentType}</div>
@@ -50,26 +50,26 @@ export default class Attachment extends Component {
         switch (this.props.secondaryInteraction) {
             case 'delete':
                 return (
-                    <div className="mrc-ui-attachment-interaction">
-                        <Textlink icon="trash" text={lookup('mrc.attachments.delete')} onClick={null} />
+                    <div className="mrc-ui-attachment-interaction" onClick={this.props.handleSecondaryAction}>
+                        <Textlink icon="trash" text={lookup('mrc.attachments.delete')} />
                     </div>
                 );
             case 'restore':
                 return (
-                    <div className="mrc-ui-attachment-interaction">
-                        <Textlink icon="restore" text={lookup('mrc.attachments.restore')} onClick={null} />
+                    <div className="mrc-ui-attachment-interaction" onClick={this.props.handleSecondaryAction}>
+                        <Textlink icon="restore" text={lookup('mrc.attachments.restore')} />
                     </div>
                 );
             case 'add':
                 return (
-                    <div className="mrc-ui-attachment-interaction">
-                        <Textlink icon="add" text={lookup('mrc.attachments.add')} onClick={null} />
+                    <div className="mrc-ui-attachment-interaction" onClick={this.props.handleSecondaryAction}>
+                        <Textlink icon="add" text={lookup('mrc.attachments.add')} />
                     </div>
                 );
             default:
                 return (
-                    <div className="mrc-ui-attachment-interaction">
-                        <Textlink text={this.props.secondaryInteraction} onClick={null} />
+                    <div className="mrc-ui-attachment-interaction" onClick={this.props.handleSecondaryAction}>
+                        <Textlink text={this.props.secondaryInteraction} />
                     </div>
                 );
         }
@@ -104,5 +104,6 @@ Attachment.propTypes = {
     author: PropTypes.string,
     timestamp: PropTypes.string,
     secondaryInteraction: PropTypes.string,
-    onClick: PropTypes.func,
+    handlePrimaryAction: PropTypes.func,
+    handleSecondaryAction: PropTypes.func,
 };
