@@ -30,6 +30,18 @@
     background-color: white;
   }
 
+  .column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+  }
+
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
   .mrc-detailed-customer-trigger-table {
     padding-right: 2px;
     padding-left: 2px;

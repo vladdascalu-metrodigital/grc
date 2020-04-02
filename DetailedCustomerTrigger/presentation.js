@@ -1,8 +1,8 @@
 import './index.scss';
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { displayName } from '../Util';
-import { lookup } from '../Util/translations';
+import {displayName} from '../Util';
+import {lookup} from '../Util/translations';
 import Attention from '../icons/attention.svg';
 
 export default class DetailedCustomerTrigger extends Component {
@@ -25,10 +25,19 @@ export default class DetailedCustomerTrigger extends Component {
             );
         else return this.PLACEHOLDER;
     };
+    asNumberForAvailable = (value1, value2, country) => {
+        if (this.isValidAmount(value1) && this.isValidAmount(value2))
+            return (
+                <mrc-number dynamic={value1} show-currency-for-country={country}>
+                    {value1 - value2}
+                </mrc-number>
+            );
+        else return this.PLACEHOLDER;
+    };
 
     displayCustomerWarnings() {
         if (this.props.isWithWarning !== undefined && this.props.isWithWarning === true) {
-            return <img className="attention" src={Attention} alt="Blocked" />;
+            return <img className="attention" src={Attention} alt="Blocked"/>;
         }
     }
 
@@ -50,33 +59,39 @@ export default class DetailedCustomerTrigger extends Component {
         if (this.isValidAmount(this.props.current) || this.isValidAmount(this.props.requested)) {
             return (
                 <div>
+
                     <table className={this.getTableClassName()}>
                         <tbody>
-                            <tr key="current">
-                                <td>{lookup('mrc.creditdetails.current') + ': '}</td>
-                                <td className={this.getLimitFontClassName()}>
-                                    {this.asNumber(this.props.current, this.props.customer.country)}
-                                </td>
-                                {this.getProductColumn(this.props.cProduct)}
-                                {this.getPeriodColumn(this.props.cPeriod)}
-                                {this.getDebitTypeColumn(this.props.cDebitType)}
-                                {this.getLimitExpiryColumn(this.props.cLimitExpiryDate)}
-                                {this.getLimitExpiryValueColumn(this.props.cLimitExpiryValue)}
-                            </tr>
-                            <tr key="requested">
-                                <td>{lookup('mrc.creditdetails.requested') + ': '}</td>
-                                <td className={this.getLimitFontClassName()}>
-                                    {this.asNumber(this.props.requested, this.props.customer.country)}
-                                </td>
-                                {this.getProductColumn(this.props.rProduct)}
-                                {this.getPeriodColumn(this.props.rPeriod)}
-                                {this.getDebitTypeColumn(this.props.rDebitType)}
-                                {this.getLimitExpiryColumn(this.props.rLimitExpiryDate)}
-                                {this.getLimitExpiryValueColumn(this.props.rLimitExpiryValue)}
-                            </tr>
-                            {this.displayApprovedLimit()}
+                        <tr key="current">
+                            <td>{lookup('mrc.creditdetails.available') + ':'}{' '}</td>
+                            <td>{this.asNumberForAvailable(this.props.current, this.props.customer.limitExhaustion, this.props.customer.country)}</td>
+                            <td>{lookup('mrc.creditdetails.current') + ': '}</td>
+                            <td className={this.getLimitFontClassName()}>
+                                {this.asNumber(this.props.current, this.props.customer.country)}
+                            </td>
+                            {this.getProductColumn(this.props.cProduct)}
+                            {this.getPeriodColumn(this.props.cPeriod)}
+                            {this.getDebitTypeColumn(this.props.cDebitType)}
+                            {this.getLimitExpiryColumn(this.props.cLimitExpiryDate)}
+                            {this.getLimitExpiryValueColumn(this.props.cLimitExpiryValue)}
+                        </tr>
+                        <tr key="requested">
+                            <td>{lookup('mrc.creditdetails.limitExhaustion') + ':'}{' '}</td>
+                            <td>{this.asNumber(this.props.customer.limitExhaustion, this.props.customer.country)}</td>
+                            <td>{lookup('mrc.creditdetails.requested') + ': '}</td>
+                            <td className={this.getLimitFontClassName()}>
+                                {this.asNumber(this.props.requested, this.props.customer.country)}
+                            </td>
+                            {this.getProductColumn(this.props.rProduct)}
+                            {this.getPeriodColumn(this.props.rPeriod)}
+                            {this.getDebitTypeColumn(this.props.rDebitType)}
+                            {this.getLimitExpiryColumn(this.props.rLimitExpiryDate)}
+                            {this.getLimitExpiryValueColumn(this.props.rLimitExpiryValue)}
+                        </tr>
+                        {this.displayApprovedLimit()}
                         </tbody>
                     </table>
+
                 </div>
             );
         }
@@ -86,6 +101,8 @@ export default class DetailedCustomerTrigger extends Component {
         if (this.isValidAmount(this.props.approved)) {
             return (
                 <tr key="approved">
+                    <td></td>
+                    <td></td>
                     <td>{lookup('mrc.creditdetails.applied') + ': '}</td>
                     <td className={this.getLimitFontClassName()}>
                         {this.asNumber(this.props.approved, this.props.customer.country)}
