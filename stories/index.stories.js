@@ -15,6 +15,7 @@ import Attachments from '../Attachment';
 import { HashRouter, NavLink } from 'react-router-dom';
 
 import '../node_modules/mrc-component-library/public/css/bundle.css';
+import SegmentedControl from '../SegmentedControl';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -145,6 +146,7 @@ storiesOf('Attachments', module)
             country="PL"
         />
     ));
+storiesOf('Segmented Control', module).add('basic', () => <SegmentedControl />);
 
 storiesOf('Recommendations', module)
     .add('standard', () => (
