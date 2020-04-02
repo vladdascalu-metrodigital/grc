@@ -100,6 +100,13 @@ export const ALL_ATTACHMENT_TYPES_JSON =
     '         ]\n' +
     '      },\n' +
     '      { \n' +
+    '         "country":"DE",\n' +
+    '         "type":"contract",\n' +
+    '         "label":"mrc.attachments.types.contract",\n' +
+    '         "remark":"Contract",\n' +
+    '         "is_collateral":false\n' +
+    '      },\n' +
+    '      { \n' +
     '         "country":"RS",\n' +
     '         "type":"contract",\n' +
     '         "label":"mrc.attachments.types.contract",\n' +
@@ -354,8 +361,8 @@ export const ALL_ATTACHMENT_TYPES_JSON =
     '      },\n' +
     '      { \n' +
     '         "country":"PL",\n' +
-    '         "type":"contracting",\n' +
-    '         "label":"mrc.attachments.types.contracting",\n' +
+    '         "type":"contract",\n' +
+    '         "label":"mrc.attachments.types.contract",\n' +
     '         "remark":"Contract",\n' +
     '         "is_collateral":false\n' +
     '      }\n' +
