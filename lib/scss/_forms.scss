@@ -39,6 +39,14 @@
   background-color: $color-palette-blue-shade-20;
 };
 
+.mrc-primary-large-add-button:disabled {
+  background-color: rgb(230, 232, 235);
+  background-color: $color-palette-grey-tint-90;
+  // gradient color rgba(04, 208, 214) is $color-palette-grey-tint-80, we need opacity here
+  background-image: repeating-linear-gradient(40deg, rgba(204, 208, 214, 0.498039) 0px, rgba(204, 208, 214, 0.498039) 2px, transparent 2px, transparent 10px);
+  cursor: not-allowed;
+}
+
 .mrc-primary-large-add-button {
   display: block;
   padding: $spacing-none $spacing-extra-large;
@@ -60,4 +68,5 @@
   -ms-user-select: none;
   user-select: none;
   transition: background-color 125ms ease,box-shadow 125ms ease;
+  border-radius: $border-radius-extra-small;
 }
