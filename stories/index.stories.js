@@ -38,7 +38,6 @@ storiesOf('Attachments', module)
                     status: 'missing',
                     fileType: 'Commercial Credit Insurance missing',
                     secondaryInteraction: 'add',
-                    handleSecondaryAction: logAddFile,
                 },
                 {
                     status: 'missing',
@@ -50,7 +49,6 @@ storiesOf('Attachments', module)
                     status: 'missing',
                     fileType: 'Signed contract missing',
                     secondaryInteraction: 'add',
-                    handleSecondaryAction: logAddFile,
                 },
                 {
                     status: 'normal',

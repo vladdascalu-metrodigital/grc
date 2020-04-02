@@ -175,7 +175,6 @@ export const ALL_ATTACHMENT_TYPES_JSON =
     '            }\n' +
     '         ]\n' +
     '      },\n' +
-    //Attachements for Croatia
     '      { \n' +
     '         "country":"HR",\n' +
     '         "type":"contract",\n' +
