@@ -51,9 +51,12 @@ export default class Attachments extends Component {
                     expiry={attachment.expiryDate}
                     author={attachment.uploaderPrincipalName}
                     timestamp={attachment.uploadTimestamp}
-                    onClick={
+                    handlePrimaryAction={
                         attachment.status === 'missing' ? this.toggleModal : () => window.open(attachment.contentUri)
                     }
+                    handleSecondaryAction={() => {
+                        attachment.handleSecondaryAction();
+                    }}
                     secondaryInteraction={attachment.secondaryInteraction}
                 />
             );
@@ -62,7 +65,6 @@ export default class Attachments extends Component {
             <div className="mrc-ui-attachments-component">
                 <button
                     type="button"
-                    // TODO @Christoph change this class when disabled
                     className="mrc-primary-large-add-button"
                     onClick={this.toggleModal}
                     disabled={this.props.disabled}
