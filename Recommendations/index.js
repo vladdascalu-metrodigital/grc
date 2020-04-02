@@ -44,7 +44,6 @@ export default class Recommendations extends Component {
                             name="rate"
                             value="4"
                             onClick={() => this.props.onRatingChange('4')}
-                            checked
                         />
                         <label htmlFor="star4" title="text">
                             2 stars

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './AttachmentsRows.scss';
-import './attachments.scss';
+import './OldAttachmentsRows.scss';
+import './oldAttachments.scss';
 import PropTypes from 'prop-types';
 import { lookup } from '../Util/translations.js';
 import FileUpload from '../FileUpload';
