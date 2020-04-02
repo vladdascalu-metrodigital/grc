@@ -21,7 +21,7 @@ export function FieldCheckBox(props) {
     };
 
     return (
-        <>
+        <span>
             <input
                 {...props}
                 type="checkbox"
@@ -33,7 +33,7 @@ export function FieldCheckBox(props) {
                 }}
             />
             <div className="m-radioButton-inputIcon checkbox-icon" onClick={onClickBox} />
-        </>
+        </span>
     );
 }
 
