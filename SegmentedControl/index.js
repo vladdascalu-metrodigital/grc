@@ -18,7 +18,7 @@ export default class SegmentedControl extends Component {
     };
 
     render() {
-        const labels = ['Document', 'Placeholder', 'bar', 'baz', 'foobar'];
+        const labels = this.props.labels;
         const segments = labels.map((value, index) => {
             const segmentId = 'segment-' + index;
             return (
@@ -36,7 +36,7 @@ export default class SegmentedControl extends Component {
             );
         });
 
-        return <div className="mrc-ui-segmented-control">{segments}</div>;
+        return <div className={`mrc-ui-${this.props.labels.length}-segmented-control`}>{segments}</div>;
     }
 }
 
