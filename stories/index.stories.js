@@ -10,7 +10,7 @@ import FileUpload from '../FileUpload';
 
 import Recommendations from '../Recommendations';
 
-import Attachments from '../Attachment';
+import Attachments from '../Attachments';
 
 import { HashRouter, NavLink } from 'react-router-dom';
 
@@ -146,6 +146,7 @@ storiesOf('Attachments', module)
             country="PL"
         />
     ));
+
 storiesOf('Segmented Control', module).add('basic', () => <SegmentedControl />);
 
 storiesOf('Recommendations', module)

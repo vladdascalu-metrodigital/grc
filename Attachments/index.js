@@ -62,7 +62,6 @@ export default class Attachments extends Component {
             <div className="mrc-ui-attachments-component">
                 <button
                     type="button"
-                    // TODO @Christoph change this class when disabled
                     className="mrc-primary-large-add-button"
                     onClick={this.toggleModal}
                     disabled={this.props.disabled}
