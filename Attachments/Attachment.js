@@ -4,6 +4,7 @@ import Textlink from './TextLink';
 import { PropTypes } from 'prop-types';
 import { lookup } from '../Util/translations';
 import * as mime from 'react-native-mime-types';
+import moment from 'moment';
 
 export default class Attachment extends Component {
     constructor(props) {
@@ -36,11 +37,11 @@ export default class Attachment extends Component {
                     <div className="mrc-ui-attachment-info-group">
                         <div className="mrc-ui-attachment-info-label">{lookup('mrc.attachments.expiry')}</div>
                         <div className="mrc-ui-attachment-info-value">
-                            {this.props.expiry ? this.props.expiry : '-'}
+                            {this.props.expiry ? moment(this.props.expiry).format('L') : '-'}
                         </div>
                     </div>
                     <div className="mrc-ui-attachment-author">{this.props.author}</div>
-                    <div className="mrc-ui-attachment-timestamp">{this.props.timestamp}</div>
+                    <div className="mrc-ui-attachment-timestamp">{moment(this.props.timestamp).format('LLL')}</div>
                 </div>
             );
         }
@@ -81,7 +82,7 @@ export default class Attachment extends Component {
         const secondaryAction = this.getSecondaryInteraction();
 
         return (
-            <div className={classes}>
+            <div className={(this.props.disabled ? 'mrc-ui-attachment-disabled ' : '') + classes}>
                 {content}
                 {secondaryAction}
             </div>
@@ -106,4 +107,5 @@ Attachment.propTypes = {
     secondaryInteraction: PropTypes.string,
     handlePrimaryAction: PropTypes.func,
     handleSecondaryAction: PropTypes.func,
+    disabled: PropTypes.bool,
 };
