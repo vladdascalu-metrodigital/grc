@@ -43,6 +43,7 @@ export default class Attachments extends Component {
             const status = attachment.status ? attachment.status : 'normal';
             return (
                 <Attachment
+                    disabled={this.props.disabled}
                     key={index}
                     status={status}
                     title={attachment.title}
@@ -52,8 +53,16 @@ export default class Attachments extends Component {
                     expiry={attachment.expiryDate}
                     author={attachment.uploaderPrincipalName}
                     timestamp={attachment.uploadTimestamp}
-                    handlePrimaryAction={isMissing ? this.toggleModal : () => window.open(attachment.contentUri)}
-                    handleSecondaryAction={isMissing ? this.toggleModal : attachment.handleSecondaryAction}
+                    handlePrimaryAction={
+                        this.props.disabled
+                            ? null
+                            : isMissing
+                            ? this.toggleModal
+                            : () => window.open(attachment.contentUri)
+                    }
+                    handleSecondaryAction={
+                        this.props.disabled ? null : isMissing ? this.toggleModal : attachment.handleSecondaryAction
+                    }
                     secondaryInteraction={attachment.secondaryInteraction}
                 />
             );

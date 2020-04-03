@@ -82,7 +82,7 @@ export default class Attachment extends Component {
         const secondaryAction = this.getSecondaryInteraction();
 
         return (
-            <div className={classes}>
+            <div className={(this.props.disabled ? 'mrc-ui-attachment-disabled ' : '') + classes}>
                 {content}
                 {secondaryAction}
             </div>
@@ -107,4 +107,5 @@ Attachment.propTypes = {
     secondaryInteraction: PropTypes.string,
     handlePrimaryAction: PropTypes.func,
     handleSecondaryAction: PropTypes.func,
+    disabled: PropTypes.bool,
 };
