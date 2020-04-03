@@ -12,6 +12,7 @@
 }
 
 .mrc-ui-attachment-content {
+  line-height: $line-height-solid;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,7 +38,7 @@
 
 .mrc-ui-attachment-interaction {
   position: absolute;
-  
+
   bottom: $spacing-none;
   left: $spacing-none;
   right: $spacing-none;
@@ -66,7 +67,7 @@ div.mrc-ui-attachment-deleted .mrc-ui-attachment-interaction {
   width: 100%;
   text-align: center;
   text-overflow: ellipsis;
-  overflow: hidden; 
+  overflow: hidden;
   white-space: nowrap;
 }
 
