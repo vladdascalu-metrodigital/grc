@@ -25,6 +25,10 @@ storiesOf('Button', module)
     .add('Secondary', () => <Button status="secondary" onClick={action('clicked')} text="Approve" />)
     .add('Success', () => <Button status="success" onClick={action('clicked')} text="Approve" />);
 
+const logAddFile = () => console.log('adding file');
+const logDeleteFile = () => console.log('deleting file');
+const logRestoreFile = () => console.log('restoring file');
+
 storiesOf('Attachments', module)
     .add('standard', () => (
         <Attachments
@@ -39,6 +43,7 @@ storiesOf('Attachments', module)
                     status: 'missing',
                     fileType: 'Bond missing',
                     secondaryInteraction: 'delete',
+                    handleSecondaryAction: logDeleteFile,
                 },
                 {
                     status: 'missing',
@@ -55,6 +60,7 @@ storiesOf('Attachments', module)
                     uploaderPrincipalName: 'joe.appleseed@metronom.com',
                     uploadTimestamp: '22.03.20, 10:56',
                     secondaryInteraction: 'delete',
+                    handleSecondaryAction: logDeleteFile,
                 },
                 {
                     status: 'normal',
@@ -66,6 +72,7 @@ storiesOf('Attachments', module)
                     uploaderPrincipalName: 'joe.appleseed@metronom.com',
                     uploadTimestamp: '22.02.20, 14:53',
                     secondaryInteraction: 'delete',
+                    handleSecondaryAction: logDeleteFile,
                 },
                 {
                     status: 'deleted',
@@ -77,11 +84,12 @@ storiesOf('Attachments', module)
                     uploaderPrincipalName: 'joe.appleseed@metronom.com',
                     uploadTimestamp: '06.01.20, 16:35',
                     secondaryInteraction: 'restore',
+                    handleSecondaryAction: logRestoreFile,
                 },
             ]}
             filetypes={['general', 'delkredere', 'warenkreditversicherung']}
             fileTypesForCC={['general', 'contracting']}
-            addAttachment={() => console.log('adding file')}
+            addAttachment={logAddFile}
             currentApprover="CC"
             country="PL"
         />

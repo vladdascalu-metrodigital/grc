@@ -25,6 +25,15 @@ export default class DetailedCustomerTrigger extends Component {
             );
         else return this.PLACEHOLDER;
     };
+    asNumberForAvailable = (value1, value2, country) => {
+        if (this.isValidAmount(value1))
+            return (
+                <mrc-number dynamic={value1} show-currency-for-country={country}>
+                    {value1 - value2}
+                </mrc-number>
+            );
+        else return this.PLACEHOLDER;
+    };
 
     displayCustomerWarnings() {
         if (this.props.isWithWarning !== undefined && this.props.isWithWarning === true) {
@@ -53,6 +62,14 @@ export default class DetailedCustomerTrigger extends Component {
                     <table className={this.getTableClassName()}>
                         <tbody>
                             <tr key="current">
+                                <td>{lookup('mrc.creditdetails.available') + ':'} </td>
+                                <td>
+                                    {this.asNumberForAvailable(
+                                        this.props.current,
+                                        this.props.customer.limitExhaustion,
+                                        this.props.customer.country
+                                    )}
+                                </td>
                                 <td>{lookup('mrc.creditdetails.current') + ': '}</td>
                                 <td className={this.getLimitFontClassName()}>
                                     {this.asNumber(this.props.current, this.props.customer.country)}
@@ -64,6 +81,10 @@ export default class DetailedCustomerTrigger extends Component {
                                 {this.getLimitExpiryValueColumn(this.props.cLimitExpiryValue)}
                             </tr>
                             <tr key="requested">
+                                <td>{lookup('mrc.creditdetails.limitExhaustion') + ':'} </td>
+                                <td>
+                                    {this.asNumber(this.props.customer.limitExhaustion, this.props.customer.country)}
+                                </td>
                                 <td>{lookup('mrc.creditdetails.requested') + ': '}</td>
                                 <td className={this.getLimitFontClassName()}>
                                     {this.asNumber(this.props.requested, this.props.customer.country)}
@@ -86,6 +107,8 @@ export default class DetailedCustomerTrigger extends Component {
         if (this.isValidAmount(this.props.approved)) {
             return (
                 <tr key="approved">
+                    <td></td>
+                    <td></td>
                     <td>{lookup('mrc.creditdetails.applied') + ': '}</td>
                     <td className={this.getLimitFontClassName()}>
                         {this.asNumber(this.props.approved, this.props.customer.country)}

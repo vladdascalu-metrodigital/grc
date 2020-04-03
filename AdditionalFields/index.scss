@@ -76,4 +76,8 @@
     label.m-radioButton.radioButton_value {
         padding-left: 1rem !important;
     }
+
+    .m-radioButton input[type='radio'] {
+        display: none;
+    }
 }
