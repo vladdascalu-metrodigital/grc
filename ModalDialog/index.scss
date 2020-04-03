@@ -34,11 +34,11 @@
 
 @media #{$breakpoint-not-small} {
   .mrc-ui-modal-title {
-    border-top-left-radius: $border-radius-small;
-    border-top-right-radius: $border-radius-small;
+    border-top-left-radius: $border-radius-medium;
+    border-top-right-radius: $border-radius-medium;
   }
   .mrc-ui-modal {
-    border-radius: $border-radius-small;
+    border-radius: $border-radius-medium;
     max-width: 44rem;
     height: auto;
   }

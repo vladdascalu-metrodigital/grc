@@ -154,6 +154,7 @@ storiesOf('Attachments', module)
             country="PL"
         />
     ));
+
 storiesOf('Segmented Control', module).add('basic', () => <SegmentedControl />);
 
 storiesOf('Recommendations', module)

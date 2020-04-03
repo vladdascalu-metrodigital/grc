@@ -1,29 +1,10 @@
-// Create a segmented control using a radio group
-// look at the following structure for an example
-// css:
-// .controls {
-//  +segmented-controls()
-// }
-// html:
-// <div class="controls">
-//  <input id="control" type="radio" />
-//  <label for="control">
-//    Segmented
-//  </label>
-// </div>
-//
-// $amount - how many controls you need
-// $width  - the max-width a single control will be
-// $margin - margin around a single control
-// $active - the active text color of a checked control
-
 @import "../lib/scss/main.scss";
-
-@mixin segmented-controls($amount: 2, $width: 80px, $margin: 2px, $active: inherit) {
+@mixin segmented-controls($amount: 2, $width: $width-4, $margin: $spacing-none, $active: inherit) {
     $_margin: $margin * 2;
     $_width: 100% / $amount;
 
     display: flex;
+    align-items: center;
     max-width: $width * $amount;
     width: 100%;
     position: relative;
@@ -35,7 +16,11 @@
         display: none;
         &:checked + label {
             color: $active;
-            // background-color: $color-interaction;
+            background-color: $color-interaction;
+        }
+
+        &:not(:checked) + label:hover {
+            background-color: $color-palette-blue-tint-80;
         }
 
         @for $i from 1 through $amount {
@@ -52,33 +37,40 @@
         overflow: hidden;
         text-overflow: ellipsis;
         cursor: pointer;
-        // we use the last label's pseudo element as the active state
-        // to eliminate the need for an arbitrary element
         &:last-of-type:before {
             content: "";
             display: block;
             max-width: calc(#{$_width} - #{$_margin});
             margin: $margin;
             position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
+            top: $spacing-none;
+            right: $spacing-none;
+            bottom: $spacing-none;
+            left: v;
             z-index: -1;
             transform: translateX(0);
         }
     }
 }
 
-.flight-types {
-    @include segmented-controls(2, 112px, 0px, white);
-    margin: 0 auto;
+.mybox {
+    margin: $spacing-medium $spacing-medium;
+    display:flex;
+}
+
+.mrc-ui-segmented-control label, .mrc-ui-segmented-control label:before ,.mrc-ui-segmented-control label:after, .mrc-ui-segmented-control, .mrc-ui-segmented-control:before , .mrc-ui-segmented-control:after {
+    box-sizing: border-box !important;
+}
+
+.mrc-ui-segmented-control {
+    @include segmented-controls(5, 100px, 0px, white);
+    margin: $spacing-small auto;
     font-weight: bold;
-    border: 1px solid $color-interaction;
-    border-radius: 3px;
+    border: $border-width-thin solid $color-interaction;
+    border-radius: $border-radius-small;
     color: $color-interaction;
     label {
-        padding: 6px 3px;
+        padding: $spacing-small $spacing-extra-small;
         transition: color 250ms cubic-bezier(0, 0.95, 0.38, 0.98);
         &:before {
             background: $color-interaction;
@@ -88,4 +80,4 @@
             border-right: 1px solid $color-interaction;
         }
     }
-}
+}  
