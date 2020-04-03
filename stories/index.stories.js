@@ -155,7 +155,9 @@ storiesOf('Attachments', module)
         />
     ));
 
-storiesOf('Segmented Control', module).add('basic', () => <SegmentedControl />);
+storiesOf('Segmented Control', module).add('basic', () => (
+    <SegmentedControl selectedSegment={'Placeholder'} labels={['Document', 'Placeholder', 'bar', 'baz']} />
+));
 
 storiesOf('Recommendations', module)
     .add('standard', () => (
@@ -181,6 +183,7 @@ storiesOf('Recommendations', module)
                     uploaderName: 'John Doe',
                     uploaderPosition: 'HOT',
                     uploadTime: '2019-02-02',
+                    editableByCurrentUser: true,
                 },
                 {
                     content: 'bar',
