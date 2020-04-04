@@ -37,6 +37,17 @@ export default class Attachments extends Component {
         );
     }
 
+    primaryAction(attachment) {
+        switch (attachment.status) {
+            case 'missing':
+                return this.toggleModal;
+            case 'normal':
+                return () => window.open(attachment.contentUri);
+            case 'deleted':
+                return null;
+        }
+    }
+
     render() {
         const attachments = this.props.attachments.map((attachment, index) => {
             const isMissing = attachment.status === 'missing';
@@ -53,13 +64,7 @@ export default class Attachments extends Component {
                     expiry={attachment.expiryDate}
                     author={attachment.uploaderPrincipalName}
                     timestamp={attachment.uploadTimestamp}
-                    handlePrimaryAction={
-                        this.props.disabled
-                            ? null
-                            : isMissing
-                            ? this.toggleModal
-                            : () => window.open(attachment.contentUri)
-                    }
+                    handlePrimaryAction={this.props.disabled ? null : this.primaryAction(attachment)}
                     handleSecondaryAction={
                         this.props.disabled ? null : isMissing ? this.toggleModal : attachment.handleSecondaryAction
                     }
