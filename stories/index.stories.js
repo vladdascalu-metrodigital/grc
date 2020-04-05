@@ -10,9 +10,12 @@ import FileUpload from '../FileUpload';
 
 import Recommendations from '../Recommendations';
 
+import Attachments from '../Attachments';
+
 import { HashRouter, NavLink } from 'react-router-dom';
 
 import '../node_modules/mrc-component-library/public/css/bundle.css';
+import SegmentedControl from '../SegmentedControl';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -21,6 +24,137 @@ storiesOf('Button', module)
     .add('Error', () => <Button status="error" onClick={action('clicked')} text="Approve" />)
     .add('Secondary', () => <Button status="secondary" onClick={action('clicked')} text="Approve" />)
     .add('Success', () => <Button status="success" onClick={action('clicked')} text="Approve" />);
+
+const logAddFile = () => console.log('adding file');
+const logDeleteFile = () => console.log('deleting file');
+const logRestoreFile = () => console.log('restoring file');
+
+storiesOf('Attachments', module)
+    .add('standard', () => (
+        <Attachments
+            disabled={false}
+            attachments={[
+                {
+                    status: 'missing',
+                    fileType: 'Commercial Credit Insurance missing',
+                    secondaryInteraction: 'add',
+                },
+                {
+                    status: 'missing',
+                    fileType: 'Bond missing',
+                    secondaryInteraction: 'delete',
+                    handleSecondaryAction: logDeleteFile,
+                },
+                {
+                    status: 'missing',
+                    fileType: 'Signed contract missing',
+                    secondaryInteraction: 'add',
+                },
+                {
+                    status: 'normal',
+                    title: 'LVM 203',
+                    contentType: 'application/msword',
+                    fileType: 'Commercial Credit Insurance',
+                    amount: '4000€',
+                    expiryDate: '23.10.20',
+                    uploaderPrincipalName: 'joe.appleseed@metronom.com',
+                    uploadTimestamp: '22.03.20, 10:56',
+                    secondaryInteraction: 'delete',
+                    handleSecondaryAction: logDeleteFile,
+                },
+                {
+                    status: 'normal',
+                    title: 'awsesome_company_Contract _final_2020.pdf',
+                    contentType: 'application/pdf',
+                    fileType: 'General',
+                    amount: '',
+                    expiryDate: '',
+                    uploaderPrincipalName: 'joe.appleseed@metronom.com',
+                    uploadTimestamp: '22.02.20, 14:53',
+                    secondaryInteraction: 'delete',
+                    handleSecondaryAction: logDeleteFile,
+                },
+                {
+                    status: 'deleted',
+                    title: 'HJK 20',
+                    contentType: 'application/doc',
+                    fileType: 'Commercial Credit Insurance',
+                    amount: '500€',
+                    expiryDate: '23.10.20',
+                    uploaderPrincipalName: 'joe.appleseed@metronom.com',
+                    uploadTimestamp: '06.01.20, 16:35',
+                    secondaryInteraction: 'restore',
+                    handleSecondaryAction: logRestoreFile,
+                },
+            ]}
+            filetypes={['general', 'delkredere', 'warenkreditversicherung']}
+            fileTypesForCC={['general', 'contracting']}
+            addAttachment={logAddFile}
+            currentApprover="CC"
+            country="PL"
+        />
+    ))
+    .add('disabled', () => (
+        <Attachments
+            disabled={true}
+            attachments={[
+                {
+                    status: 'missing',
+                    fileType: 'Commercial Credit Insurance missing',
+                    secondaryInteraction: 'add',
+                },
+                {
+                    status: 'missing',
+                    fileType: 'Bond missing',
+                    secondaryInteraction: 'delete',
+                },
+                {
+                    status: 'missing',
+                    fileType: 'Signed contract missing',
+                    secondaryInteraction: 'add',
+                },
+                {
+                    status: 'normal',
+                    title: 'LVM 203',
+                    contentType: 'application/msword',
+                    fileType: 'Commercial Credit Insurance',
+                    amount: '4000€',
+                    expiryDate: '23.10.20',
+                    uploaderPrincipalName: 'joe.appleseed@metronom.com',
+                    uploadTimestamp: '22.03.20, 10:56',
+                    secondaryInteraction: 'delete',
+                },
+                {
+                    status: 'normal',
+                    title: 'awsesome_company_Contract _final_2020.pdf',
+                    contentType: 'application/pdf',
+                    fileType: 'General',
+                    amount: '',
+                    expiryDate: '',
+                    uploaderPrincipalName: 'joe.appleseed@metronom.com',
+                    uploadTimestamp: '22.02.20, 14:53',
+                    secondaryInteraction: 'delete',
+                },
+                {
+                    status: 'deleted',
+                    title: 'HJK 20',
+                    contentType: 'application/doc',
+                    fileType: 'Commercial Credit Insurance',
+                    amount: '500€',
+                    expiryDate: '23.10.20',
+                    uploaderPrincipalName: 'joe.appleseed@metronom.com',
+                    uploadTimestamp: '06.01.20, 16:35',
+                    secondaryInteraction: 'restore',
+                },
+            ]}
+            filetypes={['general', 'delkredere', 'warenkreditversicherung']}
+            fileTypesForCC={['general', 'contracting']}
+            addAttachment={() => console.log('adding file')}
+            currentApprover="CC"
+            country="PL"
+        />
+    ));
+storiesOf('Segmented Control', module).add('basic', () => <SegmentedControl />);
 
 storiesOf('Recommendations', module)
     .add('standard', () => (

@@ -1,8 +1,4 @@
-$green: #34C082;
-$grey: #001432;
-$grey-tint-20: #33435B;
-$grey-tint-60: #99A1AD;
-$metro-blue: #002D72;
+@import "../lib/scss/main.scss";
 
 .t-text {
   text-transform: none;
@@ -18,11 +14,13 @@ $metro-blue: #002D72;
   &.t-size-9 { font-size: 240%; }
   &.t-size-10{ font-size: 250%; }
 
-  &.t-color-grey-dark { color: $grey-tint-20; }
-  &.t-color-grey-light { color: $grey-tint-60; }
-  &.t-color-green { color: $green; }
-  &.t-color-blue { color: $metro-blue; }
-  &.t-color-white { color: #FFFFFF; }
+  &.t-color-grey-dark { color: $color-palette-grey-tint-20; }
+  &.t-color-grey-light { color: $color-palette-grey-tint-60; }
+  &.t-color-green { color: $color-palette-green-default; }
+  &.t-color-blue { color: $color-brand-primary-default; }
+  &.t-color-white { color: $color-contrast-white; }
   &.t-uppercase { text-transform: uppercase; }
+  &.t-color-red { color: $color-palette-red-default; }
+  &.t-color-yellow { color: $color-palette-yellow-default; }
 }
 

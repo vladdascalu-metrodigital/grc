@@ -16,6 +16,7 @@ const COLORS = {
     light_grey: 't-color-grey-light',
     white: 't-color-white',
     blue: 't-color-blue',
+    yellow: 't-color-yellow',
 };
 
 const SIZES = {

@@ -1,0 +1,140 @@
+@import '../lib/scss/main.scss';
+
+.mrc-ui-attachment {
+  background-color: $color-brand-primary-tint-95;
+  color: $color-brand-primary-default;
+  width: $width-6;
+  height: $width-6;
+  border: $border-width-thin solid $color-brand-primary-tint-70;
+  border-radius: $border-radius-large;
+  margin: $spacing-small $spacing-small;
+  position: relative;
+}
+
+.mrc-ui-attachment-content {
+  line-height: $line-height-solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  top: 0px;
+  bottom: 3rem;
+  width: 100%;
+  padding: 0 $spacing-medium;
+  line-height: $line-height-solid;
+}
+
+.mrc-ui-attachment-missing {
+  background-color: $color-palette-red-tint-90;
+  color: $color-palette-red-shade-40;
+  border: $border-width-thin dashed $color-palette-red-shade-40;
+}
+
+.mrc-ui-attachment-deleted {
+  background-color: $color-contrast-white;
+  color: $color-palette-grey-tint-70;
+  border: $border-width-thin dashed $color-palette-grey-tint-70;
+}
+
+.mrc-ui-attachment-interaction {
+  position: absolute;
+
+  bottom: $spacing-none;
+  left: $spacing-none;
+  right: $spacing-none;
+}
+
+div.mrc-ui-attachment-deleted * {
+  color: $color-palette-grey-tint-70;
+}
+
+div.mrc-ui-attachment-deleted .mrc-ui-link * {
+  color: $color-interaction !important;
+}
+
+.mrc-ui-attachment-deleted .mrc-ui-attachment-filetype {
+  background-color: $color-palette-grey-tint-70;
+  color: $color-contrast-white;
+}
+
+div.mrc-ui-attachment-deleted .mrc-ui-attachment-interaction {
+  color: $color-interaction;
+}
+
+.mrc-ui-attachment-title {
+  font-size: $font-size-5;
+  margin: $spacing-medium $spacing-none $spacing-extra-small $spacing-none;
+  width: 100%;
+  text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.mrc-ui-attachment-filetype {
+  border-radius: $border-radius-pill;
+  background-color: $color-brand-primary-tint-40;
+  color: $color-contrast-white;
+  font-size: $font-size-9;
+  font-weight: bold;
+  padding: 6px $spacing-small $spacing-extra-small $spacing-small;
+  letter-spacing: $letter-spacing-1;
+  line-height: $line-height-solid;
+  margin-bottom: $spacing-medium;
+  text-transform: uppercase;
+}
+
+.mrc-ui-attachment-documenttype {
+  font-weight: bold;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.mrc-ui-attachment-info-group {
+  margin-top: $spacing-extra-small;
+  display: flex;
+  width: 100%;
+  padding: $spacing-none $spacing-large;
+  justify-content: space-between;
+}
+
+.mrc-ui-attachment-info-value {
+  font-weight: bold;
+}
+
+.mrc-ui-attachment-info-label {
+  font-size: $font-size-8;
+  color: $color-brand-primary-tint-40;
+}
+
+.mrc-ui-attachment-author {
+  font-size: $font-size-10;
+  color: $color-brand-primary-tint-40;
+  margin-top: $spacing-medium;
+}
+
+.mrc-ui-attachment-timestamp {
+  font-size: $font-size-8;
+  color: $color-brand-primary-tint-40;
+}
+
+.mrc-ui-attachment-link {
+  color: inherit;
+}
+
+.mrc-ui-attachment {
+  // box-shadow: 0 3px 5px 0 rgba(0,0,0,0.08);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.mrc-ui-attachment:hover {
+  box-shadow: 0 5px 15px 2px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+
+}
+
+.mrc-ui-attachment-disabled:hover {
+    cursor: auto;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.0);
+}

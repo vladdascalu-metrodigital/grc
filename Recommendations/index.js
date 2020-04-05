@@ -188,7 +188,11 @@ export default class Recommendations extends Component {
                     </div>
                 )}
                 {this.state.isModalVisible ? (
-                    <ModalDialog toggle={this.toggleModal} content={this.modalDialogContent()} />
+                    <ModalDialog
+                        toggle={this.toggleModal}
+                        content={this.modalDialogContent()}
+                        title={lookup('mrc.recommendations.modaltitle')}
+                    />
                 ) : null}
             </div>
         );
