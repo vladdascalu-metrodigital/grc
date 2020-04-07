@@ -66,49 +66,46 @@ export default class CustomerTrigger extends Component {
                 <div className="previousAmounts">
                     <table className="tableLimit">
                         <tbody>
-                            <tr>
-                                <td>
-                                    <div>
-                                        {' '}
-                                        {lookup('mrc.creditdetails.available') + ':'}{' '}
-                                        {this.asNumberForAvailable(
-                                            this.props.current,
-                                            this.props.customer.limitExhaustion,
-                                            this.props.customer.country
-                                        )}
-                                    </div>
-                                </td>
-                                <td>
-                                    <div>
-                                        {' '}
-                                        {lookup('mrc.creditdetails.current') + ':'}{' '}
-                                        {this.asNumber(this.props.current, this.props.customer.country)}
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div>
-                                        {' '}
-                                        {lookup('mrc.creditdetails.limitExhaustion') + ':'}{' '}
-                                        {this.asNumber(
-                                            this.props.customer.limitExhaustion,
-                                            this.props.customer.country
-                                        )}
-                                    </div>
-                                </td>
-                                <td>
-                                    <div>
-                                        {' '}
-                                        {lookup('mrc.creditdetails.requested') + ':'}{' '}
-                                        {this.asNumber(this.props.requested, this.props.customer.country)}
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>{this.displayApprovedLimit()}</td>
-                            </tr>
+                        <tr>
+                            <td>
+                                {lookup('mrc.creditdetails.available') + ':'}
+                            </td>
+                            <td>
+                                {this.asNumberForAvailable(
+                                    this.props.current,
+                                    this.props.customer.limitExhaustion,
+                                    this.props.customer.country,
+                                )}
+                            </td>
+                            <td>
+                                {lookup('mrc.creditdetails.current') + ':'}
+                            </td>
+                            <td>
+                                {this.asNumber(this.props.current, this.props.customer.country)}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {lookup('mrc.creditdetails.limitExhaustion') + ':'}
+                            </td>
+                            <td>
+                                {this.asNumber(
+                                    this.props.customer.limitExhaustion,
+                                    this.props.customer.country,
+                                )}
+                            </td>
+                            <td>
+                                {lookup('mrc.creditdetails.requested') + ':'}
+                            </td>
+                            <td>
+                                {this.asNumber(this.props.requested, this.props.customer.country)}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            {this.displayApprovedLimit()}
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -123,14 +120,24 @@ export default class CustomerTrigger extends Component {
     displayApprovedLimit() {
         if (this.isValidAmount(this.props.approved)) {
             return (
-                <div>
-                    {' '}
-                    {lookup('mrc.creditdetails.applied') + ':'}{' '}
-                    {this.asNumber(this.props.approved, this.props.customer.country)}
-                </div>
+                <React.Fragment>
+                    <td>{lookup('mrc.creditdetails.applied') + ':'}</td>
+                    <td> {this.asNumber(this.props.approved, this.props.customer.country)} </td>
+                </React.Fragment>
             );
         }
+        else {
+            return (
+                <React.Fragment>
+                    <td></td>
+                    <td></td>
+                </React.Fragment>
+            );
+
+        }
+
     }
+
     displayActivation() {
         if (
             this.props.customer.activationStatus !== undefined &&
