@@ -5,6 +5,7 @@ import { lookup } from '../Util/translations';
 import './index.scss';
 import { PropTypes } from 'prop-types';
 import AttachmentsRows from './AttachmentsRows';
+import SegmentedControl from '../SegmentedControl';
 
 export default class Attachments extends Component {
     toggleModal = () => {
@@ -21,6 +22,7 @@ export default class Attachments extends Component {
     modalDialogContent() {
         return (
             <div>
+                <SegmentedControl selectedSegment={'Document'} labels={['Document', 'Placeholder']} />
                 <AttachmentsRows
                     readonly={this.props.readonly}
                     hideUploader={false}

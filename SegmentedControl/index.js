@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import classnames from 'classnames';
 import { PropTypes } from 'prop-types';
 import './index.scss';
 
@@ -22,7 +21,7 @@ export default class SegmentedControl extends Component {
         const segments = labels.map((value, index) => {
             const segmentId = 'segment-' + index;
             return (
-                <>
+                <React.Fragment key={'segmentedInput' + index}>
                     <input
                         type="radio"
                         name="form-type"
@@ -32,7 +31,7 @@ export default class SegmentedControl extends Component {
                         onChange={this.handleSegmentChange}
                     />
                     <label htmlFor={segmentId}>{value}</label>
-                </>
+                </React.Fragment>
             );
         });
 
