@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {PropTypes} from 'prop-types';
+import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
 import './index.scss';
-import {lookup} from '../Util/translations';
+import { lookup } from '../Util/translations';
 
 export default class CustomerGroupLimits extends Component {
 
@@ -58,7 +58,8 @@ export default class CustomerGroupLimits extends Component {
                             </p>
                         </td>
                         <td className="td-right">
-                            <mrc-number show-currency-for-country={this.props.country}>
+                            <mrc-number dynamic={this.props.requestedGroupLimit}
+                                        show-currency-for-country={this.props.country}>
                                 {this.props.requestedGroupLimit}
                             </mrc-number>
                         </td>
@@ -83,7 +84,7 @@ export default class CustomerGroupLimits extends Component {
             </div>
 
 
-        )
+        );
 
     }
 }
