@@ -144,7 +144,6 @@ export default class AttachmentsRows extends Component {
                     )}
                 </div>
                 <div>{this.crateAttachmentTypesFields()}</div>
-
                 <button
                     className="mrc-btn mrc-secondary-button"
                     type="button"
