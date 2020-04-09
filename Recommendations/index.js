@@ -32,7 +32,7 @@ export default class Recommendations extends Component {
                 <div className="mrc-ui-input-star-rating-component mrc-ui-input">
                     <label className="mrc-ui-label">{lookup('mrc.recommendations.rating')}</label>
                 </div>
-                <StarRating />
+                <StarRating selectedIndex={_.get(this.state, 'editedRecommendation.rating')} />
                 <div className="mrc-ui-input clear-both">
                     <label className="mrc-ui-label">{lookup('mrc.recommendations.text')}</label>
                     <textarea

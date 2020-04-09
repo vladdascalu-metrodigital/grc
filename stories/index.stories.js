@@ -165,14 +165,26 @@ storiesOf('Recommendations', module)
         <Recommendations
             recommendations={[
                 {
+                    id: '1',
                     content: 'foo',
                     rating: '5',
                     uploaderName: 'John Doe',
                     uploaderPosition: 'HOT',
                     uploadTime: '2019-02-02',
                 },
+                {
+                    id: '2',
+                    content: 'bar',
+                    rating: '4',
+                    uploaderName: 'John Doe',
+                    uploaderPosition: 'HOT',
+                    uploadTime: '2019-02-02',
+                    canEdit: true,
+                },
             ]}
             canAddNew={true}
+            onDelete={id => console.log('deleting recommendation with id: ' + id)}
+            onSave={id => console.log('saving recommendation with id: ' + id)}
         />
     ))
     .add('2-recommendations', () => (
@@ -199,7 +211,7 @@ storiesOf('Recommendations', module)
     ));
 
 storiesOf('StarRating', module).add('standard', () => {
-    return <StarRating />;
+    return <StarRating selectedindex="2" />;
 });
 
 storiesOf('FileUpload', module).add('standard', () => (
