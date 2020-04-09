@@ -10,10 +10,10 @@ import { PropTypes } from 'prop-types';
 const intersperse = (xs, e) => _.initial(_.reduce(xs, (acc, x) => _.concat(acc, [x, e]), []));
 
 export default class Recommendations extends Component {
-    toggleModal = recommendation => {
+    toggleModal = _recommendation => {
         this.setState(prevState => ({
             isModalVisible: !prevState.isModalVisible,
-            editedRecommendation: recommendation ? recommendation : null,
+            recommendation: _recommendation ? _recommendation : { content: '', rating: null },
         }));
     };
 
@@ -21,7 +21,7 @@ export default class Recommendations extends Component {
         super(props);
         this.state = {
             isModalVisible: false,
-            editedRecommendation: null,
+            recommendation: null,
         };
     }
 
@@ -32,17 +32,25 @@ export default class Recommendations extends Component {
                 <div className="mrc-ui-input-star-rating-component mrc-ui-input">
                     <label className="mrc-ui-label">{lookup('mrc.recommendations.rating')}</label>
                 </div>
-                <StarRating selectedIndex={_.get(this.state, 'editedRecommendation.rating')} />
+                <StarRating
+                    onChange={_rating =>
+                        this.setState({ recommendation: { ...this.state.recommendation, rating: _rating } })
+                    }
+                    selectedIndex={_.get(this.state, 'recommendation.rating')}
+                />
                 <div className="mrc-ui-input clear-both">
                     <label className="mrc-ui-label">{lookup('mrc.recommendations.text')}</label>
                     <textarea
                         className="mrc-ui-textarea"
-                        value={
-                            this.state.editedRecommendation
-                                ? this.state.editedRecommendation.content
-                                : this.props.newContent
+                        value={_.get(this.state, 'recommendation.content')}
+                        onChange={e =>
+                            this.setState({
+                                recommendation: {
+                                    ...this.state.recommendation,
+                                    content: e.currentTarget.value,
+                                },
+                            })
                         }
-                        onChange={e => this.props.onContentChange(e.target.value)}
                     ></textarea>
                 </div>
 
@@ -52,7 +60,8 @@ export default class Recommendations extends Component {
                         className="mrc-btn mrc-primary-button mrc-ui-button-small"
                         onClick={() => {
                             {
-                                this.props.onSave(_.get(this.state, 'editedRecommendation.id'));
+                                const recommendation = this.state.recommendation;
+                                this.props.onSave(recommendation.id, recommendation.content, recommendation.rating);
                             }
                             this.toggleModal();
                         }}
@@ -150,12 +159,9 @@ export default class Recommendations extends Component {
 }
 
 Recommendations.propTypes = {
-    onContentChange: PropTypes.func,
     onRatingChange: PropTypes.func,
     onSave: PropTypes.func,
     onDelete: PropTypes.func,
-    newContent: PropTypes.string,
-    newRating: PropTypes.string,
     recommendations: PropTypes.array,
     canAddNew: PropTypes.bool,
     canEdit: PropTypes.bool,

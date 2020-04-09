@@ -184,7 +184,9 @@ storiesOf('Recommendations', module)
             ]}
             canAddNew={true}
             onDelete={id => console.log('deleting recommendation with id: ' + id)}
-            onSave={id => console.log('saving recommendation with id: ' + id)}
+            onSave={(id, content, rating) =>
+                console.log('saving recommendation with id, content, rating ', id, content, rating)
+            }
         />
     ))
     .add('2-recommendations', () => (
@@ -211,7 +213,7 @@ storiesOf('Recommendations', module)
     ));
 
 storiesOf('StarRating', module).add('standard', () => {
-    return <StarRating selectedindex="2" />;
+    return <StarRating selectedIndex="2" />;
 });
 
 storiesOf('FileUpload', module).add('standard', () => (
