@@ -1,3 +1,5 @@
+@import '../lib/scss/main.scss';
+
 // Star Rating
 .mrc-ui-recommendation-star-rating {
   margin: $spacing-medium $spacing-none;
@@ -22,9 +24,7 @@
   margin-right: $spacing-extra-extra-small;;
 }
 
-
 // Star Rating Input
-
 
 .mrc-ui-input-star-rating {
     float: left;

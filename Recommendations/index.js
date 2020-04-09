@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { lookup } from '../Util/translations';
 import ModalDialog from '../ModalDialog';
+import StarRating from '../StarRating';
 import Author from '../Author';
 import './index.scss';
 import * as _ from 'lodash';
@@ -9,14 +10,18 @@ import { PropTypes } from 'prop-types';
 const intersperse = (xs, e) => _.initial(_.reduce(xs, (acc, x) => _.concat(acc, [x, e]), []));
 
 export default class Recommendations extends Component {
-    toggleModal = () => {
-        this.setState(prevState => ({ isModalVisible: !prevState.isModalVisible }));
+    toggleModal = recommendation => {
+        this.setState(prevState => ({
+            isModalVisible: !prevState.isModalVisible,
+            editedRecommendation: recommendation ? recommendation : null,
+        }));
     };
 
     constructor(props) {
         super(props);
         this.state = {
             isModalVisible: false,
+            editedRecommendation: null,
         };
     }
 
@@ -24,67 +29,19 @@ export default class Recommendations extends Component {
         return (
             <div>
                 <p className="mrc-ui-form-text">{lookup('mrc.recommendations.description')}</p>
-
                 <div className="mrc-ui-input-star-rating-component mrc-ui-input">
                     <label className="mrc-ui-label">{lookup('mrc.recommendations.rating')}</label>
-                    <div className="mrc-ui-input-star-rating">
-                        <input
-                            type="radio"
-                            id="star5"
-                            name="rate"
-                            value="5"
-                            onClick={() => this.props.onRatingChange('5')}
-                        />
-                        <label htmlFor="star5" title="text">
-                            1 star
-                        </label>
-                        <input
-                            type="radio"
-                            id="star4"
-                            name="rate"
-                            value="4"
-                            onClick={() => this.props.onRatingChange('4')}
-                        />
-                        <label htmlFor="star4" title="text">
-                            2 stars
-                        </label>
-                        <input
-                            type="radio"
-                            id="star3"
-                            name="rate"
-                            value="3"
-                            onClick={() => this.props.onRatingChange('3')}
-                        />
-                        <label htmlFor="star3" title="text">
-                            3 stars
-                        </label>
-                        <input
-                            type="radio"
-                            id="star2"
-                            name="rate"
-                            value="2"
-                            onClick={() => this.props.onRatingChange('2')}
-                        />
-                        <label htmlFor="star2" title="text">
-                            4 stars
-                        </label>
-                        <input
-                            type="radio"
-                            id="star1"
-                            name="rate"
-                            value="1"
-                            onClick={() => this.props.onRatingChange('1')}
-                        />
-                        <label htmlFor="star1" title="text">
-                            5 stars
-                        </label>
-                    </div>
                 </div>
+                <StarRating selectedIndex={_.get(this.state, 'editedRecommendation.rating')} />
                 <div className="mrc-ui-input clear-both">
                     <label className="mrc-ui-label">{lookup('mrc.recommendations.text')}</label>
                     <textarea
                         className="mrc-ui-textarea"
-                        value={this.props.newContent}
+                        value={
+                            this.state.editedRecommendation
+                                ? this.state.editedRecommendation.content
+                                : this.props.newContent
+                        }
                         onChange={e => this.props.onContentChange(e.target.value)}
                     ></textarea>
                 </div>
@@ -94,7 +51,9 @@ export default class Recommendations extends Component {
                         type="button"
                         className="mrc-btn mrc-primary-button mrc-ui-button-small"
                         onClick={() => {
-                            this.props.onSave(this.props.newContent, this.props.newRating);
+                            {
+                                this.props.onSave(_.get(this.state, 'editedRecommendation.id'));
+                            }
                             this.toggleModal();
                         }}
                     >
@@ -134,6 +93,26 @@ export default class Recommendations extends Component {
                     additionalContent={this.starRatingResult(recommendation.rating)}
                 />
                 <div className="mrc-ui-recommendation-text">{recommendation.content}</div>
+                {recommendation.canEdit ? (
+                    <div className="mrc-btn-group">
+                        <button
+                            type="button"
+                            className="mrc-btn mrc-primary-button mrc-ui-button-small"
+                            onClick={() => {
+                                this.toggleModal(recommendation);
+                            }}
+                        >
+                            {lookup('mrc.recommendations.editrecommendation')}
+                        </button>
+                        <button
+                            type="button"
+                            className="mrc-btn mrc-secondary-button mrc-ui-button-small mrc-ui-button-secondary mrc-ui-secondary-button-small-red"
+                            onClick={() => this.props.onDelete(recommendation.id)}
+                        >
+                            {lookup('mrc.recommendations.deleterecommendation')}
+                        </button>
+                    </div>
+                ) : null}
             </div>
         ));
         return (
@@ -174,9 +153,11 @@ Recommendations.propTypes = {
     onContentChange: PropTypes.func,
     onRatingChange: PropTypes.func,
     onSave: PropTypes.func,
+    onDelete: PropTypes.func,
     newContent: PropTypes.string,
     newRating: PropTypes.string,
     recommendations: PropTypes.array,
     canAddNew: PropTypes.bool,
+    canEdit: PropTypes.bool,
     addNewDisabled: PropTypes.bool,
 };
