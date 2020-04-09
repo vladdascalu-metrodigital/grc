@@ -10,6 +10,7 @@ import Button from '../Button';
 import FileUpload from '../FileUpload';
 
 import Recommendations from '../Recommendations';
+import Comments from '../NewComments';
 
 import Attachments from '../Attachments';
 
@@ -159,6 +160,41 @@ storiesOf('Attachments', module)
 storiesOf('Segmented Control', module).add('basic', () => (
     <SegmentedControl selectedSegment={'Placeholder'} labels={['Document', 'Placeholder', 'bar', 'baz']} />
 ));
+
+storiesOf('Comments', module)
+    .add('standard', () => (
+        <Comments
+            comments={[
+                {
+                    content: 'foo',
+                    uploaderName: 'John Doe',
+                    uploaderPosition: 'HOT',
+                    uploadTime: '2019-02-02',
+                },
+            ]}
+            canAddNew={true}
+        />
+    ))
+    .add('2-comments', () => (
+        <Comments
+            comments={[
+                {
+                    content: 'foo',
+                    uploaderName: 'John Doe',
+                    uploaderPosition: 'HOT',
+                    uploadTime: '2019-02-02',
+                    editableByCurrentUser: true,
+                },
+                {
+                    content: 'bar',
+                    uploaderName: 'John Doe',
+                    uploaderPosition: 'HOT',
+                    uploadTime: '2019-02-02',
+                },
+            ]}
+            canAddNew={true}
+        />
+    ));
 
 storiesOf('Recommendations', module)
     .add('standard', () => (
