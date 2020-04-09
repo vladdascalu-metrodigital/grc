@@ -1,5 +1,6 @@
 import React from 'react';
 
+import StarRating from '../StarRating';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
@@ -196,6 +197,10 @@ storiesOf('Recommendations', module)
             canAddNew={true}
         />
     ));
+
+storiesOf('StarRating', module).add('standard', () => {
+    return <StarRating />;
+});
 
 storiesOf('FileUpload', module).add('standard', () => (
     <FileUpload
