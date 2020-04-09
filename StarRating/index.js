@@ -18,7 +18,7 @@ export default class StarRating extends Component {
 
     render() {
         const segments = ['1', '2', '3', '4', '5'].map(x => (
-            <React.Fragment key={x}>
+            <React.Fragment key={'starrating' + x}>
                 <input
                     type="radio"
                     name="form-type"
