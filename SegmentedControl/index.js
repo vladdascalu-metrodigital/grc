@@ -1,19 +1,46 @@
 import React, { Component } from 'react';
-// import classnames from 'classnames';
-// import { PropTypes } from 'prop-types';
-// import { lookup } from '../Util/translations';
+import { PropTypes } from 'prop-types';
 import './index.scss';
 
 export default class SegmentedControl extends Component {
-    render() {
-        return (
-            <div className="mrc-ui-segmented-control">
-                <input type="radio" name="form-type" value="document" id="document" checked />
-                <label htmlFor="document">Document</label>
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedSegment: this.props.selectedSegment,
+        };
+    }
 
-                <input type="radio" name="form-type" value="placeholder" id="placeholder" />
-                <label htmlFor="placeholder">Placeholder</label>
-            </div>
-        );
+    handleSegmentChange = changeEvent => {
+        this.setState({
+            selectedSegment: changeEvent.target.value,
+        });
+    };
+
+    render() {
+        const labels = this.props.labels;
+        const segments = labels.map((value, index) => {
+            const segmentId = 'segment-' + index;
+            return (
+                <React.Fragment key={'segmentedInput' + index}>
+                    <input
+                        type="radio"
+                        name="form-type"
+                        value={value}
+                        id={segmentId}
+                        checked={this.state.selectedSegment === value}
+                        onChange={this.handleSegmentChange}
+                    />
+                    <label htmlFor={segmentId}>{value}</label>
+                </React.Fragment>
+            );
+        });
+
+        return <div className={`mrc-ui-${this.props.labels.length}-segmented-control`}>{segments}</div>;
     }
 }
+
+SegmentedControl.propTypes = {
+    onSegmentChange: PropTypes.func,
+    selectedSegment: PropTypes.string,
+    labels: PropTypes.array,
+};
