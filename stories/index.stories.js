@@ -218,6 +218,7 @@ storiesOf('Recommendations', module)
                     canEdit: true,
                 },
             ]}
+            addNewDisabled={false}
             canAddNew={true}
             onDelete={id => console.log('deleting recommendation with id: ' + id)}
             onSave={(id, content, rating) =>

@@ -126,7 +126,7 @@ export default class Recommendations extends Component {
         ));
         return (
             <div className="mrc-ui-recommendation-component">
-                {this.props.canAddNew && !this.props.addNewDisabled ? (
+                {this.props.canAddNew ? (
                     <button
                         type="button"
                         className="mrc-primary-large-add-button"
