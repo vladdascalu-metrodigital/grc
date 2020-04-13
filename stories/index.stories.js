@@ -172,7 +172,7 @@ storiesOf('Comments', module)
                     uploadTime: '2019-02-02',
                 },
             ]}
-            canAddNew={true}
+            onSave={newValue => console.log(newValue)}
         />
     ))
     .add('2-comments', () => (
@@ -192,9 +192,10 @@ storiesOf('Comments', module)
                     uploadTimestamp: '2019-02-02',
                 },
             ]}
-            canAddNew={true}
+            onSave={newValue => console.log(newValue)}
         />
-    ));
+    ))
+    .add('no-comments', () => <Comments onSave={newValue => console.log(newValue)} />);
 
 storiesOf('Recommendations', module)
     .add('standard', () => (

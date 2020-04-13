@@ -3,12 +3,17 @@ import * as _ from 'lodash';
 import { lookup } from '../Util/translations';
 import React from 'react';
 import Author from '../Author';
+import { CommentPropTypes } from './CommentsPropTypes';
 
 const intersperse = (xs, e) => _.initial(_.reduce(xs, (acc, x) => _.concat(acc, [x, e]), []));
 
 export function CommentsList(props) {
     if (_.isEmpty(props.comments)) {
-        return null;
+        return (
+            <div className="mrc-ui-comments">
+                <h3 className="mrc-ui-no-comment">{lookup('mrc.comment.nocomments')}</h3>
+            </div>
+        );
     }
     const comments = props.comments.map((comment, i) => (
         <div key={i} className="mrc-ui-comment">
@@ -38,14 +43,6 @@ export function CommentsList(props) {
         </div>
     );
 }
-
-export const CommentPropTypes = PropTypes.shape({
-    id: PropTypes.string,
-    comment: PropTypes.string.isRequired,
-    uploadTimestamp: PropTypes.string.isRequired,
-    uploaderPosition: PropTypes.string,
-    uploaderPrincipalName: PropTypes.string.isRequired,
-});
 
 CommentsList.propTypes = {
     comments: PropTypes.arrayOf(CommentPropTypes),

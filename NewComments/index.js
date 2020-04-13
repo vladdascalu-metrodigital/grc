@@ -1,77 +1,33 @@
 import React, { Component } from 'react';
-import { lookup } from '../Util/translations';
-import ModalDialog from '../ModalDialog';
 import './index.scss';
 import { PropTypes } from 'prop-types';
-import { CommentPropTypes, CommentsList } from './CommentsList';
+import { CommentsList } from './CommentsList';
+import CommentsAdd from './CommentsAdd';
+import { CommentPropTypes } from './CommentsPropTypes';
 
 export default class Comments extends Component {
-    toggleModal = () => {
-        this.setState(prevState => ({ isModalVisible: !prevState.isModalVisible }));
-    };
-
     constructor(props) {
         super(props);
-        this.state = {
-            isModalVisible: false,
-        };
+        this.state = {};
+        this.onSave = this.onSave.bind(this);
     }
 
-    modalDialogContent() {
-        return (
-            <div>
-                <div className="mrc-ui-input clear-both">
-                    <label className="mrc-ui-label">{lookup('mrc.comments.text')}</label>
-                    <textarea
-                        className="mrc-ui-textarea"
-                        value={this.props.newContent}
-                        onChange={e => this.props.onContentChange(e.target.value)}
-                    ></textarea>
-                </div>
-
-                <div className="mrc-btn-group">
-                    <button
-                        type="button"
-                        className="mrc-btn mrc-primary-button mrc-ui-button-small"
-                        onClick={() => {
-                            this.props.onSave(this.props.newContent);
-                            this.toggleModal();
-                        }}
-                    >
-                        {lookup('mrc.comments.save')}
-                    </button>
-                    <button
-                        type="button"
-                        className="mrc-btn mrc-secondary-button mrc-ui-button-small mrc-ui-button-secondary"
-                        onClick={this.toggleModal}
-                    >
-                        {lookup('mrc.comments.cancel')}
-                    </button>
-                </div>
-            </div>
-        );
+    onSave() {
+        const newValue = this.state.newValue;
+        this.setState({ newValue: undefined });
+        this.props.onSave && this.props.onSave(newValue);
     }
 
     render() {
         return (
             <div className="mrc-ui-comment-component">
-                {this.props.canAddNew && !this.props.addNewDisabled ? (
-                    <button
-                        type="button"
-                        className="mrc-primary-large-add-button"
-                        onClick={this.toggleModal}
-                        disabled={this.props.addNewDisabled}
-                    >
-                        {lookup('mrc.comments.addcomment')}
-                    </button>
-                ) : null}
-                {this.state.isModalVisible ? (
-                    <ModalDialog
-                        toggle={this.toggleModal}
-                        content={this.modalDialogContent()}
-                        title={lookup('mrc.comments.modaltitle')}
-                    />
-                ) : null}
+                <CommentsAdd
+                    newContent={this.state.newValue}
+                    onContentChange={newValue => this.setState({ newValue })}
+                    onSave={this.onSave}
+                    canAddNew={!this.props.disabled}
+                    addNewDisabled={this.props.disabled}
+                />
                 <CommentsList comments={this.props.comments} />
             </div>
         );
@@ -79,10 +35,7 @@ export default class Comments extends Component {
 }
 
 Comments.propTypes = {
-    onContentChange: PropTypes.func,
     onSave: PropTypes.func,
-    newContent: PropTypes.string,
     comments: PropTypes.arrayOf(CommentPropTypes),
-    canAddNew: PropTypes.bool,
-    addNewDisabled: PropTypes.bool,
+    disabled: PropTypes.bool,
 };
