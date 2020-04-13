@@ -179,17 +179,17 @@ storiesOf('Comments', module)
         <Comments
             comments={[
                 {
-                    content: 'foo',
-                    uploaderName: 'John Doe',
+                    comment: 'foo',
+                    uploaderPrincipalName: 'John Doe',
                     uploaderPosition: 'HOT',
-                    uploadTime: '2019-02-02',
+                    uploadTimestamp: '2019-02-02',
                     editableByCurrentUser: true,
                 },
                 {
-                    content: 'bar',
-                    uploaderName: 'John Doe',
+                    comment: 'bar',
+                    uploaderPrincipalName: 'John Doe',
                     uploaderPosition: 'HOT',
-                    uploadTime: '2019-02-02',
+                    uploadTimestamp: '2019-02-02',
                 },
             ]}
             canAddNew={true}
