@@ -26,9 +26,9 @@ export function CommentsList(props) {
                     {lookup(comment.comment)}&nbsp;
                     {(comment.comment === 'strategy.decision.blocked' ||
                         comment.comment === 'strategy.decision.rejected') &&
-                    this.props.timeoutDate != undefined &&
-                    this.props.timeoutDate != null ? (
-                        <mrc-datetime className="datetime">{this.props.timeoutDate}</mrc-datetime>
+                    props.timeoutDate != undefined &&
+                    props.timeoutDate != null ? (
+                        <mrc-datetime className="datetime">{props.timeoutDate}</mrc-datetime>
                     ) : null}
                 </div>
             </div>
