@@ -1,4 +1,5 @@
 import { PropTypes } from 'prop-types';
+import * as _ from 'lodash';
 import { lookup } from '../Util/translations';
 import React, { Component } from 'react';
 import ModalDialog from '../ModalDialog';
@@ -34,6 +35,7 @@ export default class CommentsAdd extends Component {
                             this.props.onSave && this.props.onSave();
                             this.toggleModal();
                         }}
+                        disabled={_.isEmpty(this.props.newContent)}
                     >
                         {lookup('mrc.comments.save')}
                     </button>

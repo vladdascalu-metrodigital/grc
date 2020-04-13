@@ -5,8 +5,6 @@ import React from 'react';
 import Author from '../Author';
 import { CommentPropTypes } from './CommentsPropTypes';
 
-const intersperse = (xs, e) => _.initial(_.reduce(xs, (acc, x) => _.concat(acc, [x, e]), []));
-
 export function CommentsList(props) {
     if (_.isEmpty(props.comments)) {
         return (
@@ -16,30 +14,30 @@ export function CommentsList(props) {
         );
     }
     const comments = props.comments.map((comment, i) => (
-        <div key={i} className="mrc-ui-comment">
-            <Author
-                name={comment.uploaderPrincipalName}
-                position={comment.uploaderPosition}
-                writeTime={comment.uploadTimestamp}
-                key={i}
-            />
-            <div className="mrc-ui-comment-text">{comment.comment}</div>
+        <div key={i}>
+            <div className="mrc-ui-comment">
+                <Author
+                    name={comment.uploaderPrincipalName}
+                    position={comment.uploaderPosition}
+                    writeTime={comment.uploadTimestamp}
+                    key={i}
+                />
+                <div className="mrc-ui-comment-text">{comment.comment}</div>
+            </div>
+            {i !== props.comments.length - 1 && (
+                <hr
+                    key={Math.random()
+                        .toString(36)
+                        .substr(2, 9)}
+                    className="mrc-ui-comment-divider"
+                />
+            )}
         </div>
     ));
     return (
         <div className="mrc-ui-comments">
             <h3 className="mrc-ui-comments-headline">{lookup('mrc.comments.comments')}</h3>
-            <div className="mrc-ui-comments-list">
-                {intersperse(
-                    comments,
-                    <hr
-                        key={Math.random()
-                            .toString(36)
-                            .substr(2, 9)}
-                        className="mrc-ui-comment-divider"
-                    />
-                )}
-            </div>
+            <div className="mrc-ui-comments-list">{comments}</div>
         </div>
     );
 }

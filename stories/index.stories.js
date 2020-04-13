@@ -166,10 +166,10 @@ storiesOf('Comments', module)
         <Comments
             comments={[
                 {
-                    content: 'foo',
-                    uploaderName: 'John Doe',
+                    comment: 'foo',
+                    uploaderPrincipalName: 'John Doe',
                     uploaderPosition: 'HOT',
-                    uploadTime: '2019-02-02',
+                    uploadTimestamp: '2019-02-02',
                 },
             ]}
             onSave={newValue => console.log(newValue)}
@@ -183,7 +183,24 @@ storiesOf('Comments', module)
                     uploaderPrincipalName: 'John Doe',
                     uploaderPosition: 'HOT',
                     uploadTimestamp: '2019-02-02',
-                    editableByCurrentUser: true,
+                },
+                {
+                    comment: 'bar',
+                    uploaderPrincipalName: 'John Doe',
+                    uploaderPosition: 'HOT',
+                    uploadTimestamp: '2019-02-02',
+                },
+                {
+                    comment: 'bar',
+                    uploaderPrincipalName: 'John Doe',
+                    uploaderPosition: 'HOT',
+                    uploadTimestamp: '2019-02-02',
+                },
+                {
+                    comment: 'bar',
+                    uploaderPrincipalName: 'John Doe',
+                    uploaderPosition: 'HOT',
+                    uploadTimestamp: '2019-02-02',
                 },
                 {
                     comment: 'bar',
