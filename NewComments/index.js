@@ -28,7 +28,7 @@ export default class Comments extends Component {
                     canAddNew={!this.props.disabled}
                     addNewDisabled={this.props.disabled}
                 />
-                <CommentsList comments={this.props.comments} />
+                <CommentsList {...this.props} />
             </div>
         );
     }
@@ -38,4 +38,5 @@ Comments.propTypes = {
     onSave: PropTypes.func,
     comments: PropTypes.arrayOf(CommentPropTypes),
     disabled: PropTypes.bool,
+    timeoutDate: PropTypes.string,
 };

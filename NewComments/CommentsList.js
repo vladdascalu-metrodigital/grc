@@ -22,7 +22,15 @@ export function CommentsList(props) {
                     writeTime={comment.uploadTimestamp}
                     key={i}
                 />
-                <div className="mrc-ui-comment-text">{comment.comment}</div>
+                <div className="mrc-ui-comment-text">
+                    {lookup(comment.comment)}&nbsp;
+                    {(comment.comment === 'strategy.decision.blocked' ||
+                        comment.comment === 'strategy.decision.rejected') &&
+                    this.props.timeoutDate != undefined &&
+                    this.props.timeoutDate != null ? (
+                        <mrc-datetime className="datetime">{this.props.timeoutDate}</mrc-datetime>
+                    ) : null}
+                </div>
             </div>
             {i !== props.comments.length - 1 && (
                 <hr
@@ -36,7 +44,7 @@ export function CommentsList(props) {
     ));
     return (
         <div className="mrc-ui-comments">
-            <h3 className="mrc-ui-comments-headline">{lookup('mrc.comments.comments')}</h3>
+            <h3 className="mrc-ui-comments-headline">{lookup('mrc.comments.title')}</h3>
             <div className="mrc-ui-comments-list">{comments}</div>
         </div>
     );
@@ -44,4 +52,5 @@ export function CommentsList(props) {
 
 CommentsList.propTypes = {
     comments: PropTypes.arrayOf(CommentPropTypes),
+    timeoutDate: PropTypes.string,
 };
