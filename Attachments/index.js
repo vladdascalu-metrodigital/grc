@@ -22,7 +22,9 @@ export default class Attachments extends Component {
     modalDialogContent() {
         return (
             <div>
-                <SegmentedControl selectedSegment={'Document'} labels={['Document', 'Placeholder']} />
+                {this.props.noPlaceholder ? null : (
+                    <SegmentedControl selectedSegment={'Document'} labels={['Document', 'Placeholder']} />
+                )}
                 <AttachmentsRows
                     readonly={this.props.readonly}
                     hideUploader={false}
@@ -109,4 +111,5 @@ Attachments.propTypes = {
     currentApprover: PropTypes.string,
     readonly: PropTypes.bool,
     disabled: PropTypes.bool,
+    noPlaceholder: PropTypes.bool,
 };

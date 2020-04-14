@@ -35,6 +35,7 @@ storiesOf('Attachments', module)
     .add('standard', () => (
         <Attachments
             disabled={false}
+            noPlaceholder={true}
             attachments={[
                 {
                     status: 'missing',
