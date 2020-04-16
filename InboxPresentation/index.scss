@@ -1,0 +1,124 @@
+@import "../settings";
+
+.mrc-inbox {
+  $insetbullet: 20px;
+  $inset: 32px;
+
+  font-size: $small-text;
+  color: $grey;
+
+  @include respond-to('tablet') {
+    padding: 0;
+  }
+
+  .item-content-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    .mrc-inbox-details {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .mrc-secondary-button {
+      width: 80px;
+      padding: 0 .5rem;
+    }
+  }
+
+  li {
+    a {
+      display: inline;
+    }
+
+    .mrc-inbox-item {
+      width: 100%;
+      padding: 0 0;
+
+      .collapsed {
+        padding: 0 $inset;
+      }
+
+      .mrc-inbox-header {
+        padding: 0 $inset;
+
+        .mrc-inbox-header-title {
+          color: #999999;
+          font-size: 13px;
+          font-weight: 500;
+          line-height: 18px;
+        }
+      }
+    }
+  }
+
+  .approval {
+    color: #999999;
+    font-size: 13px;
+    line-height: 18px;
+    width: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+    // justify-content: space-between;
+
+    label {
+      color: #999999;
+      font-size: 13px;
+      line-height: 20px;
+    }
+
+    .customerNameAndNumber {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      @include respond-to('tablet') {
+        flex-direction: row;
+      }
+    }
+
+    .customerName {
+      color: #1A3B7A;
+      font-size: 13px;
+      line-height: 18px;
+      font-weight: 500;
+    }
+
+    .customerNumber {
+    }
+
+    .approvalData {
+      width: 95%;
+
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      .amount, .currentLimit, .requestDate, .approvedLimit {
+        width: 100%;
+        @include respond-to('tablet') {
+          width: 50%;
+        }
+      }
+    }
+
+    &.expanded {
+      .customerName {
+        font-size: 16px;
+        line-height: 20px;
+      }
+    }
+
+    .detailsLink {
+      width: 5%;
+      display: flex;
+      justify-content: center; /* align horizontal */
+      align-items: center; /* align vertical */
+    }
+  }
+
+  .inbox-item-detail-text {
+    margin-left: .5rem;
+  }
+}
