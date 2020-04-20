@@ -1,6 +1,6 @@
 {
     "name": "global-react-components",
-    "version": "2.3.11",
+    "version": "2.3.12",
     "description": "MRC collection of reusable frontend react components",
     "publishConfig": {
         "registry": "https://dx-nexus.metroscales.io/repository/npm-mrc-hosted/"
@@ -32,11 +32,19 @@
         "moment": "^2.24.0",
         "mrc-component-library": "1.0.57",
         "normalize-scss": "^7.0.1",
-        "react-datepicker": "2.12.1",
+        "react-datepicker": "^2.14.1",
         "react-native-mime-types": "^2.3.0",
         "react-router-dom": "^5.1.2",
         "react-table": "^7.0.0",
-        "universal-cookie": "^4.0.3"
+        "react-moment": "^0.9.7",
+        "react-redux": "^7.2.0",
+        "redux": "^4.0.5",
+        "reducers": "^2.0.0",
+        "spin.js": "^2.3.2",
+        "universal-cookie": "^4.0.3",
+        "modernizr": "^3.10.0",
+        "modernizr-loader": "^1.0.1",
+        "json-loader": "^0.5.7"
     },
     "scripts": {
         "storybook": "start-storybook -p 6006",

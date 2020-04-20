@@ -14,13 +14,15 @@ import Comments from '../NewComments';
 
 import Attachments from '../Attachments';
 
-import { HashRouter, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-import '../node_modules/mrc-component-library/public/css/bundle.css';
-import '../node_modules/mrc-component-library/public/js/bundle';
+import 'mrc-component-library/public/css/bundle.css';
+import 'mrc-component-library/public/js/bundle';
 import SegmentedControl from '../SegmentedControl';
 
 import InboxPresentation from '../InboxPresentation';
+import LaunchPad from '../LaunchPad';
+import CustomerSearch from '../CustomerSearch';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -335,10 +337,7 @@ storiesOf('NavLink', module).add('MRC-3820', () => {
 
     const lineBreak = <br key="2" />;
 
-    //HashRouter needs a single element to render, so we should wrap our links.
-    const app = <div>{[someLink, lineBreak, activeLink]}</div>;
-    const routerWithLinks = <HashRouter basename="/">{app}</HashRouter>;
-    return routerWithLinks;
+    return <div>{[someLink, lineBreak, activeLink]}</div>;
 });
 
 storiesOf('InboxPresentation', module).add('standard', () => (
@@ -354,16 +353,16 @@ storiesOf('InboxPresentation', module).add('standard', () => (
                 currentLimit: null,
                 customerName: 'test',
                 customerNumber: '123354',
-                customerStoreNumber: "125",
+                customerStoreNumber: '125',
                 detailsURI: 'test',
                 groupAmount: 7000,
                 groupSize: 2,
-                id: "1",
+                id: '1',
                 new: true,
                 position: 'CM',
                 requestDate: '2020-04-16T11:30:44Z',
                 topic: 'APPROVAL_STEP_READY',
-                translateKey: 'mrc.label.appliedLimit'
+                translateKey: 'mrc.label.appliedLimit',
             },
             {
                 amount: '5000',
@@ -377,17 +376,17 @@ storiesOf('InboxPresentation', module).add('standard', () => (
                 currentLimit: null,
                 customerName: 'test',
                 customerNumber: '123354',
-                customerStoreNumber: "125",
+                customerStoreNumber: '125',
                 detailsURI: 'test',
                 groupAmount: 5000,
                 groupSize: 1,
-                id: "2",
+                id: '2',
                 new: true,
                 position: 'HOT',
                 requestDate: '2020-04-16T11:30:44Z',
                 topic: 'GENERAL_NOTIFICATION',
-                translateKey: 'mrc.label.appliedLimit'
-            }
+                translateKey: 'mrc.label.appliedLimit',
+            },
         ]}
         filterAvailable={true}
         isTablet={false}
@@ -396,3 +395,228 @@ storiesOf('InboxPresentation', module).add('standard', () => (
         currentFilterValue={() => console.log('currentFilterValue')}
     />
 ));
+
+storiesOf('LaunchPad', module)
+    .add('standard desktop', () => (
+        <LaunchPad
+            config={{
+                data: {
+                    trainingMovie: {
+                        available: true,
+                        url: 'https://confluence.metrosystems.net/download/attachments/190837537/mrc_einfuehrung.mp4',
+                    },
+                    launchpad: {
+                        tiles: [
+                            {
+                                template: '/customerstatus/{country}/{storeNumber}/{customerNumber}',
+                                roleKey: 'limitCheck',
+                                title: 'mrc.apps.limitcheck',
+                            },
+                            {
+                                template: '/quickstatus/{country}/{storeNumber}/{customerNumber}',
+                                roleKey: 'quickCheck',
+                                title: 'mrc.apps.quickcheck',
+                            },
+                            {
+                                template:
+                                    'http://localhost:8091/creditcorrection/creditcorrection/{country}/{storeNumber}/{customerNumber}',
+                                roleKey: 'creditCorrection',
+                                title: 'mrc.apps.creditcorrection',
+                            },
+                            {
+                                template:
+                                    'http://localhost:8086/history/items/{country}/{storeNumber}/{customerNumber}',
+                                roleKey: 'history',
+                                title: 'mrc.apps.history',
+                            },
+                            {
+                                template: 'http://localhost:8089/inbox',
+                                roleKey: 'inbox',
+                                title: 'mrc.apps.inbox',
+                            },
+                        ],
+                    },
+                },
+            }}
+            desktop={true}
+            tablet={false}
+            updateActiveItem={value => console.log(value)}
+            showAuxControl={value => console.log(value)}
+            updateUiPageTitle={value => console.log(value)}
+        />
+    ))
+    .add('standard mobile', () => (
+        <LaunchPad
+            config={{
+                data: {
+                    trainingMovie: {
+                        available: true,
+                        url: 'https://confluence.metrosystems.net/download/attachments/190837537/mrc_einfuehrung.mp4',
+                    },
+                    launchpad: {
+                        tiles: [
+                            {
+                                template: '/customerstatus/{country}/{storeNumber}/{customerNumber}',
+                                roleKey: 'limitCheck',
+                                title: 'mrc.apps.limitcheck',
+                            },
+                            {
+                                template: '/quickstatus/{country}/{storeNumber}/{customerNumber}',
+                                roleKey: 'quickCheck',
+                                title: 'mrc.apps.quickcheck',
+                            },
+                            {
+                                template:
+                                    'http://localhost:8091/creditcorrection/creditcorrection/{country}/{storeNumber}/{customerNumber}',
+                                roleKey: 'creditCorrection',
+                                title: 'mrc.apps.creditcorrection',
+                            },
+                            {
+                                template:
+                                    'http://localhost:8086/history/items/{country}/{storeNumber}/{customerNumber}',
+                                roleKey: 'history',
+                                title: 'mrc.apps.history',
+                            },
+                            {
+                                template: 'http://localhost:8089/inbox',
+                                roleKey: 'inbox',
+                                title: 'mrc.apps.inbox',
+                            },
+                        ],
+                    },
+                },
+            }}
+            desktop={false}
+            tablet={false}
+            updateActiveItem={value => console.log(value)}
+            showAuxControl={value => console.log(value)}
+            updateUiPageTitle={value => console.log(value)}
+        />
+    ));
+
+storiesOf('CustomerSearch', module)
+    .add('standard search', () => (
+        <CustomerSearch
+            results={null}
+            isLoading={false}
+            doSearch={value => console.log(value)}
+            updateSearchTerm={value => console.log(value)}
+            updateUiPageTitle={value => console.log(value)}
+            showAuxControl={value => console.log(value)}
+            hideNotification={value => console.log(value)}
+            searchTerm={null}
+            cleanSearchResult={value => console.log(value)}
+            match={{
+                isExact: true,
+                params: {
+                    roleKey: 'limitCheck',
+                    template: '%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
+                },
+                path: '/search/:roleKey/:template',
+                url: '/search/limitCheck/%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
+            }}
+        />
+    ))
+    .add('standard loading', () => (
+        <CustomerSearch
+            results={null}
+            isLoading={true}
+            doSearch={value => console.log(value)}
+            updateSearchTerm={value => console.log(value)}
+            updateUiPageTitle={value => console.log(value)}
+            showAuxControl={value => console.log(value)}
+            hideNotification={value => console.log(value)}
+            searchTerm={'test1'}
+            cleanSearchResult={value => console.log(value)}
+            match={{
+                isExact: false,
+                params: {
+                    roleKey: 'limitCheck',
+                    template: '%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
+                },
+                path: '/search/:roleKey/:template',
+                url: '/search/limitCheck/%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
+            }}
+        />
+    ))
+    .add('standard found', () => (
+        <CustomerSearch
+            results={[
+                {
+                    customerId: {
+                        country: 'DE',
+                        customerNumber: '12',
+                        storeNumber: '1',
+                    },
+                    vatSpecNumber: 't11',
+                    names: {
+                        customer: {
+                            firstName: 'foo1',
+                            lastName: 'bar1',
+                        },
+                        companyOwner: {
+                            firstName: 'foo11',
+                            lastName: 'bar11',
+                        },
+                    },
+                },
+                {
+                    customerId: {
+                        country: 'DE',
+                        customerNumber: '13',
+                        storeNumber: '1',
+                    },
+                    vatSpecNumber: 't12',
+                    names: {
+                        customer: {
+                            firstName: 'foo2',
+                            lastName: 'bar2',
+                        },
+                        companyOwner: {
+                            firstName: 'foo22',
+                            lastName: 'bar22',
+                        },
+                    },
+                },
+            ]}
+            isLoading={false}
+            doSearch={value => console.log(value)}
+            updateSearchTerm={value => console.log(value)}
+            updateUiPageTitle={value => console.log(value)}
+            showAuxControl={value => console.log(value)}
+            hideNotification={value => console.log(value)}
+            searchTerm={'test1'}
+            cleanSearchResult={value => console.log(value)}
+            match={{
+                isExact: false,
+                params: {
+                    roleKey: 'limitCheck',
+                    template: '%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
+                },
+                path: '/search/:roleKey/:template',
+                url: '/search/limitCheck/%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
+            }}
+        />
+    ))
+    .add('standard not found', () => (
+        <CustomerSearch
+            results={[]}
+            isLoading={false}
+            doSearch={value => console.log(value)}
+            updateSearchTerm={value => console.log(value)}
+            updateUiPageTitle={value => console.log(value)}
+            showAuxControl={value => console.log(value)}
+            hideNotification={value => console.log(value)}
+            searchTerm={'test1'}
+            cleanSearchResult={value => console.log(value)}
+            match={{
+                isExact: true,
+                params: {
+                    roleKey: 'limitCheck',
+                    template: '%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
+                },
+                path: '/search/:roleKey/:template',
+                url: '/search/limitCheck/%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
+            }}
+        />
+    ));
