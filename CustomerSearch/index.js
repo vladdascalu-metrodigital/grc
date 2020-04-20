@@ -38,7 +38,6 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch, props) {
-    console.log(props);
     return {
         doSearch: (text, delay = 350) => {
             dispatch(hideNotification());
