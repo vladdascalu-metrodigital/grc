@@ -33,7 +33,7 @@ storiesOf('Button', module)
     .add('Secondary', () => <Button status="secondary" onClick={action('clicked')} text="Approve" />)
     .add('Success', () => <Button status="success" onClick={action('clicked')} text="Approve" />);
 
-const logAddFile = () => console.log('adding file');
+const logAddFile = (file, title, filetype) => console.log('adding file of type: ' + filetype);
 const logDeleteFile = () => console.log('deleting file');
 const logRestoreFile = () => console.log('restoring file');
 
@@ -96,8 +96,8 @@ storiesOf('Attachments', module)
                     handleSecondaryAction: logRestoreFile,
                 },
             ]}
-            filetypes={['general', 'delkredere', 'warenkreditversicherung']}
-            fileTypesForCC={['general', 'contracting']}
+            fileTypes={['general', 'delkredere', 'warenkreditversicherung', 'contract']}
+            fileTypesForCC={['general', 'contract']}
             addAttachment={logAddFile}
             currentApprover="CC"
             country="PL"
@@ -156,8 +156,8 @@ storiesOf('Attachments', module)
                     secondaryInteraction: 'restore',
                 },
             ]}
-            filetypes={['general', 'delkredere', 'warenkreditversicherung']}
-            fileTypesForCC={['general', 'contracting']}
+            fileTypes={['general', 'delkredere', 'warenkreditversicherung', 'contract']}
+            fileTypesForCC={['general', 'contract']}
             addAttachment={() => console.log('adding file')}
             currentApprover="CC"
             country="PL"
