@@ -11,6 +11,7 @@ export default class SegmentedControl extends Component {
     }
 
     handleSegmentChange = changeEvent => {
+        this.props.callback(changeEvent.target.value);
         this.setState({
             selectedSegment: changeEvent.target.value,
         });
@@ -43,4 +44,5 @@ SegmentedControl.propTypes = {
     onSegmentChange: PropTypes.func,
     selectedSegment: PropTypes.string,
     labels: PropTypes.array,
+    callback: PropTypes.func,
 };

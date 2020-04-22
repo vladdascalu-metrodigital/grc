@@ -80,6 +80,30 @@ export default class AttachmentsPlaceholderForm extends Component {
         );
     }
 
+    handleFileTypeChange = event => {
+        let attachmentFromJson = this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.filter(
+            att => att.type.toLowerCase() === event.target.value
+        )[0];
+
+        let showCollateralMeta = false;
+        if (attachmentFromJson.fields) showCollateralMeta = true;
+
+        for (let i = 0; attachmentFromJson.fields && i < attachmentFromJson.fields.length; i++) {
+            if (attachmentFromJson.fields[i].value) {
+                attachmentFromJson.fields[i].value = null;
+            }
+        }
+
+        this.setState({
+            ...this.state,
+            fileType: attachmentFromJson.type,
+            showCollateralMeta: showCollateralMeta,
+            attachmentType: attachmentFromJson,
+            attachmentExpiryDate: null,
+            attachmentAmount: null,
+        });
+    };
+
     createUploader(currentApprover) {
         if (
             this.props.hideUploader !== undefined &&
@@ -110,7 +134,7 @@ export default class AttachmentsPlaceholderForm extends Component {
                     className="mrc-btn mrc-secondary-button"
                     type="button"
                     name="upload-button"
-                    onClick={this.savePlaceholder}
+                    onClick={() => this.props.savePlaceholder(this.state.fileType)}
                 >
                     {lookup('mrc.file.upload')}
                 </button>
@@ -161,8 +185,6 @@ export default class AttachmentsPlaceholderForm extends Component {
             </option>
         );
     }
-
-    savePlaceholder = () => {};
 }
 
 AttachmentsPlaceholderForm.propTypes = {
@@ -173,4 +195,5 @@ AttachmentsPlaceholderForm.propTypes = {
     country: PropTypes.string,
     hideUploader: PropTypes.bool,
     fileTypesForCC: PropTypes.array,
+    savePlaceholder: PropTypes.func,
 };

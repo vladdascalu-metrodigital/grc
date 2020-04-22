@@ -48,27 +48,28 @@ export default class Attachment extends Component {
     }
 
     getSecondaryInteraction() {
+        const ifNotDisabled = a => (!this.props.disabled ? a : null);
         switch (this.props.secondaryInteraction) {
             case 'delete':
-                return (
+                return ifNotDisabled(
                     <div className="mrc-ui-attachment-interaction" onClick={this.props.handleSecondaryAction}>
                         <Textlink icon="trash" text={lookup('mrc.attachments.delete')} />
                     </div>
                 );
             case 'restore':
-                return (
+                return ifNotDisabled(
                     <div className="mrc-ui-attachment-interaction" onClick={this.props.handleSecondaryAction}>
                         <Textlink icon="restore" text={lookup('mrc.attachments.restore')} />
                     </div>
                 );
             case 'add':
-                return (
+                return ifNotDisabled(
                     <div className="mrc-ui-attachment-interaction" onClick={this.props.handleSecondaryAction}>
                         <Textlink icon="add" text={lookup('mrc.attachments.add')} />
                     </div>
                 );
             default:
-                return (
+                return ifNotDisabled(
                     <div className="mrc-ui-attachment-interaction" onClick={this.props.handleSecondaryAction}>
                         <Textlink text={this.props.secondaryInteraction} />
                     </div>

@@ -6,12 +6,16 @@ import './index.scss';
 import { PropTypes } from 'prop-types';
 import AttachmentsRows from './AttachmentsRows';
 import SegmentedControl from '../SegmentedControl';
+import AttachmentPlaceholderForm from './AttachmentPlaceholderForm';
+
+import * as _ from 'lodash';
 
 export default class Attachments extends Component {
     toggleModal = fileTypes => {
         this.setState(prevState => ({
             isModalVisible: !prevState.isModalVisible,
             fileTypes: fileTypes ? fileTypes : null,
+            segment: 'Document',
         }));
     };
 
@@ -20,6 +24,7 @@ export default class Attachments extends Component {
         this.state = {
             isModalVisible: false,
             fileTypes: null,
+            segment: 'Document',
         };
     }
 
@@ -28,20 +33,43 @@ export default class Attachments extends Component {
         return (
             <div>
                 {this.props.noPlaceholder ? null : (
-                    <SegmentedControl selectedSegment={'Document'} labels={['Document', 'Placeholder']} />
+                    <SegmentedControl
+                        callback={newSegment => this.setState({ segment: newSegment })}
+                        selectedSegment={'Document'}
+                        labels={['Document', 'Placeholder']}
+                    />
                 )}
-                <AttachmentsRows
-                    readonly={this.props.readonly}
-                    hideUploader={false}
-                    addAttachment={(file, title, filetype, expiryDate, attachmentType) => {
-                        this.props.addAttachment(file, title, filetype, expiryDate, attachmentType);
-                        this.toggleModal();
-                    }}
-                    fileTypes={explicitFileTypes ? explicitFileTypes : this.props.fileTypes}
-                    fileTypesForCC={explicitFileTypes ? explicitFileTypes : this.props.fileTypesForCC}
-                    country={this.props.country}
-                    currentApprover={this.props.currentApprover}
-                />
+                {this.state.segment === 'Document' ? (
+                    <AttachmentsRows
+                        readonly={this.props.readonly}
+                        hideUploader={false}
+                        addAttachment={(file, title, filetype, expiryDate, attachmentType) => {
+                            this.props.addAttachment(file, title, filetype, expiryDate, attachmentType);
+                            this.toggleModal();
+                        }}
+                        fileTypes={explicitFileTypes ? explicitFileTypes : this.props.fileTypes}
+                        fileTypesForCC={explicitFileTypes ? explicitFileTypes : this.props.fileTypesForCC}
+                        country={this.props.country}
+                        currentApprover={this.props.currentApprover}
+                    />
+                ) : (
+                    <AttachmentPlaceholderForm
+                        country={this.props.country}
+                        fileTypes={explicitFileTypes ? explicitFileTypes : this.props.fileTypes}
+                        fileTypesForCC={explicitFileTypes ? explicitFileTypes : this.props.fileTypesForCC}
+                        readonly={false}
+                        currentApprover={this.props.currentApprover}
+                        savePlaceholder={fileType => {
+                            if (!_.isNil(fileType)) {
+                                this.props.savePlaceholder(fileType);
+                                this.toggleModal();
+                            } else {
+                                console.log('error saving placeholder');
+                            }
+                        }}
+                        hideUploader={false}
+                    />
+                )}
             </div>
         );
     }
@@ -49,7 +77,9 @@ export default class Attachments extends Component {
     primaryAction(attachment) {
         switch (attachment.status) {
             case 'missing':
-                return () => this.toggleModal(['contract']);
+                return attachment.handlePrimaryAction
+                    ? attachment.handlePrimaryAction
+                    : () => this.toggleModal([attachment.placeholder]);
             case 'normal':
                 return () => window.open(attachment.contentUri);
             case 'deleted':
@@ -61,9 +91,17 @@ export default class Attachments extends Component {
         const attachments = this.props.attachments.map((attachment, index) => {
             const isMissing = attachment.status === 'missing';
             const status = attachment.status ? attachment.status : 'normal';
+            const disabled = attachment.disabled || this.props.disabled;
+
+            const secondaryAction = disabled
+                ? null
+                : !attachment.handleSecondaryAction && isMissing
+                ? () => this.toggleModal(isMissing ? [attachment.placeholder] : null)
+                : () => attachment.handleSecondaryAction();
+
             return (
                 <Attachment
-                    disabled={this.props.disabled}
+                    disabled={disabled}
                     key={index}
                     status={status}
                     title={attachment.title}
@@ -73,14 +111,8 @@ export default class Attachments extends Component {
                     expiry={attachment.expiryDate}
                     author={attachment.uploaderPrincipalName}
                     timestamp={attachment.uploadTimestamp}
-                    handlePrimaryAction={this.props.disabled ? null : this.primaryAction(attachment)}
-                    handleSecondaryAction={
-                        this.props.disabled
-                            ? null
-                            : isMissing
-                            ? () => this.toggleModal(isMissing ? ['contract'] : null)
-                            : attachment.handleSecondaryAction
-                    }
+                    handlePrimaryAction={disabled ? null : this.primaryAction(attachment)}
+                    handleSecondaryAction={secondaryAction}
                     secondaryInteraction={attachment.secondaryInteraction}
                 />
             );
@@ -114,6 +146,7 @@ export default class Attachments extends Component {
 Attachments.propTypes = {
     attachments: PropTypes.array,
     addAttachment: PropTypes.func,
+    savePlaceholder: PropTypes.func,
     fileTypes: PropTypes.array,
     fileTypesForCC: PropTypes.array,
     country: PropTypes.string,
