@@ -10,6 +10,7 @@ import HistoryIcon from '../icons/history-blue.svg';
 import InboxIcon from '../icons/inbox-blue.svg';
 import QuickcheckIcon from '../icons/quick-check-blue.svg';
 import CreditcorrectionIcon from '../icons/credit-correction-blue.svg';
+import BatchUpdateIcon from '../icons/batch-update-blue.svg';
 
 const trainingMovieStyle = {
     margin: '1rem',
@@ -24,6 +25,7 @@ const iconMap = {
     inbox: InboxIcon,
     quickcheck: QuickcheckIcon,
     creditcorrection: CreditcorrectionIcon,
+    batchupdate: BatchUpdateIcon,
 };
 
 export default class LaunchPadLayout extends Component {

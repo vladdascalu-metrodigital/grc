@@ -6,6 +6,7 @@ import LimitcheckIcon from '../icons/credit-request.svg';
 import HistoryIcon from '../icons/history.svg';
 import QuickcheckIcon from '../icons/quick-check.svg';
 import CreditcorrectionIcon from '../icons/credit-correction-white.svg';
+import BatchUpdateIcon from '../icons/batch-update-white.svg';
 
 const iconMap = {
     launchpad: LaunchpadIcon, // Will not be part of the config, just for here
@@ -14,8 +15,9 @@ const iconMap = {
     inbox: InboxIcon,
     quickcheck: QuickcheckIcon,
     creditcorrection: CreditcorrectionIcon,
+    batchupdate: BatchUpdateIcon,
 };
-const sortMap = ['launchpad', 'inbox', 'limitcheck', 'quickcheck', 'creditcorrection', 'history'];
+const sortMap = ['launchpad', 'inbox', 'limitcheck', 'quickcheck', 'creditcorrection', 'history', 'batchupdate'];
 
 function sortNavs(navs, sortMap) {
     return navs.sort((a, b) => sortMap.indexOf(a.roleKey.toLowerCase()) - sortMap.indexOf(b.roleKey.toLowerCase()));
