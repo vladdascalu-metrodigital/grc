@@ -42,6 +42,7 @@ export default class Attachments extends Component {
                 {this.state.segment === 'Document' ? (
                     <AttachmentsRows
                         readonly={this.props.readonly}
+                        explicitFileType={!_.isNil(explicitFileTypes)}
                         hideUploader={false}
                         addAttachment={(file, title, filetype, expiryDate, attachmentType) => {
                             this.props.addAttachment(file, title, filetype, expiryDate, attachmentType);

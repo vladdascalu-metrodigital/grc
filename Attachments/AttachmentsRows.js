@@ -8,6 +8,7 @@ import { NumberInput } from '../NumberInput/index';
 import MrcDatePickerInput from '../DatePicker/index';
 
 import * as Constants from './AttachmentsDefinition';
+import * as _ from 'lodash';
 
 export default class AttachmentsRows extends Component {
     constructor(props) {
@@ -40,6 +41,9 @@ export default class AttachmentsRows extends Component {
 
     componentDidMount() {
         !this.state.attachmentTypesLoaded ? this.loadAttachmentTypes() : null;
+        if (this.props.explicitFileType) {
+            this.handleFileTypeChange(this.props.fileTypes[0]);
+        }
     }
 
     componentDidUpdate() {
@@ -49,7 +53,11 @@ export default class AttachmentsRows extends Component {
     }
 
     render() {
-        return <div className="mrc-attachments">{this.createUploader(this.props.currentApprover)}</div>;
+        return (
+            <div className="mrc-attachments">
+                {this.createUploader(this.props.currentApprover, this.props.explicitFileType)}
+            </div>
+        );
     }
 
     shortenFileName(name, maxLength) {
@@ -74,13 +82,12 @@ export default class AttachmentsRows extends Component {
     }
 
     fileSelection() {
-        !this.state.attachmentTypesLoaded ? this.loadAttachmentTypes() : null;
         return (
             <select
                 name="file-type"
                 id="select-file-type"
                 value={this.state.fileType == null || this.state.fileType === '' ? '' : this.state.fileType}
-                onChange={this.handleFileTypeChange}
+                onChange={event => this.handleFileTypeChange(event.target.value)}
                 disabled={this.props.readonly || (this.props.fileTypes && this.props.fileTypes.length === 1)}
                 placeholder="File Type"
             >
@@ -89,7 +96,7 @@ export default class AttachmentsRows extends Component {
         );
     }
 
-    createUploader(currentApprover) {
+    createUploader(currentApprover, explicitFileType) {
         if (
             this.props.hideUploader !== undefined &&
             this.props.hideUploader !== null &&
@@ -99,7 +106,7 @@ export default class AttachmentsRows extends Component {
         }
         const maxFileNameLength = 50;
         const classNameOfTypeOptions =
-            this.props.fileTypes && this.props.fileTypes.length > 1 ? 'column' : 'hiddenColumn';
+            explicitFileType || _.get(this.props, 'fileTypes.length') > 1 ? 'column' : 'hiddenColumn';
         let mandatoryFields = this.checkMandatoryFields();
         let readyToSend =
             this.state.title.trim().length > 0 &&
@@ -108,6 +115,8 @@ export default class AttachmentsRows extends Component {
                 (this.props.fileTypes !== null && this.props.fileTypes.length === 1)) &&
             mandatoryFields;
         let isCcWithOnlyGeneral = currentApprover === 'CC' && this.checkForOnlyGeneralFileType();
+
+        !this.state.attachmentTypesLoaded ? this.loadAttachmentTypes() : null;
 
         return (
             <div className="mrc-add-attachment">
@@ -347,13 +356,15 @@ export default class AttachmentsRows extends Component {
         this.setState({ ...this.state, title: evt.target.value });
     };
 
-    handleFileTypeChange = event => {
+    handleFileTypeChange = value => {
         let attachmentFromJson = this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.filter(
-            att => att.type.toLowerCase() === event.target.value
+            att => att.type.toLowerCase() === value
         )[0];
 
         let showCollateralMeta = false;
-        if (attachmentFromJson.fields) showCollateralMeta = true;
+        if (attachmentFromJson.fields) {
+            showCollateralMeta = true;
+        }
 
         for (let i = 0; attachmentFromJson.fields && i < attachmentFromJson.fields.length; i++) {
             if (attachmentFromJson.fields[i].value) {
@@ -448,4 +459,5 @@ AttachmentsRows.propTypes = {
     country: PropTypes.string,
     hideUploader: PropTypes.bool,
     fileTypesForCC: PropTypes.array,
+    explicitFileType: PropTypes.bool,
 };

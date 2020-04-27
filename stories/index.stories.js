@@ -56,6 +56,11 @@ storiesOf('Attachments', module)
                     secondaryInteraction: 'add',
                 },
                 {
+                    status: 'missing',
+                    fileType: 'delkredere',
+                    secondaryInteraction: 'add',
+                },
+                {
                     status: 'normal',
                     title: 'LVM 203',
                     contentType: 'application/msword',
@@ -96,8 +101,8 @@ storiesOf('Attachments', module)
             fileTypesForCC={['general', 'contract']}
             addAttachment={logAddFile}
             savePlaceholder={fileType => console.log('saving placeholder of type ' + fileType)}
-            currentApprover="CC"
-            country="PL"
+            currentApprover="ConM"
+            country="DE"
         />
     ))
     .add('disabled', () => (
