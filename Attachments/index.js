@@ -79,7 +79,7 @@ export default class Attachments extends Component {
             case 'missing':
                 return attachment.handlePrimaryAction
                     ? attachment.handlePrimaryAction
-                    : () => this.toggleModal([attachment.placeholder]);
+                    : () => this.toggleModal([attachment.fileType]);
             case 'normal':
                 return () => window.open(attachment.contentUri);
             case 'deleted':
@@ -96,7 +96,7 @@ export default class Attachments extends Component {
             const secondaryAction = disabled
                 ? null
                 : !attachment.handleSecondaryAction && isMissing
-                ? () => this.toggleModal(isMissing ? [attachment.placeholder] : null)
+                ? () => this.toggleModal(isMissing ? [attachment.fileType] : null)
                 : () => attachment.handleSecondaryAction();
 
             return (
