@@ -15,11 +15,22 @@ export default class Attachment extends Component {
         };
     }
 
+    getFileType(contentType) {
+        const fileExtension = mime.extension(contentType);
+        return fileExtension || lookup('mrc.attachments.unknown-mime');
+    }
+
+    documentTypeTitle(documentType) {
+        return lookup('mrc.attachments.types.' + documentType) + ' ' + lookup('mrc.attachments.missing');
+    }
+
     getAttachmentContent() {
         if (this.props.status === 'missing') {
             return (
                 <div className="mrc-ui-attachment-content" onClick={this.props.handlePrimaryAction}>
-                    <div className="mrc-ui-attachment-documenttype">{this.props.documentType}</div>
+                    <div className="mrc-ui-attachment-documenttype">
+                        {this.documentTypeTitle(this.props.documentType)}
+                    </div>
                 </div>
             );
         } else {
@@ -88,11 +99,6 @@ export default class Attachment extends Component {
                 {secondaryAction}
             </div>
         );
-    }
-
-    getFileType(contentType) {
-        const fileExtension = mime.extension(contentType);
-        return fileExtension || lookup('mrc.attachments.unknown-mime');
     }
 }
 

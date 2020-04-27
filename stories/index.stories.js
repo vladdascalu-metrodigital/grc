@@ -45,19 +45,14 @@ storiesOf('Attachments', module)
             attachments={[
                 {
                     status: 'missing',
-                    fileType: 'Commercial Credit Insurance',
-                    secondaryInteraction: 'add',
-                },
-                {
-                    status: 'missing',
-                    fileType: 'Bond',
+                    fileType: 'bond',
                     secondaryInteraction: 'delete',
                     handleSecondaryAction: logDeleteFile,
                     disabled: true,
                 },
                 {
                     status: 'missing',
-                    fileType: 'Signed contract',
+                    fileType: 'contract',
                     secondaryInteraction: 'add',
                 },
                 {

@@ -11,6 +11,10 @@ let translations = {
     'mrc.attachments.fields.file': 'Selected file',
     'mrc.attachments.noattachments': 'No Attachments',
 
+    'mrc.attachments.missing': 'missing',
+    'mrc.attachments.types.contract': 'Contract',
+    'mrc.attachments.types.bond': 'Bond',
+
     'mrc.customerdetails.fields.customernumber': 'Customer Number',
     'mrc.customerdetails.fields.taxnumber': 'Tax Number',
     'mrc.customerdetails.fields.vateunumber': 'Vat EU Number',
