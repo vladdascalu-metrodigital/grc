@@ -15,11 +15,22 @@ export default class Attachment extends Component {
         };
     }
 
+    getFileType(contentType) {
+        const fileExtension = mime.extension(contentType);
+        return fileExtension || lookup('mrc.attachments.unknown-mime');
+    }
+
+    documentTypeTitle(documentType) {
+        return lookup('mrc.attachments.types.' + documentType) + ' ' + lookup('mrc.attachments.missing');
+    }
+
     getAttachmentContent() {
         if (this.props.status === 'missing') {
             return (
                 <div className="mrc-ui-attachment-content" onClick={this.props.handlePrimaryAction}>
-                    <div className="mrc-ui-attachment-documenttype">{this.props.documentType}</div>
+                    <div className="mrc-ui-attachment-documenttype">
+                        {this.documentTypeTitle(this.props.documentType)}
+                    </div>
                 </div>
             );
         } else {
@@ -48,27 +59,28 @@ export default class Attachment extends Component {
     }
 
     getSecondaryInteraction() {
+        const ifNotDisabled = a => (!this.props.disabled ? a : null);
         switch (this.props.secondaryInteraction) {
             case 'delete':
-                return (
+                return ifNotDisabled(
                     <div className="mrc-ui-attachment-interaction" onClick={this.props.handleSecondaryAction}>
                         <Textlink icon="trash" text={lookup('mrc.attachments.delete')} />
                     </div>
                 );
             case 'restore':
-                return (
+                return ifNotDisabled(
                     <div className="mrc-ui-attachment-interaction" onClick={this.props.handleSecondaryAction}>
                         <Textlink icon="restore" text={lookup('mrc.attachments.restore')} />
                     </div>
                 );
             case 'add':
-                return (
+                return ifNotDisabled(
                     <div className="mrc-ui-attachment-interaction" onClick={this.props.handleSecondaryAction}>
                         <Textlink icon="add" text={lookup('mrc.attachments.add')} />
                     </div>
                 );
             default:
-                return (
+                return ifNotDisabled(
                     <div className="mrc-ui-attachment-interaction" onClick={this.props.handleSecondaryAction}>
                         <Textlink text={this.props.secondaryInteraction} />
                     </div>
@@ -87,11 +99,6 @@ export default class Attachment extends Component {
                 {secondaryAction}
             </div>
         );
-    }
-
-    getFileType(contentType) {
-        const fileExtension = mime.extension(contentType);
-        return fileExtension || lookup('mrc.attachments.unknown-mime');
     }
 }
 

@@ -41,29 +41,25 @@ storiesOf('Attachments', module)
     .add('standard', () => (
         <Attachments
             disabled={false}
-            noPlaceholder={true}
+            noPlaceholder={false}
             attachments={[
                 {
                     status: 'missing',
-                    fileType: 'Commercial Credit Insurance missing',
-                    secondaryInteraction: 'add',
-                },
-                {
-                    status: 'missing',
-                    fileType: 'Bond missing',
+                    fileType: 'bond',
                     secondaryInteraction: 'delete',
                     handleSecondaryAction: logDeleteFile,
+                    disabled: true,
                 },
                 {
                     status: 'missing',
-                    fileType: 'Signed contract missing',
+                    fileType: 'contract',
                     secondaryInteraction: 'add',
                 },
                 {
                     status: 'normal',
                     title: 'LVM 203',
                     contentType: 'application/msword',
-                    fileType: 'Commercial Credit Insurance',
+                    fileType: 'Commercial Credit',
                     amount: '4000€',
                     expiryDate: '23.10.20',
                     uploaderPrincipalName: 'joe.appleseed@metronom.com',
@@ -99,6 +95,7 @@ storiesOf('Attachments', module)
             fileTypes={['general', 'delkredere', 'warenkreditversicherung', 'contract']}
             fileTypesForCC={['general', 'contract']}
             addAttachment={logAddFile}
+            savePlaceholder={fileType => console.log('saving placeholder of type ' + fileType)}
             currentApprover="CC"
             country="PL"
         />
