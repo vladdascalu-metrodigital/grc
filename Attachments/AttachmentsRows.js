@@ -241,12 +241,12 @@ export default class AttachmentsRows extends Component {
 
     createDatePicker(id, minDate, maxDate, field) {
         let value = this.getFieldValueFromAttachmentType(field);
-        let selectedDate = value;
-        // let dateParser;
-        // if (value) {
-        //     dateParser = value.split('.');
-        //     selectedDate = new Date(dateParser[2], dateParser[1] - 1, dateParser[0]);
-        // }
+        let selectedDate;
+        let dateParser;
+        if (value) {
+            dateParser = value.split('.');
+            selectedDate = new Date(dateParser[2], dateParser[1] - 1, dateParser[0]);
+        }
         return (
             <div
                 className="column attachments-date-picker"
@@ -258,7 +258,7 @@ export default class AttachmentsRows extends Component {
                 <MrcDatePickerInput
                     className="m-input-element"
                     onChange={event => this.handleDatePickerChange(event, field)}
-                    selected={selectedDate ? new Date(selectedDate) : null} //to check this
+                    selected={selectedDate ? selectedDate : null} //to check this
                     minDate={minDate}
                     maxDate={maxDate}
                     showYearDropdown={true}
@@ -325,12 +325,6 @@ export default class AttachmentsRows extends Component {
         let fileType = this.state.fileType;
         if (fileType === null) fileType = this.props.fileTypes[0];
 
-        // let fieldsForBackEnd = [];
-        // let fieldsInState = this.state.attachmentType.fields;
-        // for (let i = 0; i < fieldsInState.length; i++) {
-        //     fieldsForBackEnd [i] = {value: fieldsInState[i].value, data_type: fieldsInState[i].data_type};
-        // }
-
         this.props.addAttachment(
             this.state.file,
             this.state.title,
@@ -391,7 +385,7 @@ export default class AttachmentsRows extends Component {
     };
 
     handleDatePickerChange = (event, field) => {
-        let formattedDate = event; // && this.appendLeadingZeroes(event.getDate()) + "." + this.appendLeadingZeroes(event.getMonth() + 1) + "." + event.getFullYear();
+        let formattedDate = event && this.appendLeadingZeroes(event.getDate()) + "." + this.appendLeadingZeroes(event.getMonth() + 1) + "." + event.getFullYear();
         this.addFieldValueOnState(formattedDate, field);
     };
 
