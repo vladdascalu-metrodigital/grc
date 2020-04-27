@@ -385,7 +385,13 @@ export default class AttachmentsRows extends Component {
     };
 
     handleDatePickerChange = (event, field) => {
-        let formattedDate = event && this.appendLeadingZeroes(event.getDate()) + "." + this.appendLeadingZeroes(event.getMonth() + 1) + "." + event.getFullYear();
+        let formattedDate =
+            event &&
+            this.appendLeadingZeroes(event.getDate()) +
+                '.' +
+                this.appendLeadingZeroes(event.getMonth() + 1) +
+                '.' +
+                event.getFullYear();
         this.addFieldValueOnState(formattedDate, field);
     };
 
