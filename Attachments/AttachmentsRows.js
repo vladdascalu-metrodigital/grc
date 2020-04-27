@@ -249,7 +249,7 @@ export default class AttachmentsRows extends Component {
                 <MrcDatePickerInput
                     className="m-input-element"
                     onChange={event => this.handleDatePickerChange(event, field)}
-                    selected={selectedDate ? new Date(selectedDate) : null} //to check this
+                    selected={selectedDate ? selectedDate : null} //to check this
                     minDate={minDate}
                     maxDate={maxDate}
                     showYearDropdown={true}
