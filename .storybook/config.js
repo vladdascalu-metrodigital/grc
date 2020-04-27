@@ -1,9 +1,24 @@
-import { configure } from '@storybook/react';
+import { configure, addDecorator } from '@storybook/react';
 
-// automatically import all files ending in *.stories.js
+import React from 'react';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import reducer from 'reducers/reducer';
+import { HashRouter } from 'react-router-dom';
+
+const store = createStore(reducer);
+
+addDecorator(S => (
+    <Provider store={store}>
+        <HashRouter>
+            <S />
+        </HashRouter>
+    </Provider>
+));
+
 const req = require.context('../stories', true, /\.stories\.js$/);
 function loadStories() {
-  req.keys().forEach(filename => req(filename));
+    req.keys().forEach(filename => req(filename));
 }
 
 configure(loadStories, module);

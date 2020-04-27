@@ -1,0 +1,80 @@
+@import '../settings';
+
+.mrc-search {
+    .mrc-icon-base {
+        height: 2rem;
+        width: auto;
+        align-self: center;
+    }
+
+    .search-icon {
+        margin-left: 0.25rem;
+    }
+
+    .mrc-icon {
+        background-color: $sky-blue;
+        border-radius: 3px;
+    }
+
+    .spinner-wrapper {
+        position: relative;
+        padding-top: 18px;
+        padding-right: 18px;
+        padding-left: 18px;
+    }
+}
+
+.mrc-search-result {
+    a,
+    .result-summary {
+        width: 100%;
+        display: block;
+        padding: 18px 21px;
+        background-color: $form-bg;
+        border-bottom: $form-border;
+    }
+
+    .result-summary {
+        color: $form-placeholder-color;
+        font-size: $small-text;
+        display: flex;
+        font-weight: 500;
+        text-transform: uppercase;
+        justify-content: space-between;
+    }
+
+    h1,
+    h2 {
+        color: $metro-blue;
+        font-size: $text-flow;
+        font-weight: inherit;
+        display: flex;
+        align-content: flex-start;
+    }
+
+    h1 {
+        font-weight: 500;
+    }
+
+    h2 {
+        color: #666;
+        margin-top: 5px;
+        align-items: center;
+
+        span {
+            display: flex;
+            margin-right: 10px;
+        }
+    }
+
+    .vat-number {
+        background-color: $light-grey;
+        padding: 0.25rem;
+        border-radius: 0.35rem;
+    }
+
+    .hint {
+        color: $form-label-color;
+        font-weight: 300;
+    }
+}

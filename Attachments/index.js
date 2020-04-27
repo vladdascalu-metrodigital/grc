@@ -8,21 +8,28 @@ import AttachmentsRows from './AttachmentsRows';
 import SegmentedControl from '../SegmentedControl';
 
 export default class Attachments extends Component {
-    toggleModal = () => {
-        this.setState(prevState => ({ isModalVisible: !prevState.isModalVisible }));
+    toggleModal = fileTypes => {
+        this.setState(prevState => ({
+            isModalVisible: !prevState.isModalVisible,
+            fileTypes: fileTypes ? fileTypes : null,
+        }));
     };
 
     constructor(props) {
         super(props);
         this.state = {
             isModalVisible: false,
+            fileTypes: null,
         };
     }
 
     modalDialogContent() {
+        const explicitFileTypes = this.state.fileTypes;
         return (
             <div>
-                <SegmentedControl selectedSegment={'Document'} labels={['Document', 'Placeholder']} />
+                {this.props.noPlaceholder ? null : (
+                    <SegmentedControl selectedSegment={'Document'} labels={['Document', 'Placeholder']} />
+                )}
                 <AttachmentsRows
                     readonly={this.props.readonly}
                     hideUploader={false}
@@ -30,8 +37,8 @@ export default class Attachments extends Component {
                         this.props.addAttachment(file, title, filetype, expiryDate, attachmentType);
                         this.toggleModal();
                     }}
-                    fileTypes={this.props.fileTypesForCC}
-                    fileTypesForCC={this.props.fileTypesForCC}
+                    fileTypes={explicitFileTypes ? explicitFileTypes : this.props.fileTypes}
+                    fileTypesForCC={explicitFileTypes ? explicitFileTypes : this.props.fileTypesForCC}
                     country={this.props.country}
                     currentApprover={this.props.currentApprover}
                 />
@@ -42,7 +49,7 @@ export default class Attachments extends Component {
     primaryAction(attachment) {
         switch (attachment.status) {
             case 'missing':
-                return this.toggleModal;
+                return () => this.toggleModal(['contract']);
             case 'normal':
                 return () => window.open(attachment.contentUri);
             case 'deleted':
@@ -68,7 +75,11 @@ export default class Attachments extends Component {
                     timestamp={attachment.uploadTimestamp}
                     handlePrimaryAction={this.props.disabled ? null : this.primaryAction(attachment)}
                     handleSecondaryAction={
-                        this.props.disabled ? null : isMissing ? this.toggleModal : attachment.handleSecondaryAction
+                        this.props.disabled
+                            ? null
+                            : isMissing
+                            ? () => this.toggleModal(isMissing ? ['contract'] : null)
+                            : attachment.handleSecondaryAction
                     }
                     secondaryInteraction={attachment.secondaryInteraction}
                 />
@@ -79,7 +90,7 @@ export default class Attachments extends Component {
                 <button
                     type="button"
                     className="mrc-primary-large-add-button"
-                    onClick={this.toggleModal}
+                    onClick={() => this.toggleModal()}
                     disabled={this.props.disabled}
                 >
                     {lookup('mrc.attachments.addbutton')}
@@ -90,7 +101,7 @@ export default class Attachments extends Component {
                 </div>
                 {this.state.isModalVisible ? (
                     <ModalDialog
-                        toggle={this.toggleModal}
+                        toggle={() => this.toggleModal()}
                         content={this.modalDialogContent()}
                         title={lookup('mrc.attachments.modaltitle')}
                     />
@@ -109,4 +120,5 @@ Attachments.propTypes = {
     currentApprover: PropTypes.string,
     readonly: PropTypes.bool,
     disabled: PropTypes.bool,
+    noPlaceholder: PropTypes.bool,
 };

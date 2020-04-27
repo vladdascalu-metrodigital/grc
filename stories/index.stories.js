@@ -14,10 +14,16 @@ import Comments from '../NewComments';
 
 import Attachments from '../Attachments';
 
-import { HashRouter, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-import '../node_modules/mrc-component-library/public/css/bundle.css';
+import 'mrc-component-library/public/css/bundle.css';
+import 'mrc-component-library/public/js/bundle';
 import SegmentedControl from '../SegmentedControl';
+
+import InboxPresentation from '../InboxPresentation';
+import LaunchPad from '../LaunchPad';
+import CustomerSearch from '../CustomerSearch';
+import RecentRequestsInfo from '../RecentRequestsInfo';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -27,7 +33,7 @@ storiesOf('Button', module)
     .add('Secondary', () => <Button status="secondary" onClick={action('clicked')} text="Approve" />)
     .add('Success', () => <Button status="success" onClick={action('clicked')} text="Approve" />);
 
-const logAddFile = () => console.log('adding file');
+const logAddFile = (file, title, filetype) => console.log('adding file of type: ' + filetype);
 const logDeleteFile = () => console.log('deleting file');
 const logRestoreFile = () => console.log('restoring file');
 
@@ -35,6 +41,7 @@ storiesOf('Attachments', module)
     .add('standard', () => (
         <Attachments
             disabled={false}
+            noPlaceholder={true}
             attachments={[
                 {
                     status: 'missing',
@@ -89,8 +96,8 @@ storiesOf('Attachments', module)
                     handleSecondaryAction: logRestoreFile,
                 },
             ]}
-            filetypes={['general', 'delkredere', 'warenkreditversicherung']}
-            fileTypesForCC={['general', 'contracting']}
+            fileTypes={['general', 'delkredere', 'warenkreditversicherung', 'contract']}
+            fileTypesForCC={['general', 'contract']}
             addAttachment={logAddFile}
             currentApprover="CC"
             country="PL"
@@ -149,8 +156,8 @@ storiesOf('Attachments', module)
                     secondaryInteraction: 'restore',
                 },
             ]}
-            filetypes={['general', 'delkredere', 'warenkreditversicherung']}
-            fileTypesForCC={['general', 'contracting']}
+            fileTypes={['general', 'delkredere', 'warenkreditversicherung', 'contract']}
+            fileTypesForCC={['general', 'contract']}
             addAttachment={() => console.log('adding file')}
             currentApprover="CC"
             country="PL"
@@ -331,8 +338,592 @@ storiesOf('NavLink', module).add('MRC-3820', () => {
 
     const lineBreak = <br key="2" />;
 
-    //HashRouter needs a single element to render, so we should wrap our links.
-    const app = <div>{[someLink, lineBreak, activeLink]}</div>;
-    const routerWithLinks = <HashRouter basename="/">{app}</HashRouter>;
-    return routerWithLinks;
+    return <div>{[someLink, lineBreak, activeLink]}</div>;
 });
+
+storiesOf('InboxPresentation', module).add('standard', () => (
+    <InboxPresentation
+        data={[
+            {
+                amount: '5000',
+                approvedLimit: '20',
+                assignedUserName: null,
+                autoDecision: null,
+                country: null,
+                creationDate: '2020-04-16T11:30:44Z',
+                currentLimit: null,
+                customerName: 'test',
+                customerNumber: '123354',
+                customerStoreNumber: '125',
+                detailsURI: 'test',
+                groupAmount: 7000,
+                groupSize: 2,
+                id: '1',
+                new: true,
+                position: 'CM',
+                requestDate: '2020-04-16T11:30:44Z',
+                topic: 'APPROVAL_STEP_READY',
+                translateKey: 'mrc.label.appliedLimit',
+            },
+            {
+                amount: '5000',
+                confirmationURI: 'test',
+                creationDate: '2020-04-16T11:30:44Z',
+                approvedLimit: '5000',
+                assignedUserName: null,
+                autoDecision: null,
+                country: null,
+                issueDate: '2020-04-16T11:30:44Z',
+                currentLimit: null,
+                customerName: 'test',
+                customerNumber: '123354',
+                customerStoreNumber: '125',
+                detailsURI: 'test',
+                groupAmount: 5000,
+                groupSize: 1,
+                id: '2',
+                new: true,
+                position: 'HOT',
+                requestDate: '2020-04-16T11:30:44Z',
+                topic: 'GENERAL_NOTIFICATION',
+                translateKey: 'mrc.label.appliedLimit',
+            },
+        ]}
+        filterAvailable={true}
+        isTablet={false}
+        confirmNotification={uri => console.log('confirmed uri: ' + uri)}
+        onFilterChanged={filter => console.log('onchanged filter: ' + filter)}
+        currentFilterValue={() => console.log('currentFilterValue')}
+    />
+));
+
+storiesOf('LaunchPad', module)
+    .add('standard desktop', () => (
+        <LaunchPad
+            config={{
+                data: {
+                    trainingMovie: {
+                        available: true,
+                        url: 'https://confluence.metrosystems.net/download/attachments/190837537/mrc_einfuehrung.mp4',
+                    },
+                    launchpad: {
+                        tiles: [
+                            {
+                                template: '/customerstatus/{country}/{storeNumber}/{customerNumber}',
+                                roleKey: 'limitCheck',
+                                title: 'mrc.apps.limitcheck',
+                            },
+                            {
+                                template: '/quickstatus/{country}/{storeNumber}/{customerNumber}',
+                                roleKey: 'quickCheck',
+                                title: 'mrc.apps.quickcheck',
+                            },
+                            {
+                                template:
+                                    'http://localhost:8091/creditcorrection/creditcorrection/{country}/{storeNumber}/{customerNumber}',
+                                roleKey: 'creditCorrection',
+                                title: 'mrc.apps.creditcorrection',
+                            },
+                            {
+                                template:
+                                    'http://localhost:8086/history/items/{country}/{storeNumber}/{customerNumber}',
+                                roleKey: 'history',
+                                title: 'mrc.apps.history',
+                            },
+                            {
+                                template: 'http://localhost:8089/inbox',
+                                roleKey: 'inbox',
+                                title: 'mrc.apps.inbox',
+                            },
+                        ],
+                    },
+                },
+            }}
+            desktop={true}
+            tablet={false}
+            updateActiveItem={value => console.log(value)}
+            showAuxControl={value => console.log(value)}
+            updateUiPageTitle={value => console.log(value)}
+        />
+    ))
+    .add('standard mobile', () => (
+        <LaunchPad
+            config={{
+                data: {
+                    trainingMovie: {
+                        available: true,
+                        url: 'https://confluence.metrosystems.net/download/attachments/190837537/mrc_einfuehrung.mp4',
+                    },
+                    launchpad: {
+                        tiles: [
+                            {
+                                template: '/customerstatus/{country}/{storeNumber}/{customerNumber}',
+                                roleKey: 'limitCheck',
+                                title: 'mrc.apps.limitcheck',
+                            },
+                            {
+                                template: '/quickstatus/{country}/{storeNumber}/{customerNumber}',
+                                roleKey: 'quickCheck',
+                                title: 'mrc.apps.quickcheck',
+                            },
+                            {
+                                template:
+                                    'http://localhost:8091/creditcorrection/creditcorrection/{country}/{storeNumber}/{customerNumber}',
+                                roleKey: 'creditCorrection',
+                                title: 'mrc.apps.creditcorrection',
+                            },
+                            {
+                                template:
+                                    'http://localhost:8086/history/items/{country}/{storeNumber}/{customerNumber}',
+                                roleKey: 'history',
+                                title: 'mrc.apps.history',
+                            },
+                            {
+                                template: 'http://localhost:8089/inbox',
+                                roleKey: 'inbox',
+                                title: 'mrc.apps.inbox',
+                            },
+                        ],
+                    },
+                },
+            }}
+            desktop={false}
+            tablet={false}
+            updateActiveItem={value => console.log(value)}
+            showAuxControl={value => console.log(value)}
+            updateUiPageTitle={value => console.log(value)}
+        />
+    ));
+
+storiesOf('CustomerSearch', module)
+    .add('standard search', () => (
+        <CustomerSearch
+            results={null}
+            isLoading={false}
+            doSearch={value => console.log(value)}
+            updateSearchTerm={value => console.log(value)}
+            updateUiPageTitle={value => console.log(value)}
+            showAuxControl={value => console.log(value)}
+            hideNotification={value => console.log(value)}
+            searchTerm={null}
+            cleanSearchResult={value => console.log(value)}
+            match={{
+                isExact: true,
+                params: {
+                    roleKey: 'limitCheck',
+                    template: '%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
+                },
+                path: '/search/:roleKey/:template',
+                url: '/search/limitCheck/%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
+            }}
+        />
+    ))
+    .add('standard loading', () => (
+        <CustomerSearch
+            results={null}
+            isLoading={true}
+            doSearch={value => console.log(value)}
+            updateSearchTerm={value => console.log(value)}
+            updateUiPageTitle={value => console.log(value)}
+            showAuxControl={value => console.log(value)}
+            hideNotification={value => console.log(value)}
+            searchTerm={'test1'}
+            cleanSearchResult={value => console.log(value)}
+            match={{
+                isExact: false,
+                params: {
+                    roleKey: 'limitCheck',
+                    template: '%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
+                },
+                path: '/search/:roleKey/:template',
+                url: '/search/limitCheck/%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
+            }}
+        />
+    ))
+    .add('standard found', () => (
+        <CustomerSearch
+            results={[
+                {
+                    customerId: {
+                        country: 'DE',
+                        customerNumber: '12',
+                        storeNumber: '1',
+                    },
+                    vatSpecNumber: 't11',
+                    names: {
+                        customer: {
+                            firstName: 'foo1',
+                            lastName: 'bar1',
+                        },
+                        companyOwner: {
+                            firstName: 'foo11',
+                            lastName: 'bar11',
+                        },
+                    },
+                },
+                {
+                    customerId: {
+                        country: 'DE',
+                        customerNumber: '13',
+                        storeNumber: '1',
+                    },
+                    vatSpecNumber: 't12',
+                    names: {
+                        customer: {
+                            firstName: 'foo2',
+                            lastName: 'bar2',
+                        },
+                        companyOwner: {
+                            firstName: 'foo22',
+                            lastName: 'bar22',
+                        },
+                    },
+                },
+            ]}
+            isLoading={false}
+            doSearch={value => console.log(value)}
+            updateSearchTerm={value => console.log(value)}
+            updateUiPageTitle={value => console.log(value)}
+            showAuxControl={value => console.log(value)}
+            hideNotification={value => console.log(value)}
+            searchTerm={'test1'}
+            cleanSearchResult={value => console.log(value)}
+            match={{
+                isExact: false,
+                params: {
+                    roleKey: 'limitCheck',
+                    template: '%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
+                },
+                path: '/search/:roleKey/:template',
+                url: '/search/limitCheck/%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
+            }}
+        />
+    ))
+    .add('standard not found', () => (
+        <CustomerSearch
+            results={[]}
+            isLoading={false}
+            doSearch={value => console.log(value)}
+            updateSearchTerm={value => console.log(value)}
+            updateUiPageTitle={value => console.log(value)}
+            showAuxControl={value => console.log(value)}
+            hideNotification={value => console.log(value)}
+            searchTerm={'test1'}
+            cleanSearchResult={value => console.log(value)}
+            match={{
+                isExact: true,
+                params: {
+                    roleKey: 'limitCheck',
+                    template: '%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
+                },
+                path: '/search/:roleKey/:template',
+                url: '/search/limitCheck/%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
+            }}
+        />
+    ));
+
+storiesOf('RecentRequestsInfo', module)
+    .add('standard desktop', () => (
+        <RecentRequestsInfo
+            isTablet={true}
+            recentRequests={{
+                data: {
+                    country: 'DE',
+                    storeNumber: '10',
+                    customerNumber: '12346',
+                    progressBar: {
+                        currentStep: 3,
+                        totalSteps: 4,
+                        phase: 'contracting',
+                    },
+                    requests: [
+                        {
+                            requestId: '1',
+                            url: 'http://localhost:8080/history/items/request/1',
+                            requestStatus: {
+                                trafficLight: 'yellow',
+                                creationDate: '2020-04-21T12:10:46Z',
+                                amount: 15000,
+                                groupAmount: 10000,
+                                creditProduct: 'METRO Cash',
+                                creditPeriod: '3',
+                                debitType: 'Firmenlastschriftmandat',
+                                status: 'Pending',
+                                position: 'CM',
+                                requestType: 'LIMIT_REQUEST',
+                                amountBeforeExpiry: null,
+                                groupMembers: 2,
+                                applied: true,
+                            },
+                        },
+                        {
+                            requestId: '2',
+                            url: 'http://localhost:8080/history/items/qcr/2',
+                            requestStatus: {
+                                trafficLight: 'quickcheck',
+                                creationDate: '2020-04-21T12:10:46Z',
+                                amount: 10000,
+                                groupAmount: 0,
+                                creditProduct: null,
+                                creditPeriod: null,
+                                debitType: null,
+                                status: 'Approved',
+                                position: 'MRC System',
+                                requestType: 'QUICK_CHECK',
+                                amountBeforeExpiry: null,
+                                groupMembers: 1,
+                                applied: false,
+                            },
+                        },
+                        {
+                            requestId: '3',
+                            url: 'http://localhost:8080/history/items/request/3',
+                            requestStatus: {
+                                trafficLight: 'noColor',
+                                creationDate: '2020-04-21T12:10:46Z',
+                                amount: 20000,
+                                groupAmount: 0,
+                                creditProduct: '3',
+                                creditPeriod: 'METRO Cash',
+                                debitType: 'Firmenlastschriftmandat',
+                                status: 'Cancelled',
+                                position: 'SM',
+                                requestType: 'LIMIT_REQUEST',
+                                amountBeforeExpiry: null,
+                                groupMembers: 2,
+                                applied: false,
+                            },
+                        },
+                        {
+                            requestId: '4',
+                            url: 'http://localhost:8080/history/items/request/4',
+                            requestStatus: {
+                                trafficLight: 'red',
+                                creationDate: '2020-04-21T12:10:46Z',
+                                amount: 10000,
+                                groupAmount: 0,
+                                creditProduct: '3',
+                                creditPeriod: 'METRO Cash',
+                                debitType: 'Firmenlastschriftmandat',
+                                status: 'Blocked',
+                                position: 'CM',
+                                requestType: 'LIMIT_REQUEST',
+                                amountBeforeExpiry: null,
+                                groupMembers: 2,
+                                applied: false,
+                            },
+                        },
+                        {
+                            requestId: '5',
+                            url: 'http://localhost:8080/history/items/expiry/5',
+                            requestStatus: {
+                                trafficLight: 'green',
+                                creationDate: '2020-04-21T12:10:46Z',
+                                amount: 10000,
+                                groupAmount: 0,
+                                creditProduct: '3',
+                                creditPeriod: 'METRO Cash',
+                                debitType: 'Firmenlastschriftmandat',
+                                status: 'Activated',
+                                position: 'MRC System',
+                                requestType: 'LIMIT_EXPIRY',
+                                amountBeforeExpiry: 2000,
+                                groupMembers: 1,
+                                applied: false,
+                            },
+                        },
+                        {
+                            requestId: '6',
+                            url: 'http://localhost:8080/history/items/expiry/6',
+                            requestStatus: {
+                                trafficLight: 'no',
+                                creationDate: '2020-04-21T12:10:46Z',
+                                amount: 10000,
+                                groupAmount: 0,
+                                creditProduct: '3',
+                                creditPeriod: 'METRO Cash',
+                                debitType: 'Firmenlastschriftmandat',
+                                status: 'Failed',
+                                position: 'MRC System',
+                                requestType: 'LIMIT_EXPIRY',
+                                amountBeforeExpiry: 2000,
+                                groupMembers: 1,
+                                applied: false,
+                            },
+                        },
+                        {
+                            requestId: '7',
+                            url: 'http://localhost:8080/history/items/correditcorrection/7',
+                            requestStatus: {
+                                trafficLight: 'red',
+                                creationDate: '2020-04-21T12:10:46Z',
+                                amount: 12000,
+                                groupAmount: 0,
+                                creditProduct: '3',
+                                creditPeriod: 'METRO Cash',
+                                debitType: 'Firmenlastschriftmandat',
+                                status: 'Blocked',
+                                position: 'CM',
+                                requestType: 'CREDIT_CORRECTION',
+                                amountBeforeExpiry: null,
+                                groupMembers: 2,
+                                applied: false,
+                            },
+                        },
+                    ],
+                },
+            }}
+        />
+    ))
+    .add('standard mobile', () => (
+        <RecentRequestsInfo
+            isTablet={false}
+            recentRequests={{
+                data: {
+                    country: 'DE',
+                    storeNumber: '10',
+                    customerNumber: '12346',
+                    progressBar: {
+                        currentStep: 3,
+                        totalSteps: 4,
+                        phase: 'contracting',
+                    },
+                    requests: [
+                        {
+                            requestId: '1',
+                            url: 'http://localhost:8080/history/items/request/1',
+                            requestStatus: {
+                                trafficLight: 'yellow',
+                                creationDate: '2020-04-21T12:10:46Z',
+                                amount: 15000,
+                                groupAmount: 10000,
+                                creditProduct: 'METRO Cash',
+                                creditPeriod: '3',
+                                debitType: 'Firmenlastschriftmandat',
+                                status: 'Pending',
+                                position: 'CM',
+                                requestType: 'LIMIT_REQUEST',
+                                amountBeforeExpiry: null,
+                                groupMembers: 2,
+                                applied: true,
+                            },
+                        },
+                        {
+                            requestId: '2',
+                            url: 'http://localhost:8080/history/items/qcr/2',
+                            requestStatus: {
+                                trafficLight: 'quickcheck',
+                                creationDate: '2020-04-21T12:10:46Z',
+                                amount: 10000,
+                                groupAmount: 0,
+                                creditProduct: null,
+                                creditPeriod: null,
+                                debitType: null,
+                                status: 'Approved',
+                                position: 'MRC System',
+                                requestType: 'QUICK_CHECK',
+                                amountBeforeExpiry: null,
+                                groupMembers: 1,
+                                applied: false,
+                            },
+                        },
+                        {
+                            requestId: '3',
+                            url: 'http://localhost:8080/history/items/request/3',
+                            requestStatus: {
+                                trafficLight: 'noColor',
+                                creationDate: '2020-04-21T12:10:46Z',
+                                amount: 20000,
+                                groupAmount: 0,
+                                creditProduct: '3',
+                                creditPeriod: 'METRO Cash',
+                                debitType: 'Firmenlastschriftmandat',
+                                status: 'Cancelled',
+                                position: 'SM',
+                                requestType: 'LIMIT_REQUEST',
+                                amountBeforeExpiry: null,
+                                groupMembers: 2,
+                                applied: false,
+                            },
+                        },
+                        {
+                            requestId: '4',
+                            url: 'http://localhost:8080/history/items/request/4',
+                            requestStatus: {
+                                trafficLight: 'red',
+                                creationDate: '2020-04-21T12:10:46Z',
+                                amount: 10000,
+                                groupAmount: 0,
+                                creditProduct: '3',
+                                creditPeriod: 'METRO Cash',
+                                debitType: 'Firmenlastschriftmandat',
+                                status: 'Blocked',
+                                position: 'CM',
+                                requestType: 'LIMIT_REQUEST',
+                                amountBeforeExpiry: null,
+                                groupMembers: 2,
+                                applied: false,
+                            },
+                        },
+                        {
+                            requestId: '5',
+                            url: 'http://localhost:8080/history/items/expiry/5',
+                            requestStatus: {
+                                trafficLight: 'green',
+                                creationDate: '2020-04-21T12:10:46Z',
+                                amount: 10000,
+                                groupAmount: 0,
+                                creditProduct: '3',
+                                creditPeriod: 'METRO Cash',
+                                debitType: 'Firmenlastschriftmandat',
+                                status: 'Activated',
+                                position: 'MRC System',
+                                requestType: 'LIMIT_EXPIRY',
+                                amountBeforeExpiry: 2000,
+                                groupMembers: 1,
+                                applied: false,
+                            },
+                        },
+                        {
+                            requestId: '6',
+                            url: 'http://localhost:8080/history/items/expiry/6',
+                            requestStatus: {
+                                trafficLight: 'no',
+                                creationDate: '2020-04-21T12:10:46Z',
+                                amount: 10000,
+                                groupAmount: 0,
+                                creditProduct: '3',
+                                creditPeriod: 'METRO Cash',
+                                debitType: 'Firmenlastschriftmandat',
+                                status: 'Failed',
+                                position: 'MRC System',
+                                requestType: 'LIMIT_EXPIRY',
+                                amountBeforeExpiry: 2000,
+                                groupMembers: 1,
+                                applied: false,
+                            },
+                        },
+                        {
+                            requestId: '7',
+                            url: 'http://localhost:8080/history/items/correditcorrection/7',
+                            requestStatus: {
+                                trafficLight: 'red',
+                                creationDate: '2020-04-21T12:10:46Z',
+                                amount: 12000,
+                                groupAmount: 0,
+                                creditProduct: '3',
+                                creditPeriod: 'METRO Cash',
+                                debitType: 'Firmenlastschriftmandat',
+                                status: 'Blocked',
+                                position: 'CM',
+                                requestType: 'CREDIT_CORRECTION',
+                                amountBeforeExpiry: null,
+                                groupMembers: 2,
+                                applied: false,
+                            },
+                        },
+                    ],
+                },
+            }}
+        />
+    ));
