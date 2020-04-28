@@ -59,6 +59,7 @@ export default class Attachments extends Component {
                         fileTypesForCC={explicitFileTypes ? explicitFileTypes : this.props.fileTypesForCC}
                         country={this.props.country}
                         currentApprover={this.props.currentApprover}
+                        contractUrl={this.props.contractUrl}
                     />
                 ) : (
                     <AttachmentPlaceholderForm
@@ -162,4 +163,5 @@ Attachments.propTypes = {
     readonly: PropTypes.bool,
     disabled: PropTypes.bool,
     noPlaceholder: PropTypes.bool,
+    contractUrl: PropTypes.string,
 };

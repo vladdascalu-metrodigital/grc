@@ -43,6 +43,7 @@ storiesOf('Attachments', module)
         <Attachments
             disabled={false}
             noPlaceholder={false}
+            contractUrl={'http://example.com'}
             attachments={[
                 {
                     status: 'missing',
