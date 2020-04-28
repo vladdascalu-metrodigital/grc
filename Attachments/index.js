@@ -100,9 +100,7 @@ export default class Attachments extends Component {
             this.props.attachments.filter(a => a.fileType == 'contract' && a.status == 'missing')
         );
         return hasContractPlaceholder && this.props.contractUrl ? (
-            <div className="mrc-contract-link">
-                <a href={this.props.contractUrl}>{lookup('mrc.attachments.contractlinktext')}</a>
-            </div>
+            <a href={this.props.contractUrl}>{lookup('mrc.attachments.contractlinktext')}</a>
         ) : null;
     }
 

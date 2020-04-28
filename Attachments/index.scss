@@ -23,6 +23,12 @@
   color: $color-brand-primary-default;
   text-align: center;
 }
+
+.mrc-ui-attachments-headerrow {
+  padding: $spacing-none $spacing-medium;
+    margin-bottom: $spacing-large
+}
+
 @media #{$breakpoint-not-small} {
   .mrc-ui-attachments-headline {
     text-align: left;
