@@ -14,6 +14,7 @@ let translations = {
     'mrc.attachments.missing': 'missing',
     'mrc.attachments.types.contract': 'Contract',
     'mrc.attachments.types.bond': 'Bond',
+    'mrc.attachments.contractlinktext': 'Contract Templates',
 
     'mrc.customerdetails.fields.customernumber': 'Customer Number',
     'mrc.customerdetails.fields.taxnumber': 'Tax Number',

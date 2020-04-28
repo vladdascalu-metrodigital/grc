@@ -96,14 +96,6 @@ export default class AttachmentsRows extends Component {
         );
     }
 
-    contractLink() {
-        return this.props.contractUrl ? (
-            <div className="mrc-contract-link">
-                <a href={this.props.contractUrl}>{lookup('mrc.attachments.contractlinktext')}</a>
-            </div>
-        ) : null;
-    }
-
     createUploader(currentApprover, explicitFileType) {
         if (
             this.props.hideUploader !== undefined &&
@@ -160,7 +152,6 @@ export default class AttachmentsRows extends Component {
                         </div>
                     )}
                 </div>
-                {this.state.fileType === 'contract' ? this.contractLink() : null}
                 <div>{this.crateAttachmentTypesFields()}</div>
                 <button
                     className="mrc-btn mrc-secondary-button"
@@ -469,5 +460,4 @@ AttachmentsRows.propTypes = {
     hideUploader: PropTypes.bool,
     fileTypesForCC: PropTypes.array,
     explicitFileType: PropTypes.bool,
-    contractUrl: PropTypes.string,
 };

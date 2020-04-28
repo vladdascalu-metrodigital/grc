@@ -59,7 +59,6 @@ export default class Attachments extends Component {
                         fileTypesForCC={explicitFileTypes ? explicitFileTypes : this.props.fileTypesForCC}
                         country={this.props.country}
                         currentApprover={this.props.currentApprover}
-                        contractUrl={this.props.contractUrl}
                     />
                 ) : (
                     <AttachmentPlaceholderForm
@@ -94,6 +93,17 @@ export default class Attachments extends Component {
             case 'deleted':
                 return null;
         }
+    }
+
+    contractLink() {
+        const hasContractPlaceholder = !_.isEmpty(
+            this.props.attachments.filter(a => a.fileType == 'contract' && a.status == 'missing')
+        );
+        return hasContractPlaceholder && this.props.contractUrl ? (
+            <div className="mrc-contract-link">
+                <a href={this.props.contractUrl}>{lookup('mrc.attachments.contractlinktext')}</a>
+            </div>
+        ) : null;
     }
 
     render() {
@@ -137,6 +147,7 @@ export default class Attachments extends Component {
                     {lookup('mrc.attachments.addbutton')}
                 </button>
                 <div className="mrc-ui-attachments">
+                    <div className="mrc-ui-attachments-headerrow">{this.contractLink()}</div>
                     <h3 className="mrc-ui-attachments-headline">{lookup('mrc.attachments.headline')}</h3>
                     <div className="mrc-ui-attachments-list">{attachments}</div>
                 </div>
