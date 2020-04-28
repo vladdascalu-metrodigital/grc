@@ -271,7 +271,7 @@ export default class OldAttachmentsRows extends Component {
                 <MrcDatePickerInput
                     className="m-input-element"
                     onChange={event => this.handleDatePickerChange(event, field)}
-                    selected={selectedDate ? selectedDate : null} //to check this
+                    selected={selectedDate ? selectedDate : null}
                     minDate={minDate}
                     maxDate={maxDate}
                     showYearDropdown={true}
@@ -408,10 +408,20 @@ export default class OldAttachmentsRows extends Component {
     }
 
     displayFieldMetadata(field) {
-        let fieldValueString =
-            field.data_type && field.data_type.toLowerCase() == 'date'
-                ? new Date(field.value).toLocaleDateString()
-                : field.value;
+        let fieldValueString;
+        if (field.data_type && field.data_type.toLowerCase() == 'date') {
+            //in new case the date value is stored as string dd.MM.yyyy
+            if (this.isString(field.value) && field.value.includes('.')) {
+                let dateParser = field.value.split('.');
+                fieldValueString = new Date(dateParser[2], dateParser[1] - 1, dateParser[0]).toLocaleDateString();
+                //in old case the date value is stored as miliseconds 1582844400000
+            } else {
+                fieldValueString = new Date(field.value).toLocaleDateString();
+            }
+        } else {
+            fieldValueString = field.value;
+        }
+
         return (
             <h4 className="attachment-collaterals-meta" key={field.field_label}>
                 {field.value ? (
@@ -421,6 +431,10 @@ export default class OldAttachmentsRows extends Component {
                 ) : null}
             </h4>
         );
+    }
+
+    isString = (s) => {
+        return typeof(s) === 'string' || s instanceof String;
     }
 
     downloadFile(item) {
