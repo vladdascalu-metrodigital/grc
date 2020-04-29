@@ -9,7 +9,6 @@ import SegmentedControl from '../SegmentedControl';
 import AttachmentPlaceholderForm from './AttachmentPlaceholderForm';
 
 import * as _ from 'lodash';
-import moment from 'moment';
 
 export default class Attachments extends Component {
     toggleModal = fileTypes => {
@@ -46,13 +45,7 @@ export default class Attachments extends Component {
                         explicitFileType={!_.isNil(explicitFileTypes)}
                         hideUploader={false}
                         addAttachment={(file, title, filetype, expiryDate, attachmentType) => {
-                            this.props.addAttachment(
-                                file,
-                                title,
-                                filetype,
-                                typeof expiryDate === 'string' ? moment(expiryDate, 'DD.MM.YYY') : expiryDate,
-                                attachmentType
-                            );
+                            this.props.addAttachment(file, title, filetype, expiryDate, attachmentType);
                             this.toggleModal();
                         }}
                         fileTypes={explicitFileTypes ? explicitFileTypes : this.props.fileTypes}
