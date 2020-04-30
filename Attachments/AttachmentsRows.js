@@ -8,7 +8,6 @@ import { NumberInput } from '../NumberInput/index';
 import MrcDatePickerInput from '../DatePicker/index';
 
 import * as Constants from './AttachmentsDefinition';
-import * as _ from 'lodash';
 
 export default class AttachmentsRows extends Component {
     constructor(props) {
@@ -23,7 +22,6 @@ export default class AttachmentsRows extends Component {
             attachmentType: null,
             attachmentTypesLoaded: false,
         };
-        //this.FILE_TYPES_TRANSLATION_KEYS = props.fileTypes;
         this.handleDatePickerChange = this.handleDatePickerChange.bind(this);
     }
 
@@ -43,12 +41,8 @@ export default class AttachmentsRows extends Component {
         !this.state.attachmentTypesLoaded ? this.loadAttachmentTypes() : null;
         if (this.props.explicitFileType) {
             this.handleFileTypeChange(this.props.fileTypes[0]);
-        }
-    }
-
-    componentDidUpdate() {
-        if (this.props.currentApprover === 'CC' && this.checkForOnlyGeneralFileType()) {
-            this.createStateForCC();
+        } else if (this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.length === 1) {
+            this.handleFileTypeChange(this.props.fileTypes[0]);
         }
     }
 
@@ -96,7 +90,7 @@ export default class AttachmentsRows extends Component {
         );
     }
 
-    createUploader(currentApprover, explicitFileType) {
+    createUploader() {
         if (
             this.props.hideUploader !== undefined &&
             this.props.hideUploader !== null &&
@@ -105,8 +99,6 @@ export default class AttachmentsRows extends Component {
             return null;
         }
         const maxFileNameLength = 50;
-        const classNameOfTypeOptions =
-            explicitFileType || _.get(this.props, 'fileTypes.length') > 1 ? 'column' : 'hiddenColumn';
         let mandatoryFields = this.checkMandatoryFields();
         let readyToSend =
             this.state.title.trim().length > 0 &&
@@ -114,7 +106,6 @@ export default class AttachmentsRows extends Component {
             ((this.state.fileType !== null && this.state.fileType !== '') ||
                 (this.props.fileTypes !== null && this.props.fileTypes.length === 1)) &&
             mandatoryFields;
-        let isCcWithOnlyGeneral = currentApprover === 'CC' && this.checkForOnlyGeneralFileType();
 
         !this.state.attachmentTypesLoaded ? this.loadAttachmentTypes() : null;
 
@@ -143,14 +134,7 @@ export default class AttachmentsRows extends Component {
                             placeholder="Title"
                         />
                     </div>
-                    {isCcWithOnlyGeneral ? null : (
-                        <div className={classNameOfTypeOptions}>
-                            <label name="selected-file-type" className="selected-file">
-                                {lookup('mrc.attachments.fields.fileType')}:{' '}
-                            </label>
-                            {this.fileSelection()}
-                        </div>
-                    )}
+                    {this.fileSelection()}
                 </div>
                 <div>{this.crateAttachmentTypesFields()}</div>
                 <button
@@ -165,24 +149,6 @@ export default class AttachmentsRows extends Component {
             </div>
         );
     }
-
-    checkForOnlyGeneralFileType = () => {
-        return (
-            this.props.fileTypesForCC &&
-            this.props.fileTypesForCC.length === 1 &&
-            this.props.fileTypesForCC[0] === 'general'
-        );
-    };
-
-    //when send back to CC from approval-service
-    createStateForCC = () => {
-        if (!this.state.fileType) {
-            this.setState({
-                fileType: 'general',
-                attachmentType: { type: 'general' },
-            });
-        }
-    };
 
     crateAttachmentTypesFields() {
         if (this.state.showCollateralMeta) {
@@ -458,6 +424,5 @@ AttachmentsRows.propTypes = {
     fileTypes: PropTypes.array,
     country: PropTypes.string,
     hideUploader: PropTypes.bool,
-    fileTypesForCC: PropTypes.array,
     explicitFileType: PropTypes.bool,
 };

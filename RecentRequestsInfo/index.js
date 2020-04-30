@@ -14,7 +14,6 @@ import './index.scss';
 export default class RecentRequestsInfo extends Component {
     render() {
         const requestResponse = this.props.recentRequests.data;
-        console.log(requestResponse);
         const divClassName = this.props.isTablet ? 'recent-requests-info tablet' : 'recent-requests-info no-tablet';
         if (requestResponse && requestResponse.requests != null && requestResponse.requests.length > 0) {
             return (

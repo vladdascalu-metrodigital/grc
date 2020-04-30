@@ -49,7 +49,6 @@ export default class Attachments extends Component {
                             this.toggleModal();
                         }}
                         fileTypes={explicitFileTypes ? explicitFileTypes : this.props.fileTypes}
-                        fileTypesForCC={explicitFileTypes ? explicitFileTypes : this.props.fileTypesForCC}
                         country={this.props.country}
                         currentApprover={this.props.currentApprover}
                     />
@@ -57,7 +56,6 @@ export default class Attachments extends Component {
                     <AttachmentPlaceholderForm
                         country={this.props.country}
                         fileTypes={explicitFileTypes ? explicitFileTypes : this.props.fileTypes}
-                        fileTypesForCC={explicitFileTypes ? explicitFileTypes : this.props.fileTypesForCC}
                         readonly={false}
                         currentApprover={this.props.currentApprover}
                         savePlaceholder={fileType => {

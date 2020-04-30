@@ -31,11 +31,10 @@ export default class AttachmentsPlaceholderForm extends Component {
 
     componentDidMount() {
         !this.state.attachmentTypesLoaded ? this.loadAttachmentTypes() : null;
-    }
-
-    componentDidUpdate() {
-        if (this.props.currentApprover === 'CC' && this.checkForOnlyGeneralFileType()) {
-            this.createStateForCC();
+        if (this.props.explicitFileType) {
+            this.handleFileTypeChange(this.props.fileTypes[0]);
+        } else if (this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.length === 1) {
+            this.handleFileTypeChange(this.props.fileTypes[0]);
         }
     }
 
@@ -71,7 +70,7 @@ export default class AttachmentsPlaceholderForm extends Component {
                 name="file-type"
                 id="select-file-type"
                 value={this.state.fileType == null || this.state.fileType === '' ? '' : this.state.fileType}
-                onChange={this.handleFileTypeChange}
+                onChange={event => this.handleFileTypeChange(event.target.value)}
                 disabled={this.props.readonly || (this.props.fileTypes && this.props.fileTypes.length === 1)}
                 placeholder="File Type"
             >
@@ -80,9 +79,9 @@ export default class AttachmentsPlaceholderForm extends Component {
         );
     }
 
-    handleFileTypeChange = event => {
+    handleFileTypeChange = value => {
         let attachmentFromJson = this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.filter(
-            att => att.type.toLowerCase() === event.target.value
+            att => att.type.toLowerCase() === value
         )[0];
 
         let showCollateralMeta = false;
@@ -104,7 +103,7 @@ export default class AttachmentsPlaceholderForm extends Component {
         });
     };
 
-    createUploader(currentApprover) {
+    createUploader() {
         if (
             this.props.hideUploader !== undefined &&
             this.props.hideUploader !== null &&
@@ -112,23 +111,9 @@ export default class AttachmentsPlaceholderForm extends Component {
         ) {
             return null;
         }
-        const classNameOfTypeOptions =
-            this.props.fileTypes && this.props.fileTypes.length > 1 ? 'column' : 'hiddenColumn';
-
-        let isCcWithOnlyGeneral = currentApprover === 'CC' && this.checkForOnlyGeneralFileType();
-
         return (
             <div className="mrc-add-attachment">
-                <div className="row">
-                    {isCcWithOnlyGeneral ? null : (
-                        <div className={classNameOfTypeOptions}>
-                            <label name="selected-file-type" className="selected-file">
-                                {lookup('mrc.attachments.fields.fileType')}:{' '}
-                            </label>
-                            {this.fileSelection()}
-                        </div>
-                    )}
-                </div>
+                <div className="row">{this.fileSelection()}</div>
 
                 <button
                     className="mrc-btn mrc-secondary-button"
@@ -141,24 +126,6 @@ export default class AttachmentsPlaceholderForm extends Component {
             </div>
         );
     }
-
-    checkForOnlyGeneralFileType = () => {
-        return (
-            this.props.fileTypesForCC &&
-            this.props.fileTypesForCC.length === 1 &&
-            this.props.fileTypesForCC[0] === 'general'
-        );
-    };
-
-    //when send back to CC from approval-service
-    createStateForCC = () => {
-        if (!this.state.fileType) {
-            this.setState({
-                fileType: 'general',
-                attachmentType: { type: 'general' },
-            });
-        }
-    };
 
     createFileTypeOptions() {
         if (this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY && this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.length > 0) {
@@ -194,6 +161,6 @@ AttachmentsPlaceholderForm.propTypes = {
     fileTypes: PropTypes.array,
     country: PropTypes.string,
     hideUploader: PropTypes.bool,
-    fileTypesForCC: PropTypes.array,
     savePlaceholder: PropTypes.func,
+    explicitFileType: PropTypes.bool,
 };
