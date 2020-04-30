@@ -134,7 +134,12 @@ export default class AttachmentsRows extends Component {
                             placeholder="Title"
                         />
                     </div>
-                    {this.fileSelection()}
+                    <div className={'column'}>
+                        <label name="selected-file-type" className="selected-file">
+                            {lookup('mrc.attachments.fields.fileType')}:{' '}
+                        </label>
+                        {this.fileSelection()}
+                    </div>
                 </div>
                 <div>{this.crateAttachmentTypesFields()}</div>
                 <button

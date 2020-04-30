@@ -113,7 +113,12 @@ export default class AttachmentsPlaceholderForm extends Component {
         }
         return (
             <div className="mrc-add-attachment">
-                <div className="row">{this.fileSelection()}</div>
+                <div className={'column'}>
+                    <label name="selected-file-type" className="selected-file">
+                        {lookup('mrc.attachments.fields.fileType')}:{' '}
+                    </label>
+                    {this.fileSelection()}
+                </div>
 
                 <button
                     className="mrc-btn mrc-secondary-button"
