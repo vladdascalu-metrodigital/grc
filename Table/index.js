@@ -20,7 +20,12 @@ export function Table({ columns, data, title, className }) {
                     {headerGroups.map(headerGroup => (
                         <tr key={headerGroup.getHeaderGroupProps().key} {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map(column => (
-                                <th key={column.getHeaderProps().key} {...column.getHeaderProps()}>
+                                <th
+                                    key={column.getHeaderProps().key}
+                                    {...Object.assign({}, column.getHeaderProps(), {
+                                        width: column.customWidth ? column.customWidth : undefined,
+                                    })}
+                                >
                                     {column.render('Header')}
                                 </th>
                             ))}
