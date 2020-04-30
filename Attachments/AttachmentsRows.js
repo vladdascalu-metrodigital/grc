@@ -39,19 +39,13 @@ export default class AttachmentsRows extends Component {
 
     componentDidMount() {
         !this.state.attachmentTypesLoaded ? this.loadAttachmentTypes() : null;
-        if (this.props.explicitFileType) {
-            this.handleFileTypeChange(this.props.fileTypes[0]);
-        } else if (this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.length === 1) {
+        if (this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.length === 1) {
             this.handleFileTypeChange(this.props.fileTypes[0]);
         }
     }
 
     render() {
-        return (
-            <div className="mrc-attachments">
-                {this.createUploader(this.props.currentApprover, this.props.explicitFileType)}
-            </div>
-        );
+        return <div className="mrc-attachments">{this.createUploader()}</div>;
     }
 
     shortenFileName(name, maxLength) {
@@ -429,5 +423,4 @@ AttachmentsRows.propTypes = {
     fileTypes: PropTypes.array,
     country: PropTypes.string,
     hideUploader: PropTypes.bool,
-    explicitFileType: PropTypes.bool,
 };

@@ -11,10 +11,10 @@ import AttachmentPlaceholderForm from './AttachmentPlaceholderForm';
 import * as _ from 'lodash';
 
 export default class Attachments extends Component {
-    toggleModal = fileTypes => {
+    toggleModal = fileType => {
         this.setState(prevState => ({
             isModalVisible: !prevState.isModalVisible,
-            fileTypes: fileTypes ? fileTypes : null,
+            fileType: fileType ? fileType : null,
             segment: 'Document',
         }));
     };
@@ -29,7 +29,6 @@ export default class Attachments extends Component {
     }
 
     modalDialogContent() {
-        const explicitFileTypes = this.state.fileTypes;
         return (
             <div>
                 {this.props.noPlaceholder ? null : (
@@ -42,20 +41,19 @@ export default class Attachments extends Component {
                 {this.state.segment === 'Document' ? (
                     <AttachmentsRows
                         readonly={this.props.readonly}
-                        explicitFileType={!_.isNil(explicitFileTypes)}
                         hideUploader={false}
                         addAttachment={(file, title, filetype, expiryDate, attachmentType) => {
                             this.props.addAttachment(file, title, filetype, expiryDate, attachmentType);
                             this.toggleModal();
                         }}
-                        fileTypes={explicitFileTypes ? explicitFileTypes : this.props.fileTypes}
+                        fileTypes={this.state.fileType ? [this.state.fileType] : this.props.fileTypes}
                         country={this.props.country}
                         currentApprover={this.props.currentApprover}
                     />
                 ) : (
                     <AttachmentPlaceholderForm
                         country={this.props.country}
-                        fileTypes={explicitFileTypes ? explicitFileTypes : this.props.fileTypes}
+                        fileTypes={this.state.fileType ? [this.state.fileType] : this.props.fileTypes}
                         readonly={false}
                         currentApprover={this.props.currentApprover}
                         savePlaceholder={fileType => {
@@ -78,7 +76,7 @@ export default class Attachments extends Component {
             case 'missing':
                 return attachment.handlePrimaryAction
                     ? attachment.handlePrimaryAction
-                    : () => this.toggleModal([attachment.fileType]);
+                    : () => this.toggleModal(attachment.fileType);
             case 'normal':
                 return () => window.open(attachment.contentUri);
             case 'deleted':

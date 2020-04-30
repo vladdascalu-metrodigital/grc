@@ -31,9 +31,7 @@ export default class AttachmentsPlaceholderForm extends Component {
 
     componentDidMount() {
         !this.state.attachmentTypesLoaded ? this.loadAttachmentTypes() : null;
-        if (this.props.explicitFileType) {
-            this.handleFileTypeChange(this.props.fileTypes[0]);
-        } else if (this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.length === 1) {
+        if (this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.length === 1) {
             this.handleFileTypeChange(this.props.fileTypes[0]);
         }
     }
@@ -160,12 +158,11 @@ export default class AttachmentsPlaceholderForm extends Component {
 }
 
 AttachmentsPlaceholderForm.propTypes = {
-    addAttachment: PropTypes.func.isRequired,
+    addAttachment: PropTypes.func,
     readonly: PropTypes.bool,
     currentApprover: PropTypes.string,
     fileTypes: PropTypes.array,
     country: PropTypes.string,
     hideUploader: PropTypes.bool,
     savePlaceholder: PropTypes.func,
-    explicitFileType: PropTypes.bool,
 };
