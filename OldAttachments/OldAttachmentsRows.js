@@ -433,9 +433,9 @@ export default class OldAttachmentsRows extends Component {
         );
     }
 
-    isString = (s) => {
-        return typeof(s) === 'string' || s instanceof String;
-    }
+    isString = s => {
+        return typeof s === 'string' || s instanceof String;
+    };
 
     downloadFile(item) {
         window.open(item.contentUri, '_blank');
@@ -542,7 +542,13 @@ export default class OldAttachmentsRows extends Component {
     };
 
     handleDatePickerChange = (event, field) => {
-        let formattedDate = event && this.appendLeadingZeroes(event.getDate()) + "." + this.appendLeadingZeroes(event.getMonth() + 1) + "." + event.getFullYear();
+        let formattedDate =
+            event &&
+            this.appendLeadingZeroes(event.getDate()) +
+                '.' +
+                this.appendLeadingZeroes(event.getMonth() + 1) +
+                '.' +
+                event.getFullYear();
         this.addFieldValueOnState(formattedDate, field);
     };
 

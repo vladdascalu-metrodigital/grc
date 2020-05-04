@@ -7,7 +7,13 @@ import FileUpload from '../FileUpload';
 import { NumberInput } from '../NumberInput/index';
 import MrcDatePickerInput from '../DatePicker/index';
 
-import * as Constants from './AttachmentsDefinition';
+import AttachmentSpec from './spec.json';
+
+import * as _ from 'lodash';
+
+import { List, Map } from 'immutable';
+
+const MAX_FILE_LENGTH = 50;
 
 export default class AttachmentsRows extends Component {
     constructor(props) {
@@ -16,206 +22,132 @@ export default class AttachmentsRows extends Component {
             title: '',
             file: null,
             fileType: null,
-            attachmentExpiryDate: null,
-            showCollateralMeta: false,
-            attachmentAmount: null,
-            attachmentType: null,
-            attachmentTypesLoaded: false,
+            expiryDate: null,
+            showMetadata: false,
+            amount: null,
+            attachmentSpecList: null,
         };
-        this.handleDatePickerChange = this.handleDatePickerChange.bind(this);
-    }
-
-    loadAttachmentTypes() {
-        this.ALL_ATTACHMENT_TYPES_JSON = JSON.parse(Constants.ALL_ATTACHMENT_TYPES_JSON);
-        this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY = this.ALL_ATTACHMENT_TYPES_JSON.attachment_types
-            .filter(
-                attType =>
-                    attType.country.toLowerCase() === this.props.country.toLowerCase() ||
-                    attType.country.toLowerCase() === 'all'
-            )
-            .filter(attType => this.props.fileTypes.includes(attType.type.toLowerCase()));
-        this.setState({ attachmentTypesLoaded: true });
     }
 
     componentDidMount() {
-        !this.state.attachmentTypesLoaded ? this.loadAttachmentTypes() : null;
-        if (this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.length === 1) {
+        this.setState({
+            attachmentSpecList: AttachmentSpec.attachment_types
+                .filter(
+                    attType =>
+                        attType.country.toLowerCase() === this.props.country.toLowerCase() ||
+                        attType.country.toLowerCase() === 'all'
+                )
+                .filter(attType => this.props.fileTypes.includes(attType.type.toLowerCase())),
+        });
+        if (this.state.attachmentSpecList === 1) {
             this.handleFileTypeChange(this.props.fileTypes[0]);
         }
     }
 
-    render() {
-        return <div className="mrc-attachments">{this.createUploader()}</div>;
+    ///////////////////////////////////////////////////////////////////////////////
+    // File selection
+
+    handleFileTypeChange(value) {
+        let attachmentSpec = List(this.state.attachmentSpecList).find(att => att.type.toLowerCase() === value);
+
+        this.setState({
+            ...this.state,
+            fileType: attachmentSpec.type,
+            showMetadata: !_.isNil(attachmentSpec.fields),
+            attachmentSpec: {
+                ...attachmentSpec,
+                fields: attachmentSpec.fields
+                    ? attachmentSpec.fields.map(field => {
+                          return { ...field, value: null };
+                      })
+                    : null,
+            },
+            expiryDate: null,
+            amount: null,
+        });
     }
 
-    shortenFileName(name, maxLength) {
-        let array = name.split('.');
-        let result = '';
-        let ext = '';
-
-        if (array.length >= 2) {
-            ext = array[array.length - 1];
-            result = name.substring(0, name.length - ext.length - 1);
-        } else {
-            result = name;
-        }
-
-        result = result.substring(0, maxLength);
-
-        if (ext.length > 0) {
-            result += '.' + ext;
-        }
-
-        return result;
+    options(fileType, attachmentSpecList) {
+        const option = spec => (
+            <option key={spec.type} value={spec.type.toLowerCase()}>
+                {lookup(spec.label)}
+            </option>
+        );
+        return _.isEmpty(attachmentSpecList)
+            ? null
+            : attachmentSpecList.length === 1 || !_.isNil(fileType)
+            ? attachmentSpecList.map(option)
+            : [<option key="null">{lookup('mrc.attachments.choose')}</option>].concat(attachmentSpecList.map(option));
     }
 
-    fileSelection() {
+    select(fileType, fileTypes, attachmentSpecList) {
         return (
             <select
                 name="file-type"
                 id="select-file-type"
-                value={this.state.fileType == null || this.state.fileType === '' ? '' : this.state.fileType}
+                value={_.isEmpty(fileType) ? '' : fileType}
                 onChange={event => this.handleFileTypeChange(event.target.value)}
-                disabled={this.props.readonly || (this.props.fileTypes && this.props.fileTypes.length === 1)}
-                placeholder="File Type"
+                disabled={this.props.readonly || fileTypes.length === 1}
             >
-                {this.createFileTypeOptions()}
+                {this.options(fileType, attachmentSpecList)}
             </select>
         );
     }
 
-    createUploader() {
-        if (
-            this.props.hideUploader !== undefined &&
-            this.props.hideUploader !== null &&
-            this.props.hideUploader === true
-        ) {
-            return null;
-        }
-        const maxFileNameLength = 50;
-        let mandatoryFields = this.checkMandatoryFields();
-        let readyToSend =
-            this.state.title.trim().length > 0 &&
-            this.state.file !== null &&
-            ((this.state.fileType !== null && this.state.fileType !== '') ||
-                (this.props.fileTypes !== null && this.props.fileTypes.length === 1)) &&
-            mandatoryFields;
-
-        !this.state.attachmentTypesLoaded ? this.loadAttachmentTypes() : null;
-
+    readyToSend(fields, title, fileType, fileTypes) {
+        const fieldsFilledIn = fields
+            ? List(fields)
+                  .filter(e => e && e.mandatory && _.isNil(e.value))
+                  .isEmpty()
+            : true;
         return (
-            <div className="mrc-add-attachment">
-                <FileUpload
-                    labelSelect={lookup('mrc.file.select')}
-                    updateFile={this.updateFile}
-                    selectDisabled={this.props.readonly}
-                    uploadDisabled={!readyToSend}
-                />
-
-                <div className="row">
-                    <div className="column">
-                        <label name="selected-file" className="selected-file">
-                            {lookup('mrc.attachments.fields.file')}: {this.state.file && this.state.file.name}
-                        </label>
-                        <input
-                            maxLength={maxFileNameLength}
-                            className="m-input-element"
-                            name="title"
-                            type="text"
-                            value={this.shortenFileName(this.state.title, maxFileNameLength)}
-                            onChange={this.updateTitle}
-                            disabled={this.props.readonly}
-                            placeholder="Title"
-                        />
-                    </div>
-                    <div className={'column'}>
-                        <label name="selected-file-type" className="selected-file">
-                            {lookup('mrc.attachments.fields.fileType')}:{' '}
-                        </label>
-                        {this.fileSelection()}
-                    </div>
-                </div>
-                <div>{this.crateAttachmentTypesFields()}</div>
-                <button
-                    className="mrc-btn mrc-secondary-button"
-                    type="button"
-                    name="upload-button"
-                    onClick={this.sendFile}
-                    disabled={!readyToSend}
-                >
-                    {lookup('mrc.file.upload')}
-                </button>
-            </div>
+            !_.isEmpty(title.trim()) &&
+            !_.isNil(this.state.file) &&
+            (!_.isEmpty(fileType) || fileTypes.length === 1) &&
+            fieldsFilledIn
         );
     }
 
-    crateAttachmentTypesFields() {
-        if (this.state.showCollateralMeta) {
-            let allFields = this.state.attachmentType.fields;
-            if (!allFields) return;
+    ///////////////////////////////////////////////////////////////////////////////
+    // Metadata fields
 
-            let fields = [];
-            let i,
-                j = 0;
-            for (i = 0; i < allFields.length; i++) {
-                if (i % 2 === 0) {
-                    fields[j] = this.createMetadataRow(allFields[i], i, allFields[i + 1], i + 1);
-                    j++;
-                }
-            }
-            return fields;
+    updateAttachmentState(value, field) {
+        if (!this.state.attachmentSpec) {
+            return;
         }
-        return null;
-    }
 
-    createMetadataRow(field1, id1, field2, id2) {
-        let returnValue = [];
-        returnValue[0] = this.createMetadataField(field1, id1);
-        returnValue[1] = this.createMetadataField(field2, id2);
-        return (
-            <div className="row" key={id1 + '_' + id2}>
-                {returnValue}
-            </div>
+        let _attachmentSpec = this.state.attachmentSpec;
+
+        let _value = field.data_type.toLowerCase() === 'date' ? value.valueOf() : value;
+
+        let _fields = _attachmentSpec.fields.map(_field =>
+            Map(_field).equals(Map(field)) ? { ..._field, value: _value } : _field
         );
+
+        this.setState({
+            ...this.state,
+            attachmentSpec: { ..._attachmentSpec, fields: _fields },
+            expiryDate: field.field_in_db === 'expiry_date' ? value : this.state.expiryDate,
+            amount: field.field_in_db === 'amount' ? value : this.state.amount,
+        });
     }
 
-    createMetadataField(field, id) {
-        if (field) {
-            let reactField;
-            if (field.data_type.toLowerCase() === 'date') {
-                let minDate = null,
-                    maxDate = null;
-                if (field.validation_operation.toLowerCase() === 'less_than_and_equals') {
-                    maxDate = new Date();
-                } else if (field.validation_operation.toLowerCase() === 'greater_than_and_equals') {
-                    minDate = new Date(); //new Date(minDate.getTime() + 86400000); // add 1 day in ms
-                } else if (field.validation_operation.toLowerCase() === 'greater_than') {
-                    minDate = new Date(new Date().getTime() + 86400000); // add 1 day in ms
-                } else if (field.validation_operation.toLowerCase() === 'less_than') {
-                    maxDate = new Date(new Date().getTime() - 86400000);
-                }
-                reactField = this.createDatePicker(id, minDate, maxDate, field);
-            } else if (field.data_type.toLowerCase() === 'double') {
-                reactField = this.createNumberInput(id, field);
-            }
-            return reactField;
-        } else {
-            return null;
-        }
+    handleDatePickerChange(event, field) {
+        const withLeadingZero = n => (n <= 9 ? '0' + n : n);
+
+        let formattedDate =
+            event &&
+            withLeadingZero(event.getDate()) + '.' + withLeadingZero(event.getMonth() + 1) + '.' + event.getFullYear();
+        this.updateAttachmentState(formattedDate, field);
     }
 
     createDatePicker(id, minDate, maxDate, field) {
-        let value = this.getFieldValueFromAttachmentType(field);
-        let selectedDate;
-        let dateParser;
-        if (value) {
-            dateParser = value.split('.');
-            selectedDate = new Date(dateParser[2], dateParser[1] - 1, dateParser[0]);
-        }
+        const [year, month, day] = field.value ? field.value.split('.') : [null, null, null];
+        const selectedDate = field.value ? new Date(year, month - 1, day) : null;
         return (
             <div
                 className="column attachments-date-picker"
-                key={this.state.attachmentType.type + '.' + field.field_label + '_' + id}
+                key={this.state.attachmentSpec.type + '.' + field.field_label + '_' + id}
             >
                 <label name={field.field_label} className="selected-file">
                     {lookup(field.field_label)}
@@ -237,183 +169,159 @@ export default class AttachmentsRows extends Component {
 
     createNumberInput(id, field) {
         return (
-            <div className="column" key={this.state.attachmentType.type + '.' + field.field_label + '_' + id}>
+            <div className="column" key={this.state.attachmentSpec.type + '.' + field.field_label + '_' + id}>
                 <label name={field.field_label} className="selected-file">
                     {lookup(field.field_label)}
                 </label>
                 <NumberInput
                     className="m-input-element"
                     name="attachment-amount"
-                    onBlur={event => this.handleAttachmentAmountChangeOnBlur(event, field)}
-                    onChange={this.handleAttachmentAmountChange}
+                    onBlur={event => this.updateAttachmentState(parseFloat(event.target.value), field)}
+                    onChange={() => null}
                     id={id}
                 />
             </div>
         );
     }
 
-    createFileTypeOptions() {
-        if (this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY && this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.length > 0) {
-            if (
-                (this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY &&
-                    this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.length === 1) ||
-                this.state.fileType != null
-            ) {
-                return this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.map(this.toOption);
-            } else {
-                return [<option key="null">{lookup('mrc.attachments.choose')}</option>].concat(
-                    this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.map(this.toOption)
-                );
-            }
-        } else {
-            return null;
-        }
+    datePickerField(field, id) {
+        const minDate =
+            field.validation_operation.toLowerCase() === 'greater_than_and_equals'
+                ? new Date()
+                : field.validation_operation.toLowerCase() === 'greater_than'
+                ? new Date(new Date().getTime() + 86400000)
+                : null;
+        const maxDate =
+            field.validation_operation.toLowerCase() === 'less_than_and_equals'
+                ? new Date()
+                : field.validation_operation.toLowerCase() === 'less_than'
+                ? new Date(new Date().getTime() - 86400000)
+                : null;
+
+        return this.createDatePicker(id, minDate, maxDate, field);
     }
 
-    toOption(t) {
+    metadataField(field, id) {
+        return field
+            ? field.data_type.toLowerCase() === 'date'
+                ? this.datePickerField(field, id)
+                : field.data_type.toLowerCase() === 'double'
+                ? this.createNumberInput(id, field)
+                : null
+            : null;
+    }
+
+    createMetadataRow(field1, id1, field2, id2) {
         return (
-            <option key={t.type} value={t.type.toLowerCase()}>
-                {lookup(t.label)}
-            </option>
+            <div className="row" key={id1 + '_' + id2}>
+                {[this.metadataField(field1, id1), this.metadataField(field2, id2)]}
+            </div>
         );
     }
 
-    updateFile = file => {
-        if (this.state.title.trim().length > 0) {
-            this.setState({ ...this.state, file: file });
-        } else {
-            this.setState({ ...this.state, title: file.name, file: file });
-        }
-    };
+    additionalFields() {
+        const showFields = allFields => {
+            if (!allFields) return;
 
-    sendFile = () => {
-        let fileType = this.state.fileType;
-        if (fileType === null) fileType = this.props.fileTypes[0];
+            return _.chunk(allFields, 2).map(([field1, field2], idx) =>
+                this.createMetadataRow(field1, 2 * idx, field2, 2 * idx + 1)
+            );
+        };
+        return this.state.showMetadata ? showFields(this.state.attachmentSpec.fields) : null;
+    }
 
-        this.props.addAttachment(
-            this.state.file,
-            this.state.title,
-            fileType,
-            this.state.attachmentExpiryDate,
-            this.state.attachmentAmount,
-            this.state.attachmentType
+    ///////////////////////////////////////////////////////////////////////////////
+    // Render
+
+    render() {
+        const [fileName, ext] = _.split(this.state.title, '.');
+
+        const uploader = this.props.hideUploader ? null : (
+            <div className="mrc-add-attachment">
+                <FileUpload
+                    labelSelect={lookup('mrc.file.select')}
+                    updateFile={file => this.setState({ ...this.state, title: file.name, file: file })}
+                    uploadDisabled={
+                        !this.readyToSend(
+                            _.get(this.state, 'attachmentSpec.fields'),
+                            this.state.title,
+                            this.state.fileType,
+                            this.props.fileTypes
+                        )
+                    }
+                    selectDisabled={this.props.readonly}
+                />
+
+                <div className="row">
+                    <div className="column">
+                        <label name="selected-file" className="selected-file">
+                            {lookup('mrc.attachments.fields.file')}: {_.get(this.state, 'file.name')}
+                        </label>
+                        <input
+                            maxLength={MAX_FILE_LENGTH}
+                            className="m-input-element"
+                            name="title"
+                            type="text"
+                            value={
+                                (fileName ? fileName.substring(0, MAX_FILE_LENGTH) : '') +
+                                (fileName ? '.' : '') +
+                                (ext ? ext : '')
+                            }
+                            onChange={event => {
+                                event.preventDefault();
+                                this.setState({ ...this.state, title: event.target.value });
+                            }}
+                            disabled={this.props.readonly}
+                            placeholder="Title"
+                        />
+                    </div>
+                    <div className={'column'}>
+                        <label name="selected-file-type" className="selected-file">
+                            {lookup('mrc.attachments.fields.fileType')}:{' '}
+                        </label>
+                        {this.select(this.state.fileType, this.props.fileTypes, this.state.attachmentSpecList)}
+                    </div>
+                </div>
+                <div>{this.additionalFields()}</div>
+                <button
+                    className="mrc-btn mrc-secondary-button"
+                    type="button"
+                    name="upload-button"
+                    onClick={() => {
+                        this.props.addAttachment(
+                            this.state.file,
+                            this.state.title,
+                            this.state.fileType || this.props.fileTypes[0],
+                            this.state.expiryDate,
+                            this.state.amount,
+                            this.state.attachmentSpec
+                        );
+                        this.setState({
+                            title: '',
+                            file: null,
+                            fileType: null,
+                            showMetadata: false,
+                            amount: 0,
+                            expiryDate: null,
+                            attachmentSpec: null,
+                        });
+                    }}
+                    disabled={
+                        !this.readyToSend(
+                            _.get(this.state, 'attachmentSpec.fields'),
+                            this.state.title,
+                            this.state.fileType,
+                            this.props.fileTypes
+                        )
+                    }
+                >
+                    {lookup('mrc.file.upload')}
+                </button>
+            </div>
         );
 
-        this.setState({
-            title: '',
-            file: null,
-            fileType: null,
-            showCollateralMeta: false,
-            attachmentAmount: 0,
-            attachmentExpiryDate: null,
-            attachmentType: null,
-        });
-    };
-
-    updateTitle = evt => {
-        evt.preventDefault();
-        this.setState({ ...this.state, title: evt.target.value });
-    };
-
-    handleFileTypeChange = value => {
-        let attachmentFromJson = this.AVAILABLE_ATTACHMENT_TYPES_FOR_COUNTRY.filter(
-            att => att.type.toLowerCase() === value
-        )[0];
-
-        let showCollateralMeta = false;
-        if (attachmentFromJson.fields) {
-            showCollateralMeta = true;
-        }
-
-        for (let i = 0; attachmentFromJson.fields && i < attachmentFromJson.fields.length; i++) {
-            if (attachmentFromJson.fields[i].value) {
-                attachmentFromJson.fields[i].value = null;
-            }
-        }
-
-        this.setState({
-            ...this.state,
-            fileType: attachmentFromJson.type,
-            showCollateralMeta: showCollateralMeta,
-            attachmentType: attachmentFromJson,
-            attachmentExpiryDate: null,
-            attachmentAmount: null,
-        });
-    };
-
-    handleAttachmentAmountChangeOnBlur = (event, field) => {
-        this.addFieldValueOnState(parseFloat(event.target.value), field);
-    };
-
-    handleAttachmentAmountChange = () => {
-        null;
-    };
-
-    handleDatePickerChange = (event, field) => {
-        let formattedDate =
-            event &&
-            this.appendLeadingZeroes(event.getDate()) +
-                '.' +
-                this.appendLeadingZeroes(event.getMonth() + 1) +
-                '.' +
-                event.getFullYear();
-        this.addFieldValueOnState(formattedDate, field);
-    };
-
-    addFieldValueOnState = (value, field) => {
-        let attachmentTypeArr = this.state.attachmentType || [];
-        let index = attachmentTypeArr.fields.indexOf(field);
-        let expiryDate = this.state.attachmentExpiryDate;
-        let attachmentAmount = this.state.attachmentAmount;
-        if (index > -1) {
-            attachmentTypeArr.fields[index].value =
-                field.data_type && field.data_type.toLowerCase() === 'date' ? value.valueOf() : value;
-        }
-
-        if (field.field_in_db && field.field_in_db === 'expiry_date') {
-            //can be only one field_in_db = expiry_date per attachment type
-            expiryDate = value;
-        } else if (field.field_in_db && field.field_in_db === 'amount') {
-            //can be only one field_in_db = amount per attachment type
-            attachmentAmount = value;
-        }
-        this.setState({
-            ...this.state,
-            attachmentType: attachmentTypeArr,
-            attachmentExpiryDate: expiryDate,
-            attachmentAmount: attachmentAmount,
-        });
-    };
-
-    checkMandatoryFields = () => {
-        let fieldsToCheckArr =
-            this.state.attachmentType &&
-            this.state.attachmentType.fields &&
-            this.state.attachmentType.fields.filter(elem => elem.mandatory === true);
-
-        for (let i = 0; fieldsToCheckArr && i < fieldsToCheckArr.length; i++) {
-            if (
-                fieldsToCheckArr[i].value === undefined ||
-                fieldsToCheckArr[i].value === null ||
-                fieldsToCheckArr[i].value === ''
-            ) {
-                return false;
-            }
-        }
-        return true;
-    };
-
-    getFieldValueFromAttachmentType = field => {
-        let index = this.state.attachmentType.fields.indexOf(field);
-        return this.state.attachmentType.fields[index].value;
-    };
-
-    appendLeadingZeroes = n => {
-        if (n <= 9) {
-            return '0' + n;
-        }
-        return n;
-    };
+        return <div className="mrc-attachments">{uploader}</div>;
+    }
 }
 
 AttachmentsRows.propTypes = {

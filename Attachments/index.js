@@ -41,7 +41,6 @@ export default class Attachments extends Component {
                 {this.state.segment === 'Document' ? (
                     <AttachmentsRows
                         readonly={this.props.readonly}
-                        hideUploader={false}
                         addAttachment={(file, title, filetype, expiryDate, attachmentType) => {
                             this.props.addAttachment(file, title, filetype, expiryDate, attachmentType);
                             this.toggleModal();
@@ -64,7 +63,6 @@ export default class Attachments extends Component {
                                 console.log('error saving placeholder');
                             }
                         }}
-                        hideUploader={false}
                     />
                 )}
             </div>
