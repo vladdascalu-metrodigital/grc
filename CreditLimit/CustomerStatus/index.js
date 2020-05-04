@@ -11,6 +11,7 @@ import { lookup } from '../../Util/translations';
 import Precheck from './Precheck';
 import { displayName } from '../../Util/index';
 import RecentRequestsInfo from '../../RecentRequestsInfo';
+import './index.scss';
 
 export default class CustomerStatusLayout extends Component {
     constructor(props) {

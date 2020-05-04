@@ -6,6 +6,7 @@ import { createUriPath } from '../../Util/util.js';
 import CoinReceive from '../../icons/coin-receive.svg';
 import { lookup } from '../../Util/translations';
 import IconEdit from '../../icons/icon-edit-white.svg';
+import './index.scss';
 
 export default class RequestCredit extends Component {
     constructor(props) {

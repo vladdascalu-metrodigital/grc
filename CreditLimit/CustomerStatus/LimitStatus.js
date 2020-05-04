@@ -4,6 +4,7 @@ import ReportProblemTriangle from '../../icons/report-problem-triangle.svg';
 import PropTypes from 'prop-types';
 import CoinReceive from '../../icons/coin-receive.svg';
 import { lookup } from '../../Util/translations';
+import './index.scss';
 
 export default class LimitStatus extends Component {
     render() {

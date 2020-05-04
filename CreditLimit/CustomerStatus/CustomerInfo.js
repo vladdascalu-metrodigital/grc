@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import InfoRow from '../../InfoRow';
 import { Link } from 'react-router-dom';
 import ArrowRight from '../../icons/arrow-right-12.svg';
+import './index.scss';
 
 export default class CustomerInfo extends Component {
     render() {

@@ -3,6 +3,7 @@ import InfoRow from '../../InfoRow';
 import PropTypes from 'prop-types';
 import ProgressBar from '../../ProgressBar/index';
 import { lookup } from '../../Util/translations';
+import './index.scss';
 
 export default class PendingRequestInfo extends Component {
     render() {
