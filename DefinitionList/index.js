@@ -1,4 +1,4 @@
-import { lookup } from 'global-react-components/Util/translations';
+import { lookup } from '../Util/translations';
 
 import './index.css';
 import React, { Component } from 'react';

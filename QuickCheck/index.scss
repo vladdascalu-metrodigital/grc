@@ -1,0 +1,32 @@
+@import '../settings';
+
+.customer-status-details-panel {
+    background-color: #f4f4f4;
+}
+
+.pending-request-info {
+    .mrc-info-row {
+        background-color: $light-grey;
+    }
+}
+
+/** TODO Delete below after integrating component lib **/
+
+.mrc-pre-checks-group-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.mrc-pre-checks-group,
+.mrc-pre-checks {
+    margin: 0.5rem;
+    display: inline-flex;
+}
+
+.mrc-pre-checks-group {
+    flex-direction: column;
+}
+
+.mrc-pre-checks .mrc-icon {
+    margin-right: 0.5rem;
+}
