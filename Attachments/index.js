@@ -77,7 +77,7 @@ export default class Attachments extends Component {
         const hasContractPlaceholder = !_.isEmpty(
             this.props.attachments.filter(a => a.fileType == 'contract' && a.status == 'missing')
         );
-        return hasContractPlaceholder && this.props.contractUrl ? (
+        return hasContractPlaceholder && this.props.contractUrl && !this.props.readonly ? (
             <a target="_blank" rel="noopener noreferrer" href={this.props.contractUrl}>
                 {lookup('mrc.attachments.contractlinktext')}
             </a>
@@ -85,6 +85,9 @@ export default class Attachments extends Component {
     }
 
     render() {
+        if (!this.props.attachments) {
+            return null;
+        }
         const attachments = this.props.attachments.map((attachment, index) => {
             const isMissing = attachment.status === 'missing';
             const status = attachment.status ? attachment.status : 'normal';
@@ -116,14 +119,16 @@ export default class Attachments extends Component {
         });
         return (
             <div className="mrc-ui-attachments-component">
-                <button
-                    type="button"
-                    className="mrc-primary-large-add-button"
-                    onClick={() => this.toggleModal()}
-                    disabled={this.props.disabled}
-                >
-                    {lookup('mrc.attachments.addbutton')}
-                </button>
+                {this.props.readonly ? null : (
+                    <button
+                        type="button"
+                        className="mrc-primary-large-add-button"
+                        onClick={() => this.toggleModal()}
+                        disabled={this.props.disabled}
+                    >
+                        {lookup('mrc.attachments.addbutton')}
+                    </button>
+                )}
                 <div className="mrc-ui-attachments">
                     <div className="mrc-ui-attachments-headerrow">{this.contractLink()}</div>
                     <h3 className="mrc-ui-attachments-headline">{lookup('mrc.attachments.headline')}</h3>

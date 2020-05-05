@@ -30,25 +30,26 @@ export default class UploaderForm extends Component {
     }
 
     componentDidMount() {
+        const _attachmentSpecList = AttachmentSpec.attachment_types
+            .filter(
+                attType =>
+                    attType.country.toLowerCase() === this.props.country.toLowerCase() ||
+                    attType.country.toLowerCase() === 'all'
+            )
+            .filter(attType => this.props.fileTypes.includes(attType.type.toLowerCase()));
         this.setState({
-            attachmentSpecList: AttachmentSpec.attachment_types
-                .filter(
-                    attType =>
-                        attType.country.toLowerCase() === this.props.country.toLowerCase() ||
-                        attType.country.toLowerCase() === 'all'
-                )
-                .filter(attType => this.props.fileTypes.includes(attType.type.toLowerCase())),
+            attachmentSpecList: _attachmentSpecList,
         });
-        if (this.state.attachmentSpecList === 1) {
-            this.handleFileTypeChange(this.props.fileTypes[0]);
+        if (_attachmentSpecList.length === 1) {
+            this.handleFileTypeChange(this.props.fileTypes[0], _attachmentSpecList);
         }
     }
 
     ///////////////////////////////////////////////////////////////////////////////
     // File selection
 
-    handleFileTypeChange(value) {
-        let attachmentSpec = List(this.state.attachmentSpecList).find(att => att.type.toLowerCase() === value);
+    handleFileTypeChange(value, attachmentSpecList) {
+        let attachmentSpec = List(attachmentSpecList).find(att => att.type.toLowerCase() === value);
 
         this.setState({
             ...this.state,
@@ -73,7 +74,7 @@ export default class UploaderForm extends Component {
                 {lookup(spec.label)}
             </option>
         );
-        return _.isEmpty(attachmentSpecList)
+        return _.isNil(attachmentSpecList)
             ? null
             : attachmentSpecList.length === 1 || !_.isNil(fileType)
             ? attachmentSpecList.map(option)
@@ -86,7 +87,7 @@ export default class UploaderForm extends Component {
                 name="file-type"
                 id="select-file-type"
                 value={_.isEmpty(fileType) ? '' : fileType}
-                onChange={event => this.handleFileTypeChange(event.target.value)}
+                onChange={event => this.handleFileTypeChange(event.target.value, this.state.attachmentSpecList)}
                 disabled={this.props.readonly || fileTypes.length === 1}
             >
                 {this.options(fileType, attachmentSpecList)}
@@ -279,12 +280,18 @@ export default class UploaderForm extends Component {
                             />
                         </div>
                     )}
-                    <div className={'column'}>
-                        <label name="selected-file-type" className="selected-file">
-                            {lookup('mrc.attachments.fields.fileType')}:{' '}
-                        </label>
-                        {this.select(this.state.fileType, this.props.fileTypes, this.state.attachmentSpecList)}
-                    </div>
+                    {_.isNil(this.state.attachmentSpecList) ? null : (
+                        <div className={'column'}>
+                            <label name="selected-file-type" className="selected-file">
+                                {lookup('mrc.attachments.fields.fileType')}:{' '}
+                            </label>
+                            {this.select(
+                                this.props.fileTypes.length === 1 ? this.props.fileTypes[0] : this.state.fileType,
+                                this.props.fileTypes,
+                                this.state.attachmentSpecList
+                            )}
+                        </div>
+                    )}
                 </div>
                 {this.props.onlyPlaceholder ? null : <div>{this.additionalFields()}</div>}
                 <button

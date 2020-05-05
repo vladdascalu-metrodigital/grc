@@ -114,6 +114,74 @@ storiesOf('Attachments', module)
             country="DE"
         />
     ))
+    .add('readonly', () => (
+        <Attachments
+            readonly={true}
+            disabled={true}
+            noPlaceholder={false}
+            contractUrl={'http://example.com'}
+            attachments={[
+                {
+                    status: 'missing',
+                    fileType: 'bond',
+                    secondaryInteraction: 'delete',
+                    handleSecondaryAction: logDeleteFile,
+                    disabled: true,
+                },
+                {
+                    status: 'missing',
+                    fileType: 'contract',
+                    secondaryInteraction: 'add',
+                },
+                {
+                    status: 'missing',
+                    fileType: 'delkredere',
+                    secondaryInteraction: 'add',
+                },
+                {
+                    status: 'normal',
+                    title: 'LVM 203',
+                    contentType: 'application/msword',
+                    fileType: 'Commercial Credit',
+                    amount: '4000€',
+                    expiryDate: '23.10.20',
+                    uploaderPrincipalName: 'joe.appleseed@metronom.com',
+                    uploadTimestamp: '22.03.20, 10:56',
+                    secondaryInteraction: 'delete',
+                    handleSecondaryAction: logDeleteFile,
+                },
+                {
+                    status: 'normal',
+                    title: 'awsesome_company_Contract _final_2020.pdf',
+                    contentType: 'application/pdf',
+                    fileType: 'General',
+                    amount: '',
+                    expiryDate: '',
+                    uploaderPrincipalName: 'joe.appleseed@metronom.com',
+                    uploadTimestamp: '22.02.20, 14:53',
+                    secondaryInteraction: 'delete',
+                    handleSecondaryAction: logDeleteFile,
+                },
+                {
+                    status: 'deleted',
+                    title: 'HJK 20',
+                    contentType: 'application/doc',
+                    fileType: 'Commercial Credit Insurance',
+                    amount: '500€',
+                    expiryDate: '23.10.20',
+                    uploaderPrincipalName: 'joe.appleseed@metronom.com',
+                    uploadTimestamp: '06.01.20, 16:35',
+                    secondaryInteraction: 'restore',
+                    handleSecondaryAction: logRestoreFile,
+                },
+            ]}
+            fileTypes={['general', 'delkredere', 'warenkreditversicherung', 'contract']}
+            addAttachment={logAddFile}
+            savePlaceholder={fileType => console.log('saving placeholder of type ' + fileType)}
+            currentApprover="ConM"
+            country="DE"
+        />
+    ))
     .add('disabled', () => (
         <Attachments
             disabled={true}
