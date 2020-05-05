@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './AttachmentsRows.scss';
+import './UploaderForm.scss';
 
 import PropTypes from 'prop-types';
 import { lookup } from '../Util/translations.js';
@@ -15,7 +15,7 @@ import { List, Map } from 'immutable';
 
 const MAX_FILE_LENGTH = 50;
 
-export default class AttachmentsRows extends Component {
+export default class UploaderForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -100,12 +100,12 @@ export default class AttachmentsRows extends Component {
                   .filter(e => e && e.mandatory && _.isNil(e.value))
                   .isEmpty()
             : true;
-        return (
-            !_.isEmpty(title.trim()) &&
-            !_.isNil(this.state.file) &&
-            (!_.isEmpty(fileType) || fileTypes.length === 1) &&
-            fieldsFilledIn
-        );
+        return this.props.onlyPlaceholder
+            ? !_.isNil(fileType)
+            : !_.isEmpty(title.trim()) &&
+                  !_.isNil(this.state.file) &&
+                  (!_.isEmpty(fileType) || fileTypes.length === 1) &&
+                  fieldsFilledIn;
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -238,43 +238,47 @@ export default class AttachmentsRows extends Component {
 
         const uploader = this.props.hideUploader ? null : (
             <div className="mrc-add-attachment">
-                <FileUpload
-                    labelSelect={lookup('mrc.file.select')}
-                    updateFile={file => this.setState({ ...this.state, title: file.name, file: file })}
-                    uploadDisabled={
-                        !this.readyToSend(
-                            _.get(this.state, 'attachmentSpec.fields'),
-                            this.state.title,
-                            this.state.fileType,
-                            this.props.fileTypes
-                        )
-                    }
-                    selectDisabled={this.props.readonly}
-                />
+                {this.props.onlyPlaceholder ? null : (
+                    <FileUpload
+                        labelSelect={lookup('mrc.file.select')}
+                        updateFile={file => this.setState({ ...this.state, title: file.name, file: file })}
+                        uploadDisabled={
+                            !this.readyToSend(
+                                _.get(this.state, 'attachmentSpec.fields'),
+                                this.state.title,
+                                this.state.fileType,
+                                this.props.fileTypes
+                            )
+                        }
+                        selectDisabled={this.props.readonly}
+                    />
+                )}
 
                 <div className="row">
-                    <div className="column">
-                        <label name="selected-file" className="selected-file">
-                            {lookup('mrc.attachments.fields.file')}: {_.get(this.state, 'file.name')}
-                        </label>
-                        <input
-                            maxLength={MAX_FILE_LENGTH}
-                            className="m-input-element"
-                            name="title"
-                            type="text"
-                            value={
-                                (fileName ? fileName.substring(0, MAX_FILE_LENGTH) : '') +
-                                (fileName ? '.' : '') +
-                                (ext ? ext : '')
-                            }
-                            onChange={event => {
-                                event.preventDefault();
-                                this.setState({ ...this.state, title: event.target.value });
-                            }}
-                            disabled={this.props.readonly}
-                            placeholder="Title"
-                        />
-                    </div>
+                    {this.props.onlyPlaceholder ? null : (
+                        <div className="column">
+                            <label name="selected-file" className="selected-file">
+                                {lookup('mrc.attachments.fields.file')}: {_.get(this.state, 'file.name')}
+                            </label>
+                            <input
+                                maxLength={MAX_FILE_LENGTH}
+                                className="m-input-element"
+                                name="title"
+                                type="text"
+                                value={
+                                    (fileName ? fileName.substring(0, MAX_FILE_LENGTH) : '') +
+                                    (fileName ? '.' : '') +
+                                    (ext ? ext : '')
+                                }
+                                onChange={event => {
+                                    event.preventDefault();
+                                    this.setState({ ...this.state, title: event.target.value });
+                                }}
+                                disabled={this.props.readonly}
+                                placeholder="Title"
+                            />
+                        </div>
+                    )}
                     <div className={'column'}>
                         <label name="selected-file-type" className="selected-file">
                             {lookup('mrc.attachments.fields.fileType')}:{' '}
@@ -282,16 +286,16 @@ export default class AttachmentsRows extends Component {
                         {this.select(this.state.fileType, this.props.fileTypes, this.state.attachmentSpecList)}
                     </div>
                 </div>
-                <div>{this.additionalFields()}</div>
+                {this.props.onlyPlaceholder ? null : <div>{this.additionalFields()}</div>}
                 <button
                     className="mrc-btn mrc-secondary-button"
                     type="button"
                     name="upload-button"
                     onClick={() => {
-                        this.props.addAttachment(
+                        this.props.callback(
+                            this.state.fileType || this.props.fileTypes[0],
                             this.state.file,
                             this.state.title,
-                            this.state.fileType || this.props.fileTypes[0],
                             this.state.expiryDate,
                             this.state.amount,
                             this.state.attachmentSpec
@@ -324,11 +328,12 @@ export default class AttachmentsRows extends Component {
     }
 }
 
-AttachmentsRows.propTypes = {
-    addAttachment: PropTypes.func.isRequired,
+UploaderForm.propTypes = {
+    callback: PropTypes.func.isRequired,
     readonly: PropTypes.bool,
     currentApprover: PropTypes.string,
     fileTypes: PropTypes.array,
     country: PropTypes.string,
     hideUploader: PropTypes.bool,
+    onlyPlaceholder: PropTypes.bool,
 };

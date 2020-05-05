@@ -4,9 +4,8 @@ import ModalDialog from '../ModalDialog';
 import { lookup } from '../Util/translations';
 import './index.scss';
 import { PropTypes } from 'prop-types';
-import AttachmentsRows from './AttachmentsRows';
+import UploaderForm from './UploaderForm';
 import SegmentedControl from '../SegmentedControl';
-import AttachmentPlaceholderForm from './AttachmentPlaceholderForm';
 
 import * as _ from 'lodash';
 
@@ -29,42 +28,34 @@ export default class Attachments extends Component {
     }
 
     modalDialogContent() {
+        const isPlaceholder = this.state.segment === 'Placeholder';
         return (
             <div>
-                {this.props.noPlaceholder ? null : (
+                {this.props.noPlaceholder || this.state.fileType ? null : (
                     <SegmentedControl
                         callback={newSegment => this.setState({ segment: newSegment })}
                         selectedSegment={'Document'}
                         labels={['Document', 'Placeholder']}
                     />
                 )}
-                {this.state.segment === 'Document' ? (
-                    <AttachmentsRows
-                        readonly={this.props.readonly}
-                        addAttachment={(file, title, filetype, expiryDate, attachmentType) => {
-                            this.props.addAttachment(file, title, filetype, expiryDate, attachmentType);
-                            this.toggleModal();
-                        }}
-                        fileTypes={this.state.fileType ? [this.state.fileType] : this.props.fileTypes}
-                        country={this.props.country}
-                        currentApprover={this.props.currentApprover}
-                    />
-                ) : (
-                    <AttachmentPlaceholderForm
-                        country={this.props.country}
-                        fileTypes={this.state.fileType ? [this.state.fileType] : this.props.fileTypes}
-                        readonly={false}
-                        currentApprover={this.props.currentApprover}
-                        savePlaceholder={fileType => {
-                            if (!_.isNil(fileType)) {
-                                this.props.savePlaceholder(fileType);
-                                this.toggleModal();
-                            } else {
-                                console.log('error saving placeholder');
-                            }
-                        }}
-                    />
-                )}
+                <UploaderForm
+                    onlyPlaceholder={isPlaceholder}
+                    country={this.props.country}
+                    readonly={this.props.readonly}
+                    fileTypes={this.state.fileType ? [this.state.fileType] : this.props.fileTypes}
+                    currentApprover={this.props.currentApprover}
+                    callback={
+                        isPlaceholder
+                            ? fileType => {
+                                  this.props.savePlaceholder(fileType);
+                                  this.toggleModal();
+                              }
+                            : (filetype, file, title, expiryDate, attachmentType) => {
+                                  this.props.addAttachment(filetype, file, title, expiryDate, attachmentType);
+                                  this.toggleModal();
+                              }
+                    }
+                />
             </div>
         );
     }

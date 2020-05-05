@@ -41,7 +41,7 @@ storiesOf('Button', module)
     .add('Secondary', () => <Button status="secondary" onClick={action('clicked')} text="Approve" />)
     .add('Success', () => <Button status="success" onClick={action('clicked')} text="Approve" />);
 
-const logAddFile = (file, title, filetype, expiryDate, attachmentType) =>
+const logAddFile = (filetype, file, title, expiryDate, attachmentType) =>
     console.log('adding file of type: ' + filetype + ' and expiry: ' + expiryDate);
 const logDeleteFile = () => console.log('deleting file');
 const logRestoreFile = () => console.log('restoring file');
