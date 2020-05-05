@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 export class NumberInput extends Component {
     constructor(props) {
         super(props);
@@ -11,13 +10,11 @@ export class NumberInput extends Component {
             console.log('NumberInput should not be passed a value prop (will be ignored)');
         }
     }
-
     //deprecated, we use parseFloat instead, because these field should also accept float.
     parse(str) {
         return /^[0-9]+$/.test(str) ? Number(str) : NaN;
     }
-
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
         if (
             this.props.shouldBePrefilledWith != null &&
             !Number.isNaN(this.props.shouldBePrefilledWith) &&
@@ -28,8 +25,10 @@ export class NumberInput extends Component {
         if (this.props.shouldBePrefilledWith == null && this.state.changed) {
             this.handleChangeAmount('');
         }
+        if (this.props.newValue !== prevProps.newValue && this.props.newValue != this.state.value) {
+            this.handleChangeAmount((this.props.newValue))
+        }
     }
-
     handleChange = event => {
         const str = event.target.value;
         const parsed = parseFloat(str);
@@ -41,7 +40,6 @@ export class NumberInput extends Component {
             this.props.onChange(parsed);
         }
     };
-
     handleChangeAmount = amount => {
         const str = amount;
         const parsed = parseFloat(str);
@@ -53,7 +51,6 @@ export class NumberInput extends Component {
             this.props.onChange(parsed);
         }
     };
-
     render() {
         const inputProps = { ...this.props };
         delete inputProps.value;
