@@ -119,7 +119,7 @@ export default class Attachments extends Component {
         });
         return (
             <div className="mrc-ui-attachments-component">
-                {this.props.readonly ? null : (
+                {this.props.noAddButton ? null : (
                     <button
                         type="button"
                         className="mrc-primary-large-add-button"
@@ -158,4 +158,5 @@ Attachments.propTypes = {
     disabled: PropTypes.bool,
     noPlaceholder: PropTypes.bool,
     contractUrl: PropTypes.string,
+    noAddButton: PropTypes.bool,
 };
