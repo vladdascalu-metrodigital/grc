@@ -30,6 +30,7 @@ module.exports = async ({ config, mode }) => {
 
     config.resolve.alias = {
         modernizr$: path.resolve(__dirname, '../.modernizrrc'),
+        moment$: 'moment/moment.js',
     };
 
     // config.module.rules.push({
