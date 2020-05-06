@@ -338,7 +338,6 @@ export default class UploaderForm extends Component {
 UploaderForm.propTypes = {
     callback: PropTypes.func.isRequired,
     readonly: PropTypes.bool,
-    currentApprover: PropTypes.string,
     fileTypes: PropTypes.array,
     country: PropTypes.string,
     hideUploader: PropTypes.bool,

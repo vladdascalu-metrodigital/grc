@@ -43,7 +43,6 @@ export default class Attachments extends Component {
                     country={this.props.country}
                     readonly={this.props.readonly}
                     fileTypes={this.state.fileType ? [this.state.fileType] : this.props.fileTypes}
-                    currentApprover={this.props.currentApprover}
                     callback={
                         isPlaceholder
                             ? fileType => {
@@ -153,7 +152,6 @@ Attachments.propTypes = {
     fileTypes: PropTypes.array,
     fileTypesForCC: PropTypes.array,
     country: PropTypes.string,
-    currentApprover: PropTypes.string,
     readonly: PropTypes.bool,
     disabled: PropTypes.bool,
     noPlaceholder: PropTypes.bool,

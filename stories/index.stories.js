@@ -110,7 +110,6 @@ storiesOf('Attachments', module)
             fileTypes={['general', 'delkredere', 'warenkreditversicherung', 'contract']}
             addAttachment={logAddFile}
             savePlaceholder={fileType => console.log('saving placeholder of type ' + fileType)}
-            currentApprover="ConM"
             country="DE"
         />
     ))
@@ -178,7 +177,6 @@ storiesOf('Attachments', module)
             fileTypes={['general', 'delkredere', 'warenkreditversicherung', 'contract']}
             addAttachment={logAddFile}
             savePlaceholder={fileType => console.log('saving placeholder of type ' + fileType)}
-            currentApprover="ConM"
             country="DE"
         />
     ))
@@ -237,7 +235,6 @@ storiesOf('Attachments', module)
             ]}
             fileTypes={['general', 'delkredere', 'warenkreditversicherung', 'contract']}
             addAttachment={() => console.log('adding file')}
-            currentApprover="CC"
             country="PL"
         />
     ))
@@ -305,7 +302,6 @@ storiesOf('Attachments', module)
             fileTypes={['general']}
             addAttachment={logAddFile}
             savePlaceholder={fileType => console.log('saving placeholder of type ' + fileType)}
-            currentApprover="ConM"
             country="DE"
         />
     ));
