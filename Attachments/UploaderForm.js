@@ -326,7 +326,7 @@ export default class UploaderForm extends Component {
                         )
                     }
                 >
-                    {lookup('mrc.file.upload')}
+                    {this.props.onlyPlaceholder ? lookup('mrc.attachments.addPlaceholder') : lookup('mrc.file.upload')}
                 </button>
             </div>
         );
