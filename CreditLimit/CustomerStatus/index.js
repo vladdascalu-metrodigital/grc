@@ -16,8 +16,6 @@ import './index.scss';
 export default class CustomerStatusLayout extends Component {
     constructor(props) {
         super(props);
-        console.log('constststst');
-        console.log(this.props);
         const { country, storeNumber, customerNumber } = this.buildCustomerInfoData();
         this.props.loadCustomerData(country, storeNumber, customerNumber);
         this.props.loadPendingRequest(country, storeNumber, customerNumber);

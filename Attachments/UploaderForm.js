@@ -112,7 +112,7 @@ export default class UploaderForm extends Component {
     ///////////////////////////////////////////////////////////////////////////////
     // Metadata fields
 
-    updateAttachmentState(value, field) {
+    setField(value, field) {
         if (!this.state.attachmentSpec) {
             return;
         }
@@ -133,17 +133,17 @@ export default class UploaderForm extends Component {
         });
     }
 
-    handleDatePickerChange(event, field) {
+    setDateField(event, field) {
         const withLeadingZero = n => (n <= 9 ? '0' + n : n);
 
         let formattedDate =
             event &&
             withLeadingZero(event.getDate()) + '.' + withLeadingZero(event.getMonth() + 1) + '.' + event.getFullYear();
-        this.updateAttachmentState(formattedDate, field);
+        this.setField(formattedDate, field);
     }
 
-    createDatePicker(id, minDate, maxDate, field) {
-        const [year, month, day] = field.value ? field.value.split('.') : [null, null, null];
+    datePicker(id, minDate, maxDate, field) {
+        const [day, month, year] = field.value ? field.value.split('.') : [null, null, null];
         const selectedDate = field.value ? new Date(year, month - 1, day) : null;
         return (
             <div
@@ -155,30 +155,13 @@ export default class UploaderForm extends Component {
                 </label>
                 <MrcDatePickerInput
                     className="m-input-element"
-                    onChange={event => this.handleDatePickerChange(event, field)}
+                    onChange={event => this.setDateField(event, field)}
                     selected={selectedDate ? selectedDate : null} //to check this
                     minDate={minDate}
                     maxDate={maxDate}
                     showYearDropdown={true}
                     dateFormat={'dd.MM.yyyy'}
                     placeholderText={'dd.MM.yyyy'}
-                    id={id}
-                />
-            </div>
-        );
-    }
-
-    createNumberInput(id, field) {
-        return (
-            <div className="column" key={this.state.attachmentSpec.type + '.' + field.field_label + '_' + id}>
-                <label name={field.field_label} className="selected-file">
-                    {lookup(field.field_label)}
-                </label>
-                <NumberInput
-                    className="m-input-element"
-                    name="attachment-amount"
-                    onBlur={event => this.updateAttachmentState(parseFloat(event.target.value), field)}
-                    onChange={() => null}
                     id={id}
                 />
             </div>
@@ -199,23 +182,40 @@ export default class UploaderForm extends Component {
                 ? new Date(new Date().getTime() - 86400000)
                 : null;
 
-        return this.createDatePicker(id, minDate, maxDate, field);
+        return this.datePicker(id, minDate, maxDate, field);
     }
 
-    metadataField(field, id) {
+    numberInput(id, field) {
+        return (
+            <div className="column" key={this.state.attachmentSpec.type + '.' + field.field_label + '_' + id}>
+                <label name={field.field_label} className="selected-file">
+                    {lookup(field.field_label)}
+                </label>
+                <NumberInput
+                    className="m-input-element"
+                    name="attachment-amount"
+                    onBlur={event => this.setField(parseFloat(event.target.value), field)}
+                    onChange={() => null}
+                    id={id}
+                />
+            </div>
+        );
+    }
+
+    field(field, id) {
         return field
             ? field.data_type.toLowerCase() === 'date'
                 ? this.datePickerField(field, id)
                 : field.data_type.toLowerCase() === 'double'
-                ? this.createNumberInput(id, field)
+                ? this.numberInput(id, field)
                 : null
             : null;
     }
 
-    createMetadataRow(field1, id1, field2, id2) {
+    fieldPair(field1, id1, field2, id2) {
         return (
             <div className="row" key={id1 + '_' + id2}>
-                {[this.metadataField(field1, id1), this.metadataField(field2, id2)]}
+                {[this.field(field1, id1), this.field(field2, id2)]}
             </div>
         );
     }
@@ -225,7 +225,7 @@ export default class UploaderForm extends Component {
             if (!allFields) return;
 
             return _.chunk(allFields, 2).map(([field1, field2], idx) =>
-                this.createMetadataRow(field1, 2 * idx, field2, 2 * idx + 1)
+                this.fieldPair(field1, 2 * idx, field2, 2 * idx + 1)
             );
         };
         return this.state.showMetadata ? showFields(this.state.attachmentSpec.fields) : null;
