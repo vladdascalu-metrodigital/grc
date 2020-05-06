@@ -50,6 +50,26 @@ export const filterAdditionalFieldsList = (requestFieldList, level, section, cou
     return filteredBySection;
 };
 
+export const filterAdditionalFieldsByCode = (requestFieldList, code) => {
+    if (
+        code === undefined ||
+        code === null ||
+        requestFieldList === undefined ||
+        requestFieldList === null ||
+        requestFieldList.length === 0
+    ) {
+        return [];
+    }
+
+    const filteredByCode = requestFieldList.filter(
+        rf =>
+            (rf.countryField && rf.countryField.field && rf.countryField.field.code && rf.countryField.field.code === code)
+    )
+
+    return filteredByCode;
+
+};
+
 export function getDateFormatString() {
     const formatObj = new Intl.DateTimeFormat().formatToParts(new Date());
     return formatObj
