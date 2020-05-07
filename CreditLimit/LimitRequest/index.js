@@ -5,7 +5,7 @@ import CoinReceive from '../../icons/coin-receive.svg';
 import ProgressBar from '../../ProgressBar';
 import CreditData from '../CreditData';
 import Comments from '../../NewComments';
-import OldAttachments from '../../OldAttachments';
+import Attachments from '../../Attachments';
 import Sales from '../../Sales';
 import { Route, Switch } from 'react-router-dom';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
@@ -579,9 +579,14 @@ export default class LimitRequestLayout extends Component {
         if (limitRequest.fileTypes) this.FILE_TYPES = limitRequest.fileTypes;
         if (limitRequest.collateralAttachments) this.COLLATERALS_ATTACHMENTS = limitRequest.collateralAttachments;
         return (
-            <OldAttachments
-                data={this.COLLATERALS_ATTACHMENTS}
-                addAttachment={this.props.addAttachment.bind(this, limitRequest.id)}
+            <Attachments
+                noPlaceholder={true}
+                attachments={(this.COLLATERALS_ATTACHMENTS ? this.COLLATERALS_ATTACHMENTS : []).map(a => {
+                    return { ...a, status: 'normal' };
+                })}
+                addAttachment={(fileType, file, title, expiryDate, amount, metadataJson) =>
+                    this.props.addAttachment(fileType, limitRequest.id, file, title, expiryDate, amount, metadataJson)
+                }
                 fileTypes={this.FILE_TYPES}
                 country={limitRequest.requestedCustomerId.country}
             />
