@@ -109,6 +109,9 @@ export default class QuickStatusLayout extends Component {
         if (!this.props.customers || !this.props.customers.data) return null;
         if (this.props.customers.data.error) return <h2 className="not-found">{lookup('mrc.qcr.notenabled')}</h2>;
         const cid = this.buildCustomerInfoData();
+        let btnDisabledRequests = this.props.customers.data.requestsDisabled
+            ? this.props.customers.data.requestsDisabled
+            : false;
         let btnDisabled = false;
         const precheckErrors = this.props.customers.data.precheckErrors.filter(function(element) {
             return element.reason !== 'strategy.init.failed.runningRequest';
@@ -142,7 +145,7 @@ export default class QuickStatusLayout extends Component {
                         <div className="mrc-customer-status">
                             {<LimitStatus requestedCustomer={this.getCustomer()} customers={this.props.customers} />}
                             <CustomerInfo data={cid} showLink={!!this.props.customers.data} match={this.props.match} />
-                            <RequestQuick selectedCustomerInfo={cid} disabled={btnDisabled} {...this.props} />
+                            <RequestQuick selectedCustomerInfo={cid} disabled={btnDisabled||btnDisabledRequests} {...this.props} />
                             {this.props.recentRequests.loading ? null : (
                                 <RecentRequestsInfo
                                     recentRequests={this.props.recentRequests}
