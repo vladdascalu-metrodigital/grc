@@ -582,7 +582,19 @@ export default class LimitRequestLayout extends Component {
             <Attachments
                 noPlaceholder={true}
                 attachments={(this.COLLATERALS_ATTACHMENTS ? this.COLLATERALS_ATTACHMENTS : []).map(a => {
-                    return { ...a, status: 'normal' };
+                    return a.deleted
+                        ? {
+                              ...a,
+                              status: 'deleted',
+                              secondaryInteraction: 'restore',
+                              handleSecondaryAction: () => this.props.restoreAttachment(limitRequest.id, a.id),
+                          }
+                        : {
+                              ...a,
+                              status: 'normal',
+                              secondaryInteraction: 'delete',
+                              handleSecondaryAction: () => this.props.deleteAttachment(limitRequest.id, a.id),
+                          };
                 })}
                 addAttachment={(fileType, file, title, expiryDate, amount, metadataJson) =>
                     this.props.addAttachment(fileType, limitRequest.id, file, title, expiryDate, amount, metadataJson)
@@ -697,6 +709,8 @@ LimitRequestLayout.propTypes = {
     additionalFields: PropTypes.shape({ requestFields: PropTypes.arrayOf(RequestFieldPropTypes) }),
     addComment: PropTypes.func.isRequired,
     addAttachment: PropTypes.func.isRequired,
+    restoreAttachment: PropTypes.func.isRequired,
+    deleteAttachment: PropTypes.func.isRequired,
     setCreditData: PropTypes.func.isRequired,
     setLimitExpiry: PropTypes.func.isRequired,
     submitRequest: PropTypes.func.isRequired,
