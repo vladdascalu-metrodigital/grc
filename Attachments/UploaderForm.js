@@ -268,7 +268,7 @@ export default class UploaderForm extends Component {
                                 type="text"
                                 value={
                                     (fileName ? fileName.substring(0, MAX_FILE_LENGTH) : '') +
-                                    (fileName ? '.' : '') +
+                                    (ext ? '.' : '') +
                                     (ext ? ext : '')
                                 }
                                 onChange={event => {
