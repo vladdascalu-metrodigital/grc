@@ -10,10 +10,15 @@ let translations = {
     'mrc.attachments.fields.title': 'Title',
     'mrc.attachments.fields.file': 'Selected file',
     'mrc.attachments.noattachments': 'No Attachments',
+    'mrc.attachments.unknown-mime': 'Unknown',
 
+    'mrc.attachments.amount': 'Amount',
+    'mrc.attachments.expiry': 'expiry',
     'mrc.attachments.missing': 'missing',
     'mrc.attachments.types.contract': 'Contract',
     'mrc.attachments.types.bond': 'Bond',
+    'mrc.attachments.types.delkredere': 'Delkredere',
+    'mrc.attachments.headline': 'Attachments',
     'mrc.attachments.contractlinktext': 'Contract Templates',
 
     'mrc.customerdetails.fields.customernumber': 'Customer Number',

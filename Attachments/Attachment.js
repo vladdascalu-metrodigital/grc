@@ -24,7 +24,7 @@ export default class Attachment extends Component {
         return lookup('mrc.attachments.types.' + documentType) + ' ' + lookup('mrc.attachments.missing');
     }
 
-    getAttachmentContent() {
+    getAttachmentContent(amount, expiry) {
         if (this.props.status === 'missing') {
             return (
                 <div className="mrc-ui-attachment-content" onClick={this.props.handlePrimaryAction}>
@@ -39,18 +39,20 @@ export default class Attachment extends Component {
                     <h2 className="mrc-ui-attachment-title">{this.props.title}</h2>
                     <div className="mrc-ui-attachment-filetype">{this.getFileType(this.props.fileType)}</div>
                     <div className="mrc-ui-attachment-documenttype">{this.props.documentType}</div>
-                    <div className="mrc-ui-attachment-info-group">
-                        <div className="mrc-ui-attachment-info-label">{lookup('mrc.attachments.amount')}</div>
-                        <div className="mrc-ui-attachment-info-value">
-                            {this.props.amount ? this.props.amount : '-'}
-                        </div>
-                    </div>
-                    <div className="mrc-ui-attachment-info-group">
-                        <div className="mrc-ui-attachment-info-label">{lookup('mrc.attachments.expiry')}</div>
-                        <div className="mrc-ui-attachment-info-value">
-                            {this.props.expiry ? moment(this.props.expiry).format('L') : '-'}
-                        </div>
-                    </div>
+                    {amount || expiry
+                        ? [
+                              <div key="amount" className="mrc-ui-attachment-info-group">
+                                  <div className="mrc-ui-attachment-info-label">{lookup('mrc.attachments.amount')}</div>
+                                  <div className="mrc-ui-attachment-info-value">{amount ? amount : '-'}</div>
+                              </div>,
+                              <div key="expiry" className="mrc-ui-attachment-info-group">
+                                  <div className="mrc-ui-attachment-info-label">{lookup('mrc.attachments.expiry')}</div>
+                                  <div className="mrc-ui-attachment-info-value">
+                                      {expiry ? moment(expiry).format('L') : '-'}
+                                  </div>
+                              </div>,
+                          ]
+                        : null}
                     <div className="mrc-ui-attachment-author">{this.props.author}</div>
                     <div className="mrc-ui-attachment-timestamp">{moment(this.props.timestamp).format('LLL')}</div>
                 </div>
@@ -90,7 +92,7 @@ export default class Attachment extends Component {
 
     render() {
         const classes = classnames('mrc-ui-attachment', this.classnames[this.props.status]);
-        const content = this.getAttachmentContent();
+        const content = this.getAttachmentContent(this.props.amount, this.props.expiry);
         const secondaryAction = this.getSecondaryInteraction();
 
         return (
