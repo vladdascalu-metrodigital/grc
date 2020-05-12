@@ -49,8 +49,8 @@ export default class Attachments extends Component {
                                   this.props.savePlaceholder(fileType);
                                   this.toggleModal();
                               }
-                            : (filetype, file, title, expiryDate, attachmentType) => {
-                                  this.props.addAttachment(filetype, file, title, expiryDate, attachmentType);
+                            : (filetype, file, title, expiryDate, amount, metadata) => {
+                                  this.props.addAttachment(filetype, file, title, expiryDate, amount, metadata);
                                   this.toggleModal();
                               }
                     }

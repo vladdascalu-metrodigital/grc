@@ -220,9 +220,11 @@ export default class UploaderForm extends Component {
         );
     }
 
-    additionalFields() {
+    metadataFields() {
         const showFields = allFields => {
-            if (!allFields) return;
+            if (!allFields) {
+                return;
+            }
 
             return _.chunk(allFields, 2).map(([field1, field2], idx) =>
                 this.fieldPair(field1, 2 * idx, field2, 2 * idx + 1)
@@ -293,7 +295,7 @@ export default class UploaderForm extends Component {
                         </div>
                     )}
                 </div>
-                {this.props.onlyPlaceholder ? null : <div>{this.additionalFields()}</div>}
+                {this.props.onlyPlaceholder ? null : <div>{this.metadataFields()}</div>}
                 <button
                     className="mrc-btn mrc-secondary-button"
                     type="button"
@@ -305,7 +307,12 @@ export default class UploaderForm extends Component {
                             this.state.title,
                             this.state.expiryDate,
                             this.state.amount,
-                            this.state.attachmentSpec
+                            List(this.state.attachmentSpec.fields)
+                                .filter(field => !field.field_in_db)
+                                .map(field => {
+                                    return { label: field.field_label, value: field.value };
+                                })
+                                .toArray()
                         );
                         this.setState({
                             title: '',
