@@ -1,1 +1,24 @@
 @import '../lib/scss/main.scss';
+
+.mrc-ui-bullet {
+  height: 1rem; // $mrc-icon-sm
+  width:  1rem; // $mrc-icon-sm
+  background-color: $color-palette-grey-tint-60;
+  border-radius: 50%;
+}
+
+.mrc-ui-bullet-warning { 
+  background-color: $color-palette-yellow-default;
+}
+
+.mrc-ui-bullet-error { 
+  background-color: $color-palette-red-default;
+}
+
+.mrc-ui-bullet-success { 
+  background-color: $color-palette-green-default;
+}
+
+.mrc-ui-bullet-active { 
+  background-color: $color-palette-blue-default;
+}

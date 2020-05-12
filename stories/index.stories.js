@@ -9,6 +9,7 @@ import { linkTo } from '@storybook/addon-links';
 
 import { Welcome } from '@storybook/react/demo';
 import Button from '../Button';
+import Bullet, { MODE as BM } from '../Bullet';
 import FileUpload from '../FileUpload';
 
 import Recommendations from '../Recommendations';
@@ -40,6 +41,16 @@ storiesOf('Button', module)
     .add('Error', () => <Button status="error" onClick={action('clicked')} text="Approve" />)
     .add('Secondary', () => <Button status="secondary" onClick={action('clicked')} text="Approve" />)
     .add('Success', () => <Button status="success" onClick={action('clicked')} text="Approve" />);
+
+storiesOf('Bullet', module).add('all bullets', () => (
+    <div style={{ display: 'grid', gridGap: '2rem', padding: '2rem' }}>
+        <Bullet />
+        <Bullet mode="success" alt="Success!" />
+        <Bullet mode={BM.ACTIVE} alt="Active!" />
+        <Bullet mode={BM.WARNING} alt="Warning!" />
+        <Bullet mode={BM.ERROR} alt="Error!" />
+    </div>
+));
 
 const logAddFile = (filetype, file, title, expiryDate, attachmentType) =>
     console.log('adding file of type: ' + filetype + ' and expiry: ' + expiryDate);

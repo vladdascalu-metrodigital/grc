@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Bullet from '../Bullet';
+import Bullet, { MODE as BM } from '../Bullet';
 import { lookup } from '../Util/translations';
 
 export default class InboxItemPresentation extends Component {
@@ -17,8 +17,8 @@ export default class InboxItemPresentation extends Component {
             this.props.entry.type === 'LIMIT_EXPIRY_REMINDER' ||
             this.props.entry.type === 'LIMIT_EXPIRY_ACTIVATION' ||
             this.props.topic === 'ATTACHMENT_EXPIRY_NOTIFICATION'
-                ? (event) => this.props.openDetailsOnNewTab(event, this.props.markAsReadURI, this.props.detailsURI)
-                : (event) => this.props.navigateToDetails(event, this.props.markAsReadURI, this.props.detailsURI);
+                ? event => this.props.openDetailsOnNewTab(event, this.props.markAsReadURI, this.props.detailsURI)
+                : event => this.props.navigateToDetails(event, this.props.markAsReadURI, this.props.detailsURI);
         return (
             <div className="item-content-wrapper">
                 <a
@@ -205,7 +205,7 @@ export default class InboxItemPresentation extends Component {
     }
 
     createBullet() {
-        const bulletmode = this.props.entry.assignedUserName ? 'claimed' : this.props.isNew ? 'new' : 'read';
+        const bulletmode = this.props.entry.assignedUserName ? BM.CLAIMED : this.props.isNew ? BM.NEW : BM.READ;
         return <Bullet mode={bulletmode} />;
     }
 
@@ -287,7 +287,7 @@ export default class InboxItemPresentation extends Component {
     }
 
     details = () => {
-        return React.Children.map(this.props.children, (child) => {
+        return React.Children.map(this.props.children, child => {
             return React.cloneElement(child, {
                 collapsed: this.state.collapsed,
             });
