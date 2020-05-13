@@ -5,6 +5,7 @@ import { PropTypes } from 'prop-types';
 import { lookup } from '../Util/translations';
 import * as mime from 'react-native-mime-types';
 import moment from 'moment';
+import { List } from 'immutable';
 
 export default class Attachment extends Component {
     constructor(props) {
@@ -24,7 +25,7 @@ export default class Attachment extends Component {
         return lookup('mrc.attachments.types.' + documentType) + ' ' + lookup('mrc.attachments.missing');
     }
 
-    getAttachmentContent(amount, expiry) {
+    getAttachmentContent(amount, expiry, metadata) {
         if (this.props.status === 'missing') {
             return (
                 <div className="mrc-ui-attachment-content" onClick={this.props.handlePrimaryAction}>
@@ -40,7 +41,7 @@ export default class Attachment extends Component {
                     <div className="mrc-ui-attachment-filetype">{this.getFileType(this.props.fileType)}</div>
                     <div className="mrc-ui-attachment-documenttype">{this.props.documentType}</div>
                     {amount || expiry
-                        ? [
+                        ? List([
                               <div key="amount" className="mrc-ui-attachment-info-group">
                                   <div className="mrc-ui-attachment-info-label">{lookup('mrc.attachments.amount')}</div>
                                   <div className="mrc-ui-attachment-info-value">{amount ? amount : '-'}</div>
@@ -51,7 +52,20 @@ export default class Attachment extends Component {
                                       {expiry ? moment(expiry).format('L') : '-'}
                                   </div>
                               </div>,
-                          ]
+                          ]).concat(
+                              metadata
+                                  ? List(
+                                        metadata.map(e => (
+                                            <div key="expiry" className="mrc-ui-attachment-info-group">
+                                                <div className="mrc-ui-attachment-info-label">{lookup(e.label)}</div>
+                                                <div className="mrc-ui-attachment-info-value">
+                                                    {moment(e.value, 'dd.MM.YYYY').format('L')}
+                                                </div>
+                                            </div>
+                                        ))
+                                    )
+                                  : null
+                          )
                         : null}
                     <div className="mrc-ui-attachment-author">{this.props.author}</div>
                     <div className="mrc-ui-attachment-timestamp">{moment(this.props.timestamp).format('LLL')}</div>
@@ -91,14 +105,15 @@ export default class Attachment extends Component {
     }
 
     render() {
-        const classes = classnames('mrc-ui-attachment', this.classnames[this.props.status]);
-        const content = this.getAttachmentContent(this.props.amount, this.props.expiry);
-        const secondaryAction = this.getSecondaryInteraction();
-
         return (
-            <div className={(this.props.disabled ? 'mrc-ui-attachment-disabled ' : '') + classes}>
-                {content}
-                {secondaryAction}
+            <div
+                className={
+                    (this.props.disabled ? 'mrc-ui-attachment-disabled ' : '') +
+                    classnames('mrc-ui-attachment', this.classnames[this.props.status])
+                }
+            >
+                {this.getAttachmentContent(this.props.amount, this.props.expiry, this.props.metadata)}
+                {this.getSecondaryInteraction()}
             </div>
         );
     }
@@ -117,4 +132,5 @@ Attachment.propTypes = {
     handlePrimaryAction: PropTypes.func,
     handleSecondaryAction: PropTypes.func,
     disabled: PropTypes.bool,
+    metadata: PropTypes.array,
 };

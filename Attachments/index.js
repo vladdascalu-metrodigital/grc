@@ -98,6 +98,12 @@ export default class Attachments extends Component {
                 ? () => this.toggleModal(isMissing ? [attachment.fileType] : null)
                 : () => attachment.handleSecondaryAction();
 
+            let metadata = null;
+            try {
+                metadata = JSON.parse(_.get(attachment, 'metadataJson'));
+            } catch (e) {
+                console.log('Attachments: JSON parse error' + e);
+            }
             return (
                 <Attachment
                     disabled={disabled}
@@ -113,6 +119,7 @@ export default class Attachments extends Component {
                     handlePrimaryAction={disabled ? null : this.primaryAction(attachment)}
                     handleSecondaryAction={secondaryAction}
                     secondaryInteraction={attachment.secondaryInteraction}
+                    metadata={metadata}
                 />
             );
         });

@@ -32,6 +32,7 @@ let translations = {
     'mrc.customerdetails.fields.zipcity': 'ZIP/City',
     'mrc.customerdetails.fields.registration': 'Registration',
     'mrc.customerdetails.fields.legalformdescription': 'Legal Form Description',
+    'mrc.attachments.fields.contract.start_date': 'Start Date',
 };
 
 export const addTranslations = update => {

@@ -158,7 +158,7 @@ storiesOf('Attachments', module)
                     amount: '4000€',
                     expiryDate: '23.10.20',
                     uploaderPrincipalName: 'joe.appleseed@metronom.com',
-                    uploadTimestamp: '22.03.20, 10:56',
+                    uploadTimestamp: new Date('2023-10-20'),
                     secondaryInteraction: 'delete',
                     handleSecondaryAction: logDeleteFile,
                 },
@@ -184,9 +184,9 @@ storiesOf('Attachments', module)
                     contentType: 'application/msword',
                     fileType: 'Commercial Credit Insurance',
                     amount: '4000€',
-                    expiryDate: '23.10.20',
+                    expiryDate: new Date('2020-02-02'),
                     uploaderPrincipalName: 'joe.appleseed@metronom.com',
-                    uploadTimestamp: '22.03.20, 10:56',
+                    uploadTimestamp: new Date('2020-02-02'),
                     secondaryInteraction: 'delete',
                 },
             ]}
@@ -200,20 +200,16 @@ storiesOf('Attachments', module)
             disabled={false}
             attachments={[
                 {
-                    status: 'missing',
-                    fileType: 'Commercial Credit Insurance missing',
-                    secondaryInteraction: 'add',
-                },
-                {
                     status: 'normal',
                     title: 'LVM 203',
                     contentType: 'application/msword',
-                    fileType: 'Commercial Credit Insurance',
-                    amount: '4000€',
-                    expiryDate: '23.10.20',
+                    fileType: 'Contract',
+                    amount: null,
+                    expiryDate: new Date('2020-02-03'),
                     uploaderPrincipalName: 'joe.appleseed@metronom.com',
-                    uploadTimestamp: '22.03.20, 10:56',
+                    uploadTimestamp: new Date('2020-02-02'),
                     secondaryInteraction: 'delete',
+                    metadataJson: '[{"label":"mrc.attachments.fields.contract.start_date","value":"07.05.2020"}]',
                 },
             ]}
             fileTypes={['general', 'contract']}
