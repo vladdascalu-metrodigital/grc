@@ -102,7 +102,7 @@ export default class Attachments extends Component {
             try {
                 metadata = JSON.parse(_.get(attachment, 'metadataJson'));
             } catch (e) {
-                console.log('Attachments: JSON parse error' + e);
+                // metadata will be passed on as null
             }
             return (
                 <Attachment
