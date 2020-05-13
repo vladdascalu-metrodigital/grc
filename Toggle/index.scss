@@ -1,0 +1,63 @@
+@import '../lib/scss/colors';
+@import '../lib/scss/shadows';
+
+.mrc-ui-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  font-weight: 400;
+}
+
+.mrc-ui-toggle-reversed {
+  justify-content: left;
+  flex-direction: row-reverse;
+}
+
+.mrc-ui-toggle-spaced {
+  justify-content: space-between;
+}
+
+.mrc-ui-toggle-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  -webkit-transition: opacity 0.25s;
+  transition: opacity 0.25s;
+}
+
+.mrc-ui-toggle-label {
+  padding-left: .5rem;
+  padding-right: .5rem;
+}
+
+.mrc-ui-toggle-button {
+  position: relative;
+  height: 2rem;
+  width: 4rem;
+  box-shadow: $shadow-small-inset;
+  border-radius: 2rem;
+  background-color: $color-palette-grey-tint-90;
+  transition: background-color 0.18s ease-out;
+  will-change: background-color;
+}
+
+.mrc-ui-toggle-checked .mrc-ui-toggle-button {
+  background-color: $color-interaction;
+}
+
+.mrc-ui-toggle-knob {
+  border-radius: 100%;
+  display: block;
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  left: .25rem;
+  top: .25rem;
+  background-color: $color-contrast-white;
+  box-shadow: $shadow-small;
+  transition: transform 0.18s ease-out;
+  will-change: transform;
+}
+
+.mrc-ui-toggle-checked .mrc-ui-toggle-knob {
+  transform: translateX(2rem)
+}

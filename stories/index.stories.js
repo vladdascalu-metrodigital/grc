@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import '../Util/imports';
 import SidebarNavigation from '../Navigation/SidebarNavigation';
@@ -11,6 +11,7 @@ import { linkTo } from '@storybook/addon-links';
 
 import { Welcome } from '@storybook/react/demo';
 import Button from '../Button';
+import Toggle from '../Toggle';
 import Bullet, { MODE as BM } from '../Bullet';
 import FileUpload from '../FileUpload';
 
@@ -53,6 +54,27 @@ storiesOf('Bullet', module).add('all bullets', () => (
         <Bullet mode={BM.ERROR} alt="Error!" />
     </div>
 ));
+
+storiesOf('Toggle', module).add('Toggle', () => {
+    const [isChecked, setChecked] = useState(false);
+    const handleClick = value => {
+        action('clicked')(value);
+        setChecked(value);
+    };
+    return (
+        <div style={{ display: 'grid', gridGap: '2rem', padding: '2rem' }}>
+            <Toggle checked={isChecked} onClick={handleClick}>
+                This is the default Toggle
+            </Toggle>
+            <Toggle checked={isChecked} onClick={handleClick} reverse>
+                This Toggle is reversed
+            </Toggle>
+            <Toggle checked={isChecked} onClick={handleClick} spaceBetween>
+                This one is spaced all over the place
+            </Toggle>
+        </div>
+    );
+});
 
 const logAddFile = (filetype, file, title, expiryDate, attachmentType) =>
     console.log('adding file of type: ' + filetype + ' and expiry: ' + expiryDate);
