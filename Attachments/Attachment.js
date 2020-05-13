@@ -7,6 +7,8 @@ import * as mime from 'react-native-mime-types';
 import moment from 'moment';
 import { List } from 'immutable';
 
+import * as _ from 'lodash';
+
 export default class Attachment extends Component {
     constructor(props) {
         super(props);
@@ -53,7 +55,7 @@ export default class Attachment extends Component {
                                   </div>
                               </div>,
                           ]).concat(
-                              metadata
+                              _.isArray(metadata)
                                   ? List(
                                         metadata.map(e => (
                                             <div key="expiry" className="mrc-ui-attachment-info-group">
