@@ -2,6 +2,7 @@ import React from 'react';
 
 import '../Util/imports';
 
+import IFrame from '../IFrame';
 import StarRating from '../StarRating';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
@@ -287,6 +288,13 @@ storiesOf('Attachments', module)
 
 storiesOf('Segmented Control', module).add('basic', () => (
     <SegmentedControl selectedSegment={'Placeholder'} labels={['Document', 'Placeholder', 'bar', 'baz']} />
+));
+
+storiesOf('IFrame', module).add('standard', () => (
+    <IFrame
+        title="Example Report"
+        src="https://datastudio.google.com/embed/reporting/ff59c160-b8ce-45b8-9f3c-1e82a74df15c/page/kITLB"
+    />
 ));
 
 storiesOf('Comments', module)
