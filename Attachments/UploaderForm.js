@@ -194,7 +194,10 @@ export default class UploaderForm extends Component {
                 <NumberInput
                     className="m-input-element"
                     name="attachment-amount"
-                    onBlur={event => this.setField(parseFloat(event.target.value), field)}
+                    onBlur={event => {
+                        const parsed = parseFloat(event.target.value);
+                        this.setField(_.isNaN(parsed) ? null : parsed, field);
+                    }}
                     onChange={() => null}
                     id={id}
                 />

@@ -95,7 +95,7 @@ export default class Attachments extends Component {
             const secondaryAction = disabled
                 ? null
                 : !attachment.handleSecondaryAction && isMissing
-                ? () => this.toggleModal(isMissing ? [attachment.fileType] : null)
+                ? () => this.toggleModal(isMissing ? attachment.fileType : null)
                 : () => attachment.handleSecondaryAction();
 
             let metadata = null;
