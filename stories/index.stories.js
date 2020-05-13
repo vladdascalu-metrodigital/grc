@@ -1,6 +1,7 @@
 import React from 'react';
 
 import '../Util/imports';
+import SidebarNavigation from '../Navigation/SidebarNavigation';
 
 import IFrame from '../IFrame';
 import StarRating from '../StarRating';
@@ -288,6 +289,23 @@ storiesOf('Attachments', module)
 
 storiesOf('Segmented Control', module).add('basic', () => (
     <SegmentedControl selectedSegment={'Placeholder'} labels={['Document', 'Placeholder', 'bar', 'baz']} />
+));
+
+storiesOf('NavBar', module).add('basic', () => (
+    <div className="mrc-sidebar-wrapper">
+        <div className="mrc-sidebar">
+            <SidebarNavigation
+                highlight={'history'}
+                config={{
+                    data: {
+                        translations: [],
+                        quickNav: { history: { show: 'history' }, reports: { show: 'reports' } },
+                    },
+                }}
+                updateActiveItem={() => console.log('foo')}
+            />
+        </div>
+    </div>
 ));
 
 storiesOf('IFrame', module).add('standard', () => (

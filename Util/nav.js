@@ -16,8 +16,18 @@ const iconMap = {
     quickcheck: QuickcheckIcon,
     creditcorrection: CreditcorrectionIcon,
     batchupdate: BatchUpdateIcon,
+    reports: BatchUpdateIcon,
 };
-const sortMap = ['launchpad', 'inbox', 'limitcheck', 'quickcheck', 'creditcorrection', 'history', 'batchupdate'];
+const sortMap = [
+    'launchpad',
+    'inbox',
+    'limitcheck',
+    'quickcheck',
+    'creditcorrection',
+    'history',
+    'batchupdate',
+    'reports',
+];
 
 function sortNavs(navs, sortMap) {
     return navs.sort((a, b) => sortMap.indexOf(a.roleKey.toLowerCase()) - sortMap.indexOf(b.roleKey.toLowerCase()));
