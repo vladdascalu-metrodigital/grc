@@ -6,6 +6,7 @@ import './index.scss';
 import { PropTypes } from 'prop-types';
 import UploaderForm from './UploaderForm';
 import SegmentedControl from '../SegmentedControl';
+import Toggle from '../Toggle';
 
 import * as _ from 'lodash';
 
@@ -24,6 +25,7 @@ export default class Attachments extends Component {
             isModalVisible: false,
             fileTypes: null,
             segment: 'Document',
+            showDeletedAttachments: false,
         };
     }
 
@@ -87,7 +89,10 @@ export default class Attachments extends Component {
         if (!this.props.attachments) {
             return null;
         }
-        const attachments = this.props.attachments.map((attachment, index) => {
+        const _attachments = this.state.showDeletedAttachments
+            ? this.props.attachments
+            : this.props.attachments.filter(a => a.status !== 'deleted');
+        const attachments = _attachments.map((attachment, index) => {
             const isMissing = attachment.status === 'missing';
             const status = attachment.status ? attachment.status : 'normal';
             const disabled = attachment.disabled || this.props.disabled;
@@ -125,6 +130,14 @@ export default class Attachments extends Component {
         });
         return (
             <div className="mrc-ui-attachments-component">
+                <Toggle
+                    checked={this.state.showDeletedAttachments}
+                    onClick={() => {
+                        this.setState({ showDeletedAttachments: !this.state.showDeletedAttachments });
+                    }}
+                >
+                    <label>Show deleted attachments</label>
+                </Toggle>
                 {this.props.noAddButton ? null : (
                     <button
                         type="button"
