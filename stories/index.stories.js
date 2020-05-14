@@ -15,6 +15,9 @@ import Toggle from '../Toggle';
 import Bullet, { MODE as BM } from '../Bullet';
 import FileUpload from '../FileUpload';
 
+import ErrorHandler from '../ErrorHandler';
+import ErrorHandledTabPanel from '../ErrorHandledTabPanel';
+
 import Recommendations from '../Recommendations';
 import Comments from '../NewComments';
 
@@ -36,6 +39,7 @@ import CreditLimitRequestSubmitted from '../CreditLimit/LimitRequest/RequestSubm
 import CreditLimitCustomerStatus from '../CreditLimit/CustomerStatus';
 
 import QuickCheck from '../QuickCheck';
+import { Tabs, TabList, Tab } from 'react-tabs';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -78,6 +82,31 @@ storiesOf('Toggle', module).add('Toggle', () => {
         </div>
     );
 });
+
+// A helper component to throw exceptions
+const Boom = () => {
+    throw new Exception('This is a demo Exception');
+    return <div>Boom?</div>;
+};
+
+storiesOf('Error Handling', module)
+    .add('ErrorHandler', () => (
+        <ErrorHandler>
+            <Boom />
+        </ErrorHandler>
+    ))
+    .add('ErrorHandledTabPanel', () => (
+        <Tabs>
+            <TabList>
+                <Tab>Error</Tab>
+                <Tab>No Error</Tab>
+            </TabList>
+            <ErrorHandledTabPanel>
+                <Boom />
+            </ErrorHandledTabPanel>
+            <ErrorHandledTabPanel>Hi! 👋</ErrorHandledTabPanel>
+        </Tabs>
+    ));
 
 const logAddFile = (filetype, file, title, expiryDate, attachmentType) =>
     console.log('adding file of type: ' + filetype + ' and expiry: ' + expiryDate);
