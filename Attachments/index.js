@@ -130,15 +130,17 @@ export default class Attachments extends Component {
         });
         return (
             <div className="mrc-ui-attachments-component">
-                <Toggle
-                    disabled={this.props.disabled}
-                    checked={this.state.showDeletedAttachments}
-                    onClick={() => {
-                        this.setState({ showDeletedAttachments: !this.state.showDeletedAttachments });
-                    }}
-                >
-                    <label>{lookup('mrc.attachments.showDeletedAttachments')}</label>
-                </Toggle>
+                {this.props.noDeletedAttachmentsToggle ? null : (
+                    <Toggle
+                        disabled={this.props.disabled}
+                        checked={this.state.showDeletedAttachments}
+                        onClick={() => {
+                            this.setState({ showDeletedAttachments: !this.state.showDeletedAttachments });
+                        }}
+                    >
+                        <label>{lookup('mrc.attachments.showDeletedAttachments')}</label>
+                    </Toggle>
+                )}
                 {this.props.noAddButton ? null : (
                     <button
                         type="button"
@@ -176,6 +178,7 @@ Attachments.propTypes = {
     readonly: PropTypes.bool,
     disabled: PropTypes.bool,
     noPlaceholder: PropTypes.bool,
-    contractUrl: PropTypes.string,
     noAddButton: PropTypes.bool,
+    noDeletedAttachmentsToggle: PropTypes.bool,
+    contractUrl: PropTypes.string,
 };
