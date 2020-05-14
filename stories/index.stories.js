@@ -72,6 +72,9 @@ storiesOf('Toggle', module).add('Toggle', () => {
             <Toggle checked={isChecked} onClick={handleClick} spaceBetween>
                 This one is spaced all over the place
             </Toggle>
+            <Toggle checked={false} onClick={() => action('clicked')('This click should not happen')} disabled>
+                Don't touch me
+            </Toggle>
         </div>
     );
 });

@@ -131,6 +131,7 @@ export default class Attachments extends Component {
         return (
             <div className="mrc-ui-attachments-component">
                 <Toggle
+                    disabled={this.props.disabled}
                     checked={this.state.showDeletedAttachments}
                     onClick={() => {
                         this.setState({ showDeletedAttachments: !this.state.showDeletedAttachments });

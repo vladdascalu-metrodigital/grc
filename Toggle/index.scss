@@ -18,7 +18,6 @@
 }
 
 .mrc-ui-toggle-disabled {
-  cursor: not-allowed;
   opacity: 0.5;
   -webkit-transition: opacity 0.25s;
   transition: opacity 0.25s;
@@ -38,10 +37,23 @@
   background-color: $color-palette-grey-tint-90;
   transition: background-color 0.18s ease-out;
   will-change: background-color;
+
+  &:focus {
+    outline: currentcolor none medium;
+    box-shadow: $shadow-small-inset, $shadow-outline-glow;
+  }
 }
 
 .mrc-ui-toggle-checked .mrc-ui-toggle-button {
   background-color: $color-interaction;
+}
+
+.mrc-ui-toggle-disabled .mrc-ui-toggle-button {
+  cursor: not-allowed;
+
+  &:focus {
+    box-shadow: $shadow-small-inset, $shadow-outline-disabled;
+  }
 }
 
 .mrc-ui-toggle-knob {

@@ -7,19 +7,12 @@ export default class Toggle extends PureComponent {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
-        this.handleKeyUp = this.handleKeyUp.bind(this);
     }
 
     handleClick() {
         const { disabled, onClick, checked } = this.props;
         if (disabled) return;
         if (onClick) onClick(!checked);
-    }
-
-    handleKeyUp(e) {
-        if (e.keyCode === 13 || e.keyCode === 32) {
-            this.handleClick();
-        }
     }
 
     render() {
@@ -34,7 +27,7 @@ export default class Toggle extends PureComponent {
         return (
             <div className={className}>
                 <div className="mrc-ui-toggle-label">{children}</div>
-                <button className="mrc-ui-toggle-button" onClick={this.handleClick} onKeyUp={this.handleKeyUp}>
+                <button tabIndex="0" className="mrc-ui-toggle-button" onClick={this.handleClick}>
                     <span className="mrc-ui-toggle-knob"></span>
                 </button>
             </div>
