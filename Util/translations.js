@@ -33,6 +33,7 @@ let translations = {
     'mrc.customerdetails.fields.registration': 'Registration',
     'mrc.customerdetails.fields.legalformdescription': 'Legal Form Description',
     'mrc.attachments.fields.contract.start_date': 'Start Date',
+    'mrc.attachments.showDeletedAttachments': 'Show Deleted Attachments',
 };
 
 export const addTranslations = update => {

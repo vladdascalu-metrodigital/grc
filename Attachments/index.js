@@ -136,7 +136,7 @@ export default class Attachments extends Component {
                         this.setState({ showDeletedAttachments: !this.state.showDeletedAttachments });
                     }}
                 >
-                    <label>Show deleted attachments</label>
+                    <label>{lookup('mrc.attachments.showDeletedAttachments')}</label>
                 </Toggle>
                 {this.props.noAddButton ? null : (
                     <button
