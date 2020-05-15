@@ -582,6 +582,7 @@ export default class LimitRequestLayout extends Component {
         return (
             <Attachments
                 noPlaceholder={true}
+                noDeletedAttachmentsToggle={true}
                 disabled={!this.props.request.data || this.props.request.loading}
                 readonly={!this.props.request.data || this.props.request.loading}
                 attachments={(this.COLLATERALS_ATTACHMENTS ? this.COLLATERALS_ATTACHMENTS : []).map(a => {
