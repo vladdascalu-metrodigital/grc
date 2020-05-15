@@ -19,9 +19,6 @@ export default class ErrorHandler extends React.Component {
             return (
                 <div className="mrc-detail">
                     <h2>Something went wrong.</h2>
-                    {/*<details style={{whiteSpace: 'pre-wrap'}}>*/}
-                    {/*    {this.state.error.stack}*/}
-                    {/*</details>*/}
                 </div>
             );
         }
