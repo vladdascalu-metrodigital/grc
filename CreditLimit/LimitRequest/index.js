@@ -8,7 +8,8 @@ import Comments from '../../NewComments';
 import Attachments from '../../Attachments';
 import Sales from '../../Sales';
 import { Route, Switch } from 'react-router-dom';
-import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
+import { Tab, TabList, Tabs } from 'react-tabs';
+import ErrorHandledTabPanel from '../../ErrorHandledTabPanel';
 import '../../tabs.scss';
 import { Accordion, Collapsible } from '../../Accordion';
 import RequestSubmitted from './RequestSubmitted';
@@ -662,11 +663,11 @@ export default class LimitRequestLayout extends Component {
                                         <Tab>{lookup('mrc.comments.title')}</Tab>
                                         <Tab>{lookup('mrc.attachments.title')}</Tab>
                                     </TabList>
-                                    <TabPanel>{this.createCustomerDetailsPanel(req)}</TabPanel>
-                                    <TabPanel>{this.createRequestPanel()}</TabPanel>
-                                    <TabPanel>{this.createSalesPanel()}</TabPanel>
-                                    <TabPanel>{this.createCommentsPanel()}</TabPanel>
-                                    <TabPanel>{this.createAttachmentsPanel()}</TabPanel>
+                                    <ErrorHandledTabPanel>{this.createCustomerDetailsPanel(req)}</ErrorHandledTabPanel>
+                                    <ErrorHandledTabPanel>{this.createRequestPanel()}</ErrorHandledTabPanel>
+                                    <ErrorHandledTabPanel>{this.createSalesPanel()}</ErrorHandledTabPanel>
+                                    <ErrorHandledTabPanel>{this.createCommentsPanel()}</ErrorHandledTabPanel>
+                                    <ErrorHandledTabPanel>{this.createAttachmentsPanel()}</ErrorHandledTabPanel>
                                 </Tabs>
                             ) : (
                                 <Accordion>
