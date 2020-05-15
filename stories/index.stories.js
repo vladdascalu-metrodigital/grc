@@ -85,8 +85,7 @@ storiesOf('Toggle', module).add('Toggle', () => {
 
 // A helper component to throw exceptions
 const Boom = () => {
-    throw new Exception('This is a demo Exception');
-    return <div>Boom?</div>;
+    throw new Error('This is a demo Exception');
 };
 
 storiesOf('Error Handling', module)
