@@ -9,6 +9,13 @@ export default class CommentsAdd extends Component {
         super(props);
         this.state = {};
         this.toggleModal = this.toggleModal.bind(this);
+        this.commentsInput = React.createRef();
+    }
+
+    componentDidUpdate(prevState) {
+        if (this.commentsInput.current && this.state != prevState) {
+            this.commentsInput.current.focus();
+        }
     }
 
     toggleModal() {
@@ -21,6 +28,7 @@ export default class CommentsAdd extends Component {
                 <div className="mrc-ui-input clear-both">
                     <label className="mrc-ui-label">{lookup('mrc.comments.text')}</label>
                     <textarea
+                        ref={this.commentsInput}
                         className="mrc-ui-textarea"
                         value={this.props.newContent}
                         onChange={e => this.props.onContentChange && this.props.onContentChange(e.target.value)}

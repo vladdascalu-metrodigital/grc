@@ -23,6 +23,13 @@ export default class Recommendations extends Component {
             isModalVisible: false,
             recommendation: null,
         };
+        this.recommendationsInput = React.createRef();
+    }
+
+    componentDidUpdate(prevState) {
+        if (this.recommendationsInput.current && this.state != prevState) {
+            this.recommendationsInput.current.focus();
+        }
     }
 
     modalDialogContent() {
@@ -41,6 +48,7 @@ export default class Recommendations extends Component {
                 <div className="mrc-ui-input clear-both">
                     <label className="mrc-ui-label">{lookup('mrc.recommendations.text')}</label>
                     <textarea
+                        ref={this.recommendationsInput}
                         className="mrc-ui-textarea"
                         value={_.get(this.state, 'recommendation.content')}
                         onChange={e =>

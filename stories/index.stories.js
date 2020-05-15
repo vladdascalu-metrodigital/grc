@@ -353,7 +353,7 @@ storiesOf('NavBar', module).add('basic', () => (
                 config={{
                     data: {
                         translations: [],
-                        quickNav: { history: { show: 'history' }, reports: { show: 'reports' } },
+                        quickNav: { history: { show: true }, reports: { show: true } },
                     },
                 }}
                 updateActiveItem={() => console.log('foo')}
