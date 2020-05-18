@@ -3,4 +3,4 @@ webpack.*
 postcss.*
 karma.*
 publish.js
-*/index.stories.js
+*/*.stories.js
