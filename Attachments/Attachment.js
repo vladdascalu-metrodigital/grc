@@ -18,8 +18,8 @@ export default class Attachment extends Component {
         };
     }
 
-    getFileType(contentType) {
-        const fileExtension = mime.extension(contentType);
+    getFileType(fileType) {
+        const fileExtension = mime.extension(fileType);
         return fileExtension || lookup('mrc.attachments.unknown-mime');
     }
 
