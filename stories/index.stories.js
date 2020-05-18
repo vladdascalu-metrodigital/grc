@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import '../Util/imports';
 import SidebarNavigation from '../Navigation/SidebarNavigation';
 
+import Reports from '../Reports';
+
 import IFrame from '../IFrame';
 import StarRating from '../StarRating';
 import { storiesOf } from '@storybook/react';
@@ -48,6 +50,15 @@ storiesOf('Button', module)
     .add('Error', () => <Button status="error" onClick={action('clicked')} text="Approve" />)
     .add('Secondary', () => <Button status="secondary" onClick={action('clicked')} text="Approve" />)
     .add('Success', () => <Button status="success" onClick={action('clicked')} text="Approve" />);
+
+storiesOf('Reports', module).add('report list', () => (
+    <Reports
+        data={[
+            { name: 'Credit Portfolio', id: 'bar' },
+            { name: 'Running Requests', id: 'foo' },
+        ]}
+    />
+));
 
 storiesOf('Bullet', module).add('all bullets', () => (
     <div style={{ display: 'grid', gridGap: '2rem', padding: '2rem' }}>
