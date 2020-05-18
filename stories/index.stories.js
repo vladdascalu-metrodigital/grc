@@ -56,6 +56,8 @@ storiesOf('Reports', module).add('report list', () => (
         data={[
             { name: 'Credit Portfolio', id: 'bar' },
             { name: 'Running Requests', id: 'foo' },
+            { name: 'Foo', id: 'foo' },
+            { name: 'Bar', id: 'foo' },
         ]}
     />
 ));

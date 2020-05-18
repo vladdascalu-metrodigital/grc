@@ -17,19 +17,23 @@
 }
 
 .mrc-ui-reports-headline {
+    margin: 0 auto;
+    width: 100%;
+    display: table;
+    text-align: center;
     margin-bottom: $spacing-extra-small;
     padding: $spacing-extra-small $spacing-medium;
     color: $color-brand-primary-default;
 }
 
 .mrc-ui-report {
+    width: $width-4;
     padding: $spacing-medium;
     margin: $spacing-none auto !important;
-}
-
-.mrc-ui-no-report {
-    margin: $spacing-none auto !important;
-    display: table;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
 }
 
 @media #{$breakpoint-not-small} {
@@ -52,6 +56,10 @@
 }
 
 .mrc-ui-reports-list {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
     background: $color-contrast-white;
 }
 
