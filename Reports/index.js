@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { lookup } from '../Util/translations';
 import './index.scss';
-import FileIcon from '../icons/file.svg';
+import ReportingIcon from '../icons/reporting-blue.svg';
 
 export default class Reports extends Component {
     constructor(props) {
@@ -13,7 +13,7 @@ export default class Reports extends Component {
         const reports = this.props.data.map((report, i) => (
             <div key={i}>
                 <div className="mrc-ui-report">
-                    <img className="mrc-ui-report-icon" src={FileIcon} alt={'report'} />
+                    <img className="mrc-ui-report-icon" src={ReportingIcon} alt={'report'} />
                     <div className="mrc-ui-report-text">
                         <a href={'#/reports/' + report.id}>{report.name}</a>
                     </div>

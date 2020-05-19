@@ -105,7 +105,6 @@ export default class LimitRequestLayout extends Component {
                             : !_.isNil(item.customer.creditLimit)
                             ? item.customer.creditLimit
                             : 0;
-                    console.log(amount);
                     requestedGroupLimit += amount;
                     exhaustionGroupLimit += item.customer.limitExhaustion;
                 });
@@ -326,7 +325,6 @@ export default class LimitRequestLayout extends Component {
                         : !_.isNil(item.customer.creditLimit)
                         ? item.customer.creditLimit
                         : 0;
-                console.log(amount);
                 requestedGroupLimitNew += amount;
             });
             this.setState({
