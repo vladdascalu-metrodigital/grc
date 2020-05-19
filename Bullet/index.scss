@@ -3,8 +3,11 @@
 .mrc-ui-bullet {
   height: 1rem; // $mrc-icon-sm
   width:  1rem; // $mrc-icon-sm
-  background-color: $color-palette-grey-tint-60;
   border-radius: 50%;
+}
+
+.mrc-ui-bullet-default {
+  background-color: $color-palette-grey-tint-60;
 }
 
 .mrc-ui-bullet-warning { 
