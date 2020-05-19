@@ -99,12 +99,14 @@ export default class LimitRequestLayout extends Component {
             if (nextProps.request != null && nextProps.request.data != null) {
                 nextProps.request.data.requestedItems.map(item => {
                     currentGroupLimit += item.customer.creditLimit;
-                    requestedGroupLimit +=
-                        item.creditData.amount == 0 ||
-                        item.creditData.amount == null ||
-                        item.creditData.amount != item.creditData.amount
-                            ? 0
-                            : item.creditData.amount;
+                    const amount =
+                        !_.isNil(item.creditData.amount) && !_.isNaN(item.creditData.amount)
+                            ? item.creditData.amount
+                            : !_.isNil(item.customer.creditLimit)
+                            ? item.customer.creditLimit
+                            : 0;
+                    console.log(amount);
+                    requestedGroupLimit += amount;
                     exhaustionGroupLimit += item.customer.limitExhaustion;
                 });
                 availableGroupLimit = currentGroupLimit - exhaustionGroupLimit;
@@ -318,11 +320,13 @@ export default class LimitRequestLayout extends Component {
         let requestedGroupLimitNew = 0;
         if (this.props.request != null && this.props.request.data != null) {
             this.props.request.data.requestedItems.map(item => {
-                const amount = !_.isNil(item.creditData.amount)
-                    ? item.creditData.amount
-                    : !_.isNil(item.customer.creditLimit)
-                    ? item.customer.creditLimit
-                    : 0;
+                const amount =
+                    !_.isNil(item.creditData.amount) && !_.isNaN(item.creditData.amount)
+                        ? item.creditData.amount
+                        : !_.isNil(item.customer.creditLimit)
+                        ? item.customer.creditLimit
+                        : 0;
+                console.log(amount);
                 requestedGroupLimitNew += amount;
             });
             this.setState({
