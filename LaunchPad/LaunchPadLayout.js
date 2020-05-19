@@ -11,6 +11,7 @@ import InboxIcon from '../icons/inbox-blue.svg';
 import QuickcheckIcon from '../icons/quick-check-blue.svg';
 import CreditcorrectionIcon from '../icons/credit-correction-blue.svg';
 import BatchUpdateIcon from '../icons/batch-update-blue.svg';
+import FileIcon from '../icons/file.svg';
 
 const trainingMovieStyle = {
     margin: '1rem',
@@ -26,6 +27,8 @@ const iconMap = {
     quickcheck: QuickcheckIcon,
     creditcorrection: CreditcorrectionIcon,
     batchupdate: BatchUpdateIcon,
+    // TODO change to real icon
+    reports: FileIcon,
 };
 
 export default class LaunchPadLayout extends Component {
