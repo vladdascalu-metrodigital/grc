@@ -24,6 +24,8 @@ import './index.scss';
 import { RequestFieldPropTypes } from '../../AdditionalFields/AdditionalFieldsPropTypes';
 import { filterAdditionalFieldsList } from '../../AdditionalFields/additionalFielsUtil';
 
+import * as _ from 'lodash';
+
 export default class LimitRequestLayout extends Component {
     FILE_TYPES = [''];
     COLLATERALS = [''];
@@ -316,12 +318,12 @@ export default class LimitRequestLayout extends Component {
         let requestedGroupLimitNew = 0;
         if (this.props.request != null && this.props.request.data != null) {
             this.props.request.data.requestedItems.map(item => {
-                requestedGroupLimitNew +=
-                    item.creditData.amount == 0 ||
-                    item.creditData.amount == null ||
-                    item.creditData.amount != item.creditData.amount
-                        ? 0
-                        : item.creditData.amount;
+                const amount = !_.isNil(item.creditData.amount)
+                    ? item.creditData.amount
+                    : !_.isNil(item.customer.creditLimit)
+                    ? item.customer.creditLimit
+                    : 0;
+                requestedGroupLimitNew += amount;
             });
             this.setState({
                 requestedGroupLimit: requestedGroupLimitNew,
