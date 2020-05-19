@@ -285,6 +285,28 @@ storiesOf('Attachments', module)
             country="RS"
         />
     ))
+    .add('ES', () => (
+        <Attachments
+            disabled={false}
+            attachments={[
+                {
+                    status: 'normal',
+                    title: 'LVM 203',
+                    contentType: 'application/msword',
+                    fileType: 'Contract',
+                    amount: null,
+                    expiryDate: new Date('2020-02-03'),
+                    uploaderPrincipalName: 'joe.appleseed@metronom.com',
+                    uploadTimestamp: new Date('2020-02-02'),
+                    secondaryInteraction: 'delete',
+                    metadataJson: '[{"label":"mrc.attachments.fields.contract.start_date","value":"07.05.2020"}]',
+                },
+            ]}
+            fileTypes={['general']}
+            addAttachment={() => console.log('adding file')}
+            country="ES"
+        />
+    ))
     .add('provide-info-cc', () => (
         <Attachments
             disabled={false}

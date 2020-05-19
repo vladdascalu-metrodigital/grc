@@ -31,6 +31,7 @@ export default class Attachments extends Component {
 
     modalDialogContent() {
         const isPlaceholder = this.state.segment === 'Placeholder';
+        const fileTypes = _.isEmpty(this.props.fileTypes) ? ['general'] : this.props.fileTypes;
         return (
             <div>
                 {this.props.noPlaceholder || this.state.fileType ? null : (
@@ -44,7 +45,7 @@ export default class Attachments extends Component {
                     onlyPlaceholder={isPlaceholder}
                     country={this.props.country}
                     readonly={this.props.readonly}
-                    fileTypes={this.state.fileType ? [this.state.fileType] : this.props.fileTypes}
+                    fileTypes={this.state.fileType ? [this.state.fileType] : fileTypes}
                     callback={
                         isPlaceholder
                             ? fileType => {
