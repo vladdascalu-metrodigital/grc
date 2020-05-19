@@ -14,7 +14,6 @@ import { linkTo } from '@storybook/addon-links';
 import { Welcome } from '@storybook/react/demo';
 import Button from '../Button';
 import Toggle from '../Toggle';
-import Bullet, { MODE as BM } from '../Bullet';
 import FileUpload from '../FileUpload';
 
 import ErrorHandler from '../ErrorHandler';
@@ -60,16 +59,6 @@ storiesOf('Reports', module).add('report list', () => (
             { name: 'Bar', id: 'foo' },
         ]}
     />
-));
-
-storiesOf('Bullet', module).add('all bullets', () => (
-    <div style={{ display: 'grid', gridGap: '2rem', padding: '2rem' }}>
-        <Bullet />
-        <Bullet mode="success" alt="Success!" />
-        <Bullet mode={BM.ACTIVE} alt="Active!" />
-        <Bullet mode={BM.WARNING} alt="Warning!" />
-        <Bullet mode={BM.ERROR} alt="Error!" />
-    </div>
 ));
 
 storiesOf('Toggle', module).add('Toggle', () => {

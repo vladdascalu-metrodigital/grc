@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './index.scss';
 import { lookup } from '../Util/translations';
 import PropTypes from 'prop-types';
+import MrcDateTime from '../MrcDateTime';
 
 export default class Comments extends Component {
     constructor(props) {
@@ -27,7 +28,7 @@ export default class Comments extends Component {
                 {comments.map(comment => {
                     return (
                         <div key={comment.id} className="mrc-comment">
-                            <mrc-datetime class="datetime">{comment.uploadTimestamp}</mrc-datetime>{' '}
+                            <MrcDateTime>{comment.uploadTimestamp}</MrcDateTime>{' '}
                             <span className="author">
                                 {comment.uploaderPrincipalName} ({comment.uploaderPosition})
                             </span>
@@ -37,7 +38,7 @@ export default class Comments extends Component {
                                     comment.comment === 'strategy.decision.rejected') &&
                                 this.props.timeoutDate != undefined &&
                                 this.props.timeoutDate != null ? (
-                                    <mrc-datetime className="datetime">{this.props.timeoutDate}</mrc-datetime>
+                                    <MrcDateTime>{this.props.timeoutDate}</MrcDateTime>
                                 ) : (
                                     ''
                                 )}
