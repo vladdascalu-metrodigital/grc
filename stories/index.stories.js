@@ -648,6 +648,11 @@ storiesOf('LaunchPad', module)
                                 roleKey: 'inbox',
                                 title: 'mrc.apps.inbox',
                             },
+                            {
+                                template: 'http://localhost:8089/reportingservice',
+                                roleKey: 'reports',
+                                title: 'mrc.apps.reportingservice',
+                            },
                         ],
                     },
                 },
