@@ -24,7 +24,7 @@ export default class Bullet extends PureComponent {
         let { alt, mode } = this.props;
         mode = mode ? mode.toUpperCase() : null;
         let className = classnames('mrc-ui-bullet', {
-            'mrc-ui-bullet-default': Object.keys(MODE).indexOf(mode) == -1,
+            'mrc-ui-bullet-default': Object.keys(MODE).indexOf(mode) == -1 || mode === MODE.READ,
             'mrc-ui-bullet-warning': mode === MODE.WARNING || mode === MODE.CLAIMED,
             'mrc-ui-bullet-error': mode === MODE.ERROR,
             'mrc-ui-bullet-success': mode === MODE.SUCCESS,
