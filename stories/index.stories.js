@@ -226,6 +226,33 @@ storiesOf('Attachments', module)
             country="DE"
         />
     ))
+    .add('collateral', () => (
+        <Attachments
+            readonly={false}
+            disabled={false}
+            noPlaceholder={false}
+            contractUrl={'http://example.com'}
+            attachments={[
+                {
+                    isCollateral: true,
+                    status: 'normal',
+                    title: 'LVM 203',
+                    contentType: 'application/msword',
+                    fileType: 'Commercial Credit',
+                    amount: '4000€',
+                    expiryDate: '23.10.20',
+                    uploaderPrincipalName: 'joe.appleseed@metronom.com',
+                    uploadTimestamp: new Date('2023-10-20'),
+                    secondaryInteraction: null,
+                    handleSecondaryAction: logDeleteFile,
+                },
+            ]}
+            fileTypes={['general', 'delkredere', 'warenkreditversicherung', 'contract']}
+            addAttachment={logAddFile}
+            savePlaceholder={fileType => console.log('saving placeholder of type ' + fileType)}
+            country="DE"
+        />
+    ))
     .add('disabled', () => (
         <Attachments
             disabled={true}

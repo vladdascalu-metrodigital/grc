@@ -77,6 +77,9 @@ export default class Attachment extends Component {
     }
 
     getSecondaryInteraction() {
+        if (_.isNil(this.props.handleSecondaryAction)) {
+            return null;
+        }
         const ifNotDisabled = a => (!this.props.disabled ? a : null);
         switch (this.props.secondaryInteraction) {
             case 'delete':
