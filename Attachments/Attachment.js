@@ -77,6 +77,10 @@ export default class Attachment extends Component {
     }
 
     getSecondaryInteraction() {
+        console.log(this.props);
+        console.log('hello');
+        console.log(this.props.handleSecondaryAction);
+        console.log(_.isNil(this.props.handleSecondaryAction));
         if (_.isNil(this.props.handleSecondaryAction)) {
             return null;
         }

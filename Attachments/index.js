@@ -98,11 +98,12 @@ export default class Attachments extends Component {
             const status = attachment.status ? attachment.status : 'normal';
             const disabled = attachment.disabled || this.props.disabled;
 
-            const secondaryAction = disabled
-                ? null
-                : !attachment.handleSecondaryAction && isMissing
-                ? () => this.toggleModal(isMissing ? attachment.fileType : null)
-                : () => attachment.handleSecondaryAction();
+            const secondaryAction =
+                disabled || _.isNil(attachment.secondaryInteraction)
+                    ? null
+                    : !attachment.handleSecondaryAction && isMissing
+                    ? () => this.toggleModal(isMissing ? attachment.fileType : null)
+                    : () => attachment.handleSecondaryAction();
 
             let metadata = null;
             try {
