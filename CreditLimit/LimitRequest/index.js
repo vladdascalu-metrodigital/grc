@@ -594,13 +594,13 @@ export default class LimitRequestLayout extends Component {
                         ? {
                               ...a,
                               status: 'deleted',
-                              secondaryInteraction: 'restore',
+                              secondaryInteraction: a.isCollateral ? null : 'restore',
                               handleSecondaryAction: () => this.props.restoreAttachment(limitRequest.id, a.id),
                           }
                         : {
                               ...a,
                               status: 'normal',
-                              secondaryInteraction: 'delete',
+                              secondaryInteraction: a.isCollateral ? null : 'delete',
                               handleSecondaryAction: () => this.props.deleteAttachment(limitRequest.id, a.id),
                           };
                 })}
