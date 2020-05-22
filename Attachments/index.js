@@ -155,7 +155,9 @@ export default class Attachments extends Component {
                 )}
                 <div className="mrc-ui-attachments">
                     <div className="mrc-ui-attachments-headerrow">{this.contractLink()}</div>
-                    <h3 className="mrc-ui-attachments-headline">{lookup('mrc.attachments.headline')}</h3>
+                    {_.isEmpty(attachments) || this.props.noHeader ? null : (
+                        <h3 className="mrc-ui-attachments-headline">{lookup('mrc.attachments.headline')}</h3>
+                    )}
                     <div className="mrc-ui-attachments-list">{attachments}</div>
                 </div>
                 {this.state.isModalVisible ? (
@@ -182,5 +184,6 @@ Attachments.propTypes = {
     noPlaceholder: PropTypes.bool,
     noAddButton: PropTypes.bool,
     noDeletedAttachmentsToggle: PropTypes.bool,
+    noHeader: PropTypes.bool,
     contractUrl: PropTypes.string,
 };
