@@ -1,0 +1,13 @@
+@import '../lib/scss/colors';
+
+.mrc-ui-toggle-indicator {
+  color: $color-palette-grey-tint-40;
+  font-size: 2rem;
+  font-weight: bold;
+  transition: transform 220ms ease-out;
+  will-change: transform;
+}
+
+.mrc-ui-toggle-indicator-tilted {
+  transform: rotate(45deg);
+}

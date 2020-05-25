@@ -1,3 +1,5 @@
+@import './colors';
+
 $font-size-headline: 6rem !default;
 $font-size-subheadline: 5rem !default;
 
@@ -25,3 +27,14 @@ $measure: 30em !default;
 $measure-narrow: 20em !default;
 /* Measure width is limited to ~80 characters */
 $measure-wide: 34em !default;
+
+@mixin typo-anchor() {
+  color: $color-interaction;
+  text-decoration: none;
+  text-transform: none;
+  cursor: pointer;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,28 @@
+@import '../lib/scss/colors';
+@import '../lib/scss/variables';
+@import '../lib/scss/shadows';
+
+.mrc-ui-toggle-box-strip {
+  align-items: center;
+  background-color: $color-contrast-white;
+  cursor: pointer;
+  display: flex;
+  min-height: 4.5rem;
+  padding: $spacing-medium;
+  transition: background-color 220ms ease-out, box-shadow 220ms ease-out;
+  will-change: background-color, box-shadow;
+}
+
+.mrc-ui-toggle-box-strip-toggled {
+  background-color: $color-brand-primary-tint-90;
+  box-shadow: $shadow-downwards-medium;
+}
+
+.mrc-ui-toggle-box-title-content {
+  flex-grow: 1;
+  padding-right: $spacing-medium;
+}
+
+.mrc-ui-toggle-box-content {
+  padding: $spacing-large $spacing-medium $spacing-medium;
+}

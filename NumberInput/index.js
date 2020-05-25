@@ -26,7 +26,7 @@ export class NumberInput extends Component {
             this.handleChangeAmount('');
         }
         if (this.props.newValue !== prevProps.newValue && this.props.newValue != this.state.value) {
-            this.handleChangeAmount((this.props.newValue))
+            this.handleChangeAmount(this.props.newValue);
         }
     }
     handleChange = event => {
@@ -60,3 +60,5 @@ export class NumberInput extends Component {
         return <input type="text" value={this.state.value} onChange={this.handleChange} {...inputProps} />;
     }
 }
+
+export default NumberInput;

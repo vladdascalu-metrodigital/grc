@@ -1,0 +1,20 @@
+@import '../lib/scss/card-styles';
+@import '../lib/scss/variables';
+
+.mrc-ui-card {
+  @include card-default();
+  box-sizing: border-box;
+  padding: $spacing-medium;
+}
+
+.mrc-ui-card-primary {
+  @include card-primary();
+}
+
+.mrc-ui-card-muted {
+  @include card-muted();
+}
+
+.mrc-ui-card-warning {
+  @include card-warning();
+}

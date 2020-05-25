@@ -1,0 +1,37 @@
+@import "./borders";
+
+@mixin card-default() {
+  @include border-radius-all();
+  background-color: $color-palette-grey-tint-95;
+  border: $border-width-thin solid $color-palette-grey-tint-70;
+}
+
+@mixin card-primary() {
+  @include border-radius-all();
+  background-color: $color-brand-primary-tint-95;
+  border: $border-width-thin solid $color-brand-primary-tint-70;
+}
+
+@mixin card-primary-white() {
+  @include border-radius-all();
+  background-color: $color-contrast-white;
+  border: $border-width-thin solid $color-brand-primary-tint-70;
+}
+
+@mixin card-muted() {
+  @include border-radius-all();
+  background-color: $color-contrast-white;
+  border: $border-width-thin dashed $color-palette-grey-tint-70;
+}
+
+@mixin card-warning() {
+  @include border-radius-all();
+  background-color: $color-palette-red-tint-90;
+  border: $border-width-thin dashed $color-palette-red-shade-40;
+}
+
+@mixin card-succcess() {
+  @include border-radius-all();
+  background-color: $color-palette-green-tint-90;
+  border: $border-width-thin solid $color-palette-green-default;
+}

@@ -1,0 +1,54 @@
+@import '../lib/scss/variables';
+@import '../lib/scss/colors';
+@import '../lib/scss/typography';
+
+.mrc-ui-box-with-title {
+  font-weight: normal;
+}
+
+.mrc-ui-box-with-title-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  border-bottom: $border-width-thin solid $color-palette-grey-tint-70;
+  color: $color-palette-grey-tint-60;
+  padding: 0 .25rem;
+
+  > * {
+    line-height: $line-height-copy * 1.25;
+  }
+
+  .mrc-ui-box-with-title-action {
+    font-size: $font-size-7;
+  }
+}
+
+.mrc-ui-box-with-title-title {
+  font-size: $font-size-5;
+  color: $color-palette-grey-tint-20;
+  font-weight: normal;
+}
+
+.mrc-ui-box-with-title-smaller {
+  .mrc-ui-box-with-title-header {
+    > * {
+      line-height: $line-height-title;
+    }
+  }
+
+  .mrc-ui-box-with-title-title {
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    font-size: $font-size-8;
+    font-weight: normal;
+  }
+}
+
+.mrc-ui-box-with-title-action {
+  @include typo-anchor();
+}
+
+.mrc-ui-box-with-title-content {
+  padding: $spacing-medium .25rem 0;
+}

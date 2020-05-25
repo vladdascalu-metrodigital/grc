@@ -1,0 +1,57 @@
+@import '../lib/scss/card-styles';
+@import '../lib//scss/variables';
+
+.mrc-ui-check-card {
+  @include card-primary-white();
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  font-weight: normal;
+  justify-content: space-around;
+  min-height: 4.5rem;
+  width: max-content;
+  padding: $spacing-extra-small $spacing-medium;
+}
+
+.mrc-ui-check-card-no-content {
+  justify-content: center;
+}
+
+.mrc-ui-check-card-checked {
+  @include card-succcess();
+}
+
+.mrc-ui-check-card-disabled {
+  @include card-primary();
+  cursor: not-allowed;
+}
+
+.mrc-ui-check-card-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-transform: uppercase;
+
+  @at-root .mrc-ui-check-card-checked #{&} {
+    color: $color-palette-green-shade-20;
+  }
+  
+  @at-root .mrc-ui-check-card-no-content #{&} {
+    text-transform: none;
+    font-weight: bold;
+  }
+}
+
+.mrc-ui-check-card-checkmark {
+  box-sizing: border-box;
+  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+  margin-left: $spacing-column-gap;
+  opacity: 0;
+
+  @at-root .mrc-ui-check-card-checked #{&} {
+    opacity: 1;
+    background-color: $color-palette-green-default;
+  }
+}

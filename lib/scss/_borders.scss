@@ -1,0 +1,6 @@
+@import "./colors";
+@import "./variables";
+
+@mixin border-radius-all($radius: $border-radius-large) {
+  border-radius: $radius;
+}

@@ -1,0 +1,8 @@
+@import '../lib/scss/variables';
+
+.mrc-ui-grid {
+  display: grid;
+  // TODO: set a cool min width
+  grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
+  grid-gap: $spacing-row-gap $spacing-column-gap;
+}

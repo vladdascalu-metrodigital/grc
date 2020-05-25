@@ -1,0 +1,34 @@
+@import '../lib/scss/variables';
+@import '../lib/scss/colors';
+
+.mrc-ui-key-value-group {
+  display: table;
+  color: $color-palette-grey-tint-20;
+  font-weight: normal;
+  line-height: 1.3;
+}
+
+.mrc-ui-key-value-row {
+  display: table-row;
+  > .mrc-ui-key,
+  > .mrc-ui-value {
+    padding-top: $spacing-extra-extra-small;
+  }
+}
+
+.mrc-ui-key-value-row-spaced {
+  > .mrc-ui-key,
+  > .mrc-ui-value {
+    padding-top: 1.375rem;
+  }
+}
+
+.mrc-ui-key {
+  display: table-cell;
+  font-weight: bold;
+  padding-right: $spacing-column-gap;
+}
+
+.mrc-ui-value {
+  display: table-cell;
+}
