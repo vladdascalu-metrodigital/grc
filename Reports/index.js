@@ -13,10 +13,10 @@ export default class Reports extends Component {
         const reports = this.props.data.map((report, i) => (
             <div key={i}>
                 <div className="mrc-ui-report">
-                    <img className="mrc-ui-report-icon" src={ReportingIcon} alt={'report'} />
-                    <div className="mrc-ui-report-text">
-                        <a href={'#/reports/' + report.id}>{report.name}</a>
-                    </div>
+                    <a href={'#/reports/' + report.id}>
+                        <img className="mrc-ui-report-icon" src={ReportingIcon} alt={'report'} />
+                        <div className="mrc-ui-report-text">{report.name}</div>
+                    </a>
                 </div>
             </div>
         ));

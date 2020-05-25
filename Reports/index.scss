@@ -12,7 +12,8 @@
 }
 
 .mrc-ui-report-icon{
-  // margin-right: $spacing-small;
+  margin: 0 auto;
+  display: table;
   width: $width-3;
 }
 
@@ -43,12 +44,14 @@
 }
 
 .mrc-ui-report-text {
+    color: $color-palette-blue-default !important;
     white-space: pre-line;
     line-height: $line-height-copy;
     color: $color-palette-grey-tint-20;
     -ms-hyphens: auto;
     -webkit-hyphens: auto;
     hyphens: auto;
+    text-align: center;
 }
 
 .mrc-ui-report-divider {
