@@ -2201,6 +2201,10 @@ storiesOf('CreditLimit/LimitRequest', module)
                                     sellValNspFL12m: 1,
                                     sellValNspNfL12m: 1,
                                     sellValNnbpL12m: 1,
+                                    sellValNnbpL1m: 1,
+                                    sellValNnbpL3m: 1,
+                                    sellValNnbpL6m: 1,
+                                    sellValNnbpL24m: 1,
                                 },
                                 customer: {
                                     country: 'DE',
