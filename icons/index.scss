@@ -1,7 +1,7 @@
 @import '../lib/scss/colors';
 @import '../lib/scss/variables';
 
-// wrapper (a circle around an icon)
+// wrapper (currently by default a circle around an icon, if needed)
 
 .mrc-ui-icon-wrapper {
   display: flex;
@@ -39,6 +39,14 @@
   border-color: $color-neutral;
 }
 
+.mrc-ui-icon-wrapper-stroke-danger {
+  border-color: $color-palette-red-default;
+}
+
+.mrc-ui-icon-wrapper-stroke-attention {
+  border-color: $color-brand-secondary-default;
+}
+
 // the svg element
 
 .mrc-ui-icon-svg {
@@ -52,8 +60,16 @@
   }
 }
 
+// sizes
+
+.mrc-ui-icon-wrapper-size-small,
 .mrc-ui-icon-svg-size-small {
-  font-size: 2rem; // determines width/height
+  font-size: 2rem; // determines width/height!
+}
+
+.mrc-ui-icon-wrapper-size-xsmall,
+.mrc-ui-icon-svg-size-xsmall {
+  font-size: 1.3125rem;
 }
 
 // strokes
@@ -82,6 +98,14 @@
   stroke: $color-neutral;
 }
 
+.mrc-ui-icon-stroke-danger {
+  stroke: $color-palette-red-default;
+}
+
+.mrc-ui-icon-stroke-attention {
+  stroke: $color-brand-secondary-default;
+}
+
 // fills
 
 .mrc-ui-icon-fill {
@@ -108,3 +132,10 @@
   fill: $color-neutral;
 }
 
+.mrc-ui-icon-fill-danger {
+  fill: $color-palette-red-default;
+}
+
+.mrc-ui-icon-fill-attention {
+  fill: $color-brand-secondary-default;
+}

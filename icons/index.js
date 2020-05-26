@@ -7,9 +7,12 @@ export const COLOR = {
     INTERACTION: 'interaction',
     SUCCESS: 'success',
     NEUTRAL: 'neutral',
+    DANGER: 'danger',
+    ATTENTION: 'attention',
 };
 
 export const SIZE = {
+    XSMALL: 'xsmall',
     SMALL: 'small',
 };
 
@@ -21,9 +24,14 @@ export const STROKE_WIDTH = {
 // so that all icons use the same pattern
 export function iconClassNames(props) {
     let { fill, size, stroke, strokeWidth } = props;
-    let wrapperClassName = classnames('mrc-ui-icon-wrapper', stroke && 'mrc-ui-icon-wrapper-stroke-' + stroke, {
-        'mrc-ui-icon-wrapper-stroke-width-medium': strokeWidth === STROKE_WIDTH.MEDIUM,
-    });
+    let wrapperClassName = classnames(
+        'mrc-ui-icon-wrapper',
+        stroke && 'mrc-ui-icon-wrapper-stroke-' + stroke,
+        size && 'mrc-ui-icon-wrapper-size-' + size,
+        {
+            'mrc-ui-icon-wrapper-stroke-width-medium': strokeWidth === STROKE_WIDTH.MEDIUM,
+        }
+    );
     let svgClassName = classnames('mrc-ui-icon-svg', size && 'mrc-ui-icon-svg-size-' + size);
     let strokeClassName = classnames('mrc-ui-icon-stroke', stroke && 'mrc-ui-icon-stroke-' + stroke);
     let fillClassName = classnames('mrc-ui-icon-fill', fill && 'mrc-ui-icon-fill-' + fill);
