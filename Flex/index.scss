@@ -1,0 +1,15 @@
+.mrc-ui-flex-row,
+.mrc-ui-flex-column {
+  display: flex;
+  justify-content: var(--justify-content);
+  align-items: var(--align-items);
+}
+
+.mrc-ui-flex-row-inline,
+.mrc-ui-flex-column-inline {
+  display: inline-flex;
+}
+
+.mrc-ui-flex-column {
+  flex-direction: column;
+}
