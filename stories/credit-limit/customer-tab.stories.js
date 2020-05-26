@@ -1,10 +1,14 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+
 import BoxWithTitle, { TYPE as BOX_TYPE } from '../../BoxWithTitle';
 import Grid from '../../Grid';
 import ToggleBox from '../../ToggleBox';
 import Card, { TYPE as CARD_TYPE } from '../../Card';
+import VCard from '../../VCard';
 import KeyValueGroup, { KeyValueRow, Key, Value } from '../../KeyValueGroup';
+
+import { person } from '../VCard.stories';
 
 storiesOf('S Credit Limit/Customer Tab', module).add('Customer Tab', () => (
     <>
@@ -14,7 +18,9 @@ storiesOf('S Credit Limit/Customer Tab', module).add('Customer Tab', () => (
         <ToggleBox titleContent="Blaumeier AG" initialShow>
             <Grid>
                 <BoxWithTitle title="Contact Info" type={BOX_TYPE.SMALLER}>
-                    <Card type={CARD_TYPE.PRIMARY}></Card>
+                    <Card type={CARD_TYPE.PRIMARY}>
+                        <VCard person={person} />
+                    </Card>
                 </BoxWithTitle>
                 <BoxWithTitle title="Business Info" type={BOX_TYPE.SMALLER}>
                     <KeyValueGroup>
