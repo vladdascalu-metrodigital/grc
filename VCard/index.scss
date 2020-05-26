@@ -1,0 +1,42 @@
+@import '../lib/scss/variables';
+@import '../lib/scss/typography';
+@import '../lib/scss/colors';
+
+.mrc-ui-vcard {
+  display: grid;
+  grid-template: 
+    "avatar       personal"
+    ".            address"
+    ".            contact" 
+    /min-content  auto;
+  grid-gap: $spacing-medium $spacing-medium;
+  align-self: center;
+  font-weight: normal;
+  line-height: $line-height-copy-narrow;
+  color: $color-brand-primary-default;
+}
+
+.mrc-ui-vcard-avatar {
+  grid-area: avatar;
+}
+
+.mrc-ui-vcard-personal {
+  grid-area: personal;
+  align-self: center;
+}
+
+.mrc-ui-vcard-name {
+  font-weight: bold;
+}
+
+.mrc-ui-vcard-birthday {
+  color: $color-palette-grey-tint-60;
+}
+
+.mrc-ui-vcard-address {
+  grid-area: address;
+}
+
+.mrc-ui-vcard-contact {
+  grid-area: contact;
+}

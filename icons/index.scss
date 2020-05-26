@@ -1,3 +1,110 @@
-.mrc-ui-icon {
-  
+@import '../lib/scss/colors';
+@import '../lib/scss/variables';
+
+// wrapper (a circle around an icon)
+
+.mrc-ui-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.875rem;
+  width: 1em;
+  height: 1em;
+
+  border-radius: 50%;
+  border: $border-width-thin solid $color-brand-primary-default;
 }
+
+.mrc-ui-icon-wrapper-stroke-width-medium {
+  border-width: $border-width-medium;
+}
+
+.mrc-ui-icon-wrapper-stroke-white {
+  border-color: $color-contrast-white;
+}
+
+.mrc-ui-icon-wrapper-stroke-black {
+  border-color: $color-contrast-black;
+}
+
+.mrc-ui-icon-wrapper-stroke-interaction {
+  border-color: $color-interaction;
+}
+
+.mrc-ui-icon-wrapper-stroke-success {
+  border-color: $color-success;
+}
+
+.mrc-ui-icon-wrapper-stroke-neutral {
+  border-color: $color-neutral;
+}
+
+// the svg element
+
+.mrc-ui-icon-svg {
+  font-size: 2.875rem;
+  width: 1em;
+  height: 1em;
+
+  @at-root .mrc-ui-icon-wrapper #{&} {
+    width: .65em;
+    height: .65em;
+  }
+}
+
+.mrc-ui-icon-svg-size-small {
+  font-size: 2rem; // determines width/height
+}
+
+// strokes
+
+.mrc-ui-icon-stroke {
+  stroke: $color-brand-primary-default;
+}
+
+.mrc-ui-icon-stroke-white {
+  stroke: $color-contrast-white;
+}
+
+.mrc-ui-icon-stroke-black {
+  stroke: $color-contrast-black;
+}
+
+.mrc-ui-icon-stroke-interaction {
+  stroke: $color-interaction;
+}
+
+.mrc-ui-icon-stroke-success {
+  stroke: $color-success;
+}
+
+.mrc-ui-icon-stroke-neutral {
+  stroke: $color-neutral;
+}
+
+// fills
+
+.mrc-ui-icon-fill {
+  fill: $color-brand-primary-default;
+}
+
+.mrc-ui-icon-fill-white {
+  fill: $color-contrast-white;
+}
+
+.mrc-ui-icon-fill-black {
+  fill: $color-contrast-black;
+}
+
+.mrc-ui-icon-fill-interaction {
+  fill: $color-interaction;
+}
+
+.mrc-ui-icon-fill-success {
+  fill: $color-success;
+}
+
+.mrc-ui-icon-fill-neutral {
+  fill: $color-neutral;
+}
+

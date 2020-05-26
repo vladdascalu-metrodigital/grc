@@ -10,6 +10,7 @@ export const COUNTRY = {
     PL: 'PL',
     RS: 'RS',
     HR: 'HR',
+    RU: 'RU',
 };
 
 export const CURRENCY = {
@@ -18,6 +19,7 @@ export const CURRENCY = {
     PLN: 'PLN',
     RSD: 'RSD',
     HRK: 'HRK',
+    RUB: 'RUB',
 };
 
 export const countryToCurrency = {
@@ -29,6 +31,7 @@ export const countryToCurrency = {
     PL: CURRENCY.PLN,
     RS: CURRENCY.RSD,
     HR: CURRENCY.HRK,
+    RU: CURRENCY.RUB,
 };
 
 export default class MrcNumber extends PureComponent {

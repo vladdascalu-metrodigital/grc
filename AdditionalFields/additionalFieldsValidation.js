@@ -13,6 +13,7 @@ export const validations = {
     notNull: value => (value && value !== null ? true : false),
     isNull: value => (value === undefined || value === null ? true : false),
     isNumber: value => !isNaN(value),
+    isNumberInteger: value => !isNaN(value) && (value.trim().length>0 ? parseInt(value)==value : true),
     isPercentage: value =>
         validations.isNumber(value) && validations.greaterThanEq(value, 0) && validations.lessThanEq(value, 100),
     lessThanEq1000: value => validations.lessThanEq(value, 1000),

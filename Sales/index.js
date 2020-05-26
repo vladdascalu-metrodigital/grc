@@ -18,21 +18,55 @@ export default class Sales extends Component {
         const rows = _.reduce(
             mdwData,
             (acc, salesOverview) => {
-                acc[0].l1 += this.orZero(salesOverview.customerCreditData.numPurchasesL1m);
-                acc[1].l1 += this.orZero(salesOverview.customerCreditData.numInvoicesL1m);
-                acc[2].l1 += this.orZero(salesOverview.customerCreditData.sellValNspL1m);
+                const cd = salesOverview.customerCreditData;
 
-                acc[0].l3 += this.orZero(salesOverview.customerCreditData.numPurchasesL3m);
-                acc[1].l3 += this.orZero(salesOverview.customerCreditData.numInvoicesL3m);
-                acc[2].l3 += this.orZero(salesOverview.customerCreditData.sellValNspL3m);
+                acc[0].l1 += this.orZero(cd.numPurchasesL1m);
+                acc[1].l1 += this.orZero(cd.numInvoicesL1m);
+                acc[2].l1 += this.orZero(cd.sellValNspL1m);
+                acc[3].l1 += this.orZero(cd.sellValNspL1m) - this.orZero(cd.sellValNnbpL1m);
+                if (this.orZero(cd.sellValNspL1m) === 0) {
+                    acc[4].l1 += 0;
+                } else {
+                    acc[4].l1 +=
+                        (100 * (this.orZero(cd.sellValNspL1m) - this.orZero(cd.sellValNnbpL1m))) /
+                        this.orZero(cd.sellValNspL1m);
+                }
 
-                acc[0].l6 += this.orZero(salesOverview.customerCreditData.numPurchasesL6m);
-                acc[1].l6 += this.orZero(salesOverview.customerCreditData.numInvoicesL6m);
-                acc[2].l6 += this.orZero(salesOverview.customerCreditData.sellValNspL6m);
+                acc[0].l3 += this.orZero(cd.numPurchasesL3m);
+                acc[1].l3 += this.orZero(cd.numInvoicesL3m);
+                acc[2].l3 += this.orZero(cd.sellValNspL3m);
+                acc[3].l3 += this.orZero(cd.sellValNspL3m) - this.orZero(cd.sellValNnbpL3m);
+                if (this.orZero(cd.sellValNspL3m) === 0) {
+                    acc[4].l3 += 0;
+                } else {
+                    acc[4].l3 +=
+                        (100 * (this.orZero(cd.sellValNspL3m) - this.orZero(cd.sellValNnbpL3m))) /
+                        this.orZero(cd.sellValNspL3m);
+                }
 
-                acc[0].l12 += this.orZero(salesOverview.customerCreditData.numPurchasesL12m);
-                acc[1].l12 += this.orZero(salesOverview.customerCreditData.numInvoicesL12m);
-                acc[2].l12 += this.orZero(salesOverview.customerCreditData.sellValNspL12m);
+                acc[0].l6 += this.orZero(cd.numPurchasesL6m);
+                acc[1].l6 += this.orZero(cd.numInvoicesL6m);
+                acc[2].l6 += this.orZero(cd.sellValNspL6m);
+                acc[3].l6 += this.orZero(cd.sellValNspL6m) - this.orZero(cd.sellValNnbpL6m);
+                if (this.orZero(cd.sellValNspL6m) === 0) {
+                    acc[4].l6 += 0;
+                } else {
+                    acc[4].l6 +=
+                        (100 * (this.orZero(cd.sellValNspL6m) - this.orZero(cd.sellValNnbpL6m))) /
+                        this.orZero(cd.sellValNspL6m);
+                }
+
+                acc[0].l12 += this.orZero(cd.numPurchasesL12m);
+                acc[1].l12 += this.orZero(cd.numInvoicesL12m);
+                acc[2].l12 += this.orZero(cd.sellValNspL12m);
+                acc[3].l12 += this.orZero(cd.sellValNspL12m) - this.orZero(cd.sellValNnbpL12m);
+                if (this.orZero(cd.sellValNspL12m) === 0) {
+                    acc[4].l12 += 0;
+                } else {
+                    acc[4].l12 +=
+                        (100 * (this.orZero(cd.sellValNspL12m) - this.orZero(cd.sellValNnbpL12m))) /
+                        this.orZero(cd.sellValNspL12m);
+                }
 
                 if (salesOverview.customer.country) {
                     country = salesOverview.customer.country;
@@ -47,6 +81,8 @@ export default class Sales extends Component {
                 { tag: 'purchase', name: lookup('mrc.mdw.numberofpurchase'), l1: 0, l3: 0, l6: 0, l12: 0 },
                 { tag: 'invoices', name: lookup('mrc.mdw.numberofinvoices'), l1: 0, l3: 0, l6: 0, l12: 0 },
                 { name: lookup('mrc.mdw.totalturnover'), l1: 0, l3: 0, l6: 0, l12: 0, country: country },
+                { name: lookup('mrc.mdw.totalgrossprofit'), l1: 0, l3: 0, l6: 0, l12: 0, country: country },
+                { tag: 'margin', name: lookup('mrc.mdw.totalmargin'), l1: 0, l3: 0, l6: 0, l12: 0 },
             ]
         );
         return rows;
@@ -68,6 +104,12 @@ export default class Sales extends Component {
     wrapCurrency(value, sales) {
         if (sales.original.tag === 'purchase' || sales.original.tag === 'invoices') {
             return <mrc-number>{value}</mrc-number>;
+        } else if (sales.original.tag === 'margin') {
+            return (
+                <span>
+                    <mrc-number>{value}</mrc-number>%
+                </span>
+            );
         } else {
             return <mrc-number show-currency-for-country={sales.original.country}>{value}</mrc-number>;
         }
@@ -104,33 +146,63 @@ export default class Sales extends Component {
         ];
 
         const country = data.customer.country;
+        const cd = data.customerCreditData;
 
         const salesRows = [
             {
                 name: lookup('mrc.mdw.numberofpurchase'),
                 country: country,
                 tag: 'purchase',
-                l1: data.customerCreditData.numPurchasesL1m,
-                l3: data.customerCreditData.numPurchasesL3m,
-                l6: data.customerCreditData.numPurchasesL6m,
-                l12: data.customerCreditData.numPurchasesL12m,
+                l1: cd.numPurchasesL1m,
+                l3: cd.numPurchasesL3m,
+                l6: cd.numPurchasesL6m,
+                l12: cd.numPurchasesL12m,
             },
             {
                 name: lookup('mrc.mdw.numberofinvoices'),
                 tag: 'invoices',
                 country: country,
-                l1: data.customerCreditData.numInvoicesL1m,
-                l3: data.customerCreditData.numInvoicesL3m,
-                l6: data.customerCreditData.numInvoicesL6m,
-                l12: data.customerCreditData.numInvoicesL12m,
+                l1: cd.numInvoicesL1m,
+                l3: cd.numInvoicesL3m,
+                l6: cd.numInvoicesL6m,
+                l12: cd.numInvoicesL12m,
             },
             {
                 name: lookup('mrc.mdw.totalturnover'),
                 country: country,
-                l1: data.customerCreditData.sellValNspL1m,
-                l3: data.customerCreditData.sellValNspL3m,
-                l6: data.customerCreditData.sellValNspL6m,
-                l12: data.customerCreditData.sellValNspL12m,
+                l1: cd.sellValNspL1m,
+                l3: cd.sellValNspL3m,
+                l6: cd.sellValNspL6m,
+                l12: cd.sellValNspL12m,
+            },
+            {
+                name: lookup('mrc.mdw.totalgrossprofit'), //sell_val_nsp_lxm - sell_val_nnbp_lxm
+                country: country,
+                l1: cd.sellValNspL1m - cd.sellValNnbpL1m,
+                l3: cd.sellValNspL3m - cd.sellValNnbpL3m,
+                l6: cd.sellValNspL6m - cd.sellValNnbpL6m,
+                l12: cd.sellValNspL12m - cd.sellValNnbpL12m,
+            },
+            {
+                name: lookup('mrc.mdw.totalmargin'), //(sell_val_nsp_lxm - sell_val_nnbp_lxm)  / sell_val_nsp_lxm * 100,0
+                tag: 'margin',
+                country: country,
+                l1:
+                    this.orZero(cd.sellValNspL1m) == 0
+                        ? 0
+                        : (100 * (cd.sellValNspL1m - cd.sellValNnbpL1m)) / cd.sellValNspL1m,
+                l3:
+                    this.orZero(cd.sellValNspL3m) == 0
+                        ? 0
+                        : (100 * (cd.sellValNspL3m - cd.sellValNnbpL3m)) / cd.sellValNspL3m,
+                l6:
+                    this.orZero(cd.sellValNspL6m) == 0
+                        ? 0
+                        : (100 * (cd.sellValNspL6m - cd.sellValNnbpL6m)) / cd.sellValNspL6m,
+                l12:
+                    this.orZero(cd.sellValNspL12m) == 0
+                        ? 0
+                        : (100 * (cd.sellValNspL12m - cd.sellValNnbpL12m)) / cd.sellValNspL12m,
             },
         ];
 

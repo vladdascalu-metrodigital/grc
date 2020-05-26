@@ -1,12 +1,14 @@
 import React, { PureComponent } from 'react';
 import { iconClassNames, iconPropTypes } from './index';
 
+import './index.scss';
+
 export default class ProfileIcon extends PureComponent {
     render() {
-        let { className, strokeClassName } = iconClassNames(this.props);
+        let { svgClassName, strokeClassName } = iconClassNames(this.props);
         return (
             <svg
-                className={className}
+                className={svgClassName}
                 width="48px"
                 height="48px"
                 viewBox="0 0 48 48"
