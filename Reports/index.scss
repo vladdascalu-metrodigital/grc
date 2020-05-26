@@ -11,78 +11,49 @@
     margin: $spacing-large auto $spacing-large auto !important;
 }
 
-.mrc-ui-report-icon{
-  margin: 0 auto;
-  display: table;
-  width: $width-3;
+.mrc-ui-report-icon-background {
+    background-color: $color-palette-grey-tint-90;
+    background: linear-gradient(315deg, $color-palette-grey-tint-90 0%, $color-palette-grey-tint-95 100%);
+    border-radius: $border-radius-large;
+    width: 57px;
+    height: 57px;
+    display: grid;
+    justify-content:center;
+    margin: 0 auto;  
 }
 
-.mrc-ui-reports-headline {
-    margin: 0 auto;
-    width: 100%;
-    display: table;
-    text-align: center;
-    margin-bottom: $spacing-extra-small;
-    padding: $spacing-extra-small $spacing-medium;
-    color: $color-brand-primary-default;
+.mrc-ui-report-icon{
+    align-self:center;
+    width: 38px;
+    height: 38px;
 }
 
 .mrc-ui-report {
-    width: $width-4;
-    padding: $spacing-medium;
-    margin: $spacing-none auto !important;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
+    display: grid;
+    justify-content: center;
+    padding: 1rem 0;
+    
 }
 
-@media #{$breakpoint-not-small} {
-    .mrc-ui-report {
-        padding: $spacing-medium 4rem !important;
-    }
+.mrc-ui-report a {
+    overflow: hidden;
 }
 
 .mrc-ui-report-text {
-    color: $color-palette-blue-default !important;
-    white-space: pre-line;
-    line-height: $line-height-copy;
-    color: $color-palette-grey-tint-20;
-    -ms-hyphens: auto;
-    -webkit-hyphens: auto;
-    hyphens: auto;
     text-align: center;
-}
-
-.mrc-ui-report-divider {
-    border-color: $color-palette-grey-tint-80;
+    font-size: $font-size-8;
+    line-height: $line-height-title;
+    font-weight: normal;
+    margin: 6px 0px 0px 0px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: #{2 * $font-size-8 * $line-height-title};
 }
 
 .mrc-ui-reports-list {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
+    grid-gap: 1rem;
     background: $color-contrast-white;
 }
 
-@media #{$breakpoint-not-small} {
-    .mrc-ui-reports-list {
-        border: $border-width-thin solid $color-palette-grey-tint-80;
-        padding: 2rem 0rem !important;
-    }
-}
-
-@media #{$breakpoint-medium} {
-    .mrc-ui-reports {
-        max-width: 44rem;
-        margin: $spacing-none auto $spacing-none auto !important;
-    }
-}
-
-@media #{$breakpoint-large} {
-    .mrc-ui-reports {
-        max-width: 48rem;
-        margin: $spacing-none auto $spacing-none auto !important;
-    }
-}
