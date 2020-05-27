@@ -4,10 +4,16 @@ import classnames from 'classnames';
 
 import './index.scss';
 
+export const SPACING = {
+    SMALL: 'small',
+    MEDIUM: 'medium',
+    LARGE: 'large',
+};
+
 export class FlexRow extends Component {
     render() {
-        let { inline, justifyContent, alignItems, children } = this.props;
-        let className = classnames('mrc-ui-flex-row', {
+        let { inline, justifyContent, alignItems, children, gap } = this.props;
+        let className = classnames('mrc-ui-flex-row', gap && 'mrc-ui-flex-row-gap-' + gap, {
             'mrc-ui-flex-row-inline': inline,
         });
         let style = {
@@ -24,8 +30,8 @@ export class FlexRow extends Component {
 
 export class FlexColumn extends Component {
     render() {
-        let { inline, justifyContent, alignItems, children } = this.props;
-        let className = classnames('mrc-ui-flex-column', {
+        let { inline, justifyContent, alignItems, children, gap } = this.props;
+        let className = classnames('mrc-ui-flex-column', gap && 'mrc-ui-flex-column-gap-' + gap, {
             'mrc-ui-flex-column-inline': inline,
         });
         let style = {
@@ -58,6 +64,7 @@ FlexRow.propTypes = {
     ]),
     alignItems: PropTypes.oneOf(['normal', 'stretch', 'center', 'start', 'end', 'flex-start', 'flex-end', 'baseline']),
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+    gap: PropTypes.oneOf(['small', 'medium', 'large']),
 };
 
 FlexColumn.propTypes = FlexRow.propTypes;

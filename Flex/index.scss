@@ -1,3 +1,5 @@
+@import '../lib/scss/variables';
+
 .mrc-ui-flex-row,
 .mrc-ui-flex-column {
   display: flex;
@@ -12,4 +14,42 @@
 
 .mrc-ui-flex-column {
   flex-direction: column;
+}
+
+// gaps
+
+.mrc-ui-flex-row-gap-small > * {
+  margin-right: $spacing-small;
+}
+
+.mrc-ui-flex-row-gap-medium > * {
+  margin-right: $spacing-medium;
+}
+
+.mrc-ui-flex-row-gap-large > * {
+  margin-right: $spacing-large;
+}
+
+.mrc-ui-flex-row-gap-small > :last-child,
+.mrc-ui-flex-row-gap-medium > :last-child,
+.mrc-ui-flex-row-gap-large > :last-child {
+  margin-right: 0;
+}
+
+.mrc-ui-flex-column-gap-small > * {
+  margin-bottom: $spacing-small;
+}
+
+.mrc-ui-flex-column-gap-medium > * {
+  margin-bottom: $spacing-medium;
+}
+
+.mrc-ui-flex-column-gap-large > * {
+  margin-bottom: $spacing-large;
+}
+
+.mrc-ui-flex-column-gap-small > :last-child,
+.mrc-ui-flex-column-gap-medium > :last-child,
+.mrc-ui-flex-column-gap-large > :last-child {
+  margin-bottom: 0;
 }

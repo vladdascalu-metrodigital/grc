@@ -4,7 +4,7 @@ import { FlexRow, FlexColumn } from '../Flex';
 
 storiesOf('Layouts/Flex', module)
     .add('rows', () => (
-        <FlexRow alignItems="center">
+        <FlexRow alignItems="center" gap="medium">
             <div>
                 A simple
                 <br />
@@ -14,7 +14,7 @@ storiesOf('Layouts/Flex', module)
         </FlexRow>
     ))
     .add('columns', () => (
-        <FlexColumn alignItems="center">
+        <FlexColumn alignItems="center" gap="medium">
             <div>
                 A simple
                 <br />
