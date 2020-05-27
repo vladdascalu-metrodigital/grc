@@ -3,6 +3,8 @@ import { lookup } from '../Util/translations';
 import './index.scss';
 import ReportingIcon from '../icons/reporting-blue.svg';
 
+import BoxWithTitle, { TYPE } from '../BoxWithTitle';
+
 export default class Reports extends Component {
     constructor(props) {
         super(props);
@@ -10,22 +12,23 @@ export default class Reports extends Component {
     }
 
     render() {
-        const reports = this.props.data.map((report, i) => (
-            <div key={i}>
+        const reports = this.props.data.map(report => (
+            <>
                 <div className="mrc-ui-report">
                     <a href={'#/reports/' + report.id}>
-                        <img className="mrc-ui-report-icon" src={ReportingIcon} alt={'report'} />
-                        <div className="mrc-ui-report-text">{report.name}</div>
+                        <div className="mrc-ui-report-icon-background">
+                            <img className="mrc-ui-report-icon" src={ReportingIcon} alt={'report'} />
+                        </div>
+                        <h3 className="mrc-ui-report-text">{report.name}</h3>
                     </a>
                 </div>
-            </div>
+            </>
         ));
         return (
             <div className="mrc-ui-report-component">
-                <div className="mrc-ui-reports">
-                    <h3 className="mrc-ui-reports-headline">{lookup('mrc.reports.title')}</h3>
+                <BoxWithTitle title={lookup('mrc.reports.title')} type={TYPE.SMALLER}>
                     <div className="mrc-ui-reports-list">{reports}</div>
-                </div>
+                </BoxWithTitle>
             </div>
         );
     }

@@ -19,7 +19,8 @@ $letter-spacing-1: .1em !default;
 $letter-spacing-2: .25em !default;
 $line-height-solid: 1 !default;
 $line-height-title: 1.25 !default;
-$line-height-copy: 1.5 !default;
+$line-height-copy: 1.5 !default; // default
+$line-height-copy-narrow: 1.25 !default;
 
 /* Measure width is limited to ~66 characters */
 $measure: 30em !default;
