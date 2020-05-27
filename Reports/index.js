@@ -4,6 +4,7 @@ import './index.scss';
 import ReportingIcon from '../icons/reporting-blue.svg';
 
 import BoxWithTitle, { TYPE } from '../BoxWithTitle';
+import MainContent from '../MainContent';
 
 export default class Reports extends Component {
     constructor(props) {
@@ -25,11 +26,13 @@ export default class Reports extends Component {
             </>
         ));
         return (
-            <div className="mrc-ui-report-component">
-                <BoxWithTitle title={lookup('mrc.reports.title')} type={TYPE.SMALLER}>
-                    <div className="mrc-ui-reports-list">{reports}</div>
-                </BoxWithTitle>
-            </div>
+            <MainContent>
+                <div className="mrc-ui-report-component">
+                    <BoxWithTitle title={lookup('mrc.reports.title')} type={TYPE.SMALLER}>
+                        <div className="mrc-ui-reports-list">{reports}</div>
+                    </BoxWithTitle>
+                </div>
+            </MainContent>
         );
     }
 }
