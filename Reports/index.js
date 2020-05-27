@@ -14,16 +14,14 @@ export default class Reports extends Component {
 
     render() {
         const reports = this.props.data.map(report => (
-            <>
-                <div className="mrc-ui-report">
-                    <a href={'#/reports/' + report.id}>
-                        <div className="mrc-ui-report-icon-background">
-                            <img className="mrc-ui-report-icon" src={ReportingIcon} alt={'report'} />
-                        </div>
-                        <h3 className="mrc-ui-report-text">{report.name}</h3>
-                    </a>
-                </div>
-            </>
+            <div key={report.id} className="mrc-ui-report">
+                <a href={'#/reports/' + report.id}>
+                    <div className="mrc-ui-report-icon-background">
+                        <img className="mrc-ui-report-icon" src={ReportingIcon} alt={'report'} />
+                    </div>
+                    <h3 className="mrc-ui-report-text">{report.name}</h3>
+                </a>
+            </div>
         ));
         return (
             <MainContent>
