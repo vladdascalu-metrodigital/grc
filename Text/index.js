@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
+import './index.scss';
+
 export const COLOR = {
     CONTRAST_WHITE: 'white',
     CONTRAST_BLACK: 'black',

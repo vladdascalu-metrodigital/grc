@@ -8,26 +8,58 @@ import Card, { TYPE as CARD_TYPE } from '../../Card';
 import VCard from '../../VCard';
 import KeyValueGroup, { KeyValueRow, Key, Value } from '../../KeyValueGroup';
 import BusinessIcon from '../../icons/BusinessIcon';
+import WarningSmallFilledIcon from '../../icons/WarningSmallFilledIcon';
+import { COLOR as ICOLOR, SIZE as ISIZE } from '../../icons/index';
 import { FlexRow } from '../../Flex';
 import Text, { COLOR } from '../../Text';
 
 import { person } from '../VCard.stories';
 
+let MeierGmbHToggler = () => (
+    <FlexRow alignItems={'center'} gap="medium">
+        <BusinessIcon />
+        <div>
+            <Text>Meier GmbH</Text>
+            <br />
+            <Text>122/45060</Text>
+        </div>
+        <ClientBlocked />
+    </FlexRow>
+);
+
+let BlaumeierAGToggler = () => (
+    <FlexRow alignItems={'center'} gap="medium">
+        <BusinessIcon />
+        <div>
+            <Text>Blaumeier AG</Text>
+            <br />
+            <Text>122/45080</Text>
+        </div>
+    </FlexRow>
+);
+
+let ClientBlocked = () => (
+    <FlexRow alignItems={'center'} gap="small">
+        <WarningSmallFilledIcon size={ISIZE.XSMALL} fill={ICOLOR.DANGER} />
+        <Text color={COLOR.DANGER}>Kundensperre</Text>
+    </FlexRow>
+);
+
+let ClientBlockedBigger = () => (
+    <FlexRow alignItems={'center'} gap="small">
+        <WarningSmallFilledIcon size={ISIZE.SMALL} fill={ICOLOR.DANGER} />
+        <Text color={COLOR.DANGER}>Kundensperre</Text>
+    </FlexRow>
+);
+
 storiesOf('S Credit Limit/Customer Tab', module).add('Customer Tab', () => {
-    let MeierGmbHToggler = () => (
-        <FlexRow alignItems={'center'} gap="medium">
-            <BusinessIcon />
-            <div>
-                <Text>Meier GmbH</Text>
-                <br />
-                <Text>122/45060</Text>
-            </div>
-        </FlexRow>
-    );
     return (
         <>
             <ToggleBox titleContent={<MeierGmbHToggler />}>
                 <Grid>
+                    <div style={{ 'grid-column': '1/-1' }}>
+                        <ClientBlockedBigger />
+                    </div>
                     <BoxWithTitle title="Contact Info" type={BOX_TYPE.SMALLER}>
                         <Card type={CARD_TYPE.PRIMARY}>
                             <VCard person={person} />
@@ -63,7 +95,7 @@ storiesOf('S Credit Limit/Customer Tab', module).add('Customer Tab', () => {
                     </BoxWithTitle>
                 </Grid>
             </ToggleBox>
-            <ToggleBox titleContent="Blaumeier AG" initialShow>
+            <ToggleBox titleContent={<BlaumeierAGToggler />} initialShow>
                 <Grid>
                     <BoxWithTitle title="Contact Info" type={BOX_TYPE.SMALLER}>
                         <Card type={CARD_TYPE.PRIMARY}>
