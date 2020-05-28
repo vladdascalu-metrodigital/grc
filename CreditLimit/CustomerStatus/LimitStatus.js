@@ -6,6 +6,8 @@ import CoinReceive from '../../icons/coin-receive.svg';
 import { lookup } from '../../Util/translations';
 import './index.scss';
 
+import * as _ from 'lodash';
+
 export default class LimitStatus extends Component {
     render() {
         const customer = this.props.requestedCustomer === null ? {} : this.props.requestedCustomer;
@@ -13,7 +15,7 @@ export default class LimitStatus extends Component {
             const requestedCustomerAmount = customer.creditLimit;
             let groupAmount = 0;
             this.props.customers.data.customers.forEach(groupCustomer => {
-                if (groupCustomer.creditLimitStatus === 'valid') {
+                if (!_.isNil(groupCustomer) && groupCustomer.creditLimitStatus === 'valid') {
                     groupAmount = groupAmount + groupCustomer.creditLimit;
                 }
             });
