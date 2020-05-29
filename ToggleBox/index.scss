@@ -2,6 +2,14 @@
 @import '../lib/scss/variables';
 @import '../lib/scss/shadows';
 
+.mrc-ui-toggle-box {
+  border-top: 1px solid $color-palette-grey-tint-90;
+
+  &:last-child {
+    border-bottom: 1px solid $color-palette-grey-tint-90;
+  }
+}
+
 .mrc-ui-toggle-box-strip {
   align-items: center;
   background-color: $color-contrast-white;
