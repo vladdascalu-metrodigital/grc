@@ -1,64 +1,120 @@
 @import '../lib/scss/colors';
 @import '../lib/scss/variables';
+@import '../lib/scss/typography';
 
-table {
+
+.mrc-ui-table {
     width: 100%;
     border-spacing: 0px;
 }
 
-thead {
-    background-color: white;
+// tr td {
+//     height: 4rem;
+// }
 
-    
-}
+// settings for table
 
-th {
-    position: sticky;
-    top: 0;
-    background-color: white; 
-}
+$table-padding-v: $spacing-extra-small;
+$table-padding-h: $spacing-medium;
+$table-base-line-height: $line-height-copy;
 
-td, th {
-    border-top: $border-width-none solid $color-palette-grey-tint-70;
-    border-left: $border-width-none solid $color-palette-grey-tint-70;
-    border-right: $border-width-thin solid $color-palette-grey-tint-70;
-    border-bottom: $border-width-thin solid $color-palette-grey-tint-70;
-}
-
-td {
+@mixin table-row-default-color () {
+  .mrc-ui-table-h,
+  .mrc-ui-table-d {
     background-color: $color-contrast-white;
+    border-color: $color-palette-grey-tint-70;
+  }
 }
 
-tr td {
-    height: 4rem;
+@mixin table-row-active-color () {
+  .mrc-ui-table-h,
+  .mrc-ui-table-d {
+    background-color: $color-palette-blue-tint-90;
+    border-color: $color-contrast-white;
+  }
 }
 
-thead {
-    tr {
-        th, td {
-            background-color: $color-palette-grey-tint-70;
-            border-color: $color-contrast-white;
-        }
+@mixin table-row-light-grey () {
+  .mrc-ui-table-h,
+  .mrc-ui-table-d {
+    background-color: $color-palette-grey-tint-95;
+    border-color: $color-contrast-white;
+  }
+}
+
+@mixin table-row-dark-grey () {
+  .mrc-ui-table-h,
+  .mrc-ui-table-d {
+    background-color: $color-palette-grey-tint-70;
+    border-color: $color-contrast-white;
+  }
+}
+
+// set the basics
+
+.mrc-ui-table-h,
+.mrc-ui-table-d {
+  border-top: $border-width-none solid $color-palette-grey-tint-70;
+  border-left: $border-width-none solid $color-palette-grey-tint-70;
+  border-right: $border-width-thin solid $color-palette-grey-tint-70;
+  border-bottom: $border-width-thin solid $color-palette-grey-tint-70;
+  background-color: $color-contrast-white;
+  padding: $table-padding-v $table-padding-h;
+  line-height: $table-base-line-height;
+
+  &:last-child {
+    border-right-width: $border-width-none;
+  }
+}
+
+.mrc-ui-table .mrc-ui-table-border-fix {
+  border-right-width: $border-width-thin;
+}
+
+// set the row themes
+
+.mrc-ui-table-r {
+  @include table-row-default-color();
+}
+
+.mrc-ui-table-head {
+    .mrc-ui-table-r {
+        @include table-row-dark-grey();
     }
 
     .mrc-ui-table-light-header-row {
-        th, td {
-            background-color: $color-palette-grey-tint-95;
-            border-color: $color-contrast-white;
-        }
+        @include table-row-light-grey();
     }
 }
 
-.border-fix {
-    border-right: 0px solid black;
-}
-
-.mrc-ui-second-header-row {
-    top: 26px;
-}
 
 
-.mrc-ui-third-header-row {
-    top: 51px;
+
+
+// sticky stuff
+
+// maybe calculate tops with JS and assign as custom property
+
+.mrc-ui-table-sticky {
+  th {
+    position: sticky;
+    top: 0;
+  }
 }
-html {background:white;}
+
+@for $n from 1 through 5 {
+  .mrc-ui-table-sticky:nth-child(#{$n + 1}) th {
+    // top: 25px * $n;
+    $lines: $table-base-line-height * $n * 1rem;
+    $paddings: $table-padding-v * 2 * $n; 
+    $borders: 1px * $n;
+    top: calc(#{$lines + $paddings} + #{$borders});
+  }
+}
+
+
+// temp
+
+html, body {
+  background:white;
+}
