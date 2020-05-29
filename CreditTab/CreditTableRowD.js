@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import Table from './Table';
+import CRTableCellCustomer from './CRTableCellCustomer';
 
 export default class CreditTableRowC extends Component {
     render() {
         return (
             <>
                 <Table.R isActive>
-                    <Table.D rowSpan="2">Mepo Gmbh</Table.D>
+                    <Table.D rowSpan="2">
+                        <CRTableCellCustomer name="Mepo GmbH" number="12/123432" isBlocked isHighlighted />
+                    </Table.D>
 
                     <Table.D colSpan="3" rowSpan="2">
                         Prepayment

@@ -24,10 +24,11 @@ export default class CreditTab extends Component {
                     <Table.Root>
                         <CreditTableHead />
                         <Table.Body>
+                            <CreditTableRowD />
+
                             <CreditTableRowA />
                             <CreditTableRowB />
                             <CreditTableRowC />
-                            <CreditTableRowD />
 
                             <CreditTableRowA />
                             <CreditTableRowB />
