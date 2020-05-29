@@ -21,3 +21,31 @@ Grid.PropTypes = {
     gap: PropTypes.string,
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
 };
+
+export class GridItem extends Component {
+    render() {
+        let { rowSpan, colSpan, children } = this.props;
+        let style = {};
+        if (colSpan === 'all') {
+            style.gridColumn = '1/-1';
+        } else if (parseInt(colSpan) > 0) {
+            style.gridColumnEnd = 'span ' + colSpan;
+        }
+        if (rowSpan === 'all') {
+            style.gridRow = '1/-1';
+        } else if (parseInt(rowSpan) > 0) {
+            style.gridRowEnd = 'span ' + rowSpan;
+        }
+        return (
+            <div className="mrc-ui-grid-item" style={style}>
+                {children}
+            </div>
+        );
+    }
+}
+
+GridItem.PropTypes = {
+    rowSpan: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['all'])]),
+    colSpan: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['all'])]),
+    children: PropTypes.node,
+};
