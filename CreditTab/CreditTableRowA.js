@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Table from './Table';
 
-export default class CreditTableHead extends Component {
+export default class CreditTableRowA extends Component {
     render() {
         return (
             <>

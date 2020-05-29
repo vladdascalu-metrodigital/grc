@@ -22,14 +22,14 @@ $table-base-line-height: $line-height-copy;
   .mrc-ui-table-h,
   .mrc-ui-table-d {
     background-color: $color-contrast-white;
-    border-color: $color-palette-grey-tint-70;
+    border-color: $color-palette-grey-tint-90;
   }
 }
 
 @mixin table-row-active-color () {
   .mrc-ui-table-h,
   .mrc-ui-table-d {
-    background-color: $color-palette-blue-tint-90;
+    background-color: $color-brand-primary-tint-90;
     border-color: $color-contrast-white;
   }
 }
@@ -39,6 +39,7 @@ $table-base-line-height: $line-height-copy;
   .mrc-ui-table-d {
     background-color: $color-palette-grey-tint-95;
     border-color: $color-contrast-white;
+    color: $color-palette-grey-tint-60;
   }
 }
 
@@ -47,6 +48,7 @@ $table-base-line-height: $line-height-copy;
   .mrc-ui-table-d {
     background-color: $color-palette-grey-tint-70;
     border-color: $color-contrast-white;
+    color: $color-contrast-white;
   }
 }
 
@@ -54,10 +56,10 @@ $table-base-line-height: $line-height-copy;
 
 .mrc-ui-table-h,
 .mrc-ui-table-d {
-  border-top: $border-width-none solid $color-palette-grey-tint-70;
-  border-left: $border-width-none solid $color-palette-grey-tint-70;
-  border-right: $border-width-thin solid $color-palette-grey-tint-70;
-  border-bottom: $border-width-thin solid $color-palette-grey-tint-70;
+  border-top: $border-width-none solid $color-palette-grey-tint-90;
+  border-left: $border-width-none solid $color-palette-grey-tint-90;
+  border-right: $border-width-thin solid $color-palette-grey-tint-90;
+  border-bottom: $border-width-thin solid $color-palette-grey-tint-90;
   background-color: $color-contrast-white;
   padding: $table-padding-v $table-padding-h;
   line-height: $table-base-line-height;
@@ -77,12 +79,16 @@ $table-base-line-height: $line-height-copy;
   @include table-row-default-color();
 }
 
+.mrc-ui-table-r-active {
+  @include table-row-active-color();
+}
+
 .mrc-ui-table-head {
     .mrc-ui-table-r {
         @include table-row-dark-grey();
     }
 
-    .mrc-ui-table-light-header-row {
+    .mrc-ui-table-r-light {
         @include table-row-light-grey();
     }
 }
@@ -95,7 +101,7 @@ $table-base-line-height: $line-height-copy;
 
 // maybe calculate tops with JS and assign as custom property
 
-.mrc-ui-table-sticky {
+.mrc-ui-table-r-sticky {
   th {
     position: sticky;
     top: 0;
@@ -103,7 +109,7 @@ $table-base-line-height: $line-height-copy;
 }
 
 @for $n from 1 through 5 {
-  .mrc-ui-table-sticky:nth-child(#{$n + 1}) th {
+  .mrc-ui-table-r-sticky:nth-child(#{$n + 1}) th {
     // top: 25px * $n;
     $lines: $table-base-line-height * $n * 1rem;
     $paddings: $table-padding-v * 2 * $n; 

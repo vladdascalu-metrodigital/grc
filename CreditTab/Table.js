@@ -21,9 +21,11 @@ class Body extends Component {
 
 class R extends Component {
     render() {
-        let { className, children, isSticky, ...otherProps } = this.props;
+        let { className, children, isSticky, isActive, type, ...otherProps } = this.props;
         className = classnames('mrc-ui-table-r', {
-            'mrc-ui-table-sticky': isSticky,
+            'mrc-ui-table-r-sticky': isSticky,
+            'mrc-ui-table-r-active': isActive,
+            'mrc-ui-table-r-light': type === 'light',
         });
         return (
             <tr className={className} {...otherProps}>
