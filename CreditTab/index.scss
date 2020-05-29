@@ -1,6 +1,64 @@
+@import '../lib/scss/colors';
+@import '../lib/scss/variables';
+
 table {
     width: 100%;
+    border-spacing: 0px;
 }
-th, td {
-    border: 1px solid black;
-  }
+
+thead {
+    background-color: white;
+
+    
+}
+
+th {
+    position: sticky;
+    top: 0;
+    background-color: white; 
+}
+
+td, th {
+    border-top: $border-width-none solid $color-palette-grey-tint-70;
+    border-left: $border-width-none solid $color-palette-grey-tint-70;
+    border-right: $border-width-thin solid $color-palette-grey-tint-70;
+    border-bottom: $border-width-thin solid $color-palette-grey-tint-70;
+}
+
+td {
+    background-color: $color-contrast-white;
+}
+
+tr td {
+    height: 4rem;
+}
+
+thead {
+    tr {
+        th, td {
+            background-color: $color-palette-grey-tint-70;
+            border-color: $color-contrast-white;
+        }
+    }
+
+    .mrc-ui-table-light-header-row {
+        th, td {
+            background-color: $color-palette-grey-tint-95;
+            border-color: $color-contrast-white;
+        }
+    }
+}
+
+.border-fix {
+    border-right: 0px solid black;
+}
+
+.mrc-ui-second-header-row {
+    top: 26px;
+}
+
+
+.mrc-ui-third-header-row {
+    top: 51px;
+}
+html {background:white;}
