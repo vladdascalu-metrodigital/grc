@@ -1,0 +1,18 @@
+@import '../lib/scss/colors';
+@import '../lib/scss/typography';
+
+.mrc-ui-crtable-cell-expiry {
+    font-size: $font-size-8;
+    text-align: right;
+    color: $color-palette-grey-tint-40;
+}
+
+.mrc-ui-crtable-cell-expiry-limit {
+    font-size: $font-size-7;
+    line-height: $line-height-copy-narrow;
+    font-weight: 400;
+}
+
+.mrc-ui-crtable-cell-expiry-date {
+    line-height: $line-height-copy-narrow;
+}

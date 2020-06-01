@@ -1,0 +1,23 @@
+@import '../lib/scss/colors';
+@import '../lib/scss/typography';
+
+.mrc-ui-crtable-cell-credit-product {
+    font-size: $font-size-7;
+    text-align: left;
+    color: $color-palette-grey-tint-40;
+}
+
+.mrc-ui-crtable-cell-product-name {
+    font-weight: 400;
+    line-height: $line-height-copy-narrow;
+}
+
+.mrc-ui-crtable-cell-product-time-period {
+    font-size: $font-size-8;
+    line-height: $line-height-copy-narrow;
+}
+
+.mrc-ui-crtable-cell-product-payment-method {
+    font-size: $font-size-8;
+    line-height: $line-height-copy-narrow;
+}

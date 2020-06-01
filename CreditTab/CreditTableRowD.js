@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Table from './Table';
 import CRTableCellCustomer from './CRTableCellCustomer';
+import CRTableCellLimit from './CRTableCellLimit';
+import CRTableCellExpiry from './CRTableCellExpiry';
+import CRTableCellCreditProduct from './CRTableCellCreditProduct';
+import CRTableCellPrepaymentCash from './CRTableCellPrepaymentCash';
 
 export default class CreditTableRowC extends Component {
     render() {
@@ -12,17 +16,29 @@ export default class CreditTableRowC extends Component {
                     </Table.D>
 
                     <Table.D colSpan="3" rowSpan="2">
-                        Prepayment
+                        <CRTableCellPrepaymentCash name="Prepayment" isBlue />
                     </Table.D>
 
-                    <Table.D colSpan="3">Cash</Table.D>
-
+                    <Table.D colSpan="3">
+                        <CRTableCellPrepaymentCash name="Cash" isGreen />
+                    </Table.D>
                     <Table.D rowSpan="2">toggler</Table.D>
                 </Table.R>
                 <Table.R isActive>
-                    <Table.D>new 21300</Table.D>
-                    <Table.D>new expiry</Table.D>
-                    <Table.D borderFix>new product</Table.D>
+                    <Table.D>
+                        <CRTableCellLimit country="EUR" exhausted="22000" limit="30000" isGreen />
+                    </Table.D>
+                    <Table.D>
+                        <CRTableCellExpiry expiryLimit="10000" expiryDate="4/2/2020" isGreen />
+                    </Table.D>
+                    <Table.D borderFix>
+                        <CRTableCellCreditProduct
+                            productName="Metro Cash"
+                            productTimePeriod="14 Days"
+                            productPaymentMethod="Direct Debit 1"
+                            isGreen
+                        />
+                    </Table.D>
                 </Table.R>
             </>
         );

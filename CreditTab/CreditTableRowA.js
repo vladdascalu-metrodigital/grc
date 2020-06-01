@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Table from './Table';
 import CRTableCellCustomer from './CRTableCellCustomer';
+import CRTableCellLimit from './CRTableCellLimit';
+import CRTableCellExpiry from './CRTableCellExpiry';
+import CRTableCellCreditProduct from './CRTableCellCreditProduct';
 
 export default class CreditTableRowA extends Component {
     render() {
@@ -10,12 +13,34 @@ export default class CreditTableRowA extends Component {
                     <Table.D>
                         <CRTableCellCustomer name="Mepo GmbH" number="12/123432" isBlocked />
                     </Table.D>
-                    <Table.D>Exhausted/Granted</Table.D>
-                    <Table.D>Expiry</Table.D>
-                    <Table.D>Creditproduct</Table.D>
-                    <Table.D>wish 21000</Table.D>
-                    <Table.D>wish 22.03.2020</Table.D>
-                    <Table.D>product a</Table.D>
+                    <Table.D>
+                        <CRTableCellLimit country="EUR" exhausted="22000" limit="30000" isBlue />
+                    </Table.D>
+                    <Table.D>
+                        <CRTableCellExpiry expiryLimit="10000" expiryDate="4/2/2020" isBlue />
+                    </Table.D>
+                    <Table.D>
+                        <CRTableCellCreditProduct
+                            productName="Metro Cash"
+                            productTimePeriod="14 Days"
+                            productPaymentMethod="Direct Debit 1"
+                            isBlue
+                        />
+                    </Table.D>
+                    <Table.D>
+                        <CRTableCellLimit country="EUR" limit="40000" isGreen />
+                    </Table.D>
+                    <Table.D>
+                        <CRTableCellExpiry expiryLimit="30000" expiryDate="4/2/2020" isGreen />
+                    </Table.D>
+                    <Table.D>
+                        <CRTableCellCreditProduct
+                            productName="Metro Cash"
+                            productTimePeriod="28 Days"
+                            productPaymentMethod="Direct Debit 2"
+                            isGreen
+                        />
+                    </Table.D>
                     <Table.D>toggler</Table.D>
                 </Table.R>
             </>

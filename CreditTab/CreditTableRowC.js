@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Table from './Table';
 import CRTableCellCustomer from './CRTableCellCustomer';
+import CRTableCellLimit from './CRTableCellLimit';
+import CRTableCellExpiry from './CRTableCellExpiry';
+import CRTableCellCreditProduct from './CRTableCellCreditProduct';
+import CRTableCellPrepaymentCash from './CRTableCellPrepaymentCash';
 
 export default class CreditTableRowC extends Component {
     render() {
@@ -11,18 +15,42 @@ export default class CreditTableRowC extends Component {
                         <CRTableCellCustomer name="Mepo GmbH" number="12/123432" isBlocked />
                     </Table.D>
 
-                    <Table.D rowSpan="2">Exhausted/Granted</Table.D>
-                    <Table.D rowSpan="2">Expiry</Table.D>
-                    <Table.D rowSpan="2">Creditproduct</Table.D>
+                    <Table.D rowSpan="2">
+                        <CRTableCellLimit country="EUR" exhausted="22000" limit="30000" isBlue />
+                    </Table.D>
+                    <Table.D rowSpan="2">
+                        <CRTableCellExpiry expiryLimit="10000" expiryDate="4/2/2020" isBlue />
+                    </Table.D>
+                    <Table.D rowSpan="2">
+                        <CRTableCellCreditProduct
+                            productName="Metro Cash"
+                            productTimePeriod="14 Days"
+                            productPaymentMethod="Direct Debit 1"
+                            isBlue
+                        />
+                    </Table.D>
 
-                    <Table.D colSpan="3">Cash</Table.D>
+                    <Table.D colSpan="3">
+                        <CRTableCellPrepaymentCash name="Cash" isGreen />
+                    </Table.D>
 
                     <Table.D rowSpan="2">toggler</Table.D>
                 </Table.R>
                 <Table.R>
-                    <Table.D>new 21300</Table.D>
-                    <Table.D>new expiry</Table.D>
-                    <Table.D borderFix>new product</Table.D>
+                    <Table.D>
+                        <CRTableCellLimit country="EUR" exhausted="22000" limit="30000" isGreen />
+                    </Table.D>
+                    <Table.D>
+                        <CRTableCellExpiry expiryLimit="10000" expiryDate="4/2/2020" isGreen />
+                    </Table.D>
+                    <Table.D borderFix>
+                        <CRTableCellCreditProduct
+                            productName="Metro Cash"
+                            productTimePeriod="14 Days"
+                            productPaymentMethod="Direct Debit 1"
+                            isGreen
+                        />
+                    </Table.D>
                 </Table.R>
             </>
         );
