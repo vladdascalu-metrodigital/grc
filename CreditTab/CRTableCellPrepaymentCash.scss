@@ -1,5 +1,6 @@
 @import '../lib/scss/colors';
 @import '../lib/scss/typography';
+@import '../lib/scss/variables';
 
 
 .mrc-ui-crtable-cell-customer-prepayment-cash {
@@ -7,4 +8,8 @@
     text-align: center;
     font-weight: 400;
     line-height: $line-height-solid;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: $height-4;
 }
