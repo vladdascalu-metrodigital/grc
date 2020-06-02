@@ -5,6 +5,7 @@ import CRTableCellLimit from './CRTableCellLimit';
 import CRTableCellExpiry from './CRTableCellExpiry';
 import CRTableCellCreditProduct from './CRTableCellCreditProduct';
 import CRTableCellPrepaymentCash from './CRTableCellPrepaymentCash';
+import ToggleIndicator from '../ToggleIndicator';
 
 export default class CreditTableRowC extends Component {
     render() {
@@ -34,7 +35,9 @@ export default class CreditTableRowC extends Component {
                         <CRTableCellPrepaymentCash name="Cash" isGreen />
                     </Table.D>
 
-                    <Table.D rowSpan="2">toggler</Table.D>
+                    <Table.D rowSpan="2">
+                        <ToggleIndicator />
+                    </Table.D>
                 </Table.R>
                 <Table.R>
                     <Table.D>

@@ -4,6 +4,7 @@ import CRTableCellCustomer from './CRTableCellCustomer';
 import CRTableCellLimit from './CRTableCellLimit';
 import CRTableCellExpiry from './CRTableCellExpiry';
 import CRTableCellCreditProduct from './CRTableCellCreditProduct';
+import ToggleIndicator from '../ToggleIndicator';
 
 export default class CreditTableRowA extends Component {
     render() {
@@ -41,7 +42,9 @@ export default class CreditTableRowA extends Component {
                             isGreen
                         />
                     </Table.D>
-                    <Table.D>toggler</Table.D>
+                    <Table.D>
+                        <ToggleIndicator />
+                    </Table.D>
                 </Table.R>
             </>
         );

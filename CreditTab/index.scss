@@ -63,6 +63,7 @@ $table-base-line-height: $line-height-copy;
   background-color: $color-contrast-white;
   padding: $table-padding-v $table-padding-h;
   line-height: $table-base-line-height;
+  z-index: 1;
 
   &:last-child {
     border-right-width: $border-width-none;
