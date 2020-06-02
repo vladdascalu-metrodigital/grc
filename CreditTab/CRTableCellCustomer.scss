@@ -10,6 +10,7 @@
   line-height: $line-height-copy-narrow;
   color: $color-palette-grey-tint-40;
   min-height: 5rem;
+  font-size: $font-size-5;
 }
 
 .mrc-ui-crtable-cell-customer-highlighted {
@@ -19,11 +20,12 @@
 .mrc-ui-crtable-cell-customer-name {
   display: block;
   color: $color-brand-primary-default;
+  font-size: $font-size-5;
 }
 
 .mrc-ui-crtable-cell-customer-blocked {
-  font-size: .75rem;
+  font-size: $font-size-10;
   display: block;
-  font-weight: normal;
-  color: $color-danger;
+  font-weight: bold;
+  color: $color-palette-red-tint-20;
 }
