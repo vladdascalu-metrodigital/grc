@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Table from './Table';
+import Table from '../MrcTable';
 import CreditTableHead from './CreditTableHead';
 import CreditTableRowA from './CreditTableRowA';
 import CreditTableRowB from './CreditTableRowB';
@@ -7,8 +7,6 @@ import CreditTableRowC from './CreditTableRowC';
 import CreditTableRowD from './CreditTableRowD';
 // import PropTypes from 'prop-types';
 // import classnames from 'classnames';
-
-import './index.scss';
 
 // export const GAP = {
 // 'NONE'

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Table from './Table';
+import Table from '../MrcTable';
 import CRTableCellCustomer from './CRTableCellCustomer';
 import CRTableCellLimit from './CRTableCellLimit';
 import CRTableCellExpiry from './CRTableCellExpiry';

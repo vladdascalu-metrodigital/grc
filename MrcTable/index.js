@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 
+import './index.scss';
+
 class Root extends Component {
     render() {
         return <table className="mrc-ui-table">{this.props.children}</table>;
