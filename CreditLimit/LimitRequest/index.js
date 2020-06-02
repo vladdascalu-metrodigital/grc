@@ -36,6 +36,7 @@ export default class LimitRequestLayout extends Component {
         this.state = {
             creditDataValid: false,
             creditProgramValid: false,
+            applyCurrent: false,
             applyCurrentLimitAndExpiry: false,
             applyCurrentPayments: false,
             creditDataComponentsValid: {},
@@ -136,7 +137,7 @@ export default class LimitRequestLayout extends Component {
         const request = this.props.request.data;
         if (request) {
             const totalSteps = request.containsContracting ? 4 : 3;
-            return <ProgressBar name={lookup('mrc.phase.initialization')} step={1} totalSteps={totalSteps} />;
+            return <ProgressBar name={lookup('mrc.phase.initialization')} step={1} totalSteps={totalSteps}/>;
         } else {
             return null;
         }
@@ -237,34 +238,18 @@ export default class LimitRequestLayout extends Component {
                                 type="checkbox"
                                 className="m-radioButton-input"
                                 id="one"
-                                value={this.state.applyCurrentLimitAndExpiry}
-                                onClick={e => this.onApplyCurrentLimitAndExpiryChange(e)}
-                                defaultChecked={this.state.applyCurrentLimitAndExpiry === true}
+                                value={this.state.applyCurrent}
+                                onClick={e => this.onApplyCurrentChange(e)}
+                                defaultChecked={this.state.applyCurrent === true}
                             />
-                            <div className="m-radioButton-inputIcon" />
+                            <div className="m-radioButton-inputIcon"/>
 
                             <span className="m-radioButton-label">
-                                <p>{lookup('creditlimit.limitrequest.toggles.applylimitandexpiry')}</p>
+                                <p>{lookup('creditlimit.limitrequest.toggles.applyCurrent')}</p>
                             </span>
                         </label>
                     </div>
-                    <div className="mrc-radio-button">
-                        <label className="m-radioButton" htmlFor="two">
-                            <input
-                                type="checkbox"
-                                className="m-radioButton-input"
-                                id="two"
-                                value={this.state.applyCurrentPayments}
-                                onClick={e => this.onApplyCurrentPaymentsChange(e)}
-                                defaultChecked={this.state.applyCurrentPayments === true}
-                            />
-                            <div className="m-radioButton-inputIcon"></div>
 
-                            <span className="m-radioButton-label">
-                                <p>{lookup('creditlimit.limitrequest.toggles.applypayment')}</p>
-                            </span>
-                        </label>
-                    </div>
                 </div>
             </div>
         );
@@ -283,9 +268,11 @@ export default class LimitRequestLayout extends Component {
         );
     }
 
-    onApplyCurrentLimitAndExpiryChange(e) {
+    onApplyCurrentChange(e) {
         this.setState({
+            applyCurrent: !(e.currentTarget.value === 'true'),
             applyCurrentLimitAndExpiry: !(e.currentTarget.value === 'true'),
+            applyCurrentPayments: !(e.currentTarget.value == 'true'),
             isApplyCurrentLimitAndExpiryClicked: true,
         });
         if (this.state.isApplyCurrentLimitAndExpiryClickedCallbacks) {
@@ -294,6 +281,7 @@ export default class LimitRequestLayout extends Component {
             }
         }
     }
+
 
     registerCallbackOnApplyCurrentLimitAndExpiryChange(id, callback) {
         this.setState(state => {
@@ -309,11 +297,6 @@ export default class LimitRequestLayout extends Component {
         });
     }
 
-    onApplyCurrentPaymentsChange(e) {
-        this.setState({
-            applyCurrentPayments: !(e.currentTarget.value == 'true'),
-        });
-    }
 
     handleRequestedGroupLimitChange() {
         let requestedGroupLimitNew = 0;
@@ -367,7 +350,7 @@ export default class LimitRequestLayout extends Component {
                 'CREDIT_DATA',
                 customer.country,
                 customer.storeNumber,
-                customer.customerNumber
+                customer.customerNumber,
             );
             const hasAdditionalFields =
                 additionalFieldsList !== undefined && additionalFieldsList !== null && additionalFieldsList.length > 0
@@ -414,7 +397,7 @@ export default class LimitRequestLayout extends Component {
                                 dateFormat={dateFormat}
                                 currentPayment={this.defineCurrentPayment(item)}
                                 registerCallbackOnApplyCurrentLimitAndExpiryChange={this.registerCallbackOnApplyCurrentLimitAndExpiryChange.bind(
-                                    this
+                                    this,
                                 )}
                                 countriesWithDifferentBlockingCodes={this.props.countriesWithDifferentBlockingCodes}
                             />
@@ -444,7 +427,7 @@ export default class LimitRequestLayout extends Component {
                 ? this.props.additionalFields.requestFields
                 : undefined,
             'REQUEST',
-            'CREDIT_DATA'
+            'CREDIT_DATA',
         );
         const hasRequestAdditionalFields =
             requestAdditionalFields !== undefined &&
@@ -457,7 +440,7 @@ export default class LimitRequestLayout extends Component {
                 ? this.props.additionalFields.requestFields
                 : undefined,
             'GROUP',
-            'CREDIT_DATA'
+            'CREDIT_DATA',
         );
         const hasGroupAdditionalFields =
             groupAdditionalFields !== undefined && groupAdditionalFields !== null && groupAdditionalFields.length > 0
@@ -557,7 +540,7 @@ export default class LimitRequestLayout extends Component {
             ...this.state,
             creditDataComponentsValid: newValidity,
             creditDataValid:
-                Object.values(newValidity).every(v => v == true || v == null) && requestorCreditDataIsValid == true,
+            Object.values(newValidity).every(v => v == true || v == null) && requestorCreditDataIsValid == true,
         });
     }
 
@@ -592,17 +575,17 @@ export default class LimitRequestLayout extends Component {
                 attachments={(this.COLLATERALS_ATTACHMENTS ? this.COLLATERALS_ATTACHMENTS : []).map(a => {
                     return a.deleted
                         ? {
-                              ...a,
-                              status: 'deleted',
-                              secondaryInteraction: a.isCollateral ? null : 'restore',
-                              handleSecondaryAction: () => this.props.restoreAttachment(limitRequest.id, a.id),
-                          }
+                            ...a,
+                            status: 'deleted',
+                            secondaryInteraction: a.isCollateral ? null : 'restore',
+                            handleSecondaryAction: () => this.props.restoreAttachment(limitRequest.id, a.id),
+                        }
                         : {
-                              ...a,
-                              status: 'normal',
-                              secondaryInteraction: a.isCollateral ? null : 'delete',
-                              handleSecondaryAction: () => this.props.deleteAttachment(limitRequest.id, a.id),
-                          };
+                            ...a,
+                            status: 'normal',
+                            secondaryInteraction: a.isCollateral ? null : 'delete',
+                            handleSecondaryAction: () => this.props.deleteAttachment(limitRequest.id, a.id),
+                        };
                 })}
                 addAttachment={(fileType, file, title, expiryDate, amount, metadataJson) =>
                     this.props.addAttachment(fileType, limitRequest.id, file, title, expiryDate, amount, metadataJson)
@@ -650,7 +633,7 @@ export default class LimitRequestLayout extends Component {
                 <Route
                     path="*/submitted"
                     render={() => {
-                        return <RequestSubmitted data={this.props.request.data} />;
+                        return <RequestSubmitted data={this.props.request.data}/>;
                     }}
                 />
 
