@@ -54,7 +54,7 @@ let ClientBlockedBigger = () => (
 
 storiesOf('S Credit Limit/Customer Tab', module).add('Customer Tab', () => {
     return (
-        <>
+        <React.Fragment>
             <ToggleBox titleContent={<MeierGmbHToggler />}>
                 <Grid>
                     <div style={{ 'grid-column': '1/-1' }}>
@@ -132,6 +132,6 @@ storiesOf('S Credit Limit/Customer Tab', module).add('Customer Tab', () => {
                     </BoxWithTitle>
                 </Grid>
             </ToggleBox>
-        </>
+        </React.Fragment>
     );
 });

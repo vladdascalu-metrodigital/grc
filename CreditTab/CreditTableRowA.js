@@ -9,7 +9,7 @@ import ToggleIndicator from '../ToggleIndicator';
 export default class CreditTableRowA extends Component {
     render() {
         return (
-            <>
+            <React.Fragment>
                 <Table.R>
                     <Table.D>
                         <CRTableCellCustomer name="Mepo GmbH" number="12/123432" isBlocked />
@@ -46,7 +46,7 @@ export default class CreditTableRowA extends Component {
                         <ToggleIndicator />
                     </Table.D>
                 </Table.R>
-            </>
+            </React.Fragment>
         );
     }
 }

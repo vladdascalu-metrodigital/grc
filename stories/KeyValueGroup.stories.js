@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import KeyValueGroup, { KeyValueRow, Key, Value } from '../KeyValueGroup';
 
 storiesOf('Fundamentals/KeyValueGroup', module).add('super automatic grid', () => (
-    <>
+    <React.Fragment>
         <KeyValueGroup>
             <KeyValueRow>
                 <Key>Tax ID</Key>
@@ -26,5 +26,5 @@ storiesOf('Fundamentals/KeyValueGroup', module).add('super automatic grid', () =
                 <Value>Traders</Value>
             </KeyValueRow>
         </KeyValueGroup>
-    </>
+    </React.Fragment>
 ));

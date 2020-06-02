@@ -32,10 +32,10 @@ storiesOf('Fundamentals/Icons', module)
         </div>
     ))
     .add('sizes', () => (
-        <>
+        <React.Fragment>
             <p>Change the size via the size property:</p>
             <BusinessIcon size={SIZE.XSMALL} />
             <BusinessIcon size={SIZE.SMALL} />
             <BusinessIcon />
-        </>
+        </React.Fragment>
     ));
