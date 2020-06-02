@@ -44,7 +44,7 @@ export class GridItem extends Component {
     }
 }
 
-GridItem.PropTypes = {
+GridItem.propTypes = {
     rowSpan: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['all'])]),
     colSpan: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['all'])]),
     children: PropTypes.node,
