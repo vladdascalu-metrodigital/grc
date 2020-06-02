@@ -2,15 +2,10 @@
 @import '../lib/scss/variables';
 @import '../lib/scss/typography';
 
-
 .mrc-ui-table {
     width: 100%;
     border-spacing: 0px;
 }
-
-// tr td {
-//     height: 4rem;
-// }
 
 // settings for table
 
@@ -95,30 +90,12 @@ $table-base-line-height: $line-height-copy;
 }
 
 
-
-
-
-// sticky stuff
-
-// maybe calculate tops with JS and assign as custom property
-
 .mrc-ui-table-r-sticky {
   th {
     position: sticky;
-    top: 0;
+    top: var(--sticky-offset); // gets calculated and assigned via JS
   }
 }
-
-@for $n from 1 through 5 {
-  .mrc-ui-table-r-sticky:nth-child(#{$n + 1}) th {
-    // top: 25px * $n;
-    $lines: $table-base-line-height * $n * 1rem;
-    $paddings: $table-padding-v * 2 * $n; 
-    $borders: 1px * $n;
-    top: calc(#{$lines + $paddings} + #{$borders});
-  }
-}
-
 
 // temp
 

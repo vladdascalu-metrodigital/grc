@@ -22,6 +22,29 @@ class Body extends Component {
 }
 
 class R extends Component {
+    constructor(props) {
+        super(props);
+        if (this.props.isSticky) {
+            this.selfRef = React.createRef();
+        }
+    }
+
+    getStickyOffset(node, offset = 0) {
+        if (node.previousSibling) {
+            let prevSiblingOffset = offset + node.previousSibling.clientHeight;
+            return this.getStickyOffset(node.previousSibling, prevSiblingOffset);
+        } else {
+            return offset;
+        }
+    }
+
+    componentDidMount() {
+        if (this.props.isSticky) {
+            let stickyOffset = this.getStickyOffset(this.selfRef.current);
+            this.selfRef.current.style.setProperty('--sticky-offset', stickyOffset + 'px');
+        }
+    }
+
     render() {
         let { className, children, isSticky, isActive, type, ...otherProps } = this.props;
         className = classnames('mrc-ui-table-r', {
@@ -30,7 +53,7 @@ class R extends Component {
             'mrc-ui-table-r-light': type === 'light',
         });
         return (
-            <tr className={className} {...otherProps}>
+            <tr className={className} ref={this.selfRef} {...otherProps}>
                 {children}
             </tr>
         );
