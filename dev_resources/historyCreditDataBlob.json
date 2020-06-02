@@ -1,0 +1,436 @@
+{
+  "requestData": [
+    {
+      "customerData": {
+        "accordionDisplayName": "* 15/88194 Antonio Jensen",
+        "displayName": "Antonio Jensen",
+        "customerNumber": "88194",
+        "storeNumber": "15",
+        "vatSpecNumber": "1221-1212-1212",
+        "vatEuNumber": "1117",
+        "legalForm": "7",
+        "email": "test@test.com",
+        "phoneNumber": "0751768231",
+        "mobilePhoneNumber": "212311212",
+        "street": "Huttenberg",
+        "houseNumber": "51",
+        "zipCode": "88214",
+        "city": "Ravensburg",
+        "registrationDate": "2020-04-24T06:56:54Z",
+        "checkoutCheckCode": null,
+        "blockingReason": null,
+        "companyFoundationDate": null,
+        "branchId": null,
+        "segment": null,
+        "branchDescription": null,
+        "legalFormDescription": "Test",
+        "country": "DE",
+        "companyAge": "",
+        "customerLastName": "Jensen",
+        "customerFirstName": "Antonio",
+        "companyOwnerLastName": "Lux companyOwnerLastName",
+        "companyOwnerFirstName": "Anton companyOwnerFirstName",
+        "birthDay": "1973-01-19T23:00:00Z",
+        "limitExhaustion": null,
+        "requestedCustomer": true
+      },
+      "current": {
+        "creditLimit": 2000,
+        "creditPeriod": "12",
+        "creditProduct": "Metro Cash",
+        "debitType": "Basislaftshiftmandat",
+        "blockingOption": null
+      },
+      "requested": {
+        "creditLimit": 12000,
+        "creditPeriod": "12",
+        "creditProduct": "Metro Cash",
+        "debitType": "Basislaftshiftmandat",
+        "blockingOption": null
+      },
+      "applied": {
+        "creditLimit": 11000,
+        "creditPeriod": "Ende des Monats",
+        "creditProduct": "Metro Top",
+        "debitType": "Basislaftshiftmandat",
+        "blockingOption": null
+      },
+      "limitExpiryDate": null,
+      "resetToLimitAmount": null
+    }
+  ],
+  "requestedStatus": {
+    "trafficLight": "yellow",
+    "creationDate": "2020-04-24T06:56:54Z",
+    "amount": 11000,
+    "groupAmount": 0,
+    "creditProduct": "Metro Top",
+    "creditPeriod": "Ende des Monats",
+    "debitType": "Basislaftshiftmandat",
+    "status": "Pending",
+    "position": "HALJ",
+    "requestType": "LIMIT_REQUEST",
+    "amountBeforeExpiry": null,
+    "groupMembers": 1,
+    "applied": true
+  },
+  "groupLimit": {
+    "limitExhaustion": null,
+    "current": 2000,
+    "requested": 12000,
+    "applied": 11000
+  },
+  "countryCode": "DE",
+  "additionalFields": {
+    "requestFields": [
+      {
+        "id": "7965484c-1f4d-432c-90f0-c5ef525725b2",
+        "requestId": "1",
+        "country": "DE",
+        "storeNumber": "19",
+        "customerNumber": "77123",
+        "groupId": null,
+        "creationTimestamp": "2020-06-02T11:07:33.217038Z",
+        "value": "Computer_peripheral_equipment|Recreational_Products_Toys",
+        "textValue": null,
+        "countryField": {
+          "id": "e3992ab5-425c-45ed-99f6-c82f63ea9be0",
+          "mandatory": false,
+          "validation": null,
+          "level": "CUSTOMER",
+          "order": 5,
+          "section": "CREDIT_DATA",
+          "reusable": true,
+          "endTimestamp": null,
+          "country": "DE",
+          "options": "Oil_Gas_Production|Computer_peripheral_equipment|Recreational_Products_Toys|Electric_Utilities_Central|Package_Goods_Cosmetics|EDP_Services|Commercial_Banks|Metal_Fabrications|Industrial_Machinery_Components",
+          "field": {
+            "id": "2bcc9833-1aa8-40ed-8b31-985a28fa906e",
+            "code": "DMY_CUSTOMER_INDUSTRY",
+            "label": "mrc.customerdetails.industry",
+            "type": "DROPDOWN_MULTIPLE"
+          }
+        }
+      },
+      {
+        "id": "827a2995-d41b-444b-af1e-d0c65ce28ef0",
+        "requestId": "1",
+        "country": "DE",
+        "storeNumber": "19",
+        "customerNumber": "77123",
+        "groupId": null,
+        "creationTimestamp": "2020-06-02T11:07:33.217079Z",
+        "value": "true",
+        "textValue": null,
+        "countryField": {
+          "id": "cb45aef4-bbe7-4f1d-95d2-ece99a148a1d",
+          "mandatory": false,
+          "validation": null,
+          "level": "CUSTOMER",
+          "order": 6,
+          "section": "CREDIT_DATA",
+          "reusable": true,
+          "endTimestamp": null,
+          "country": "DE",
+          "options": null,
+          "field": {
+            "id": "a6c4d42a-43db-400b-a515-077a327be619",
+            "code": "DMY_CUSTOMER_IS_PROFITABLE",
+            "label": "mrc.customer.is.profitable",
+            "type": "CHECKBOX"
+          }
+        }
+      },
+      {
+        "id": "69b45804-62cd-491b-8af1-4c93028cbe8d",
+        "requestId": "1",
+        "country": "DE",
+        "storeNumber": "19",
+        "customerNumber": "77123",
+        "groupId": null,
+        "creationTimestamp": "2020-06-02T11:07:33.216521Z",
+        "value": "123",
+        "textValue": null,
+        "countryField": {
+          "id": "0660f875-b508-4f66-9cc7-141f1e1a962b",
+          "mandatory": true,
+          "validation": "isNumber",
+          "level": "GROUP",
+          "order": 1,
+          "section": "CREDIT_DATA",
+          "reusable": true,
+          "endTimestamp": null,
+          "country": "DE",
+          "options": null,
+          "field": {
+            "id": "c2a83b05-e05e-40e7-bfa9-8fd5835e4b94",
+            "code": "DMY_GROUP_TOTAL_TURNOVER",
+            "label": "mrc.mdw.totalturnover",
+            "type": "NUMBER"
+          }
+        }
+      },
+      {
+        "id": "715d8821-993a-4368-b00f-e04d01aa4fcb",
+        "requestId": "1",
+        "country": "DE",
+        "storeNumber": "19",
+        "customerNumber": "77123",
+        "groupId": null,
+        "creationTimestamp": "2020-06-02T11:07:33.216988Z",
+        "value": "2020-12-31",
+        "textValue": null,
+        "countryField": {
+          "id": "f017993c-9338-45c4-abfb-6c61f407f4c3",
+          "mandatory": false,
+          "validation": "isDateInFuture",
+          "level": "CUSTOMER",
+          "order": 4,
+          "section": "CREDIT_DATA",
+          "reusable": true,
+          "endTimestamp": null,
+          "country": "DE",
+          "options": null,
+          "field": {
+            "id": "f47f3f98-a953-4c2b-b4a0-b050fbd0da92",
+            "code": "DMY_CUSTOMER_CONTRACT_EXPIRATION_DATE",
+            "label": "mrc.attachments.fields.contract.expiration_date",
+            "type": "DATE"
+          }
+        }
+      },
+      {
+        "id": "c8e8916b-c46f-4596-85f3-95d883948f97",
+        "requestId": "1",
+        "country": "DE",
+        "storeNumber": "19",
+        "customerNumber": "77123",
+        "groupId": null,
+        "creationTimestamp": "2020-06-02T11:07:33.216830Z",
+        "value": null,
+        "textValue": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        "countryField": {
+          "id": "c4ff9118-2886-4461-9037-59a530794a56",
+          "mandatory": false,
+          "validation": "maxLength255",
+          "level": "REQUEST",
+          "order": 2,
+          "section": "CREDIT_DATA",
+          "reusable": false,
+          "endTimestamp": null,
+          "country": "DE",
+          "options": null,
+          "field": {
+            "id": "3e112e86-4c0b-4c0f-b014-4a586b067dd7",
+            "code": "DMY_REQUEST_COMMENT",
+            "label": "mrc.request.comment",
+            "type": "TEXTAREA"
+          }
+        }
+      },
+      {
+        "id": "b1771c48-5b65-4724-8dc4-11d727c7ed59",
+        "requestId": "1",
+        "country": "DE",
+        "storeNumber": "19",
+        "customerNumber": "77123",
+        "groupId": null,
+        "creationTimestamp": "2020-06-02T11:07:33.216871Z",
+        "value": "example of string value",
+        "textValue": null,
+        "countryField": {
+          "id": "5f36fbc7-c1c7-44df-a8df-fc0ea90c42b7",
+          "mandatory": false,
+          "validation": "maxLength255",
+          "level": "CUSTOMER",
+          "order": 1,
+          "section": "CREDIT_DATA",
+          "reusable": true,
+          "endTimestamp": null,
+          "country": "DE",
+          "options": null,
+          "field": {
+            "id": "eef491e5-466d-4f97-bf17-ea68208d1a73",
+            "code": "DMY_CUSTOMER_COMPANY_NAME",
+            "label": "mrc.customerdetails.fields.companyname",
+            "type": "TEXT"
+          }
+        }
+      },
+      {
+        "id": "2007aa80-fb0a-4eaf-9a3e-0e451ab1ff2c",
+        "requestId": "1",
+        "country": "DE",
+        "storeNumber": "19",
+        "customerNumber": "77123",
+        "groupId": null,
+        "creationTimestamp": "2020-06-02T11:07:33.216912Z",
+        "value": "sample@example.com",
+        "textValue": null,
+        "countryField": {
+          "id": "9789dade-f6e7-4e72-ae24-7f219d80d40f",
+          "mandatory": true,
+          "validation": "isEmail",
+          "level": "CUSTOMER",
+          "order": 2,
+          "section": "CREDIT_DATA",
+          "reusable": true,
+          "endTimestamp": null,
+          "country": "DE",
+          "options": null,
+          "field": {
+            "id": "12de83a4-1b56-482b-b283-a1209ca9e71e",
+            "code": "DMY_CUSTOMER_EMAIL",
+            "label": "mrc.customerdetails.fields.email",
+            "type": "TEXT"
+          }
+        }
+      },
+      {
+        "id": "61540570-2f03-45fe-a091-37b39c6eacd7",
+        "requestId": "1",
+        "country": "DE",
+        "storeNumber": "19",
+        "customerNumber": "77123",
+        "groupId": null,
+        "creationTimestamp": "2020-06-02T11:07:33.216954Z",
+        "value": "+49 30 901820",
+        "textValue": null,
+        "countryField": {
+          "id": "1e6519b8-f7d5-4698-8b62-bbaba20820ba",
+          "mandatory": true,
+          "validation": "isPhone",
+          "level": "CUSTOMER",
+          "order": 3,
+          "section": "CREDIT_DATA",
+          "reusable": true,
+          "endTimestamp": null,
+          "country": "DE",
+          "options": null,
+          "field": {
+            "id": "b43c8585-2a4f-4055-a2b5-3b174d3a30f4",
+            "code": "DMY_CUSTOMER_PHONE",
+            "label": "mrc.customerdetails.fields.phone",
+            "type": "TEXT"
+          }
+        }
+      },
+      {
+        "id": "ce99cdca-d7c5-4984-926e-d071011aaed6",
+        "requestId": "1",
+        "country": "DE",
+        "storeNumber": "19",
+        "customerNumber": "77123",
+        "groupId": null,
+        "creationTimestamp": "2020-06-02T11:07:33.216614Z",
+        "value": "75",
+        "textValue": null,
+        "countryField": {
+          "id": "0490c4a8-d46c-4ca4-968c-e0924e4eca74",
+          "mandatory": true,
+          "validation": "isPercentage",
+          "level": "GROUP",
+          "order": 2,
+          "section": "CREDIT_DATA",
+          "reusable": true,
+          "endTimestamp": null,
+          "country": "DE",
+          "options": null,
+          "field": {
+            "id": "9ec81e6b-9e61-4663-8069-cd62c701fe05",
+            "code": "DMY_GROUP_PROFITABILITY",
+            "label": "mrc.topmanagement.profitability",
+            "type": "NUMBER"
+          }
+        }
+      },
+      {
+        "id": "2f37599b-7943-4f6a-9a26-9f43216836db",
+        "requestId": "1",
+        "country": "DE",
+        "storeNumber": "19",
+        "customerNumber": "77123",
+        "groupId": null,
+        "creationTimestamp": "2020-06-02T11:07:33.216685Z",
+        "value": "20",
+        "textValue": null,
+        "countryField": {
+          "id": "2e6cb78c-e5a9-49cc-93db-6a3e4db10990",
+          "mandatory": false,
+          "validation": "isNumber",
+          "level": "GROUP",
+          "order": 3,
+          "section": "CREDIT_DATA",
+          "reusable": false,
+          "endTimestamp": null,
+          "country": "DE",
+          "options": null,
+          "field": {
+            "id": "bbc8c7e4-b9d6-46b4-844b-9eca65829773",
+            "code": "DMY_GROUP_LIMIT_AVERAGE",
+            "label": "mrc.limit.average",
+            "type": "NUMBER"
+          }
+        }
+      },
+      {
+        "id": "1b7944da-2fb6-4b13-a9eb-3dd3f29efdd2",
+        "requestId": "1",
+        "country": "DE",
+        "storeNumber": "19",
+        "customerNumber": "77123",
+        "groupId": null,
+        "creationTimestamp": "2020-06-02T11:07:33.216750Z",
+        "value": "3",
+        "textValue": null,
+        "countryField": {
+          "id": "ede80e37-7718-46b0-8566-eddcef681161",
+          "mandatory": false,
+          "validation": null,
+          "level": "GROUP",
+          "order": 4,
+          "section": "CREDIT_DATA",
+          "reusable": true,
+          "endTimestamp": null,
+          "country": "DE",
+          "options": "1|2|3|4|5",
+          "field": {
+            "id": "a0ca6a5a-2783-448f-a9c7-aefcd5b23f75",
+            "code": "DMY_GROUP_GENERAL_RATING",
+            "label": "mrc.recommendations.rating",
+            "type": "RADIOBUTTON"
+          }
+        }
+      },
+      {
+        "id": "087d8e1a-0f78-4558-975c-395f2a921c39",
+        "requestId": "1",
+        "country": "DE",
+        "storeNumber": "19",
+        "customerNumber": "77123",
+        "groupId": null,
+        "creationTimestamp": "2020-06-02T11:07:33.216786Z",
+        "value": "VERY_IMPORTANT",
+        "textValue": null,
+        "countryField": {
+          "id": "4cc61cef-80eb-44ab-850b-a7899e566629",
+          "mandatory": true,
+          "validation": null,
+          "level": "REQUEST",
+          "order": 1,
+          "section": "CREDIT_DATA",
+          "reusable": false,
+          "endTimestamp": null,
+          "country": "DE",
+          "options": "NOT_IMPORTANT|IMPORTANT|VERY_IMPORTANT",
+          "field": {
+            "id": "a09bd711-d0f1-4900-8672-37acf6b983e8",
+            "code": "DMY_REQUEST_IMPORTANCE",
+            "label": "mrc.request.importance",
+            "type": "DROPDOWN"
+          }
+        }
+      }
+    ]
+  }
+}

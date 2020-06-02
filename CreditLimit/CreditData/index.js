@@ -183,6 +183,7 @@ export default class CreditData extends Component {
     }
 
     render() {
+        console.log(JSON.stringify(this.props));
         let noDebitTypesToSelect = false;
         let noCreditPeriodsToSelect = false;
         if (this.props.requestedItem.customer.availablePayments) {
