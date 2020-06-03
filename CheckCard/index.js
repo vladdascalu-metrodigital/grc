@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
+import CheckSmallFilledIcon from '../icons/CheckSmallFilledIcon';
+import { SIZE as ISIZE, COLOR as ICOLOR } from '../icons/index';
+
 import './index.scss';
 
 export default class CheckCard extends Component {
@@ -27,7 +30,7 @@ export default class CheckCard extends Component {
             <div className={className} onClick={this.handleClick}>
                 <div className="mrc-ui-check-card-title-row">
                     {title}
-                    <span className="mrc-ui-check-card-checkmark"></span>
+                    {checked && <CheckSmallFilledIcon size={ISIZE.XSMALL} fill={ICOLOR.LIGHT_GREEN} />}
                 </div>
                 <div>{children}</div>
             </div>

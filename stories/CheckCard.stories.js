@@ -16,7 +16,7 @@ storiesOf('Fundamentals/CheckCard', module).add('check card', () => {
                 How are you?
             </CheckCard>
             <CheckCard title="Without Content" checked={isChecked} onClick={handleClick} />
-            <CheckCard title="Disabled" disabled checked={isChecked} onClick={handleClick} />
+            <CheckCard title="Disabled" disabled onClick={handleClick} />
         </Grid>
     );
 });

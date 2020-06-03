@@ -9,6 +9,7 @@ export const COLOR = {
     NEUTRAL: 'neutral',
     DANGER: 'danger',
     ATTENTION: 'attention',
+    LIGHT_GREEN: 'light-green',
     LIGHT_RED: 'light-red',
 };
 
