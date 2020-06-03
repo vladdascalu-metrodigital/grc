@@ -1,10 +1,15 @@
 @import '../lib/scss/card-styles';
 @import '../lib/scss/variables';
+@import '../lib/scss/shadows';
 
 .mrc-ui-card {
   @include card-default();
   box-sizing: border-box;
-  padding: $spacing-medium;
+  padding: ($spacing-medium * 1.5) $spacing-medium;
+}
+
+.mrc-ui-card-shadow {
+  box-shadow: $shadow-downwards-medium;
 }
 
 .mrc-ui-card-primary {

@@ -19,32 +19,39 @@
   border-width: $border-width-medium;
 }
 
-.mrc-ui-icon-wrapper-stroke-white {
-  border-color: $color-contrast-white;
+// colors
+
+$icons-color-mapping: (
+  "white": $color-contrast-white,
+  "black": $color-contrast-black,
+  "interaction": $color-interaction,
+  "success": $color-success,
+  "neutral": $color-neutral,
+  "danger": $color-palette-red-default,
+  "attention": $color-brand-secondary-default,
+  "light-red": $color-palette-red-tint-30,
+);
+
+.mrc-ui-icon-stroke {
+  stroke: $color-brand-primary-default;
 }
 
-.mrc-ui-icon-wrapper-stroke-black {
-  border-color: $color-contrast-black;
+.mrc-ui-icon-fill {
+  fill: $color-brand-primary-default;
 }
 
-.mrc-ui-icon-wrapper-stroke-interaction {
-  border-color: $color-interaction;
-}
+@each $key, $color in $icons-color-mapping {
+  .mrc-ui-icon-wrapper-stroke-#{$key} {
+    border-color: $color;
+  }
 
-.mrc-ui-icon-wrapper-stroke-success {
-  border-color: $color-success;
-}
+  .mrc-ui-icon-stroke-#{$key} {
+    stroke: $color;
+  }
 
-.mrc-ui-icon-wrapper-stroke-neutral {
-  border-color: $color-neutral;
-}
-
-.mrc-ui-icon-wrapper-stroke-danger {
-  border-color: $color-palette-red-default;
-}
-
-.mrc-ui-icon-wrapper-stroke-attention {
-  border-color: $color-brand-secondary-default;
+  .mrc-ui-icon-fill-#{$key} {
+    fill: $color;
+  }
 }
 
 // the svg element
@@ -70,72 +77,4 @@
 .mrc-ui-icon-wrapper-size-xsmall,
 .mrc-ui-icon-svg-size-xsmall {
   font-size: 1.3125rem;
-}
-
-// strokes
-
-.mrc-ui-icon-stroke {
-  stroke: $color-brand-primary-default;
-}
-
-.mrc-ui-icon-stroke-white {
-  stroke: $color-contrast-white;
-}
-
-.mrc-ui-icon-stroke-black {
-  stroke: $color-contrast-black;
-}
-
-.mrc-ui-icon-stroke-interaction {
-  stroke: $color-interaction;
-}
-
-.mrc-ui-icon-stroke-success {
-  stroke: $color-success;
-}
-
-.mrc-ui-icon-stroke-neutral {
-  stroke: $color-neutral;
-}
-
-.mrc-ui-icon-stroke-danger {
-  stroke: $color-palette-red-default;
-}
-
-.mrc-ui-icon-stroke-attention {
-  stroke: $color-brand-secondary-default;
-}
-
-// fills
-
-.mrc-ui-icon-fill {
-  fill: $color-brand-primary-default;
-}
-
-.mrc-ui-icon-fill-white {
-  fill: $color-contrast-white;
-}
-
-.mrc-ui-icon-fill-black {
-  fill: $color-contrast-black;
-}
-
-.mrc-ui-icon-fill-interaction {
-  fill: $color-interaction;
-}
-
-.mrc-ui-icon-fill-success {
-  fill: $color-success;
-}
-
-.mrc-ui-icon-fill-neutral {
-  fill: $color-neutral;
-}
-
-.mrc-ui-icon-fill-danger {
-  fill: $color-palette-red-default;
-}
-
-.mrc-ui-icon-fill-attention {
-  fill: $color-brand-secondary-default;
 }

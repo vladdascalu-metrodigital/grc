@@ -9,6 +9,7 @@ export const COLOR = {
     NEUTRAL: 'neutral',
     DANGER: 'danger',
     ATTENTION: 'attention',
+    LIGHT_RED: 'light-red',
 };
 
 export const SIZE = {

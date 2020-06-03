@@ -25,7 +25,7 @@ export default class CustomerTab extends Component {
                             <ClientBlocked size="large" text="Kunde zur Löschung vorgesehen" />
                         </GridItem>
                         <BoxWithTitle title="Contact Info" type={BOX_TYPE.SMALLER}>
-                            <Card>
+                            <Card dropShadow>
                                 <VCard person={person} />
                             </Card>
                         </BoxWithTitle>
