@@ -30,6 +30,16 @@
   font-weight: normal;
 }
 
+.mrc-ui-box-with-title-action {
+  @include typo-anchor();
+}
+
+.mrc-ui-box-with-title-content {
+  padding: $spacing-medium .25rem 0;
+}
+
+// type variations
+
 .mrc-ui-box-with-title-smaller {
   .mrc-ui-box-with-title-header {
     > * {
@@ -40,12 +50,4 @@
   .mrc-ui-box-with-title-title {
     @include typo-header-small-caps();
   }
-}
-
-.mrc-ui-box-with-title-action {
-  @include typo-anchor();
-}
-
-.mrc-ui-box-with-title-content {
-  padding: $spacing-medium .25rem 0;
 }

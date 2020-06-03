@@ -6,3 +6,7 @@
   grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
   grid-gap: $spacing-row-gap $spacing-column-gap;
 }
+
+.mrc-ui-grid-cols {
+  grid-template-columns: repeat(var(--grid-cols), 1fr);
+}

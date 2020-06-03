@@ -12,12 +12,23 @@ import './index.scss';
 
 export default class Grid extends Component {
     render() {
-        let className = classnames('mrc-ui-grid');
-        return <div className={className}>{this.props.children}</div>;
+        let { cols } = this.props;
+        let className = classnames('mrc-ui-grid', {
+            'mrc-ui-grid-cols': cols && cols > 0,
+        });
+        let style = {
+            '--grid-cols': cols && cols > 0 ? cols : undefined,
+        };
+        return (
+            <div style={style} className={className}>
+                {this.props.children}
+            </div>
+        );
     }
 }
 
 Grid.propTypes = {
+    cols: PropTypes.number,
     gap: PropTypes.string,
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
 };

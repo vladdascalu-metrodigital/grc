@@ -9,7 +9,6 @@
   font-weight: normal;
   justify-content: space-around;
   min-height: 4.5rem;
-  width: max-content;
   padding: $spacing-extra-small $spacing-medium;
 }
 
@@ -22,7 +21,7 @@
 }
 
 .mrc-ui-check-card-disabled {
-  @include card-primary();
+  // @include card-primary(); // wrong styling
   cursor: not-allowed;
 }
 
