@@ -31,6 +31,6 @@ export class Value extends Component {
     }
 }
 
-KeyValueGroup.PropTypes = {
-    children: PropTypes.oneOf([Key, Value]),
+KeyValueGroup.propTypes = {
+    children: PropTypes.node,
 };

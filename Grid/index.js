@@ -17,7 +17,7 @@ export default class Grid extends Component {
     }
 }
 
-Grid.PropTypes = {
+Grid.propTypes = {
     gap: PropTypes.string,
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
 };

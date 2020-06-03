@@ -39,3 +39,11 @@ $measure-wide: 34em !default;
     text-decoration: underline;
   }
 }
+
+@mixin typo-header-small-caps() {
+  text-transform: uppercase;
+  letter-spacing: .02em;
+  font-size: $font-size-8;
+  font-weight: normal;
+  color: $color-palette-grey-tint-60;
+}

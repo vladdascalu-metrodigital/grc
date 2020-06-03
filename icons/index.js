@@ -47,5 +47,5 @@ export const iconPropTypes = {
     fill: PropTypes.oneOf(['white', 'black', 'interaction', 'success', 'neutral', 'danger', 'attention']),
     stroke: PropTypes.oneOf(['white', 'black', 'interaction', 'success', 'neutral', 'danger', 'attention']),
     strokeWidth: PropTypes.oneOf(['thin', 'medium']),
-    size: PropTypes.oneOf(['small', 'large']),
+    size: PropTypes.oneOf(['small', 'xsmall']),
 };

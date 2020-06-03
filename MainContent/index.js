@@ -17,7 +17,7 @@ export default class MainContent extends Component {
     }
 }
 
-MainContent.PropTypes = {
+MainContent.propTypes = {
     gap: PropTypes.string,
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
 };

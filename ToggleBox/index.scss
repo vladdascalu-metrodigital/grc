@@ -11,6 +11,7 @@
 }
 
 .mrc-ui-toggle-box-strip {
+  position: relative;
   align-items: center;
   background-color: $color-contrast-white;
   cursor: pointer;
@@ -19,6 +20,7 @@
   padding: $spacing-medium;
   transition: background-color 220ms ease-out, box-shadow 220ms ease-out;
   will-change: background-color, box-shadow;
+  z-index: 1;
 }
 
 .mrc-ui-toggle-box-strip-toggled {
@@ -33,4 +35,5 @@
 
 .mrc-ui-toggle-box-content {
   padding: $spacing-large $spacing-medium $spacing-extra-large;
+  background-color: $color-form-background-grey;
 }
