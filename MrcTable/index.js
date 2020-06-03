@@ -77,7 +77,7 @@ class H extends Component {
 class D extends Component {
     render() {
         let { borderFix, className, children, ...otherProps } = this.props;
-        className = classnames('mrc-ui-table-d', {
+        className = classnames('mrc-ui-table-d', className, {
             'mrc-ui-table-border-fix': borderFix,
         });
         return (

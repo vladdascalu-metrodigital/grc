@@ -1,0 +1,36 @@
+@import '../lib/scss/colors';
+@import '../lib/scss/typography';
+@import '../lib/scss/variables';
+
+.mrc-ui-two-column-form {
+    display: grid;
+    grid-template-columns: 33% auto;
+    width: 100%;
+    padding: $spacing-medium $spacing-none;
+}
+
+.mrc-ui-form-side-column {
+    h3 {
+        font-size: $font-size-5;
+        font-weight: normal;
+        color: $color-palette-grey-tint-20;
+        line-height: $line-height-title;
+        margin-bottom: $spacing-extra-small;
+    }
+
+    p {
+        font-size: $font-size-8;
+        color: $color-palette-grey-tint-50;
+        max-width: $measure-wide;
+        line-height: $line-height-copy;
+    }
+    padding-right: $spacing-extra-large;
+}
+
+.mrc-ui-form-main-column {
+
+}
+
+.mrc-ui-form-bg {
+    background-color: $color-form-background-grey !important;
+}
