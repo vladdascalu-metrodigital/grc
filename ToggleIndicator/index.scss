@@ -1,9 +1,16 @@
 @import '../lib/scss/colors';
 
 .mrc-ui-toggle-indicator {
+  border: 1px solid red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: $color-palette-grey-tint-40;
   font-size: 2rem;
   font-weight: bold;
+  transform: rotate(0deg);
+  width: 3rem;
+  height: 3rem;
   transition: transform 220ms ease-out;
   will-change: transform;
 }
