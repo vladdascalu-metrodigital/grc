@@ -9,6 +9,19 @@ $spacing-extra-extra-large: 6rem;
 $spacing-extra-extra-extra-large: 8rem;
 $spacing-extra-extra-extra-extra-large: 16rem;
 
+$spacings: (
+  '0': $spacing-none,
+  '1': $spacing-extra-extra-small,
+  '2': $spacing-extra-small,
+  '3': $spacing-small,
+  '4': $spacing-medium,
+  '5': $spacing-large,
+  '6': $spacing-extra-large,
+  '7': $spacing-extra-extra-large,
+  '8': $spacing-extra-extra-extra-large,
+  '9': $spacing-extra-extra-extra-extra-large,
+);
+
 $spacing-column-gap: 1.5rem;
 $spacing-row-gap: 2rem;
 

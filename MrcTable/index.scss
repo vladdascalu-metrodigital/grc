@@ -38,6 +38,15 @@ $table-base-line-height: $line-height-copy;
   }
 }
 
+@mixin table-row-form-grey () {
+  .mrc-ui-table-h,
+  .mrc-ui-table-d {
+    background-color: $color-form-background-grey;
+    border-color: $color-contrast-white;
+    color: $color-palette-grey-tint-60;
+  }
+}
+
 @mixin table-row-dark-grey () {
   .mrc-ui-table-h,
   .mrc-ui-table-d {
@@ -77,6 +86,10 @@ $table-base-line-height: $line-height-copy;
 
 .mrc-ui-table-r-active {
   @include table-row-active-color();
+}
+
+.mrc-ui-table-r-form {
+  @include table-row-form-grey();
 }
 
 .mrc-ui-table-head {

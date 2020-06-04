@@ -51,6 +51,7 @@ class R extends Component {
             'mrc-ui-table-r-sticky': isSticky,
             'mrc-ui-table-r-active': isActive,
             'mrc-ui-table-r-light': type === 'light',
+            'mrc-ui-table-r-form': type === 'form',
         });
         return (
             <tr className={className} ref={this.selfRef} {...otherProps}>

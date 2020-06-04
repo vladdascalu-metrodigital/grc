@@ -47,3 +47,18 @@ $measure-wide: 34em !default;
   font-weight: normal;
   color: $color-palette-grey-tint-60;
 }
+
+@mixin typo-header-small() {
+  font-size: $font-size-7;
+  color: $color-palette-grey-tint-20;
+  font-weight: normal;
+  line-height: $line-height-title;
+}
+
+@mixin typo-header-medium() {
+  font-size: $font-size-5;
+  font-weight: normal;
+  color: $color-palette-grey-tint-20;
+  line-height: $line-height-title;
+}
+

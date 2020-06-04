@@ -1,3 +1,5 @@
+@import './variables';
+
 .clear-both {
   clear:both;
 }
@@ -14,4 +16,33 @@
   clip: rect(0,0,0,0);
   white-space: nowrap;
   border: 0;
+}
+
+// spacing utility like in bootstrap
+@each $i, $spacing in $spacings {
+  .mt-#{$i} { margin-top: $spacing; }
+  .mr-#{$i} { margin-right: $spacing; }
+  .ml-#{$i} { margin-left: $spacing; }
+  .mb-#{$i} { margin-bottom: $spacing; }
+  .mx-#{$i} { 
+    margin-left: $spacing;
+    margin-right: $spacing;
+  }
+  .my-#{$i} { 
+    margin-top: $spacing; 
+    margin-bottom: $spacing; 
+  }
+  
+  .pt-#{$i} { padding-top: $spacing; }
+  .pr-#{$i} { padding-right: $spacing; }
+  .pl-#{$i} { padding-left: $spacing; }
+  .pb-#{$i} { padding-bottom: $spacing; }
+  .px-#{$i} { 
+    padding-left: $spacing;
+    padding-right: $spacing;
+  }
+  .py-#{$i} { 
+    padding-top: $spacing; 
+    padding-bottom: $spacing; 
+  }
 }

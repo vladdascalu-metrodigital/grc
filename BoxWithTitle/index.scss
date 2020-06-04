@@ -25,9 +25,7 @@
 }
 
 .mrc-ui-box-with-title-title {
-  font-size: $font-size-5;
-  color: $color-palette-grey-tint-20;
-  font-weight: normal;
+  @include typo-header-medium();
 }
 
 .mrc-ui-box-with-title-action {
