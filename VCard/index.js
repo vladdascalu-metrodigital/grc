@@ -28,7 +28,7 @@ export default class VCard extends Component {
                 <div className="mrc-ui-vcard-contact">
                     Tel. <a href={'tel:' + phoneNumber}>{phoneNumber}</a>
                     <br />
-                    {email}
+                    Mail <a href={'mailto:' + email}>{email}</a>
                 </div>
             </div>
         );
