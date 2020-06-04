@@ -32,26 +32,6 @@ export default class CreditTab extends Component {
                         <Table.Body>
                             <CreditTableRowD />
 
-                            <Table.R>
-                                <Table.D colspan="8" className="mrc-ui-form-bg">
-                                    {/* <CreditTableExpandableContent
-                                        title="Payment"
-                                        description="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                                    >
-                                        <Grid>
-                                            <CheckCard title='Cash' checked />
-                                            <CheckCard title='Credit '/>
-                                            <CheckCard title='Prepayment' />
-                                        </Grid>
-                                    </CreditTableExpandableContent>
-                                    <hr />
-                                    <CreditTableExpandableContent
-                                        title="Limit"
-                                        description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-                                    /> */}
-                                </Table.D>
-                            </Table.R>
-
                             <CreditTableRowA />
                             <CreditTableRowB />
                             <CreditTableRowC />
