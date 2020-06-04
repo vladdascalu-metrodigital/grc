@@ -1,3 +1,8 @@
+@import './colors';
+@import './shadows';
+@import './typography';
+@import './variables';
+
 .mrc-ui-form-text {
   color: $color-palette-grey-tint-50;
   font-size: $font-size-8;
@@ -74,4 +79,20 @@
   user-select: none;
   transition: background-color 125ms ease,box-shadow 125ms ease;
   border-radius: $border-radius-extra-small;
+}
+
+@mixin input-base() {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  border: 1px solid $color-contrast-white;
+  box-shadow: $shadow-tiny;
+  font-size: 1rem;
+  font-family: inherit;
+  padding: 0 .75rem;
+  height: 2.5rem;
+  color: $color-palette-grey-default;
+  border-radius: 2px;
+  transition: .125s ease-in-out 0s;
+  transition-property: border-color;
 }

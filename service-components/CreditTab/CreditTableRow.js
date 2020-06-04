@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 import Grid from '../../Grid';
 import Table from '../../MrcTable';
-import Card from '../../Card';
+import Card, { TYPE as CTYPE } from '../../Card';
+import NumberInput from '../../NumberInput';
 import CRTableCellCustomer from './CRTableCellCustomer';
 import CRTableCellLimit from './CRTableCellLimit';
 import CRTableCellExpiry from './CRTableCellExpiry';
@@ -92,7 +93,26 @@ export default class CreditTableRow extends Component {
                                     <CheckCard title="New" checked />
                                 </Grid>
                                 <h4>Choose New Limit</h4>
-                                <Card dropShadow>hello</Card>
+                                <Card dropShadow>
+                                    <h4>Amount</h4>
+                                    <NumberInput /> EUR
+                                    <h4>Choose Expiry</h4>
+                                    <Grid cols="3">
+                                        <CheckCard title="Without Expiry" />
+                                        <CheckCard title="Date of Expiry">
+                                            <NumberInput />
+                                        </CheckCard>
+                                        <a>set date of expiry to all customers limits</a>
+                                    </Grid>
+                                    <h4>Set Limit after expiry to</h4>
+                                    <Grid cols="3">
+                                        <CheckCard title="0 EUR" />
+                                        <CheckCard title="6.000 EUR" />
+                                        <Card type={CTYPE.MUTED}>
+                                            <NumberInput /> EUR
+                                        </Card>
+                                    </Grid>
+                                </Card>
                             </CreditTableFormSection>
                             <hr />
                             <CreditTableFormSection

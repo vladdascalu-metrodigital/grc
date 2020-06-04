@@ -10,6 +10,7 @@ storiesOf('Fundamentals/Card', module)
             <Card type={TYPE.PRIMARY}>primary</Card>
             <Card type={TYPE.MUTED}>muted</Card>
             <Card type={TYPE.WARNING}>warning</Card>
+            <Card dropShadow>default with shadow</Card>
         </Grid>
     ))
     .add('a card', () => <Card>In Lorem cillum reprehenderit id qui laborum ipsum tempor nostrud.</Card>);

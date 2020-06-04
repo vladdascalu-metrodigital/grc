@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+
+import './index.scss';
+
 export class NumberInput extends Component {
     constructor(props) {
         super(props);
@@ -57,7 +60,16 @@ export class NumberInput extends Component {
         delete inputProps.onChange;
         delete inputProps.initialValue;
         delete inputProps.shouldBePrefilledWith;
-        return <input type="text" value={this.state.value} onChange={this.handleChange} {...inputProps} />;
+        delete inputProps.className;
+        return (
+            <input
+                type="text"
+                value={this.state.value}
+                onChange={this.handleChange}
+                className="mrc-ui-number-input"
+                {...inputProps}
+            />
+        );
     }
 }
 

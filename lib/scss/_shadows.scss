@@ -1,6 +1,6 @@
 @import "./colors";
 
-// $shadow-default: transparentize($color-palette-grey-shade-90, 0.8) 1px 3px 3px 0px;
+$shadow-tiny: 0 0 0 1px $color-palette-grey-tint-80;
 
 $shadow-small-inset: transparentize($color-palette-grey-shade-90, 0.8) 0px 1px 3px 0px inset;
 $shadow-small: transparentize($color-palette-grey-shade-90, 0.8) 0px 1px 3px 0px;
