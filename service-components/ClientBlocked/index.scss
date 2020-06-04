@@ -1,0 +1,14 @@
+@import '../../lib/scss/colors';
+@import '../../lib/scss/variables';
+@import '../../lib/scss/typography';
+
+.mrc-ui-client-blocked {
+  display: flex;
+  align-items: center;
+  color: $color-palette-red-tint-30;
+  font-weight: normal;
+
+  > :first-child {
+    margin-right: $spacing-small;
+  }
+}
