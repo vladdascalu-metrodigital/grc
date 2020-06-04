@@ -26,6 +26,8 @@ import CreditTableRowD from './CreditTableRowD';
 // 'LARGE'
 // }
 
+import './index.scss';
+
 export default class CreditTab extends Component {
     render() {
         return (
@@ -47,7 +49,10 @@ export default class CreditTab extends Component {
                             </KeyValueRow>
                         </KeyValueGroup>
                     </BoxWithTitle>
-                    <BoxWithTitle title="Requestdetails" action={{ title: 'edit', fn: () => {} }}></BoxWithTitle>
+                    <BoxWithTitle title="Requestdetails" action={{ title: 'edit', fn: () => {} }}>
+                        <h3 className="mrc-ui-credit-tab-profit-label">Profitability</h3>
+                        <span className="mrc-ui-credit-tab-profit-number">20</span>%
+                    </BoxWithTitle>
                     <GridItem colSpan="all">
                         <Table.Root>
                             <CreditTableHead />
