@@ -4,6 +4,7 @@
 
 .mrc-ui-card {
   @include card-default();
+  display: inline-block;
   box-sizing: border-box;
   padding: ($spacing-medium * 1.5) $spacing-medium;
 }
