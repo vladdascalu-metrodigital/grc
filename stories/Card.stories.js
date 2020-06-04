@@ -1,12 +1,15 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Card, { TYPE } from '../Card';
+import Grid from '../Grid';
 
-storiesOf('Fundamentals/Card', module).add('all kinds of cards', () => (
-    <div style={{ display: 'grid', gridTemplateColumns: '400px 400px', gridGap: '2rem', padding: '2rem' }}>
-        <Card>default</Card>
-        <Card type={TYPE.PRIMARY}>primary</Card>
-        <Card type={TYPE.MUTED}>muted</Card>
-        <Card type={TYPE.WARNING}>warning</Card>
-    </div>
-));
+storiesOf('Fundamentals/Card', module)
+    .add('all card types, Grid context', () => (
+        <Grid>
+            <Card>default</Card>
+            <Card type={TYPE.PRIMARY}>primary</Card>
+            <Card type={TYPE.MUTED}>muted</Card>
+            <Card type={TYPE.WARNING}>warning</Card>
+        </Grid>
+    ))
+    .add('a card', () => <Card>In Lorem cillum reprehenderit id qui laborum ipsum tempor nostrud.</Card>);

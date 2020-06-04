@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Grid from '../../Grid';
 import Table from '../../MrcTable';
+import Card from '../../Card';
 import CRTableCellCustomer from './CRTableCellCustomer';
 import CRTableCellLimit from './CRTableCellLimit';
 import CRTableCellExpiry from './CRTableCellExpiry';
@@ -69,7 +70,7 @@ export default class CreditTableRow extends Component {
                         <Table.D colSpan="8">
                             <CreditTableFormSection
                                 title="Payment"
-                                description="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                                description="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt magna aliqua."
                             >
                                 <h4>Choose Payment Type</h4>
                                 <Grid cols="4">
@@ -83,7 +84,28 @@ export default class CreditTableRow extends Component {
                                 title="Payment"
                                 description="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                             >
-                                Hello
+                                <h4>Choose Amount</h4>
+                                <Grid cols="4">
+                                    <CheckCard title="Current" />
+                                    <CheckCard title="Customer Wish" />
+                                    <CheckCard title="CM" />
+                                    <CheckCard title="New" checked />
+                                </Grid>
+                                <h4>Choose New Limit</h4>
+                                <Card dropShadow>hello</Card>
+                            </CreditTableFormSection>
+                            <hr />
+                            <CreditTableFormSection
+                                title="Payment Method"
+                                description="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod magna aliqua."
+                            >
+                                <h4>Choose Amount</h4>
+                                <Grid cols="4">
+                                    <CheckCard title="Current" />
+                                    <CheckCard title="Customer Wish" />
+                                    <CheckCard title="CM" />
+                                    <CheckCard title="New" checked />
+                                </Grid>
                             </CreditTableFormSection>
                         </Table.D>
                     </Table.R>
