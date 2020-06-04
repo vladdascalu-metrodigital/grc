@@ -3,10 +3,11 @@
 @import '../../lib/scss/variables';
 
 .mrc-ui-credit-tab-profit-label {
-  color: $color-palette-grey-tint-70;
+  color: $color-palette-grey-tint-60;
   font-weight: bold;
-  font-size: $font-size-5;
+  font-size: $font-size-7;
   margin-bottom: $spacing-small;
+  text-transform: uppercase;
 }
 
 .mrc-ui-credit-tab-profit-number {
