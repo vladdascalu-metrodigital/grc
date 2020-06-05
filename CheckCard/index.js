@@ -28,11 +28,13 @@ export default class CheckCard extends Component {
         });
         return (
             <div className={className} onClick={this.handleClick}>
-                <div className="mrc-ui-check-card-title-row">
-                    {title}
-                    {checked && <CheckSmallFilledIcon size={ISIZE.XSMALL} fill={ICOLOR.LIGHT_GREEN} />}
+                <div className="mrc-ui-check-card-head-row">
+                    {title ? <span className="mrc-ui-check-card-title">{title}</span> : <div>{children}</div>}
+                    <div className="mrc-ui-check-card-checkmark">
+                        <CheckSmallFilledIcon size={ISIZE.XSMALL} fill={ICOLOR.LIGHT_GREEN} />
+                    </div>
                 </div>
-                <div>{children}</div>
+                {children && title && <div className="mrc-ui-check-card-extra-row">{children}</div>}
             </div>
         );
     }

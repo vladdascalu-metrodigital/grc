@@ -1,0 +1,12 @@
+@import '../lib/scss/colors';
+@import '../lib/scss/typography';
+
+.mrc-ui-number-small {
+  font-size: $font-size-8;
+  color: $color-palette-grey-tint-50;
+}
+
+.mrc-ui-number-smaller {
+  font-size: $font-size-10;
+  color: $color-palette-grey-tint-50;
+}

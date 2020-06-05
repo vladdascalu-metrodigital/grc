@@ -33,5 +33,5 @@
 @mixin card-succcess() {
   @include border-radius-all();
   background-color: $color-palette-green-tint-90;
-  border: $border-width-thin solid $color-palette-green-default;
+  border: $border-width-thin solid $color-palette-green-shade-20;
 }

@@ -1,5 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+
+import './index.scss';
 
 export const COUNTRY = {
     DE: 'DE',
@@ -34,9 +37,14 @@ export const countryToCurrency = {
     RU: CURRENCY.RUB,
 };
 
+export const TYPE = {
+    SMALL: 'small',
+    SMALLER: 'smaller',
+};
+
 export default class MrcNumber extends PureComponent {
     render() {
-        let { isCurrency, country, children: number } = this.props;
+        let { isCurrency, country, children: number, type } = this.props;
 
         if (isCurrency) {
             let options = {
@@ -47,8 +55,9 @@ export default class MrcNumber extends PureComponent {
             };
             number = new Intl.NumberFormat(undefined, options).format(number);
         }
+        let className = classnames('mrc-ui-number', type && 'mrc-ui-number-' + type);
 
-        return <span className="mrc-ui-number">{number}</span>;
+        return <span className={className}>{number}</span>;
     }
 }
 
@@ -60,4 +69,5 @@ MrcNumber.propTypes = {
     children: PropTypes.string,
     country: PropTypes.string,
     isCurrency: PropTypes.bool,
+    type: PropTypes.oneOf(['small']),
 };

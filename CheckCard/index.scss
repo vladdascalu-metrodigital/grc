@@ -1,5 +1,6 @@
 @import '../lib/scss/card-styles';
 @import '../lib//scss/variables';
+@import '../lib//scss/typography';
 
 .mrc-ui-check-card {
   @include card-primary-white();
@@ -9,7 +10,7 @@
   font-weight: normal;
   justify-content: space-around;
   min-height: 4.5rem;
-  padding: $spacing-extra-small $spacing-medium;
+  padding: $spacing-small $spacing-medium;
 }
 
 .mrc-ui-check-card-no-content {
@@ -25,32 +26,44 @@
   cursor: not-allowed;
 }
 
-.mrc-ui-check-card-title-row {
-  display: flex;
+.mrc-ui-check-card-head-row {
+  display: grid;
   justify-content: space-between;
   align-items: center;
-  text-transform: uppercase;
+  grid-template-columns: 1fr max-content;
+  grid-gap: $spacing-medium;
+}
 
-  @at-root .mrc-ui-check-card-checked #{&} {
-    color: $color-palette-green-shade-20;
-  }
+.mrc-ui-check-card-title {
+  text-transform: uppercase;
+  color: $color-palette-grey-tint-40;
+  font-size: $font-size-8;
+  font-weight: 600;
+  line-height: $line-height-title;
   
   @at-root .mrc-ui-check-card-no-content #{&} {
     text-transform: none;
+    font-weight: 600;
+    font-size: $font-size-6;
+  }
+
+  @at-root .mrc-ui-check-card-checked #{&} {
+    color: $color-palette-green-shade-20;
     font-weight: bold;
   }
 }
 
 .mrc-ui-check-card-checkmark {
-  box-sizing: border-box;
-  border-radius: 50%;
-  width: 1rem;
-  height: 1rem;
-  margin-left: $spacing-column-gap;
   opacity: 0;
 
   @at-root .mrc-ui-check-card-checked #{&} {
     opacity: 1;
-    background-color: $color-palette-green-default;
   }
+}
+
+.mrc-ui-check-card-extra-row {
+  display: flex;
+  align-items: end;
+  flex-grow: 1;
+  margin-top: $spacing-small;
 }

@@ -5,19 +5,34 @@ import './index.scss';
 
 class Root extends Component {
     render() {
-        return <table className="mrc-ui-table">{this.props.children}</table>;
+        let { children, ...otherProps } = this.props;
+        return (
+            <table {...otherProps} className="mrc-ui-table">
+                {children}
+            </table>
+        );
     }
 }
 
 class Head extends Component {
     render() {
-        return <thead className="mrc-ui-table-head">{this.props.children}</thead>;
+        let { children, ...otherProps } = this.props;
+        return (
+            <thead {...otherProps} className="mrc-ui-table-head">
+                {children}
+            </thead>
+        );
     }
 }
 
 class Body extends Component {
     render() {
-        return <tbody className="mrc-ui-table-body">{this.props.children}</tbody>;
+        let { children, ...otherProps } = this.props;
+        return (
+            <tbody {...otherProps} className="mrc-ui-table-body">
+                {children}
+            </tbody>
+        );
     }
 }
 

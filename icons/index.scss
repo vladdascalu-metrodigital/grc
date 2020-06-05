@@ -10,6 +10,7 @@
   font-size: 2.875rem;
   width: 1em;
   height: 1em;
+  flex-shrink: 0;
 
   border-radius: 50%;
   border: $border-width-thin solid $color-brand-primary-default;
@@ -61,6 +62,7 @@ $icons-color-mapping: (
   font-size: 2.875rem;
   width: 1em;
   height: 1em;
+  flex-shrink: 0;
 
   @at-root .mrc-ui-icon-wrapper #{&} {
     width: .65em;

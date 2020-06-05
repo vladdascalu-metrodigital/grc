@@ -1,0 +1,46 @@
+@import '../lib/scss/typography';
+@import '../lib/scss/colors';
+
+.mrc-ui-currency {
+  font-weight: normal;
+
+  .mrc-ui-currency-symb {
+    font-size: .75em;
+    color: $color-palette-grey-tint-50;
+  }
+}
+
+// types
+
+.mrc-ui-currency-small {
+  font-size: $font-size-8;
+  color: $color-palette-grey-tint-50;
+  .mrc-ui-currency-symb {
+    font-size: 1em;
+  }
+}
+
+.mrc-ui-currency-smaller {
+  font-size: $font-size-10;
+  color: $color-palette-grey-tint-50;
+  .mrc-ui-currency-symb {
+    font-size: 1em;
+  }
+}
+
+.mrc-ui-currency-large {
+  font-size: $font-size-5;
+  color: $color-palette-grey-tint-20;
+  .mrc-ui-currency-symb {
+    font-weight: bold;
+  }
+}
+
+.mrc-ui-currency-large-bold {
+  font-size: $font-size-5;
+  font-weight: bold;
+  color: $color-palette-grey-tint-20;
+  .mrc-ui-currency-symb {
+    font-weight: bold;
+  }
+}

@@ -12,12 +12,14 @@ import './index.scss';
 
 export default class Grid extends Component {
     render() {
-        let { cols } = this.props;
+        let { cols, justifyContent, alignItems } = this.props;
         let className = classnames('mrc-ui-grid', {
             'mrc-ui-grid-cols': cols && cols > 0,
         });
         let style = {
             '--grid-cols': cols && cols > 0 ? cols : undefined,
+            '--justify-content': justifyContent,
+            '--align-items': alignItems,
         };
         return (
             <div style={style} className={className}>
@@ -30,13 +32,18 @@ export default class Grid extends Component {
 Grid.propTypes = {
     cols: PropTypes.number,
     gap: PropTypes.string,
+    justifyContent: PropTypes.string,
+    alignItems: PropTypes.string,
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
 };
 
 export class GridItem extends Component {
     render() {
-        let { rowSpan, colSpan, children } = this.props;
-        let style = {};
+        let { rowSpan, colSpan, children, justifySelf, alignSelf } = this.props;
+        let style = {
+            '--justify-self': justifySelf,
+            '--align-self': alignSelf,
+        };
         if (colSpan === 'all') {
             style.gridColumn = '1/-1';
         } else if (parseInt(colSpan) > 0) {
@@ -58,5 +65,7 @@ export class GridItem extends Component {
 GridItem.propTypes = {
     rowSpan: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['all'])]),
     colSpan: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['all'])]),
+    justifySelf: PropTypes.string,
+    alignSelf: PropTypes.string,
     children: PropTypes.node,
 };

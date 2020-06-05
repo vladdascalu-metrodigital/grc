@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 
-import Grid from '../../Grid';
+import Grid, { GridItem } from '../../Grid';
 import Table from '../../MrcTable';
 import Card from '../../Card';
+import { FlexRow } from '../../Flex';
 import NumberInput from '../../NumberInput';
+import MrcCurrency from '../../MrcCurrency';
+import MrcCurrencySymbol from '../../MrcCurrencySymbol';
+import CRLimitSetting from './CRLimitSetting';
 import CRTableCellCustomer from './CRTableCellCustomer';
 import CRTableCellLimit from './CRTableCellLimit';
 import CRTableCellExpiry from './CRTableCellExpiry';
@@ -32,7 +36,7 @@ export default class CreditTableRow extends Component {
         let { isExpanded } = this.state;
         return (
             <Table.Body>
-                <Table.R isActive={isExpanded}>
+                <Table.R isActive={isExpanded} style={{ cursor: 'pointer' }} onClick={() => this.toggle()}>
                     <Table.D rowSpan="2">
                         <CRTableCellCustomer name="Mepo GmbH" number="12/123432" isBlocked isHighlighted />
                     </Table.D>
@@ -45,12 +49,10 @@ export default class CreditTableRow extends Component {
                         <CRTableCellPrepaymentCash name="Cash" isGreen />
                     </Table.D>
                     <Table.D rowSpan="2">
-                        <div onClick={() => this.toggle()}>
-                            <ToggleIndicator tilt={isExpanded} />
-                        </div>
+                        <ToggleIndicator tilt={isExpanded} />
                     </Table.D>
                 </Table.R>
-                <Table.R isActive={isExpanded}>
+                <Table.R isActive={isExpanded} style={{ cursor: 'pointer' }} onClick={() => this.toggle()}>
                     <Table.D>
                         <CRTableCellLimit country="EUR" exhausted="22000" limit="30000" isGreen />
                     </Table.D>
@@ -74,7 +76,7 @@ export default class CreditTableRow extends Component {
                                 description="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt magna aliqua."
                             >
                                 <h4 className="mrc-ui-form-label mb-2">Choose Payment Type</h4>
-                                <Grid cols="4">
+                                <Grid cols={4}>
                                     <CheckCard title="Cash" />
                                     <CheckCard title="Credit" checked />
                                     <CheckCard title="Prepayment" />
@@ -86,30 +88,54 @@ export default class CreditTableRow extends Component {
                                 description="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                             >
                                 <h4 className="mrc-ui-form-label mb-2">Choose Amount</h4>
-                                <Grid cols="4">
-                                    <CheckCard title="Current" />
-                                    <CheckCard title="Customer Wish" />
-                                    <CheckCard title="CM" />
-                                    <CheckCard title="New" checked />
+                                <Grid cols={4}>
+                                    <CheckCard title="Current">
+                                        <CRLimitSetting limit={4000} limitAfterExpiry={1000} expiryDate="2020-05-06" />
+                                    </CheckCard>
+                                    <CheckCard title="Customer Wish">
+                                        <CRLimitSetting limit={10000} limitAfterExpiry={1000} expiryDate="2020-05-06" />
+                                    </CheckCard>
+                                    <CheckCard title="CM" checked>
+                                        <CRLimitSetting limit={9000} limitAfterExpiry={1000} expiryDate="2020-05-06" />
+                                    </CheckCard>
+                                    <CheckCard title="New" />
                                 </Grid>
                                 <h4 className="mrc-ui-form-label mt-5 mb-2">Choose New Limit</h4>
                                 <Card dropShadow>
                                     <h4 className="mrc-ui-form-label mb-1">Amount</h4>
-                                    <NumberInput /> EUR
+                                    <Grid cols={3}>
+                                        <FlexRow alignItems="baseline">
+                                            <div className="mr-3">
+                                                <NumberInput />
+                                            </div>
+                                            <MrcCurrencySymbol />
+                                        </FlexRow>
+                                    </Grid>
                                     <h4 className="mrc-ui-form-label mt-4 mb-1">Choose Expiry</h4>
-                                    <Grid cols="3">
-                                        <CheckCard title="Without Expiry" />
-                                        <CheckCard title="Date of Expiry">
+                                    <Grid cols={3}>
+                                        <CheckCard title="Without Expiry" checked />
+                                        <CheckCard title="Date of Expiry" checked>
                                             <NumberInput />
                                         </CheckCard>
-                                        <a>set date of expiry to all customers limits</a>
+                                        <GridItem alignSelf="center">
+                                            <a>set date of expiry to all customers limits</a>
+                                        </GridItem>
                                     </Grid>
                                     <h4 className="mrc-ui-form-label mt-4 mb-2">Set Limit after expiry to</h4>
-                                    <Grid cols="3">
-                                        <CheckCard title="0 EUR" />
-                                        <CheckCard title="6.000 EUR" />
+                                    <Grid cols={3}>
+                                        <CheckCard checked>
+                                            <MrcCurrency type="large-bold">123</MrcCurrency>
+                                        </CheckCard>
                                         <CheckCard>
-                                            <NumberInput /> EUR
+                                            <MrcCurrency type="large-bold">6000</MrcCurrency>
+                                        </CheckCard>
+                                        <CheckCard checked>
+                                            <FlexRow alignItems="baseline">
+                                                <div className="mr-3">
+                                                    <NumberInput />
+                                                </div>
+                                                <MrcCurrencySymbol type="small" />
+                                            </FlexRow>
                                         </CheckCard>
                                     </Grid>
                                 </Card>
@@ -120,7 +146,7 @@ export default class CreditTableRow extends Component {
                                 description="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod magna aliqua."
                             >
                                 <h4 className="mrc-ui-form-label mb-2">Choose Amount</h4>
-                                <Grid cols="4">
+                                <Grid cols={4}>
                                     <CheckCard title="Current" />
                                     <CheckCard title="Customer Wish" />
                                     <CheckCard title="CM" />
