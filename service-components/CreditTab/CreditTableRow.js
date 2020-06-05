@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Grid from '../../Grid';
 import Table from '../../MrcTable';
-import Card, { TYPE as CTYPE } from '../../Card';
+import Card from '../../Card';
 import NumberInput from '../../NumberInput';
 import CRTableCellCustomer from './CRTableCellCustomer';
 import CRTableCellLimit from './CRTableCellLimit';
@@ -108,9 +108,9 @@ export default class CreditTableRow extends Component {
                                     <Grid cols="3">
                                         <CheckCard title="0 EUR" />
                                         <CheckCard title="6.000 EUR" />
-                                        <Card type={CTYPE.MUTED}>
+                                        <CheckCard>
                                             <NumberInput /> EUR
-                                        </Card>
+                                        </CheckCard>
                                     </Grid>
                                 </Card>
                             </CreditTableFormSection>
@@ -126,6 +126,8 @@ export default class CreditTableRow extends Component {
                                     <CheckCard title="CM" />
                                     <CheckCard title="New" checked />
                                 </Grid>
+                                <h4 className="mrc-ui-form-label mt-4 mb-2">Creditperiod</h4>
+                                <h4 className="mrc-ui-form-label mt-4 mb-2">Choose Expiry</h4>
                             </CreditTableFormSection>
                         </Table.D>
                     </Table.R>

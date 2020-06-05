@@ -21,6 +21,10 @@
   @include card-muted();
 }
 
+.mrc-ui-card-primary-white {
+  @include card-primary-white();
+}
+
 .mrc-ui-card-warning {
   @include card-warning();
 }

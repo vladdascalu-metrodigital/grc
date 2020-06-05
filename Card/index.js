@@ -7,6 +7,7 @@ import './index.scss';
 export const TYPE = {
     // 'DEFAULT': 'default',
     PRIMARY: 'primary',
+    PRIMARY_WHITE: 'primary-white',
     MUTED: 'muted',
     WARNING: 'warning',
 };
@@ -18,6 +19,7 @@ export default class Card extends Component {
             'mrc-ui-card-shadow': dropShadow,
             'mrc-ui-card-primary': type === TYPE.PRIMARY,
             'mrc-ui-card-muted': type === TYPE.MUTED,
+            'mrc-ui-card-primary-white': type === TYPE.PRIMARY_WHITE,
             'mrc-ui-card-warning': type === TYPE.WARNING,
         });
         return <div className={className}>{children}</div>;
