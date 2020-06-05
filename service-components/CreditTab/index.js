@@ -57,25 +57,24 @@ export default class CreditTab extends Component {
                         <Table.Root>
                             <CreditTableHead />
                             <CreditTableRow />
-                            <Table.Body>
-                                <CreditTableRowD />
 
-                                <CreditTableRowA />
-                                <CreditTableRowB />
-                                <CreditTableRowC />
+                            <CreditTableRowD />
 
-                                <CreditTableRowA />
-                                <CreditTableRowB />
-                                <CreditTableRowC />
+                            <CreditTableRowA />
+                            <CreditTableRowB />
+                            <CreditTableRowC />
 
-                                <CreditTableRowA />
-                                <CreditTableRowB />
-                                <CreditTableRowC />
+                            <CreditTableRowA />
+                            <CreditTableRowB />
+                            <CreditTableRowC />
 
-                                <CreditTableRowA />
-                                <CreditTableRowB />
-                                <CreditTableRowC />
-                            </Table.Body>
+                            <CreditTableRowA />
+                            <CreditTableRowB />
+                            <CreditTableRowC />
+
+                            <CreditTableRowA />
+                            <CreditTableRowB />
+                            <CreditTableRowC />
                         </Table.Root>
                     </GridItem>
                 </Grid>

@@ -35,7 +35,7 @@ export default class CreditTableRow extends Component {
     render() {
         let { isExpanded } = this.state;
         return (
-            <Table.Body>
+            <React.Fragment>
                 <Table.R isActive={isExpanded} style={{ cursor: 'pointer' }} onClick={() => this.toggle()}>
                     <Table.D rowSpan="2">
                         <CRTableCellCustomer name="Mepo GmbH" number="12/123432" isBlocked isHighlighted />
@@ -158,7 +158,7 @@ export default class CreditTableRow extends Component {
                         </Table.D>
                     </Table.R>
                 )}
-            </Table.Body>
+            </React.Fragment>
         );
     }
 }
