@@ -7,13 +7,14 @@ import './CRLimitSetting.scss';
 
 export default class CRLimitSetting extends PureComponent {
     render() {
+        let { limit, limitAfterExpiry, expiryDate } = this.props;
         return (
             <div className="mrc-ui-cr-limit-setting">
-                <MrcCurrency type="large-bold">4000</MrcCurrency>
+                <MrcCurrency type="large-bold">{limit}</MrcCurrency>
                 <br />
-                <MrcCurrency type="small">1000</MrcCurrency>
+                <MrcCurrency type="small">{limitAfterExpiry}</MrcCurrency>
                 <br />
-                <MrcDate type="small">2020-05-06</MrcDate>
+                <MrcDate type="small">{expiryDate}</MrcDate>
             </div>
         );
     }
