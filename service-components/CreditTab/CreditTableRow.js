@@ -76,7 +76,7 @@ export default class CreditTableRow extends Component {
                     isActive={isExpanded}
                     isHovered={isHovered}
                     type={type}
-                    xstyle={{ cursor: 'pointer' }}
+                    style={{ cursor: 'pointer' }}
                     onClick={() => this.toggle()}
                     onMouseEnter={() => this.hover(true)}
                     onMouseLeave={() => this.hover(false)}
