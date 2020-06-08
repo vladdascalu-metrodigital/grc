@@ -12,6 +12,9 @@
   height: 3rem;
   transition: transform 220ms ease-out;
   will-change: transform;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
 }
 
 .mrc-ui-toggle-indicator-tilted {

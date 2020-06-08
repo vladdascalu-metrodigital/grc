@@ -1,6 +1,7 @@
 @import '../lib/scss/colors';
 @import '../lib/scss/variables';
 @import '../lib/scss/typography';
+@import '../lib/scss/shadows';
 
 .mrc-ui-table {
     width: 100%;
@@ -21,10 +22,26 @@ $table-base-line-height: $line-height-copy;
   }
 }
 
+@mixin table-row-zebra-color () {
+  .mrc-ui-table-h,
+  .mrc-ui-table-d {
+    background-color: $color-palette-grey-tint-95;
+    border-color: $color-contrast-white;
+  }
+}
+
 @mixin table-row-active-color () {
   .mrc-ui-table-h,
   .mrc-ui-table-d {
-    background-color: $color-brand-primary-tint-90;
+    background-color: $color-palette-blue-tint-90;
+    border-color: $color-contrast-white;
+  }
+}
+
+@mixin table-row-hover-color () {
+  .mrc-ui-table-h,
+  .mrc-ui-table-d {
+    background-color: $color-palette-blue-tint-90;
     border-color: $color-contrast-white;
   }
 }
@@ -84,12 +101,23 @@ $table-base-line-height: $line-height-copy;
   @include table-row-default-color();
 }
 
+.mrc-ui-table-r-zebra {
+  @include table-row-zebra-color();
+}
+
 .mrc-ui-table-r-active {
   @include table-row-active-color();
 }
 
+.mrc-ui-table-r-hover {
+  @include table-row-hover-color();
+}
+
 .mrc-ui-table-r-form {
   @include table-row-form-grey();
+  .mrc-ui-table-d{
+    box-shadow: $shadow-downwards-medium-inset;
+  }
 }
 
 .mrc-ui-table-head {

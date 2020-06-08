@@ -6,6 +6,9 @@
     font-weight: 400;
     text-align: right;
     color: $color-palette-grey-tint-40;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
 }
 
 .mrc-ui-crtable-cell-customer-limit-exhausted {

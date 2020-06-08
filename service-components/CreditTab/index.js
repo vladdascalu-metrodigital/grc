@@ -56,7 +56,9 @@ export default class CreditTab extends Component {
                     <GridItem colSpan="all">
                         <Table.Root>
                             <CreditTableHead />
-                            <CreditTableRow />
+                            {[...Array(10).keys()].map((e, i) => (
+                                <CreditTableRow key={i} isZebra={!!(i % 2)} />
+                            ))}
 
                             <CreditTableRowD />
 

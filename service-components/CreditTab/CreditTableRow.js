@@ -21,9 +21,17 @@ export default class CreditTableRow extends Component {
     constructor(props) {
         super(props);
         this.toggle.bind(this);
+        this.hover.bind(this);
         this.state = {
+            isHovered: false,
             isExpanded: false,
         };
+    }
+
+    hover(hoverState) {
+        this.setState({
+            isHovered: hoverState,
+        });
     }
 
     toggle() {
@@ -33,10 +41,20 @@ export default class CreditTableRow extends Component {
     }
 
     render() {
-        let { isExpanded } = this.state;
+        let { isExpanded, isHovered } = this.state;
+        let { isZebra } = this.props;
+        let type = isZebra ? 'zebra' : null;
         return (
             <React.Fragment>
-                <Table.R isActive={isExpanded} style={{ cursor: 'pointer' }} onClick={() => this.toggle()}>
+                <Table.R
+                    isActive={isExpanded}
+                    isHovered={isHovered}
+                    type={type}
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => this.toggle()}
+                    onMouseEnter={() => this.hover(true)}
+                    onMouseLeave={() => this.hover(false)}
+                >
                     <Table.D rowSpan="2">
                         <CRTableCellCustomer name="Mepo GmbH" number="12/123432" isBlocked isHighlighted />
                     </Table.D>
@@ -48,11 +66,19 @@ export default class CreditTableRow extends Component {
                     <Table.D colSpan="3">
                         <CRTableCellPrepaymentCash name="Cash" isGreen />
                     </Table.D>
-                    <Table.D rowSpan="2">
+                    <Table.D rowSpan="2" className="fix-width-cell">
                         <ToggleIndicator tilt={isExpanded} />
                     </Table.D>
                 </Table.R>
-                <Table.R isActive={isExpanded} style={{ cursor: 'pointer' }} onClick={() => this.toggle()}>
+                <Table.R
+                    isActive={isExpanded}
+                    isHovered={isHovered}
+                    type={type}
+                    xstyle={{ cursor: 'pointer' }}
+                    onClick={() => this.toggle()}
+                    onMouseEnter={() => this.hover(true)}
+                    onMouseLeave={() => this.hover(false)}
+                >
                     <Table.D>
                         <CRTableCellLimit country="EUR" exhausted="22000" limit="30000" isGreen />
                     </Table.D>

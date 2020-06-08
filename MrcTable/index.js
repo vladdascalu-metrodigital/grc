@@ -61,12 +61,14 @@ class R extends Component {
     }
 
     render() {
-        let { className, children, isSticky, isActive, type, ...otherProps } = this.props;
+        let { className, children, isSticky, isHovered, isActive, type, ...otherProps } = this.props;
         className = classnames('mrc-ui-table-r', {
             'mrc-ui-table-r-sticky': isSticky,
             'mrc-ui-table-r-active': isActive,
+            'mrc-ui-table-r-hover': isHovered,
             'mrc-ui-table-r-light': type === 'light',
             'mrc-ui-table-r-form': type === 'form',
+            'mrc-ui-table-r-zebra': type === 'zebra',
         });
         return (
             <tr className={className} ref={this.selfRef} {...otherProps}>

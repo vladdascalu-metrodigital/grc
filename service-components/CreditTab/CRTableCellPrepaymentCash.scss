@@ -12,4 +12,7 @@
     flex-direction: column;
     justify-content: center;
     min-height: $height-4;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
 }

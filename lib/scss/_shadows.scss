@@ -9,3 +9,5 @@ $shadow-outline-glow: transparentize($color-palette-blue-tint-50, 0.5) 0px 0px 0
 $shadow-outline-disabled: transparentize($color-palette-grey-shade-50, 0.65) 0px 0px 0px 3px;
 
 $shadow-downwards-medium: transparentize($color-palette-grey-shade-90, 0.8) 0px 3px 8px 0px;
+
+$shadow-downwards-medium-inset: inset transparentize($color-palette-grey-shade-90, 0.9) 0px 9px 8px -2px;
