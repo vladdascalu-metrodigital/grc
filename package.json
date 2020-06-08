@@ -1,6 +1,6 @@
 {
     "name": "global-react-components",
-    "version": "2.3.89",
+    "version": "2.3.90",
     "description": "MRC collection of reusable frontend react components",
     "publishConfig": {
         "registry": "https://dx-nexus.metroscales.io/repository/npm-mrc-hosted/"

@@ -107,7 +107,7 @@ export default class Sales extends Component {
         } else if (sales.original.tag === 'margin') {
             return (
                 <span>
-                    <mrc-number>{value}</mrc-number>%
+                    <mrc-number>{_.isNil(value) ? value : Number(value).toFixed(2)}</mrc-number>%
                 </span>
             );
         } else {
