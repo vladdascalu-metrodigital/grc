@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import CustomerInfo from './CustomerInfo';
 import RequestQuick from './RequestQuick';
 import LimitStatus from './LimitStatus';
-import CustomerDetailsGroup from '../CreditLimit/CustomerDetailsGroup';
 import { Route, Switch } from 'react-router-dom';
-import Panel from '../Panel';
 import { lookup } from '../Util/translations';
 import { displayName } from '../Util/index';
 import RecentRequestsInfo from '../RecentRequestsInfo';
 import './index.scss';
+import CustomerDataGroup from '../CustomerDataGroup';
+import MainContent from '../MainContent';
 
 export default class QuickStatusLayout extends Component {
     constructor(props) {
@@ -124,18 +124,13 @@ export default class QuickStatusLayout extends Component {
                 <Route
                     path="*/customerdetails"
                     render={() => {
-                        const customerStatusLink = this.props.match.url.replace('/customerdetails', '');
                         return (
-                            <Panel
-                                className="customer-status-details-panel"
-                                title={lookup('mrc.customerdetails.title')}
-                                closeTo={customerStatusLink}
-                            >
-                                <CustomerDetailsGroup
+                            <MainContent>
+                                <CustomerDataGroup
                                     customers={this.props.customers.data.customers}
                                     countriesWithDifferentBlockingCodes={this.props.countriesWithDifferentBlockingCodes}
                                 />
-                            </Panel>
+                            </MainContent>
                         );
                     }}
                 />
@@ -145,7 +140,11 @@ export default class QuickStatusLayout extends Component {
                         <div className="mrc-customer-status">
                             {<LimitStatus requestedCustomer={this.getCustomer()} customers={this.props.customers} />}
                             <CustomerInfo data={cid} showLink={!!this.props.customers.data} match={this.props.match} />
-                            <RequestQuick selectedCustomerInfo={cid} disabled={btnDisabled||btnDisabledRequests} {...this.props} />
+                            <RequestQuick
+                                selectedCustomerInfo={cid}
+                                disabled={btnDisabled || btnDisabledRequests}
+                                {...this.props}
+                            />
                             {this.props.recentRequests.loading ? null : (
                                 <RecentRequestsInfo
                                     recentRequests={this.props.recentRequests}

@@ -14,7 +14,6 @@ import '../../tabs.scss';
 import { Accordion, Collapsible } from '../../Accordion';
 import RequestSubmitted from './RequestSubmitted';
 import { displayName } from '../../Util';
-import CustomerDetailsGroup from '../CustomerDetailsGroup';
 import CustomerTrigger from '../../CustomerTrigger/presentation';
 import CustomerGroupLimits from '../../CustomerGroupLimits';
 import { lookup } from '../../Util/translations';
@@ -25,6 +24,7 @@ import { RequestFieldPropTypes } from '../../AdditionalFields/AdditionalFieldsPr
 import { filterAdditionalFieldsList } from '../../AdditionalFields/additionalFielsUtil';
 
 import * as _ from 'lodash';
+import CustomerDataGroup from '../../CustomerDataGroup';
 
 export default class LimitRequestLayout extends Component {
     FILE_TYPES = [''];
@@ -221,7 +221,7 @@ export default class LimitRequestLayout extends Component {
         const customers = req.data && req.data.requestedItems.map(ri => ri.customer);
 
         return (
-            <CustomerDetailsGroup
+            <CustomerDataGroup
                 customers={customers}
                 countriesWithDifferentBlockingCodes={this.props.countriesWithDifferentBlockingCodes}
             />

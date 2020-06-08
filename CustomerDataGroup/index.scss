@@ -1,0 +1,9 @@
+@import '../lib/scss/typography';
+@import '../lib/scss/variables';
+@import '../lib/scss/colors';
+
+.mrc-ui-customer-tab-title {
+  @include typo-header-small-caps();
+  padding-left: $spacing-medium;
+  background-color: $color-contrast-white;
+}

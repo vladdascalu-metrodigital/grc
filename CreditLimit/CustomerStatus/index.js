@@ -4,14 +4,14 @@ import CustomerInfo from './CustomerInfo';
 import RequestCredit from './RequestCredit';
 import LimitStatus from './LimitStatus';
 import PendingRequestInfo from './PendingRequestInfo';
-import CustomerDetailsGroup from '../CustomerDetailsGroup';
 import { Route, Switch } from 'react-router-dom';
-import Panel from '../../Panel';
 import { lookup } from '../../Util/translations';
 import Precheck from './Precheck';
 import { displayName } from '../../Util/index';
 import RecentRequestsInfo from '../../RecentRequestsInfo';
 import './index.scss';
+import CustomerDataGroup from '../../CustomerDataGroup';
+import MainContent from '../../MainContent';
 
 export default class CustomerStatusLayout extends Component {
     constructor(props) {
@@ -120,18 +120,13 @@ export default class CustomerStatusLayout extends Component {
                 <Route
                     path="*/customerdetails"
                     render={() => {
-                        const customerStatusLink = this.props.match.url.replace('/customerdetails', '');
                         return (
-                            <Panel
-                                className="customer-status-details-panel"
-                                title={lookup('mrc.customerdetails.title')}
-                                closeTo={customerStatusLink}
-                            >
-                                <CustomerDetailsGroup
+                            <MainContent>
+                                <CustomerDataGroup
                                     customers={this.props.customers.data.customers}
                                     countriesWithDifferentBlockingCodes={this.props.countriesWithDifferentBlockingCodes}
                                 />
-                            </Panel>
+                            </MainContent>
                         );
                     }}
                 />

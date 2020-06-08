@@ -31,12 +31,22 @@ let translations = {
     'mrc.customerdetails.fields.mobile': 'Mobile',
     'mrc.customerdetails.fields.street': 'Street',
     'mrc.customerdetails.fields.zipcity': 'ZIP/City',
-    'mrc.customerdetails.fields.registration': 'Registration',
+    'mrc.customerdetails.fields.registration': 'Customer since',
+    'mrc.customerdetails.fields.companyfoundationdate': 'Company foundation date',
+    'mrc.customerdetails.fields.segment': 'Segment',
     'mrc.customerdetails.fields.legalformdescription': 'Legal Form Description',
     'mrc.attachments.fields.contract.start_date': 'Start Date',
     'mrc.attachments.showDeletedAttachments': 'Show Deleted Attachments',
-
     'mrc.customerdata.name': 'Customer Name',
+
+    'mrc.blockingReason.message.2': 'card misuse by customer',
+    'mrc.checkoutCheckCode.message.30': 'credit block',
+    'mrc.customerdata.title': 'Customer',
+
+    'mrc.customerdata.blocked': 'Blocked Customer',
+    'mrc.customerdata.contactInfo': 'Contact Info',
+    'mrc.customerdata.businessInfo': 'Business Info',
+    'mrc.customerdetails.fields.branch': 'Branch',
 };
 
 export const addTranslations = update => {

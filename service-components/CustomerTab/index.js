@@ -4,7 +4,7 @@ import BoxWithTitle, { TYPE as BOX_TYPE } from '../../BoxWithTitle';
 import ToggleBox from '../../ToggleBox';
 import CustomerToggler from './CustomerToggler';
 import Grid, { GridItem } from '../../Grid';
-import ClientBlocked from '../ClientBlocked';
+import ClientBlocked from '../../ClientBlocked';
 import Card from '../../Card';
 import VCard from '../../VCard';
 import KeyValueGroup, { KeyValueRow, Key, Value } from '../../KeyValueGroup';

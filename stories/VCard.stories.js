@@ -10,6 +10,7 @@ export const person = {
     zipCode: '47387',
     city: 'Bochum',
     phoneNumber: '+49 05 47 27 779',
+    mobilePhoneNumber: '+49 1711111',
     email: 'peter.hahn@betterlife.de',
 };
 

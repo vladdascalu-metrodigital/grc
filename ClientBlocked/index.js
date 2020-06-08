@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { COLOR as ICOLOR, SIZE as ISIZE } from '../../icons/index';
-import WarningSmallFilledIcon from '../../icons/WarningSmallFilledIcon';
+import { COLOR as ICOLOR, SIZE as ISIZE } from '../icons';
+import WarningSmallFilledIcon from '../icons/WarningSmallFilledIcon';
+import { lookup } from '../Util/translations';
 
 import './index.scss';
 
@@ -11,7 +12,7 @@ export default class ClientBlocked extends PureComponent {
         return (
             <div className="mrc-ui-client-blocked">
                 <WarningSmallFilledIcon size={size} fill={ICOLOR.LIGHT_RED} />
-                {this.props.text || 'Kundensperre'}
+                {this.props.text || lookup('mrc.customerdata.blocked')}
             </div>
         );
     }
