@@ -4,6 +4,7 @@ import Table from '../../MrcTable';
 import Grid, { GridItem } from '../../Grid';
 import BoxWithTitle from '../../BoxWithTitle';
 import KeyValueGroup, { KeyValueRow, Key, Value } from '../../KeyValueGroup';
+import { lookup } from '../../Util/translations';
 
 import CreditTableHead from './CreditTableHead';
 import CreditTableRow from './CreditTableRow';
@@ -13,20 +14,11 @@ import CreditTableRowB from './CreditTableRowB';
 import CreditTableRowC from './CreditTableRowC';
 import CreditTableRowD from './CreditTableRowD';
 
-// import CheckCard from '../CheckCard';
-// import Grid from '../Grid';
-
-// import CreditTableExpandableContent from './CreditTableExpandableContent';
-// import PropTypes from 'prop-types';
-// import classnames from 'classnames';
-
-// export const GAP = {
-// 'NONE'
-// 'SMALL'
-// 'LARGE'
-// }
-
 import './index.scss';
+
+import * as _ from 'lodash';
+
+// TODO additional fields
 
 export default class CreditTab extends Component {
     render() {
@@ -36,21 +28,21 @@ export default class CreditTab extends Component {
                     <BoxWithTitle title="Groupdetails" action={{ title: 'edit', fn: () => alert('edit') }}>
                         <KeyValueGroup>
                             <KeyValueRow>
-                                <Key>Name</Key>
-                                <Value>Peter Parker</Value>
+                                <Key>{lookup('mrc.customerdata.name')}</Key>
+                                <Value>{_.get(this.props, 'customer.name')}</Value>
                             </KeyValueRow>
                             <KeyValueRow spaced>
-                                <Key>Telefon</Key>
-                                <Value>123 456 789</Value>
+                                <Key>{lookup('mrc.credittab.telephone')}</Key>
+                                <Value>{_.get(this.props, 'customer.phoneNumber')}</Value>
                             </KeyValueRow>
                             <KeyValueRow spaced>
-                                <Key>Email</Key>
-                                <Value>peter@parker.com</Value>
+                                <Key>{lookup('mrc.customerdetails.fields.email')}</Key>
+                                <Value>{_.get(this.props, 'customer.email')}</Value>
                             </KeyValueRow>
                         </KeyValueGroup>
                     </BoxWithTitle>
                     <BoxWithTitle title="Requestdetails" action={{ title: 'edit', fn: () => {} }}>
-                        <h3 className="mrc-ui-credit-tab-profit-label">Profitability</h3>
+                        <h3 className="mrc-ui-credit-tab-profit-label">{lookup('addfield.profitability')}</h3>
                         <span className="mrc-ui-credit-tab-profit-number">20</span>%
                     </BoxWithTitle>
                     <GridItem colSpan="all">
