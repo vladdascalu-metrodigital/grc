@@ -11,7 +11,6 @@ export const TYPE = {
 export default class BoxWithTitle extends Component {
     constructor(props) {
         super(props);
-        this.handleActionClick.bind(this);
     }
 
     handleActionClick() {
@@ -30,7 +29,7 @@ export default class BoxWithTitle extends Component {
                 <div className="mrc-ui-box-with-title-header">
                     <h4 className="mrc-ui-box-with-title-title">{title}</h4>
                     {action && (
-                        <span className="mrc-ui-box-with-title-action" onClick={this.handleActionClick}>
+                        <span className="mrc-ui-box-with-title-action" onClick={() => this.handleActionClick()}>
                             {action.title}
                         </span>
                     )}
