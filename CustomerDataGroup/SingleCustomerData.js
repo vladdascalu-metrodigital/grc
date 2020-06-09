@@ -44,7 +44,7 @@ export default class SingleCustomerData extends Component {
     createContactInfo(customer) {
         return (
             <BoxWithTitle title={lookup('mrc.customerdata.contactInfo')} type={BOX_TYPE.SMALLER}>
-                <Card dropShadow>
+                <Card isBlock dropShadow>
                     <VCard person={this.createPersonForVisitCard(customer)} />
                 </Card>
             </BoxWithTitle>

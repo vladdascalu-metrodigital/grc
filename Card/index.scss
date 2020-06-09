@@ -9,6 +9,10 @@
   padding: ($spacing-medium * 1.5) $spacing-medium;
 }
 
+.mrc-ui-card-block {
+  display: block;
+}
+
 .mrc-ui-card-shadow {
   box-shadow: $shadow-downwards-medium;
 }

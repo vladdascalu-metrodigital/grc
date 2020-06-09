@@ -14,8 +14,9 @@ export const TYPE = {
 
 export default class Card extends Component {
     render() {
-        let { children, dropShadow, type } = this.props;
+        let { children, isBlock, dropShadow, type } = this.props;
         let className = classnames('mrc-ui-card', {
+            'mrc-ui-card-block': isBlock,
             'mrc-ui-card-shadow': dropShadow,
             'mrc-ui-card-primary': type === TYPE.PRIMARY,
             'mrc-ui-card-muted': type === TYPE.MUTED,
@@ -30,4 +31,5 @@ Card.propTypes = {
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     type: PropTypes.string,
     dropShadow: PropTypes.bool,
+    isBlock: PropTypes.bool,
 };

@@ -13,4 +13,10 @@ storiesOf('Fundamentals/Card', module)
             <Card dropShadow>default with shadow</Card>
         </Grid>
     ))
-    .add('a card', () => <Card>In Lorem cillum reprehenderit id qui laborum ipsum tempor nostrud.</Card>);
+    .add('a card', () => <Card>In Lorem cillum reprehenderit id qui laborum ipsum tempor nostrud.</Card>)
+    .add('normal card vs. block card', () => (
+        <React.Fragment>
+            <Card>This is a normal Card.</Card>
+            <Card isBlock>This Card is a block element.</Card>
+        </React.Fragment>
+    ));

@@ -32,12 +32,10 @@ export default class VCard extends Component {
                 <div className="mrc-ui-vcard-personal">
                     <span className="mrc-ui-vcard-name">{name}</span>
                     <br />
-                    {validBirthDay ? (
+                    {validBirthDay && (
                         <span className="mrc-ui-vcard-birthday">
                             <MrcDate>{birthday}</MrcDate>
                         </span>
-                    ) : (
-                        <br />
                     )}
                 </div>
                 <address className="mrc-ui-vcard-address">

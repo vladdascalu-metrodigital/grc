@@ -24,7 +24,7 @@ export default class CustomerTab extends Component {
                             <ClientBlocked size="large" text="Kunde zur Löschung vorgesehen" />
                         </GridItem>
                         <BoxWithTitle title="Contact Info" type={BOX_TYPE.SMALLER}>
-                            <Card dropShadow>
+                            <Card isBlock dropShadow>
                                 <VCard person={person} />
                             </Card>
                         </BoxWithTitle>
@@ -61,7 +61,7 @@ export default class CustomerTab extends Component {
                 <ToggleBox titleContent={<CustomerToggler />}>
                     <Grid>
                         <BoxWithTitle title="Contact Info" type={BOX_TYPE.SMALLER}>
-                            <Card>
+                            <Card isBlock>
                                 <VCard person={person} />
                             </Card>
                         </BoxWithTitle>
