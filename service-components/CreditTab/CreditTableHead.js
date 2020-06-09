@@ -44,8 +44,8 @@ export default class CreditTableHead extends Component {
             />
         ) : null;
         return (
-            <Table.Head>
-                <Table.R isSticky type="light">
+            <React.Fragment>
+                <Table.R sticky="credit-table-head-sticky" type="head-light">
                     <Table.H>
                         <CRTableHeaderCellCustomerGroup title={translations.customerGroup} />
                     </Table.H>
@@ -53,7 +53,7 @@ export default class CreditTableHead extends Component {
                     <Table.H colSpan="3">{customerWish}</Table.H>
                     <Table.H className="border-fix"></Table.H>
                 </Table.R>
-                <Table.R isSticky>
+                <Table.R sticky="credit-table-head-sticky" type="head">
                     <Table.H rowSpan="2">Customer</Table.H>
                     <Table.H colSpan="3">
                         <CRTableHeaderCellLimitColSpanTitle
@@ -70,7 +70,7 @@ export default class CreditTableHead extends Component {
                     </Table.H>
                     <Table.H rowSpan="2"></Table.H>
                 </Table.R>
-                <Table.R isSticky>
+                <Table.R sticky="credit-table-head-sticky" type="head">
                     <Table.H>
                         <CRTableHeaderCellLimit prefix={translations.exhausted} title={translations.granted} />
                     </Table.H>
@@ -80,7 +80,7 @@ export default class CreditTableHead extends Component {
                     <Table.H>{translations.expiry}</Table.H>
                     <Table.H borderFix>{translations.creditproduct}</Table.H>
                 </Table.R>
-            </Table.Head>
+            </React.Fragment>
         );
     }
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Grid, { GridItem } from '../../Grid';
 import Table from '../../MrcTable';
@@ -7,6 +8,7 @@ import { FlexRow } from '../../Flex';
 import NumberInput from '../../NumberInput';
 import MrcCurrency from '../../MrcCurrency';
 import MrcCurrencySymbol from '../../MrcCurrencySymbol';
+import CreditTableRowShadow from './CreditTableRowShadow';
 import CRLimitSetting from './CRLimitSetting';
 import CRTableCellCustomer from './CRTableCellCustomer';
 import CRTableCellLimit from './CRTableCellLimit';
@@ -44,15 +46,18 @@ export default class CreditTableRow extends Component {
 
     render() {
         let { isExpanded, isHovered } = this.state;
-        let { isZebra } = this.props;
+        let { id, isZebra } = this.props;
         let type = isZebra ? 'zebra' : null;
+
         return (
             <React.Fragment>
                 <Table.R
                     isActive={isExpanded}
                     isHovered={isHovered}
+                    sticky={id}
+                    stickyOffset={'tr[data-sticky="credit-table-head-sticky"]'}
                     type={type}
-                    style={{ cursor: 'pointer' }}
+                    style={{ cursor: 'pointer', '--sticky-override': isExpanded ? 'sticky' : 'static' }}
                     onClick={() => this.toggle()}
                     onMouseEnter={() => this.hover(true)}
                     onMouseLeave={() => this.hover(false)}
@@ -75,8 +80,10 @@ export default class CreditTableRow extends Component {
                 <Table.R
                     isActive={isExpanded}
                     isHovered={isHovered}
+                    sticky={id}
+                    stickyOffset={'tr[data-sticky="credit-table-head-sticky"]'}
                     type={type}
-                    style={{ cursor: 'pointer' }}
+                    style={{ cursor: 'pointer', '--sticky-override': isExpanded ? 'sticky' : 'static' }}
                     onClick={() => this.toggle()}
                     onMouseEnter={() => this.hover(true)}
                     onMouseLeave={() => this.hover(false)}
@@ -96,6 +103,15 @@ export default class CreditTableRow extends Component {
                         />
                     </Table.D>
                 </Table.R>
+                {isExpanded && (
+                    <Table.R
+                        sticky={id}
+                        style={{ '--sticky-override': isExpanded ? 'sticky' : 'static' }}
+                        stickyOffset={'tr[data-sticky="credit-table-head-sticky"]'}
+                    >
+                        <CreditTableRowShadow />
+                    </Table.R>
+                )}
                 {isExpanded && (
                     <Table.R type="form">
                         <Table.D colSpan="8">
@@ -224,3 +240,9 @@ export default class CreditTableRow extends Component {
         );
     }
 }
+
+CreditTableRow.propTypes = {
+    id: PropTypes.string,
+    isZebra: PropTypes.bool,
+    stickyOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+};

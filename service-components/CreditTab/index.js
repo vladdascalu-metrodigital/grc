@@ -19,6 +19,10 @@ import './index.scss';
 // TODO additional fields
 
 export default class CreditTab extends Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         const { customer } = this.props;
         const translations = {
@@ -54,28 +58,36 @@ export default class CreditTab extends Component {
                     </BoxWithTitle>
                     <GridItem colSpan="all">
                         <Table.Root>
-                            <CreditTableHead {...this.props} />
-                            {[...Array(10).keys()].map((e, i) => (
-                                <CreditTableRow key={i} isZebra={!!(i % 2)} />
-                            ))}
+                            <Table.Body>
+                                <CreditTableHead />
+                                {[...Array(10).keys()].map((e, i) => (
+                                    <React.Fragment>
+                                        <CreditTableRow
+                                            key={i}
+                                            id={'credit-table-sticky-row-' + i}
+                                            isZebra={!!(i % 2)}
+                                        />
+                                    </React.Fragment>
+                                ))}
 
-                            <CreditTableRowD />
+                                <CreditTableRowD />
 
-                            <CreditTableRowA />
-                            <CreditTableRowB />
-                            <CreditTableRowC />
+                                <CreditTableRowA />
+                                <CreditTableRowB />
+                                <CreditTableRowC />
 
-                            <CreditTableRowA />
-                            <CreditTableRowB />
-                            <CreditTableRowC />
+                                <CreditTableRowA />
+                                <CreditTableRowB />
+                                <CreditTableRowC />
 
-                            <CreditTableRowA />
-                            <CreditTableRowB />
-                            <CreditTableRowC />
+                                <CreditTableRowA />
+                                <CreditTableRowB />
+                                <CreditTableRowC />
 
-                            <CreditTableRowA />
-                            <CreditTableRowB />
-                            <CreditTableRowC />
+                                <CreditTableRowA />
+                                <CreditTableRowB />
+                                <CreditTableRowC />
+                            </Table.Body>
                         </Table.Root>
                     </GridItem>
                 </Grid>

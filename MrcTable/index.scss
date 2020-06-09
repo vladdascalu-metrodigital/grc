@@ -91,6 +91,11 @@ $table-base-line-height: $line-height-copy;
   }
 }
 
+.mrc-ui-table-h-flush,
+.mrc-ui-table-d-flush {
+  padding: 0;
+}
+
 .mrc-ui-table .mrc-ui-table-border-fix {
   border-right-width: $border-width-thin;
 }
@@ -115,26 +120,21 @@ $table-base-line-height: $line-height-copy;
 
 .mrc-ui-table-r-form {
   @include table-row-form-grey();
-  .mrc-ui-table-d{
-    box-shadow: $shadow-downwards-medium-inset;
-  }
 }
 
-.mrc-ui-table-head {
-    .mrc-ui-table-r {
-        @include table-row-dark-grey();
-    }
-
-    .mrc-ui-table-r-light {
-        @include table-row-light-grey();
-    }
+.mrc-ui-table-r-head {
+  @include table-row-dark-grey();
 }
 
+.mrc-ui-table-r-head-light {
+  @include table-row-light-grey();
+}
 
 .mrc-ui-table-r-sticky {
-  th {
+  th, td {
     position: sticky;
-    top: var(--sticky-offset); // gets calculated and assigned via JS
+    position: var(--sticky-override, sticky);
+    top: var(--sticky-top); // gets calculated and assigned via JS
   }
 }
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import './index.scss';
@@ -39,53 +40,79 @@ class Body extends Component {
 class R extends Component {
     constructor(props) {
         super(props);
-        if (this.props.isSticky) {
+        if (this.props.sticky) {
             this.selfRef = React.createRef();
         }
     }
 
-    getStickyOffset(node, offset = 0) {
-        if (node.previousSibling) {
-            let prevSiblingOffset = offset + node.previousSibling.clientHeight;
-            return this.getStickyOffset(node.previousSibling, prevSiblingOffset);
+    getStickyTop(node, top = 0) {
+        let prevSibling = node.previousSibling;
+        if (prevSibling && prevSibling.dataset.sticky === this.props.sticky) {
+            let prevSiblingOffset = top + prevSibling.clientHeight;
+            return this.getStickyTop(prevSibling, prevSiblingOffset);
         } else {
-            return offset;
+            return top;
         }
     }
 
     componentDidMount() {
-        if (this.props.isSticky) {
-            let stickyOffset = this.getStickyOffset(this.selfRef.current);
-            this.selfRef.current.style.setProperty('--sticky-offset', stickyOffset + 'px');
+        let { sticky, stickyOffset } = this.props;
+        if (sticky) {
+            let stickyTopOffset = 0;
+            if (typeof stickyOffset === 'number') {
+                stickyTopOffset = stickyOffset;
+            } else if (typeof stickyOffset === 'string' && document.querySelector(stickyOffset)) {
+                stickyTopOffset = Array.from(document.querySelectorAll(stickyOffset)).reduce(
+                    (height, el) => (height += el.clientHeight),
+                    0
+                );
+            }
+            let stickyTop = stickyTopOffset + this.getStickyTop(this.selfRef.current);
+            this.selfRef.current.style.setProperty('--sticky-top', stickyTop + 'px');
         }
     }
 
     render() {
-        let { className, children, isSticky, isHovered, isActive, type, ...otherProps } = this.props;
+        let { className, children, sticky, isHovered, isActive, type, ...otherProps } = this.props;
+        delete otherProps.stickyOffset;
         className = classnames('mrc-ui-table-r', {
-            'mrc-ui-table-r-sticky': isSticky,
+            'mrc-ui-table-r-sticky': sticky,
             'mrc-ui-table-r-active': isActive,
             'mrc-ui-table-r-hover': isHovered,
+            'mrc-ui-table-r-head': type === 'head',
+            'mrc-ui-table-r-head-light': type === 'head-light',
             'mrc-ui-table-r-light': type === 'light',
             'mrc-ui-table-r-form': type === 'form',
             'mrc-ui-table-r-zebra': type === 'zebra',
+            className,
         });
         return (
-            <tr className={className} ref={this.selfRef} {...otherProps}>
+            <tr {...otherProps} className={className} data-sticky={sticky} ref={this.selfRef}>
                 {children}
             </tr>
         );
     }
 }
 
+R.propTypes = {
+    className: PropTypes.string,
+    children: PropTypes.node,
+    sticky: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+    stickyOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    isHovered: PropTypes.bool,
+    isActive: PropTypes.bool,
+    type: PropTypes.oneOf(['head', 'head-light', 'light', 'form', 'zebra']),
+};
+
 class H extends Component {
     render() {
-        let { borderFix, className, children, ...otherProps } = this.props;
-        className = classnames('mrc-ui-table-h', {
+        let { borderFix, className, children, flush, ...otherProps } = this.props;
+        className = classnames('mrc-ui-table-h', className, {
             'mrc-ui-table-border-fix': borderFix,
+            'mrc-ui-table-d-flush': flush,
         });
         return (
-            <th className={className} {...otherProps}>
+            <th {...otherProps} className={className}>
                 {children}
             </th>
         );
@@ -94,12 +121,13 @@ class H extends Component {
 
 class D extends Component {
     render() {
-        let { borderFix, className, children, ...otherProps } = this.props;
+        let { borderFix, className, children, flush, ...otherProps } = this.props;
         className = classnames('mrc-ui-table-d', className, {
             'mrc-ui-table-border-fix': borderFix,
+            'mrc-ui-table-d-flush': flush,
         });
         return (
-            <td className={className} {...otherProps}>
+            <td {...otherProps} className={className}>
                 {children}
             </td>
         );

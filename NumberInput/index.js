@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 
 import './index.scss';
 
@@ -60,8 +61,16 @@ export class NumberInput extends Component {
         delete inputProps.onChange;
         delete inputProps.initialValue;
         delete inputProps.shouldBePrefilledWith;
-        inputProps.className = 'mrc-ui-number-input ' + inputProps.className ? inputProps.className : '';
-        return <input type="text" value={this.state.value} onChange={this.handleChange} {...inputProps} />;
+        let className = classnames('mrc-ui-number-input', inputProps.className);
+        return (
+            <input
+                {...inputProps}
+                className={className}
+                type="text"
+                value={this.state.value}
+                onChange={this.handleChange}
+            />
+        );
     }
 }
 
