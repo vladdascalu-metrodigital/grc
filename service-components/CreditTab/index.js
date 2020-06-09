@@ -16,38 +16,40 @@ import CreditTableRowD from './CreditTableRowD';
 
 import './index.scss';
 
-import * as _ from 'lodash';
-
 // TODO additional fields
 
 export default class CreditTab extends Component {
     render() {
+        const { customer } = this.props;
+        const groupInfo = customer ? (
+            <BoxWithTitle title="Groupdetails" action={{ title: 'edit', fn: () => alert('edit') }}>
+                <KeyValueGroup>
+                    <KeyValueRow>
+                        <Key>{lookup('mrc.customerdata.name')}</Key>
+                        <Value>{customer.name}</Value>
+                    </KeyValueRow>
+                    <KeyValueRow spaced>
+                        <Key>{lookup('mrc.credittab.telephone')}</Key>
+                        <Value>{customer.phone}</Value>
+                    </KeyValueRow>
+                    <KeyValueRow spaced>
+                        <Key>{lookup('mrc.customerdetails.fields.email')}</Key>
+                        <Value>{customer.email}</Value>
+                    </KeyValueRow>
+                </KeyValueGroup>
+            </BoxWithTitle>
+        ) : null;
         return (
             <MainContent>
                 <Grid>
-                    <BoxWithTitle title="Groupdetails" action={{ title: 'edit', fn: () => alert('edit') }}>
-                        <KeyValueGroup>
-                            <KeyValueRow>
-                                <Key>{lookup('mrc.customerdata.name')}</Key>
-                                <Value>{_.get(this.props, 'customer.name')}</Value>
-                            </KeyValueRow>
-                            <KeyValueRow spaced>
-                                <Key>{lookup('mrc.credittab.telephone')}</Key>
-                                <Value>{_.get(this.props, 'customer.phoneNumber')}</Value>
-                            </KeyValueRow>
-                            <KeyValueRow spaced>
-                                <Key>{lookup('mrc.customerdetails.fields.email')}</Key>
-                                <Value>{_.get(this.props, 'customer.email')}</Value>
-                            </KeyValueRow>
-                        </KeyValueGroup>
-                    </BoxWithTitle>
+                    {groupInfo}
                     <BoxWithTitle title="Requestdetails" action={{ title: 'edit', fn: () => {} }}>
                         <h3 className="mrc-ui-credit-tab-profit-label">{lookup('addfield.profitability')}</h3>
                         <span className="mrc-ui-credit-tab-profit-number">20</span>%
                     </BoxWithTitle>
                     <GridItem colSpan="all">
                         <Table.Root>
-                            <CreditTableHead />
+                            <CreditTableHead {...this.props} />
                             {[...Array(10).keys()].map((e, i) => (
                                 <CreditTableRow key={i} isZebra={!!(i % 2)} />
                             ))}
