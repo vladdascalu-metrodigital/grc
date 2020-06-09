@@ -46,7 +46,7 @@ export default class CreditTableRow extends Component {
 
     render() {
         let { isExpanded, isHovered } = this.state;
-        let { id, isZebra } = this.props;
+        let { id, isZebra, customer } = this.props;
         let type = isZebra ? 'zebra' : null;
 
         return (
@@ -63,7 +63,14 @@ export default class CreditTableRow extends Component {
                     onMouseLeave={() => this.hover(false)}
                 >
                     <Table.D rowSpan="2">
-                        <CRTableCellCustomer name="Mepo GmbH" number="12/123432" isBlocked isHighlighted />
+                        {customer ? (
+                            <CRTableCellCustomer
+                                name={customer.name}
+                                number={[customer.storeNumber, customer.number].join('/')}
+                                isBlocked
+                                isHighlighted
+                            />
+                        ) : null}
                     </Table.D>
 
                     <Table.D colSpan="3" rowSpan="2">
@@ -244,5 +251,6 @@ export default class CreditTableRow extends Component {
 CreditTableRow.propTypes = {
     id: PropTypes.string,
     isZebra: PropTypes.bool,
+    customer: PropTypes.object,
     stickyOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };

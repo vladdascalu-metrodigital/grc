@@ -16,7 +16,7 @@ import CreditTableRowD from './CreditTableRowD';
 
 import './index.scss';
 
-// TODO additional fields
+import * as _ from 'lodash';
 
 export default class CreditTab extends Component {
     constructor(props) {
@@ -24,7 +24,7 @@ export default class CreditTab extends Component {
     }
 
     render() {
-        const { customer } = this.props;
+        const { customer, customers } = this.props;
         const translations = {
             name: lookup('mrc.customerdata.name'),
             phone: lookup('mrc.credittab.telephone'),
@@ -60,15 +60,16 @@ export default class CreditTab extends Component {
                         <Table.Root>
                             <Table.Body>
                                 <CreditTableHead />
-                                {[...Array(10).keys()].map((e, i) => (
-                                    <React.Fragment>
-                                        <CreditTableRow
-                                            key={i}
-                                            id={'credit-table-sticky-row-' + i}
-                                            isZebra={!!(i % 2)}
-                                        />
-                                    </React.Fragment>
-                                ))}
+                                {customers
+                                    ? customers.map((customer, i) => (
+                                          <CreditTableRow
+                                              customer={customer}
+                                              key={_.get(customer, 'customerData.displayName')}
+                                              id={'credit-table-sticky-row-' + i}
+                                              isZebra={!!(i % 2)}
+                                          />
+                                      ))
+                                    : null}
 
                                 <CreditTableRowD />
 
