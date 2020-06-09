@@ -21,19 +21,24 @@ import './index.scss';
 export default class CreditTab extends Component {
     render() {
         const { customer } = this.props;
+        const translations = {
+            name: lookup('mrc.customerdata.name'),
+            phone: lookup('mrc.credittab.telephone'),
+            email: lookup('mrc.customerdetails.fields.email'),
+        };
         const groupInfo = customer ? (
             <BoxWithTitle title="Groupdetails" action={{ title: 'edit', fn: () => alert('edit') }}>
                 <KeyValueGroup>
                     <KeyValueRow>
-                        <Key>{lookup('mrc.customerdata.name')}</Key>
+                        <Key>{translations.name}</Key>
                         <Value>{customer.name}</Value>
                     </KeyValueRow>
                     <KeyValueRow spaced>
-                        <Key>{lookup('mrc.credittab.telephone')}</Key>
+                        <Key>{translations.phone}</Key>
                         <Value>{customer.phone}</Value>
                     </KeyValueRow>
                     <KeyValueRow spaced>
-                        <Key>{lookup('mrc.customerdetails.fields.email')}</Key>
+                        <Key>{translations.email}</Key>
                         <Value>{customer.email}</Value>
                     </KeyValueRow>
                 </KeyValueGroup>

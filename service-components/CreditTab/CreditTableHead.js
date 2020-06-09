@@ -8,7 +8,6 @@ import { lookup } from '../../Util/translations';
 
 export default class CreditTableHead extends Component {
     render() {
-        console.log(this.props);
         const { groupLimit, historical, countryCode } = this.props;
         const translations = {
             exhausted: lookup('mrc.credittab.exhausted'),
@@ -19,6 +18,9 @@ export default class CreditTableHead extends Component {
             customerGroup: lookup('mrc.credittab.customerGroup'),
             toBeGranted: lookup('mrc.credittab.toBeGranted'),
             customerWish: lookup('mrc.credittab.customerWish'),
+            expiry: lookup('mrc.credittab.expiry'),
+            limit: lookup('mrc.credittab.limit'),
+            creditproduct: lookup('mrc.creditdetails.creditproduct'),
         };
         const granted = groupLimit ? (
             <CRTableHeaderCellCustomerGroupLimit
@@ -72,11 +74,11 @@ export default class CreditTableHead extends Component {
                     <Table.H>
                         <CRTableHeaderCellLimit prefix={translations.exhausted} title={translations.granted} />
                     </Table.H>
-                    <Table.H>Expiry</Table.H>
-                    <Table.H>Creditproduct</Table.H>
-                    <Table.H>Limit</Table.H>
-                    <Table.H>Expiry</Table.H>
-                    <Table.H borderFix>Creditproduct</Table.H>
+                    <Table.H>{translations.expiry}</Table.H>
+                    <Table.H>{translations.creditproduct}</Table.H>
+                    <Table.H>{translations.limit}</Table.H>
+                    <Table.H>{translations.expiry}</Table.H>
+                    <Table.H borderFix>{translations.creditproduct}</Table.H>
                 </Table.R>
             </Table.Head>
         );
