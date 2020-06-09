@@ -80,7 +80,7 @@ export default class CreditTableRow extends Component {
                     <Table.D colSpan="3">
                         <CRTableCellPrepaymentCash name="Cash" isGreen />
                     </Table.D>
-                    <Table.D rowSpan="2" className="fix-width-cell">
+                    <Table.D rowSpan="2">
                         <ToggleIndicator tilt={isExpanded} />
                     </Table.D>
                 </Table.R>
