@@ -60,16 +60,8 @@ export class NumberInput extends Component {
         delete inputProps.onChange;
         delete inputProps.initialValue;
         delete inputProps.shouldBePrefilledWith;
-        delete inputProps.className;
-        return (
-            <input
-                type="text"
-                value={this.state.value}
-                onChange={this.handleChange}
-                className="mrc-ui-number-input"
-                {...inputProps}
-            />
-        );
+        inputProps.className = 'mrc-ui-number-input ' + inputProps.className;
+        return <input type="text" value={this.state.value} onChange={this.handleChange} {...inputProps} />;
     }
 }
 
