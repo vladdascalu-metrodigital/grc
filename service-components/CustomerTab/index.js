@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import BoxWithTitle, { TYPE as BOX_TYPE } from '../../BoxWithTitle';
-import MainContent from '../../MainContent';
 import ToggleBox from '../../ToggleBox';
 import CustomerToggler from './CustomerToggler';
 import Grid, { GridItem } from '../../Grid';
@@ -17,7 +16,7 @@ import { person } from '../../stories/VCard.stories';
 export default class CustomerTab extends Component {
     render() {
         return (
-            <MainContent>
+            <React.Fragment>
                 <h2 className="mrc-ui-customer-tab-title">Customer</h2>
                 <ToggleBox titleContent={<CustomerToggler isBlocked />}>
                     <Grid>
@@ -96,7 +95,7 @@ export default class CustomerTab extends Component {
                         </BoxWithTitle>
                     </Grid>
                 </ToggleBox>
-            </MainContent>
+            </React.Fragment>
         );
     }
 }
