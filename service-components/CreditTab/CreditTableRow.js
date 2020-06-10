@@ -30,7 +30,8 @@ export default class CreditTableRow extends Component {
 
     render() {
         let { isZebra, customer, historical } = this.props;
-        // We should make a choice here, which type of row
+        // TODO We should make a choice here, which type of row. Here, I have
+        // just hardcoded type A. The name should change as well eventually.
         return (
             <CreditTableRowA
                 {...{

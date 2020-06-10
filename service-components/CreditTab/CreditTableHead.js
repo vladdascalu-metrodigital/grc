@@ -34,7 +34,7 @@ export default class CreditTableHead extends Component {
                     <Table.H colSpan="3">
                         {groupLimit ? (
                             <CRTableHeaderCellCustomerGroupLimit
-                                limit={groupLimit.granted}
+                                limit={groupLimit.old}
                                 exhausted={groupLimit.exhausted}
                                 country={country}
                                 subtitle={
@@ -49,7 +49,7 @@ export default class CreditTableHead extends Component {
                     <Table.H colSpan="3">
                         {groupLimit ? (
                             <CRTableHeaderCellCustomerGroupLimit
-                                limit={groupLimit.wish}
+                                limit={groupLimit.current}
                                 country={country}
                                 subtitle={historical ? translations.newlyGranted : translations.toBeGranted}
                                 isGreen
