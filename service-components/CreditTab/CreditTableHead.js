@@ -9,6 +9,7 @@ import { lookup } from '../../Util/translations';
 const translations = {
     exhausted: lookup('mrc.credittab.exhausted'),
     granted: lookup('mrc.credittab.granted'),
+    newlyGranted: lookup('mrc.credittab.newlyGranted'),
     current: lookup('mrc.creditdata.current'),
     old: lookup('mrc.credittab.old'),
     new: lookup('mrc.credittab.new'),
@@ -50,7 +51,7 @@ export default class CreditTableHead extends Component {
                             <CRTableHeaderCellCustomerGroupLimit
                                 limit={groupLimit.wish}
                                 country={country}
-                                subtitle={translations.toBeGranted}
+                                subtitle={historical ? translations.newlyGranted : translations.toBeGranted}
                                 isGreen
                             />
                         ) : null}

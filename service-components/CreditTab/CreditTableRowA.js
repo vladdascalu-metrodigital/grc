@@ -8,7 +8,6 @@ import CRTableCellCustomer from './CRTableCellCustomer';
 import CRTableCellLimit from './CRTableCellLimit';
 import CRTableCellExpiry from './CRTableCellExpiry';
 import CRTableCellCreditProduct from './CRTableCellCreditProduct';
-import CRTableCellPrepaymentCash from './CRTableCellPrepaymentCash';
 import CreditTableFormSection from './CreditTableFormSection';
 import ClientBlocked from '../../ClientBlocked';
 import ToggleIndicator from '../../ToggleIndicator';
@@ -72,7 +71,7 @@ export default class CreditTableRowA extends Component {
                     onMouseEnter={canToggle ? () => onHover(true) : null}
                     onMouseLeave={canToggle ? () => onHover(false) : null}
                 >
-                    <Table.D>
+                    <Table.D rowSpan="2">
                         {customer ? (
                             <CRTableCellCustomer
                                 name={customer.name}
@@ -83,14 +82,72 @@ export default class CreditTableRowA extends Component {
                         ) : null}
                     </Table.D>
 
-                    <Table.D>
-                        <CRTableCellPrepaymentCash name={translations.prepayment} isBlue />
+                    <Table.D rowSpan="2">
+                        <CRTableCellLimit
+                            country={country}
+                            exhausted={null}
+                            limit={_.get(customer, 'limit.old.amount')}
+                            isGreen
+                        />
+                    </Table.D>
+
+                    <Table.D rowSpan="2">
+                        <CRTableCellExpiry
+                            expiryLimit={_.get(customer, 'limit.expiry.amount')}
+                            expiryDate={_.get(customer, 'limit.expiry.date')}
+                            isGreen
+                        />
+                    </Table.D>
+
+                    <Table.D rowSpan="2" borderFix>
+                        <CRTableCellCreditProduct
+                            productName={_.get(customer, 'limit.old.product')}
+                            productTimePeriod={[_.get(customer, 'limit.old.period'), translations.days].join(' ')}
+                            productPaymentMethod={_.get(customer, 'limit.old.method')}
+                            isGreen
+                        />
                     </Table.D>
 
                     <Table.D>
-                        <CRTableCellPrepaymentCash name={translations.cash} />
+                        <CRTableCellLimit
+                            country={country}
+                            exhausted={null}
+                            limit={_.get(customer, 'limit.wish.amount')}
+                        />
                     </Table.D>
 
+                    <Table.D>
+                        <CRTableCellExpiry
+                            expiryLimit={_.get(customer, 'limit.expiry.amount')}
+                            expiryDate={_.get(customer, 'limit.expiry.date')}
+                        />
+                    </Table.D>
+
+                    <Table.D borderFix>
+                        <CRTableCellCreditProduct
+                            productName={_.get(customer, 'limit.wish.product')}
+                            productTimePeriod={[_.get(customer, 'limit.wish.period'), translations.days].join(' ')}
+                            productPaymentMethod={_.get(customer, 'limit.wish.method')}
+                        />
+                    </Table.D>
+                    <Table.D rowSpan="2">
+                        <ToggleIndicator tilt={isExpanded} />
+                    </Table.D>
+                </Table.R>
+                <Table.R
+                    isActive={isExpanded}
+                    isHovered={isHovered}
+                    sticky={id}
+                    stickyOffset={'tr[data-sticky="credit-table-head-sticky"]'}
+                    type={type}
+                    style={{
+                        cursor: canToggle ? 'pointer' : 'auto',
+                        '--sticky-override': isExpanded ? 'sticky' : 'static',
+                    }}
+                    onClick={canToggle ? () => onExpand() : null}
+                    onMouseEnter={canToggle ? () => onHover(true) : null}
+                    onMouseLeave={canToggle ? () => onHover(false) : null}
+                >
                     <Table.D>
                         <CRTableCellLimit
                             country={country}
@@ -115,10 +172,6 @@ export default class CreditTableRowA extends Component {
                             productPaymentMethod={_.get(customer, 'limit.current.method')}
                             isGreen
                         />
-                    </Table.D>
-
-                    <Table.D>
-                        <ToggleIndicator tilt={isExpanded} />
                     </Table.D>
                 </Table.R>
                 {isExpanded && (

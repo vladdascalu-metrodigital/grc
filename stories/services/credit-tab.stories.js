@@ -8,7 +8,7 @@ storiesOf('Services/Credit Tab', module)
         <CreditTab
             historical={true}
             country={'DE'}
-            groupLimit={{ exhausted: 1200, granted: 5000, wish: 60000 }}
+            groupLimit={{ exhausted: null, granted: 36000, wish: 60000 }}
             customer={{ name: 'Customer A', email: 'test@gmail.com', phone: '1239843' }}
             customers={[
                 {
@@ -20,7 +20,7 @@ storiesOf('Services/Credit Tab', module)
                         wish: { amount: 30000, product: 'Metro Top', period: '12', method: 'Basislastshriftmandat' },
                         current: {
                             amount: 20000,
-                            product: 'Metro Cash',
+                            product: 'Metro Top',
                             period: '12',
                             method: 'Basislastshriftmandat',
                         },
@@ -37,7 +37,7 @@ storiesOf('Services/Credit Tab', module)
                         wish: { amount: 30000, product: 'Metro Top', period: '12', method: 'Basislastshriftmandat' },
                         current: {
                             amount: 20000,
-                            product: 'Metro Cash',
+                            product: 'Metro Top',
                             period: '12',
                             method: 'Basislastshriftmandat',
                         },
@@ -53,7 +53,7 @@ storiesOf('Services/Credit Tab', module)
                         wish: { amount: 30000, product: 'Metro Top', period: '12', method: 'Basislastshriftmandat' },
                         current: {
                             amount: 20000,
-                            product: 'Metro Cash',
+                            product: 'Metro Top',
                             period: '12',
                             method: 'Basislastshriftmandat',
                         },
