@@ -6,51 +6,54 @@ import CRTableHeaderCellLimitColSpanTitle from './CRTableHeaderCellLimitColSpanT
 import CRTableHeaderCellLimit from './CRTableHeaderCellLimit';
 import { lookup } from '../../Util/translations';
 
+const translations = {
+    exhausted: lookup('mrc.credittab.exhausted'),
+    granted: lookup('mrc.credittab.granted'),
+    current: lookup('mrc.creditdata.current'),
+    old: lookup('mrc.credittab.old'),
+    new: lookup('mrc.credittab.new'),
+    customerGroup: lookup('mrc.credittab.customerGroup'),
+    toBeGranted: lookup('mrc.credittab.toBeGranted'),
+    customerWish: lookup('mrc.credittab.customerWish'),
+    expiry: lookup('mrc.credittab.expiry'),
+    limit: lookup('mrc.credittab.limit'),
+    creditproduct: lookup('mrc.creditdetails.creditproduct'),
+};
+
 export default class CreditTableHead extends Component {
     render() {
         const { groupLimit, historical, countryCode } = this.props;
-        const translations = {
-            exhausted: lookup('mrc.credittab.exhausted'),
-            granted: lookup('mrc.credittab.granted'),
-            current: lookup('mrc.creditdata.current'),
-            old: lookup('mrc.credittab.old'),
-            new: lookup('mrc.credittab.new'),
-            customerGroup: lookup('mrc.credittab.customerGroup'),
-            toBeGranted: lookup('mrc.credittab.toBeGranted'),
-            customerWish: lookup('mrc.credittab.customerWish'),
-            expiry: lookup('mrc.credittab.expiry'),
-            limit: lookup('mrc.credittab.limit'),
-            creditproduct: lookup('mrc.creditdetails.creditproduct'),
-        };
-        const granted = groupLimit ? (
-            <CRTableHeaderCellCustomerGroupLimit
-                limit={groupLimit.applied}
-                exhausted={groupLimit.exhausted}
-                country={countryCode}
-                subtitle={
-                    groupLimit.exhausted
-                        ? [translations.exhausted, translations.granted].join('/')
-                        : translations.granted
-                }
-                isBlue
-            />
-        ) : null;
-        const customerWish = groupLimit ? (
-            <CRTableHeaderCellCustomerGroupLimit
-                limit={groupLimit.customerWish}
-                country={countryCode}
-                subtitle={translations.toBeGranted}
-                isGreen
-            />
-        ) : null;
         return (
             <React.Fragment>
                 <Table.R sticky="credit-table-head-sticky" type="head-light">
                     <Table.H>
                         <CRTableHeaderCellCustomerGroup title={translations.customerGroup} />
                     </Table.H>
-                    <Table.H colSpan="3">{granted}</Table.H>
-                    <Table.H colSpan="3">{customerWish}</Table.H>
+                    <Table.H colSpan="3">
+                        {groupLimit ? (
+                            <CRTableHeaderCellCustomerGroupLimit
+                                limit={groupLimit.granted}
+                                exhausted={groupLimit.exhausted}
+                                country={countryCode}
+                                subtitle={
+                                    groupLimit.exhausted
+                                        ? [translations.exhausted, translations.granted].join('/')
+                                        : translations.granted
+                                }
+                                isBlue
+                            />
+                        ) : null}
+                    </Table.H>
+                    <Table.H colSpan="3">
+                        {groupLimit ? (
+                            <CRTableHeaderCellCustomerGroupLimit
+                                limit={groupLimit.customerWish}
+                                country={countryCode}
+                                subtitle={translations.toBeGranted}
+                                isGreen
+                            />
+                        ) : null}
+                    </Table.H>
                     <Table.H className="border-fix"></Table.H>
                 </Table.R>
                 <Table.R sticky="credit-table-head-sticky" type="head">

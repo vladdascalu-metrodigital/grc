@@ -30,28 +30,27 @@ export default class CreditTab extends Component {
             phone: lookup('mrc.credittab.telephone'),
             email: lookup('mrc.customerdetails.fields.email'),
         };
-        const groupInfo = customer ? (
-            <BoxWithTitle title="Groupdetails" action={{ title: 'edit', fn: () => alert('edit') }}>
-                <KeyValueGroup>
-                    <KeyValueRow>
-                        <Key>{translations.name}</Key>
-                        <Value>{customer.name}</Value>
-                    </KeyValueRow>
-                    <KeyValueRow spaced>
-                        <Key>{translations.phone}</Key>
-                        <Value>{customer.phone}</Value>
-                    </KeyValueRow>
-                    <KeyValueRow spaced>
-                        <Key>{translations.email}</Key>
-                        <Value>{customer.email}</Value>
-                    </KeyValueRow>
-                </KeyValueGroup>
-            </BoxWithTitle>
-        ) : null;
         return (
             <MainContent>
                 <Grid>
-                    {groupInfo}
+                    {customer ? (
+                        <BoxWithTitle title="Groupdetails" action={{ title: 'edit', fn: () => alert('edit') }}>
+                            <KeyValueGroup>
+                                <KeyValueRow>
+                                    <Key>{translations.name}</Key>
+                                    <Value>{customer.name}</Value>
+                                </KeyValueRow>
+                                <KeyValueRow spaced>
+                                    <Key>{translations.phone}</Key>
+                                    <Value>{customer.phone}</Value>
+                                </KeyValueRow>
+                                <KeyValueRow spaced>
+                                    <Key>{translations.email}</Key>
+                                    <Value>{customer.email}</Value>
+                                </KeyValueRow>
+                            </KeyValueGroup>
+                        </BoxWithTitle>
+                    ) : null}
                     <BoxWithTitle title="Requestdetails" action={{ title: 'edit', fn: () => {} }}>
                         <h3 className="mrc-ui-credit-tab-profit-label">{lookup('addfield.profitability')}</h3>
                         <span className="mrc-ui-credit-tab-profit-number">20</span>%
@@ -59,7 +58,7 @@ export default class CreditTab extends Component {
                     <GridItem colSpan="all">
                         <Table.Root>
                             <Table.Body>
-                                <CreditTableHead />
+                                <CreditTableHead {...this.props} />
                                 {customers
                                     ? customers.map((customer, i) => (
                                           <CreditTableRow
