@@ -9,11 +9,6 @@ import { lookup } from '../../Util/translations';
 import CreditTableHead from './CreditTableHead';
 import CreditTableRow from './CreditTableRow';
 
-import CreditTableRowA from './CreditTableRowA';
-import CreditTableRowB from './CreditTableRowB';
-import CreditTableRowC from './CreditTableRowC';
-import CreditTableRowD from './CreditTableRowD';
-
 import './index.scss';
 
 import * as _ from 'lodash';
@@ -63,30 +58,13 @@ export default class CreditTab extends Component {
                                     ? customers.map((customer, i) => (
                                           <CreditTableRow
                                               customer={customer}
+                                              historical={this.props.historical}
                                               key={_.get(customer, 'customerData.displayName')}
                                               id={'credit-table-sticky-row-' + i}
                                               isZebra={!!(i % 2)}
                                           />
                                       ))
                                     : null}
-
-                                <CreditTableRowD />
-
-                                <CreditTableRowA />
-                                <CreditTableRowB />
-                                <CreditTableRowC />
-
-                                <CreditTableRowA />
-                                <CreditTableRowB />
-                                <CreditTableRowC />
-
-                                <CreditTableRowA />
-                                <CreditTableRowB />
-                                <CreditTableRowC />
-
-                                <CreditTableRowA />
-                                <CreditTableRowB />
-                                <CreditTableRowC />
                             </Table.Body>
                         </Table.Root>
                     </GridItem>

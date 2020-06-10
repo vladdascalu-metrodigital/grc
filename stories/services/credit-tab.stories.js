@@ -28,6 +28,7 @@ storiesOf('Services/Credit Tab', module)
                     },
                 },
                 {
+                    isBlocked: true,
                     name: 'Customer B',
                     storeNumber: 10,
                     number: 98,

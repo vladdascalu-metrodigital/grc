@@ -16,6 +16,7 @@ import CRTableCellExpiry from './CRTableCellExpiry';
 import CRTableCellCreditProduct from './CRTableCellCreditProduct';
 import CRTableCellPrepaymentCash from './CRTableCellPrepaymentCash';
 import CreditTableFormSection from './CreditTableFormSection';
+import ClientBlocked from '../../ClientBlocked';
 import ToggleIndicator from '../../ToggleIndicator';
 import CheckCard from '../../CheckCard';
 import Select from '../../Select';
@@ -25,10 +26,21 @@ import { lookup } from '../../Util/translations';
 import * as _ from 'lodash';
 
 const translations = {
+    blocked: lookup('mrc.status.blocked'),
+    customerWish: lookup('mrc.credittab.customerWish'),
+    current: lookup('mrc.creditdata.current'),
+    old: lookup('mrc.credittab.old'),
+    new: lookup('mrc.credittab.new'),
     days: lookup('mrc.credittab.days'),
     choosepayment: lookup('mrc.credittab.choosepayment'),
     prepayment: lookup('mrc.payment.Prepayment'),
     cash: lookup('mrc.credittab.cash'),
+    payment: lookup('mrc.credittab.payment'),
+    paymentdescription: lookup('mrc.credittab.paymentdescription'),
+    credit: lookup('mrc.creditdata.title'),
+    limit: lookup('mrc.credittab.limit'),
+    limitdescription: lookup('mrc.credittab.limitdescription'),
+    chooseamount: lookup('mrc.credittab.chooseamount'),
 };
 
 export default class CreditTableRow extends Component {
@@ -56,8 +68,13 @@ export default class CreditTableRow extends Component {
 
     render() {
         let { isExpanded, isHovered } = this.state;
-        let { id, isZebra, customer, country } = this.props;
+        let { id, isZebra, customer, country, historical } = this.props;
         let type = isZebra ? 'zebra' : null;
+
+        const isCashCustomer =
+            _.get(customer, 'limit.current.amount') === 0 || _.isNil(_.get(customer, 'limit.current.amount'));
+
+        const canToggle = !historical || _.get(customer, 'isBlocked');
 
         return (
             <React.Fragment>
@@ -67,17 +84,20 @@ export default class CreditTableRow extends Component {
                     sticky={id}
                     stickyOffset={'tr[data-sticky="credit-table-head-sticky"]'}
                     type={type}
-                    style={{ cursor: 'pointer', '--sticky-override': isExpanded ? 'sticky' : 'static' }}
-                    onClick={() => this.toggle()}
-                    onMouseEnter={() => this.hover(true)}
-                    onMouseLeave={() => this.hover(false)}
+                    style={{
+                        cursor: canToggle ? 'pointer' : 'auto',
+                        '--sticky-override': isExpanded ? 'sticky' : 'static',
+                    }}
+                    onClick={canToggle ? () => this.toggle() : null}
+                    onMouseEnter={canToggle ? () => this.hover(true) : null}
+                    onMouseLeave={canToggle ? () => this.hover(false) : null}
                 >
                     <Table.D rowSpan="2">
                         {customer ? (
                             <CRTableCellCustomer
                                 name={customer.name}
                                 number={[customer.storeNumber, customer.number].join('/')}
-                                isBlocked
+                                isBlocked={customer.isBlocked}
                                 isHighlighted
                             />
                         ) : null}
@@ -100,10 +120,13 @@ export default class CreditTableRow extends Component {
                     sticky={id}
                     stickyOffset={'tr[data-sticky="credit-table-head-sticky"]'}
                     type={type}
-                    style={{ cursor: 'pointer', '--sticky-override': isExpanded ? 'sticky' : 'static' }}
-                    onClick={() => this.toggle()}
-                    onMouseEnter={() => this.hover(true)}
-                    onMouseLeave={() => this.hover(false)}
+                    style={{
+                        cursor: canToggle ? 'pointer' : 'auto',
+                        '--sticky-override': isExpanded ? 'sticky' : 'static',
+                    }}
+                    onClick={canToggle ? () => this.toggle() : null}
+                    onMouseEnter={canToggle ? () => this.hover(true) : null}
+                    onMouseLeave={canToggle ? () => this.hover(false) : null}
                 >
                     <Table.D>
                         <CRTableCellLimit
@@ -138,130 +161,153 @@ export default class CreditTableRow extends Component {
                         <CreditTableRowShadow />
                     </Table.R>
                 )}
-                {isExpanded && (
-                    <Table.R type="form">
-                        <Table.D colSpan="8">
-                            <CreditTableFormSection
-                                title="Payment"
-                                description="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt magna aliqua."
-                            >
-                                <h4 className="mrc-ui-form-label mb-2">{translations.choosepayment}</h4>
-                                <Grid cols={4}>
-                                    <CheckCard title="Cash" />
-                                    <CheckCard title="Credit" checked />
-                                    <CheckCard title="Prepayment" />
-                                </Grid>
-                            </CreditTableFormSection>
-                            <hr />
-                            <CreditTableFormSection
-                                title="Payment"
-                                description="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                            >
-                                <h4 className="mrc-ui-form-label mb-2">Choose Amount</h4>
-                                <Grid cols={4}>
-                                    <CheckCard title="Current">
-                                        <CRLimitSetting limit={4000} limitAfterExpiry={1000} expiryDate="2020-05-06" />
-                                    </CheckCard>
-                                    <CheckCard title="Customer Wish">
-                                        <CRLimitSetting limit={10000} limitAfterExpiry={1000} expiryDate="2020-05-06" />
-                                    </CheckCard>
-                                    <CheckCard title="CM" checked>
-                                        <CRLimitSetting limit={9000} limitAfterExpiry={1000} expiryDate="2020-05-06" />
-                                    </CheckCard>
-                                    <CheckCard title="New" />
-                                </Grid>
-                                <h4 className="mrc-ui-form-label mt-5 mb-2">Choose New Limit</h4>
-                                <Card dropShadow>
-                                    <h4 className="mrc-ui-form-label mb-1">Amount</h4>
-                                    <Grid cols={3}>
-                                        <FlexRow alignItems="baseline">
-                                            <div className="mr-3">
-                                                <NumberInput />
-                                            </div>
-                                            <MrcCurrencySymbol />
-                                        </FlexRow>
+                {isExpanded &&
+                    (historical ? (
+                        <Table.R>
+                            <Table.D>
+                                {lookup('mrc.status.blocked')}
+                                <ClientBlocked />
+                            </Table.D>
+                        </Table.R>
+                    ) : (
+                        <Table.R type="form">
+                            <Table.D colSpan="8">
+                                <CreditTableFormSection
+                                    title={translations.payment}
+                                    description={translations.paymentdescription}
+                                >
+                                    <h4 className="mrc-ui-form-label mb-2">{translations.choosepayment}</h4>
+                                    <Grid cols={4}>
+                                        <CheckCard
+                                            title={translations.cash}
+                                            checked={isCashCustomer}
+                                            onClick={() => alert('todo: cash')}
+                                        />
+                                        <CheckCard
+                                            title={translations.credit}
+                                            checked={!isCashCustomer}
+                                            onClick={() => alert('todo: credit')}
+                                        />
                                     </Grid>
-                                    <h4 className="mrc-ui-form-label mt-4 mb-1">Choose Expiry</h4>
-                                    <Grid cols={3}>
-                                        <CheckCard title="Without Expiry" checked />
-                                        <CheckCard title="Date of Expiry" checked>
-                                            <NumberInput />
+                                </CreditTableFormSection>
+                                <hr />
+                                <CreditTableFormSection
+                                    title={translations.limit}
+                                    description={translations.limitdescription}
+                                >
+                                    <h4 className="mrc-ui-form-label mb-2">{translations.chooseamount}</h4>
+                                    <Grid cols={4}>
+                                        <CheckCard title={translations.current}>
+                                            <CRLimitSetting
+                                                limit={_.get(customer, 'limit.current.amount')}
+                                                limitAfterExpiry={_.get(customer, 'limit.expiry.amount')}
+                                                expiryDate={_.get(customer, 'limit.expiry.date')}
+                                            />
                                         </CheckCard>
-                                        <GridItem alignSelf="center">
-                                            <a>set date of expiry to all customers limits</a>
-                                        </GridItem>
+                                        <CheckCard
+                                            title={translations.customerWish}
+                                            checked
+                                            onClick={() => alert('todo: change amount')}
+                                        >
+                                            <CRLimitSetting
+                                                limit={_.get(customer, 'limit.wish.amount')}
+                                                limitAfterExpiry={_.get(customer, 'limit.expiry.amount')}
+                                                expiryDate={_.get(customer, 'limit.expiry.date')}
+                                            />
+                                        </CheckCard>
                                     </Grid>
-                                    <h4 className="mrc-ui-form-label mt-4 mb-2">Set Limit after expiry to</h4>
-                                    <Grid cols={3}>
-                                        <CheckCard checked>
-                                            <MrcCurrency type="large-bold">123</MrcCurrency>
-                                        </CheckCard>
-                                        <CheckCard>
-                                            <MrcCurrency type="large-bold">6000</MrcCurrency>
-                                        </CheckCard>
-                                        <CheckCard checked>
+                                    <h4 className="mrc-ui-form-label mt-5 mb-2">Choose New Limit</h4>
+                                    <Card dropShadow>
+                                        <h4 className="mrc-ui-form-label mb-1">Amount</h4>
+                                        <Grid cols={3}>
                                             <FlexRow alignItems="baseline">
                                                 <div className="mr-3">
                                                     <NumberInput />
                                                 </div>
-                                                <MrcCurrencySymbol type="small" />
+                                                <MrcCurrencySymbol />
                                             </FlexRow>
-                                        </CheckCard>
-                                    </Grid>
-                                </Card>
-                            </CreditTableFormSection>
-                            <hr />
-                            <CreditTableFormSection
-                                title="Payment Method"
-                                description="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod magna aliqua."
-                            >
-                                <h4 className="mrc-ui-form-label mt-0 mb-2">Choose New Limit</h4>
-                                <Card dropShadow>
-                                    <h4 className="mrc-ui-form-label mb-2">Choose Amount</h4>
-                                    <Grid cols={4}>
-                                        <CheckCard title="Current" />
-                                        <CheckCard title="Customer Wish" />
-                                        <CheckCard title="CM" />
-                                        <CheckCard title="New" checked />
-                                    </Grid>
-                                    <h4 className="mrc-ui-form-label mt-4 mb-2">Creditperiod</h4>
-                                    <Select />
-                                    <h4 className="mrc-ui-form-label mt-4 mb-2">Choose Expiry</h4>
-                                    <Grid cols={3}>
-                                        <CheckCard title="Without Expiry" checked />
-                                        <CheckCard title="Date of Expiry" checked>
-                                            <NumberInput />
-                                        </CheckCard>
-                                        <GridItem alignSelf="center">
-                                            <a>set date of expiry to all customers payments</a>
-                                        </GridItem>
-                                    </Grid>
-                                    <h4 className="mrc-ui-form-label mt-4 mb-2">Set Limit after expiry to</h4>
-                                    <Grid cols={4}>
-                                        <CheckCard title="Current">
-                                            <CRPaymentMethodSetting
-                                                product="Bank Transfer"
-                                                period="14 Days"
-                                                directDebit="Basislastschrift"
-                                            />
-                                        </CheckCard>
-                                        <CheckCard title="Customer Wish">
-                                            <CRPaymentMethodSetting product="Bank Transfer" period="14 Days" />
-                                        </CheckCard>
-                                        <CheckCard title="CM" checked>
-                                            <CRPaymentMethodSetting
-                                                product="Bank Transfer"
-                                                period="14 Days"
-                                                directDebit="Basislastschrift"
-                                            />
-                                        </CheckCard>
-                                        {/* <CheckCard title="New" /> */}
-                                    </Grid>
-                                </Card>
-                            </CreditTableFormSection>
-                        </Table.D>
-                    </Table.R>
-                )}
+                                        </Grid>
+                                        <h4 className="mrc-ui-form-label mt-4 mb-1">Choose Expiry</h4>
+                                        <Grid cols={3}>
+                                            <CheckCard title="Without Expiry" checked />
+                                            <CheckCard title="Date of Expiry" checked>
+                                                <NumberInput />
+                                            </CheckCard>
+                                            <GridItem alignSelf="center">
+                                                <a>set date of expiry to all customers limits</a>
+                                            </GridItem>
+                                        </Grid>
+                                        <h4 className="mrc-ui-form-label mt-4 mb-2">Set Limit after expiry to</h4>
+                                        <Grid cols={3}>
+                                            <CheckCard checked>
+                                                <MrcCurrency type="large-bold">123</MrcCurrency>
+                                            </CheckCard>
+                                            <CheckCard>
+                                                <MrcCurrency type="large-bold">6000</MrcCurrency>
+                                            </CheckCard>
+                                            <CheckCard checked>
+                                                <FlexRow alignItems="baseline">
+                                                    <div className="mr-3">
+                                                        <NumberInput />
+                                                    </div>
+                                                    <MrcCurrencySymbol type="small" />
+                                                </FlexRow>
+                                            </CheckCard>
+                                        </Grid>
+                                    </Card>
+                                </CreditTableFormSection>
+                                <hr />
+                                <CreditTableFormSection
+                                    title="Payment Method"
+                                    description="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod magna aliqua."
+                                >
+                                    <h4 className="mrc-ui-form-label mt-0 mb-2">Choose New Limit</h4>
+                                    <Card dropShadow>
+                                        <h4 className="mrc-ui-form-label mb-2">Choose Amount</h4>
+                                        <Grid cols={4}>
+                                            <CheckCard title="Current" />
+                                            <CheckCard title="Customer Wish" />
+                                            <CheckCard title="CM" />
+                                            <CheckCard title="New" checked />
+                                        </Grid>
+                                        <h4 className="mrc-ui-form-label mt-4 mb-2">Creditperiod</h4>
+                                        <Select />
+                                        <h4 className="mrc-ui-form-label mt-4 mb-2">Choose Expiry</h4>
+                                        <Grid cols={3}>
+                                            <CheckCard title="Without Expiry" checked />
+                                            <CheckCard title="Date of Expiry" checked>
+                                                <NumberInput />
+                                            </CheckCard>
+                                            <GridItem alignSelf="center">
+                                                <a>set date of expiry to all customers payments</a>
+                                            </GridItem>
+                                        </Grid>
+                                        <h4 className="mrc-ui-form-label mt-4 mb-2">Set Limit after expiry to</h4>
+                                        <Grid cols={4}>
+                                            <CheckCard title="Current">
+                                                <CRPaymentMethodSetting
+                                                    product="Bank Transfer"
+                                                    period="14 Days"
+                                                    directDebit="Basislastschrift"
+                                                />
+                                            </CheckCard>
+                                            <CheckCard title="Customer Wish">
+                                                <CRPaymentMethodSetting product="Bank Transfer" period="14 Days" />
+                                            </CheckCard>
+                                            <CheckCard title="CM" checked>
+                                                <CRPaymentMethodSetting
+                                                    product="Bank Transfer"
+                                                    period="14 Days"
+                                                    directDebit="Basislastschrift"
+                                                />
+                                            </CheckCard>
+                                            {/* <CheckCard title="New" /> */}
+                                        </Grid>
+                                    </Card>
+                                </CreditTableFormSection>
+                            </Table.D>
+                        </Table.R>
+                    ))}
             </React.Fragment>
         );
     }
@@ -269,6 +315,8 @@ export default class CreditTableRow extends Component {
 
 CreditTableRow.propTypes = {
     id: PropTypes.string,
+    historical: PropTypes.bool,
+    isCashCustomer: PropTypes.bool,
     country: PropTypes.string,
     isZebra: PropTypes.bool,
     customer: PropTypes.object,

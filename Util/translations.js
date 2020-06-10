@@ -4,6 +4,7 @@ import { addCsrfToken } from './csrf';
 // only add entries that are used in global-react-components, other translations are defined in services themselves
 // (this makes it easier to see which keys are actually used or can be cleaned up)
 let translations = {
+    'mrc.status.blocked': 'Blocked',
     'mrc.reports.title': 'Available Reports',
     'mrc.file.select': 'SELECT FILE',
     'mrc.file.upload': 'UPLOAD FILE',
@@ -64,6 +65,9 @@ let translations = {
     'mrc.credittab.choosepayment': 'Choose Payment',
     'mrc.credittab.cash': 'Cash',
     'mrc.payment.Prepayment': 'Prepayment',
+    'mrc.credittab.payment': 'Payment',
+    'mrc.creditdata.title': 'Credit',
+    'mrc.credittab.chooseamount': 'Choose Amount',
 };
 
 export const addTranslations = update => {
