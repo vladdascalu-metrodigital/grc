@@ -17,12 +17,13 @@ const translations = {
     customerWish: lookup('mrc.credittab.customerWish'),
     expiry: lookup('mrc.credittab.expiry'),
     limit: lookup('mrc.credittab.limit'),
+    customer: lookup('mrc.customerdata.title'),
     creditproduct: lookup('mrc.creditdetails.creditproduct'),
 };
 
 export default class CreditTableHead extends Component {
     render() {
-        const { groupLimit, historical, countryCode } = this.props;
+        const { groupLimit, historical, country } = this.props;
         return (
             <React.Fragment>
                 <Table.R sticky="credit-table-head-sticky" type="head-light">
@@ -34,7 +35,7 @@ export default class CreditTableHead extends Component {
                             <CRTableHeaderCellCustomerGroupLimit
                                 limit={groupLimit.granted}
                                 exhausted={groupLimit.exhausted}
-                                country={countryCode}
+                                country={country}
                                 subtitle={
                                     groupLimit.exhausted
                                         ? [translations.exhausted, translations.granted].join('/')
@@ -47,8 +48,8 @@ export default class CreditTableHead extends Component {
                     <Table.H colSpan="3">
                         {groupLimit ? (
                             <CRTableHeaderCellCustomerGroupLimit
-                                limit={groupLimit.customerWish}
-                                country={countryCode}
+                                limit={groupLimit.wish}
+                                country={country}
                                 subtitle={translations.toBeGranted}
                                 isGreen
                             />
@@ -57,7 +58,7 @@ export default class CreditTableHead extends Component {
                     <Table.H className="border-fix"></Table.H>
                 </Table.R>
                 <Table.R sticky="credit-table-head-sticky" type="head">
-                    <Table.H rowSpan="2">Customer</Table.H>
+                    <Table.H rowSpan="2">{translations.customer}</Table.H>
                     <Table.H colSpan="3">
                         <CRTableHeaderCellLimitColSpanTitle
                             title={historical ? translations.old : translations.current}

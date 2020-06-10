@@ -55,9 +55,15 @@ let translations = {
     'mrc.credittab.limit': 'Limit',
     'mrc.creditdetails.creditproduct': 'Creditproduct',
     'mrc.credittab.new': 'New',
+    'mrc.credittab.old': 'Old',
+    'mrc.credittab.toBeGranted': 'To be granted',
     'mrc.credittab.customerWish': 'Customer Wish',
     'mrc.credittab.customerGroup': 'Customer Group',
+    'mrc.credittab.days': 'Days',
     'addfield.profitability': 'Profitability',
+    'mrc.credittab.choosepayment': 'Choose Payment',
+    'mrc.credittab.cash': 'Cash',
+    'mrc.payment.Prepayment': 'Prepayment',
 };
 
 export const addTranslations = update => {
