@@ -20,6 +20,16 @@ import ToggleIndicator from '../../ToggleIndicator';
 import CheckCard from '../../CheckCard';
 import Select from '../../Select';
 import CRPaymentMethodSetting from './CRPaymentMethodSetting';
+import { lookup } from '../../Util/translations';
+
+import * as _ from 'lodash';
+
+const translations = {
+    days: lookup('mrc.credittab.days'),
+    choosepayment: lookup('mrc.credittab.choosepayment'),
+    prepayment: lookup('mrc.payment.Prepayment'),
+    cash: lookup('mrc.credittab.cash'),
+};
 
 export default class CreditTableRow extends Component {
     constructor(props) {
@@ -46,7 +56,7 @@ export default class CreditTableRow extends Component {
 
     render() {
         let { isExpanded, isHovered } = this.state;
-        let { id, isZebra, customer } = this.props;
+        let { id, isZebra, customer, country } = this.props;
         let type = isZebra ? 'zebra' : null;
 
         return (
@@ -74,11 +84,11 @@ export default class CreditTableRow extends Component {
                     </Table.D>
 
                     <Table.D colSpan="3" rowSpan="2">
-                        <CRTableCellPrepaymentCash name="Prepayment" isBlue />
+                        <CRTableCellPrepaymentCash name={translations.prepayment} isBlue />
                     </Table.D>
 
                     <Table.D colSpan="3">
-                        <CRTableCellPrepaymentCash name="Cash" isGreen />
+                        <CRTableCellPrepaymentCash name={translations.cash} />
                     </Table.D>
                     <Table.D rowSpan="2">
                         <ToggleIndicator tilt={isExpanded} />
@@ -96,16 +106,25 @@ export default class CreditTableRow extends Component {
                     onMouseLeave={() => this.hover(false)}
                 >
                     <Table.D>
-                        <CRTableCellLimit country="EUR" exhausted="22000" limit="30000" isGreen />
+                        <CRTableCellLimit
+                            country={country}
+                            exhausted={null}
+                            limit={_.get(customer, 'limit.current.amount')}
+                            isGreen
+                        />
                     </Table.D>
                     <Table.D>
-                        <CRTableCellExpiry expiryLimit="10000" expiryDate="4/2/2020" isGreen />
+                        <CRTableCellExpiry
+                            expiryLimit={_.get(customer, 'limit.expiry.amount')}
+                            expiryDate={_.get(customer, 'limit.expiry.date')}
+                            isGreen
+                        />
                     </Table.D>
                     <Table.D borderFix>
                         <CRTableCellCreditProduct
-                            productName="Metro Cash"
-                            productTimePeriod="14 Days"
-                            productPaymentMethod="Direct Debit 1"
+                            productName={_.get(customer, 'limit.current.product')}
+                            productTimePeriod={[_.get(customer, 'limit.current.period'), translations.days].join(' ')}
+                            productPaymentMethod={_.get(customer, 'limit.current.method')}
                             isGreen
                         />
                     </Table.D>
@@ -126,7 +145,7 @@ export default class CreditTableRow extends Component {
                                 title="Payment"
                                 description="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt magna aliqua."
                             >
-                                <h4 className="mrc-ui-form-label mb-2">Choose Payment Type</h4>
+                                <h4 className="mrc-ui-form-label mb-2">{translations.choosepayment}</h4>
                                 <Grid cols={4}>
                                     <CheckCard title="Cash" />
                                     <CheckCard title="Credit" checked />
@@ -250,6 +269,7 @@ export default class CreditTableRow extends Component {
 
 CreditTableRow.propTypes = {
     id: PropTypes.string,
+    country: PropTypes.string,
     isZebra: PropTypes.bool,
     customer: PropTypes.object,
     stickyOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
