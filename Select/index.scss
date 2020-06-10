@@ -1,0 +1,9 @@
+@import '../lib/scss/form-styles';
+
+.mrc-ui-select {
+  position: relative;
+}
+
+.mrc-ui-select-input {
+  @include input-base();
+}
