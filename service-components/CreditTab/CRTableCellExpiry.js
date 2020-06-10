@@ -15,11 +15,9 @@ export default class CRTableCellExpiry extends PureComponent {
 
         return (
             <div className="mrc-ui-crtable-cell-expiry">
-                <div className={className}>
-                    <MrcNumber isCurrency>{expiryLimit}</MrcNumber>
-                </div>
+                <div className={className}>{expiryLimit ? <MrcNumber isCurrency>{expiryLimit}</MrcNumber> : '-'}</div>
                 <div className="mrc-ui-crtable-cell-expiry-date">
-                    <MrcDate>{expiryDate}</MrcDate>
+                    {expiryLimit ? <MrcDate>{expiryDate}</MrcDate> : null}
                 </div>
             </div>
         );

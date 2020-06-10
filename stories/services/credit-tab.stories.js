@@ -24,7 +24,7 @@ storiesOf('Services/Credit Tab', module)
                             period: '12',
                             method: 'Basislastshriftmandat',
                         },
-                        expiry: { amount: 1000, date: '4/2/2020' },
+                        expiry: { amount: null, date: null },
                     },
                 },
                 {
@@ -57,7 +57,6 @@ storiesOf('Services/Credit Tab', module)
                             period: '12',
                             method: 'Basislastshriftmandat',
                         },
-                        expiry: { amount: 1000, date: '4/2/2020' },
                     },
                 },
             ]}
