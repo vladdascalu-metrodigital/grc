@@ -68,6 +68,8 @@ let translations = {
     'mrc.credittab.payment': 'Payment',
     'mrc.creditdata.title': 'Credit',
     'mrc.credittab.chooseamount': 'Choose Amount',
+    'mrc.credittab.groupdetails': 'Group Details',
+    'mrc.credittab.requestdetails': 'Request Details',
 };
 
 export const addTranslations = update => {

@@ -29,7 +29,11 @@ export default class CreditTab extends Component {
             <MainContent>
                 <Grid>
                     {customer ? (
-                        <BoxWithTitle title="Groupdetails" action={{ title: 'edit', fn: () => alert('edit') }}>
+                        <BoxWithTitle
+                            title={lookup('mrc.credittab.groupdetails')}
+                            // TODO
+                            action={null}
+                        >
                             <KeyValueGroup>
                                 <KeyValueRow>
                                     <Key>{translations.name}</Key>
@@ -46,7 +50,11 @@ export default class CreditTab extends Component {
                             </KeyValueGroup>
                         </BoxWithTitle>
                     ) : null}
-                    <BoxWithTitle title="Requestdetails" action={{ title: 'edit', fn: () => {} }}>
+                    <BoxWithTitle
+                        title={lookup('mrc.credittab.requestdetails')}
+                        // TODO
+                        action={null}
+                    >
                         <h3 className="mrc-ui-credit-tab-profit-label">{lookup('addfield.profitability')}</h3>
                         <span className="mrc-ui-credit-tab-profit-number">20</span>%
                     </BoxWithTitle>
