@@ -47,6 +47,17 @@ let translations = {
     'mrc.customerdata.contactInfo': 'Contact Info',
     'mrc.customerdata.businessInfo': 'Business Info',
     'mrc.customerdetails.fields.branch': 'Branch',
+
+    'mrc.creditdata.current': 'Current',
+    'mrc.credittab.expiry': 'Expiry',
+    'mrc.credittab.granted': 'Granted',
+    'mrc.credittab.exhausted': 'Exhausted',
+    'mrc.credittab.limit': 'Limit',
+    'mrc.creditdetails.creditproduct': 'Creditproduct',
+    'mrc.credittab.new': 'New',
+    'mrc.credittab.customerWish': 'Customer Wish',
+    'mrc.credittab.customerGroup': 'Customer Group',
+    'addfield.profitability': 'Profitability',
 };
 
 export const addTranslations = update => {
