@@ -4,7 +4,7 @@ import CheckCard from '../CheckCard';
 import Grid from '../Grid';
 import { action } from '@storybook/addon-actions';
 
-storiesOf('Fundamentals/CheckCard', module).add('check card', () => {
+storiesOf('Forms/CheckCard', module).add('A check card', () => {
     const [isChecked, setChecked] = useState(false);
     const handleClick = value => {
         action('clicked')(value);
