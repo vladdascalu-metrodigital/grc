@@ -30,7 +30,7 @@ export default class Grid extends Component {
 }
 
 Grid.propTypes = {
-    cols: PropTypes.number,
+    cols: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     gap: PropTypes.string,
     justifyContent: PropTypes.string,
     alignItems: PropTypes.string,
