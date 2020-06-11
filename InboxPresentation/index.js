@@ -13,13 +13,24 @@ import InboxFilterPanel from '../InboxFilterPanel';
 export default class InboxPresentation extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            filter: {},
+        };
+        this.props.fetchInboxItems({});
+        this.onFilterChange = this.onFilterChange.bind(this);
+        this.onConfirmItem = this.onConfirmItem.bind(this);
     }
 
     render() {
-        const inbox = this.props.data || [];
+        const data = this.props.data || undefined;
+        const inbox = data && data.inboxUIItems ? data.inboxUIItems : [];
+        const availableFilterOptions = {
+            assignedUserNames: data && data.assignedUserNames ? data.assignedUserNames : [],
+            positions: data && data.positions ? data.positions : [],
+        };
         return (
             <div className="mrc-inbox">
-                {this.renderFilter()}
+                {this.renderFilter(availableFilterOptions)}
 
                 <div className="mrc-tab list-header">
                     <h4 className="span-metro-blue uppercase">
@@ -32,16 +43,32 @@ export default class InboxPresentation extends Component {
         );
     }
 
-    renderFilter = () => {
+    onFilterChange = filter => {
+        this.setState({
+            filter: filter,
+        });
+        this.props.fetchInboxItems(filter);
+    };
+
+    onConfirmItem = uri => {
+        this.props.confirmNotification(uri, this.state.filter);
+    };
+
+    renderFilter = availableFilterOptions => {
         if (this.props.filterAvailable !== undefined && this.props.filterAvailable)
             return (
                 <div>
-                    <InboxFilterPanel chosenFilter={this.props.currentFilterValue()} onChange={this.props.onFilterChanged} />
+                    <InboxFilterPanel
+                        availableFilterOptions={availableFilterOptions}
+                        onChange={this.onFilterChange}
+                        setChosenFilter={this.props.setChosenFilter}
+                        getChosenFilter={this.props.getChosenFilter}
+                    />
                 </div>
             );
     };
 
-    renderInboxEntry = (entry) => {
+    renderInboxEntry = entry => {
         return (
             <div key={entry.id} id={entry.id} className="mrc-detail clickable">
                 <InboxItemPresentation
@@ -51,7 +78,7 @@ export default class InboxPresentation extends Component {
                     isNew={entry.new}
                     confirmationURI={entry.confirmationURI}
                     markAsReadURI={entry.markAsReadURI}
-                    confirmNotification={this.props.confirmNotification}
+                    confirmNotification={this.onConfirmItem}
                     navigateToDetails={this.props.navigateToDetails}
                     openDetailsOnNewTab={this.props.openDetailsOnNewTab}
                     timeoutAt={entry.timeoutAt}
@@ -67,7 +94,7 @@ export default class InboxPresentation extends Component {
         );
     };
 
-    titleUpdate = (entry) => {
+    titleUpdate = entry => {
         let title =
             entry.translateKey !== null && entry.translateKey !== '' ? lookup(entry.translateKey) : lookup(entry.title);
         if (entry.position && entry.position !== null && entry.position !== '') {
@@ -76,7 +103,7 @@ export default class InboxPresentation extends Component {
         return title;
     };
 
-    dispatchType = (entry) => {
+    dispatchType = entry => {
         switch (entry.topic) {
             case 'APPROVAL_STEP_READY':
                 return <ApprovalInboxItemPresentation isTablet={this.props.isTablet} entry={entry} />;
@@ -85,7 +112,7 @@ export default class InboxPresentation extends Component {
                     <NotificationInboxItemPresentation
                         isTablet={this.props.isTablet}
                         entry={entry}
-                        confirmNotification={this.props.confirmNotification}
+                        confirmNotification={this.onConfirmItem}
                     />
                 );
             case 'REVIEW_NOTIFICATION':
@@ -101,15 +128,23 @@ export default class InboxPresentation extends Component {
 }
 
 InboxPresentation.propTypes = {
-    data: PropTypes.arrayOf(
-        PropTypes.shape({
-            title: PropTypes.string,
-            detailsURI: PropTypes.string,
-            confirmationURI: PropTypes.string,
-            autoDecision: PropTypes.string,
-            topic: PropTypes.topic,
-        })
-    ),
+    fetchInboxItems: PropTypes.func,
+    getChosenFilter: PropTypes.func,
+    setChosenFilter: PropTypes.func,
+    data: PropTypes.shape({
+        assignedUserNames: PropTypes.arrayOf(PropTypes.string),
+        positions: PropTypes.arrayOf(PropTypes.string),
+        totalElements: PropTypes.number,
+        inboxUIItems: PropTypes.arrayOf(
+            PropTypes.shape({
+                title: PropTypes.string,
+                detailsURI: PropTypes.string,
+                confirmationURI: PropTypes.string,
+                autoDecision: PropTypes.string,
+                topic: PropTypes.topic,
+            })
+        ),
+    }),
     filterAvailable: PropTypes.any,
     isTablet: PropTypes.bool,
     confirmNotification: PropTypes.func,
@@ -118,6 +153,4 @@ InboxPresentation.propTypes = {
     ownStoreInitiatedRequests: PropTypes.func,
     navigateToDetails: PropTypes.func,
     openDetailsOnNewTab: PropTypes.func,
-    onFilterChanged: PropTypes.func,
-    currentFilterValue: PropTypes.func,
 };
