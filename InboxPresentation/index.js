@@ -28,6 +28,12 @@ export default class InboxPresentation extends Component {
             assignedUserNames: data && data.assignedUserNames ? data.assignedUserNames : [],
             positions: data && data.positions ? data.positions : [],
         };
+        const renderInboxItems = inbox => {
+            if (!inbox || !inbox.length) {
+                return null;
+            }
+            return <div className="mrc-inbox-items">{inbox.map(this.renderInboxEntry)}</div>;
+        };
         return (
             <div className="mrc-inbox">
                 {this.renderFilter(availableFilterOptions)}
@@ -37,8 +43,7 @@ export default class InboxPresentation extends Component {
                         {inbox.length} {lookup('inbox.numberOfItems')}
                     </h4>
                 </div>
-
-                {inbox.map(this.renderInboxEntry)}
+                {renderInboxItems(inbox)}
             </div>
         );
     }
@@ -55,17 +60,15 @@ export default class InboxPresentation extends Component {
     };
 
     renderFilter = availableFilterOptions => {
-        if (this.props.filterAvailable !== undefined && this.props.filterAvailable)
-            return (
-                <div>
-                    <InboxFilterPanel
-                        availableFilterOptions={availableFilterOptions}
-                        onChange={this.onFilterChange}
-                        setChosenFilter={this.props.setChosenFilter}
-                        getChosenFilter={this.props.getChosenFilter}
-                    />
-                </div>
-            );
+        return (
+            <InboxFilterPanel
+                filterAvailable={this.props.filterAvailable}
+                availableFilterOptions={availableFilterOptions}
+                onChange={this.onFilterChange}
+                setChosenFilter={this.props.setChosenFilter}
+                getChosenFilter={this.props.getChosenFilter}
+            />
+        );
     };
 
     renderInboxEntry = entry => {

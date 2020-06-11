@@ -17,6 +17,13 @@ export default class InboxFilterPanel extends Component {
     }
 
     renderFirstLevelFilter = () => {
+        if (this.props.filterAvailable === undefined) {
+            return null;
+        }
+        if (!(this.props.filterAvailable !== undefined && this.props.filterAvailable)) {
+            this.execOnChange({ filterName: 'store-customers-requests' });
+            return null;
+        }
         return (
             <div className="inbox-filter">
                 <div className="mrc-radio-button">
@@ -166,6 +173,7 @@ export default class InboxFilterPanel extends Component {
 }
 
 InboxFilterPanel.propTypes = {
+    filterAvailable: PropTypes.bool,
     onChange: PropTypes.func,
     getChosenFilter: PropTypes.func,
     setChosenFilter: PropTypes.func,
