@@ -154,6 +154,22 @@ storiesOf('Services/Credit Tab', module)
                         wish: { amount: 30000, product: 'Metro Top', period: '12', method: 'Basislastshriftmandat' },
                     },
                 },
+                {
+                    name: 'Customer D',
+                    storeNumber: 10,
+                    number: 96,
+                    limit: {
+                        old: { amount: 0, product: null, period: null, method: null },
+                        wish: { amount: 30000, product: 'Metro Cash', period: '12', method: 'Basislastshriftmandat' },
+                        current: {
+                            amount: 20000,
+                            product: 'Metro Top',
+                            period: '12',
+                            method: 'Basislastshriftmandat',
+                            expiry: { amount: 0, date: '4/2/2020' },
+                        },
+                    },
+                },
             ]}
         />
     ));

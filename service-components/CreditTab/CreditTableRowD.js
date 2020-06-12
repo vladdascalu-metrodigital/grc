@@ -1,48 +1,136 @@
 import React, { Component } from 'react';
 import Table from '../../MrcTable';
+import ExpandedRow from './ExpandedRow';
 import CRTableCellCustomer from './CRTableCellCustomer';
 import CRTableCellLimit from './CRTableCellLimit';
 import CRTableCellExpiry from './CRTableCellExpiry';
 import CRTableCellCreditProduct from './CRTableCellCreditProduct';
 import CRTableCellPrepaymentCash from './CRTableCellPrepaymentCash';
 import ToggleIndicator from '../../ToggleIndicator';
+import { lookup } from '../../Util/translations';
+
+import * as _ from 'lodash';
+
+const translations = {
+    cash: lookup('mrc.credittab.cash'),
+};
 
 export default class CreditTableRowC extends Component {
     render() {
+        const currentOrNew = (historical, obj, path) =>
+            historical ? _.get(obj, 'limit.current.' + path) : _.get(obj, 'limit.new.' + path);
+        const {
+            customer,
+            isExpanded,
+            country,
+            isHovered,
+            id,
+            canToggle,
+            type,
+            historical,
+            onExpand,
+            onHover,
+        } = this.props;
         return (
             <React.Fragment>
-                <Table.R isActive>
+                <Table.R
+                    isActive={isExpanded}
+                    isHovered={isHovered}
+                    sticky={id}
+                    stickyOffset={'tr[data-sticky="credit-table-head-sticky"]'}
+                    type={type}
+                    style={{
+                        cursor: canToggle ? 'pointer' : 'auto',
+                        '--sticky-override': isExpanded ? 'sticky' : 'static',
+                    }}
+                    onClick={canToggle ? () => onExpand() : null}
+                    onMouseEnter={canToggle ? () => onHover(true) : null}
+                    onMouseLeave={canToggle ? () => onHover(false) : null}
+                >
                     <Table.D rowSpan="2">
-                        <CRTableCellCustomer name="Mepo GmbH" number="12/123432" isBlocked isHighlighted />
+                        {customer ? (
+                            <CRTableCellCustomer
+                                name={customer.name}
+                                number={[customer.storeNumber, customer.number].join('/')}
+                                isBlocked={customer.isBlocked}
+                                isHighlighted
+                            />
+                        ) : null}
                     </Table.D>
 
                     <Table.D colSpan="3" rowSpan="2">
-                        <CRTableCellPrepaymentCash name="Prepayment" isBlue />
+                        <CRTableCellPrepaymentCash name={translations.cash} isBlue />
                     </Table.D>
 
-                    <Table.D colSpan="3">
-                        <CRTableCellPrepaymentCash name="Cash" isGreen />
+                    <Table.D>
+                        <CRTableCellLimit
+                            country={country}
+                            exhausted={null}
+                            limit={_.get(customer, 'limit.wish.amount')}
+                        />
+                    </Table.D>
+
+                    <Table.D>
+                        <CRTableCellExpiry
+                            expiryLimit={_.get(customer, 'limit.wish.expiry.amount')}
+                            expiryDate={_.get(customer, 'limit.wish.expiry.date')}
+                        />
+                    </Table.D>
+
+                    <Table.D borderFix>
+                        <CRTableCellCreditProduct
+                            productName={_.get(customer, 'limit.wish.product')}
+                            productTimePeriod={[_.get(customer, 'limit.wish.period'), translations.days].join(' ')}
+                            productPaymentMethod={_.get(customer, 'limit.wish.method')}
+                        />
                     </Table.D>
                     <Table.D rowSpan="2">
                         <ToggleIndicator />
                     </Table.D>
                 </Table.R>
-                <Table.R isActive>
+                <Table.R
+                    isActive={isExpanded}
+                    isHovered={isHovered}
+                    sticky={id}
+                    stickyOffset={'tr[data-sticky="credit-table-head-sticky"]'}
+                    type={type}
+                    style={{
+                        cursor: canToggle ? 'pointer' : 'auto',
+                        '--sticky-override': isExpanded ? 'sticky' : 'static',
+                    }}
+                    onClick={canToggle ? () => onExpand() : null}
+                    onMouseEnter={canToggle ? () => onHover(true) : null}
+                    onMouseLeave={canToggle ? () => onHover(false) : null}
+                >
                     <Table.D>
-                        <CRTableCellLimit country="EUR" exhausted="22000" limit="30000" isGreen />
+                        <CRTableCellLimit
+                            country={country}
+                            exhausted={null}
+                            limit={currentOrNew(historical, customer, 'amount')}
+                            isGreen
+                        />
                     </Table.D>
+
                     <Table.D>
-                        <CRTableCellExpiry expiryLimit="10000" expiryDate="4/2/2020" isGreen />
+                        <CRTableCellExpiry
+                            expiryLimit={currentOrNew(historical, customer, 'expiry.amount')}
+                            expiryDate={currentOrNew(historical, customer, 'expiry.date')}
+                            isGreen
+                        />
                     </Table.D>
+
                     <Table.D borderFix>
                         <CRTableCellCreditProduct
-                            productName="Metro Cash"
-                            productTimePeriod="14 Days"
-                            productPaymentMethod="Direct Debit 1"
+                            productName={currentOrNew(historical, customer, 'product')}
+                            productTimePeriod={[currentOrNew(historical, customer, 'period'), translations.days].join(
+                                ' '
+                            )}
+                            productPaymentMethod={currentOrNew(historical, customer, 'method')}
                             isGreen
                         />
                     </Table.D>
                 </Table.R>
+                {isExpanded ? <ExpandedRow {...this.props} /> : null}
             </React.Fragment>
         );
     }

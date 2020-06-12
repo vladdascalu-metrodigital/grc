@@ -161,7 +161,7 @@ export default class CreditTableRowA extends Component {
 
                     <Table.D borderFix>
                         <CRTableCellCreditProduct
-                            productName={currentOrNew(customer, historical, 'product')}
+                            productName={currentOrNew(historical, customer, 'product')}
                             productTimePeriod={[currentOrNew(historical, customer, 'period'), translations.days].join(
                                 ' '
                             )}
@@ -170,7 +170,7 @@ export default class CreditTableRowA extends Component {
                         />
                     </Table.D>
                 </Table.R>
-                {isExpanded && <ExpandedRow {...this.props} />}
+                {isExpanded ? <ExpandedRow {...this.props} /> : null}
             </React.Fragment>
         );
     }

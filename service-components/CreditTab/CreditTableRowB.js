@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Table from '../../MrcTable';
+import ExpandedRow from './ExpandedRow';
 import CRTableCellCustomer from './CRTableCellCustomer';
 import CRTableCellLimit from './CRTableCellLimit';
 import CRTableCellExpiry from './CRTableCellExpiry';
@@ -101,10 +102,11 @@ export default class CreditTableRowB extends Component {
                             productPaymentMethod={_.get(customer, 'limit.wish.method')}
                         />
                     </Table.D>
-                    <Table.D rowSpan="2">
+                    <Table.D>
                         <ToggleIndicator />
                     </Table.D>
                 </Table.R>
+                {isExpanded ? <ExpandedRow {...this.props} /> : null}
             </React.Fragment>
         );
     }
