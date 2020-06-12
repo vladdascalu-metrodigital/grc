@@ -27,6 +27,6 @@ export default class MrcDate extends PureComponent {
 }
 
 MrcDate.propTypes = {
-    type: PropTypes.oneOf(['small']),
+    type: PropTypes.oneOf(['small', 'smaller']),
     children: PropTypes.string,
 };

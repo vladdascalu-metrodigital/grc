@@ -69,5 +69,5 @@ MrcNumber.propTypes = {
     children: PropTypes.string,
     country: PropTypes.string,
     isCurrency: PropTypes.bool,
-    type: PropTypes.oneOf(['small']),
+    type: PropTypes.oneOf(['small', 'smaller']),
 };

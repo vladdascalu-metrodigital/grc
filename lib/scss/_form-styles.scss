@@ -12,9 +12,17 @@
   font-size: 1rem;
   font-family: inherit;
   padding: 0 .75rem;
-  height: 2.5rem;
+  height: $height-input;
   color: $color-palette-grey-default;
   border-radius: 2px;
   transition: .125s ease-in-out 0s;
   transition-property: border-color;
+  margin: 0;
+
+  &:focus {
+    border-color: $color-palette-blue-tint-50;
+    box-shadow: $shadow-outline;
+    outline: none;
+  }
 }
+

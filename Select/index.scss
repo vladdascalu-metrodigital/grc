@@ -7,3 +7,12 @@
 .mrc-ui-select-input {
   @include input-base();
 }
+
+.mrc-ui-select-icon {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  height: $height-input;
+  right: $spacing-small;
+  top: 0;
+}
