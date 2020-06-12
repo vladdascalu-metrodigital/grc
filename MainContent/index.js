@@ -13,7 +13,7 @@ export default class MainContent extends Component {
     render() {
         return (
             <div className="mrc-ui-main-content">
-                <div clasName="mrc-ui-main-content-content">{this.props.children}</div>
+                <div className="mrc-ui-main-content-content">{this.props.children}</div>
             </div>
         );
     }
