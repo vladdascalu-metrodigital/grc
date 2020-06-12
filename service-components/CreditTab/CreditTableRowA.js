@@ -92,7 +92,7 @@ export default class CreditTableRowA extends Component {
                             country={country}
                             exhausted={null}
                             limit={oldOrCurrent(historical, customer, 'amount')}
-                            isGreen
+                            isBlue
                         />
                     </Table.D>
 
@@ -100,7 +100,7 @@ export default class CreditTableRowA extends Component {
                         <CRTableCellExpiry
                             expiryLimit={oldOrCurrent(historical, customer, 'expiry.amount')}
                             expiryDate={oldOrCurrent(historical, customer, 'expiry.date')}
-                            isGreen
+                            isBlue
                         />
                     </Table.D>
 
@@ -111,8 +111,8 @@ export default class CreditTableRowA extends Component {
                                 oldOrCurrent(historical, customer, 'period'),
                                 oldOrCurrent(historical, customer, 'period') ? translations.days : '-',
                             ].join(' ')}
-                            productPaymentMethod={_.get(customer, 'limit.old.method')}
-                            isGreen
+                            productPaymentMethod={oldOrCurrent(historical, customer, 'method')}
+                            isBlue
                         />
                     </Table.D>
 
@@ -175,7 +175,7 @@ export default class CreditTableRowA extends Component {
 
                     <Table.D borderFix>
                         <CRTableCellCreditProduct
-                            productName={currentOrNew(customer, 'product')}
+                            productName={currentOrNew(customer, historical, 'product')}
                             productTimePeriod={[currentOrNew(historical, customer, 'period'), translations.days].join(
                                 ' '
                             )}

@@ -79,12 +79,7 @@ storiesOf('Services/Credit Tab', module)
                             method: 'Basislastshriftmandat',
                         },
                         wish: { amount: 30000, product: 'Metro Top', period: '12', method: 'Basislastshriftmandat' },
-                        new: {
-                            amount: 20000,
-                            product: 'Metro Top',
-                            period: '12',
-                            method: 'Basislastshriftmandat',
-                        },
+                        new: null,
                     },
                 },
             ]}
@@ -157,12 +152,6 @@ storiesOf('Services/Credit Tab', module)
                     limit: {
                         old: { amount: 12000, product: 'Metro Cash', period: '12', method: 'Basislastshriftmandat' },
                         wish: { amount: 30000, product: 'Metro Top', period: '12', method: 'Basislastshriftmandat' },
-                        current: {
-                            amount: 20000,
-                            product: 'Metro Top',
-                            period: '12',
-                            method: 'Basislastshriftmandat',
-                        },
                     },
                 },
             ]}

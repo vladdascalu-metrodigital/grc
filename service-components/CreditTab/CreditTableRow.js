@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import CreditTableRowA from './CreditTableRowA';
+import CreditTableRowB from './CreditTableRowB';
 
 import * as _ from 'lodash';
 
@@ -30,24 +31,41 @@ export default class CreditTableRow extends Component {
 
     render() {
         let { isZebra, customer, historical } = this.props;
-        // TODO We should make a choice here, which type of row. Here, I have
-        // just hardcoded type A. The name should change as well eventually.
-        return (
-            <CreditTableRowA
-                {...{
-                    ...this.props,
-                    onExpand: () => this.toggle(),
-                    onHover: flag => this.hover(flag),
-                    isExpanded: this.state.isExpanded,
-                    isHovered: this.state.isHovered,
-                    canToggle: !historical || _.get(customer, 'isBlocked'),
-                    type: isZebra ? 'zebra' : null,
-                    isCashCustomer:
-                        _.get(customer, 'limit.current.amount') === 0 ||
-                        _.isNil(_.get(customer, 'limit.current.amount')),
-                }}
-            />
-        );
+        if ((historical && _.get(customer, 'limit.current')) || (!historical && _.get(customer, 'limit.new'))) {
+            return (
+                <CreditTableRowA
+                    {...{
+                        ...this.props,
+                        onExpand: () => this.toggle(),
+                        onHover: flag => this.hover(flag),
+                        isExpanded: this.state.isExpanded,
+                        isHovered: this.state.isHovered,
+                        canToggle: !historical || _.get(customer, 'isBlocked'),
+                        type: isZebra ? 'zebra' : null,
+                        isCashCustomer:
+                            _.get(customer, 'limit.current.amount') === 0 ||
+                            _.isNil(_.get(customer, 'limit.current.amount')),
+                    }}
+                />
+            );
+        } else {
+            return (
+                <CreditTableRowB
+                    {...{
+                        ...this.props,
+                        onExpand: () => this.toggle(),
+                        onHover: flag => this.hover(flag),
+                        isExpanded: this.state.isExpanded,
+                        isHovered: this.state.isHovered,
+                        canToggle: !historical || _.get(customer, 'isBlocked'),
+                        type: isZebra ? 'zebra' : null,
+                        isCashCustomer:
+                            _.get(customer, 'limit.current.amount') === 0 ||
+                            _.isNil(_.get(customer, 'limit.current.amount')),
+                    }}
+                />
+            );
+        }
     }
 }
 
