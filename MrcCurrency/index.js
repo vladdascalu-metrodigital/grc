@@ -70,10 +70,14 @@ export default class MrcNumber extends PureComponent {
         let className = classnames('mrc-ui-currency', type && 'mrc-ui-currency-' + type);
         return (
             <span className={className}>
-                {numberParts.map(({ type, value }) => {
+                {numberParts.map(({ type, value }, i) => {
                     switch (type) {
                         case 'currency':
-                            return <span className="mrc-ui-currency-symb">{countryToCurrency[country]}</span>;
+                            return (
+                                <span key={i} className="mrc-ui-currency-symb">
+                                    {countryToCurrency[country]}
+                                </span>
+                            );
                         default:
                             return value;
                     }

@@ -22,6 +22,7 @@ import AdditionalFieldsSection from '../../AdditionalFields/AdditionalFieldsSect
 import './index.scss';
 import { RequestFieldPropTypes } from '../../AdditionalFields/AdditionalFieldsPropTypes';
 import { filterAdditionalFieldsList } from '../../AdditionalFields/additionalFielsUtil';
+import CreditTab from '../../service-components/CreditTab';
 
 import * as _ from 'lodash';
 import CustomerDataGroup from '../../CustomerDataGroup';
@@ -623,6 +624,78 @@ export default class LimitRequestLayout extends Component {
         }
     }
 
+    _creditTab() {
+        console.log(this.props);
+        const request = _.get(this.props, 'request.data');
+        const requestedItem = request
+            ? request.requestedItems
+                ? _.find(request.requestedItems, x => _.get(x, 'customer.requestedCustomer'))
+                : null
+            : null;
+        const firstName = _.get(requestedItem, 'customer.firstName');
+        const lastName = _.get(requestedItem, 'customer.lastName');
+        const customerName = (firstName, lastName) =>
+            firstName && lastName ? firstName + ' ' + lastName : lastName ? lastName : null;
+        console.log(this.state);
+        return (
+            <CreditTab
+                country={_.get(request, 'requestedCustomerId.country')}
+                historical={false}
+                groupLimit={{
+                    exhausted: _.get(request, 'requestedItems')
+                        ? _.sum(request.requestedItems.map(x => _.get(x, 'customer.limitExhaustion')))
+                        : null,
+                    current: _.get(request, 'requestedItems')
+                        ? _.sum(request.requestedItems.map(x => _.get(x, 'customer.creditLimit')))
+                        : null,
+                    wish: this.state.requestedGroupLimit,
+                }}
+                customer={{
+                    name: customerName(firstName, lastName),
+                    email: _.get(requestedItem, 'customer.email'),
+                    phone: _.get(requestedItem, 'customer.phoneNumber'),
+                }}
+                customers={
+                    _.get(request, 'requestedItems')
+                        ? request.requestedItems.map(data => {
+                              return {
+                                  name: customerName(
+                                      _.get(data, 'customer.firstName'),
+                                      _.get(data, 'customer.lastName')
+                                  ),
+                                  storeNumber: _.get(data, 'customer.storeNumber'),
+                                  number: _.get(data, 'customer.customerNumber'),
+                                  isBlocked: !_.isNil(_.get(data, 'customer.blockingReason')),
+                                  limit: {
+                                      current: {
+                                          amount: _.get(data, 'customer.creditLimit'),
+                                          product: _.get(data, 'customer.currentPayment.creditProduct'),
+                                          period: _.get(data, 'customer.currentPayment.creditPeriod'),
+                                          method: _.get(data, 'customer.currentPayment.debitType'),
+                                          expiry: {
+                                              date: _.get(data, 'currentLimitExpiry.limitExpiryDate'),
+                                              amount: _.get(data, 'currentLimitExpiry.resetToLimitAmount'),
+                                          },
+                                      },
+                                      wish: {
+                                          amount: _.get(data, 'requestedCreditData.amount'),
+                                          product: _.get(data, 'requestedCreditData.creditProduct'),
+                                          period: _.get(data, 'requestedCreditData.creditPeriod'),
+                                          method: _.get(data, 'requestedCreditData.debitType'),
+                                          expiry: {
+                                              date: _.get(data, 'requestedLimitExpiry.limitExpiryDate'),
+                                              amount: _.get(data, 'requestedLimitExpiry.resetToLimitAmount'),
+                                          },
+                                      },
+                                  },
+                              };
+                          })
+                        : []
+                }
+            />
+        );
+    }
+
     render() {
         const req = this.props.request;
         return (
@@ -644,12 +717,14 @@ export default class LimitRequestLayout extends Component {
                                     <TabList>
                                         <Tab>{lookup('mrc.customerdetails.title')}</Tab>
                                         <Tab>{lookup('mrc.creditdetails.title')}</Tab>
+                                        <Tab>{lookup('mrc.newcredittab.title')}</Tab>
                                         <Tab>{lookup('mrc.sales.title')}</Tab>
                                         <Tab>{lookup('mrc.comments.title')}</Tab>
                                         <Tab>{lookup('mrc.attachments.title')}</Tab>
                                     </TabList>
                                     <ErrorHandledTabPanel>{this.createCustomerDetailsPanel(req)}</ErrorHandledTabPanel>
                                     <ErrorHandledTabPanel>{this.createRequestPanel()}</ErrorHandledTabPanel>
+                                    <ErrorHandledTabPanel>{this._creditTab()}</ErrorHandledTabPanel>
                                     <ErrorHandledTabPanel>{this.createSalesPanel()}</ErrorHandledTabPanel>
                                     <ErrorHandledTabPanel>{this.createCommentsPanel()}</ErrorHandledTabPanel>
                                     <ErrorHandledTabPanel>{this.createAttachmentsPanel()}</ErrorHandledTabPanel>

@@ -36,8 +36,10 @@ export default class CreditTableRow extends Component {
             (historical && _.get(customer, 'limit.old.amount') === 0) ||
             (!historical && _.get(customer, 'limit.current.amount') === 0);
         const newLimitMissing =
-            (historical && _.get(customer, 'limit.current')) || (!historical && _.get(customer, 'limit.new'));
+            (historical && _.isNil(_.get(customer, 'limit.current'))) ||
+            (!historical && _.isNil(_.get(customer, 'limit.new')));
         if (wasCashCustomer) {
+            console.log('I chose: D');
             return (
                 <CreditTableRowD
                     {...{
@@ -55,8 +57,10 @@ export default class CreditTableRow extends Component {
                 />
             );
         } else if (newLimitMissing) {
+            // Closed and approved request: requested, current and approved limit exists
+            console.log('I chose: B');
             return (
-                <CreditTableRowA
+                <CreditTableRowB
                     {...{
                         ...this.props,
                         onExpand: () => this.toggle(),
@@ -72,8 +76,9 @@ export default class CreditTableRow extends Component {
                 />
             );
         } else {
+            console.log('I chose: A');
             return (
-                <CreditTableRowB
+                <CreditTableRowA
                     {...{
                         ...this.props,
                         onExpand: () => this.toggle(),

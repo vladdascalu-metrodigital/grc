@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Table from '../../MrcTable';
 import ExpandedRow from './ExpandedRow';
 import CRTableCellCustomer from './CRTableCellCustomer';
@@ -28,7 +28,7 @@ const translations = {
     chooseamount: lookup('mrc.credittab.chooseamount'),
 };
 
-export default class CreditTableRowA extends Component {
+export default class CreditTableRowA extends PureComponent {
     render() {
         const oldOrCurrent = (historical, obj, path) =>
             historical ? _.get(obj, 'limit.old.' + path) : _.get(obj, 'limit.current.' + path);

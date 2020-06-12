@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Table from '../../MrcTable';
 import ExpandedRow from './ExpandedRow';
 import CRTableCellCustomer from './CRTableCellCustomer';
@@ -15,7 +15,7 @@ const translations = {
     cash: lookup('mrc.credittab.cash'),
 };
 
-export default class CreditTableRowC extends Component {
+export default class CreditTableRowD extends PureComponent {
     render() {
         const currentOrNew = (historical, obj, path) =>
             historical ? _.get(obj, 'limit.current.' + path) : _.get(obj, 'limit.new.' + path);
