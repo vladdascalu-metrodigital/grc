@@ -12,7 +12,6 @@ import CreditTableFormSection from './CreditTableFormSection';
 import ClientBlocked from '../../ClientBlocked';
 import ToggleIndicator from '../../ToggleIndicator';
 import CheckCard from '../../CheckCard';
-import Select from '../../Select';
 import CRPaymentMethodSetting from './CRPaymentMethodSetting';
 import CreditTableRowShadow from './CreditTableRowShadow';
 import { lookup } from '../../Util/translations';
@@ -42,6 +41,10 @@ const translations = {
 
 export default class CreditTableRowA extends Component {
     render() {
+        const oldOrCurrent = (historical, obj, path) =>
+            historical ? _.get(obj, 'limit.old.' + path) : _.get(obj, 'limit.current.' + path);
+        const currentOrNew = (historical, obj, path) =>
+            historical ? _.get(obj, 'limit.current.' + path) : _.get(obj, 'limit.new.' + path);
         const {
             customer,
             isExpanded,
@@ -88,23 +91,26 @@ export default class CreditTableRowA extends Component {
                         <CRTableCellLimit
                             country={country}
                             exhausted={null}
-                            limit={_.get(customer, 'limit.old.amount')}
+                            limit={oldOrCurrent(historical, customer, 'amount')}
                             isGreen
                         />
                     </Table.D>
 
                     <Table.D rowSpan="2">
                         <CRTableCellExpiry
-                            expiryLimit={_.get(customer, 'limit.expiry.amount')}
-                            expiryDate={_.get(customer, 'limit.expiry.date')}
+                            expiryLimit={oldOrCurrent(historical, customer, 'expiry.amount')}
+                            expiryDate={oldOrCurrent(historical, customer, 'expiry.date')}
                             isGreen
                         />
                     </Table.D>
 
                     <Table.D rowSpan="2" borderFix>
                         <CRTableCellCreditProduct
-                            productName={_.get(customer, 'limit.old.product')}
-                            productTimePeriod={[_.get(customer, 'limit.old.period'), translations.days].join(' ')}
+                            productName={oldOrCurrent(historical, customer, 'product')}
+                            productTimePeriod={[
+                                oldOrCurrent(historical, customer, 'period'),
+                                oldOrCurrent(historical, customer, 'period') ? translations.days : '-',
+                            ].join(' ')}
                             productPaymentMethod={_.get(customer, 'limit.old.method')}
                             isGreen
                         />
@@ -120,8 +126,8 @@ export default class CreditTableRowA extends Component {
 
                     <Table.D>
                         <CRTableCellExpiry
-                            expiryLimit={_.get(customer, 'limit.expiry.amount')}
-                            expiryDate={_.get(customer, 'limit.expiry.date')}
+                            expiryLimit={_.get(customer, 'limit.wish.expiry.amount')}
+                            expiryDate={_.get(customer, 'limit.wish.expiry.date')}
                         />
                     </Table.D>
 
@@ -154,24 +160,26 @@ export default class CreditTableRowA extends Component {
                         <CRTableCellLimit
                             country={country}
                             exhausted={null}
-                            limit={_.get(customer, 'limit.current.amount')}
+                            limit={currentOrNew(historical, customer, 'amount')}
                             isGreen
                         />
                     </Table.D>
 
                     <Table.D>
                         <CRTableCellExpiry
-                            expiryLimit={_.get(customer, 'limit.expiry.amount')}
-                            expiryDate={_.get(customer, 'limit.expiry.date')}
+                            expiryLimit={currentOrNew(historical, customer, 'expiry.amount')}
+                            expiryDate={currentOrNew(historical, customer, 'expiry.date')}
                             isGreen
                         />
                     </Table.D>
 
                     <Table.D borderFix>
                         <CRTableCellCreditProduct
-                            productName={_.get(customer, 'limit.current.product')}
-                            productTimePeriod={[_.get(customer, 'limit.current.period'), translations.days].join(' ')}
-                            productPaymentMethod={_.get(customer, 'limit.current.method')}
+                            productName={currentOrNew(customer, 'product')}
+                            productTimePeriod={[currentOrNew(historical, customer, 'period'), translations.days].join(
+                                ' '
+                            )}
+                            productPaymentMethod={currentOrNew(historical, customer, 'method')}
                             isGreen
                         />
                     </Table.D>
@@ -295,7 +303,6 @@ export default class CreditTableRowA extends Component {
                                             <CheckCard title="New" checked />
                                         </Grid>
                                         <h4 className="mrc-ui-form-label mt-4 mb-2">Creditperiod</h4>
-                                        <Select />
                                         <h4 className="mrc-ui-form-label mt-4 mb-2">Choose Expiry</h4>
                                         <Grid cols={3}>
                                             <CheckCard title="Without Expiry" checked />
