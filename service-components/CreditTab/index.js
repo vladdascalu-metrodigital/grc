@@ -19,6 +19,8 @@ export default class CreditTab extends Component {
     }
 
     render() {
+        console.log('credit tab');
+        console.log(this.props);
         const { customer, customers } = this.props;
         const translations = {
             name: lookup('mrc.customerdata.name'),

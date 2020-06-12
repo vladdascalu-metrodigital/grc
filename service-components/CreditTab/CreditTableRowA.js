@@ -54,6 +54,8 @@ export default class CreditTableRowA extends Component {
             isCashCustomer,
             onExpand,
             onHover,
+            makeCashCustomer,
+            makeCreditCustomer,
         } = this.props;
         return (
             <React.Fragment>
@@ -203,12 +205,12 @@ export default class CreditTableRowA extends Component {
                                         <CheckCard
                                             title={translations.cash}
                                             checked={isCashCustomer}
-                                            onClick={() => alert('todo: cash')}
+                                            onClick={() => makeCashCustomer()}
                                         />
                                         <CheckCard
                                             title={translations.credit}
                                             checked={!isCashCustomer}
-                                            onClick={() => alert('todo: credit')}
+                                            onClick={() => makeCreditCustomer()}
                                         />
                                     </Grid>
                                 </CreditTableFormSection>
