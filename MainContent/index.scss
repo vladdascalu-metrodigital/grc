@@ -1,6 +1,14 @@
 @import '../lib/scss/variables';
+@import '../lib/scss/colors';
 
 .mrc-ui-main-content {
-    margin: 0 auto;
-    max-width: $max-width-8;
+  background-color: $color-contrast-white;
+  margin: 0 auto;
+  display: grid;
+  grid-template: ". content ." / 1fr minmax(0px, 96rem) 1fr;
+  padding: $spacing-medium;
+}
+
+.mrc-ui-main-content-content {
+  grid-area: content;
 }
