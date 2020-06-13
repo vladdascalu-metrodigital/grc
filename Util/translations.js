@@ -64,11 +64,12 @@ let translations = {
     'mrc.credittab.days': 'Days',
     'addfield.profitability': 'Profitability',
     'mrc.credittab.choosepayment': 'Choose Payment',
+    'mrc.credittab.chooseamount': 'Choose Amount',
+    'mrc.credittab.chooselimit': 'Choose new Limit',
     'mrc.credittab.cash': 'Cash',
     'mrc.payment.Prepayment': 'Prepayment',
     'mrc.credittab.payment': 'Payment',
     'mrc.creditdata.title': 'Credit',
-    'mrc.credittab.chooseamount': 'Choose Amount',
     'mrc.credittab.groupdetails': 'Group Details',
     'mrc.credittab.requestdetails': 'Request Details',
 };

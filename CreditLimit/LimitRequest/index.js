@@ -35,6 +35,7 @@ export default class LimitRequestLayout extends Component {
         super(props);
         // this.handleRequestedLimitChange = this.handleRequestedLimitChange.bind(this);
         this.state = {
+            loaded: false,
             creditDataValid: false,
             creditProgramValid: false,
             applyCurrent: false,
@@ -62,64 +63,82 @@ export default class LimitRequestLayout extends Component {
         this.props.cleanup();
     }
 
+    componentDidUpdate() {
+        const req = this.props.request;
+        const path = 'submitted';
+        if (!this.props.history.location.pathname.endsWith(path) && req.data && req.data.submitInfo) {
+            const target = `/limitrequests/${req.data.id}/${path}`;
+            this.props.history.replace(target);
+        }
+        if (this.state.isApplyCurrentLimitAndExpiryClicked) {
+            this.setState({
+                isApplyCurrentLimitAndExpiryClicked: false,
+            });
+        }
+        if (!this.state.loaded && _.get(this.props, 'request.data')) {
+            const nextProps = this.props;
+            if (nextProps.request && nextProps.request.data) {
+                const req = nextProps.request.data;
+
+                //
+                // mark the requested customer
+                //
+                req.requestedItems.forEach(ri => this.markRequestedCustomer(req.requestedCustomerId, ri.customer));
+
+                //
+                // sort by customerID, taking the requestedCustomer first
+                //
+                req.requestedItems.sort((a, b) => {
+                    const custa = a.customer;
+                    const custb = b.customer;
+                    if (custa.requestedCustomer) return -1;
+                    if (custb.requestedCustomer) return 1;
+
+                    if (custa.storeNumber !== custb.storeNumber) {
+                        return Number.parseInt(custa.storeNumber) - Number.parseInt(custb.storeNumber);
+                    }
+
+                    return Number.parseInt(custa.customerNumber) - Number.parseInt(custb.customerNumber);
+                });
+                let currentGroupLimit = 0;
+                let requestedGroupLimit = 0;
+                let availableGroupLimit = 0;
+                let exhaustionGroupLimit = 0;
+                if (nextProps.request != null && nextProps.request.data != null) {
+                    nextProps.request.data.requestedItems.map(item => {
+                        currentGroupLimit += item.customer.creditLimit;
+                        const amount =
+                            !_.isNil(item.creditData.amount) && !_.isNaN(item.creditData.amount)
+                                ? item.creditData.amount
+                                : !_.isNil(item.customer.creditLimit)
+                                ? item.customer.creditLimit
+                                : 0;
+                        requestedGroupLimit += amount;
+                        exhaustionGroupLimit += item.customer.limitExhaustion;
+                    });
+                    availableGroupLimit = currentGroupLimit - exhaustionGroupLimit;
+                    this.setState({
+                        currentGroupLimit: currentGroupLimit,
+                        requestedGroupLimit: requestedGroupLimit,
+                        availableGroupLimit: availableGroupLimit,
+                        exhaustionGroupLimit: exhaustionGroupLimit,
+                        loaded: true,
+                    });
+                }
+            }
+        }
+    }
+
     /**
      * @overload livecycle callback to check for valid data actually loaded
      *
      * @param nextProps
      */
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        //
-        // in case we got data, prepare it
-        //
-        if (nextProps.request && nextProps.request.data) {
-            const req = nextProps.request.data;
-
-            //
-            // mark the requested customer
-            //
-            req.requestedItems.forEach(ri => this.markRequestedCustomer(req.requestedCustomerId, ri.customer));
-
-            //
-            // sort by customerID, taking the requestedCustomer first
-            //
-            req.requestedItems.sort((a, b) => {
-                const custa = a.customer;
-                const custb = b.customer;
-                if (custa.requestedCustomer) return -1;
-                if (custb.requestedCustomer) return 1;
-
-                if (custa.storeNumber !== custb.storeNumber) {
-                    return Number.parseInt(custa.storeNumber) - Number.parseInt(custb.storeNumber);
-                }
-
-                return Number.parseInt(custa.customerNumber) - Number.parseInt(custb.customerNumber);
-            });
-            let currentGroupLimit = 0;
-            let requestedGroupLimit = 0;
-            let availableGroupLimit = 0;
-            let exhaustionGroupLimit = 0;
-            if (nextProps.request != null && nextProps.request.data != null) {
-                nextProps.request.data.requestedItems.map(item => {
-                    currentGroupLimit += item.customer.creditLimit;
-                    const amount =
-                        !_.isNil(item.creditData.amount) && !_.isNaN(item.creditData.amount)
-                            ? item.creditData.amount
-                            : !_.isNil(item.customer.creditLimit)
-                            ? item.customer.creditLimit
-                            : 0;
-                    requestedGroupLimit += amount;
-                    exhaustionGroupLimit += item.customer.limitExhaustion;
-                });
-                availableGroupLimit = currentGroupLimit - exhaustionGroupLimit;
-                this.setState({
-                    currentGroupLimit: currentGroupLimit,
-                    requestedGroupLimit: requestedGroupLimit,
-                    availableGroupLimit: availableGroupLimit,
-                    exhaustionGroupLimit: exhaustionGroupLimit,
-                });
-            }
-        }
-    }
+    //UNSAFE_componentWillReceiveProps(nextProps) {
+    //    //
+    //    // in case we got data, prepare it
+    //    //
+    //}
 
     /*
     private helper
@@ -610,20 +629,6 @@ export default class LimitRequestLayout extends Component {
         );
     }
 
-    componentDidUpdate() {
-        const req = this.props.request;
-        const path = 'submitted';
-        if (!this.props.history.location.pathname.endsWith(path) && req.data && req.data.submitInfo) {
-            const target = `/limitrequests/${req.data.id}/${path}`;
-            this.props.history.replace(target);
-        }
-        if (this.state.isApplyCurrentLimitAndExpiryClicked) {
-            this.setState({
-                isApplyCurrentLimitAndExpiryClicked: false,
-            });
-        }
-    }
-
     _creditTab() {
         console.log(this.props);
         const request = _.get(this.props, 'request.data');
@@ -636,7 +641,6 @@ export default class LimitRequestLayout extends Component {
         const lastName = _.get(requestedItem, 'customer.lastName');
         const customerName = (firstName, lastName) =>
             firstName && lastName ? firstName + ' ' + lastName : lastName ? lastName : null;
-        console.log(this.state);
         return (
             <CreditTab
                 country={_.get(request, 'requestedCustomerId.country')}
@@ -659,6 +663,12 @@ export default class LimitRequestLayout extends Component {
                     _.get(request, 'requestedItems')
                         ? request.requestedItems.map(data => {
                               return {
+                                  makeCashCustomer: () => alert('cash'),
+                                  type:
+                                      _.get(data, 'customer.creditLimit') === 0 ||
+                                      _.isNil(_.get(data, 'customer.creditLimit'))
+                                          ? 'cash'
+                                          : 'credit',
                                   name: customerName(
                                       _.get(data, 'customer.firstName'),
                                       _.get(data, 'customer.lastName')

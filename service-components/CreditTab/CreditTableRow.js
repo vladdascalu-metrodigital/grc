@@ -32,14 +32,10 @@ export default class CreditTableRow extends Component {
 
     render() {
         let { isZebra, customer, historical } = this.props;
-        const wasCashCustomer =
-            (historical && _.get(customer, 'limit.old.amount') === 0) ||
-            (!historical && _.get(customer, 'limit.current.amount') === 0);
         const newLimitMissing =
             (historical && _.isNil(_.get(customer, 'limit.current'))) ||
             (!historical && _.isNil(_.get(customer, 'limit.new')));
-        if (wasCashCustomer) {
-            console.log('I chose: D');
+        if (customer.type === 'cash') {
             return (
                 <CreditTableRowD
                     {...{
@@ -50,15 +46,11 @@ export default class CreditTableRow extends Component {
                         isHovered: this.state.isHovered,
                         canToggle: !historical || _.get(customer, 'isBlocked'),
                         type: isZebra ? 'zebra' : null,
-                        isCashCustomer:
-                            _.get(customer, 'limit.current.amount') === 0 ||
-                            _.isNil(_.get(customer, 'limit.current.amount')),
                     }}
                 />
             );
         } else if (newLimitMissing) {
             // Closed and approved request: requested, current and approved limit exists
-            console.log('I chose: B');
             return (
                 <CreditTableRowB
                     {...{
@@ -69,14 +61,10 @@ export default class CreditTableRow extends Component {
                         isHovered: this.state.isHovered,
                         canToggle: !historical || _.get(customer, 'isBlocked'),
                         type: isZebra ? 'zebra' : null,
-                        isCashCustomer:
-                            _.get(customer, 'limit.current.amount') === 0 ||
-                            _.isNil(_.get(customer, 'limit.current.amount')),
                     }}
                 />
             );
         } else {
-            console.log('I chose: A');
             return (
                 <CreditTableRowA
                     {...{
@@ -87,9 +75,6 @@ export default class CreditTableRow extends Component {
                         isHovered: this.state.isHovered,
                         canToggle: !historical || _.get(customer, 'isBlocked'),
                         type: isZebra ? 'zebra' : null,
-                        isCashCustomer:
-                            _.get(customer, 'limit.current.amount') === 0 ||
-                            _.isNil(_.get(customer, 'limit.current.amount')),
                     }}
                 />
             );
