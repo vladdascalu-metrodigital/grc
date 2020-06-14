@@ -11,6 +11,7 @@ storiesOf('Services/Credit Tab', module)
             customer={{ name: 'Customer A', email: 'test@gmail.com', phone: '1239843' }}
             customers={[
                 {
+                    type: 'credit',
                     name: 'type A',
                     storeNumber: 10,
                     number: 99,
@@ -39,6 +40,7 @@ storiesOf('Services/Credit Tab', module)
                     },
                 },
                 {
+                    type: 'credit',
                     isBlocked: true,
                     name: 'type A',
                     storeNumber: 10,
@@ -68,6 +70,7 @@ storiesOf('Services/Credit Tab', module)
                     },
                 },
                 {
+                    type: 'credit',
                     name: 'type B',
                     storeNumber: 10,
                     number: 97,
@@ -83,6 +86,7 @@ storiesOf('Services/Credit Tab', module)
                     },
                 },
                 {
+                    type: 'cash',
                     name: 'type D (no current limit)',
                     storeNumber: 10,
                     number: 96,

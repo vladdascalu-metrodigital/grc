@@ -73,12 +73,12 @@ export default class CreditTableRowB extends PureComponent {
                     </Table.D>
                     <Table.D>
                         <CRTableCellCreditProduct
-                            productName={oldOrCurrent(historical, customer, 'product')}
+                            productName={lookup(oldOrCurrent(historical, customer, 'product'))}
                             productTimePeriod={[
-                                oldOrCurrent(historical, customer, 'period'),
+                                lookup(oldOrCurrent(historical, customer, 'period')),
                                 oldOrCurrent(historical, customer, 'period') ? translations.days : '-',
                             ].join(' ')}
-                            productPaymentMethod={oldOrCurrent(historical, customer, 'method')}
+                            productPaymentMethod={lookup(oldOrCurrent(historical, customer, 'debittype'))}
                             isBlue
                         />
                     </Table.D>
@@ -97,9 +97,11 @@ export default class CreditTableRowB extends PureComponent {
                     </Table.D>
                     <Table.D>
                         <CRTableCellCreditProduct
-                            productName={_.get(customer, 'limit.wish.product')}
-                            productTimePeriod={[_.get(customer, 'limit.wish.period'), translations.days].join(' ')}
-                            productPaymentMethod={_.get(customer, 'limit.wish.method')}
+                            productName={lookup(_.get(customer, 'limit.wish.product'))}
+                            productTimePeriod={[lookup(_.get(customer, 'limit.wish.period')), translations.days].join(
+                                ' '
+                            )}
+                            productPaymentMethod={lookup(_.get(customer, 'limit.wish.debittype'))}
                         />
                     </Table.D>
                     <Table.D>

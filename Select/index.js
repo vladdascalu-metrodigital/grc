@@ -18,23 +18,25 @@ export default class Select extends PureComponent {
         let { value, options } = this.props;
         return (
             <div className="mrc-ui-select">
-                <select className="mrc-ui-select-input" value={value} onChange={this.handleChange.bind(this)}>
-                    {options.map((option, i) => {
-                        let optionValue, optionText;
-                        if (Array.isArray(option)) {
-                            optionValue = option[0];
-                            optionText = option[1];
-                        } else {
-                            optionValue = option;
-                            optionText = option;
-                        }
-                        return (
-                            <option value={optionValue} key={i}>
-                                {optionText}
-                            </option>
-                        );
-                    })}
-                </select>
+                {options ? (
+                    <select className="mrc-ui-select-input" value={value} onChange={this.handleChange.bind(this)}>
+                        {options.map((option, i) => {
+                            let optionValue, optionText;
+                            if (Array.isArray(option)) {
+                                optionValue = option[0];
+                                optionText = option[1];
+                            } else {
+                                optionValue = option;
+                                optionText = option;
+                            }
+                            return (
+                                <option value={optionValue} key={i}>
+                                    {optionText}
+                                </option>
+                            );
+                        })}
+                    </select>
+                ) : null}
                 <div className="mrc-ui-select-icon">
                     <SelectIcon size="xsmall" />
                 </div>

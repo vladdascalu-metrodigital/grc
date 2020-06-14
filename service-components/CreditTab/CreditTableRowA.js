@@ -92,12 +92,12 @@ export default class CreditTableRowA extends PureComponent {
 
                     <Table.D rowSpan="2" borderFix>
                         <CRTableCellCreditProduct
-                            productName={oldOrCurrent(historical, customer, 'product')}
+                            productName={lookup(oldOrCurrent(historical, customer, 'product'))}
                             productTimePeriod={[
                                 oldOrCurrent(historical, customer, 'period'),
                                 oldOrCurrent(historical, customer, 'period') ? translations.days : '-',
                             ].join(' ')}
-                            productPaymentMethod={oldOrCurrent(historical, customer, 'method')}
+                            productPaymentMethod={oldOrCurrent(historical, customer, 'debittype')}
                             isBlue
                         />
                     </Table.D>
@@ -119,9 +119,9 @@ export default class CreditTableRowA extends PureComponent {
 
                     <Table.D borderFix>
                         <CRTableCellCreditProduct
-                            productName={_.get(customer, 'limit.wish.product')}
+                            productName={lookup(_.get(customer, 'limit.wish.product'))}
                             productTimePeriod={[_.get(customer, 'limit.wish.period'), translations.days].join(' ')}
-                            productPaymentMethod={_.get(customer, 'limit.wish.method')}
+                            productPaymentMethod={_.get(customer, 'limit.wish.debittype')}
                         />
                     </Table.D>
                     <Table.D rowSpan="2">
@@ -161,11 +161,11 @@ export default class CreditTableRowA extends PureComponent {
 
                     <Table.D borderFix>
                         <CRTableCellCreditProduct
-                            productName={currentOrNew(historical, customer, 'product')}
+                            productName={lookup(currentOrNew(historical, customer, 'product'))}
                             productTimePeriod={[currentOrNew(historical, customer, 'period'), translations.days].join(
                                 ' '
                             )}
-                            productPaymentMethod={currentOrNew(historical, customer, 'method')}
+                            productPaymentMethod={currentOrNew(historical, customer, 'debittype')}
                             isGreen
                         />
                     </Table.D>

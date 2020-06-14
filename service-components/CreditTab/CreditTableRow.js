@@ -85,7 +85,6 @@ export default class CreditTableRow extends Component {
 CreditTableRow.propTypes = {
     id: PropTypes.string,
     historical: PropTypes.bool,
-    isCashCustomer: PropTypes.bool,
     country: PropTypes.string,
     isZebra: PropTypes.bool,
     customer: PropTypes.object,
