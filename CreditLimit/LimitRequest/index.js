@@ -88,7 +88,6 @@ export default class LimitRequestLayout extends Component {
             //
             // mark the requested customer
             //
-            console.log('XXXXXXXXXXXXXXXXXXXXX 2');
             req.requestedItems.forEach(ri => this.markRequestedCustomer(req.requestedCustomerId, ri.customer));
 
             //
@@ -663,6 +662,13 @@ export default class LimitRequestLayout extends Component {
                                           creditPeriod: null,
                                           debitType: null,
                                       }),
+                                  onExpiryDateChange: x =>
+                                      this.props.setLimitExpiry(request, _.get(item, 'id'), {
+                                          // TODO
+                                          limitExpiryDate: x,
+                                          resetToLimitAmount: 0,
+                                          limitExpiryReminderDays: 14,
+                                      }),
                                   type:
                                       _.get(item, 'customer.creditLimit') === 0 ||
                                       _.isNil(_.get(item, 'customer.creditLimit'))
@@ -699,10 +705,10 @@ export default class LimitRequestLayout extends Component {
                                           },
                                       },
                                       wish: {
-                                          amount: _.get(item, 'requestedCreditData.amount'),
-                                          product: _.get(item, 'requestedCreditData.creditProduct'),
-                                          period: _.get(item, 'requestedCreditData.creditPeriod'),
-                                          debittype: _.get(item, 'requestedCreditData.debitType'),
+                                          amount: _.get(item, 'creditData.amount'),
+                                          product: _.get(item, 'creditData.creditProduct'),
+                                          period: _.get(item, 'creditData.creditPeriod'),
+                                          debittype: _.get(item, 'creditData.debitType'),
                                           expiry: {
                                               date: _.get(item, 'requestedLimitExpiry.limitExpiryDate'),
                                               amount: _.get(item, 'requestedLimitExpiry.resetToLimitAmount'),

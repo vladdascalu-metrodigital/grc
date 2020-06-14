@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import MrcDatePickerInput from '../../DatePicker';
 import Select from '../../Select';
 import CRPaymentMethodSetting from './CRPaymentMethodSetting';
 import NumberInput from '../../NumberInput';
@@ -65,12 +66,14 @@ export default class ExpandedRow extends Component {
                 customerType: props.customer.type,
                 amount: 'current',
                 resetPayment: 'current',
+                limitExpiry: 'none',
             },
         };
     }
 
     render() {
         const { customer, isExpanded, id, historical } = this.props;
+        console.log();
         return [
             <Table.R
                 key="sticky"
@@ -184,9 +187,40 @@ export default class ExpandedRow extends Component {
                                                         {translations.chooseexpiry}
                                                     </h4>
                                                     <Grid cols={3}>
-                                                        <CheckCard title={translations.withoutExpiry} checked />
-                                                        <CheckCard title={translations.expiryDate}>
-                                                            <NumberInput />
+                                                        <CheckCard
+                                                            title={translations.withoutExpiry}
+                                                            checked={this.state.checked.limitExpiry === 'none'}
+                                                            onClick={() => {
+                                                                this.setState({
+                                                                    checked: {
+                                                                        ...this.state.checked,
+                                                                        limitExpiry: 'none',
+                                                                    },
+                                                                });
+                                                                customer.onExpiryDateChange(null);
+                                                            }}
+                                                        />
+                                                        <CheckCard
+                                                            title={translations.expiryDate}
+                                                            checked={this.state.checked.limitExpiry === 'date'}
+                                                            onClick={() =>
+                                                                this.setState({
+                                                                    checked: {
+                                                                        ...this.state.checked,
+                                                                        limitExpiry: 'date',
+                                                                    },
+                                                                })
+                                                            }
+                                                        >
+                                                            <MrcDatePickerInput
+                                                                className="m-input-element"
+                                                                onChange={x => customer.onExpiryDateChange(x)}
+                                                                selected={
+                                                                    new Date(_.get(customer, 'limit.wish.expiry.date'))
+                                                                }
+                                                                showYearDropdown={true}
+                                                                dateFormat={'MM/dd/yyyy'}
+                                                            />
                                                         </CheckCard>
                                                         <GridItem alignSelf="center">
                                                             <a>{translations.setExpiryDateForAll}</a>

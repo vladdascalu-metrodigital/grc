@@ -92,7 +92,13 @@ storiesOf('Services/Credit Tab', module)
                     number: 96,
                     limit: {
                         current: { amount: undefined, product: null, period: null, method: null },
-                        wish: { amount: 30000, product: 'Metro Cash', period: '12', method: 'Basislastshriftmandat' },
+                        wish: {
+                            amount: 30000,
+                            product: 'Metro Cash',
+                            period: '12',
+                            method: 'Basislastshriftmandat',
+                            expiry: { amount: 0, date: null },
+                        },
                         new: {
                             amount: 20000,
                             product: 'Metro Top',

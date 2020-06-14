@@ -15,13 +15,13 @@ export default class CRTableCellExpiry extends PureComponent {
             'mrc-ui-crtable-cell-highlight-color-blue': isBlue,
         });
 
+        const dataPresent = !_.isNil(expiryLimit) && !_.isNil(expiryDate);
+
         return (
             <div className="mrc-ui-crtable-cell-expiry">
-                <div className={className}>
-                    {!_.isNil(expiryLimit) ? <MrcNumber isCurrency>{expiryLimit}</MrcNumber> : '-'}
-                </div>
+                <div className={className}>{dataPresent ? <MrcNumber isCurrency>{expiryLimit}</MrcNumber> : '-'}</div>
                 <div className="mrc-ui-crtable-cell-expiry-date">
-                    {!_.isNil(expiryLimit) ? <MrcDate>{expiryDate}</MrcDate> : null}
+                    {dataPresent ? <MrcDate>{expiryDate}</MrcDate> : null}
                 </div>
             </div>
         );

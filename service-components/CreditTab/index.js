@@ -22,7 +22,7 @@ export default class CreditTab extends Component {
         const { customer, customers } = this.props;
         const translations = {
             name: lookup('mrc.customerdata.name'),
-            phone: lookup('mrc.credittab.telephone'),
+            phone: lookup('mrc.customerdetails.fields.phone'),
             email: lookup('mrc.customerdetails.fields.email'),
         };
         return (

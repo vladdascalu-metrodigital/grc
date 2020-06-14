@@ -1523,7 +1523,6 @@ storiesOf('CreditLimit/CreditData', module).add('standard status', () => (
                 limitExpiryReminderDays: 14,
                 resetToLimitAmount: 0,
             },
-            requestedLimitExpiry: null,
             customerSapId: {
                 country: 'PK',
                 storeNumber: '10',
@@ -1664,7 +1663,11 @@ storiesOf('CreditLimit/LimitRequest', module)
                                 limitExpiryReminderDays: 14,
                                 resetToLimitAmount: 0,
                             },
-                            requestedLimitExpiry: null,
+                            requestedLimitExpiry: {
+                                limitExpiryDate: '2020-05-04T07:47:46Z',
+                                limitExpiryReminderDays: 14,
+                                resetToLimitAmount: 0,
+                            },
                             customerSapId: {
                                 country: 'PK',
                                 storeNumber: '10',
