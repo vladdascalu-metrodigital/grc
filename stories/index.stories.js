@@ -12,7 +12,7 @@ import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
 import { Welcome } from '@storybook/react/demo';
-import Button from '../Button';
+
 import Toggle from '../Toggle';
 import FileUpload from '../FileUpload';
 
@@ -43,12 +43,6 @@ import QuickCheck from '../QuickCheck';
 import { Tabs, TabList, Tab } from 'react-tabs';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
-
-storiesOf('Button', module)
-    .add('Primary', () => <Button status="primary" onClick={action('clicked')} text="Approve" />)
-    .add('Error', () => <Button status="error" onClick={action('clicked')} text="Approve" />)
-    .add('Secondary', () => <Button status="secondary" onClick={action('clicked')} text="Approve" />)
-    .add('Success', () => <Button status="success" onClick={action('clicked')} text="Approve" />);
 
 storiesOf('Reports', module).add('report list', () => (
     <Reports

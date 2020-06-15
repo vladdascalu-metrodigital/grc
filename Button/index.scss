@@ -1,51 +1,102 @@
-@import "../settings";
-@import "../buttons";
-@import "../helpers";
+@import '../lib/scss/variables';
+@import '../lib/scss/typography';
+@import '../lib/scss/colors';
 
-.mrc-primary-button {
+.mrc-ui-btn {
+  --mrc-ui-button-color: #{$color-interaction};
+  display: block;
+  color: $color-contrast-white;
+  background-color: var(--mrc-ui-button-color);
 
   position: relative;
-  min-height: 3rem;
+  vertical-align: middle;
+  
+  font-weight: bold;
+  text-align: center;
 
-  button {
-    text-transform: uppercase;
-    color: #fff;
-    font-weight: 500;
+  line-height: $line-height-title;
 
-    margin: 20px auto 0 auto;
-    padding: .75rem;
-    min-width: 280px;
+  outline: none;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  
+  transition: background-color 125ms ease,box-shadow 125ms ease;
+  border-radius: $border-radius-extra-small;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  padding: $spacing-none $spacing-large;
 
-    border-radius: 5px;
-    background-color: $sky-blue;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15);
-
-    &.success {
-      background-color: $success-green;
-    }
-
-    &.warning {
-      background-color: $warning-orange;
-    }
-
-    &.reject {
-      background-color: $warning-orange;
-    }
-
-    &[disabled] {
-      background-color: $form-placeholder-color;
-      box-shadow: none;
-    }
+  min-height: $height-2-5;
+  &:hover {
+    background-color: $color-palette-blue-shade-20;
   }
+}
 
-  .icon {
-    width: 24px;
-    height: 24px;
-    margin-right: 12px;
+////// DISABLED
+
+.mrc-ui-btn:disabled {
+  background-color: $color-palette-grey-tint-90;
+  background-image: repeating-linear-gradient(40deg, transparentize($color-palette-grey-tint-80, 0.5) 0px, rgba(204, 208, 214, 0.498039) 2px, transparent 2px, transparent 10px);
+  cursor: not-allowed;
+}
+
+////// SIZES
+
+.mrc-ui-btn-small {
+  padding: $spacing-none $spacing-medium;
+  min-height: $height-2;
+}
+
+.mrc-ui-btn-large {
+  padding: $spacing-none $spacing-extra-large;
+  min-height: $height-3;
+}
+
+////// COLORS
+
+.mrc-ui-btn-success {
+  --mrc-ui-button-color: #{$color-success};
+  background-color: $color-success;
+  &:hover {
+    background-color: $color-palette-green-shade-30;
+  }
+  &.mrc-ui-btn-outlined {
+    
+  }
+}
+
+.mrc-ui-btn-neutral {
+  --mrc-ui-button-color: #{$color-neutral};
+  background-color: $color-neutral;
+  &:hover {
+    background-color: $color-palette-grey-tint-20;
+  }
+}
+
+.mrc-ui-btn-danger {
+  --mrc-ui-button-color: #{$color-danger};
+  background-color: $color-danger;
+  &:hover {
+    background-color: $color-palette-red-shade-10;
+  }
+}
+
+.mrc-ui-btn-attention {
+  --mrc-ui-button-color: #{$color-attention};
+  background-color: $color-attention;
+  &:hover {
+    background-color: $color-brand-secondary-shade-10;
   }
 
 }
+
+/////// Outlined
+
+.mrc-ui-btn-outlined {
+  border: 2px solid var(--mrc-ui-button-color) !important;
+  background: white;
+  color: var(--mrc-ui-button-color) !important;
+}
+

@@ -1,0 +1,51 @@
+@import "../settings";
+@import "../buttons";
+@import "../helpers";
+
+.mrc-primary-button {
+
+  position: relative;
+  min-height: 3rem;
+
+  button {
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 500;
+
+    margin: 20px auto 0 auto;
+    padding: .75rem;
+    min-width: 280px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 5px;
+    background-color: $sky-blue;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15);
+
+    &.success {
+      background-color: $success-green;
+    }
+
+    &.warning {
+      background-color: $warning-orange;
+    }
+
+    &.reject {
+      background-color: $warning-orange;
+    }
+
+    &[disabled] {
+      background-color: $form-placeholder-color;
+      box-shadow: none;
+    }
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+  }
+
+}
