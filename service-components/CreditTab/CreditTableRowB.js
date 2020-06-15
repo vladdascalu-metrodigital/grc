@@ -98,9 +98,11 @@ export default class CreditTableRowB extends PureComponent {
                     <Table.D>
                         <CRTableCellCreditProduct
                             productName={lookup(_.get(customer, 'limit.wish.product'))}
-                            productTimePeriod={[lookup(_.get(customer, 'limit.wish.period')), translations.days].join(
-                                ' '
-                            )}
+                            productTimePeriod={
+                                _.get(customer, 'limit.wish.period')
+                                    ? [lookup(_.get(customer, 'limit.wish.period')), translations.days].join(' ')
+                                    : '-'
+                            }
                             productPaymentMethod={lookup(_.get(customer, 'limit.wish.debittype'))}
                         />
                     </Table.D>

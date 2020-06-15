@@ -10,9 +10,9 @@ export default class CRLimitSetting extends PureComponent {
         let { limit, limitAfterExpiry, expiryDate } = this.props;
         return (
             <div className="mrc-ui-cr-limit-setting">
-                {limit ? <MrcCurrency type="large-bold">{limit}</MrcCurrency> : '-'}
+                {limit ? <MrcCurrency type="large-bold">{limit}</MrcCurrency> : null}
                 <br />
-                {limitAfterExpiry ? <MrcCurrency type="small">{limitAfterExpiry}</MrcCurrency> : '-'}
+                {limitAfterExpiry ? <MrcCurrency type="small">{limitAfterExpiry}</MrcCurrency> : null}
                 <br />
                 {expiryDate ? <MrcDate type="small">{expiryDate}</MrcDate> : null}
             </div>

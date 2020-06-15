@@ -664,7 +664,6 @@ export default class LimitRequestLayout extends Component {
                                       }),
                                   onExpiryDateChange: x =>
                                       this.props.setLimitExpiry(request, _.get(item, 'id'), {
-                                          // TODO
                                           limitExpiryDate: x,
                                           resetToLimitAmount: 0,
                                           limitExpiryReminderDays: 14,

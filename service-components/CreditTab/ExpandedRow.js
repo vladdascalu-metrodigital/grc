@@ -61,19 +61,27 @@ const compareTranslationKeys = (sx, sy) => {
 export default class ExpandedRow extends Component {
     constructor(props) {
         super(props);
+        const currentAmount = _.get(props, 'customer.limit.current.amount');
+        const wishedAmount = _.get(props, 'customer.wish.current.amount');
         this.state = {
-            checked: {
-                customerType: props.customer.type,
-                amount: 'current',
-                resetPayment: 'current',
-                limitExpiry: 'none',
-            },
+            customerType: props.customer.type,
+            requestBasesOn: 'current',
+            setExpiryAmountTo:
+                _.get(props, 'customer.limit.wish.expiry.amount') === currentAmount
+                    ? 'current'
+                    : 0 === currentAmount
+                    ? 'zero'
+                    : 'pick',
+            setExpiryPaymentTo: 'current',
+            expiryDateType: _.get(props, 'customer.limit.wish.expiry.date') ? 'pick' : 'none',
+            creditProduct: _.get(props, 'customer.limit.wish.product'),
+            debitType: _.get(props, 'customer.limit.wish.debittype'),
+            wishedAmount: wishedAmount ? wishedAmount : currentAmount,
         };
     }
 
     render() {
         const { customer, isExpanded, id, historical } = this.props;
-        console.log();
         return [
             <Table.R
                 key="sticky"
@@ -110,25 +118,23 @@ export default class ExpandedRow extends Component {
                                 <Grid cols={4}>
                                     <CheckCard
                                         title={translations.cash}
-                                        checked={this.state.checked.customerType === 'cash'}
+                                        checked={this.state.customerType === 'cash'}
                                         onClick={() => {
-                                            this.setState({ checked: { ...this.state.checked, customerType: 'cash' } });
-                                            customer.makeCashCustomer();
+                                            this.setState({ customerType: 'cash' });
                                         }}
                                     />
                                     <CheckCard
                                         title={translations.credit}
-                                        checked={this.state.checked.customerType === 'credit'}
+                                        checked={this.state.customerType === 'credit'}
                                         onClick={() => {
                                             this.setState({
-                                                checked: { ...this.state.checked, customerType: 'credit' },
+                                                customerType: 'credit',
                                             });
-                                            customer.makeCreditCustomer();
                                         }}
                                     />
                                 </Grid>
                             </CreditTableFormSection>
-                            {this.state.checked.customerType === 'credit' ? (
+                            {this.state.customerType === 'credit' ? (
                                 <React.Fragment>
                                     <hr />
                                     <CreditTableFormSection
@@ -139,12 +145,13 @@ export default class ExpandedRow extends Component {
                                         <Grid cols={4}>
                                             <CheckCard
                                                 title={translations.current}
-                                                checked={this.state.checked.amount === 'current'}
-                                                onClick={() =>
+                                                checked={this.state.requestBasesOn === 'current'}
+                                                onClick={() => {
                                                     this.setState({
-                                                        checked: { ...this.state.checked, amount: 'current' },
-                                                    })
-                                                }
+                                                        requestBasesOn: 'current',
+                                                        wishedAmount: _.get(customer, 'limit.current.amount'),
+                                                    });
+                                                }}
                                             >
                                                 <CRLimitSetting
                                                     limit={_.get(customer, 'limit.current.amount')}
@@ -154,10 +161,8 @@ export default class ExpandedRow extends Component {
                                             </CheckCard>
                                             <CheckCard
                                                 title={translations.new}
-                                                checked={this.state.checked.amount === 'new'}
-                                                onClick={() =>
-                                                    this.setState({ checked: { ...this.state.checked, amount: 'new' } })
-                                                }
+                                                checked={this.state.requestBasesOn === 'new'}
+                                                onClick={() => this.setState({ requestBasesOn: 'new' })}
                                             >
                                                 <CRLimitSetting
                                                     limit={_.get(customer, 'limit.wish.amount')}
@@ -166,7 +171,7 @@ export default class ExpandedRow extends Component {
                                                 />
                                             </CheckCard>
                                         </Grid>
-                                        {this.state.checked.amount === 'new' ? (
+                                        {this.state.requestBasesOn === 'new' ? (
                                             <React.Fragment>
                                                 <h4 className="mrc-ui-form-label mt-5 mb-2">
                                                     {translations.chooselimit}
@@ -177,7 +182,10 @@ export default class ExpandedRow extends Component {
                                                         <FlexRow alignItems="baseline">
                                                             <div className="mr-3">
                                                                 <NumberInput
-                                                                    onChange={x => customer.onAmountChange(x)}
+                                                                    onChange={x => {
+                                                                        customer.onAmountChange(x);
+                                                                        this.setState({ wishedAmount: x });
+                                                                    }}
                                                                 />
                                                             </div>
                                                             <MrcCurrencySymbol />
@@ -189,26 +197,20 @@ export default class ExpandedRow extends Component {
                                                     <Grid cols={3}>
                                                         <CheckCard
                                                             title={translations.withoutExpiry}
-                                                            checked={this.state.checked.limitExpiry === 'none'}
+                                                            checked={this.state.expiryDateType === 'none'}
                                                             onClick={() => {
                                                                 this.setState({
-                                                                    checked: {
-                                                                        ...this.state.checked,
-                                                                        limitExpiry: 'none',
-                                                                    },
+                                                                    expiryDateType: 'none',
                                                                 });
                                                                 customer.onExpiryDateChange(null);
                                                             }}
                                                         />
                                                         <CheckCard
                                                             title={translations.expiryDate}
-                                                            checked={this.state.checked.limitExpiry === 'date'}
+                                                            checked={this.state.expiryDateType === 'pick'}
                                                             onClick={() =>
                                                                 this.setState({
-                                                                    checked: {
-                                                                        ...this.state.checked,
-                                                                        limitExpiry: 'date',
-                                                                    },
+                                                                    expiryDateType: 'pick',
                                                                 })
                                                             }
                                                         >
@@ -230,15 +232,36 @@ export default class ExpandedRow extends Component {
                                                         {translations.resetLimit}
                                                     </h4>
                                                     <Grid cols={3}>
-                                                        <CheckCard checked>
+                                                        <CheckCard
+                                                            checked={this.state.setExpiryAmountTo === 'zero'}
+                                                            onClick={() =>
+                                                                this.setState({
+                                                                    setExpiryAmountTo: 'zero',
+                                                                })
+                                                            }
+                                                        >
                                                             <MrcCurrency type="large-bold">0</MrcCurrency>
                                                         </CheckCard>
-                                                        <CheckCard>
+                                                        <CheckCard
+                                                            checked={this.state.setExpiryAmountTo === 'current'}
+                                                            onClick={() =>
+                                                                this.setState({
+                                                                    setExpiryAmountTo: 'current',
+                                                                })
+                                                            }
+                                                        >
                                                             <MrcCurrency type="large-bold">
                                                                 {_.get(customer, 'limit.current.amount')}
                                                             </MrcCurrency>
                                                         </CheckCard>
-                                                        <CheckCard>
+                                                        <CheckCard
+                                                            checked={this.state.setExpiryAmountTo === 'pick'}
+                                                            onClick={() =>
+                                                                this.setState({
+                                                                    setExpiryAmountTo: 'pick',
+                                                                })
+                                                            }
+                                                        >
                                                             <FlexRow alignItems="baseline">
                                                                 <div className="mr-3">
                                                                     <NumberInput />
@@ -269,8 +292,11 @@ export default class ExpandedRow extends Component {
                                                               <CheckCard
                                                                   key={x}
                                                                   title={lookup(x)}
-                                                                  checked={
-                                                                      _.get(customer, 'limit.current.product') === x
+                                                                  checked={this.state.creditProduct === x}
+                                                                  onClick={() =>
+                                                                      this.setState({
+                                                                          creditProduct: x,
+                                                                      })
                                                                   }
                                                               />
                                                           ))
@@ -287,8 +313,11 @@ export default class ExpandedRow extends Component {
                                                               <CheckCard
                                                                   key={x}
                                                                   title={lookup(x)}
-                                                                  checked={
-                                                                      _.get(customer, 'limit.current.debittype') === x
+                                                                  checked={this.state.debitType === x}
+                                                                  onClick={() =>
+                                                                      this.setState({
+                                                                          debitType: x,
+                                                                      })
                                                                   }
                                                               />
                                                           ))
@@ -318,7 +347,12 @@ export default class ExpandedRow extends Component {
                                             <Grid cols={4}>
                                                 <CheckCard
                                                     title={translations.current}
-                                                    checked={this.state.checked.resetPayment === 'current'}
+                                                    checked={this.state.setExpiryPaymentTo === 'current'}
+                                                    onClick={() =>
+                                                        this.setState({
+                                                            setExpiryPaymentTo: 'current',
+                                                        })
+                                                    }
                                                 >
                                                     <CRPaymentMethodSetting
                                                         product={_.get(customer, 'limit.current.product')}
@@ -328,7 +362,12 @@ export default class ExpandedRow extends Component {
                                                 </CheckCard>
                                                 <CheckCard
                                                     title={translations.customerWish}
-                                                    checked={this.state.checked.resetPayment === 'customerWish'}
+                                                    checked={this.state.setExpiryPaymentTo === 'customerWish'}
+                                                    onClick={() =>
+                                                        this.setState({
+                                                            setExpiryPaymentTo: 'customerWish',
+                                                        })
+                                                    }
                                                 >
                                                     <CRPaymentMethodSetting
                                                         product={_.get(customer, 'limit.wish.product')}
