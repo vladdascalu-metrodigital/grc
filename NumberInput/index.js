@@ -11,6 +11,7 @@ export class NumberInput extends Component {
             changed: false,
         };
         if (props.value) {
+            // TODO accept value prop as prefilled value to align with other form components
             console.log('NumberInput should not be passed a value prop (will be ignored)');
         }
     }

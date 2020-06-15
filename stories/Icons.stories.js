@@ -6,6 +6,7 @@ import Grid from '../Grid';
 import BusinessIcon from '../icons/BusinessIcon';
 import ProfileIcon from '../icons/ProfileIcon';
 import WarningSmallFilledIcon from '../icons/WarningSmallFilledIcon';
+import SearchIcon from '../icons/SearchIcon';
 
 storiesOf('Fundamentals/Icons', module)
     .add('all icons', () => (
@@ -13,6 +14,7 @@ storiesOf('Fundamentals/Icons', module)
             <ProfileIcon />
             <BusinessIcon />
             <WarningSmallFilledIcon />
+            <SearchIcon />
         </Grid>
     ))
     .add('colors', () => (

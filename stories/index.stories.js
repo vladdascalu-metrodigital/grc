@@ -13,7 +13,6 @@ import { linkTo } from '@storybook/addon-links';
 
 import { Welcome } from '@storybook/react/demo';
 
-import Toggle from '../Toggle';
 import FileUpload from '../FileUpload';
 
 import ErrorHandler from '../ErrorHandler';
@@ -70,30 +69,6 @@ storiesOf('Reports', module).add('report list', () => (
         ]}
     />
 ));
-
-storiesOf('Toggle', module).add('Toggle', () => {
-    const [isChecked, setChecked] = useState(false);
-    const handleClick = value => {
-        action('clicked')(value);
-        setChecked(value);
-    };
-    return (
-        <div style={{ display: 'grid', gridGap: '2rem', padding: '2rem' }}>
-            <Toggle checked={isChecked} onClick={handleClick}>
-                This is the default Toggle
-            </Toggle>
-            <Toggle checked={isChecked} onClick={handleClick} reverse>
-                This Toggle is reversed
-            </Toggle>
-            <Toggle checked={isChecked} onClick={handleClick} spaceBetween>
-                This one is spaced all over the place
-            </Toggle>
-            <Toggle checked={false} onClick={() => action('clicked')('This click should not happen')} disabled>
-                Don't touch me
-            </Toggle>
-        </div>
-    );
-});
 
 // A helper component to throw exceptions
 const Boom = () => {
