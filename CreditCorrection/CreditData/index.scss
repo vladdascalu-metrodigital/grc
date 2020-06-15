@@ -1,0 +1,55 @@
+@import "../../settings";
+
+.mrc-credit-data {
+
+  select {
+    width: 100%;
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: normal;
+    background-color: transparent;
+    z-index: 10;
+    position: relative;
+
+    option {
+      font-size: 16px;
+      font-weight: 300;
+    }
+  }
+
+  select:disabled {
+    z-index: 0 !important;
+    color: #99a1ad !important;
+    background-color: #f2f3f5 !important;
+  }
+
+  input {
+    margin-top: 5px;
+    width: 100%;
+    min-width: 200px;
+    font-size: $text-flow;
+  }
+
+  .current-value {
+    width: auto;
+    text-align: right;
+    font-weight: 400;
+    position: relative;
+    top: -2em;
+    margin-top: 1.5em;
+    margin-bottom: -2em;
+
+    label {
+      font-size: 12px;
+    }
+  }
+
+  .mrc-down-icon {
+    float: right;
+    margin: -2.85rem 0.75rem 0.5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+}
+

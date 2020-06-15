@@ -1,0 +1,25 @@
+@import "../../settings";
+
+.blockingDropdownGroupLevel {
+  label {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  select {
+    margin: 16px;
+    margin-bottom: 15px;
+    padding: 0 .75rem;
+    margin-top: 5px;
+    width: 98%;
+
+  }
+}
+
+.blockingDropdownCustomerLevel {
+
+  label {
+    padding-top: 1.5em;
+    padding-bottom: -2em;
+  }
+}
