@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { displayName } from '../../Util/index';
 import './index.scss';
 import { lookup } from '../../Util/translations';
+import MrcNumber from '../../MrcNumber';
 
 export default class RequestSubmitted extends Component {
     createSummaryPanel() {
@@ -32,11 +33,9 @@ export default class RequestSubmitted extends Component {
                             <dd>{this.lookupPayment(cd.debitType)}</dd>
                             <dt>{lookup('mrc.creditdetails.creditlimit')}</dt>
                             <dd>
-                                <mrc-number
-                                    show-currency-for-country={this.props.data.requestedItems[0].customer.country}
-                                >
+                                <MrcNumber country={this.props.data.requestedItems[0].customer.country}>
                                     {cd.amount}
-                                </mrc-number>
+                                </MrcNumber>
                             </dd>
                         </dl>
 

@@ -4,6 +4,7 @@ import ReportProblemTriangle from '../../icons/report-problem-triangle.svg';
 import PropTypes from 'prop-types';
 import CoinReceive from '../../icons/coin-receive.svg';
 import { lookup } from '../../Util/translations';
+import MrcNumber from '../../MrcNumber';
 
 export default class LimitStatus extends Component {
     render() {
@@ -23,9 +24,7 @@ export default class LimitStatus extends Component {
                         message={
                             <span>
                                 {lookup('creditlimit.status.valid')}{' '}
-                                <mrc-number show-currency-for-country={customer.country}>
-                                    {requestedCustomerAmount}
-                                </mrc-number>
+                                <MrcNumber country={customer.country}>{requestedCustomerAmount}</MrcNumber>
                             </span>
                         }
                         icon={CoinReceive}
@@ -37,11 +36,9 @@ export default class LimitStatus extends Component {
                         message={
                             <span>
                                 {lookup('creditlimit.status.valid')}{' '}
-                                <mrc-number show-currency-for-country={customer.country}>
-                                    {requestedCustomerAmount}
-                                </mrc-number>{' '}
-                                ({lookup('mrc.groupLimit')}{' '}
-                                <mrc-number show-currency-for-country={customer.country}>{groupAmount}</mrc-number>)
+                                <MrcNumber country={customer.country}>{requestedCustomerAmount}</MrcNumber> (
+                                {lookup('mrc.groupLimit')}{' '}
+                                <MrcNumber country={customer.country}>{groupAmount}</MrcNumber>)
                             </span>
                         }
                         icon={CoinReceive}

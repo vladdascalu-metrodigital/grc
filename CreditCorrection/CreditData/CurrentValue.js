@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../../node_modules/mrc-component-library/public/js/bundle.js';
 import './index.scss';
 import { lookup } from '../../Util/translations';
+import MrcNumber from '../../MrcNumber';
 
 export default class CurrentValue extends Component {
     constructor(props) {
@@ -21,8 +22,7 @@ export default class CurrentValue extends Component {
     toVisualRepresentation() {
         switch (this.props.type) {
             case 'limit':
-                if (this.isValidNumber())
-                    return <mrc-number show-currency-for-country={this.props.country}>{this.props.value}</mrc-number>;
+                if (this.isValidNumber()) return <MrcNumber country={this.props.country}>{this.props.value}</MrcNumber>;
                 else return '-';
             default:
                 return <span>{this.props.value || '-'}</span>;
