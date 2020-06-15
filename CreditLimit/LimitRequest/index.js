@@ -743,14 +743,12 @@ export default class LimitRequestLayout extends Component {
                                     <TabList>
                                         <Tab>{lookup('mrc.customerdetails.title')}</Tab>
                                         <Tab>{lookup('mrc.creditdetails.title')}</Tab>
-                                        <Tab>{lookup('mrc.newcredittab.title')}</Tab>
                                         <Tab>{lookup('mrc.sales.title')}</Tab>
                                         <Tab>{lookup('mrc.comments.title')}</Tab>
                                         <Tab>{lookup('mrc.attachments.title')}</Tab>
                                     </TabList>
                                     <ErrorHandledTabPanel>{this.createCustomerDetailsPanel(req)}</ErrorHandledTabPanel>
                                     <ErrorHandledTabPanel>{this.createRequestPanel()}</ErrorHandledTabPanel>
-                                    <ErrorHandledTabPanel>{this._creditTab()}</ErrorHandledTabPanel>
                                     <ErrorHandledTabPanel>{this.createSalesPanel()}</ErrorHandledTabPanel>
                                     <ErrorHandledTabPanel>{this.createCommentsPanel()}</ErrorHandledTabPanel>
                                     <ErrorHandledTabPanel>{this.createAttachmentsPanel()}</ErrorHandledTabPanel>
