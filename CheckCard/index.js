@@ -41,7 +41,7 @@ export default class CheckCard extends Component {
 }
 
 CheckCard.propTypes = {
-    checked: PropTypes.bool.isRequired,
+    checked: PropTypes.bool,
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     disabled: PropTypes.bool,
     onClick: PropTypes.func,

@@ -5,6 +5,7 @@ $shadow-tiny: 0 0 0 1px $color-palette-grey-tint-80;
 $shadow-small-inset: transparentize($color-palette-grey-shade-90, 0.8) 0px 1px 3px 0px inset;
 $shadow-small: transparentize($color-palette-grey-shade-90, 0.8) 0px 1px 3px 0px;
 
+$shadow-outline: $color-palette-blue-tint-50 0px 0px 0px 1px;
 $shadow-outline-glow: transparentize($color-palette-blue-tint-50, 0.5) 0px 0px 0px 3px;
 $shadow-outline-disabled: transparentize($color-palette-grey-shade-50, 0.65) 0px 0px 0px 3px;
 

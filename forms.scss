@@ -12,7 +12,7 @@ input[disabled] {
   background-color: $form-bg-disabled;
 }
 
-input:focus {
+input:focus:not([class*='mrc-ui-']) {
   border-color: $sky-blue;
   outline: none;
 }

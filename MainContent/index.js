@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 
 import './index.scss';
 
@@ -12,8 +11,11 @@ import './index.scss';
 
 export default class MainContent extends Component {
     render() {
-        let className = classnames('mrc-ui-main-content');
-        return <div className={className}>{this.props.children}</div>;
+        return (
+            <div className="mrc-ui-main-content">
+                <div className="mrc-ui-main-content-content">{this.props.children}</div>
+            </div>
+        );
     }
 }
 

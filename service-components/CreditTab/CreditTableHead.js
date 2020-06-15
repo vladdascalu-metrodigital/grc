@@ -9,6 +9,7 @@ import { lookup } from '../../Util/translations';
 const translations = {
     exhausted: lookup('mrc.credittab.exhausted'),
     granted: lookup('mrc.credittab.granted'),
+    newlyGranted: lookup('mrc.credittab.newlyGranted'),
     current: lookup('mrc.creditdata.current'),
     old: lookup('mrc.credittab.old'),
     new: lookup('mrc.credittab.new'),
@@ -33,7 +34,7 @@ export default class CreditTableHead extends Component {
                     <Table.H colSpan="3">
                         {groupLimit ? (
                             <CRTableHeaderCellCustomerGroupLimit
-                                limit={groupLimit.granted}
+                                limit={historical ? groupLimit.old : groupLimit.current}
                                 exhausted={groupLimit.exhausted}
                                 country={country}
                                 subtitle={
@@ -48,9 +49,11 @@ export default class CreditTableHead extends Component {
                     <Table.H colSpan="3">
                         {groupLimit ? (
                             <CRTableHeaderCellCustomerGroupLimit
-                                limit={groupLimit.wish}
+                                limit={
+                                    historical ? groupLimit.current : groupLimit.new ? groupLimit.new : groupLimit.wish
+                                }
                                 country={country}
-                                subtitle={translations.toBeGranted}
+                                subtitle={historical ? translations.newlyGranted : translations.toBeGranted}
                                 isGreen
                             />
                         ) : null}
@@ -67,8 +70,14 @@ export default class CreditTableHead extends Component {
                     </Table.H>
                     <Table.H colSpan="3">
                         <CRTableHeaderCellLimitColSpanTitle
-                            title={historical ? translations.current : translations.new}
-                            prefix={translations.customerWish}
+                            title={
+                                historical
+                                    ? translations.current
+                                    : groupLimit.new
+                                    ? translations.new
+                                    : translations.customerWish
+                            }
+                            prefix={groupLimit.new ? translations.customerWish : ''}
                             isGreen
                         />
                     </Table.H>

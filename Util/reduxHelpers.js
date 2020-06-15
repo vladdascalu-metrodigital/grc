@@ -61,7 +61,16 @@ export function createLoadingHelpers(prefix, name, createUrl, optional = false, 
     const createLoader = dispatch => (...args) => {
         const url = createUrl.apply(null, args);
         dispatch(loadingInProgress());
-        return fetch(url, { credentials: 'include', method: 'GET' })
+        return defaultFetchCallHandler(dispatch, fetch(url, { credentials: 'include', method: 'GET' }));
+    };
+
+    const createCustomerLoader = dispatch => fetchCall => {
+        dispatch(loadingInProgress());
+        return defaultFetchCallHandler(dispatch, fetchCall);
+    };
+
+    const defaultFetchCallHandler = (dispatch, fetchCall) => {
+        return fetchCall
             .then(resp => {
                 if (resp.ok) {
                     return resp;
@@ -100,5 +109,5 @@ export function createLoadingHelpers(prefix, name, createUrl, optional = false, 
         done: data => dispatch(loadingComplete(data)),
     });
 
-    return { reducer, createLoader, createCleanup, createUpdater };
+    return { reducer, createLoader, createCleanup, createUpdater, createCustomerLoader };
 }

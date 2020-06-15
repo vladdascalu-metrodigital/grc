@@ -9,11 +9,6 @@ import { lookup } from '../../Util/translations';
 import CreditTableHead from './CreditTableHead';
 import CreditTableRow from './CreditTableRow';
 
-import CreditTableRowA from './CreditTableRowA';
-import CreditTableRowB from './CreditTableRowB';
-import CreditTableRowC from './CreditTableRowC';
-import CreditTableRowD from './CreditTableRowD';
-
 import './index.scss';
 
 import * as _ from 'lodash';
@@ -27,14 +22,18 @@ export default class CreditTab extends Component {
         const { customer, customers } = this.props;
         const translations = {
             name: lookup('mrc.customerdata.name'),
-            phone: lookup('mrc.credittab.telephone'),
+            phone: lookup('mrc.customerdetails.fields.phone'),
             email: lookup('mrc.customerdetails.fields.email'),
         };
         return (
             <MainContent>
                 <Grid>
                     {customer ? (
-                        <BoxWithTitle title="Groupdetails" action={{ title: 'edit', fn: () => alert('edit') }}>
+                        <BoxWithTitle
+                            title={lookup('mrc.credittab.groupdetails')}
+                            // TODO
+                            action={null}
+                        >
                             <KeyValueGroup>
                                 <KeyValueRow>
                                     <Key>{translations.name}</Key>
@@ -51,7 +50,11 @@ export default class CreditTab extends Component {
                             </KeyValueGroup>
                         </BoxWithTitle>
                     ) : null}
-                    <BoxWithTitle title="Requestdetails" action={{ title: 'edit', fn: () => {} }}>
+                    <BoxWithTitle
+                        title={lookup('mrc.credittab.requestdetails')}
+                        // TODO
+                        action={null}
+                    >
                         <h3 className="mrc-ui-credit-tab-profit-label">{lookup('addfield.profitability')}</h3>
                         <span className="mrc-ui-credit-tab-profit-number">20</span>%
                     </BoxWithTitle>
@@ -63,30 +66,13 @@ export default class CreditTab extends Component {
                                     ? customers.map((customer, i) => (
                                           <CreditTableRow
                                               customer={customer}
+                                              historical={this.props.historical}
                                               key={_.get(customer, 'customerData.displayName')}
                                               id={'credit-table-sticky-row-' + i}
                                               isZebra={!!(i % 2)}
                                           />
                                       ))
                                     : null}
-
-                                <CreditTableRowD />
-
-                                <CreditTableRowA />
-                                <CreditTableRowB />
-                                <CreditTableRowC />
-
-                                <CreditTableRowA />
-                                <CreditTableRowB />
-                                <CreditTableRowC />
-
-                                <CreditTableRowA />
-                                <CreditTableRowB />
-                                <CreditTableRowC />
-
-                                <CreditTableRowA />
-                                <CreditTableRowB />
-                                <CreditTableRowC />
                             </Table.Body>
                         </Table.Root>
                     </GridItem>

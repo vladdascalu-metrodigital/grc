@@ -22,11 +22,13 @@ export default class CRTableCellLimit extends PureComponent {
                     </span>
                 )}
                 {exhausted && limit && ' / '}
-                <span className={className}>
-                    <MrcNumber isCurrency country={country}>
-                        {limit}
-                    </MrcNumber>
-                </span>
+                {limit ? (
+                    <span className={className}>
+                        <MrcNumber isCurrency country={country}>
+                            {limit}
+                        </MrcNumber>
+                    </span>
+                ) : null}
             </div>
         );
     }

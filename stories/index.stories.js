@@ -1517,7 +1517,6 @@ storiesOf('CreditLimit/CreditData', module).add('standard status', () => (
                 limitExpiryReminderDays: 14,
                 resetToLimitAmount: 0,
             },
-            requestedLimitExpiry: null,
             customerSapId: {
                 country: 'PK',
                 storeNumber: '10',
@@ -1589,9 +1588,9 @@ storiesOf('CreditLimit/LimitRequest', module)
                                 street: 'Heppenheimer Weg',
                                 badDebits: '1',
                                 registrationDate: '2011-10-09T00:00:00+02:00',
-                                creditLimit: 123.4,
+                                creditLimit: 10000,
                                 requestedCustomer: true,
-                                customerLastName: 'Anylastname',
+                                customerLastName: 'Anylastnamo',
                                 vatSpecNumber: '123/78234/8901',
                                 email: 'someone@example.com',
                                 mobilePhoneNumber: '+49 160 98765432',
@@ -1658,7 +1657,11 @@ storiesOf('CreditLimit/LimitRequest', module)
                                 limitExpiryReminderDays: 14,
                                 resetToLimitAmount: 0,
                             },
-                            requestedLimitExpiry: null,
+                            requestedLimitExpiry: {
+                                limitExpiryDate: '2020-05-04T07:47:46Z',
+                                limitExpiryReminderDays: 14,
+                                resetToLimitAmount: 0,
+                            },
                             customerSapId: {
                                 country: 'PK',
                                 storeNumber: '10',

@@ -5,6 +5,8 @@ import MrcDate from '../../MrcDate';
 import './CRTableCellExpiry.scss';
 import './CRTableCellTypoHighlight.scss';
 
+import * as _ from 'lodash';
+
 export default class CRTableCellExpiry extends PureComponent {
     render() {
         let { expiryLimit, expiryDate, isGreen, isBlue } = this.props;
@@ -13,13 +15,13 @@ export default class CRTableCellExpiry extends PureComponent {
             'mrc-ui-crtable-cell-highlight-color-blue': isBlue,
         });
 
+        const dataPresent = !_.isNil(expiryLimit) && !_.isNil(expiryDate);
+
         return (
             <div className="mrc-ui-crtable-cell-expiry">
-                <div className={className}>
-                    <MrcNumber isCurrency>{expiryLimit}</MrcNumber>
-                </div>
+                <div className={className}>{dataPresent ? <MrcNumber isCurrency>{expiryLimit}</MrcNumber> : '-'}</div>
                 <div className="mrc-ui-crtable-cell-expiry-date">
-                    <MrcDate>{expiryDate}</MrcDate>
+                    {dataPresent ? <MrcDate>{expiryDate}</MrcDate> : null}
                 </div>
             </div>
         );

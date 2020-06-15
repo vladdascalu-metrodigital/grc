@@ -1,5 +1,26 @@
-
 .inbox-filter {
-  display: inline-flex;
-  flex-wrap: wrap;
+    display: inline-flex;
+    flex-wrap: wrap;
+}
+
+.inbox-filter-raw {
+    color: black;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    display: grid;
+    grid-gap: 1rem;
+    padding: 0rem 0rem 0.5rem 1rem;
+    label {
+        color: #33435b;
+    }
+}
+
+.inbox-filter-item {
+    //padding-left: 20px;
+
+    img {
+        float: right;
+        margin: -1.85rem 0.75rem 0.5rem;
+        position: relative;
+        z-index: 2;
+    }
 }

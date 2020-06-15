@@ -1,6 +1,12 @@
 @import '../lib/scss/variables';
+@import '../lib/scss/colors';
 
 .mrc-ui-main-content {
-    margin: 0 auto;
-    max-width: $max-width-8;
+  background-color: $color-contrast-white;
+  padding: $spacing-medium;
+}
+
+.mrc-ui-main-content-content {
+  margin: 0 auto;
+  max-width: $max-width-9;
 }

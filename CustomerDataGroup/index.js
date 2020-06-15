@@ -24,6 +24,7 @@ export default class CustomerDataGroup extends Component {
         return this.props.customers.map((customer, i) => {
             return (
                 <SingleCustomerData
+                    key={i}
                     customer={customer}
                     countriesWithDifferentBlockingCodes={this.props.countriesWithDifferentBlockingCodes}
                     open={i === 0}
