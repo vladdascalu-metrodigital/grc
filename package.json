@@ -1,6 +1,6 @@
 {
     "name": "global-react-components",
-    "version": "2.4.6",
+    "version": "2.4.7",
     "description": "MRC collection of reusable frontend react components",
     "publishConfig": {
         "registry": "https://dx-nexus.metroscales.io/repository/npm-mrc-hosted/"
@@ -30,7 +30,7 @@
         "eslint-plugin-react": "^7.19.0",
         "immutable": "^4.0.0-rc.12",
         "moment": "^2.24.0",
-        "mrc-component-library": "1.0.59",
+        "mrc-component-library": "1.0.61",
         "normalize-scss": "^7.0.1",
         "react-collapsible": "^2.7.0",
         "react-datepicker": "^2.14.1",
