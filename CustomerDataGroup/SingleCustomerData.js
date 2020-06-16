@@ -19,7 +19,8 @@ import printDate from '../Util/DateUtils';
 export default class SingleCustomerData extends Component {
     render() {
         const customer = this.props.customer;
-        const blockingContent = this.createBlockingContent(customer);
+        const checkoutCheckCodeContent = this.createCheckoutCheckContent(customer);
+        const blockingReasonContent = this.createBlockingReasonContent(customer);
         return (
             <ToggleBox
                 initialShow={this.props.open}
@@ -28,12 +29,13 @@ export default class SingleCustomerData extends Component {
                         name={displayName(customer)}
                         storeNumber={customer.storeNumber}
                         customerNumber={customer.customerNumber}
-                        isBlocked={blockingContent != null}
+                        isBlocked={blockingReasonContent != null || checkoutCheckCodeContent != null}
                     />
                 }
             >
                 <Grid>
-                    {blockingContent}
+                    {checkoutCheckCodeContent}
+                    {blockingReasonContent}
                     {this.createContactInfo(customer)}
                     {this.createBusinessInfo(customer)}
                 </Grid>
@@ -51,7 +53,7 @@ export default class SingleCustomerData extends Component {
         );
     }
 
-    createBlockingContent(customer) {
+    createBlockingReasonContent(customer) {
         const countriesWithDifferentBlockingCodes = this.props.countriesWithDifferentBlockingCodes;
         const msgKeyPartCountry =
             customer.country &&
@@ -61,28 +63,39 @@ export default class SingleCustomerData extends Component {
                 ? customer.country + '.'
                 : '';
         const hasBlockingReason = customer.blockingReason != undefined && customer.blockingReason != null;
-        const hasCheckoutCheckCode = customer.checkoutCheckCode != undefined && customer.checkoutCheckCode != null;
-        if (hasBlockingReason || hasCheckoutCheckCode) {
-            let blockingText = null;
-            if (hasBlockingReason) {
-                blockingText = lookup('mrc.blockingReason.message.' + msgKeyPartCountry + customer.blockingReason);
-            }
-            if (hasCheckoutCheckCode) {
-                if (hasBlockingReason) {
-                    blockingText =
-                        blockingText +
-                        ', ' +
-                        lookup('mrc.checkoutCheckCode.message.' + msgKeyPartCountry + customer.checkoutCheckCode);
-                } else {
-                    blockingText = lookup(
-                        'mrc.checkoutCheckCode.message.' + msgKeyPartCountry + customer.checkoutCheckCode
-                    );
-                }
-            }
+        if (hasBlockingReason) {
+            let blockingReasonText =
+                lookup('mrc.blockingReason') +
+                ': ' +
+                lookup('mrc.blockingReason.message.' + msgKeyPartCountry + customer.blockingReason);
 
             return (
                 <GridItem colSpan="all">
-                    <ClientBlocked size="large" text={blockingText} />
+                    <ClientBlocked size="large" text={blockingReasonText} />
+                </GridItem>
+            );
+        }
+        return null;
+    }
+
+    createCheckoutCheckContent(customer) {
+        const countriesWithDifferentBlockingCodes = this.props.countriesWithDifferentBlockingCodes;
+        const msgKeyPartCountry =
+            customer.country &&
+            countriesWithDifferentBlockingCodes &&
+            countriesWithDifferentBlockingCodes.length > 0 &&
+            countriesWithDifferentBlockingCodes.includes(customer.country)
+                ? customer.country + '.'
+                : '';
+        const hasCheckoutCheckCode = customer.checkoutCheckCode != undefined && customer.checkoutCheckCode != null;
+        if (hasCheckoutCheckCode) {
+            let checkoutCheckCodeText =
+                lookup('mrc.checkoutCheckCode') +
+                ': ' +
+                lookup('mrc.checkoutCheckCode.message.' + msgKeyPartCountry + customer.checkoutCheckCode);
+            return (
+                <GridItem colSpan="all">
+                    <ClientBlocked size="large" text={checkoutCheckCodeText} />
                 </GridItem>
             );
         }
