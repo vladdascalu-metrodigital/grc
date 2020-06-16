@@ -69,11 +69,15 @@ export default class SingleCustomerData extends Component {
             }
             if (hasCheckoutCheckCode) {
                 if (hasBlockingReason) {
-                    blockingText = blockingText + ', ';
+                    blockingText =
+                        blockingText +
+                        ', ' +
+                        lookup('mrc.checkoutCheckCode.message.' + msgKeyPartCountry + customer.checkoutCheckCode);
+                } else {
+                    blockingText = lookup(
+                        'mrc.checkoutCheckCode.message.' + msgKeyPartCountry + customer.checkoutCheckCode
+                    );
                 }
-                blockingText =
-                    blockingText +
-                    lookup('mrc.checkoutCheckCode.message.' + msgKeyPartCountry + customer.checkoutCheckCode);
             }
 
             return (
