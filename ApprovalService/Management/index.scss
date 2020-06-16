@@ -1,0 +1,24 @@
+@import "../../settings";
+
+.mrc-management-page {
+    background-color: white;
+    hr {
+        margin: 0;
+    }
+    width: 80%;
+    margin: 0 auto;
+
+    .existing-recommendations {
+        padding-top: 3rem;
+    }
+
+    .recommendations {
+        background-color: $grey-tint-95;
+    }
+
+    .recommendations.desktop {
+        padding-left: 4rem;
+        padding-right: 4rem;
+    }
+
+}

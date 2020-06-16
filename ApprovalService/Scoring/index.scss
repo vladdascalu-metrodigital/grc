@@ -1,0 +1,38 @@
+.mrc-selectagency {
+	margin-bottom:0px;
+}
+
+.reportFileInput {
+	display: none;
+}
+
+.uploadReportButton {
+  margin-bottom: 15px !important;
+  margin-left: 0px !important;
+}
+
+.reportUploaded:hover {
+	text-decoration:underline;
+}
+
+.scoringFileName {
+    font-weight: bold;
+}
+
+.mrc-add-score td {
+    padding: 0px 1px;
+}
+
+.reportDownloadLink {
+    margin-left:2rem;
+}
+
+.mrc-extscore-retry-buttons {
+  justify-content: left;
+  padding-left: 1rem;
+}
+
+#mrc-extscore-retry-button {
+  max-width: 18rem;
+  margin: 1rem;
+}

@@ -1,0 +1,21 @@
+@import "../../settings";
+
+.sap-invoices-table {}
+
+.not-found {
+  text-align: center;
+}
+
+table {
+  table-layout: inherit;
+  display: block;
+  overflow: auto;
+}
+
+td {
+  min-width: 170px;
+}
+
+th {
+  min-width: 170px;
+}

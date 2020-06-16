@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { lookup } from 'global-react-components/Util/translations';
+import { lookup } from '../Util/translations';
 
 export const getMccScoreTranslation = mccScore => {
     if (_.some(mccScore)) {
