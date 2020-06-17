@@ -3,6 +3,9 @@
 @import './typography';
 @import './variables';
 
+// use either input-base alone
+// or a combination of input-shell and input-input
+
 @mixin input-base() {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -50,7 +53,6 @@
 }
 
 @mixin input-input() {
-  // height: $height-input;
   color: $color-palette-grey-default;
   font-size: 1rem;
   font-family: inherit;

@@ -1369,6 +1369,7 @@ storiesOf('History/HistoryDetails', module).add('history details', () => (
         recommendations={historyData.historyDetails.recommendations}
         additionalFields={additionalFields}
         countriesWithDifferentBlockingCodes={historyData.countriesWithDifferentBlockingCodes}
+        approvalServiceUrl="no-url"
         // history: PropTypes.object // not used!?
     />
 ));
