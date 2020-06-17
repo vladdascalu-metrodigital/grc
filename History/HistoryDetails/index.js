@@ -1,0 +1,381 @@
+import React, { Component } from 'react';
+import { Tab, TabList, Tabs } from 'react-tabs';
+import ErrorHandledTabPanel from '../../ErrorHandledTabPanel';
+import PropTypes from 'prop-types';
+import '../../tabs.scss';
+import HistoryStatusBar from '../Shared/HistoryStatusBar';
+import RequestDetails from '../Shared/RequestDetails';
+import { lookup } from '../../Util/translations';
+import CreditData from './CreditData';
+import { Accordion, Collapsible } from '../../Accordion';
+import Sales from './Sales';
+import Payments from './Payments';
+import Scoring from './Scoring';
+import Strategy from './Strategy';
+import Comments from '../../NewComments';
+import Attachments from '../../Attachments';
+import Button from '../../Button';
+import AuditTrail from './AuditTrail';
+import * as _ from 'lodash';
+import ErrorHandler from '../../ErrorHandler';
+import Management from './Management';
+import { RequestFieldPropTypes } from '../../AdditionalFields/AdditionalFieldsPropTypes';
+import { filterAdditionalFieldsByCode } from '../../AdditionalFields/additionalFielsUtil';
+import { CommentPropTypes } from '../../NewComments/CommentsPropTypes';
+import CustomerDataGroup from '../../CustomerDataGroup';
+
+const TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES = ['DE'];
+
+export default class HistoryDetailsPresentation extends Component {
+    FILE_TYPES = [''];
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    customerDetailsPanel(requestData) {
+        const customers = requestData ? requestData.map(ri => ri.customerData) : null;
+        return (
+            <CustomerDataGroup
+                customers={customers}
+                countriesWithDifferentBlockingCodes={this.props.countriesWithDifferentBlockingCodes}
+            />
+        );
+    }
+
+    buttons(params) {
+        const isRetriable = _.get(params.auditTrailDetails, 'phaseSet.0.items.0.additionalInfo.isRetriable');
+        const requestType = _.get(params.requestStatus, 'requestType');
+        const editable = !this.props.buttonsDisabled;
+        if (isRetriable && requestType != 'LIMIT_EXPIRY') {
+            return (
+                <div className="mrc-btn-group">
+                    <Button
+                        status={editable ? 'success' : 'secondary'}
+                        text={lookup('history.retry')}
+                        onClick={() => this.props.retry(params.requestId)}
+                        disabled={!editable}
+                    />
+                    <Button
+                        status={editable ? 'error' : 'secondary'}
+                        text={lookup('history.cancel')}
+                        onClick={() => this.props.cancelActivation(params.requestId)}
+                        disabled={!editable}
+                    />
+                </div>
+            );
+        } else if (params.status === 'Pending' || params.status === 'Claimed') {
+            return (
+                <div className="mrc-btn-group">
+                    <Button
+                        status={'secondary'}
+                        text={lookup('history.button.go-to-approval')}
+                        onClick={() => alert('link to approval-service/approvalprocessbyrequestid/:requestid')}
+                    />
+                </div>
+            );
+        } else {
+            return null;
+        }
+    }
+
+    desktopView(params) {
+        const startTabIndex = TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES.includes(params.countryCode) ? 2 : 1;
+        return (
+            <Tabs forceRenderTabPanel={true} defaultIndex={startTabIndex}>
+                <TabList>
+                    {TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES.includes(params.countryCode) ? (
+                        <Tab>{lookup('mrc.topmanagement.title')}</Tab>
+                    ) : null}
+                    <Tab>{lookup('mrc.customerdetails.title')}</Tab>
+                    <Tab>{lookup('mrc.creditdetails.title')}</Tab>
+                    <Tab>{lookup('mrc.sales.title')}</Tab>
+                    <Tab>{lookup('mrc.payments.title')}</Tab>
+                    <Tab>{lookup('mrc.scores.title')}</Tab>
+                    <Tab>{lookup('mrc.strategy.title')}</Tab>
+                    <Tab>{lookup('mrc.comments.title')}</Tab>
+                    <Tab>{lookup('mrc.attachments.title')}</Tab>
+                    <Tab>{lookup('mrc.audittrail.title')}</Tab>
+                </TabList>
+                {TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES.includes(params.countryCode) ? (
+                    <ErrorHandledTabPanel>
+                        <Management
+                            requestData={params.requestData}
+                            requestedCustomerId={params.requestedCustomerId}
+                            totalTurnover={params.totalTurnover}
+                            profitability={params.groupProfitability}
+                            country={params.countryCode}
+                            mobile={false}
+                            recommendations={params.recommendations}
+                            validMccScore={params.validMccScore}
+                        />
+                    </ErrorHandledTabPanel>
+                ) : null}
+                <ErrorHandledTabPanel>
+                    {params.requestData ? this.customerDetailsPanel(params.requestData) : null}
+                </ErrorHandledTabPanel>
+                <ErrorHandledTabPanel>
+                    <Accordion>
+                        <CreditData
+                            requestData={params.requestData}
+                            requestedStatus={params.requestStatus}
+                            groupLimit={params.groupLimit}
+                            countryCode={params.countryCode}
+                            additionalFields={this.props.additionalFields}
+                        />
+                    </Accordion>
+                </ErrorHandledTabPanel>
+                <ErrorHandledTabPanel>
+                    <Sales salesOverviews={params.salesOverviews} />
+                </ErrorHandledTabPanel>
+                <ErrorHandledTabPanel>
+                    <Payments paymentsOverviews={params.paymentsOverviews} />
+                </ErrorHandledTabPanel>
+                <ErrorHandledTabPanel>
+                    <Scoring
+                        scores={params.scores}
+                        historicExtScores={params.historicExtScores}
+                        country={params.countryCode}
+                        host={window.location.origin}
+                    />
+                </ErrorHandledTabPanel>
+                <ErrorHandledTabPanel>
+                    <Strategy
+                        strategyKeyIndicatorsData={params.strategyKeyIndicatorsData}
+                        approvalProcess={params.approvalProcess}
+                        countryCode={params.countryCode}
+                    />
+                </ErrorHandledTabPanel>
+                <ErrorHandledTabPanel>
+                    <Comments
+                        comments={params.comments}
+                        timeoutDate={params.approvalProcess && params.approvalProcess.automaticDecisionAt}
+                        disabled={true}
+                    />
+                </ErrorHandledTabPanel>
+                <ErrorHandledTabPanel>
+                    <Attachments
+                        noDeletedAttachmentsToggle={true}
+                        disabled={false}
+                        noAddButton={true}
+                        customerName={params.customerName}
+                        country={params.countryCode}
+                        attachments={
+                            /* eslint-disable */
+                            params.attachments
+                                ? params.attachments
+                                      .map(a => {
+                                          return { ...a, status: 'normal', contentUri: a.uri };
+                                      })
+                                      .filter(a => !a.markedForDeletion)
+                                : null
+                            /* eslint-enable */
+                        }
+                    />
+                </ErrorHandledTabPanel>
+                <ErrorHandledTabPanel>
+                    <AuditTrail auditTrailDetails={params.auditTrailDetails} status={params.status} />
+                </ErrorHandledTabPanel>
+            </Tabs>
+        );
+    }
+
+    mobileView(params) {
+        return (
+            <Accordion>
+                {TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES.includes(params.countryCode) ? (
+                    <Collapsible trigger={lookup('mrc.topmanagement.title')}>
+                        <Management
+                            requestData={params.requestData}
+                            requestedCustomerId={params.requestedCustomerId}
+                            totalTurnover={params.totalTurnover}
+                            profitability={params.groupProfitability}
+                            country={params.countryCode}
+                            mobile={true}
+                            recommendations={params.recommendations}
+                        />
+                    </Collapsible>
+                ) : null}
+                <Collapsible trigger={lookup('mrc.customerdetails.title')}>
+                    {params.requestData ? this.customerDetailsPanel(params.requestData) : null}
+                </Collapsible>
+                <Collapsible trigger={lookup('mrc.creditdetails.title')}>
+                    <CreditData
+                        requestData={params.requestData}
+                        requestedStatus={params.requestStatus}
+                        groupLimit={params.groupLimit}
+                        countryCode={params.countryCode}
+                    />
+                </Collapsible>
+                <Collapsible trigger={lookup('mrc.sales.title')}>
+                    <Sales salesOverviews={params.salesOverviews} />
+                </Collapsible>
+                <Collapsible trigger={lookup('mrc.payments.title')}>
+                    <Payments paymentsOverviews={params.paymentsOverviews} />
+                </Collapsible>
+                <Collapsible trigger={lookup('mrc.scores.title')}>
+                    <Scoring
+                        scores={params.scores}
+                        historicExtScores={params.historicExtScores}
+                        country={params.countryCode}
+                        host={window.location.origin}
+                    />
+                </Collapsible>
+                <Collapsible trigger={lookup('mrc.strategy.title')}>
+                    <Strategy
+                        strategyKeyIndicatorsData={params.strategyKeyIndicatorsData}
+                        approvalProcess={params.approvalProcess}
+                        countryCode={params.countryCode}
+                    />
+                </Collapsible>
+                <Collapsible trigger={lookup('mrc.comments.title')}>
+                    <ErrorHandler>
+                        <Comments
+                            comments={params.comments}
+                            timeoutDate={params.approvalProcess && params.approvalProcess.automaticDecisionAt}
+                            disabled={true}
+                        />
+                    </ErrorHandler>
+                </Collapsible>
+                <Collapsible trigger={lookup('mrc.attachments.title')}>
+                    <Attachments
+                        noDeletedAttachmentsToggle={true}
+                        disabled={true}
+                        noAddButton={true}
+                        customerName={params.customerName}
+                        country={params.countryCode}
+                        attachments={
+                            /* eslint-disable */
+                            params.attachments
+                                ? params.attachments
+                                      .map(a => {
+                                          return { ...a, status: 'normal' };
+                                      })
+                                      .filter(a => !a.markedForDeletion)
+                                : null
+                            /* eslint-enable */
+                        }
+                    />
+                </Collapsible>
+                <Collapsible trigger={lookup('mrc.audittrail.title')}>
+                    <AuditTrail auditTrailDetails={params.auditTrailDetails} status={params.status} />
+                </Collapsible>
+            </Accordion>
+        );
+    }
+
+    // Calculates group profitability according to formula
+    // (C1%*C1$+ C2%*C2$+ C3%*C3$) / (C1$+C2$+C3$)
+    // where C% = profitability
+    //       C$ = turnower last 6m
+    getGroupProfitability() {
+        const _requestFields = _.get(this.props, 'additionalFields.data.requestFields');
+        if (_.isNil(_requestFields)) {
+            return null;
+        }
+        const profitabilityAdditionalFields = filterAdditionalFieldsByCode(_requestFields, 'percprofitability');
+        if (_.isEmpty(profitabilityAdditionalFields)) {
+            return null;
+        }
+        if (_.isNil(this.state.mdwData)) {
+            return _.sum(profitabilityAdditionalFields.map(f => f.value)) / profitabilityAdditionalFields.length;
+        }
+        let groupProfitability = 0;
+        let totalTurnoverL6m = 0;
+        this.state.mdwData.map(mdwCustomer => {
+            const customerProfitability = profitabilityAdditionalFields.filter(
+                rf =>
+                    rf.storeNumber === mdwCustomer.customerCreditData.storeNumber &&
+                    rf.customerNumber === mdwCustomer.customerCreditData.customerNumber &&
+                    rf.country === mdwCustomer.customer.country
+            );
+            const _customerProfitability = _.get(customerProfitability, '[0].value');
+            if (!_.isNil(customerProfitability) && !_.isNil(_customerProfitability)) {
+                groupProfitability += _customerProfitability * mdwCustomer.customerCreditData.sellValNspL6m;
+                totalTurnoverL6m += mdwCustomer.customerCreditData.sellValNspL6m;
+            }
+        });
+
+        return totalTurnoverL6m !== 0 ? groupProfitability / totalTurnoverL6m : null;
+    }
+
+    render() {
+        if (this.props.error) {
+            return null;
+        }
+        const consolidatedOverview = _.find(
+            this.props.salesOverviews,
+            x => _.get(x, 'customerId.customerNumber') === 'consolidated-group-id'
+        );
+        const totalTurnover = consolidatedOverview
+            ? _.get(consolidatedOverview, 'totalQuintet.l12m')
+            : this.props.salesOverviews && this.props.salesOverviews.length > 0
+            ? _.get(this.props.salesOverviews[0], 'totalQuintet.l12m')
+            : null;
+        const groupProfitability = this.getGroupProfitability();
+        const params = {
+            approvalProcess: this.props.approvalProcess,
+            countryCode: _.get(this.props, 'customerData.country'),
+            groupLimit: this.props.groupLimit,
+            salesOverviews: this.props.salesOverviews,
+            paymentsOverviews: this.props.paymentsOverviews,
+            scores: this.props.scores,
+            historicExtScores: this.props.historicExtScores,
+            strategyKeyIndicatorsData: this.props.strategyKeyIndicatorsData,
+            comments: this.props.comments,
+            attachments: this.props.attachments,
+            auditTrailDetails: this.props.auditTrailDetails,
+            requestData: this.props.requestData,
+            requestStatus: this.props.requestStatus,
+            validMccScore: this.props.validMccScore,
+            customerName: _.get(this.props, 'customerData.displayName'),
+            status: _.get(this.props, 'requestStatus.status'),
+            requestId: _.get(this.props, 'approvalProcess.request.id'),
+            requestedCustomerId: _.get(this.props, 'approvalProcess.request.requestedCustomerId'),
+            totalTurnover: totalTurnover,
+            recommendations: this.props.recommendations,
+            groupProfitability: groupProfitability,
+        };
+
+        return (
+            <div className="mrc-main">
+                {this.props.notificationShowing ? null : (
+                    <HistoryStatusBar statusBar={this.props.statusBar} countryCode={params.countryCode} />
+                )}
+                <RequestDetails requestStatus={this.props.requestStatus} countryCode={params.countryCode} />
+                {this.props.isTablet ? this.desktopView(params) : this.mobileView(params)}
+                {this.buttons(params)}
+            </div>
+        );
+    }
+}
+
+HistoryDetailsPresentation.propTypes = {
+    error: PropTypes.bool,
+    isTablet: PropTypes.bool,
+    buttonsDisabled: PropTypes.bool,
+    notificationShowing: PropTypes.string,
+    getMdwData: PropTypes.func,
+    requestData: PropTypes.array,
+    approvalProcess: PropTypes.object,
+    groupLimit: PropTypes.object,
+    salesOverviews: PropTypes.array,
+    paymentsOverviews: PropTypes.object,
+    scores: PropTypes.array,
+    historicExtScores: PropTypes.array,
+    strategyKeyIndicatorsData: PropTypes.object,
+    comments: PropTypes.arrayOf(CommentPropTypes),
+    attachments: PropTypes.array,
+    auditTrailDetails: PropTypes.object,
+    requestStatus: PropTypes.object,
+    validMccScore: PropTypes.object,
+    statusBar: PropTypes.object,
+    countryCode: PropTypes.string,
+    retry: PropTypes.func,
+    cancelActivation: PropTypes.func,
+    cancelApproval: PropTypes.func,
+    recommendations: PropTypes.array,
+    history: PropTypes.object,
+    additionalFields: PropTypes.shape({ requestFields: PropTypes.arrayOf(RequestFieldPropTypes) }),
+    countriesWithDifferentBlockingCodes: PropTypes.array,
+};

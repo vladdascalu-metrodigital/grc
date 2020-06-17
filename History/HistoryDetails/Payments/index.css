@@ -1,0 +1,18 @@
+.sap-invoices-table {
+    width: 100%;
+}
+
+td {
+    text-align: left;
+}
+
+.mrc-payments-table {
+}
+
+.tablet .mrc-payments-table {
+}
+
+.mrc-data-table {
+    /* margin-top: 20px; */
+    /*overflow-y: scroll;*/
+}

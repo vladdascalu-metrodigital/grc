@@ -1,0 +1,23 @@
+@import '../../../lib/scss/colors';
+
+.mrc-management-page {
+    background-color: $color-contrast-white;
+    hr {
+        margin: 0;
+    }
+    width: 80%;
+    margin: 0 auto;
+
+    .existing-recommendations {
+        padding-top: 3rem;
+    }
+
+    .recommendations {
+        background-color: $color-palette-grey-tint-95;
+    }
+
+    .recommendations.desktop {
+        padding-left: 4rem;
+        padding-right: 4rem;
+    }
+}

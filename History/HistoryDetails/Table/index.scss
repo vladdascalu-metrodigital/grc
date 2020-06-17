@@ -1,0 +1,60 @@
+@import '../../../lib/scss/colors';
+
+.mrc-react-table {
+  padding: 1rem;
+
+  table {
+    border-spacing: 0;
+    width: 100%;
+    display: table;
+    border-bottom: 5px solid $color-brand-primary-default;
+    border-top: 1px solid $color-palette-grey-tint-90;
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+    tr {
+      :last-child {
+        td { border-bottom: 0; }
+      }
+    }
+
+    th {
+      font-weight: bold;
+      padding: 0.5rem;
+    }
+
+    th, td {
+      margin: 0;
+      padding-top: 0px;
+      padding-left: 5px;
+
+      &:first-child { border-left: 1px solid $color-palette-grey-tint-90; }
+      &:last-child { border-right: 1px solid $color-palette-grey-tint-90; }
+    }
+  }
+
+  .table-header {
+    margin-bottom: 10px !important;
+    p { font-weight: bold; }
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+
+  thead,
+  .mrc-table-row-odd {
+    background-color: $color-palette-grey-tint-95;
+  }
+
+  .mrc-table-footer-row, tr {
+    border: 1px solid $color-palette-grey-tint-95;
+    width: 100%;
+  }
+  .mrc-table-footer-row td {
+    border-top: 1px solid $color-palette-grey-tint-90;
+  }
+}
+

@@ -1,0 +1,184 @@
+import React, { Component } from 'react';
+import './index.scss';
+import PropTypes from 'prop-types';
+import { lookup } from '../../../Util/translations';
+import DownloadIcon from '../../../icons/download-file.svg';
+import * as _ from 'lodash';
+import Bullet, { MODE as BM } from '../../../Bullet';
+import { Table } from '../../../Table';
+
+export default class Scoring extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    downloadReport = scoring => {
+        const url = this.props.host + scoring.reportPath;
+        window.open(url, '_blank');
+    };
+
+    getScoreStatus(value) {
+        switch (value) {
+            case 'POSITIVE':
+                return BM.SUCCESS;
+            case 'MEDIUM':
+                return BM.WARNING;
+            case 'NEGATIVE':
+                return BM.ERROR;
+            case 'positive':
+                return BM.SUCCESS;
+            case 'medium':
+                return BM.WARNING;
+            case 'negative':
+                return BM.ERROR;
+            default:
+                return 'unknown';
+        }
+    }
+
+    scoring = (scorings, isHistoricExtScores) => {
+        const makeScore = (score, scoring) => {
+            const scoreAvailable = !(score == null || score === '');
+            const scoreString = !scoreAvailable ? lookup('mrc.scores.scoreunavailable') : score;
+            const status = this.getScoreStatus(scoring.original.evaluation);
+            return (
+                <span className={!scoreAvailable ? 'cell-score span-error' : 'cell-score'}>
+                    {scoreAvailable ? <Bullet mode={status} /> : null}
+                    {scoreString}
+                </span>
+            );
+        };
+
+        const makeLimit = limit => {
+            const limitUnavailable = limit == null || limit === '';
+            const limitString = limitUnavailable ? lookup('mrc.scores.limitunavailable') : limit;
+            return (
+                <div className={limitUnavailable ? 'span-error' : ''}>
+                    {limitUnavailable ? (
+                        limitString
+                    ) : (
+                        <mrc-number dynamic={true} show-currency-for-country={this.props.country}>
+                            {limitString}
+                        </mrc-number>
+                    )}
+                </div>
+            );
+        };
+
+        const makeDownload = (scoring, downloadContent, noContent) => {
+            const isBlank = str => !str || str === null || /^\s*$/.test(str);
+            return isBlank(scoring && scoring.original ? scoring.original.reportPath : undefined) ? (
+                noContent
+            ) : (
+                <a onClick={this.downloadReport.bind(this, scoring.original)}>{downloadContent}</a>
+            );
+        };
+
+        const columns = [
+            {
+                Header: lookup('mrc.scores.table.agency'),
+                accessor: 'agency',
+                renderFn: (agency, scoring) => makeDownload(scoring, <span>{agency}</span>, <span>{agency}</span>),
+            },
+            { Header: lookup('mrc.scores.table.customerid'), accessor: 'customerId' },
+            { Header: lookup('mrc.scores.table.score'), accessor: 'score', renderFn: makeScore },
+            { Header: lookup('mrc.scores.table.maxlimit'), accessor: 'limit', renderFn: makeLimit },
+            {
+                Header: lookup('mrc.scores.table.requestedat'),
+                accessor: 'requestedAt',
+                renderFn: value => <mrc-datetime>{value}</mrc-datetime>,
+            },
+            { Header: lookup('mrc.scores.table.uploadedby'), accessor: 'uploadedBy' },
+            {
+                Header: lookup('mrc.scores.table.download'),
+                accessor: 'reportPath',
+                renderFn: (reportPath, scoring) => (
+                    <div className="reportDownloadLink">
+                        {makeDownload(
+                            scoring,
+                            <img className="mrc-icon-small" src={DownloadIcon} alt="Report File" />,
+                            null
+                        )}
+                    </div>
+                ),
+            },
+        ];
+
+        return (
+            <div className="mrc-data-table mrc-scoring-table">
+                <h3>
+                    {isHistoricExtScores ? lookup('mrc.scores.historicExtScoreData') : lookup('mrc.scores.scoreData')}
+                </h3>
+                <Table className="mrc-data-table mrc-scoring-table" columns={columns} data={scorings} />
+            </div>
+        );
+    };
+
+    createScores(scores, isHistoricExtScores) {
+        if (scores) {
+            scores = scores.filter(score => score && score.errorCode !== 'NOT_NEEDED');
+            scores.sort(Scoring.scoringItemsSorter);
+        }
+        if (_.some(scores)) {
+            return this.scoring(scores, isHistoricExtScores);
+        } else {
+            return (
+                <div className="mrc-detail">
+                    {isHistoricExtScores
+                        ? lookup('scoring.data.historicExtScoreUnavailable')
+                        : lookup('scoring.data.none-available')}
+                </div>
+            );
+        }
+    }
+
+    // Sort by requestedAt
+    static scoringItemsSorter(item1, item2) {
+        const requestedAt1 =
+            item1 !== undefined && item1 !== null && item1.requestedAt !== null ? item1.requestedAt : undefined;
+        const requestedAt2 =
+            item2 !== undefined && item2 !== null && item2.requestedAt !== null ? item2.requestedAt : undefined;
+        if (!requestedAt1) {
+            if (!requestedAt2) {
+                return 0;
+            } else {
+                return 1;
+            }
+        } else if (!requestedAt2) {
+            return -1;
+        }
+
+        try {
+            const requestedAtDate1 = new Date(requestedAt1);
+            const requestedAtDate2 = new Date(requestedAt2);
+
+            return (+requestedAtDate1 < +requestedAtDate2) - (+requestedAtDate1 > +requestedAtDate2);
+        } catch (e) {
+            console.error('error parsing the dates');
+        }
+
+        return 0;
+    }
+
+    render() {
+        const scores = this.props.scores;
+        const historicExtScores = this.props.historicExtScores;
+        return (
+            <div>
+                {this.createScores(scores, false)}
+                {this.createScores(historicExtScores, true)}
+            </div>
+        );
+    }
+}
+
+Scoring.propTypes = {
+    data: PropTypes.array,
+    ready: PropTypes.bool,
+    disabled: PropTypes.bool,
+    host: PropTypes.string,
+    scores: PropTypes.array,
+    country: PropTypes.string,
+    historicExtScores: PropTypes.array,
+};

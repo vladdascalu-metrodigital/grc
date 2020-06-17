@@ -1,0 +1,54 @@
+@import "../../settings";
+
+.mrc-history {
+
+  padding: 0;
+  //@include respond-to('tablet') {
+  //  padding: 0 $content-padding-horizontal-tablet;
+  //}
+
+  .actions {
+    background-color: $form-bg;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .action-buttons {
+    display: inline-grid;
+    @include respond-to('tablet') {
+      display: block;
+    }
+  }
+
+  .mrc-primary-button {
+    font-size: $small-text;
+    display: inline;
+    background-color: white;
+    margin: 0 0px;
+
+    @include respond-to('tablet') {
+      margin: 0 20px;
+    }
+
+
+    button {
+      min-width: 80px;
+      max-width: 80px;
+      margin: auto;
+      display: inline;
+    }
+  }
+  .trigger-content {
+    height: 48px;
+  }
+
+  .mrc-assigned-name {
+    margin-top:1rem;
+    text-align: center;
+  }
+
+  .mrc-collateral-retry .mrc-collateral-retry-buttons {
+    justify-content: left;
+    padding-left: 1rem;
+  }
+}
