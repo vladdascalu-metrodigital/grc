@@ -1,18 +1,30 @@
 @import '../lib/scss/form-styles';
 
 .mrc-ui-search {
+  @include input-shell();
   position: relative;
+  display: flex;
+  align-items: stretch;
+
 }
 
 .mrc-ui-search-input {
-  @include input-base();
+  @include input-input();
+  flex-grow: 1;
+}
+
+.mrc-ui-search-clear {
+  align-self: center;
+  margin: 0 .75rem;
+  cursor: pointer;
 }
 
 .mrc-ui-search-icon {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
-  position: absolute;
+  // position: absolute;
   height: $height-input;
   right: $spacing-small;
-  top: 0;
+  // top: 0;
 }
