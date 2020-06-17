@@ -30,3 +30,38 @@
   }
 }
 
+@mixin input-shell() {
+  width: 100%;
+  border: 1px solid $color-contrast-white;
+  box-shadow: $shadow-tiny;
+  font-size: 1rem;
+  font-family: inherit;
+  height: $height-input;
+  border-radius: 2px;
+  transition: .125s ease-in-out 0s;
+  transition-property: border-color;
+  margin: 0;
+  padding: 0 .75rem;
+  
+  &:focus-within {
+    border-color: $color-palette-blue-tint-50;
+    box-shadow: $shadow-outline;
+  }
+}
+
+@mixin input-input() {
+  // height: $height-input;
+  color: $color-palette-grey-default;
+  font-size: 1rem;
+  font-family: inherit;
+  margin: 0;
+  border: 0;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    font-style: italic;
+  }
+}
