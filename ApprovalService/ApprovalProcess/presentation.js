@@ -584,6 +584,8 @@ export class ApprovalProcessPresentation extends Component {
                 newRecommendation={this.state.newRecommendation}
                 editedRecommendation={this.state.editedRecommendation}
                 validMccScore={this.state.validMccScore}
+                approvedGroupLimit={this.approvedGroupLimit(process, this.state.creditData)}
+                requestedGroupLimit={this.state.requestedGroupLimit}
             />
         );
     }
@@ -661,14 +663,10 @@ export class ApprovalProcessPresentation extends Component {
         }
     }
 
-    groupLimitInfos(
-        approval,
-        creditData,
-        currentGroupLimit,
-        requestedGroupLimit,
-        availableGroupLimit,
-        exhaustionGroupLimit
-    ) {
+    approvedGroupLimit(approval, creditData) {
+        if (!_.get(approval, 'approvalItems')) {
+            return 0;
+        }
         const currentCreditAmounts = approval.approvalItems.map(x => _.get(x, 'currentCreditData.amount', null));
         var approvedGroupLimitInst = 0;
         let i = 0;
@@ -685,12 +683,23 @@ export class ApprovalProcessPresentation extends Component {
             }
         }
         approvedGroupLimitInst = isNaN(approvedGroupLimitInst) ? 0 : approvedGroupLimitInst;
+        return approvedGroupLimitInst;
+    }
+
+    groupLimitInfos(
+        approval,
+        creditData,
+        currentGroupLimit,
+        requestedGroupLimit,
+        availableGroupLimit,
+        exhaustionGroupLimit
+    ) {
         return (
             <CustomerGroupLimits
                 country={approval.country}
                 exhaustionGroupLimit={exhaustionGroupLimit}
                 requestedGroupLimit={requestedGroupLimit}
-                approvedGroupLimitInst={approvedGroupLimitInst}
+                approvedGroupLimitInst={this.approvedGroupLimit(approval, creditData)}
                 currentGroupLimit={currentGroupLimit}
                 availableGroupLimit={availableGroupLimit}
             />

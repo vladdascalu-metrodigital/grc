@@ -43,7 +43,7 @@ export default class Management extends Component {
             {
                 customer: { firstName: lookup('mrc.approvedGroupLimit'), lastName: '' },
                 approvedCreditData: {
-                    amount: groupLimit(approvalItems, 'approvedCreditData'),
+                    amount: this.props.approvedGroupLimit,
                 },
             },
         ]);
@@ -104,8 +104,8 @@ export default class Management extends Component {
     groupLimitBoxes(approvalItems, currency) {
         const groupLimits = [
             groupLimit(approvalItems, 'currentCreditData'),
-            groupLimit(approvalItems, 'requestedCreditData'),
-            groupLimit(approvalItems, 'approvedCreditData'),
+            this.props.requestedGroupLimit,
+            this.props.approvedGroupLimit,
         ];
         const keys = ['mrc.creditdetails.current', 'mrc.creditdetails.requested', 'mrc.creditdetails.applied'];
         const keyColors = ['light_grey', 'light_grey', 'white'];
@@ -257,4 +257,6 @@ Management.propTypes = {
     currentUser: PropTypes.string,
     currency: PropTypes.string,
     validMccScore: PropTypes.object,
+    approvedGroupLimit: PropTypes.number,
+    requestedGroupLimit: PropTypes.number,
 };
