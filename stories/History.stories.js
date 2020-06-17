@@ -1347,8 +1347,6 @@ storiesOf('History/HistoryDetails', module).add('history details', () => (
         error={false}
         isTablet={true}
         buttonsDisabled={false}
-        // {...historyData}
-
         // notificationShowing: PropTypes.string // bool?
         requestData={historyData.historyDetails.requestData}
         approvalProcess={historyData.historyDetails.approvalProcess}
@@ -1371,7 +1369,6 @@ storiesOf('History/HistoryDetails', module).add('history details', () => (
         recommendations={historyData.historyDetails.recommendations}
         additionalFields={additionalFields}
         countriesWithDifferentBlockingCodes={historyData.countriesWithDifferentBlockingCodes}
-
         // history: PropTypes.object // not used!?
     />
 ));

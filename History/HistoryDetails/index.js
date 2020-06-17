@@ -70,7 +70,10 @@ export default class HistoryDetailsPresentation extends Component {
                     <Button
                         status={'secondary'}
                         text={lookup('history.button.go-to-approval')}
-                        onClick={() => alert('link to approval-service/approvalprocessbyrequestid/:requestid')}
+                        onClick={() => {
+                            window.location =
+                                this.props.approvalServiceUrl + '/approvalprocessbyrequestid/' + params.requestId;
+                        }}
                     />
                 </div>
             );
@@ -377,5 +380,6 @@ HistoryDetailsPresentation.propTypes = {
     recommendations: PropTypes.array,
     history: PropTypes.object,
     additionalFields: PropTypes.shape({ requestFields: PropTypes.arrayOf(RequestFieldPropTypes) }),
+    approvalServiceUrl: PropTypes.string,
     countriesWithDifferentBlockingCodes: PropTypes.array,
 };
