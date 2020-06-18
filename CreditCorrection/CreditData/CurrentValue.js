@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import '../../../mrc-component-library/public/js/bundle.js';
 import './index.scss';
 import { lookup } from '../../Util/translations';
 import MrcNumber from '../../MrcNumber';
