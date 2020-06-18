@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import Table from '../../MrcTable';
 import CRTableCellCustomer from './CRTableCellCustomer';
 import CRTableCellLimit from './CRTableCellLimit';
@@ -7,7 +7,7 @@ import CRTableCellCreditProduct from './CRTableCellCreditProduct';
 import CRTableCellPrepaymentCash from './CRTableCellPrepaymentCash';
 import ToggleIndicator from '../../ToggleIndicator';
 
-export default class CreditTableRowC extends PureComponent {
+export default class CreditTableRowC extends Component {
     render() {
         return (
             <React.Fragment>

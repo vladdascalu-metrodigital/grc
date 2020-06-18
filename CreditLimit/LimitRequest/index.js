@@ -14,6 +14,7 @@ import '../../tabs.scss';
 import { Accordion, Collapsible } from '../../Accordion';
 import RequestSubmitted from './RequestSubmitted';
 import { displayName } from '../../Util';
+import CustomerDetailsGroup from '../CustomerDetailsGroup';
 import CustomerTrigger from '../../CustomerTrigger/presentation';
 import CustomerGroupLimits from '../../CustomerGroupLimits';
 import { lookup } from '../../Util/translations';
@@ -22,10 +23,8 @@ import AdditionalFieldsSection from '../../AdditionalFields/AdditionalFieldsSect
 import './index.scss';
 import { RequestFieldPropTypes } from '../../AdditionalFields/AdditionalFieldsPropTypes';
 import { filterAdditionalFieldsList } from '../../AdditionalFields/additionalFielsUtil';
-import CreditTab from '../../service-components/CreditTab';
 
 import * as _ from 'lodash';
-import CustomerDataGroup from '../../CustomerDataGroup';
 
 export default class LimitRequestLayout extends Component {
     FILE_TYPES = [''];
@@ -62,26 +61,15 @@ export default class LimitRequestLayout extends Component {
         this.props.cleanup();
     }
 
-    componentDidUpdate() {
-        const req = this.props.request;
-        const path = 'submitted';
-        if (!this.props.history.location.pathname.endsWith(path) && req.data && req.data.submitInfo) {
-            const target = `/limitrequests/${req.data.id}/${path}`;
-            this.props.history.replace(target);
-        }
-        if (this.state.isApplyCurrentLimitAndExpiryClicked) {
-            this.setState({
-                isApplyCurrentLimitAndExpiryClicked: false,
-            });
-        }
-    }
-
     /**
      * @overload livecycle callback to check for valid data actually loaded
      *
      * @param nextProps
      */
     UNSAFE_componentWillReceiveProps(nextProps) {
+        //
+        // in case we got data, prepare it
+        //
         if (nextProps.request && nextProps.request.data) {
             const req = nextProps.request.data;
 
@@ -233,7 +221,7 @@ export default class LimitRequestLayout extends Component {
         const customers = req.data && req.data.requestedItems.map(ri => ri.customer);
 
         return (
-            <CustomerDataGroup
+            <CustomerDetailsGroup
                 customers={customers}
                 countriesWithDifferentBlockingCodes={this.props.countriesWithDifferentBlockingCodes}
             />
@@ -541,6 +529,7 @@ export default class LimitRequestLayout extends Component {
     setComponentValidity(id, valid) {
         const newValidity = this.state.creditDataComponentsValid;
         newValidity[id] = valid;
+
         const requestor = this.props.request.data.requestedItems.find(request => request.customer.requestedCustomer);
         const requestorCreditDataIsValid = newValidity[requestor.id];
 
@@ -620,106 +609,18 @@ export default class LimitRequestLayout extends Component {
         );
     }
 
-    _creditTab() {
-        console.log(this.props);
-        const request = _.get(this.props, 'request.data');
-        const requestedItem = request
-            ? request.requestedItems
-                ? _.find(request.requestedItems, x => _.get(x, 'customer.requestedCustomer'))
-                : null
-            : null;
-        const firstName = _.get(requestedItem, 'customer.firstName');
-        const lastName = _.get(requestedItem, 'customer.lastName');
-        const customerName = (firstName, lastName) =>
-            firstName && lastName ? firstName + ' ' + lastName : lastName ? lastName : null;
-        return (
-            <CreditTab
-                country={_.get(request, 'requestedCustomerId.country')}
-                historical={false}
-                groupLimit={{
-                    exhausted: _.get(request, 'requestedItems')
-                        ? _.sum(request.requestedItems.map(x => _.get(x, 'customer.limitExhaustion')))
-                        : null,
-                    current: _.get(request, 'requestedItems')
-                        ? _.sum(request.requestedItems.map(x => _.get(x, 'customer.creditLimit')))
-                        : null,
-                    wish: this.state.requestedGroupLimit,
-                }}
-                customer={{
-                    name: customerName(firstName, lastName),
-                    email: _.get(requestedItem, 'customer.email'),
-                    phone: _.get(requestedItem, 'customer.phoneNumber'),
-                }}
-                customers={
-                    _.get(request, 'requestedItems')
-                        ? request.requestedItems.map(item => {
-                              return {
-                                  onAmountChange: x =>
-                                      this.props.setCreditData(request, {
-                                          id: _.get(item, 'creditData.id'),
-                                          amount: x,
-                                          creditProduct: null,
-                                          creditPeriod: null,
-                                          debitType: null,
-                                      }),
-                                  onExpiryDateChange: x =>
-                                      this.props.setLimitExpiry(request, _.get(item, 'id'), {
-                                          limitExpiryDate: x,
-                                          resetToLimitAmount: 0,
-                                          limitExpiryReminderDays: 14,
-                                      }),
-                                  type:
-                                      _.get(item, 'customer.creditLimit') === 0 ||
-                                      _.isNil(_.get(item, 'customer.creditLimit'))
-                                          ? 'cash'
-                                          : 'credit',
-                                  name: customerName(
-                                      _.get(item, 'customer.firstName'),
-                                      _.get(item, 'customer.lastName')
-                                  ),
-                                  storeNumber: _.get(item, 'customer.storeNumber'),
-                                  number: _.get(item, 'customer.customerNumber'),
-                                  isBlocked: !_.isNil(_.get(item, 'customer.blockingReason')),
-                                  payments: {
-                                      products: _.uniqBy(
-                                          _.get(item, 'customer.availablePayments'),
-                                          'creditProduct'
-                                      ).map(x => x.creditProduct),
-                                      debittypes: _.uniqBy(_.get(item, 'customer.availablePayments'), 'debitType').map(
-                                          x => x.debitType
-                                      ),
-                                      periods: _.uniqBy(_.get(item, 'customer.availablePayments'), 'creditPeriod').map(
-                                          x => x.creditPeriod
-                                      ),
-                                  },
-                                  limit: {
-                                      current: {
-                                          amount: _.get(item, 'customer.creditLimit'),
-                                          product: _.get(item, 'customer.currentPayment.creditProduct'),
-                                          period: _.get(item, 'customer.currentPayment.creditPeriod'),
-                                          debittype: _.get(item, 'customer.currentPayment.debitType'),
-                                          expiry: {
-                                              date: _.get(item, 'currentLimitExpiry.limitExpiryDate'),
-                                              amount: _.get(item, 'currentLimitExpiry.resetToLimitAmount'),
-                                          },
-                                      },
-                                      wish: {
-                                          amount: _.get(item, 'creditData.amount'),
-                                          product: _.get(item, 'creditData.creditProduct'),
-                                          period: _.get(item, 'creditData.creditPeriod'),
-                                          debittype: _.get(item, 'creditData.debitType'),
-                                          expiry: {
-                                              date: _.get(item, 'requestedLimitExpiry.limitExpiryDate'),
-                                              amount: _.get(item, 'requestedLimitExpiry.resetToLimitAmount'),
-                                          },
-                                      },
-                                  },
-                              };
-                          })
-                        : []
-                }
-            />
-        );
+    componentDidUpdate() {
+        const req = this.props.request;
+        const path = 'submitted';
+        if (!this.props.history.location.pathname.endsWith(path) && req.data && req.data.submitInfo) {
+            const target = `/limitrequests/${req.data.id}/${path}`;
+            this.props.history.replace(target);
+        }
+        if (this.state.isApplyCurrentLimitAndExpiryClicked) {
+            this.setState({
+                isApplyCurrentLimitAndExpiryClicked: false,
+            });
+        }
     }
 
     render() {
