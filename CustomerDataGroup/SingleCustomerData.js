@@ -119,7 +119,7 @@ export default class SingleCustomerData extends Component {
 
         return {
             name: name,
-            birthday: customer.birthday,
+            birthday: customer.birthDay,
             street: customer.street,
             houseNumber: customer.houseNumber,
             zipCode: customer.zipCode,

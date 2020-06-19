@@ -21,7 +21,7 @@ storiesOf('CustomerDataGroup', module).add('customers data in group', () => (
                 street: 'Heppenheimer Weg',
                 segment: 'SCO',
                 badDebits: '1',
-                birthday: '1971-10-09T00:00:00+02:00',
+                birthDay: '1971-10-09T00:00:00+02:00',
                 registrationDate: '2011-10-09T00:00:00+02:00',
                 creditLimit: 123.4,
                 customerLastName: 'Anylastname',
