@@ -6,7 +6,7 @@
   --mrc-ui-button-color: #{$color-interaction};
   display: block;
   color: $color-contrast-white;
-  background-color: var(--mrc-ui-button-color);
+  background-color: var(--mrc-ui-button-color, $color-interaction);
 
   position: relative;
   vertical-align: middle;
@@ -37,9 +37,9 @@
 ////// DISABLED
 
 .mrc-ui-btn:disabled {
-  background-color: $color-palette-grey-tint-90;
-  background-image: repeating-linear-gradient(40deg, transparentize($color-palette-grey-tint-80, 0.5) 0px, rgba(204, 208, 214, 0.498039) 2px, transparent 2px, transparent 10px);
+  @include background-color-pattern-disabled();
   cursor: not-allowed;
+  color: $color-disabled;
 }
 
 ////// SIZES
@@ -81,15 +81,6 @@
   &:hover {
     background-color: $color-palette-red-shade-10;
   }
-}
-
-.mrc-ui-btn-attention {
-  --mrc-ui-button-color: #{$color-attention};
-  background-color: $color-attention;
-  &:hover {
-    background-color: $color-brand-secondary-shade-10;
-  }
-
 }
 
 /////// Outlined

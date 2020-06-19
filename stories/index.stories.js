@@ -34,7 +34,7 @@ import RecentRequestsInfo from '../RecentRequestsInfo';
 
 import CreditLimitCustomerDetailsGroup from '../CreditLimit/CustomerDetailsGroup';
 import CreditLimitCreditData from '../CreditLimit/CreditData';
-import CreditLimitRequest from '../CreditLimit/LimitRequest';
+import CreditLimitRequest from '../CreditLimit/LimitRequestNew';
 import CreditLimitRequestSubmitted from '../CreditLimit/LimitRequest/RequestSubmitted';
 import CreditLimitCustomerStatus from '../CreditLimit/CustomerStatus';
 
@@ -174,7 +174,7 @@ storiesOf('Attachments', module)
             ]}
             fileTypes={['general', 'delkredere', 'warenkreditversicherung', 'contract']}
             addAttachment={logAddFile}
-            savePlaceholder={fileType => console.log('saving placeholder of type ' + fileType)}
+            savePlaceholder={(fileType) => console.log('saving placeholder of type ' + fileType)}
             country="DE"
         />
     ))
@@ -207,7 +207,7 @@ storiesOf('Attachments', module)
             ]}
             fileTypes={['general', 'delkredere', 'warenkreditversicherung', 'contract']}
             addAttachment={logAddFile}
-            savePlaceholder={fileType => console.log('saving placeholder of type ' + fileType)}
+            savePlaceholder={(fileType) => console.log('saving placeholder of type ' + fileType)}
             country="DE"
         />
     ))
@@ -234,7 +234,7 @@ storiesOf('Attachments', module)
             ]}
             fileTypes={['general', 'delkredere', 'warenkreditversicherung', 'contract']}
             addAttachment={logAddFile}
-            savePlaceholder={fileType => console.log('saving placeholder of type ' + fileType)}
+            savePlaceholder={(fileType) => console.log('saving placeholder of type ' + fileType)}
             country="DE"
         />
     ))
@@ -371,7 +371,7 @@ storiesOf('Attachments', module)
             // fileTypes={['general', 'delkredere', 'warenkreditversicherung', 'contract']}
             fileTypes={['general']}
             addAttachment={logAddFile}
-            savePlaceholder={fileType => console.log('saving placeholder of type ' + fileType)}
+            savePlaceholder={(fileType) => console.log('saving placeholder of type ' + fileType)}
             country="DE"
         />
     ));
@@ -415,7 +415,7 @@ storiesOf('Comments', module)
                     uploadTimestamp: '2019-02-02',
                 },
             ]}
-            onSave={newValue => console.log(newValue)}
+            onSave={(newValue) => console.log(newValue)}
         />
     ))
     .add('2-comments', () => (
@@ -452,10 +452,10 @@ storiesOf('Comments', module)
                     uploadTimestamp: '2019-02-02',
                 },
             ]}
-            onSave={newValue => console.log(newValue)}
+            onSave={(newValue) => console.log(newValue)}
         />
     ))
-    .add('no-comments', () => <Comments onSave={newValue => console.log(newValue)} />);
+    .add('no-comments', () => <Comments onSave={(newValue) => console.log(newValue)} />);
 
 storiesOf('Recommendations', module)
     .add('standard', () => (
@@ -481,7 +481,7 @@ storiesOf('Recommendations', module)
             ]}
             addNewDisabled={false}
             canAddNew={true}
-            onDelete={id => console.log('deleting recommendation with id: ' + id)}
+            onDelete={(id) => console.log('deleting recommendation with id: ' + id)}
             onSave={(id, content, rating) =>
                 console.log('saving recommendation with id, content, rating ', id, content, rating)
             }
@@ -627,8 +627,8 @@ storiesOf('InboxPresentation', module).add('standard', () => (
         ]}
         filterAvailable={true}
         isTablet={false}
-        confirmNotification={uri => console.log('confirmed uri: ' + uri)}
-        onFilterChanged={filter => console.log('onchanged filter: ' + filter)}
+        confirmNotification={(uri) => console.log('confirmed uri: ' + uri)}
+        onFilterChanged={(filter) => console.log('onchanged filter: ' + filter)}
         currentFilterValue={() => console.log('currentFilterValue')}
     />
 ));
@@ -682,9 +682,9 @@ storiesOf('LaunchPad', module)
             }}
             desktop={true}
             tablet={false}
-            updateActiveItem={value => console.log(value)}
-            showAuxControl={value => console.log(value)}
-            updateUiPageTitle={value => console.log(value)}
+            updateActiveItem={(value) => console.log(value)}
+            showAuxControl={(value) => console.log(value)}
+            updateUiPageTitle={(value) => console.log(value)}
         />
     ))
     .add('standard mobile', () => (
@@ -730,9 +730,9 @@ storiesOf('LaunchPad', module)
             }}
             desktop={false}
             tablet={false}
-            updateActiveItem={value => console.log(value)}
-            showAuxControl={value => console.log(value)}
-            updateUiPageTitle={value => console.log(value)}
+            updateActiveItem={(value) => console.log(value)}
+            showAuxControl={(value) => console.log(value)}
+            updateUiPageTitle={(value) => console.log(value)}
         />
     ));
 
@@ -741,13 +741,13 @@ storiesOf('CustomerSearch', module)
         <CustomerSearch
             results={null}
             isLoading={false}
-            doSearch={value => console.log(value)}
-            updateSearchTerm={value => console.log(value)}
-            updateUiPageTitle={value => console.log(value)}
-            showAuxControl={value => console.log(value)}
-            hideNotification={value => console.log(value)}
+            doSearch={(value) => console.log(value)}
+            updateSearchTerm={(value) => console.log(value)}
+            updateUiPageTitle={(value) => console.log(value)}
+            showAuxControl={(value) => console.log(value)}
+            hideNotification={(value) => console.log(value)}
             searchTerm={null}
-            cleanSearchResult={value => console.log(value)}
+            cleanSearchResult={(value) => console.log(value)}
             match={{
                 isExact: true,
                 params: {
@@ -763,13 +763,13 @@ storiesOf('CustomerSearch', module)
         <CustomerSearch
             results={null}
             isLoading={true}
-            doSearch={value => console.log(value)}
-            updateSearchTerm={value => console.log(value)}
-            updateUiPageTitle={value => console.log(value)}
-            showAuxControl={value => console.log(value)}
-            hideNotification={value => console.log(value)}
+            doSearch={(value) => console.log(value)}
+            updateSearchTerm={(value) => console.log(value)}
+            updateUiPageTitle={(value) => console.log(value)}
+            showAuxControl={(value) => console.log(value)}
+            hideNotification={(value) => console.log(value)}
             searchTerm={'test1'}
-            cleanSearchResult={value => console.log(value)}
+            cleanSearchResult={(value) => console.log(value)}
             match={{
                 isExact: false,
                 params: {
@@ -822,13 +822,13 @@ storiesOf('CustomerSearch', module)
                 },
             ]}
             isLoading={false}
-            doSearch={value => console.log(value)}
-            updateSearchTerm={value => console.log(value)}
-            updateUiPageTitle={value => console.log(value)}
-            showAuxControl={value => console.log(value)}
-            hideNotification={value => console.log(value)}
+            doSearch={(value) => console.log(value)}
+            updateSearchTerm={(value) => console.log(value)}
+            updateUiPageTitle={(value) => console.log(value)}
+            showAuxControl={(value) => console.log(value)}
+            hideNotification={(value) => console.log(value)}
             searchTerm={'test1'}
-            cleanSearchResult={value => console.log(value)}
+            cleanSearchResult={(value) => console.log(value)}
             match={{
                 isExact: false,
                 params: {
@@ -844,13 +844,13 @@ storiesOf('CustomerSearch', module)
         <CustomerSearch
             results={[]}
             isLoading={false}
-            doSearch={value => console.log(value)}
-            updateSearchTerm={value => console.log(value)}
-            updateUiPageTitle={value => console.log(value)}
-            showAuxControl={value => console.log(value)}
-            hideNotification={value => console.log(value)}
+            doSearch={(value) => console.log(value)}
+            updateSearchTerm={(value) => console.log(value)}
+            updateUiPageTitle={(value) => console.log(value)}
+            showAuxControl={(value) => console.log(value)}
+            hideNotification={(value) => console.log(value)}
             searchTerm={'test1'}
-            cleanSearchResult={value => console.log(value)}
+            cleanSearchResult={(value) => console.log(value)}
             match={{
                 isExact: true,
                 params: {
@@ -1330,10 +1330,10 @@ storiesOf('QuickCheck', module).add('standard status', () => (
             loading: false,
         }}
         countriesWithDifferentBlockingCodes={['DE']}
-        loadCustomerData={value => console.log(value)}
-        loadRecentRequests={value => console.log(value)}
-        updateUiPageTitle={value => console.log(value)}
-        showAuxControl={value => console.log(value)}
+        loadCustomerData={(value) => console.log(value)}
+        loadRecentRequests={(value) => console.log(value)}
+        updateUiPageTitle={(value) => console.log(value)}
+        showAuxControl={(value) => console.log(value)}
         match={{
             isExact: true,
             params: {
@@ -1398,10 +1398,10 @@ storiesOf('QuickCheck', module).add('standard status', () => (
             },
         }}
         request={{ data: null, loading: false }}
-        requestQuick={customer => {
+        requestQuick={(customer) => {
             return fetch(`/creditlimit/test`)
-                .then(resp => resp.json())
-                .catch(e => {
+                .then((resp) => resp.json())
+                .catch((e) => {
                     console.log('to success page');
                     return e;
                 });
@@ -1500,16 +1500,16 @@ storiesOf('CreditLimit/CreditData', module).add('standard status', () => (
             },
             valid: false,
         }}
-        setCreditData={value => console.log(value)}
-        setLimitExpiry={value => console.log(value)}
-        setValidity={value => console.log(value)}
-        handleRequestedGroupLimitChange={value => console.log(value)}
+        setCreditData={(value) => console.log(value)}
+        setLimitExpiry={(value) => console.log(value)}
+        setValidity={(value) => console.log(value)}
+        handleRequestedGroupLimitChange={(value) => console.log(value)}
         applyCurrentLimitAndExpiry={false}
         applyCurrentPayments={false}
         isApplyCurrentLimitAndExpiryClicked={false}
         dateFormat={'dd.MM.yyyy'}
         currentPayment={{ limit: 1000, payment: null }}
-        registerCallbackOnApplyCurrentLimitAndExpiryChange={value => console.log(value)}
+        registerCallbackOnApplyCurrentLimitAndExpiryChange={(value) => console.log(value)}
         countriesWithDifferentBlockingCodes={['DE']}
     />
 ));
@@ -1517,11 +1517,11 @@ storiesOf('CreditLimit/CreditData', module).add('standard status', () => (
 storiesOf('CreditLimit/LimitRequest', module)
     .add('standard request', () => (
         <CreditLimitRequest
-            cleanup={value => console.log(value)}
-            updateUiPageTitle={value => console.log(value)}
-            showAuxControl={value => console.log(value)}
-            loadRequest={value => console.log(value)}
-            loadAdditionalFields={value => console.log(value)}
+            cleanup={(value) => console.log(value)}
+            updateUiPageTitle={(value) => console.log(value)}
+            showAuxControl={(value) => console.log(value)}
+            loadRequest={(value) => console.log(value)}
+            loadAdditionalFields={(value) => console.log(value)}
             match={{
                 isExact: true,
                 params: {
@@ -1632,18 +1632,16 @@ storiesOf('CreditLimit/LimitRequest', module)
                                 limitExpiryReminderDays: 14,
                                 resetToLimitAmount: 0,
                             },
-                            requestedLimitExpiry: {
-                                limitExpiryDate: '2020-05-04T07:47:46Z',
-                                limitExpiryReminderDays: 14,
-                                resetToLimitAmount: 0,
-                            },
+                            requestedLimitExpiry: null,
                             customerSapId: {
                                 country: 'PK',
                                 storeNumber: '10',
                                 customerNumber: '555',
                                 typeCd: 'NORM',
                             },
-                            valid: false,
+                            valid: true,
+                            limitType: 'CURRENT',
+                            paymentMethodType: 'CURRENT',
                         },
                         {
                             id: 'dbfb70c2-8321-4321-b972-4ae818ec23dc',
@@ -1659,7 +1657,7 @@ storiesOf('CreditLimit/LimitRequest', module)
                                 zipCode: '40227',
                                 lastName: 'Anylastname',
                                 storeNumber: '10',
-                                paymentAllowanceCd: '3',
+                                paymentAllowanceCd: '5',
                                 legalFormDescription: 'Test Description',
                                 city: 'Düsseldorf',
                                 houseNumber: '2',
@@ -1686,6 +1684,8 @@ storiesOf('CreditLimit/LimitRequest', module)
                                 phoneNumber: '+49 123 4567',
                                 customerFirstName: 'Anyfirstname',
                                 creditSettleFrequencyCd: '',
+                                checkoutCheckCode: '30',
+                                blockingReason: 'closed',
                                 currentPayment: {
                                     creditProduct: 'mrc.payment.METRO_Cash',
                                     creditPeriod: 'mrc.payment.3',
@@ -1744,7 +1744,10 @@ storiesOf('CreditLimit/LimitRequest', module)
                                 customerNumber: '12349',
                                 typeCd: 'NORM',
                             },
-                            valid: false,
+                            valid: true,
+                            limitType: 'CURRENT',
+                            paymentMethodType: 'CURRENT',
+                            creditOption: 'NONE',
                         },
                     ],
                     creditProgram: null,
@@ -1991,7 +1994,7 @@ storiesOf('CreditLimit/LimitRequest', module)
                         requestId: '1',
                         country: 'DE',
                         storeNumber: '10',
-                        customerNumber: '12346',
+                        customerNumber: '12348',
                         groupId: null,
                         creationTimestamp: '2020-05-04T07:23:03.053685Z',
                         value: '275000',
@@ -2078,7 +2081,7 @@ storiesOf('CreditLimit/LimitRequest', module)
                         requestId: '1',
                         country: 'DE',
                         storeNumber: '10',
-                        customerNumber: '12346',
+                        customerNumber: '12348',
                         groupId: null,
                         creationTimestamp: '2020-05-04T07:23:03.056200Z',
                         value: '2',
@@ -2107,7 +2110,7 @@ storiesOf('CreditLimit/LimitRequest', module)
                         requestId: '1',
                         country: 'DE',
                         storeNumber: '10',
-                        customerNumber: '12346',
+                        customerNumber: '12348',
                         groupId: null,
                         creationTimestamp: '2020-05-04T07:23:03.055366Z',
                         value: '1',
@@ -2133,16 +2136,16 @@ storiesOf('CreditLimit/LimitRequest', module)
                     },
                 ],
             }}
-            addComment={value => console.log(value)}
-            addAttachment={value => console.log(value)}
-            setCreditData={value => console.log(value)}
-            setLimitExpiry={value => console.log(value)}
-            submitRequest={value => console.log(value)}
-            cancelRequest={value => console.log(value)}
-            getMdwData={data => {
+            addComment={(value) => console.log(value)}
+            addAttachment={(value) => console.log(value)}
+            setCreditData={(value) => console.log(value)}
+            setLimitExpiry={(value) => console.log(value)}
+            submitRequest={(value) => console.log(value)}
+            cancelRequest={(value) => console.log(value)}
+            getMdwData={(data) => {
                 return fetch(`/creditlimit/test`)
-                    .then(resp => resp.json())
-                    .catch(e => {
+                    .then((resp) => resp.json())
+                    .catch((e) => {
                         return [
                             {
                                 id: '6d4d11798482a1c24a0d12a2466dbec5ccae89758f3117cc6b12a5ff4e895b98',
@@ -2229,11 +2232,14 @@ storiesOf('CreditLimit/LimitRequest', module)
                         ];
                     });
             }}
-            getCreditPrograms={data => {
+            getCreditPrograms={(data) => {
                 return fetch(`/creditlimit/test`)
-                    .then(resp => resp.json())
-                    .catch(e => {
-                        return {};
+                    .then((resp) => resp.json())
+                    .catch((e) => {
+                        return {
+                            selectedCreditProgram: 'strategy.program.DE_1',
+                            availableCreditPrograms: ['strategy.program.DE_1', 'strategy.program.DE_2'],
+                        };
                     });
             }}
             history={{
@@ -2241,8 +2247,8 @@ storiesOf('CreditLimit/LimitRequest', module)
                     pathname: 'request',
                 },
             }}
-            setCreditPrograms={value => console.log(value)}
-            updateAdditionalField={value => console.log(value)}
+            setCreditPrograms={(value) => console.log(value)}
+            updateAdditionalField={(value) => console.log(value)}
             countriesWithDifferentBlockingCodes={['DE']}
         />
     ))
@@ -2359,19 +2365,19 @@ storiesOf('CreditLimit/CustomerStatus', module)
                 },
                 loading: false,
             }}
-            loadPendingRequest={data => {
+            loadPendingRequest={(data) => {
                 return fetch(`/creditlimit/test`)
-                    .then(resp => resp.json())
-                    .catch(e => {
+                    .then((resp) => resp.json())
+                    .catch((e) => {
                         console.log('constststst1');
                         return {};
                     });
             }}
             countriesWithDifferentBlockingCodes={['DE']}
-            loadCustomerData={value => console.log(value)}
-            loadRecentRequests={value => console.log(value)}
-            updateUiPageTitle={value => console.log(value)}
-            showAuxControl={value => console.log(value)}
+            loadCustomerData={(value) => console.log(value)}
+            loadRecentRequests={(value) => console.log(value)}
+            updateUiPageTitle={(value) => console.log(value)}
+            showAuxControl={(value) => console.log(value)}
             match={{
                 isExact: true,
                 params: {
@@ -2436,10 +2442,10 @@ storiesOf('CreditLimit/CustomerStatus', module)
                 },
             }}
             request={{ data: null, loading: false }}
-            requestQuick={customer => {
+            requestQuick={(customer) => {
                 return fetch(`/creditlimit/test`)
-                    .then(resp => resp.json())
-                    .catch(e => {
+                    .then((resp) => resp.json())
+                    .catch((e) => {
                         console.log('to success page');
                         return e;
                     });
@@ -2506,19 +2512,19 @@ storiesOf('CreditLimit/CustomerStatus', module)
                 },
                 loading: false,
             }}
-            loadPendingRequest={data => {
+            loadPendingRequest={(data) => {
                 return fetch(`/creditlimit/test`)
-                    .then(resp => resp.json())
-                    .catch(e => {
+                    .then((resp) => resp.json())
+                    .catch((e) => {
                         console.log('constststst1');
                         return {};
                     });
             }}
             countriesWithDifferentBlockingCodes={['DE']}
-            loadCustomerData={value => console.log(value)}
-            loadRecentRequests={value => console.log(value)}
-            updateUiPageTitle={value => console.log(value)}
-            showAuxControl={value => console.log(value)}
+            loadCustomerData={(value) => console.log(value)}
+            loadRecentRequests={(value) => console.log(value)}
+            updateUiPageTitle={(value) => console.log(value)}
+            showAuxControl={(value) => console.log(value)}
             match={{
                 isExact: true,
                 params: {
@@ -2818,10 +2824,10 @@ storiesOf('CreditLimit/CustomerStatus', module)
                 },
             }}
             request={{ data: null, loading: false }}
-            requestQuick={customer => {
+            requestQuick={(customer) => {
                 return fetch(`/creditlimit/test`)
-                    .then(resp => resp.json())
-                    .catch(e => {
+                    .then((resp) => resp.json())
+                    .catch((e) => {
                         console.log('to success page');
                         return e;
                     });
@@ -2888,19 +2894,19 @@ storiesOf('CreditLimit/CustomerStatus', module)
                 },
                 loading: false,
             }}
-            loadPendingRequest={data => {
+            loadPendingRequest={(data) => {
                 return fetch(`/creditlimit/test`)
-                    .then(resp => resp.json())
-                    .catch(e => {
+                    .then((resp) => resp.json())
+                    .catch((e) => {
                         console.log('constststst1');
                         return {};
                     });
             }}
             countriesWithDifferentBlockingCodes={['DE']}
-            loadCustomerData={value => console.log(value)}
-            loadRecentRequests={value => console.log(value)}
-            updateUiPageTitle={value => console.log(value)}
-            showAuxControl={value => console.log(value)}
+            loadCustomerData={(value) => console.log(value)}
+            loadRecentRequests={(value) => console.log(value)}
+            updateUiPageTitle={(value) => console.log(value)}
+            showAuxControl={(value) => console.log(value)}
             match={{
                 isExact: true,
                 params: {
@@ -2965,10 +2971,10 @@ storiesOf('CreditLimit/CustomerStatus', module)
                 },
             }}
             request={{ data: null, loading: false }}
-            requestQuick={customer => {
+            requestQuick={(customer) => {
                 return fetch(`/creditlimit/test`)
-                    .then(resp => resp.json())
-                    .catch(e => {
+                    .then((resp) => resp.json())
+                    .catch((e) => {
                         console.log('to success page');
                         return e;
                     });

@@ -1,0 +1,16 @@
+@import '../lib/scss/form-styles';
+@import '../lib/scss/variables';
+
+.mrc-ui-multiple-select{
+  position: relative;
+}
+
+.mrc-ui-multiple-select-input {
+  @include input-base;
+  padding: $spacing-small;
+  height: auto;
+}
+
+.mrc-ui-multiple-select-input-invalid {
+  @include input-invalid;
+}

@@ -34,7 +34,7 @@ export default class HistoryDetailsPresentation extends Component {
     }
 
     customerDetailsPanel(requestData) {
-        const customers = requestData ? requestData.map(ri => ri.customerData) : null;
+        const customers = requestData ? requestData.map((ri) => ri.customerData) : null;
         return (
             <CustomerDataGroup
                 customers={customers}
@@ -167,10 +167,10 @@ export default class HistoryDetailsPresentation extends Component {
                             /* eslint-disable */
                             params.attachments
                                 ? params.attachments
-                                      .map(a => {
+                                      .map((a) => {
                                           return { ...a, status: 'normal', contentUri: a.uri };
                                       })
-                                      .filter(a => !a.markedForDeletion)
+                                      .filter((a) => !a.markedForDeletion)
                                 : null
                             /* eslint-enable */
                         }
@@ -251,10 +251,10 @@ export default class HistoryDetailsPresentation extends Component {
                             /* eslint-disable */
                             params.attachments
                                 ? params.attachments
-                                      .map(a => {
+                                      .map((a) => {
                                           return { ...a, status: 'normal' };
                                       })
-                                      .filter(a => !a.markedForDeletion)
+                                      .filter((a) => !a.markedForDeletion)
                                 : null
                             /* eslint-enable */
                         }
@@ -281,13 +281,13 @@ export default class HistoryDetailsPresentation extends Component {
             return null;
         }
         if (_.isNil(this.state.mdwData)) {
-            return _.sum(profitabilityAdditionalFields.map(f => f.value)) / profitabilityAdditionalFields.length;
+            return _.sum(profitabilityAdditionalFields.map((f) => f.value)) / profitabilityAdditionalFields.length;
         }
         let groupProfitability = 0;
         let totalTurnoverL6m = 0;
-        this.state.mdwData.map(mdwCustomer => {
+        this.state.mdwData.map((mdwCustomer) => {
             const customerProfitability = profitabilityAdditionalFields.filter(
-                rf =>
+                (rf) =>
                     rf.storeNumber === mdwCustomer.customerCreditData.storeNumber &&
                     rf.customerNumber === mdwCustomer.customerCreditData.customerNumber &&
                     rf.country === mdwCustomer.customer.country
@@ -308,7 +308,7 @@ export default class HistoryDetailsPresentation extends Component {
         }
         const consolidatedOverview = _.find(
             this.props.salesOverviews,
-            x => _.get(x, 'customerId.customerNumber') === 'consolidated-group-id'
+            (x) => _.get(x, 'customerId.customerNumber') === 'consolidated-group-id'
         );
         const totalTurnover = consolidatedOverview
             ? _.get(consolidatedOverview, 'totalQuintet.l12m')

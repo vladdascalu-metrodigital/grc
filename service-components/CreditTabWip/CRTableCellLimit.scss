@@ -1,0 +1,19 @@
+@import '../../lib/scss/colors';
+@import '../../lib/scss/typography';
+
+.mrc-ui-crtable-cell-limit {
+    font-size: $font-size-8;
+    font-weight: 400;
+    text-align: right;
+    color: $color-palette-grey-tint-40;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+.mrc-ui-crtable-cell-customer-limit-exhausted {
+}
+
+.mrc-ui-crtable-cell-customer-limit-granted {
+    font-size: $font-size-5;   
+}

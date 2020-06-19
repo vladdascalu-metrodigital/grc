@@ -16,6 +16,7 @@ import WarningSmallFilledIcon from '../icons/WarningSmallFilledIcon';
 import SearchIcon from '../icons/SearchIcon';
 import SearchCircledIcon from '../icons/SearchCircledIcon';
 import SelectIcon from '../icons/SelectIcon';
+import CalendarIcon from '../icons/CalendarIcon';
 
 storiesOf('Fundamentals/Icons', module)
     .add('all icons', () => {
@@ -40,6 +41,7 @@ storiesOf('Fundamentals/Icons', module)
                     <SearchIcon color={color} />
                     <SelectIcon color={color} />
                     <WarningSmallFilledIcon color={color} />
+                    <CalendarIcon color={color} />
                 </Grid>
             </MainContent>
         );

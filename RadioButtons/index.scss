@@ -1,0 +1,22 @@
+@import '../lib/scss/form-styles';
+@import '../lib/scss/variables';
+
+.mrc-ui-radiobuttons {
+  font-weight: normal;
+}
+
+.mrc-ui-radiobuttons-box {
+  @include radiobutton();
+  margin-right: $spacing-small;
+}
+
+.mrc-ui-radiobuttons-box-checked {
+  @include radiobutton-checked();
+}
+
+.mrc-ui-radiobuttons-disabled {
+  color: $color-disabled;
+  .mrc-ui-radiobuttons-box {
+    @include radiobutton-disabled();
+  }
+}

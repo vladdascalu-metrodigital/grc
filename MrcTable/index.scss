@@ -73,6 +73,14 @@ $table-base-line-height: $line-height-copy;
   }
 }
 
+@mixin table-row-invalid-color () {
+  .mrc-ui-table-h,
+  .mrc-ui-table-d {
+    background-color: $color-palette-red-tint-95;
+    border-color: $color-contrast-white;
+  }
+}
+
 // set the basics
 
 .mrc-ui-table-h,
@@ -137,6 +145,11 @@ $table-base-line-height: $line-height-copy;
     top: var(--sticky-top); // gets calculated and assigned via JS
   }
 }
+
+.mrc-ui-table-r-invalid {
+  @include table-row-invalid-color();
+}
+
 
 // temp
 

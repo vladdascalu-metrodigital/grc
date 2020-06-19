@@ -154,7 +154,15 @@ $color-success: $color-palette-green-default;
 $color-interaction: $color-palette-blue-default;
 $color-neutral: $color-palette-grey-default;
 $color-muted: $color-palette-grey-tint-40;
-$color-disabled: $color-palette-grey-tint-60;
+$color-disabled: $color-palette-grey-tint-50;
 $color-inverted: $color-contrast-white;
 
 $color-form-background-grey: #f9f9f9;
+$color-form-input-background-disabled: $color-palette-grey-tint-90;
+
+// patterns
+
+@mixin background-color-pattern-disabled {
+  background-color: $color-palette-grey-tint-90;
+  background-image: repeating-linear-gradient(40deg, transparentize($color-palette-grey-tint-80, 0.5) 0px, rgba(204, 208, 214, 0.498039) 2px, transparent 2px, transparent 10px);
+}

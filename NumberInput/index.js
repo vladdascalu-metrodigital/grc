@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
+// import PropTypes from 'prop-types';
 
 import './index.scss';
 
@@ -76,5 +77,15 @@ export class NumberInput extends Component {
         );
     }
 }
+
+// let numberOrStringType = PropTypes.oneOfType([PropTypes.number, PropTypes.string]);
+
+// NumberInput.propTypes = {
+//     initialValue: numberOrStringType,
+//     value: numberOrStringType,
+//     onChange: PropTypes.func,
+//     disabled: PropTypes.bool,
+//     // and more
+// };
 
 export default NumberInput;

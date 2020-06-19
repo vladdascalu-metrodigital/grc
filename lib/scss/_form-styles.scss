@@ -6,6 +6,12 @@
 // use either input-base alone
 // or a combination of input-shell and input-input
 
+@mixin input-disabled-style() {
+  color: $color-disabled;
+  background-color: $color-palette-grey-tint-95;
+  cursor: not-allowed;
+}
+
 @mixin input-base() {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -32,6 +38,10 @@
   &::placeholder {
     font-style: italic;
   }
+
+  &:disabled {
+    @include input-disabled-style();
+  }
 }
 
 @mixin input-shell() {
@@ -40,7 +50,6 @@
   box-shadow: $shadow-tiny;
   font-size: 1rem;
   font-family: inherit;
-  height: $height-input;
   border-radius: 2px;
   transition: .125s ease-in-out 0s;
   transition-property: border-color;
@@ -60,6 +69,8 @@
   margin: 0;
   border: 0;
   z-index: auto;
+  height: $height-input;
+  width: inherit;
 
   &:focus {
     outline: none;
@@ -68,4 +79,104 @@
   &::placeholder {
     font-style: italic;
   }
+
+  &:disabled {
+    @include input-disabled-style();
+  }
+}
+
+// works on "shell" and "base"
+@mixin input-invalid() {
+  border-color: $color-danger;
+  box-shadow: $shadow-outline-danger;
+  background-color: $color-palette-red-tint-80;
+
+  &:focus {
+    border-color: $color-danger;
+    box-shadow: $shadow-outline-danger;
+    background-color: $color-contrast-white;
+  }
+  
+  &:focus-within {
+    border-color: $color-danger;
+    box-shadow: $shadow-outline-danger;
+  }
+}
+
+@mixin input-label() {
+  color: $color-brand-primary-default;
+  font-weight: normal;
+}
+
+@mixin input-messages() {
+  color: $color-danger;
+  font-size: $font-size-8;
+  line-height: $line-height-title;
+  display: flex;
+  flex-direction: column;
+  margin-top: $spacing-extra-extra-small;
+  font-weight: normal;
+}
+
+@mixin checkbox() {
+  position: relative;
+  float: left;
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: .3125rem;
+  border: .125rem solid $color-palette-grey-tint-60;
+  border-radius: 0;
+  background-color: $color-contrast-white;
+  transition: background-color,border-color;
+      transition-duration: 0s, 0s;
+      transition-timing-function: ease, ease;
+  transition-duration: .3s,.3s;
+  transition-timing-function: ease,ease;
+  will-change: background-color,border-color;
+  flex-shrink: 0;
+
+  // the dot
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: scale(0);
+    border-radius: 50%;
+    background-color: $color-interaction;
+    transition: transform .35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@mixin checkbox-checked() {
+  border-color: $color-interaction;
+  
+  &::after {
+    transform: scale(0.625);
+  }
+}
+
+@mixin checkbox-disabled() {
+  border-color: $color-disabled;
+  background-color: $color-form-input-background-disabled;
+  
+  &::after {
+    background-color: $color-disabled;
+  }
+}
+
+@mixin radiobutton() {
+  @include checkbox();
+  border-radius: 50%;
+}
+
+@mixin radiobutton-checked() {
+  @include checkbox-checked();
+}
+
+@mixin radiobutton-disabled() {
+  @include checkbox-disabled();
 }

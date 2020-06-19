@@ -1,6 +1,7 @@
 @import '../lib/scss/card-styles';
-@import '../lib//scss/variables';
-@import '../lib//scss/typography';
+@import '../lib/scss/variables';
+@import '../lib/scss/typography';
+@import '../lib/scss/colors';
 
 .mrc-ui-check-card {
   @include card-primary-white();
@@ -22,7 +23,7 @@
 }
 
 .mrc-ui-check-card-disabled {
-  // @include card-primary(); // wrong styling
+  @include background-color-pattern-disabled();
   cursor: not-allowed;
 }
 
@@ -45,6 +46,10 @@
     text-transform: none;
     font-weight: 600;
     font-size: $font-size-6;
+  }
+
+  @at-root .mrc-ui-check-card-disabled #{&} {
+    color: $color-disabled;
   }
 
   @at-root .mrc-ui-check-card-checked #{&} {

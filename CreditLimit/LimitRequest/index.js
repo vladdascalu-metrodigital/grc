@@ -76,7 +76,7 @@ export default class LimitRequestLayout extends Component {
             //
             // mark the requested customer
             //
-            req.requestedItems.forEach(ri => this.markRequestedCustomer(req.requestedCustomerId, ri.customer));
+            req.requestedItems.forEach((ri) => this.markRequestedCustomer(req.requestedCustomerId, ri.customer));
 
             //
             // sort by customerID, taking the requestedCustomer first
@@ -98,7 +98,7 @@ export default class LimitRequestLayout extends Component {
             let availableGroupLimit = 0;
             let exhaustionGroupLimit = 0;
             if (nextProps.request != null && nextProps.request.data != null) {
-                nextProps.request.data.requestedItems.map(item => {
+                nextProps.request.data.requestedItems.map((item) => {
                     currentGroupLimit += item.customer.creditLimit;
                     const amount =
                         !_.isNil(item.creditData.amount) && !_.isNaN(item.creditData.amount)
@@ -144,7 +144,7 @@ export default class LimitRequestLayout extends Component {
     }
 
     additionalFieldsValid() {
-        return !(Object.values(this.state.additionalFieldsValidations).filter(value => !value).length > 0);
+        return !(Object.values(this.state.additionalFieldsValidations).filter((value) => !value).length > 0);
     }
 
     createSubmitButton() {
@@ -183,7 +183,7 @@ export default class LimitRequestLayout extends Component {
         );
     }
 
-    cancelCallback = function() {
+    cancelCallback = function () {
         const req = this.props ? this.props.request : undefined;
         if (req && req.data && req.data.requestedCustomerId) {
             const target = `/customerstatus/${req.data.requestedCustomerId.country}/${req.data.requestedCustomerId.storeNumber}/${req.data.requestedCustomerId.customerNumber}`;
@@ -218,7 +218,7 @@ export default class LimitRequestLayout extends Component {
 
     createCustomerDetailsPanel(req) {
         // in case there is some data, retrieve list of customers from list of requestedItems
-        const customers = req.data && req.data.requestedItems.map(ri => ri.customer);
+        const customers = req.data && req.data.requestedItems.map((ri) => ri.customer);
 
         return (
             <CustomerDataGroup
@@ -239,7 +239,7 @@ export default class LimitRequestLayout extends Component {
                                 className="m-radioButton-input"
                                 id="one"
                                 value={this.state.applyCurrent}
-                                onClick={e => this.onApplyCurrentChange(e)}
+                                onClick={(e) => this.onApplyCurrentChange(e)}
                                 defaultChecked={this.state.applyCurrent === true}
                             />
                             <div className="m-radioButton-inputIcon" />
@@ -282,7 +282,7 @@ export default class LimitRequestLayout extends Component {
     }
 
     registerCallbackOnApplyCurrentLimitAndExpiryChange(id, callback) {
-        this.setState(state => {
+        this.setState((state) => {
             let isApplyCurrentLimitAndExpiryClickedCallbacks = [];
             if (state.isApplyCurrentLimitAndExpiryClickedCallbacks) {
                 for (const [id, callback] of Object.entries(state.isApplyCurrentLimitAndExpiryClickedCallbacks)) {
@@ -298,7 +298,7 @@ export default class LimitRequestLayout extends Component {
     handleRequestedGroupLimitChange() {
         let requestedGroupLimitNew = 0;
         if (this.props.request != null && this.props.request.data != null) {
-            this.props.request.data.requestedItems.map(item => {
+            this.props.request.data.requestedItems.map((item) => {
                 const amount =
                     !_.isNil(item.creditData.amount) && !_.isNaN(item.creditData.amount)
                         ? item.creditData.amount
@@ -321,7 +321,7 @@ export default class LimitRequestLayout extends Component {
             return false;
         }
         let isInvalid = false;
-        additionalFieldsList.forEach(addField => {
+        additionalFieldsList.forEach((addField) => {
             if (addField !== undefined && addField !== null && addField.id !== undefined && addField.id !== null) {
                 if (
                     additionalFieldsValidations[addField.id] !== undefined &&
@@ -497,7 +497,7 @@ export default class LimitRequestLayout extends Component {
     getDateFormatString() {
         const formatObj = new Intl.DateTimeFormat().formatToParts(new Date());
         return formatObj
-            .map(obj => {
+            .map((obj) => {
                 switch (obj.type) {
                     case 'day':
                         return 'dd';
@@ -530,14 +530,14 @@ export default class LimitRequestLayout extends Component {
         const newValidity = this.state.creditDataComponentsValid;
         newValidity[id] = valid;
 
-        const requestor = this.props.request.data.requestedItems.find(request => request.customer.requestedCustomer);
+        const requestor = this.props.request.data.requestedItems.find((request) => request.customer.requestedCustomer);
         const requestorCreditDataIsValid = newValidity[requestor.id];
 
         this.setState({
             ...this.state,
             creditDataComponentsValid: newValidity,
             creditDataValid:
-                Object.values(newValidity).every(v => v == true || v == null) && requestorCreditDataIsValid == true,
+                Object.values(newValidity).every((v) => v == true || v == null) && requestorCreditDataIsValid == true,
         });
     }
 
@@ -552,7 +552,7 @@ export default class LimitRequestLayout extends Component {
             <Comments
                 comments={limitRequest.comments}
                 disabled={!this.props.request.data || this.props.request.loading}
-                onSave={newComment => this.props.addComment(limitRequest.id, newComment)}
+                onSave={(newComment) => this.props.addComment(limitRequest.id, newComment)}
             />
         );
     }
@@ -569,7 +569,7 @@ export default class LimitRequestLayout extends Component {
                 noDeletedAttachmentsToggle={true}
                 disabled={!this.props.request.data || this.props.request.loading}
                 readonly={!this.props.request.data || this.props.request.loading}
-                attachments={(this.COLLATERALS_ATTACHMENTS ? this.COLLATERALS_ATTACHMENTS : []).map(a => {
+                attachments={(this.COLLATERALS_ATTACHMENTS ? this.COLLATERALS_ATTACHMENTS : []).map((a) => {
                     return a.deleted
                         ? {
                               ...a,
@@ -598,7 +598,7 @@ export default class LimitRequestLayout extends Component {
         const limitRequest = this.props.request.data;
         const mdwRequest = {
             requestId: limitRequest.id,
-            customers: limitRequest.requestedItems.map(ri => ri.customer),
+            customers: limitRequest.requestedItems.map((ri) => ri.customer),
         };
         return (
             <Sales

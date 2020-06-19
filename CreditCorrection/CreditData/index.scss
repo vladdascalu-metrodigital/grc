@@ -23,7 +23,7 @@
     background-color: #f2f3f5 !important;
   }
 
-  input {
+  input:not([class*='mrc-ui-']) {
     margin-top: 5px;
     width: 100%;
     min-width: 200px;

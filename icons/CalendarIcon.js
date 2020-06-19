@@ -1,0 +1,40 @@
+import React, { PureComponent } from 'react';
+import { iconClassNames, iconPropTypes } from './index';
+
+import './index.scss';
+
+export default class CalendarIcon extends PureComponent {
+    render() {
+        let { svgClassName, colorToStrokeClassName } = iconClassNames(this.props);
+        return (
+            <svg
+                className={svgClassName}
+                version="1.1"
+                id="Layer_1"
+                xmlns="http://www.w3.org/2000/svg"
+                x="0px"
+                y="0px"
+                viewBox="0 0 24 24"
+                style={{ 'enable-background': 'new 0 0 24 24' }}
+            >
+                <style type="text/css">
+                    {'.st0{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}'}
+                </style>
+                <g className={colorToStrokeClassName}>
+                    <polyline className="st0" points="6.2,4.6 3,4.6 3,21 21,21 21,4.6 17.9,4.6 	" />
+                    <rect x="6.2" y="3" className="st0" width="2.4" height="3.2" />
+                    <rect x="15.5" y="3" className="st0" width="2.4" height="3.2" />
+                    <line className="st0" x1="8.5" y1="4.6" x2="15.5" y2="4.6" />
+                    <line className="st0" x1="3" y1="8.5" x2="21" y2="8.5" />
+                    <g>
+                        <polygon className="st0" points="10.9,18.3 8.1,19.1 8.8,16.3 14.7,10.4 16.7,12.3 		" />
+                        <line className="st0" x1="13.1" y1="12" x2="15.2" y2="13.9" />
+                        <line className="st0" x1="8.8" y1="16.3" x2="10.9" y2="18.3" />
+                    </g>
+                </g>
+            </svg>
+        );
+    }
+}
+
+CalendarIcon.propTypes = iconPropTypes;

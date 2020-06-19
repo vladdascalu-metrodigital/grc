@@ -1,0 +1,8 @@
+@import '../lib/scss/form-styles';
+
+.mrc-ui-text-input-input {
+  @include input-base;
+}
+.mrc-ui-text-input-input-invalid {
+  @include input-invalid;
+}

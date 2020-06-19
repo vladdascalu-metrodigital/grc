@@ -1,0 +1,94 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+import CreditTableRowWithNewLimit from './CreditTableRowWithNewLimit';
+import CreditTableRowWithoutNewLimit from './CreditTableRowWithoutNewLimit';
+
+import * as _ from 'lodash';
+
+export default class CreditTableRow extends Component {
+    constructor(props) {
+        super(props);
+        this.toggle.bind(this);
+        this.hover.bind(this);
+        this.state = {
+            isHovered: false,
+            isExpanded: false,
+        };
+    }
+
+    hover(hoverState) {
+        this.setState({
+            isHovered: hoverState,
+        });
+    }
+
+    toggle() {
+        this.setState({
+            isExpanded: !this.state.isExpanded,
+        });
+    }
+
+    isCashCustomerMarkedInCreditLimit(customer) {
+        // TODO: currently credit customer can't apply this, remove the check later
+        if (!customer.isCashCustomer) {
+            return false;
+        }
+
+        if (_.get(customer, 'limit.creditOption') === 'CREDITTOCASH') {
+            return true;
+        }
+
+        return (
+            _.get(customer, 'limit.limitType') === 'CURRENT' &&
+            _.get(customer, 'limit.paymentMethodType') === 'CURRENT' &&
+            (_.isNil(_.get(customer, 'limit.creditOption')) || _.get(customer, 'limit.creditOption') == 'NONE') &&
+            customer.isCashCustomer
+        );
+    }
+
+    render() {
+        const { parent, customer, isZebra } = this.props;
+        const blockingInfo = _.get(customer, 'blockingInfo');
+        const isBlocked = blockingInfo && _.get(blockingInfo, 'isBlocked');
+        const rowProps = {
+            onExpand: () => this.toggle(),
+            onHover: (flag) => this.hover(flag),
+            isExpanded: this.state.isExpanded,
+            isHovered: this.state.isHovered,
+            canToggle: parent !== 'history' || isBlocked,
+            rowType: isZebra ? 'zebra' : null,
+        };
+
+        // in history, new limit is called current
+        const hasNewLimit = !_.isNil(
+            parent === 'history' ? _.get(customer, 'limit.current') : _.get(customer, 'limit.new')
+        );
+
+        // TODO: for approval
+        const requestsCash =
+            parent === 'approval'
+                ? _.get(customer, 'limit.new.amount') === 0
+                : this.isCashCustomerMarkedInCreditLimit(customer);
+
+        if (hasNewLimit) {
+            // TODO: adapted logic from CreditTableRowWithoutNewLimit in approve and history process
+            return <CreditTableRowWithNewLimit {...{ ...this.props, ...rowProps, requestsCash }} />;
+        } else {
+            return <CreditTableRowWithoutNewLimit {...{ ...this.props, ...rowProps, requestsCash }} />;
+        }
+    }
+}
+
+CreditTableRow.propTypes = {
+    isExpanded: PropTypes.bool,
+    isHovered: PropTypes.bool,
+    canToggle: PropTypes.bool,
+    id: PropTypes.string,
+    parent: PropTypes.string,
+    country: PropTypes.string,
+    isZebra: PropTypes.bool,
+    customer: PropTypes.object,
+    stickyOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    dateFormat: PropTypes.string,
+};

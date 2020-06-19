@@ -1,0 +1,14 @@
+@import '../lib/scss/form-styles';
+
+.mrc-ui-number-input-new {
+  display: flex;
+  flex-direction: column;
+}
+
+.mrc-ui-number-input-new-input {
+  @include input-base();
+}
+
+.mrc-ui-number-input-new-input-invalid {
+  @include input-invalid();
+}

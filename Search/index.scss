@@ -1,12 +1,16 @@
 @import '../lib/scss/colors';
 @import '../lib/scss/form-styles';
 
-.mrc-ui-search {
+.mrc-ui-search-input-wrapper {
   @include input-shell();
   position: relative;
   display: flex;
   align-items: stretch;
   background: $color-contrast-white;
+}
+
+.mrc-ui-search-input-wrapper-disabled {
+  @include input-disabled-style();
 }
 
 .mrc-ui-search-input {

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
+import { CHANGE_DELAY } from '../Util/inputCommons';
 import { COLOR, SIZE } from '../icons/index';
 import SearchIcon from '../icons/SearchIcon';
+import InputLabel from '../InputLabel';
 
 import './index.scss';
 
@@ -10,16 +13,26 @@ export default class Search extends Component {
     constructor(props) {
         super(props);
         this.inputRef = React.createRef();
+        this.delayedChangeTimeout = null;
         this.state = {
             showClearButton: false,
         };
     }
 
+    componentWillUnmount() {
+        clearTimeout(this.delayedChangeTimeout);
+    }
+
     handleChange() {
-        let { onChange } = this.props;
-        if (onChange) onChange(this.inputRef.current.value);
+        let { onChange, onChangeDelayed, changeDelay } = this.props;
+        let value = this.inputRef.current.value;
+        if (onChange) onChange(value);
+        if (onChangeDelayed) {
+            clearTimeout(this.delayedChangeTimeout);
+            this.delayedChangeTimeout = setTimeout(() => onChangeDelayed(value), changeDelay || CHANGE_DELAY);
+        }
         this.setState({
-            showClearButton: !!this.inputRef.current.value,
+            showClearButton: !!value,
         });
     }
 
@@ -38,25 +51,33 @@ export default class Search extends Component {
     }
 
     render() {
-        let { placeholder } = this.props;
+        let { placeholder, disabled, onBlur, label } = this.props;
         let { showClearButton } = this.state;
+        let inputWrapperClassName = classnames('mrc-ui-search-input-wrapper', {
+            'mrc-ui-search-input-wrapper-disabled': disabled,
+        });
         return (
             <div className="mrc-ui-search">
-                <input
-                    ref={this.inputRef}
-                    onKeyUp={this.handleEnterSearch.bind(this)}
-                    onChange={this.handleChange.bind(this)}
-                    className="mrc-ui-search-input"
-                    type="text"
-                    placeholder={placeholder}
-                />
-                {showClearButton && (
-                    <div className="mrc-ui-search-clear">
-                        <a onClick={this.handleClear.bind(this)}>clear</a>
+                <InputLabel>{label}</InputLabel>
+                <div className={inputWrapperClassName}>
+                    <input
+                        disabled={disabled}
+                        ref={this.inputRef}
+                        onKeyUp={this.handleEnterSearch.bind(this)}
+                        onChange={this.handleChange.bind(this)}
+                        className="mrc-ui-search-input"
+                        type="text"
+                        placeholder={placeholder}
+                        onBlur={onBlur}
+                    />
+                    {showClearButton && (
+                        <div className="mrc-ui-search-clear">
+                            <a onClick={this.handleClear.bind(this)}>clear</a>
+                        </div>
+                    )}
+                    <div className="mrc-ui-search-icon">
+                        <SearchIcon size={SIZE.XSMALL} color={disabled ? COLOR.DISABLED : COLOR.NEUTRAL} />
                     </div>
-                )}
-                <div className="mrc-ui-search-icon" onClick={this.handleEnterSearch.bind(this, true)}>
-                    <SearchIcon size={SIZE.XSMALL} color={COLOR.NEUTRAL} />
                 </div>
             </div>
         );
@@ -65,6 +86,11 @@ export default class Search extends Component {
 
 Search.propTypes = {
     onChange: PropTypes.func,
+    onChangeDelayed: PropTypes.func,
+    changeDelay: PropTypes.number,
     onEnterSearch: PropTypes.func,
     placeholder: PropTypes.string,
+    disabled: PropTypes.bool,
+    onBlur: PropTypes.func,
+    label: PropTypes.string,
 };

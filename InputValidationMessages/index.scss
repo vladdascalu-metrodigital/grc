@@ -1,0 +1,5 @@
+@import '../lib/scss/form-styles';
+
+.mrc-ui-input-validation-messages {
+  @include input-messages();
+}

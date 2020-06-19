@@ -1,9 +1,37 @@
-@import "../settings";
+@import '../lib/scss/form-styles';
 
-.react-datepicker-wrapper {
-  width:100%;
+.mrc-ui-datepicker {
+  position: relative;
+  width: 140px;
+
+  .react-datepicker-wrapper {
+    width:100%;
+  }
+  
+  .react-datepicker__input-container {
+      width:100%;
+  }
 }
 
-.react-datepicker__input-container {
-    width:100%;
+.mrc-ui-datepicker-input-wrapper {
+  position: relative;
+}
+
+.mrc-ui-datepicker-input {
+  @include input-base;
+  background-color: $color-contrast-white !important;
+}
+
+.mrc-ui-datepicker-input-invalid {
+  @include input-invalid;
+}
+
+.mrc-ui-datepicker-icon {
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  height: $height-input;
+  right: $spacing-small;
+  top: 0;
 }

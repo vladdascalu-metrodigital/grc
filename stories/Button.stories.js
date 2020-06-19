@@ -36,10 +36,6 @@ storiesOf('Forms/Button', module).add('all', () => (
         <Button onClick={action('clicked')} text="Danger" color="danger" />
         <Button size="large" onClick={action('clicked')} text="Danger" color="danger" />
 
-        <Button size="small" onClick={action('clicked')} text="Attention" color="attention" />
-        <Button onClick={action('clicked')} text="Attention" color="attention" />
-        <Button size="large" onClick={action('clicked')} text="Attention" color="attention" />
-
         <Button size="small" onClick={action('clicked')} text="Default" isOutlined />
         <Button onClick={action('clicked')} text="Default" isOutlined />
         <Button size="large" onClick={action('clicked')} text="Default" isOutlined />
@@ -55,9 +51,5 @@ storiesOf('Forms/Button', module).add('all', () => (
         <Button size="small" onClick={action('clicked')} text="Danger" color="danger" isOutlined />
         <Button onClick={action('clicked')} text="Danger" color="danger" isOutlined />
         <Button size="large" onClick={action('clicked')} text="Danger" color="danger" isOutlined />
-
-        <Button size="small" onClick={action('clicked')} text="Attention" color="attention" isOutlined />
-        <Button onClick={action('clicked')} text="Attention" color="attention" isOutlined />
-        <Button size="large" onClick={action('clicked')} text="Attention" color="attention" isOutlined />
     </Grid>
 ));

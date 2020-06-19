@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+// TODO remove? refactor? replaced by RadioButtons?
+
 export default class RadioButton extends Component {
     render() {
         const label = this.props.label;

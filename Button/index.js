@@ -9,7 +9,7 @@ const COLOR = {
     SUCCESS: 'success',
     NEUTRAL: 'neutral',
     DANGER: 'danger',
-    ATTENTION: 'attention',
+    // ATTENTION: 'attention',
 };
 
 const SIZE = {
@@ -41,11 +41,10 @@ export default class Button extends Component {
                 'mrc-ui-btn',
                 { 'mrc-ui-btn-small': size === SIZE.SMALL },
                 { 'mrc-ui-btn-large': size === SIZE.LARGE },
-                { 'mrc-ui-btn-interaction': color === COLOR.INTERACTION },
+                { 'mrc-ui-btn-interaction': !color || color === COLOR.INTERACTION },
                 { 'mrc-ui-btn-success': color === COLOR.SUCCESS },
                 { 'mrc-ui-btn-neutral': color === COLOR.NEUTRAL },
                 { 'mrc-ui-btn-danger': color === COLOR.DANGER },
-                { 'mrc-ui-btn-attention': color === COLOR.ATTENTION },
                 { 'mrc-ui-btn-outlined': isOutlined }
             );
             iconClasses = classNames('mrc-ui-btn-icon');

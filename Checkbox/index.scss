@@ -1,0 +1,22 @@
+@import '../lib/scss/form-styles';
+@import '../lib/scss/variables';
+
+.mrc-ui-checkbox {
+  font-weight: normal;
+}
+
+.mrc-ui-checkbox-box {
+  @include checkbox();
+  margin-right: $spacing-small;
+}
+
+.mrc-ui-checkbox-checked .mrc-ui-checkbox-box {
+  @include checkbox-checked();
+}
+
+.mrc-ui-checkbox-disabled {
+  color: $color-disabled;
+  .mrc-ui-checkbox-box {
+    @include checkbox-disabled();
+  }
+}

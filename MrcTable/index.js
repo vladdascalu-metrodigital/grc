@@ -84,6 +84,7 @@ class R extends Component {
             'mrc-ui-table-r-light': type === 'light',
             'mrc-ui-table-r-form': type === 'form',
             'mrc-ui-table-r-zebra': type === 'zebra',
+            'mrc-ui-table-r-invalid': type === 'invalid',
             className,
         });
         return (

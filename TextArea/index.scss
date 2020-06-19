@@ -1,0 +1,10 @@
+@import '../lib/scss/form-styles';
+
+.mrc-ui-text-area-input {
+  @include input-base;
+  height: auto;
+}
+
+.mrc-ui-text-area-input-invalid {
+  @include input-invalid;
+}

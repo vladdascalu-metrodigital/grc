@@ -1,0 +1,5 @@
+@import '../lib/scss/form-styles';
+
+.mrc-ui-input-label {
+  @include input-label();
+}

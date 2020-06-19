@@ -1,0 +1,83 @@
+.additional-fields-background-text {
+    position: relative;
+}
+
+.additional-fields-background-text:after {
+    content: attr(title);
+    position: absolute;
+    top: -0.8rem;
+    left: -0.8rem;
+    white-space: nowrap;
+}
+
+.additional-fields-background-text.mobile:after {
+    content: '';
+}
+
+.additional-fields-section {
+    background-color: transparent !important;
+    padding: 0.5rem 0rem 0rem 0rem !important;
+
+    .date-picker-icon {
+        float: right;
+        margin: -1.85rem 0.75rem 0.5rem;
+        position: relative;
+        z-index: 2;
+    }
+
+    .mrc-input.not-valid input {
+        border: 1px solid red;
+    }
+
+    .mrc-input.not-valid textarea {
+        border: 1px solid red;
+    }
+
+    .mrc-input.not-valid select {
+        border: 1px solid red;
+    }
+
+    .react-datepicker__input-container input {
+        z-index: 10;
+        position: relative;
+        background-color: transparent;
+    }
+
+    .react-datepicker__input-container input:disabled {
+        z-index: 0 !important;
+        color: #99a1ad !important;
+        background-color: #f2f3f5 !important;
+    }
+
+    .react-datepicker-popper {
+        z-index: 20 !important;
+    }
+
+    .checkbox-label {
+        position: relative;
+        top: 0rem;
+        margin-left: 0.7rem;
+    }
+
+    .checkbox-input {
+        margin: 0rem;
+        position: fixed;
+    }
+
+    .checkbox-icon {
+        margin: 0rem;
+        border-radius: 0%;
+    }
+
+    select[multiple] {
+        height: 10rem;
+    }
+
+    label.m-radioButton.radioButton_value {
+        padding-left: 1rem !important;
+    }
+
+    .m-radioButton input[type='radio'] {
+        display: none;
+    }
+}
