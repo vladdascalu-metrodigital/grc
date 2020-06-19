@@ -4,6 +4,7 @@ import Table from '../../MrcTable';
 import Grid, { GridItem } from '../../Grid';
 import BoxWithTitle from '../../BoxWithTitle';
 import KeyValueGroup, { KeyValueRow, Key, Value } from '../../KeyValueGroup';
+import { lookup } from '../../Util/translations';
 
 import CreditTableHead from './CreditTableHead';
 import CreditTableRow from './CreditTableRow';
@@ -13,68 +14,80 @@ import CreditTableRowB from './CreditTableRowB';
 import CreditTableRowC from './CreditTableRowC';
 import CreditTableRowD from './CreditTableRowD';
 
-// import CheckCard from '../CheckCard';
-// import Grid from '../Grid';
-
-// import CreditTableExpandableContent from './CreditTableExpandableContent';
-// import PropTypes from 'prop-types';
-// import classnames from 'classnames';
-
-// export const GAP = {
-// 'NONE'
-// 'SMALL'
-// 'LARGE'
-// }
-
 import './index.scss';
 
+// TODO additional fields
+
 export default class CreditTab extends Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
+        const { customer } = this.props;
+        const translations = {
+            name: lookup('mrc.customerdata.name'),
+            phone: lookup('mrc.credittab.telephone'),
+            email: lookup('mrc.customerdetails.fields.email'),
+        };
+        const groupInfo = customer ? (
+            <BoxWithTitle title="Groupdetails" action={{ title: 'edit', fn: () => alert('edit') }}>
+                <KeyValueGroup>
+                    <KeyValueRow>
+                        <Key>{translations.name}</Key>
+                        <Value>{customer.name}</Value>
+                    </KeyValueRow>
+                    <KeyValueRow spaced>
+                        <Key>{translations.phone}</Key>
+                        <Value>{customer.phone}</Value>
+                    </KeyValueRow>
+                    <KeyValueRow spaced>
+                        <Key>{translations.email}</Key>
+                        <Value>{customer.email}</Value>
+                    </KeyValueRow>
+                </KeyValueGroup>
+            </BoxWithTitle>
+        ) : null;
         return (
             <MainContent>
                 <Grid>
-                    <BoxWithTitle title="Groupdetails" action={{ title: 'edit', fn: () => alert('edit') }}>
-                        <KeyValueGroup>
-                            <KeyValueRow>
-                                <Key>Name</Key>
-                                <Value>Peter Parker</Value>
-                            </KeyValueRow>
-                            <KeyValueRow spaced>
-                                <Key>Telefon</Key>
-                                <Value>123 456 789</Value>
-                            </KeyValueRow>
-                            <KeyValueRow spaced>
-                                <Key>Email</Key>
-                                <Value>peter@parker.com</Value>
-                            </KeyValueRow>
-                        </KeyValueGroup>
-                    </BoxWithTitle>
+                    {groupInfo}
                     <BoxWithTitle title="Requestdetails" action={{ title: 'edit', fn: () => {} }}>
-                        <h3 className="mrc-ui-credit-tab-profit-label">Profitability</h3>
+                        <h3 className="mrc-ui-credit-tab-profit-label">{lookup('addfield.profitability')}</h3>
                         <span className="mrc-ui-credit-tab-profit-number">20</span>%
                     </BoxWithTitle>
                     <GridItem colSpan="all">
                         <Table.Root>
-                            <CreditTableHead />
-                            <CreditTableRow />
+                            <Table.Body>
+                                <CreditTableHead />
+                                {[...Array(10).keys()].map((e, i) => (
+                                    <React.Fragment>
+                                        <CreditTableRow
+                                            key={i}
+                                            id={'credit-table-sticky-row-' + i}
+                                            isZebra={!!(i % 2)}
+                                        />
+                                    </React.Fragment>
+                                ))}
 
-                            <CreditTableRowD />
+                                <CreditTableRowD />
 
-                            <CreditTableRowA />
-                            <CreditTableRowB />
-                            <CreditTableRowC />
+                                <CreditTableRowA />
+                                <CreditTableRowB />
+                                <CreditTableRowC />
 
-                            <CreditTableRowA />
-                            <CreditTableRowB />
-                            <CreditTableRowC />
+                                <CreditTableRowA />
+                                <CreditTableRowB />
+                                <CreditTableRowC />
 
-                            <CreditTableRowA />
-                            <CreditTableRowB />
-                            <CreditTableRowC />
+                                <CreditTableRowA />
+                                <CreditTableRowB />
+                                <CreditTableRowC />
 
-                            <CreditTableRowA />
-                            <CreditTableRowB />
-                            <CreditTableRowC />
+                                <CreditTableRowA />
+                                <CreditTableRowB />
+                                <CreditTableRowC />
+                            </Table.Body>
                         </Table.Root>
                     </GridItem>
                 </Grid>
