@@ -21,6 +21,7 @@
   transition: .125s ease-in-out 0s;
   transition-property: border-color;
   margin: 0;
+  z-index: auto;
 
   &:focus {
     border-color: $color-palette-blue-tint-50;
@@ -58,6 +59,7 @@
   font-family: inherit;
   margin: 0;
   border: 0;
+  z-index: auto;
 
   &:focus {
     outline: none;
