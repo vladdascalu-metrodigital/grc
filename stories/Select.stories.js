@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import Grid from '../Grid';
+import MainContent from '../MainContent';
 import Select from '../Select';
 
 let options = [
@@ -14,8 +14,8 @@ let options = [
 storiesOf('Forms/Select', module).add('select', () => {
     let [selected, setSelected] = useState('2');
     return (
-        <Grid>
+        <MainContent>
             <Select options={options} value={selected} onChange={v => setSelected(v)} />
-        </Grid>
+        </MainContent>
     );
 });
