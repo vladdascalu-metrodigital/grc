@@ -11,7 +11,7 @@ export default class ClientBlocked extends PureComponent {
         let size = this.props.size === 'large' ? ISIZE.SMALL : ISIZE.XSMALL;
         return (
             <div className="mrc-ui-client-blocked">
-                <WarningSmallFilledIcon size={size} fill={ICOLOR.LIGHT_RED} />
+                <WarningSmallFilledIcon size={size} color={ICOLOR.LIGHT_RED} />
                 {this.props.text || lookup('mrc.customerdata.blocked')}
             </div>
         );

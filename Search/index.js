@@ -56,7 +56,7 @@ export default class Search extends Component {
                     </div>
                 )}
                 <div className="mrc-ui-search-icon">
-                    <SearchIcon size={SIZE.XSMALL} fill={COLOR.NEUTRAL} />
+                    <SearchIcon size={SIZE.XSMALL} color={COLOR.NEUTRAL} />
                 </div>
             </div>
         );

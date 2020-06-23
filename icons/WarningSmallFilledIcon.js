@@ -5,7 +5,7 @@ import './index.scss';
 
 export default class WarningSmallFilledIcon extends PureComponent {
     render() {
-        let { svgClassName, fillClassName } = iconClassNames(this.props);
+        let { svgClassName, colorToFillClassName } = iconClassNames(this.props);
         return (
             <svg
                 className={svgClassName}
@@ -17,7 +17,7 @@ export default class WarningSmallFilledIcon extends PureComponent {
             >
                 <g>
                     <path
-                        className={fillClassName}
+                        className={colorToFillClassName}
                         d="m8 0a8 8 0 1 0 8 8 8 8 0 0 0 -8-8zm-1 3.5a1 1 0 1 1 2 0v5a1 1 0 0 1 -2 0zm1 10a1.5 1.5 0 1 1 1.5-1.5 1.5 1.5 0 0 1 -1.5 1.5z"
                     />
                 </g>

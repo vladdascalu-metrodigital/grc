@@ -1,0 +1,44 @@
+@import '../lib/scss/colors';
+@import '../lib/scss/variables';
+@import '../lib/scss/typography';
+
+.mrc-ui-iconandlabels {
+  display: flex;
+}
+
+.mrc-ui-iconandlabels-labels {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: $spacing-medium;
+  color: $color-brand-primary-default;
+  line-height: $line-height-title;
+}
+
+.mrc-ui-iconandlabels-title {
+  font-weight: bold;
+}
+
+.mrc-ui-iconandlabels-subtitle {
+  font-weight: normal;
+  color: $color-palette-grey-tint-40;
+}
+
+// types
+
+.mrc-ui-iconandlabels-strong-normal {
+  .mrc-ui-iconandlabels-subtitle {
+    color: $color-brand-primary-default;
+  }
+}
+
+.mrc-ui-iconandlabels-all-light {
+  .mrc-ui-iconandlabels-title {
+    font-weight: normal;
+    color: $color-palette-grey-tint-40;
+  }
+  .mrc-ui-iconandlabels-subtitle {
+    color: $color-palette-grey-tint-40;
+  }
+}
+

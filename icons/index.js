@@ -9,7 +9,8 @@ export const COLOR = {
     NEUTRAL: 'neutral',
     DANGER: 'danger',
     ATTENTION: 'attention',
-    LIGHT_GREEN: 'light-green',
+    MUTED: 'muted',
+    DISABLED: 'disabled',
     LIGHT_RED: 'light-red',
 };
 
@@ -25,29 +26,37 @@ export const STROKE_WIDTH = {
 // provides classnames for the icons derived from the props
 // so that all icons use the same pattern
 export function iconClassNames(props) {
-    let { fill, size, stroke, strokeWidth } = props;
-    let wrapperClassName = classnames(
-        'mrc-ui-icon-wrapper',
-        stroke && 'mrc-ui-icon-wrapper-stroke-' + stroke,
-        size && 'mrc-ui-icon-wrapper-size-' + size,
+    let { fill, size, stroke, strokeWidth, color } = props;
+    let circleClassName = classnames(
+        'mrc-ui-icon-circle',
+        color && 'mrc-ui-icon-circle-color-' + color,
+        size && 'mrc-ui-icon-circle-size-' + size,
         {
-            'mrc-ui-icon-wrapper-stroke-width-medium': strokeWidth === STROKE_WIDTH.MEDIUM,
+            'mrc-ui-icon-circle-width-medium': strokeWidth === STROKE_WIDTH.MEDIUM,
         }
     );
     let svgClassName = classnames('mrc-ui-icon-svg', size && 'mrc-ui-icon-svg-size-' + size);
-    let strokeClassName = classnames('mrc-ui-icon-stroke', stroke && 'mrc-ui-icon-stroke-' + stroke);
-    let fillClassName = classnames('mrc-ui-icon-fill', fill && 'mrc-ui-icon-fill-' + fill);
+    let colorToStrokeClassName = classnames(
+        'mrc-ui-icon-stroke',
+        stroke && 'mrc-ui-icon-stroke-' + stroke,
+        color && 'mrc-ui-icon-stroke-' + color
+    );
+    let colorToFillClassName = classnames(
+        'mrc-ui-icon-fill',
+        fill && 'mrc-ui-icon-fill-' + fill,
+        color && 'mrc-ui-icon-fill-' + color
+    );
+
     return {
-        wrapperClassName,
+        circleClassName,
         svgClassName,
-        strokeClassName,
-        fillClassName,
+        colorToStrokeClassName,
+        colorToFillClassName,
     };
 }
 
 export const iconPropTypes = {
-    fill: PropTypes.oneOf(['white', 'black', 'interaction', 'success', 'neutral', 'danger', 'attention']),
-    stroke: PropTypes.oneOf(['white', 'black', 'interaction', 'success', 'neutral', 'danger', 'attention']),
+    color: PropTypes.oneOf(['white', 'black', 'interaction', 'success', 'neutral', 'danger', 'attention']),
     strokeWidth: PropTypes.oneOf(['thin', 'medium']),
     size: PropTypes.oneOf(['small', 'xsmall']),
 };

@@ -31,7 +31,7 @@ export default class CheckCard extends Component {
                 <div className="mrc-ui-check-card-head-row">
                     {title ? <span className="mrc-ui-check-card-title">{title}</span> : <div>{children}</div>}
                     <div className="mrc-ui-check-card-checkmark">
-                        <CheckSmallFilledIcon size={ISIZE.XSMALL} fill={ICOLOR.LIGHT_GREEN} />
+                        <CheckSmallFilledIcon size={ISIZE.XSMALL} color={ICOLOR.SUCCESS} />
                     </div>
                 </div>
                 {children && title && <div className="mrc-ui-check-card-extra-row">{children}</div>}

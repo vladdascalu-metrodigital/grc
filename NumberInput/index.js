@@ -3,6 +3,8 @@ import classnames from 'classnames';
 
 import './index.scss';
 
+// TODO improve validation/regex - maybe allow even text, but show as invalid
+
 export class NumberInput extends Component {
     constructor(props) {
         super(props);

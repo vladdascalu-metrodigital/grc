@@ -3,7 +3,7 @@
 
 // wrapper (currently by default a circle around an icon, if needed)
 
-.mrc-ui-icon-wrapper {
+.mrc-ui-icon-circle {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,8 +16,21 @@
   border: $border-width-thin solid $color-brand-primary-default;
 }
 
-.mrc-ui-icon-wrapper-stroke-width-medium {
+.mrc-ui-icon-circle-width-medium {
   border-width: $border-width-medium;
+}
+
+.mrc-ui-icon-svg {
+  font-size: 2.875rem;
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+
+}
+
+.mrc-ui-icon-circle .mrc-ui-icon-svg {
+  width: .65em;
+  height: .65em;
 }
 
 // colors
@@ -29,9 +42,10 @@ $icons-color-mapping: (
   "success": $color-success,
   "neutral": $color-neutral,
   "danger": $color-palette-red-default,
+  "muted": $color-palette-grey-tint-40,
+  "disabled": $color-palette-grey-tint-60,
   "attention": $color-brand-secondary-default,
   "light-red": $color-palette-red-tint-30,
-  "light-green": $color-palette-green-default,
 );
 
 .mrc-ui-icon-stroke {
@@ -43,7 +57,7 @@ $icons-color-mapping: (
 }
 
 @each $key, $color in $icons-color-mapping {
-  .mrc-ui-icon-wrapper-stroke-#{$key} {
+  .mrc-ui-icon-circle-color-#{$key} {
     border-color: $color;
   }
 
@@ -56,28 +70,14 @@ $icons-color-mapping: (
   }
 }
 
-// the svg element
-
-.mrc-ui-icon-svg {
-  font-size: 2.875rem;
-  width: 1em;
-  height: 1em;
-  flex-shrink: 0;
-
-  @at-root .mrc-ui-icon-wrapper #{&} {
-    width: .65em;
-    height: .65em;
-  }
-}
-
 // sizes
 
-.mrc-ui-icon-wrapper-size-small,
+.mrc-ui-icon-circle-size-small,
 .mrc-ui-icon-svg-size-small {
   font-size: 2rem; // determines width/height!
 }
 
-.mrc-ui-icon-wrapper-size-xsmall,
+.mrc-ui-icon-circle-size-xsmall,
 .mrc-ui-icon-svg-size-xsmall {
   font-size: 1.3125rem;
 }
