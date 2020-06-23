@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ClientBlocked from '../ClientBlocked';
 import BusinessIcon from '../icons/BusinessIcon';
+import IconAndLabels from '../icons/IconAndLabels';
 
 import './CustomerToggler.scss';
 
@@ -9,14 +10,11 @@ export default class CustomerToggler extends Component {
     render() {
         return (
             <div className="mrc-ui-customer-toggler">
-                <BusinessIcon />
-                <div className="mrc-ui-customer-toggler-customer">
-                    <span className="mrc-ui-customer-toggler-name">{this.props.name}</span>
-                    <br />
-                    <span className="mrc-ui-customer-toggler-number">
-                        {this.props.storeNumber + '/' + this.props.customerNumber}
-                    </span>
-                </div>
+                <IconAndLabels
+                    icon={BusinessIcon}
+                    title={this.props.name}
+                    subtitle={this.props.storeNumber + '/' + this.props.customerNumber}
+                />
                 {this.props.isBlocked && (
                     <div className="mrc-ui-customer-toggler-blocked-label">
                         <ClientBlocked />
