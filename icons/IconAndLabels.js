@@ -21,7 +21,7 @@ export default class IconAndLabels extends PureComponent {
         }
         return (
             <div className={className}>
-                <Icon color={iconColor} />
+                {Icon && <Icon color={iconColor} />}
                 <div className="mrc-ui-iconandlabels-labels">
                     <span className="mrc-ui-iconandlabels-title">{title}</span>
                     <span className="mrc-ui-iconandlabels-subtitle">{subtitle}</span>

@@ -15,6 +15,10 @@
   line-height: $line-height-title;
 }
 
+.mrc-ui-iconandlabels-labels:first-child {
+  margin-left: 0;
+}
+
 .mrc-ui-iconandlabels-title {
   font-weight: bold;
 }
