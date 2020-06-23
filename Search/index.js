@@ -25,7 +25,7 @@ export default class Search extends Component {
 
     handleEnterSearch(e) {
         let { onEnterSearch } = this.props;
-        if (e.keyCode == 13 && onEnterSearch) onEnterSearch(this.inputRef.current.value);
+        if ((e === true || e.keyCode == 13) && onEnterSearch) onEnterSearch(this.inputRef.current.value);
     }
 
     handleClear() {
@@ -55,7 +55,7 @@ export default class Search extends Component {
                         <a onClick={this.handleClear.bind(this)}>clear</a>
                     </div>
                 )}
-                <div className="mrc-ui-search-icon">
+                <div className="mrc-ui-search-icon" onClick={this.handleEnterSearch.bind(this, true)}>
                     <SearchIcon size={SIZE.XSMALL} color={COLOR.NEUTRAL} />
                 </div>
             </div>
