@@ -13,6 +13,30 @@ export default class Sales extends Component {
         return val === undefined || val === 'NaN' ? 0 : val;
     }
 
+    getGrossProfit(sellValNspLxm, sellValNnbpLxm) {
+        return sellValNnbpLxm !== null ? this.orZero(sellValNspLxm) - this.orZero(sellValNnbpLxm) : 0;
+    }
+
+    getCustomerGrossProfit(sellValNspLxm, sellValNnbpLxm) {
+        return sellValNnbpLxm !== null ? sellValNspLxm - sellValNnbpLxm : null;
+    }
+
+    getTotalMargin(sellValNspLxm, sellValNnbpLxm) {
+        if (this.orZero(sellValNspLxm) === 0 || sellValNnbpLxm === null) {
+            return 0;
+        } else {
+            return (100 * (this.orZero(sellValNspLxm) - this.orZero(sellValNnbpLxm))) / this.orZero(sellValNspLxm);
+        }
+    }
+
+    getCustomerTotalMargin(sellValNspLxm, sellValNnbpLxm) {
+        return sellValNnbpLxm !== null
+            ? this.orZero(sellValNspLxm) == 0
+                ? 0
+                : (100 * (sellValNspLxm - sellValNnbpLxm)) / sellValNspLxm
+            : null;
+    }
+
     makeConsolidatedData(mdwData) {
         var country = '';
         const rows = _.reduce(
@@ -23,50 +47,26 @@ export default class Sales extends Component {
                 acc[0].l1 += this.orZero(cd.numPurchasesL1m);
                 acc[1].l1 += this.orZero(cd.numInvoicesL1m);
                 acc[2].l1 += this.orZero(cd.sellValNspL1m);
-                acc[3].l1 += this.orZero(cd.sellValNspL1m) - this.orZero(cd.sellValNnbpL1m);
-                if (this.orZero(cd.sellValNspL1m) === 0) {
-                    acc[4].l1 += 0;
-                } else {
-                    acc[4].l1 +=
-                        (100 * (this.orZero(cd.sellValNspL1m) - this.orZero(cd.sellValNnbpL1m))) /
-                        this.orZero(cd.sellValNspL1m);
-                }
+                acc[3].l1 += this.getGrossProfit(cd.sellValNspL1m, cd.sellValNnbpL1m);
+                acc[4].l1 += this.getTotalMargin(cd.sellValNspL1m, cd.sellValNnbpL1m);
 
                 acc[0].l3 += this.orZero(cd.numPurchasesL3m);
                 acc[1].l3 += this.orZero(cd.numInvoicesL3m);
                 acc[2].l3 += this.orZero(cd.sellValNspL3m);
-                acc[3].l3 += this.orZero(cd.sellValNspL3m) - this.orZero(cd.sellValNnbpL3m);
-                if (this.orZero(cd.sellValNspL3m) === 0) {
-                    acc[4].l3 += 0;
-                } else {
-                    acc[4].l3 +=
-                        (100 * (this.orZero(cd.sellValNspL3m) - this.orZero(cd.sellValNnbpL3m))) /
-                        this.orZero(cd.sellValNspL3m);
-                }
+                acc[3].l3 += this.getGrossProfit(cd.sellValNspL3m, cd.sellValNnbpL3m);
+                acc[4].l3 += this.getTotalMargin(cd.sellValNspL3m, cd.sellValNnbpL3m);
 
                 acc[0].l6 += this.orZero(cd.numPurchasesL6m);
                 acc[1].l6 += this.orZero(cd.numInvoicesL6m);
                 acc[2].l6 += this.orZero(cd.sellValNspL6m);
-                acc[3].l6 += this.orZero(cd.sellValNspL6m) - this.orZero(cd.sellValNnbpL6m);
-                if (this.orZero(cd.sellValNspL6m) === 0) {
-                    acc[4].l6 += 0;
-                } else {
-                    acc[4].l6 +=
-                        (100 * (this.orZero(cd.sellValNspL6m) - this.orZero(cd.sellValNnbpL6m))) /
-                        this.orZero(cd.sellValNspL6m);
-                }
+                acc[3].l6 += this.getGrossProfit(cd.sellValNspL6m, cd.sellValNnbpL6m);
+                acc[4].l6 += this.getTotalMargin(cd.sellValNspL6m, cd.sellValNnbpL6m);
 
                 acc[0].l12 += this.orZero(cd.numPurchasesL12m);
                 acc[1].l12 += this.orZero(cd.numInvoicesL12m);
                 acc[2].l12 += this.orZero(cd.sellValNspL12m);
-                acc[3].l12 += this.orZero(cd.sellValNspL12m) - this.orZero(cd.sellValNnbpL12m);
-                if (this.orZero(cd.sellValNspL12m) === 0) {
-                    acc[4].l12 += 0;
-                } else {
-                    acc[4].l12 +=
-                        (100 * (this.orZero(cd.sellValNspL12m) - this.orZero(cd.sellValNnbpL12m))) /
-                        this.orZero(cd.sellValNspL12m);
-                }
+                acc[3].l12 += this.getGrossProfit(cd.sellValNspL12m, cd.sellValNnbpL12m);
+                acc[4].l12 += this.getTotalMargin(cd.sellValNspL12m, cd.sellValNnbpL12m);
 
                 if (salesOverview.customer.country) {
                     country = salesOverview.customer.country;
@@ -102,6 +102,9 @@ export default class Sales extends Component {
     }
 
     wrapCurrency(value, sales) {
+        if (value === null) {
+            return <span>n/a</span>;
+        }
         if (sales.original.tag === 'purchase' || sales.original.tag === 'invoices') {
             return <mrc-number>{value}</mrc-number>;
         } else if (sales.original.tag === 'margin') {
@@ -178,31 +181,19 @@ export default class Sales extends Component {
             {
                 name: lookup('mrc.mdw.totalgrossprofit'), //sell_val_nsp_lxm - sell_val_nnbp_lxm
                 country: country,
-                l1: cd.sellValNspL1m - cd.sellValNnbpL1m,
-                l3: cd.sellValNspL3m - cd.sellValNnbpL3m,
-                l6: cd.sellValNspL6m - cd.sellValNnbpL6m,
-                l12: cd.sellValNspL12m - cd.sellValNnbpL12m,
+                l1: this.getCustomerGrossProfit(cd.sellValNspL1m, cd.sellValNnbpL1m),
+                l3: this.getCustomerGrossProfit(cd.sellValNspL3m, cd.sellValNnbpL3m),
+                l6: this.getCustomerGrossProfit(cd.sellValNspL6m, cd.sellValNnbpL6m),
+                l12: this.getCustomerGrossProfit(cd.sellValNspL12m, cd.sellValNnbpL12m),
             },
             {
                 name: lookup('mrc.mdw.totalmargin'), //(sell_val_nsp_lxm - sell_val_nnbp_lxm)  / sell_val_nsp_lxm * 100,0
                 tag: 'margin',
                 country: country,
-                l1:
-                    this.orZero(cd.sellValNspL1m) == 0
-                        ? 0
-                        : (100 * (cd.sellValNspL1m - cd.sellValNnbpL1m)) / cd.sellValNspL1m,
-                l3:
-                    this.orZero(cd.sellValNspL3m) == 0
-                        ? 0
-                        : (100 * (cd.sellValNspL3m - cd.sellValNnbpL3m)) / cd.sellValNspL3m,
-                l6:
-                    this.orZero(cd.sellValNspL6m) == 0
-                        ? 0
-                        : (100 * (cd.sellValNspL6m - cd.sellValNnbpL6m)) / cd.sellValNspL6m,
-                l12:
-                    this.orZero(cd.sellValNspL12m) == 0
-                        ? 0
-                        : (100 * (cd.sellValNspL12m - cd.sellValNnbpL12m)) / cd.sellValNspL12m,
+                l1: this.getCustomerTotalMargin(cd.sellValNspL1m, cd.sellValNnbpL1m),
+                l3: this.getCustomerTotalMargin(cd.sellValNspL3m, cd.sellValNnbpL3m),
+                l6: this.getCustomerTotalMargin(cd.sellValNspL6m, cd.sellValNnbpL6m),
+                l12: this.getCustomerTotalMargin(cd.sellValNspL12m, cd.sellValNnbpL12m),
             },
         ];
 
