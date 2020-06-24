@@ -112,7 +112,12 @@ export default class Scoring extends Component {
             {
                 Header: lookup('mrc.scores.table.agency'),
                 accessor: 'agency',
-                renderFn: (agency, scoring) => makeDownload(scoring, <span>{agency}</span>, <span>{agency}</span>),
+                renderFn: (agency, scoring) =>
+                    agency === 'MRC' ? (
+                        <span>{agency}</span>
+                    ) : (
+                        makeDownload(scoring, <span>{agency}</span>, <span>{agency}</span>)
+                    ),
             },
             { Header: lookup('mrc.scores.table.customerid'), accessor: 'customerId' },
             { Header: lookup('mrc.scores.table.score'), accessor: 'score', renderFn: makeScore },
