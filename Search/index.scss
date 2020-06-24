@@ -1,3 +1,4 @@
+@import '../lib/scss/colors';
 @import '../lib/scss/form-styles';
 
 .mrc-ui-search {
@@ -5,7 +6,7 @@
   position: relative;
   display: flex;
   align-items: stretch;
-
+  background: $color-contrast-white;
 }
 
 .mrc-ui-search-input {
