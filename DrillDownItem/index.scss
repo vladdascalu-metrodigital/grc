@@ -9,8 +9,16 @@
   cursor: pointer;
 }
 
+.mrc-ui-drill-down-item:hover {
+  background-color: $color-palette-blue-tint-90;
+}
+
+.mrc-ui-drill-down-item-active {
+  background-color: $color-palette-grey-tint-90;
+}
+
 .mrc-ui-drill-down-item + .mrc-ui-drill-down-item {
-  border-top: 1px solid $color-palette-grey-tint-90;
+  border-top: 1px solid $color-palette-grey-tint-80;
 }
 
 .mrc-ui-drill-down-chevron {

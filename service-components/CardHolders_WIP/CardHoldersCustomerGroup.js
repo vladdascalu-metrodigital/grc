@@ -21,7 +21,7 @@ export default class CardHoldersCustomerGroup extends Component {
                         <h3>Customers</h3>
                         <Search />
                         <div>
-                            <DrillDownItem>
+                            <DrillDownItem active>
                                 <IconAndLabels
                                     icon={BusinessIcon}
                                     iconColor={IC.SUCCESS}
