@@ -36,6 +36,10 @@
   padding: $spacing-medium .25rem 0;
 }
 
+.mrc-ui-box-with-title-content-flush {
+  padding: 0;
+}
+
 // type variations
 
 .mrc-ui-box-with-title-smaller {
@@ -46,6 +50,18 @@
   }
 
   .mrc-ui-box-with-title-title {
-    @include typo-header-small-caps();
+    @include typo-header-small-muted-caps();
+  }
+}
+
+.mrc-ui-box-with-title-smaller-alt {
+  .mrc-ui-box-with-title-header {
+    > * {
+      line-height: $line-height-title;
+    }
+  }
+
+  .mrc-ui-box-with-title-title {
+    @include typo-header-small-muted();
   }
 }

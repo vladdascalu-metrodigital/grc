@@ -6,6 +6,7 @@ import './index.scss';
 
 export const TYPE = {
     SMALLER: 'smaller',
+    SMALLER_ALT: 'smaller-alt',
 };
 
 export default class BoxWithTitle extends Component {
@@ -20,9 +21,13 @@ export default class BoxWithTitle extends Component {
     }
 
     render() {
-        let { action, children, title, type } = this.props;
+        let { action, children, title, type, flush } = this.props;
         let className = classnames('mrc-ui-box-with-title', {
             'mrc-ui-box-with-title-smaller': type === TYPE.SMALLER,
+            'mrc-ui-box-with-title-smaller-alt': type === TYPE.SMALLER_ALT,
+        });
+        let contentClassName = classnames('mrc-ui-box-with-title-content', {
+            'mrc-ui-box-with-title-content-flush': flush,
         });
         return (
             <div className={className}>
@@ -34,7 +39,7 @@ export default class BoxWithTitle extends Component {
                         </span>
                     )}
                 </div>
-                <div className="mrc-ui-box-with-title-content">{children}</div>
+                <div className={contentClassName}>{children}</div>
             </div>
         );
     }
@@ -48,4 +53,5 @@ BoxWithTitle.propTypes = {
     }),
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     type: PropTypes.string,
+    flush: PropTypes.bool,
 };

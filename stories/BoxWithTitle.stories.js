@@ -31,4 +31,9 @@ storiesOf('Fundamentals/BoxWithTitle', module)
             adipisicing. Ea aute amet voluptate ex non. Culpa amet enim dolor id deserunt elit irure nostrud do nisi
             labore magna culpa.
         </BoxWithTitle>
+    ))
+    .add('no padding for content area', () => (
+        <BoxWithTitle flush title="No padding for content">
+            <Card isBlock>I will provide my own spacing</Card>
+        </BoxWithTitle>
     ));

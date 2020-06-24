@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
 import MainContent from '../../MainContent';
-import SearchPage from './SearchPage';
-import CardHoldersSearch from './CardHoldersSearch';
+import Search from '../../Search';
 
 import './index.scss';
 
@@ -11,8 +10,8 @@ export default class CardHolders extends Component {
         return (
             <MainContent>
                 <div className="mrc-ui-cardholders">
-                    <CardHoldersSearch />
-                    <SearchPage />
+                    <Search />
+                    {'...'}
                 </div>
             </MainContent>
         );

@@ -1,3 +1,6 @@
+@import '../../lib/scss/variables';
+
 .mrc-ui-cardholders {
-  
+  display: grid;
+  grid-gap: $spacing-extra-large;
 }

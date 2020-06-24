@@ -1,0 +1,39 @@
+@import '../../lib/scss/colors';
+@import '../../lib/scss/variables';
+
+.mrc-ui-cardholders-customer-group {
+  display: flex;
+  border: 1px solid $color-palette-grey-tint-80;
+}
+
+.mrc-ui-cardholders-customer-group-customers {
+  border-right: 1px solid $color-palette-grey-tint-80;
+  background: $color-palette-grey-tint-95;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: min-content;
+  
+  > h3 {
+    align-self: center;
+  }
+}
+
+.mrc-ui-cardholders-customer-group-cardholders {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex-grow: 1;
+
+  > h3 {
+    align-self: center;
+  }
+}
+
+.mrc-ui-cardholders-customer-group-cardholder {
+  padding: 0 1rem;
+}
+
+.mrc-ui-cardholders-customer-group-cardholder + .mrc-ui-cardholders-customer-group-cardholder {
+  border-top: 1px solid $color-palette-grey-tint-95;
+}
