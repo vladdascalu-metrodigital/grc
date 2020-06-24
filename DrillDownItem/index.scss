@@ -1,0 +1,18 @@
+@import '../lib/scss/colors';
+@import '../lib/scss/variables';
+
+.mrc-ui-drill-down-item {
+  display: flex;
+  justify-items: flex-start;
+  align-items: center;
+  padding: $spacing-medium $spacing-small;
+  cursor: pointer;
+}
+
+.mrc-ui-drill-down-item + .mrc-ui-drill-down-item {
+  border-top: 1px solid $color-palette-grey-tint-90;
+}
+
+.mrc-ui-drill-down-chevron {
+  margin-left: auto;
+}
