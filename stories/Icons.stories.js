@@ -8,6 +8,8 @@ import Select from '../Select';
 import BusinessIcon from '../icons/BusinessIcon';
 import CheckmarkFilledIcon from '../icons/CheckmarkFilledIcon';
 import CheckSmallFilledIcon from '../icons/CheckSmallFilledIcon';
+import ChevronRightIcon from '../icons/ChevronRightIcon';
+import ChevronRightSmallIcon from '../icons/ChevronRightSmallIcon';
 import ProfileIcon from '../icons/ProfileIcon';
 import WarningSmallFilledIcon from '../icons/WarningSmallFilledIcon';
 import SearchIcon from '../icons/SearchIcon';
@@ -29,6 +31,8 @@ storiesOf('Fundamentals/Icons', module)
                     <BusinessIcon color={color} />
                     <CheckmarkFilledIcon color={color} />
                     <CheckSmallFilledIcon color={color} />
+                    <ChevronRightIcon color={color} />
+                    <ChevronRightSmallIcon color={color} />
                     <ProfileIcon color={color} />
                     <SearchCircledIcon color={color} />
                     <SearchIcon color={color} />
