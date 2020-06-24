@@ -6,6 +6,8 @@ import DownloadIcon from '../../../icons/download-file.svg';
 import * as _ from 'lodash';
 import Bullet, { MODE as BM } from '../../../Bullet';
 import { Table } from '../../../Table';
+import ExcelIcon from '../../../icons/xls.svg';
+import PdfIcon from '../../../icons/pdf.svg';
 
 export default class Scoring extends Component {
     constructor(props) {
@@ -15,6 +17,15 @@ export default class Scoring extends Component {
 
     downloadReport = scoring => {
         const url = this.props.host + scoring.reportPath;
+        window.open(url, '_blank');
+    };
+
+    generateInternalScoreReport = (scoring, fileType) => {
+        const internalScoreReportPath = '/scoringservice/api/score/report/{scoreId}/{fileType}';
+        const url =
+            this.props.host +
+            internalScoreReportPath.replace('{scoreId}', scoring.scoreId).replace('{fileType}', fileType);
+
         window.open(url, '_blank');
     };
 
@@ -68,11 +79,33 @@ export default class Scoring extends Component {
 
         const makeDownload = (scoring, downloadContent, noContent) => {
             const isBlank = str => !str || str === null || /^\s*$/.test(str);
-            return isBlank(scoring && scoring.original ? scoring.original.reportPath : undefined) ? (
-                noContent
-            ) : (
-                <a onClick={this.downloadReport.bind(this, scoring.original)}>{downloadContent}</a>
-            );
+            var noReport = true;
+            var scoreAvailable = false;
+            var hasInternalScoreReport = false;
+
+            if (scoring && scoring.original) {
+                const so = scoring.original;
+                noReport = isBlank(so.reportPath);
+                scoreAvailable = !isBlank(so.score);
+                hasInternalScoreReport = !isBlank(so.agency) && so.agency === 'MRC' && scoreAvailable;
+            }
+
+            if (noReport && !hasInternalScoreReport) {
+                return noContent;
+            } else if (hasInternalScoreReport) {
+                return (
+                    <div>
+                        <a onClick={this.generateInternalScoreReport.bind(this, scoring, 'excel')}>
+                            <img className="mrc-icon-large" src={ExcelIcon} alt="Excel Report" />
+                        </a>
+                        <a onClick={this.generateInternalScoreReport.bind(this, scoring, 'pdf')}>
+                            <img className="mrc-icon-large" src={PdfIcon} alt="PDF Report" />
+                        </a>
+                    </div>
+                );
+            } else {
+                return <a onClick={this.downloadReport.bind(this, scoring.original)}>{downloadContent}</a>;
+            }
         };
 
         const columns = [
