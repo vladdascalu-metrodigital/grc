@@ -95,10 +95,10 @@ export default class Scoring extends Component {
             } else if (hasInternalScoreReport) {
                 return (
                     <div>
-                        <a onClick={this.generateInternalScoreReport.bind(this, scoring, 'excel')}>
+                        <a onClick={this.generateInternalScoreReport.bind(this, scoring.original, 'excel')}>
                             <img className="mrc-icon-large" src={ExcelIcon} alt="Excel Report" />
                         </a>
-                        <a onClick={this.generateInternalScoreReport.bind(this, scoring, 'pdf')}>
+                        <a onClick={this.generateInternalScoreReport.bind(this, scoring.original, 'pdf')}>
                             <img className="mrc-icon-large" src={PdfIcon} alt="PDF Report" />
                         </a>
                     </div>
