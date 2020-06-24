@@ -9,6 +9,9 @@ import { Table } from '../../../Table';
 
 export default class Sales extends Component {
     wrapCurrency(value, sales) {
+        if (value === null) {
+            return <span>n/a</span>;
+        }
         if (sales.original.tag === 'purchase' || sales.original.tag === 'invoices') {
             return <mrc-number>{value}</mrc-number>;
         } else if (sales.original.tag === 'margin') {
