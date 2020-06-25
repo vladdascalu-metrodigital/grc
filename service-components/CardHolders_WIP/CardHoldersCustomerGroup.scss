@@ -15,6 +15,13 @@
   width: min-content;
 }
 
+.mrc-ui-cardholders-customer-group-top-row {
+  display: grid;
+  grid-template-columns: max-content auto;
+  align-items: center;
+  margin-bottom: $spacing-large;
+}
+
 .mrc-ui-cardholders-customer-group-cardholders {
   display: flex;
   flex-direction: column;

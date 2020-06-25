@@ -5,9 +5,9 @@ import BoxWithTitle from '../../BoxWithTitle';
 import DrillDownItem from '../../DrillDownItem';
 import IconAndLabels from '../../icons/IconAndLabels';
 import Toggle from '../../Toggle';
+import BackButton from '../../BackButton';
 
 import BusinessIcon from '../../icons/BusinessIcon';
-import ArrowLeftIcon from '../../icons/ArrowLeftIcon';
 import ProfileIcon from '../../icons/ProfileIcon';
 import { COLOR as IC } from '../../icons';
 
@@ -17,14 +17,15 @@ export default class CardHoldersCustomerGroup extends Component {
     render() {
         return (
             <React.Fragment>
-                <div className="mb-5">
-                    <ArrowLeftIcon color={IC.INTERACTION} />
+                <div className="mrc-ui-cardholders-customer-group-top-row">
+                    <BackButton />
+                    <h2 className="text-center">Müller GmbH</h2>
                 </div>
-                <h2 className="pb-2">Customer Group for &quot;Müller GmbH&quot;</h2>
+                <h3 className="pb-2">Customer Group</h3>
                 <div className="mrc-ui-cardholders-customer-group">
                     <div className="mrc-ui-cardholders-customer-group-customers">
                         <div className="pa-4">
-                            <h3 className="text-center pb-4">Customers</h3>
+                            <h4 className="text-center pb-4">Customers</h4>
                             <Search />
                         </div>
                         <div>
@@ -51,7 +52,7 @@ export default class CardHoldersCustomerGroup extends Component {
                     </div>
                     <div className="mrc-ui-cardholders-customer-group-cardholders px-6">
                         <div className="pt-4 pb-6">
-                            <h3 className="text-center pb-4">Cardholders</h3>
+                            <h4 className="text-center pb-4">Cardholders</h4>
                             <Search />
                         </div>
                         <BoxWithTitle
