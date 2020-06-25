@@ -18,8 +18,10 @@ export default class CardHoldersCustomerGroup extends Component {
                 <h2>Customer Group</h2>
                 <div className="mrc-ui-cardholders-customer-group">
                     <div className="mrc-ui-cardholders-customer-group-customers">
-                        <h3>Customers</h3>
-                        <Search />
+                        <div className="pa-4">
+                            <h3 className="text-center pb-4">Customers</h3>
+                            <Search />
+                        </div>
                         <div>
                             <DrillDownItem active>
                                 <IconAndLabels
@@ -42,9 +44,11 @@ export default class CardHoldersCustomerGroup extends Component {
                             </DrillDownItem>
                         </div>
                     </div>
-                    <div className="mrc-ui-cardholders-customer-group-cardholders">
-                        <h3>Cardholders</h3>
-                        <Search />
+                    <div className="mrc-ui-cardholders-customer-group-cardholders px-6">
+                        <div className="pt-4 pb-6">
+                            <h3 className="text-center pb-4">Cardholders</h3>
+                            <Search />
+                        </div>
                         <BoxWithTitle
                             title="Betterlife GmbH"
                             action={{
@@ -54,6 +58,7 @@ export default class CardHoldersCustomerGroup extends Component {
                                 },
                             }}
                             type="smaller-alt"
+                            flush
                         >
                             <div className="mrc-ui-cardholders-customer-group-cardholder">
                                 <Toggle spaceBetween>
