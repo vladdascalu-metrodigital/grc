@@ -37,10 +37,11 @@
   .mb-#{$i} { margin-bottom: $spacing; }
   
   .pa-#{i} {
-    margin: $spacing;
+    padding: $spacing;
   }
   .px-#{$i} { 
-    padding: $spacing;
+    padding-left: $spacing;
+    padding-right: $spacing;
   }
   .py-#{$i} { 
     padding-top: $spacing; 
@@ -50,4 +51,8 @@
   .pr-#{$i} { padding-right: $spacing; }
   .pl-#{$i} { padding-left: $spacing; }
   .pb-#{$i} { padding-bottom: $spacing; }
+}
+
+.text-center {
+  text-align: center;
 }
