@@ -10,22 +10,25 @@ export const validations = {
         validations.greaterThan(value, limitInf) && validations.lessThan(value, limitSup),
     betweenEq: (value, limitInf, limitSup) =>
         validations.greaterThanEq(value, limitInf) && validations.lessThanEq(value, limitSup),
-    notNull: value => (value && value !== null ? true : false),
-    isNull: value => (value === undefined || value === null ? true : false),
-    isNumber: value => !isNaN(value),
-    isNumberInteger: value => !isNaN(value) && (value != null && value.trim().length > 0 ? parseInt(value) == value : true),
-    isPercentage: value =>
+    notNull: (value) => !validations.isNull(value),
+    isNull: (value) => value === undefined || value === null,
+    isNumber: (value) => value !== undefined && value !== null && !isNaN(value),
+    isNumberInteger: (value) => validations.isNumber(value) && value != null && value.toString().split('.').length < 2,
+    isPercentage: (value) =>
         validations.isNumber(value) && validations.greaterThanEq(value, 0) && validations.lessThanEq(value, 100),
-    lessThanEq1000: value => validations.lessThanEq(value, 1000),
+    isPercentage2: (value) =>
+        validations.isPercentage(value) &&
+        (value.toString().split('.').length < 2 || value.toString().split('.')[1].length <= 2),
+    lessThanEq1000: (value) => validations.lessThanEq(value, 1000),
     //string
-    stringNotEmpty: value => value && !value.trim().length == 0,
+    stringNotEmpty: (value) => value && value.toString().trim().length !== 0,
     maxLength: (value, length) => validations.isNull(value) || value.length <= length,
-    maxLength255: value => validations.maxLength(value, 255),
+    maxLength255: (value) => validations.maxLength(value, 255),
     minLength: (value, length) => value && value.length >= length,
-    isEmail: value =>
+    isEmail: (value) =>
         validations.isNull(value) || /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value),
     //date
-    isDate: value => value && value.getTime() === value.getTime(),
+    isDate: (value) => value && value.getTime() === value.getTime(),
     beforeDate: (value, dateLimit) => validations.isDate(value) && value < dateLimit,
     beforeEqDate: (value, dateLimit) => validations.isDate(value) && value <= dateLimit,
     afterDate: (value, dateLimit) => validations.isDate(value) && value > dateLimit,
