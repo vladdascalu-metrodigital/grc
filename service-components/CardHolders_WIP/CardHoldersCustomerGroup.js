@@ -5,7 +5,9 @@ import BoxWithTitle from '../../BoxWithTitle';
 import DrillDownItem from '../../DrillDownItem';
 import IconAndLabels from '../../icons/IconAndLabels';
 import Toggle from '../../Toggle';
+
 import BusinessIcon from '../../icons/BusinessIcon';
+import ArrowLeftIcon from '../../icons/ArrowLeftIcon';
 import ProfileIcon from '../../icons/ProfileIcon';
 import { COLOR as IC } from '../../icons';
 
@@ -15,7 +17,10 @@ export default class CardHoldersCustomerGroup extends Component {
     render() {
         return (
             <React.Fragment>
-                <h2>Customer Group</h2>
+                <div className="mb-5">
+                    <ArrowLeftIcon color={IC.INTERACTION} />
+                </div>
+                <h2 className="pb-2">Customer Group</h2>
                 <div className="mrc-ui-cardholders-customer-group">
                     <div className="mrc-ui-cardholders-customer-group-customers">
                         <div className="pa-4">

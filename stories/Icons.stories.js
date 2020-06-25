@@ -5,6 +5,7 @@ import MainContent from '../MainContent';
 import Grid, { GridItem } from '../Grid';
 import Select from '../Select';
 
+import ArrowLeftIcon from '../icons/ArrowLeftIcon';
 import BusinessIcon from '../icons/BusinessIcon';
 import CheckmarkFilledIcon from '../icons/CheckmarkFilledIcon';
 import CheckSmallFilledIcon from '../icons/CheckSmallFilledIcon';
@@ -28,6 +29,7 @@ storiesOf('Fundamentals/Icons', module)
                         <Select options={['default', ...Object.values(COLOR)]} onChange={c => setColor(c)} />
                     </GridItem>
 
+                    <ArrowLeftIcon color={color} />
                     <BusinessIcon color={color} />
                     <CheckmarkFilledIcon color={color} />
                     <CheckSmallFilledIcon color={color} />
