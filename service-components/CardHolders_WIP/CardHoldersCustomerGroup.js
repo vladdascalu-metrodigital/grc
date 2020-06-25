@@ -20,7 +20,7 @@ export default class CardHoldersCustomerGroup extends Component {
                 <div className="mb-5">
                     <ArrowLeftIcon color={IC.INTERACTION} />
                 </div>
-                <h2 className="pb-2">Customer Group</h2>
+                <h2 className="pb-2">Customer Group for &quot;Müller GmbH&quot;</h2>
                 <div className="mrc-ui-cardholders-customer-group">
                     <div className="mrc-ui-cardholders-customer-group-customers">
                         <div className="pa-4">
