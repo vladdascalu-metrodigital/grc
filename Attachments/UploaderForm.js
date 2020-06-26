@@ -32,11 +32,11 @@ export default class UploaderForm extends Component {
     componentDidMount() {
         const _attachmentSpecList = AttachmentSpec.attachment_types
             .filter(
-                attType =>
+                (attType) =>
                     attType.country.toLowerCase() === this.props.country.toLowerCase() ||
                     attType.country.toLowerCase() === 'all'
             )
-            .filter(attType => this.props.fileTypes.includes(attType.type.toLowerCase()));
+            .filter((attType) => this.props.fileTypes.includes(attType.type.toLowerCase()));
         this.setState({
             attachmentSpecList: _attachmentSpecList,
         });
@@ -49,7 +49,7 @@ export default class UploaderForm extends Component {
     // File selection
 
     handleFileTypeChange(value, attachmentSpecList) {
-        let attachmentSpec = List(attachmentSpecList).find(att => att.type.toLowerCase() === value);
+        let attachmentSpec = List(attachmentSpecList).find((att) => att.type.toLowerCase() === value);
 
         this.setState({
             ...this.state,
@@ -58,7 +58,7 @@ export default class UploaderForm extends Component {
             attachmentSpec: {
                 ...attachmentSpec,
                 fields: attachmentSpec.fields
-                    ? attachmentSpec.fields.map(field => {
+                    ? attachmentSpec.fields.map((field) => {
                           return { ...field, value: null };
                       })
                     : null,
@@ -69,7 +69,7 @@ export default class UploaderForm extends Component {
     }
 
     options(fileType, attachmentSpecList) {
-        const option = spec => (
+        const option = (spec) => (
             <option key={spec.type} value={spec.type.toLowerCase()}>
                 {lookup(spec.label)}
             </option>
@@ -87,7 +87,7 @@ export default class UploaderForm extends Component {
                 name="file-type"
                 id="select-file-type"
                 value={_.isEmpty(fileType) ? '' : fileType}
-                onChange={event => this.handleFileTypeChange(event.target.value, this.state.attachmentSpecList)}
+                onChange={(event) => this.handleFileTypeChange(event.target.value, this.state.attachmentSpecList)}
                 disabled={this.props.readonly || fileTypes.length === 1}
             >
                 {this.options(fileType, attachmentSpecList)}
@@ -98,7 +98,7 @@ export default class UploaderForm extends Component {
     readyToSend(fields, title, fileType, fileTypes) {
         const fieldsFilledIn = fields
             ? List(fields)
-                  .filter(e => e && e.mandatory && _.isNil(e.value))
+                  .filter((e) => e && e.mandatory && _.isNil(e.value))
                   .isEmpty()
             : true;
         return this.props.onlyPlaceholder
@@ -121,7 +121,7 @@ export default class UploaderForm extends Component {
 
         let _value = field.data_type.toLowerCase() === 'date' ? value.valueOf() : value;
 
-        let _fields = _attachmentSpec.fields.map(_field =>
+        let _fields = _attachmentSpec.fields.map((_field) =>
             Map(_field).equals(Map(field)) ? { ..._field, value: _value } : _field
         );
 
@@ -134,7 +134,7 @@ export default class UploaderForm extends Component {
     }
 
     setDateField(event, field) {
-        const withLeadingZero = n => (n <= 9 ? '0' + n : n);
+        const withLeadingZero = (n) => (n <= 9 ? '0' + n : n);
 
         let formattedDate =
             event &&
@@ -155,7 +155,7 @@ export default class UploaderForm extends Component {
                 </label>
                 <MrcDatePickerInput
                     className="m-input-element"
-                    onChange={event => this.setDateField(event, field)}
+                    onChange={(event) => this.setDateField(event, field)}
                     selected={selectedDate ? selectedDate : null} //to check this
                     minDate={minDate}
                     maxDate={maxDate}
@@ -194,7 +194,7 @@ export default class UploaderForm extends Component {
                 <NumberInput
                     className="m-input-element"
                     name="attachment-amount"
-                    onBlur={event => {
+                    onBlur={(event) => {
                         const parsed = parseFloat(event.target.value);
                         this.setField(_.isNaN(parsed) ? null : parsed, field);
                     }}
@@ -224,7 +224,7 @@ export default class UploaderForm extends Component {
     }
 
     metadataFields() {
-        const showFields = allFields => {
+        const showFields = (allFields) => {
             if (!allFields) {
                 return;
             }
@@ -247,7 +247,7 @@ export default class UploaderForm extends Component {
                 {this.props.onlyPlaceholder ? null : (
                     <FileUpload
                         labelSelect={lookup('mrc.file.select')}
-                        updateFile={file => this.setState({ ...this.state, title: file.name, file: file })}
+                        updateFile={(file) => this.setState({ ...this.state, title: file.name, file: file })}
                         uploadDisabled={
                             !this.readyToSend(
                                 _.get(this.state, 'attachmentSpec.fields'),
@@ -276,12 +276,12 @@ export default class UploaderForm extends Component {
                                     (ext ? '.' : '') +
                                     (ext ? ext : '')
                                 }
-                                onChange={event => {
+                                onChange={(event) => {
                                     event.preventDefault();
                                     this.setState({ ...this.state, title: event.target.value });
                                 }}
                                 disabled={this.props.readonly}
-                                placeholder="Title"
+                                placeholder={lookup('mrc.reports.title')}
                             />
                         </div>
                     )}
@@ -311,8 +311,8 @@ export default class UploaderForm extends Component {
                             this.state.expiryDate,
                             this.state.amount,
                             List(this.state.attachmentSpec.fields)
-                                .filter(field => !field.field_in_db)
-                                .map(field => {
+                                .filter((field) => !field.field_in_db)
+                                .map((field) => {
                                     return { label: field.field_label, value: field.value };
                                 })
                                 .toArray()

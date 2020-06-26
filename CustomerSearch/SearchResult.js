@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { extract, extractJoinedProps } from '../Util/util.js';
-import { lookup } from '../Util/translations';
+import { lookup, numberDependentLookup } from '../Util/translations';
 import { Link } from 'react-router-dom';
 
 export default class SearchResult extends Component {
@@ -93,10 +93,7 @@ export default class SearchResult extends Component {
                 </li>
             );
         } else if (result.length > 0) {
-            showingText =
-                result.length +
-                ' ' +
-                (result.length < 2 ? lookup('creditlimit.search.result') : lookup('creditlimit.search.results'));
+            showingText = result.length + ' ' + numberDependentLookup(result.length, 'creditlimit.search.result');
             return (
                 <li key="summary" className="result-summary">
                     <span>{showingText}</span>

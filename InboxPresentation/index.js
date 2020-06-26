@@ -6,7 +6,7 @@ import ApprovalInboxItemPresentation from './ApprovalInboxItemPresentation';
 import NotificationInboxItemPresentation from './NotificationInboxItemPresentation';
 import ReviewInboxItemPresentation from './ReviewInboxItemPresentation';
 import QcrInboxItemPresentation from './QcrInboxItemPresentation';
-import { lookup } from '../Util/translations';
+import { lookup, numberDependentLookup } from '../Util/translations';
 
 import InboxFilterPanel from '../InboxFilterPanel';
 
@@ -28,7 +28,7 @@ export default class InboxPresentation extends Component {
             assignedUserNames: data && data.assignedUserNames ? data.assignedUserNames : [],
             positions: data && data.positions ? data.positions : [],
         };
-        const renderInboxItems = inbox => {
+        const renderInboxItems = (inbox) => {
             if (!inbox || !inbox.length) {
                 return null;
             }
@@ -40,7 +40,7 @@ export default class InboxPresentation extends Component {
 
                 <div className="mrc-tab list-header">
                     <h4 className="span-metro-blue uppercase">
-                        {inbox.length} {lookup('inbox.numberOfItems')}
+                        {inbox.length} {numberDependentLookup(inbox.length, 'inbox.numberOfItems')}
                     </h4>
                 </div>
                 {renderInboxItems(inbox)}
@@ -48,18 +48,18 @@ export default class InboxPresentation extends Component {
         );
     }
 
-    onFilterChange = filter => {
+    onFilterChange = (filter) => {
         this.setState({
             filter: filter,
         });
         this.props.fetchInboxItems(filter);
     };
 
-    onConfirmItem = uri => {
+    onConfirmItem = (uri) => {
         this.props.confirmNotification(uri, this.state.filter);
     };
 
-    renderFilter = availableFilterOptions => {
+    renderFilter = (availableFilterOptions) => {
         return (
             <InboxFilterPanel
                 filterAvailable={this.props.filterAvailable}
@@ -71,7 +71,7 @@ export default class InboxPresentation extends Component {
         );
     };
 
-    renderInboxEntry = entry => {
+    renderInboxEntry = (entry) => {
         return (
             <div key={entry.id} id={entry.id} className="mrc-detail clickable">
                 <InboxItemPresentation
@@ -97,7 +97,7 @@ export default class InboxPresentation extends Component {
         );
     };
 
-    titleUpdate = entry => {
+    titleUpdate = (entry) => {
         let title =
             entry.translateKey !== null && entry.translateKey !== '' ? lookup(entry.translateKey) : lookup(entry.title);
         if (entry.position && entry.position !== null && entry.position !== '') {
@@ -106,7 +106,7 @@ export default class InboxPresentation extends Component {
         return title;
     };
 
-    dispatchType = entry => {
+    dispatchType = (entry) => {
         switch (entry.topic) {
             case 'APPROVAL_STEP_READY':
                 return <ApprovalInboxItemPresentation isTablet={this.props.isTablet} entry={entry} />;

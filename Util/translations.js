@@ -49,13 +49,13 @@ let translations = {
     'mrc.customerdetails.fields.branch': 'Branch',
 };
 
-export const addTranslations = update => {
+export const addTranslations = (update) => {
     if (update) {
         translations = Object.assign({}, translations, update);
     }
 };
 
-export const lookup = key => {
+export const lookup = (key) => {
     const translation = translations[key];
     if (translation) {
         return translation;
@@ -66,7 +66,23 @@ export const lookup = key => {
         return key;
     }
 };
-export const reverseLookup = translation => {
+
+// for some languages plural form is a bit tricky e.g. for RU
+export const numberDependentLookup = (numberValue, key) => {
+    if (
+        numberValue % 10 === 0 ||
+        (numberValue % 100 >= 5 && numberValue % 100 <= 20) ||
+        (numberValue % 10 >= 5 && numberValue % 10 <= 9)
+    ) {
+        return lookup(key + 's');
+    } else if (numberValue % 10 >= 2 && numberValue % 10 <= 4) {
+        return lookup(key + 's.2');
+    } else {
+        return lookup(key);
+    }
+};
+
+export const reverseLookup = (translation) => {
     let result = translation;
     const FoundException = {};
     try {
