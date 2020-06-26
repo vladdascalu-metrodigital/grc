@@ -69,7 +69,9 @@ export const lookup = (key) => {
 
 // for some languages plural form is a bit tricky e.g. for RU
 export const numberDependentLookup = (numberValue, key) => {
-    if (
+    if (numberValue === 1) {
+        return lookup(key);
+    } else if (
         numberValue % 10 === 0 ||
         (numberValue % 100 >= 5 && numberValue % 100 <= 20) ||
         (numberValue % 10 >= 5 && numberValue % 10 <= 9)
@@ -78,7 +80,7 @@ export const numberDependentLookup = (numberValue, key) => {
     } else if (numberValue % 10 >= 2 && numberValue % 10 <= 4) {
         return lookup(key + 's.2');
     } else {
-        return lookup(key);
+        return lookup(key + 's.1');
     }
 };
 

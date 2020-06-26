@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { lookup } from '../Util/translations';
+import { lookup, numberDependentLookup } from '../Util/translations';
 import CheckmarkIcon from '../icons/checkmark.svg';
 import ErrorIcon from '../icons/close-dark.svg';
 import './index.scss';
@@ -14,7 +14,7 @@ export default class Precheck extends Component {
     componentDidMount() {
         if (this.props.customers && this.props.customers.data) {
             var qcrNewData = { ...this.props.customers.data };
-            const qcrErrorElements = qcrNewData.precheckErrors.filter(function(element) {
+            const qcrErrorElements = qcrNewData.precheckErrors.filter(function (element) {
                 return element.reason !== 'strategy.init.failed.runningRequest';
             });
             qcrNewData.precheckErrors = qcrErrorElements;
@@ -51,7 +51,12 @@ export default class Precheck extends Component {
                 <div className="mrc-icon error">
                     <img width="24" height="24" src={ErrorIcon} />
                 </div>
-                <p>{lookup('strategy.init.checks.errorChecks').replace('%s', data.precheckErrors.length)}</p>
+                <p>
+                    {numberDependentLookup(data.precheckErrors.length, 'strategy.init.checks.errorChecks').replace(
+                        '%s',
+                        data.precheckErrors.length
+                    )}
+                </p>
             </div>
         );
     }
@@ -62,7 +67,7 @@ export default class Precheck extends Component {
             let fieldTranslation = error.field ? lookup(error.field) : '';
             let customers = [];
             if (error.reason !== undefined && error.reason === 'strategy.init.failed.uniformtype') {
-                error.customers.forEach(customer => {
+                error.customers.forEach((customer) => {
                     if (customer.split(':').length > 1) {
                         const errorKey = customer.split(':')[1].trim();
                         const message = lookup(errorKey);

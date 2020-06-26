@@ -40,7 +40,7 @@ export default class InboxPresentation extends Component {
 
                 <div className="mrc-tab list-header">
                     <h4 className="span-metro-blue uppercase">
-                        {inbox.length} {numberDependentLookup(inbox.length, 'inbox.numberOfItems')}
+                        {inbox.length} {numberDependentLookup(inbox.length, 'inbox.numberOfItem')}
                     </h4>
                 </div>
                 {renderInboxItems(inbox)}
