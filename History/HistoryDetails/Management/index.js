@@ -18,16 +18,16 @@ import './index.scss';
 
 const joinOrNull = (x, y, z) => (!_.isNil(x) && !_.isNil(z) && !_.isNil(y) ? x + y + z : null);
 
-const yearDiffFromNow = d => {
+const yearDiffFromNow = (d) => {
     var diff = moment(Date.now()).diff(new Date(d), 'years');
     return diff === 0 ? '<1' : diff.toString();
 };
 
 const groupLimit = (items, accessor) => {
-    return _.sum(_.map(items, item => _.get(item, accessor + '.creditLimit')));
+    return _.sum(_.map(items, (item) => _.get(item, accessor + '.creditLimit')));
 };
 
-const emailAndPosition = x => {
+const emailAndPosition = (x) => {
     if (!x) {
         return null;
     }
@@ -55,18 +55,18 @@ export default class Management extends Component {
                 },
             },
         ]);
-        const fmtCreditLimit = x => {
+        const fmtCreditLimit = (x) => {
             const creditLimit = _.get(x, 'creditLimit');
             return creditLimit ? <mrc-number show-currency-for-country={country}>{creditLimit}</mrc-number> : '-';
         };
-        const fmtLimitExpiry = x => {
+        const fmtLimitExpiry = (x) => {
             return x ? <mrc-date>{x}</mrc-date> : '-';
         };
         const columns = [
             {
                 Header: 'customerData',
                 accessor: 'customerData',
-                renderFn: x => x.customerFirstName + ' ' + x.customerLastName,
+                renderFn: (x) => x.customerFirstName + ' ' + x.customerLastName,
             },
             {
                 Header: 'applied',
@@ -127,7 +127,7 @@ export default class Management extends Component {
         const max = _.max(groupLimits);
 
         const xs = groupLimits
-            .map(x => Math.round((x / max) * 10))
+            .map((x) => Math.round((x / max) * 10))
             .map((size, i) => {
                 return {
                     limit: groupLimits[i],
@@ -158,7 +158,7 @@ export default class Management extends Component {
         } else {
             return (
                 <Recommendations
-                    recommendations={data.map(x => {
+                    recommendations={data.map((x) => {
                         const [email, position] = emailAndPosition(x.user);
                         return {
                             content: x.content,
@@ -178,7 +178,7 @@ export default class Management extends Component {
 
         let requestedCustomer;
         if (!_.isNil(requestedCustomerId)) {
-            const isRequestedCustomer = item =>
+            const isRequestedCustomer = (item) =>
                 !_.isNil(requestedCustomerId) &&
                 _.get(item, 'customerData.customerNumber') === requestedCustomerId.customerNumber &&
                 _.get(item, 'customerData.storeNumber') === requestedCustomerId.storeNumber;
@@ -277,7 +277,7 @@ export default class Management extends Component {
                     </section>
                 </Layout>
                 <Accordion>
-                    <Collapsible trigger={'show details'}>
+                    <Collapsible trigger={lookup('mrc.topmanagement.showdetails')}>
                         {this.customerLimits(requestData, this.props.country)}
                     </Collapsible>
                 </Accordion>

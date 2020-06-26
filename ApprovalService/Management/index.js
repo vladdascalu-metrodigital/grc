@@ -19,13 +19,13 @@ const selectOrEmpty = (obj, field) => (_.get(obj, field) ? _.get(obj, field) : '
 
 const joinOrNull = (x, y, z) => (!_.isNil(x) && !_.isNil(z) && !_.isNil(y) ? x + y + z : null);
 
-const yearDiffFromNow = d => {
+const yearDiffFromNow = (d) => {
     var diff = moment(Date.now()).diff(new Date(d), 'years');
     return diff === 0 ? '<1' : diff.toString();
 };
 
 const groupLimit = (items, accessor) => {
-    return _.sum(_.map(items, item => _.get(item, accessor + '.amount')));
+    return _.sum(_.map(items, (item) => _.get(item, accessor + '.amount')));
 };
 
 export default class Management extends Component {
@@ -47,7 +47,7 @@ export default class Management extends Component {
                 },
             },
         ]);
-        const fmtCreditLimit = x => {
+        const fmtCreditLimit = (x) => {
             const amount = _.get(x, 'amount');
             return amount ? <mrc-number show-currency-for-country={country}>{amount}</mrc-number> : '-';
         };
@@ -55,7 +55,7 @@ export default class Management extends Component {
             {
                 Header: 'customer',
                 accessor: 'customer',
-                renderFn: x => x.firstName + ' ' + x.lastName,
+                renderFn: (x) => x.firstName + ' ' + x.lastName,
             },
             {
                 Header: 'applied',
@@ -75,7 +75,7 @@ export default class Management extends Component {
             {
                 Header: 'expiry',
                 accessor: 'requestedLimitExpiry',
-                renderFn: x => selectOrEmpty(x, 'limitExpiryDate'),
+                renderFn: (x) => selectOrEmpty(x, 'limitExpiryDate'),
             },
         ];
         return <Table className="mrc-data-table" title={'Customer Limits'} columns={columns} data={withGroupLimit} />;
@@ -115,7 +115,7 @@ export default class Management extends Component {
         const max = _.max(groupLimits);
 
         const xs = groupLimits
-            .map(x => Math.round((x / max) * 10))
+            .map((x) => Math.round((x / max) * 10))
             .map((size, i) => {
                 return {
                     limit: groupLimits[i],
@@ -138,7 +138,7 @@ export default class Management extends Component {
     recommendations(data) {
         return (
             <Recommendations
-                recommendations={data.map(x => {
+                recommendations={data.map((x) => {
                     return {
                         id: x.id,
                         content: x.content,
@@ -159,7 +159,7 @@ export default class Management extends Component {
 
     render() {
         const { approvalItems, totalTurnover, currency, profitability } = this.props;
-        const requestedCustomer = _.find(approvalItems, item => _.get(item, 'customer.requestedCustomer'));
+        const requestedCustomer = _.find(approvalItems, (item) => _.get(item, 'customer.requestedCustomer'));
         const customerData = requestedCustomer && requestedCustomer.customer;
         if (!customerData) {
             return (
@@ -234,7 +234,7 @@ export default class Management extends Component {
                     </section>
                 </Layout>
                 <Accordion>
-                    <Collapsible trigger={'show details'}>
+                    <Collapsible trigger={lookup('mrc.topmanagement.showdetails')}>
                         {this.customerLimits(approvalItems, customerData.country)}
                     </Collapsible>
                 </Accordion>

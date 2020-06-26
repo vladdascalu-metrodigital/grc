@@ -81,18 +81,19 @@ export default class SearchResult extends Component {
     }
 
     buildSummary(result) {
+        let showingText;
         if (!result) {
             return;
         }
         if (result.length === 0) {
+            showingText = lookup('search.result.notfound');
             return (
                 <li key="summary" className="result-summary">
-                    <span>No results found</span>
+                    <span>{showingText}</span>
                 </li>
             );
-        }
-        if (result.length > 0) {
-            var showingText =
+        } else if (result.length > 0) {
+            showingText =
                 result.length +
                 ' ' +
                 (result.length < 2 ? lookup('creditlimit.search.result') : lookup('creditlimit.search.results'));
@@ -105,7 +106,7 @@ export default class SearchResult extends Component {
         return null;
     }
 
-    createResultItem = result => {
+    createResultItem = (result) => {
         const name = this.buildDisplayName(result);
         const country = this.buildDisplayCountry(result);
         const customerNumber = this.buildDisplayCustomerNr(result);
