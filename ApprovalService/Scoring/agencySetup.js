@@ -52,6 +52,14 @@ const AGENCY_LIST_HR = [
     },
 ];
 
+const AGENCY_LIST_RS = [
+    {
+        key: 'POSLOVNI_PLAN',
+        value: 'POSLOVNI_PLAN',
+        label: 'POSLOVNI_PLAN',
+    },
+];
+
 export function getAgencyList(country) {
     switch (country.toLowerCase()) {
         case 'de':
@@ -60,6 +68,8 @@ export function getAgencyList(country) {
             return AGENCY_LIST_PL;
         case 'hr':
             return AGENCY_LIST_HR;
+        case 'rs':
+            return AGENCY_LIST_RS;
         default:
             return [];
     }

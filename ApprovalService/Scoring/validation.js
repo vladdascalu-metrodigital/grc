@@ -13,6 +13,9 @@ import { validateReportFile as validateReportFilePL } from './validationPL';
 import { validateCofaceScore as validateCofaceScoreHR } from './validationHR';
 import { validateLimit as validateLimitHR } from './validationHR';
 import { validateReportFile as validateReportFileHR } from './validationHR';
+import { validatePoslovniPlanScore as validatePoslovniPlanScore } from './validationRS';
+import { validateLimit as validateLimitRS } from './validationRS';
+import { validateReportFile as validateReportFileRS } from './validationRS';
 
 export function validateScore(agency, score, country) {
     switch (country.toLowerCase()) {
@@ -52,6 +55,13 @@ export function validateScore(agency, score, country) {
             }
             return false;
 
+        //Validations for RS
+        case 'rs':
+            if (agency === 'POSLOVNI_PLAN') {
+                return validatePoslovniPlanScore(score);
+            }
+            return false;
+
         // default validations
         default:
             return true;
@@ -66,6 +76,8 @@ export function validateLimit(limit, country) {
             return validateLimitPL(limit);
         case 'hr':
             return validateLimitHR(limit);
+        case 'rs':
+            return validateLimitRS(limit);
         default:
             return true;
     }
@@ -79,6 +91,9 @@ export function validateReportFile(fileContent, country) {
             return validateReportFilePL(fileContent);
         case 'hr':
             return validateReportFileHR(fileContent);
+        case 'rs':
+            return validateReportFileRS(fileContent);
+
         default:
             return true;
     }
