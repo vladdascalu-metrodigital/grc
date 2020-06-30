@@ -56,7 +56,7 @@ const AGENCY_LIST_RS = [
     {
         key: 'POSLOVNI_PLAN',
         value: 'POSLOVNI_PLAN',
-        label: 'POSLOVNI_PLAN',
+        label: 'Poslovni Plan',
     },
 ];
 
