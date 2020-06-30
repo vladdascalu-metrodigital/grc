@@ -11,7 +11,5 @@ export function validateReportFile(fileContent) {
 }
 
 export function validatePoslovniPlanScore(sc) {
-    return sc === undefined || isBlank(sc) || sc === 'A' || sc === 'B' || sc === 'C' || sc === 'D' || sc === 'E' || sc === 'F' || sc === 'G'|| sc === 'N';
+    return sc === 'A' || sc === 'B' || sc === 'C' || sc === 'D' || sc === 'E' || sc === 'F' || sc === 'G' || sc === 'N';
 }
-
-
