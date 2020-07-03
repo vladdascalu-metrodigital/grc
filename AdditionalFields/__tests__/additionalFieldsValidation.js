@@ -166,21 +166,21 @@ describe('is not null', () => {
 });
 
 describe('is number', () => {
-    test.each([[-1], [101], [4.2], ['1'], ['2.3']])('%s is number', (a) => {
+    test.each([[-1], [101], [4.2], ['1'], ['2.3'], [undefined], [null]])('%s is number', (a) => {
         expect(validations.isNumber(a)).toBeTruthy();
     });
 
-    test.each([[undefined], [null], ['qwe']])('%s NOT number', (a) => {
+    test.each([['qwe']])('%s NOT number', (a) => {
         expect(validations.isNumber(a)).toBeFalsy();
     });
 });
 
 describe('is int number', () => {
-    test.each([[-1], [101], ['1'], ['2'], [32]])('%s is int number', (a) => {
+    test.each([[-1], [101], ['1'], ['2'], [32], [null], [undefined]])('%s is int number', (a) => {
         expect(validations.isNumberInteger(a)).toBeTruthy();
     });
 
-    test.each([[undefined], [null], ['qwe'], [2.3]])('%s NOT int number', (a) => {
+    test.each([['qwe'], [2.3]])('%s NOT int number', (a) => {
         expect(validations.isNumberInteger(a)).toBeFalsy();
     });
 });

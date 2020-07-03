@@ -12,8 +12,10 @@ export const validations = {
         validations.greaterThanEq(value, limitInf) && validations.lessThanEq(value, limitSup),
     notNull: (value) => !validations.isNull(value),
     isNull: (value) => value === undefined || value === null,
-    isNumber: (value) => value !== undefined && value !== null && !isNaN(value),
-    isNumberInteger: (value) => validations.isNumber(value) && value != null && value.toString().split('.').length < 2,
+    isNumber: (value) => validations.isNull(value) || !isNaN(value),
+    isNumberInteger: (value) =>
+        validations.isNull(value) ||
+        (validations.isNumber(value) && value != null && value.toString().split('.').length < 2),
     isPercentage: (value) =>
         validations.isNumber(value) && validations.greaterThanEq(value, 0) && validations.lessThanEq(value, 100),
     isPercentage2: (value) =>
