@@ -21,6 +21,7 @@ export default function AdditionalField(props) {
     const mandatory = elem.countryField.mandatory;
     const validation = elem.countryField.validation;
     const type = elem.countryField.field.type;
+    const label = elem.countryField.field.label;
     let oldValue = elem.countryField.field.type === 'TEXTAREA' ? elem.textValue : elem.value;
     const isValidNow =
         props.disabled ||
@@ -54,24 +55,52 @@ export default function AdditionalField(props) {
         switch (type) {
             //NUMBER, TEXT, TEXTAREA, DATE, CHECKBOX, DROPDOWN, DROPDOWN_MULTIPLE, RADIOBUTTON, ATTACHMENT_REF
             case 'NUMBER':
-                return <NumberInput value={oldValue} onChange={onChange} disabled={props.disabled} />;
+                return (
+                    <NumberInput
+                        label={label}
+                        required={mandatory}
+                        value={oldValue}
+                        onChange={onChange}
+                        disabled={props.disabled}
+                    />
+                );
             case 'TEXT':
-                return <TextInput value={oldValue} onChange={onChange} disabled={props.disabled} />;
+                return (
+                    <TextInput
+                        label={label}
+                        required={mandatory}
+                        value={oldValue}
+                        onChange={onChange}
+                        disabled={props.disabled}
+                    />
+                );
             case 'TEXTAREA':
-                return <TextArea value={oldValue} onChange={onChange} disabled={props.disabled} />;
+                return (
+                    <TextArea
+                        label={label}
+                        required={mandatory}
+                        value={oldValue}
+                        onChange={onChange}
+                        disabled={props.disabled}
+                    />
+                );
             case 'DATE':
                 return (
                     <DatePicker
+                        label={label}
+                        required={mandatory}
                         selected={parseDateForAdditionalField(oldValue)}
                         onChange={onChange}
                         disabled={props.disabled}
                     />
                 );
             case 'CHECKBOX':
-                return <CheckBox checked={oldValue} onChange={onChange} disabled={props.disabled} />;
+                return <CheckBox label={label} checked={oldValue} onChange={onChange} disabled={props.disabled} />;
             case 'DROPDOWN':
                 return (
                     <Select
+                        label={label}
+                        required={mandatory}
                         options={getOptionValues(props.elem.countryField.options)}
                         value={oldValue}
                         onChange={onChange}
@@ -81,6 +110,8 @@ export default function AdditionalField(props) {
             case 'DROPDOWN_MULTIPLE':
                 return (
                     <MultipleSelect
+                        label={label}
+                        required={mandatory}
                         options={getOptionValues(props.elem.countryField.options)}
                         value={getOptionValues(oldValue)}
                         onChange={onChange}
@@ -90,6 +121,8 @@ export default function AdditionalField(props) {
             case 'RADIOBUTTON':
                 return (
                     <RadioButtons
+                        label={label}
+                        required={mandatory}
                         options={getOptionValues(props.elem.countryField.options)}
                         value={oldValue}
                         onChange={onChange}
@@ -102,15 +135,8 @@ export default function AdditionalField(props) {
         }
     };
 
-    const classForLabel = type === 'CHECKBOX' ? 'checkbox-label' : type === 'RADIOBUTTON' ? 'm-radioButton' : '';
-
     return props.editable ? (
-        <div className={valid ? 'mrc-input' : 'mrc-input not-valid'}>
-            <label className={classForLabel} htmlFor={props.elem.id}>
-                {lookup(props.elem.countryField.field.label)} {mandatory ? '*' : ''}
-            </label>
-            {generateField()}
-        </div>
+        <div className={valid ? 'mrc-input' : 'mrc-input not-valid'}>{generateField()}</div>
     ) : (
         <KeyValueRow>
             <Key>

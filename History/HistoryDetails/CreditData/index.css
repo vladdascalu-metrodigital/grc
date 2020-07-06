@@ -38,7 +38,7 @@
     margin-bottom: 15px;
 }
 
-.additional-fields-section select {
+.additional-fields-section select:not([class*='mrc-ui-']) {
     width: 100%;
     margin-bottom: 15px;
     margin-top: 0px;
@@ -48,12 +48,12 @@
     z-index: 10;
     position: relative;
 }
-.additional-fields-section select option {
+.additional-fields-section select option:not([class*='mrc-ui-']) {
     font-size: 16px;
     font-weight: 300;
 }
 
-.additional-fields-section select:disabled {
+.additional-fields-section select:disabled:not([class*='mrc-ui-']) {
     color: #99a1ad !important;
     background-color: #f2f3f5 !important;
 }

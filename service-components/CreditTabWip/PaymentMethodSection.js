@@ -5,7 +5,7 @@ import CreditTableFormSection from './CreditTableFormSection';
 import { translations as ts } from './index';
 
 import * as _ from 'lodash';
-import { getDefaultPayment } from 'global-react-components/Util/creditDataUtils';
+import { getDefaultPayment } from '../../Util/creditDataUtils';
 
 export default class PaymentSection extends Component {
     constructor(props) {

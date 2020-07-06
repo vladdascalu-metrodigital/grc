@@ -104,7 +104,7 @@
 }
 
 @mixin input-label() {
-  color: $color-brand-primary-default;
+  @include typo-header-small();
   font-weight: normal;
 }
 
