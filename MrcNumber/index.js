@@ -45,7 +45,7 @@ export const TYPE = {
 export default class MrcNumber extends PureComponent {
     render() {
         let { isCurrency, country, locale, children: number, type } = this.props;
-        number = number.toString().trim();
+        number = typeof number === 'string' || typeof number === 'number' ? number.toString().trim() : '';
         if (isCurrency) {
             let options = {
                 style: 'currency',

@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import InfoRow from '../../InfoRow';
 import PropTypes from 'prop-types';
+
 import ProgressBar from '../../ProgressBar/index';
+import MrcNumber from '../../MrcNumber';
+import MrcDate from '../../MrcDate';
 import { lookup } from '../../Util/translations';
 import './index.scss';
 
@@ -46,10 +49,10 @@ export default class PendingRequestInfo extends Component {
             creditProduct !== undefined && creditProduct !== null ? ' / ' + lookup(creditProduct) : creditProduct;
         return (
             <div>
-                <mrc-date>{request.creationTimestamp}</mrc-date> {' / '}
-                <mrc-number show-currency-for-country={requestedItemForRequester.customer.country}>
+                <MrcDate>{request.creationTimestamp}</MrcDate> {' / '}
+                <MrcNumber isCurrency country={requestedItemForRequester.customer.country}>
                     {requestedItemForRequester.creditData.amount}
-                </mrc-number>
+                </MrcNumber>
                 {translatedCreditProduct}
             </div>
         );
@@ -58,7 +61,7 @@ export default class PendingRequestInfo extends Component {
     findRequestedItemForRequester(request) {
         const requestedCustomer = request.requestedCustomerId;
         return request.requestedItems.find(
-            ri =>
+            (ri) =>
                 ri.customerId.country === requestedCustomer.country &&
                 ri.customerId.storeNumber === requestedCustomer.storeNumber &&
                 ri.customerId.customerNumber === requestedCustomer.customerNumber

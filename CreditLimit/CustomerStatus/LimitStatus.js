@@ -4,6 +4,9 @@ import ReportProblemTriangle from '../../icons/report-problem-triangle.svg';
 import PropTypes from 'prop-types';
 import CoinReceive from '../../icons/coin-receive.svg';
 import { lookup } from '../../Util/translations';
+
+import MrcNumber from '../../MrcNumber';
+
 import './index.scss';
 
 import * as _ from 'lodash';
@@ -14,7 +17,7 @@ export default class LimitStatus extends Component {
         if (customer.creditLimitStatus === 'valid') {
             const requestedCustomerAmount = customer.creditLimit;
             let groupAmount = 0;
-            this.props.customers.data.customers.forEach(groupCustomer => {
+            this.props.customers.data.customers.forEach((groupCustomer) => {
                 if (!_.isNil(groupCustomer) && groupCustomer.creditLimitStatus === 'valid') {
                     groupAmount = groupAmount + groupCustomer.creditLimit;
                 }
@@ -26,9 +29,9 @@ export default class LimitStatus extends Component {
                         message={
                             <span>
                                 {lookup('creditlimit.status.valid')}{' '}
-                                <mrc-number show-currency-for-country={customer.country}>
+                                <MrcNumber isCurrency country={customer.country}>
                                     {requestedCustomerAmount}
-                                </mrc-number>
+                                </MrcNumber>
                             </span>
                         }
                         icon={CoinReceive}
@@ -40,11 +43,14 @@ export default class LimitStatus extends Component {
                         message={
                             <span>
                                 {lookup('creditlimit.status.valid')}{' '}
-                                <mrc-number show-currency-for-country={customer.country}>
+                                <MrcNumber isCurrency country={customer.country}>
                                     {requestedCustomerAmount}
-                                </mrc-number>{' '}
+                                </MrcNumber>{' '}
                                 ({lookup('mrc.groupLimit')}{' '}
-                                <mrc-number show-currency-for-country={customer.country}>{groupAmount}</mrc-number>)
+                                <MrcNumber isCurrency country={customer.country}>
+                                    {groupAmount}
+                                </MrcNumber>
+                                )
                             </span>
                         }
                         icon={CoinReceive}

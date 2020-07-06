@@ -3,6 +3,9 @@ import './index.scss';
 import { lookup } from '../../Util/translations';
 import PropTypes from 'prop-types';
 
+import MrcNumber from '../../MrcNumber';
+import MrcDate from '../../MrcDate';
+
 export default class CurrentValue extends Component {
     constructor(props) {
         super(props);
@@ -22,17 +25,20 @@ export default class CurrentValue extends Component {
         switch (this.props.type) {
             case 'limit':
                 if (this.isValidNumber())
-                    return <mrc-number show-currency-for-country={this.props.country}>{this.props.value}</mrc-number>;
+                    return (
+                        <MrcNumber isCurrency country={this.props.country}>
+                            {this.props.value}
+                        </MrcNumber>
+                    );
                 else return '-';
             case 'expiry':
                 if (this.props.value !== undefined && this.props.value !== null && this.props.value.limitExpiryDate)
                     return (
                         <span>
-                            <mrc-number show-currency-for-country={this.props.country}>
-                                {' '}
+                            <MrcNumber isCurrency country={this.props.country}>
                                 {this.props.value.resetToLimitAmount}
-                            </mrc-number>
-                            , <mrc-date>{this.props.value.limitExpiryDate}</mrc-date>
+                            </MrcNumber>
+                            , <MrcDate>{this.props.value.limitExpiryDate}</MrcDate>
                         </span>
                     );
                 else return <span>-</span>;

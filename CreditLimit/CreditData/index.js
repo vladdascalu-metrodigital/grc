@@ -9,6 +9,7 @@ import { lookup } from '../../Util/translations';
 import CalendarIcon from '../../icons/calendar.svg';
 import EditIcon from '../../icons/edit.svg';
 import ChevronDownIcon from '../../icons/chevron-down.svg';
+import MrcNumber from '../../MrcNumber';
 
 export default class CreditData extends Component {
     NULL_OPTION = [<option key="null" />];
@@ -171,7 +172,7 @@ export default class CreditData extends Component {
             return null;
         }
         const matchingAvailablePayments = this.props.requestedItem.customer.availablePayments.filter(
-            ap =>
+            (ap) =>
                 (ap.creditProduct === creditData.creditProduct ||
                     'mrc.payment.' + ap.creditProduct.split(' ').join('_') === creditData.creditProduct) &&
                 (ap.creditPeriod === creditData.creditPeriod ||
@@ -291,13 +292,12 @@ export default class CreditData extends Component {
                                         <span className="m-radioButton-label">
                                             <p>
                                                 {lookup('mrc.creditdetails.limitExpiryResetToCurrent')} (
-                                                <mrc-number
-                                                    show-currency-for-country={
-                                                        this.props.requestedItem.customer.country
-                                                    }
+                                                <MrcNumber
+                                                    isCurrency
+                                                    country={this.props.requestedItem.customer.country}
                                                 >
                                                     {resetToLimitAmount}
-                                                </mrc-number>
+                                                </MrcNumber>
                                                 ).
                                             </p>
                                         </span>
@@ -488,22 +488,22 @@ export default class CreditData extends Component {
         );
     }
 
-    handleCreditProductChange = event => {
+    handleCreditProductChange = (event) => {
         let selected = event.target.value;
         this.handleAutoFillCombos({ creditProduct: selected });
     };
 
-    handleCreditPeriodChange = event => {
+    handleCreditPeriodChange = (event) => {
         let selected = event.target.value;
         this.handleAutoFillCombos({ creditPeriod: selected });
     };
 
-    handleDebitTypeChange = event => {
+    handleDebitTypeChange = (event) => {
         let selected = event.target.value;
         this.handleAutoFillCombos({ debitType: selected });
     };
 
-    handleAmountChange = amount => {
+    handleAmountChange = (amount) => {
         this.setState({ amount: parseFloat(amount) });
         if (amount == null || Number.isNaN(amount)) {
             this.setState({
@@ -514,7 +514,7 @@ export default class CreditData extends Component {
         }
     };
 
-    handleLimitExpiryReminderDaysClick = event => {
+    handleLimitExpiryReminderDaysClick = (event) => {
         let days = event.target.checked ? event.target.value : 1;
         this.setState({ limitExpiryReminderDays: days });
     };
@@ -540,17 +540,17 @@ export default class CreditData extends Component {
         }
     }
 
-    handleResetToZeroChange = event => {
+    handleResetToZeroChange = (event) => {
         let limit = event.target.value;
         this.setState({ resetToLimitAmount: limit });
     };
 
-    handleResetToCurrentChange = event => {
+    handleResetToCurrentChange = (event) => {
         let limit = event.target.value;
         this.setState({ resetToLimitAmount: limit });
     };
 
-    handleAutoFillCombos = changed_state => {
+    handleAutoFillCombos = (changed_state) => {
         if (changed_state.creditProduct !== undefined && changed_state.creditProduct !== '') {
             changed_state.debitType = '';
             changed_state.creditPeriod = '';
@@ -602,7 +602,7 @@ export default class CreditData extends Component {
         this.setState(changed_state);
     };
 
-    lookupPayment = payment => {
+    lookupPayment = (payment) => {
         if (!payment || payment.length <= 0) return '';
         let lookupValue = payment;
         if (!payment.includes('mrc.payment.')) lookupValue = 'mrc.payment.' + payment.split(' ').join('_');
