@@ -8,6 +8,7 @@ import PdfIcon from '../../icons/pdf.svg';
 import ExcelIcon from '../../icons/xls.svg';
 import AddExtScore from './addExtScore';
 import Bullet, { MODE as BM } from '../../Bullet/index.js';
+import MrcNumber from '../../MrcNumber';
 
 export default class Scoring extends Component {
     constructor(props) {
@@ -18,12 +19,12 @@ export default class Scoring extends Component {
             showAddExtScorePanel: null,
         };
 
-        props.getScoringData().then(result => {
+        props.getScoringData().then((result) => {
             this.setState({ data: result });
         });
 
         if (!this.props.historicExternalScoreFailed) {
-            props.getHistoricScoringData(this.props.requestId).then(result => {
+            props.getHistoricScoringData(this.props.requestId).then((result) => {
                 this.setState({ historicScores: result });
             });
         }
@@ -91,16 +92,16 @@ export default class Scoring extends Component {
     }
 
     historicExternalScoreRetry = () => {
-        this.props.historicExternalScoreRetry(this.props.approvalId).then(result => {
+        this.props.historicExternalScoreRetry(this.props.approvalId).then((result) => {
             if (result !== undefined && result !== null && !result.historicExternalScoreFailed) {
-                this.props.getHistoricScoringData(this.props.requestId).then(scores => {
+                this.props.getHistoricScoringData(this.props.requestId).then((scores) => {
                     this.setState({ historicScores: scores });
                 });
             }
         });
     };
 
-    addExtScore = newExtScore => {
+    addExtScore = (newExtScore) => {
         const scoreData = {
             country: this.props.country,
             storeNumber: this.props.storeNumber,
@@ -115,7 +116,7 @@ export default class Scoring extends Component {
             },
         };
 
-        return this.props.addExtScore(scoreData, newExtScore.report).then(result => {
+        return this.props.addExtScore(scoreData, newExtScore.report).then((result) => {
             if (result !== undefined) {
                 this.setState({
                     data: result,
@@ -146,7 +147,7 @@ export default class Scoring extends Component {
         }
     }
 
-    downloadReport = scoring => {
+    downloadReport = (scoring) => {
         const url = this.props.host + scoring.reportPath;
         window.open(url, '_blank');
     };
@@ -160,11 +161,11 @@ export default class Scoring extends Component {
         window.open(url, '_blank');
     };
 
-    showRequestedAtInLocaleTime = requestedAt => {
+    showRequestedAtInLocaleTime = (requestedAt) => {
         return new Date(requestedAt.toString()).toLocaleString();
     };
 
-    getScoreType = agency => {
+    getScoreType = (agency) => {
         if (agency === 'MRC') {
             return 'internal';
         }
@@ -254,9 +255,9 @@ export default class Scoring extends Component {
                             {limitUnavailable ? (
                                 limitString
                             ) : (
-                                <mrc-number dynamic={true} show-currency-for-country={this.props.country}>
+                                <MrcNumber isCurrency country={this.props.country}>
                                     {limitString}
-                                </mrc-number>
+                                </MrcNumber>
                             )}
                         </td>
                         <td data-label="Requested at">{this.showRequestedAtInLocaleTime(requestedAt)}</td>

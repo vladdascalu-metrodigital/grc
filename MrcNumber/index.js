@@ -44,8 +44,8 @@ export const TYPE = {
 
 export default class MrcNumber extends PureComponent {
     render() {
-        let { isCurrency, country, children: number, type } = this.props;
-
+        let { isCurrency, country, locale, children: number, type } = this.props;
+        number = number.toString().trim();
         if (isCurrency) {
             let options = {
                 style: 'currency',
@@ -53,7 +53,9 @@ export default class MrcNumber extends PureComponent {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 2,
             };
-            number = new Intl.NumberFormat(undefined, options).format(number);
+            number = new Intl.NumberFormat(locale, options).format(number);
+        } else {
+            number = new Intl.NumberFormat(locale, {}).format(number);
         }
         let className = classnames('mrc-ui-number', type && 'mrc-ui-number-' + type);
 
@@ -68,6 +70,7 @@ MrcNumber.defaultProps = {
 MrcNumber.propTypes = {
     children: PropTypes.string,
     country: PropTypes.string,
+    locale: PropTypes.string,
     isCurrency: PropTypes.bool,
     type: PropTypes.oneOf(['small', 'smaller']),
 };

@@ -4,6 +4,8 @@ import { lookup } from '../../Util/translations';
 import DefinitionList from '../../DefinitionList';
 import { Table } from '../../Table';
 import Bullet, { MODE as BM } from '../../Bullet/index.js';
+import MrcNumber from '../../MrcNumber';
+import MrcDateTime from '../../MrcDateTime';
 import * as _ from 'lodash';
 
 export default class Strategy extends Component {
@@ -11,7 +13,7 @@ export default class Strategy extends Component {
         super(props);
         this.state = { data: [] };
 
-        props.getStrategyData().then(result => {
+        props.getStrategyData().then((result) => {
             this.setState({ data: result });
         });
     }
@@ -77,7 +79,7 @@ export default class Strategy extends Component {
                 ? json.selectedCreditProgram
                 : 'strategy.programs.general-customer';
 
-        const renderIndicatorName = indicatorName => {
+        const renderIndicatorName = (indicatorName) => {
             const prefix =
                 !_.isNil(this.state.data.decisiveIndicators) &&
                 this.state.data.decisiveIndicators.includes(indicatorName)
@@ -106,9 +108,13 @@ export default class Strategy extends Component {
             if (isNaN(value)) {
                 return lookup(value);
             } else if (limitDescriptors.includes(indicator.original.indicatorName)) {
-                return <mrc-number show-currency-for-country={country}>{value}</mrc-number>;
+                return (
+                    <MrcNumber isCurrency country={country}>
+                        {value}
+                    </MrcNumber>
+                );
             } else {
-                return <mrc-number>{value}</mrc-number>;
+                return <MrcNumber>{value}</MrcNumber>;
             }
         };
         const columns = [
@@ -121,7 +127,7 @@ export default class Strategy extends Component {
             {
                 Header: lookup('strategy.data.rating'),
                 accessor: 'status',
-                renderFn: status => {
+                renderFn: (status) => {
                     return (
                         <span className="cell-score">
                             <Bullet mode={this.statusToIcon(status)} />
@@ -146,7 +152,7 @@ export default class Strategy extends Component {
                 list={[
                     {
                         term: lookup('strategy.data.decision.reviewAt'),
-                        description: <mrc-datetime>{this.state.data.automaticDecisionAt}</mrc-datetime>,
+                        description: <MrcDateTime>{this.state.data.automaticDecisionAt}</MrcDateTime>,
                     },
                 ]}
             />

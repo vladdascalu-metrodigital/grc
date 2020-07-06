@@ -7,6 +7,7 @@ import { lookup } from '../../Util/translations';
 import MrcDatePickerInput from '../../DatePicker/index';
 import CalendarIcon from '../../icons/calendar.svg';
 import EditIcon from '../../icons/edit.svg';
+import MrcNumber from '../../MrcNumber';
 
 import * as util from '../ApprovalProcess/util';
 
@@ -81,36 +82,26 @@ export default class CreditData extends Component {
             if (Number.isNaN(creditData.amount) || creditData.amount == null || creditData.amount === '') {
                 return false;
             }
-            const matchingAvailablePayments = this.props.availablePayments.map(this.toInternalRepresentation).filter(
-                ap =>
-                    (ap.creditProduct === creditData.creditProduct ||
-                        'mrc.payment.' +
-                            ap.creditProduct
-                                .split(' ')
-                                .join('_')
-                                .toLowerCase() ===
-                            (creditData.creditProduct && creditData.creditProduct !== null
-                                ? creditData.creditProduct.toLowerCase()
-                                : '')) &&
-                    (ap.creditPeriod === creditData.creditPeriod ||
-                        'mrc.payment.' +
-                            ap.creditPeriod
-                                .split(' ')
-                                .join('_')
-                                .toLowerCase() ===
-                            (creditData.creditPeriod && creditData.creditPeriod !== null
-                                ? creditData.creditPeriod.toLowerCase()
-                                : '')) &&
-                    (ap.debitType === creditData.debitType ||
-                        'mrc.payment.' +
-                            ap.debitType
-                                .split(' ')
-                                .join('_')
-                                .toLowerCase() ===
-                            (creditData.debitType && creditData.debitType !== null
-                                ? creditData.debitType.toLowerCase()
-                                : ''))
-            );
+            const matchingAvailablePayments = this.props.availablePayments
+                .map(this.toInternalRepresentation)
+                .filter(
+                    (ap) =>
+                        (ap.creditProduct === creditData.creditProduct ||
+                            'mrc.payment.' + ap.creditProduct.split(' ').join('_').toLowerCase() ===
+                                (creditData.creditProduct && creditData.creditProduct !== null
+                                    ? creditData.creditProduct.toLowerCase()
+                                    : '')) &&
+                        (ap.creditPeriod === creditData.creditPeriod ||
+                            'mrc.payment.' + ap.creditPeriod.split(' ').join('_').toLowerCase() ===
+                                (creditData.creditPeriod && creditData.creditPeriod !== null
+                                    ? creditData.creditPeriod.toLowerCase()
+                                    : '')) &&
+                        (ap.debitType === creditData.debitType ||
+                            'mrc.payment.' + ap.debitType.split(' ').join('_').toLowerCase() ===
+                                (creditData.debitType && creditData.debitType !== null
+                                    ? creditData.debitType.toLowerCase()
+                                    : ''))
+                );
             return matchingAvailablePayments.length === 1;
         }
 
@@ -122,36 +113,26 @@ export default class CreditData extends Component {
         ) {
             return true;
         }
-        const matchingAvailablePayments = this.props.availablePayments.map(this.toInternalRepresentation).filter(
-            ap =>
-                (ap.creditProduct === creditData.creditProduct ||
-                    'mrc.payment.' +
-                        ap.creditProduct
-                            .split(' ')
-                            .join('_')
-                            .toLowerCase() ===
-                        (creditData.creditProduct && creditData.creditProduct !== null
-                            ? creditData.creditProduct.toLowerCase()
-                            : '')) &&
-                (ap.creditPeriod === creditData.creditPeriod ||
-                    'mrc.payment.' +
-                        ap.creditPeriod
-                            .split(' ')
-                            .join('_')
-                            .toLowerCase() ===
-                        (creditData.creditPeriod && creditData.creditPeriod !== null
-                            ? creditData.creditPeriod.toLowerCase()
-                            : '')) &&
-                (ap.debitType === creditData.debitType ||
-                    'mrc.payment.' +
-                        ap.debitType
-                            .split(' ')
-                            .join('_')
-                            .toLowerCase() ===
-                        (creditData.debitType && creditData.debitType !== null
-                            ? creditData.debitType.toLowerCase()
-                            : ''))
-        );
+        const matchingAvailablePayments = this.props.availablePayments
+            .map(this.toInternalRepresentation)
+            .filter(
+                (ap) =>
+                    (ap.creditProduct === creditData.creditProduct ||
+                        'mrc.payment.' + ap.creditProduct.split(' ').join('_').toLowerCase() ===
+                            (creditData.creditProduct && creditData.creditProduct !== null
+                                ? creditData.creditProduct.toLowerCase()
+                                : '')) &&
+                    (ap.creditPeriod === creditData.creditPeriod ||
+                        'mrc.payment.' + ap.creditPeriod.split(' ').join('_').toLowerCase() ===
+                            (creditData.creditPeriod && creditData.creditPeriod !== null
+                                ? creditData.creditPeriod.toLowerCase()
+                                : '')) &&
+                    (ap.debitType === creditData.debitType ||
+                        'mrc.payment.' + ap.debitType.split(' ').join('_').toLowerCase() ===
+                            (creditData.debitType && creditData.debitType !== null
+                                ? creditData.debitType.toLowerCase()
+                                : ''))
+            );
         return matchingAvailablePayments.length === 1 && !Number.isNaN(creditData.amount);
     }
 
@@ -334,7 +315,7 @@ export default class CreditData extends Component {
         else return <span>-</span>;
     }
 
-    showLimitExpiryDateInLocaleTime = limitExpiryDate => {
+    showLimitExpiryDateInLocaleTime = (limitExpiryDate) => {
         return new Date(limitExpiryDate.toString()).toLocaleDateString();
     };
 
@@ -343,13 +324,17 @@ export default class CreditData extends Component {
             currentLimitExpiry == null || currentLimitExpiry.limitExpiryDate == null
                 ? null
                 : currentLimitExpiry.resetToLimitAmount;
-        if (value)
+        if (value) {
+            console.log('-->');
+            console.log(value);
             return (
-                <span>
-                    <mrc-number show-currency-for-country={this.props.countryForCurrency}> {value}</mrc-number>
+                <span className="test">
+                    <MrcNumber isCurrency country={this.props.countryForCurrency}>
+                        {value}
+                    </MrcNumber>
                 </span>
             );
-        else return <span>-</span>;
+        } else return <span>-</span>;
     }
 
     toOption(t) {
@@ -386,7 +371,7 @@ export default class CreditData extends Component {
         );
     }
 
-    handleCreditProductChange = event => {
+    handleCreditProductChange = (event) => {
         let newCreditData = Object.assign(this.state.creditData);
         newCreditData.creditProduct = event.target.value;
         newCreditData.creditPeriod = '';
@@ -395,7 +380,7 @@ export default class CreditData extends Component {
         this.setCreditDataIfValid();
     };
 
-    handleCreditPeriodChange = event => {
+    handleCreditPeriodChange = (event) => {
         let newCreditData = Object.assign(this.state.creditData);
         newCreditData.creditPeriod = event.target.value;
         newCreditData.debitType = '';
@@ -403,7 +388,7 @@ export default class CreditData extends Component {
         this.setCreditDataIfValid();
     };
 
-    handleDebitTypeChange = event => {
+    handleDebitTypeChange = (event) => {
         let newCreditData = Object.assign(this.state.creditData);
         newCreditData.debitType = event.target.value;
         this.setState(newCreditData, this.publishEnteredCreditData);
@@ -417,7 +402,7 @@ export default class CreditData extends Component {
         this.props.handleAmountChange(amount, this.props.index);
     }
 
-    handleAmountOnBlur = event => {
+    handleAmountOnBlur = (event) => {
         const amount = event.target.value;
 
         this.setCreditDataIfValid();
@@ -461,7 +446,7 @@ export default class CreditData extends Component {
         }
     }
 
-    handleLimitExpiryResetChange = event => {
+    handleLimitExpiryResetChange = (event) => {
         const parsed = parseFloat(event.target.value);
         if (parsed != null && !Number.isNaN(parsed) && parsed >= 0) {
             this.setState({ resetToLimitAmount: parsed });
@@ -470,7 +455,7 @@ export default class CreditData extends Component {
         }
     };
 
-    handleLimitExpiryResetOnBlur = event => {
+    handleLimitExpiryResetOnBlur = (event) => {
         this.handleLimitExpiryResetChange(event);
         const { limitExpiryDate, resetToLimitAmount } = this.state;
         this.props.setLimitExpiry(this.props.approvalItem.id, {

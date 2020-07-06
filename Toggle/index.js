@@ -38,7 +38,7 @@ export default class Toggle extends PureComponent {
 Toggle.propTypes = {
     checked: PropTypes.bool,
     disabled: PropTypes.bool,
-    label: PropTypes.label,
+    label: PropTypes.string,
     onClick: PropTypes.func,
     reverse: PropTypes.bool,
     spaceBetween: PropTypes.bool,

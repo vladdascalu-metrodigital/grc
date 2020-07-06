@@ -9,6 +9,7 @@ import ArrowRightIcon from '../icons/arrow-right.svg';
 import ProgressBar from '../ProgressBar';
 import { lookup } from '../Util/translations';
 import PropTypes from 'prop-types';
+import MrcNumber from '../MrcNumber';
 import './index.scss';
 
 export default class RecentRequestsInfo extends Component {
@@ -82,9 +83,13 @@ export default class RecentRequestsInfo extends Component {
             return (
                 <div className="mrc-request-details-title">
                     <mrc-date>{requestStatus.creationDate}</mrc-date> / {lookup('history.status.item.from')}{' '}
-                    <mrc-number show-currency-for-country={country}>{requestStatus.amount}</mrc-number>{' '}
+                    <MrcNumber isCurrency country={country}>
+                        {requestStatus.amount}
+                    </MrcNumber>{' '}
                     {lookup('history.status.item.to')}{' '}
-                    <mrc-number show-currency-for-country={country}>{requestStatus.amountBeforeExpiry}</mrc-number>
+                    <MrcNumber isCurrency country={country}>
+                        {requestStatus.amountBeforeExpiry}
+                    </MrcNumber>
                 </div>
             );
         }
@@ -93,14 +98,16 @@ export default class RecentRequestsInfo extends Component {
             <div className="mrc-request-details-title">
                 <mrc-date>{requestStatus.creationDate}</mrc-date> /{' '}
                 <span>{lookup(requestStatus.applied ? 'mrc.label.appliedLimit' : 'mrc.label.requestedLimit')}</span>{' '}
-                <mrc-number show-currency-for-country={country}>{requestStatus.amount}</mrc-number>
+                <MrcNumber isCurrency country={country}>
+                    {requestStatus.amount}
+                </MrcNumber>
                 {shouldRenderGroupLimit ? <span className="mrc-position"> ({lookup('mrc.groupLimit')} </span> : null}
                 {shouldRenderGroupLimit ? (
-                    <mrc-number show-currency-for-country={country}>
+                    <MrcNumber isCurrency country={country}>
                         {requestStatus.amount > requestStatus.groupAmount
                             ? requestStatus.amount
                             : requestStatus.groupAmount}
-                    </mrc-number>
+                    </MrcNumber>
                 ) : null}
                 {shouldRenderGroupLimit ? <span className="mrc-position">)</span> : null}
             </div>

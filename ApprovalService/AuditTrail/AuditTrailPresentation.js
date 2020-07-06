@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import './AuditTrail.scss';
 import { lookup } from '../../Util/translations.js';
 import classNames from 'classnames';
+import MrcDate from '../../MrcDate';
 
 import * as _ from 'lodash';
 
@@ -84,11 +85,11 @@ export default class AuditTrailPresentation extends Component {
     //
     // lookup I18N for an action
     //
-    actionlookup = action => {
+    actionlookup = (action) => {
         return lookup(this.actionI18N[action] || action);
     };
 
-    createRow = item => {
+    createRow = (item) => {
         const action = item.action.toLowerCase();
         const classnames = classNames(
             'uppercase',
@@ -137,8 +138,8 @@ export default class AuditTrailPresentation extends Component {
         );
     };
 
-    createDateTimeEntry = key => {
-        return key ? <mrc-date class="when">{key}</mrc-date> : <span className="when">-</span>;
+    createDateTimeEntry = (key) => {
+        return key ? <MrcDate>{key}</MrcDate> : <span className="when">-</span>;
     };
 }
 

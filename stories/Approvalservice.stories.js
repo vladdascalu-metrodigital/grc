@@ -3,6 +3,8 @@ import { storiesOf } from '@storybook/react';
 import '../Util/imports';
 import { ApprovalProcessPresentation } from '../ApprovalService/ApprovalProcess/presentation';
 
+import recentRequestsData from './fixtures/approval-service/customers.recentRequests';
+
 storiesOf('ApprovalService', module)
     .add('manual approval flow', () => {
         let processInitialProp = {};
@@ -294,12 +296,12 @@ storiesOf('ApprovalService', module)
 
         return (
             <ApprovalProcessPresentation
-                showInfo={value => console.log(value)}
-                showError={value => console.log(value)}
-                showSuccess={value => console.log(value)}
-                hideNotification={value => console.log(value)}
+                showInfo={(value) => console.log(value)}
+                showError={(value) => console.log(value)}
+                showSuccess={(value) => console.log(value)}
+                hideNotification={(value) => console.log(value)}
                 process={processProp}
-                recentRequests={null}
+                recentRequests={recentRequestsData}
                 additionalFields={{
                     requestFields: [
                         {
@@ -654,34 +656,34 @@ storiesOf('ApprovalService', module)
                         },
                     ],
                 }}
-                updateAdditionalField={value => console.log(value)}
-                approve={value => console.log(value)}
-                confirm={value => console.log(value)}
-                requestInfo={value => console.log(value)}
-                requestNewContract={value => console.log(value)}
-                provideInfo={value => console.log(value)}
-                block={value => console.log(value)}
-                cancel={value => console.log(value)}
-                reject={value => console.log(value)}
-                signContract={value => console.log(value)}
-                validateContract={value => console.log(value)}
-                addAttachment={value => console.log(value)}
-                addPlaceholder={value => console.log(value)}
-                deleteAttachment={value => console.log(value)}
-                deletePlaceholder={value => console.log(value)}
-                restoreAttachment={value => console.log(value)}
-                addComment={value => console.log(value)}
-                addReviewReason={value => console.log(value)}
-                addRecommendation={value => console.log(value)}
-                deleteRecommendation={value => console.log(value)}
-                saveRecommendation={value => console.log(value)}
+                updateAdditionalField={(value) => console.log(value)}
+                approve={(value) => console.log(value)}
+                confirm={(value) => console.log(value)}
+                requestInfo={(value) => console.log(value)}
+                requestNewContract={(value) => console.log(value)}
+                provideInfo={(value) => console.log(value)}
+                block={(value) => console.log(value)}
+                cancel={(value) => console.log(value)}
+                reject={(value) => console.log(value)}
+                signContract={(value) => console.log(value)}
+                validateContract={(value) => console.log(value)}
+                addAttachment={(value) => console.log(value)}
+                addPlaceholder={(value) => console.log(value)}
+                deleteAttachment={(value) => console.log(value)}
+                deletePlaceholder={(value) => console.log(value)}
+                restoreAttachment={(value) => console.log(value)}
+                addComment={(value) => console.log(value)}
+                addReviewReason={(value) => console.log(value)}
+                addRecommendation={(value) => console.log(value)}
+                deleteRecommendation={(value) => console.log(value)}
+                saveRecommendation={(value) => console.log(value)}
                 isTablet={true}
-                historicExternalScoreRetry={value => console.log(value)}
-                reviewDecision={value => console.log(value)}
-                getMdwData={data => {
+                historicExternalScoreRetry={(value) => console.log(value)}
+                reviewDecision={(value) => console.log(value)}
+                getMdwData={(data) => {
                     return fetch(`/approval/test`)
-                        .then(resp => resp.json())
-                        .catch(e => {
+                        .then((resp) => resp.json())
+                        .catch((e) => {
                             return [
                                 {
                                     id: '0.811830105895704',
@@ -897,10 +899,10 @@ storiesOf('ApprovalService', module)
                             ];
                         });
                 }}
-                getPaymentsData={data => {
+                getPaymentsData={(data) => {
                     return fetch(`/creditlimit/payment`)
-                        .then(resp => resp.json())
-                        .catch(e => {
+                        .then((resp) => resp.json())
+                        .catch((e) => {
                             console.log('payment loaded');
                             return {
                                 deactivated: false,
@@ -1042,10 +1044,10 @@ storiesOf('ApprovalService', module)
                             };
                         });
                 }}
-                getScoringData={data => {
+                getScoringData={(data) => {
                     return fetch(`/creditlimit/scoring`)
-                        .then(resp => resp.json())
-                        .catch(e => {
+                        .then((resp) => resp.json())
+                        .catch((e) => {
                             console.log('scoring loaded');
                             return [
                                 {
@@ -1063,10 +1065,10 @@ storiesOf('ApprovalService', module)
                             ];
                         });
                 }}
-                getStrategyData={data => {
+                getStrategyData={(data) => {
                     return fetch(`/creditlimit/mcc`)
-                        .then(resp => resp.json())
-                        .catch(e => {
+                        .then((resp) => resp.json())
+                        .catch((e) => {
                             console.log('mcc loaded');
                             return {
                                 id: '1234',
@@ -1350,19 +1352,19 @@ storiesOf('ApprovalService', module)
                             };
                         });
                 }}
-                addExtScore={value => console.log(value)}
-                showScoringError={value => console.log(value)}
-                hideScoringError={value => console.log(value)}
-                assignUser={value => console.log(value)}
-                collateralRetry={value => console.log(value)}
-                fetchHistoricCollateral={value => console.log(value)}
-                setLimitExpiry={value => console.log(value)}
-                getHistoricScoringData={value => console.log(value)}
-                setLastCreditData={value => console.log(value)}
-                getValidMccScore={data => {
+                addExtScore={(value) => console.log(value)}
+                showScoringError={(value) => console.log(value)}
+                hideScoringError={(value) => console.log(value)}
+                assignUser={(value) => console.log(value)}
+                collateralRetry={(value) => console.log(value)}
+                fetchHistoricCollateral={(value) => console.log(value)}
+                setLimitExpiry={(value) => console.log(value)}
+                getHistoricScoringData={(value) => console.log(value)}
+                setLastCreditData={(value) => console.log(value)}
+                getValidMccScore={(data) => {
                     return fetch(`/creditlimit/mcc`)
-                        .then(resp => resp.json())
-                        .catch(e => {
+                        .then((resp) => resp.json())
+                        .catch((e) => {
                             console.log('mcc loaded');
                             return processProp;
                         });
@@ -1878,12 +1880,12 @@ storiesOf('ApprovalService', module)
 
         return (
             <ApprovalProcessPresentation
-                showInfo={value => console.log(value)}
-                showError={value => console.log(value)}
-                showSuccess={value => console.log(value)}
-                hideNotification={value => console.log(value)}
+                showInfo={(value) => console.log(value)}
+                showError={(value) => console.log(value)}
+                showSuccess={(value) => console.log(value)}
+                hideNotification={(value) => console.log(value)}
                 process={processProp}
-                recentRequests={null}
+                recentRequests={recentRequestsData}
                 additionalFields={{
                     requestFields: [
                         {
@@ -2238,34 +2240,34 @@ storiesOf('ApprovalService', module)
                         },
                     ],
                 }}
-                updateAdditionalField={value => console.log(value)}
-                approve={value => console.log(value)}
-                confirm={value => console.log(value)}
-                requestInfo={value => console.log(value)}
-                requestNewContract={value => console.log(value)}
-                provideInfo={value => console.log(value)}
-                block={value => console.log(value)}
-                cancel={value => console.log(value)}
-                reject={value => console.log(value)}
-                signContract={value => console.log(value)}
-                validateContract={value => console.log(value)}
-                addAttachment={value => console.log(value)}
-                addPlaceholder={value => console.log(value)}
-                deleteAttachment={value => console.log(value)}
-                deletePlaceholder={value => console.log(value)}
-                restoreAttachment={value => console.log(value)}
-                addComment={value => console.log(value)}
-                addReviewReason={value => console.log(value)}
-                addRecommendation={value => console.log(value)}
-                deleteRecommendation={value => console.log(value)}
-                saveRecommendation={value => console.log(value)}
+                updateAdditionalField={(value) => console.log(value)}
+                approve={(value) => console.log(value)}
+                confirm={(value) => console.log(value)}
+                requestInfo={(value) => console.log(value)}
+                requestNewContract={(value) => console.log(value)}
+                provideInfo={(value) => console.log(value)}
+                block={(value) => console.log(value)}
+                cancel={(value) => console.log(value)}
+                reject={(value) => console.log(value)}
+                signContract={(value) => console.log(value)}
+                validateContract={(value) => console.log(value)}
+                addAttachment={(value) => console.log(value)}
+                addPlaceholder={(value) => console.log(value)}
+                deleteAttachment={(value) => console.log(value)}
+                deletePlaceholder={(value) => console.log(value)}
+                restoreAttachment={(value) => console.log(value)}
+                addComment={(value) => console.log(value)}
+                addReviewReason={(value) => console.log(value)}
+                addRecommendation={(value) => console.log(value)}
+                deleteRecommendation={(value) => console.log(value)}
+                saveRecommendation={(value) => console.log(value)}
                 isTablet={true}
-                historicExternalScoreRetry={value => console.log(value)}
-                reviewDecision={value => console.log(value)}
-                getMdwData={data => {
+                historicExternalScoreRetry={(value) => console.log(value)}
+                reviewDecision={(value) => console.log(value)}
+                getMdwData={(data) => {
                     return fetch(`/approval/test`)
-                        .then(resp => resp.json())
-                        .catch(e => {
+                        .then((resp) => resp.json())
+                        .catch((e) => {
                             return [
                                 {
                                     id: '0.811830105895704',
@@ -2481,10 +2483,10 @@ storiesOf('ApprovalService', module)
                             ];
                         });
                 }}
-                getPaymentsData={data => {
+                getPaymentsData={(data) => {
                     return fetch(`/creditlimit/payment`)
-                        .then(resp => resp.json())
-                        .catch(e => {
+                        .then((resp) => resp.json())
+                        .catch((e) => {
                             console.log('payment loaded');
                             return {
                                 deactivated: false,
@@ -2626,10 +2628,10 @@ storiesOf('ApprovalService', module)
                             };
                         });
                 }}
-                getScoringData={data => {
+                getScoringData={(data) => {
                     return fetch(`/creditlimit/scoring`)
-                        .then(resp => resp.json())
-                        .catch(e => {
+                        .then((resp) => resp.json())
+                        .catch((e) => {
                             console.log('scoring loaded');
                             return [
                                 {
@@ -2647,10 +2649,10 @@ storiesOf('ApprovalService', module)
                             ];
                         });
                 }}
-                getStrategyData={data => {
+                getStrategyData={(data) => {
                     return fetch(`/creditlimit/mcc`)
-                        .then(resp => resp.json())
-                        .catch(e => {
+                        .then((resp) => resp.json())
+                        .catch((e) => {
                             console.log('mcc loaded');
                             return {
                                 id: '1234',
@@ -2934,19 +2936,19 @@ storiesOf('ApprovalService', module)
                             };
                         });
                 }}
-                addExtScore={value => console.log(value)}
-                showScoringError={value => console.log(value)}
-                hideScoringError={value => console.log(value)}
-                assignUser={value => console.log(value)}
-                collateralRetry={value => console.log(value)}
-                fetchHistoricCollateral={value => console.log(value)}
-                setLimitExpiry={value => console.log(value)}
-                getHistoricScoringData={value => console.log(value)}
-                setLastCreditData={value => console.log(value)}
-                getValidMccScore={data => {
+                addExtScore={(value) => console.log(value)}
+                showScoringError={(value) => console.log(value)}
+                hideScoringError={(value) => console.log(value)}
+                assignUser={(value) => console.log(value)}
+                collateralRetry={(value) => console.log(value)}
+                fetchHistoricCollateral={(value) => console.log(value)}
+                setLimitExpiry={(value) => console.log(value)}
+                getHistoricScoringData={(value) => console.log(value)}
+                setLastCreditData={(value) => console.log(value)}
+                getValidMccScore={(data) => {
                     return fetch(`/creditlimit/mcc`)
-                        .then(resp => resp.json())
-                        .catch(e => {
+                        .then((resp) => resp.json())
+                        .catch((e) => {
                             console.log('mcc loaded');
                             return processProp;
                         });

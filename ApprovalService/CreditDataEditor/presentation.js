@@ -5,6 +5,7 @@ import { NumberInput } from '../../NumberInput/index';
 import { lookup } from '../../Util/translations';
 import EditIcon from '../../icons/edit.svg';
 import ChevronDownIcon from '../../icons/chevron-down.svg';
+import MrcNumber from '../../MrcNumber';
 
 export default class CreditDataEditor extends Component {
     PLACEHOLDER = '-';
@@ -50,14 +51,19 @@ export default class CreditDataEditor extends Component {
         }
     }
 
-    handleFormFieldChanged = event => {
+    handleFormFieldChanged = (event) => {
         if (this.props.onChange) this.props.onChange(event);
     };
 
     createDisplayText = (value, country) => {
         switch (this.props.name) {
             case 'amount':
-                if (value || value === 0) return <mrc-number show-currency-for-country={country}> {value}</mrc-number>;
+                if (value || value === 0)
+                    return (
+                        <MrcNumber isCurrency country={country}>
+                            {value}
+                        </MrcNumber>
+                    );
                 else return this.PLACEHOLDER;
             default:
                 if (value)

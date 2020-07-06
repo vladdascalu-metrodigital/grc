@@ -1,4 +1,6 @@
 import './index.scss';
+import 'react-sliding-pane/dist/react-sliding-pane.css';
+
 import React, { Component } from 'react';
 import ProgressBar from '../../ProgressBar';
 import AuditTrailPresentation from '../AuditTrail/AuditTrailPresentation';
@@ -100,7 +102,7 @@ export class ApprovalProcessPresentation extends Component {
     onReviewReasonSave() {
         const process = this.props.process.data || null;
         const newReviewReason = this.state.newReviewReason;
-        this.props.addReviewReason(process.id, newReviewReason, process.version).then(result => {
+        this.props.addReviewReason(process.id, newReviewReason, process.version).then((result) => {
             if (result !== null) {
                 this.props.reviewDecision(process.id, process.version, false, process.followUpState);
                 this.setState({ newReviewReason: undefined });
@@ -109,7 +111,7 @@ export class ApprovalProcessPresentation extends Component {
     }
 
     handleAmountChange(amount, i) {
-        this.setState(prevState => {
+        this.setState((prevState) => {
             let approvedLimits = prevState.approvedLimits ? prevState.approvedLimits : [];
             approvedLimits[i] = amount;
             return { approvedLimits: approvedLimits };
@@ -120,10 +122,10 @@ export class ApprovalProcessPresentation extends Component {
         if (approval && !approval.claimedBySomebodyElse && approval.state !== 'CANCELLED') {
             const limitExpiryModifiedInPreviousStage =
                 !approval ||
-                _.find(approval.approvalItems, x => _.get(x, 'requestedLimitExpiry.modifiedInContracting'));
+                _.find(approval.approvalItems, (x) => _.get(x, 'requestedLimitExpiry.modifiedInContracting'));
 
             if (this.state.currentStepType === 'CONTRACT_SIGNING') {
-                const [lastStep, thisStep] = _.takeRight(approval.steps, 2).map(a => a.type);
+                const [lastStep, thisStep] = _.takeRight(approval.steps, 2).map((a) => a.type);
                 if (lastStep === 'CONTRACT_VALIDATION' && thisStep === 'CONTRACT_SIGNING') {
                     this.props.showInfo(lookup('approval.message.request.uploadContractAgain'));
                 } else if (!util.placeholdersUploaded(approval)) {
@@ -153,7 +155,7 @@ export class ApprovalProcessPresentation extends Component {
         this.updateNotification(approval);
 
         if (approval && !this.state.mdwRequestCompleted) {
-            this.props.getMdwData(approval).then(result => {
+            this.props.getMdwData(approval).then((result) => {
                 this.setState({ mdwData: result, mdwRequestCompleted: true });
             });
         }
@@ -161,7 +163,7 @@ export class ApprovalProcessPresentation extends Component {
             this.setState({ currentStepType: _.get(approval, 'currentStep.type') });
         }
         if (approval && this.state.isValidMccScoreChanged) {
-            this.props.getValidMccScore(approval.request.id).then(result => {
+            this.props.getValidMccScore(approval.request.id).then((result) => {
                 this.setState({ validMccScore: result, isValidMccScoreChanged: false });
             });
         }
@@ -180,9 +182,9 @@ export class ApprovalProcessPresentation extends Component {
     componentDidMount() {
         const approval = this.props.process.data || null;
         if (approval && _.isNil(this.state.approvedLimits)) {
-            const approvedAmounts = approval.approvalItems.map(x => _.get(x, 'approvedCreditData.amount', null));
-            const currentCreditAmounts = approval.approvalItems.map(x => _.get(x, 'currentCreditData.amount', null));
-            const requestedAmounts = approval.approvalItems.map(x => _.get(x, 'requestedCreditData.amount', 0));
+            const approvedAmounts = approval.approvalItems.map((x) => _.get(x, 'approvedCreditData.amount', null));
+            const currentCreditAmounts = approval.approvalItems.map((x) => _.get(x, 'currentCreditData.amount', null));
+            const requestedAmounts = approval.approvalItems.map((x) => _.get(x, 'requestedCreditData.amount', 0));
 
             const _approvedAmounts = approvedAmounts.map((a, i) =>
                 _.isNil(a) ? (_.isNil(currentCreditAmounts[i]) ? 0 : currentCreditAmounts[i]) : a
@@ -256,7 +258,7 @@ export class ApprovalProcessPresentation extends Component {
         }
     };
 
-    deleteRecommendation = id => {
+    deleteRecommendation = (id) => {
         const approval = this.props.process.data || {};
         this.props.deleteRecommendation(approval.id, approval.version, id);
     };
@@ -267,7 +269,7 @@ export class ApprovalProcessPresentation extends Component {
             <Comments
                 comments={approval.comments}
                 disabled={!approval.editableByCurrentUser}
-                onSave={newValue => this.props.addComment(approval.id, newValue, approval.version)}
+                onSave={(newValue) => this.props.addComment(approval.id, newValue, approval.version)}
                 timeoutDate={approval.automaticDecisionAt}
             />
         );
@@ -295,13 +297,13 @@ export class ApprovalProcessPresentation extends Component {
         const _attachments = List(approval.attachments);
         const _placeholders = List(
             _.uniqBy(approval.placeholders, 'fileType')
-                .map(ph => {
+                .map((ph) => {
                     return { ...ph, status: 'missing', secondaryInteraction: 'add' };
                 })
-                .filter(ph => _attachments.filter(a => !a.deleted && a.fileType === ph.fileType).isEmpty())
+                .filter((ph) => _attachments.filter((a) => !a.deleted && a.fileType === ph.fileType).isEmpty())
         );
 
-        const withDeleteRestore = _attachments.map(a => {
+        const withDeleteRestore = _attachments.map((a) => {
             return a.deleted
                 ? {
                       ...a,
@@ -337,7 +339,7 @@ export class ApprovalProcessPresentation extends Component {
             .concat(
                 isContractingStep
                     ? _placeholders
-                    : _placeholders.map(a => {
+                    : _placeholders.map((a) => {
                           return {
                               ...a,
                               disabled: !approval.editableByCurrentUser,
@@ -368,14 +370,14 @@ export class ApprovalProcessPresentation extends Component {
                 fileTypes={fileTypes}
                 country={country}
                 currentApprover={currentApprover}
-                savePlaceholder={fileType => {
-                    const matchingFileType = x => x.filter(a => a.fileType === fileType);
+                savePlaceholder={(fileType) => {
+                    const matchingFileType = (x) => x.filter((a) => a.fileType === fileType);
 
                     if (!matchingFileType(_placeholders).isEmpty()) {
                         _.flowRight(this.props.showError, lookup)('approval.error.duplicatePlaceholder');
                     } else if (
                         !matchingFileType(_attachments)
-                            .filter(a => !a.deleted)
+                            .filter((a) => !a.deleted)
                             .isEmpty()
                     ) {
                         _.flowRight(this.props.showError, lookup)('approval.error.attachmentAlreadyUploaded');
@@ -395,7 +397,7 @@ export class ApprovalProcessPresentation extends Component {
                     <div className="mrc-collateral-retry-buttons mrc-btn-group">
                         <p>{lookup('approval.collateral.failed')}: </p>
                         <button
-                            ref={btn => {
+                            ref={(btn) => {
                                 this.collateralRetryButton = btn;
                             }}
                             id="mrc-collateral-button"
@@ -447,7 +449,7 @@ export class ApprovalProcessPresentation extends Component {
         if (this.state.historicCollateral !== null || !approval.editableByCurrentUser) {
             return;
         }
-        this.props.fetchHistoricCollateral(approval).then(result => {
+        this.props.fetchHistoricCollateral(approval).then((result) => {
             this.setState({ historicCollateral: result === undefined ? null : result });
         });
     };
@@ -471,7 +473,7 @@ export class ApprovalProcessPresentation extends Component {
                 readonly={!approval.editableByCurrentUser}
                 disabled={!approval.editableByCurrentUser}
                 noAddButton={true}
-                attachments={historicCollateral.map(a => {
+                attachments={historicCollateral.map((a) => {
                     return { ...a, status: 'normal' };
                 })}
                 fileTypes={this.FILE_TYPES}
@@ -547,13 +549,13 @@ export class ApprovalProcessPresentation extends Component {
             return null;
         }
         if (_.isNil(this.state.mdwData)) {
-            return _.sum(profitabilityAdditionalFields.map(f => f.value)) / profitabilityAdditionalFields.length;
+            return _.sum(profitabilityAdditionalFields.map((f) => f.value)) / profitabilityAdditionalFields.length;
         }
         let groupProfitability = 0;
         let totalTurnoverL6m = 0;
-        this.state.mdwData.map(mdwCustomer => {
+        this.state.mdwData.map((mdwCustomer) => {
             const customerProfitability = profitabilityAdditionalFields.filter(
-                rf =>
+                (rf) =>
                     rf.storeNumber === mdwCustomer.customerCreditData.storeNumber &&
                     rf.customerNumber === mdwCustomer.customerCreditData.customerNumber &&
                     rf.country === mdwCustomer.customer.country
@@ -627,7 +629,7 @@ export class ApprovalProcessPresentation extends Component {
             let agl = 0;
             let exhaustiongl = 0;
 
-            process.approvalItems.map(approvalItem => {
+            process.approvalItems.map((approvalItem) => {
                 const custId = approvalItem.customer.id;
                 const creditData = approvalItem.approvedCreditData || approvalItem.requestedCreditData;
 
@@ -667,7 +669,7 @@ export class ApprovalProcessPresentation extends Component {
         if (!_.get(approval, 'approvalItems')) {
             return 0;
         }
-        const currentCreditAmounts = approval.approvalItems.map(x => _.get(x, 'currentCreditData.amount', null));
+        const currentCreditAmounts = approval.approvalItems.map((x) => _.get(x, 'currentCreditData.amount', null));
         var approvedGroupLimitInst = 0;
         let i = 0;
         for (const [key, value] of Object.entries(creditData)) {
@@ -710,7 +712,7 @@ export class ApprovalProcessPresentation extends Component {
     // snip with customer groups
     //
     customers(approvalItems) {
-        const customers = approvalItems.map(approvalItem => {
+        const customers = approvalItems.map((approvalItem) => {
             return approvalItem.customer;
         });
 
@@ -1083,7 +1085,7 @@ export class ApprovalProcessPresentation extends Component {
         );
     }
 
-    requestInfo = approvalStep => {
+    requestInfo = (approvalStep) => {
         this.props.requestInfo(
             this.props.process.data.id,
             approvalStep,
@@ -1141,7 +1143,7 @@ export class ApprovalProcessPresentation extends Component {
     };
 
     additionalFieldsValid() {
-        return !(Object.values(this.state.additionalFieldsValidations).filter(value => !value).length > 0);
+        return !(Object.values(this.state.additionalFieldsValidations).filter((value) => !value).length > 0);
     }
 
     buttons(groupLimit, currency) {
@@ -1165,9 +1167,9 @@ export class ApprovalProcessPresentation extends Component {
                         id="mrc-sendback-button"
                         steps={this.props.process.data.auditTrail
                             .filter(
-                                e => e.action !== SENT_BACK && e.action !== INFO_PROVIDED && e.position !== MRC_SYSTEM
+                                (e) => e.action !== SENT_BACK && e.action !== INFO_PROVIDED && e.position !== MRC_SYSTEM
                             )
-                            .map(auditTrail => auditTrail.position)}
+                            .map((auditTrail) => auditTrail.position)}
                         requestInfo={this.requestInfo}
                     />
                 ) : null}
@@ -1313,7 +1315,7 @@ export class ApprovalProcessPresentation extends Component {
     }
 
     toggleReviewReasonModal() {
-        this.setState(prevState => ({ isReviewReasonModalVisible: !prevState.isReviewReasonModalVisible }));
+        this.setState((prevState) => ({ isReviewReasonModalVisible: !prevState.isReviewReasonModalVisible }));
     }
 
     render() {
@@ -1326,7 +1328,7 @@ export class ApprovalProcessPresentation extends Component {
         if (process === null) {
             return null;
         }
-        const currentCreditAmounts = process.approvalItems.map(x => _.get(x, 'currentCreditData.amount', null));
+        const currentCreditAmounts = process.approvalItems.map((x) => _.get(x, 'currentCreditData.amount', null));
         const _approvedAmounts = !_.isNil(this.state.approvedLimits)
             ? this.state.approvedLimits.map((a, i) =>
                   _.isNil(a) ? (_.isNil(currentCreditAmounts[i]) ? 0 : currentCreditAmounts[i]) : a
@@ -1358,7 +1360,7 @@ export class ApprovalProcessPresentation extends Component {
         }
 
         const l12mTurnover = this.state.mdwData
-            ? _.sum(_.map(this.state.mdwData, x => _.get(x, 'customerCreditData.sellValNspL12m')))
+            ? _.sum(_.map(this.state.mdwData, (x) => _.get(x, 'customerCreditData.sellValNspL12m')))
             : null;
 
         const currency = {
@@ -1380,7 +1382,7 @@ export class ApprovalProcessPresentation extends Component {
                     <Tabs
                         forceRenderTabPanel={true}
                         defaultIndex={defaultTabIndex}
-                        onSelect={x => this.setState({ selectedTabIndex: x })}
+                        onSelect={(x) => this.setState({ selectedTabIndex: x })}
                     >
                         {this.tabs(process)}
                         {this.tabContents(process, currency, l12mTurnover, customerData, creditData)}
@@ -1418,7 +1420,7 @@ export class ApprovalProcessPresentation extends Component {
                 )}
                 <AutoDecisionReviewReason
                     newContent={this.state.newReviewReason}
-                    onContentChange={newReviewReason => this.setState({ newReviewReason })}
+                    onContentChange={(newReviewReason) => this.setState({ newReviewReason })}
                     onSave={this.onReviewReasonSave}
                     toggleModal={this.toggleReviewReasonModal}
                     isModalVisible={this.state.isReviewReasonModalVisible}

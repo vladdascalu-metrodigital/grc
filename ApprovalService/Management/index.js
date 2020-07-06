@@ -5,6 +5,7 @@ import ColoredBox from '../../Layout/ColoredBox';
 import Layout, { LAYOUT_TYPES } from '../../Layout';
 import Text from '../../TextBox/Text';
 import TextBox from '../../TextBox';
+import MrcNumber from '../../MrcNumber';
 import { Accordion, Collapsible } from '../../Accordion';
 import { Table } from '../../Table';
 import '../Table/index.scss';
@@ -49,7 +50,13 @@ export default class Management extends Component {
         ]);
         const fmtCreditLimit = (x) => {
             const amount = _.get(x, 'amount');
-            return amount ? <mrc-number show-currency-for-country={country}>{amount}</mrc-number> : '-';
+            return amount ? (
+                <MrcNumber isCurrency country={country}>
+                    {amount}
+                </MrcNumber>
+            ) : (
+                '-'
+            );
         };
         const columns = [
             {
@@ -95,7 +102,7 @@ export default class Management extends Component {
                 suffix={currency}
             >
                 <Text color={contentColor} size={contentSize}>
-                    <mrc-number>{groupLimit}</mrc-number>
+                    <MrcNumber>{groupLimit}</MrcNumber>
                 </Text>
             </TextBox>
         );
@@ -209,9 +216,7 @@ export default class Management extends Component {
                                 footer={totalTurnover ? lookup('mrc.topmanagement.l12m') : null}
                                 suffix={totalTurnover ? currency : null}
                             >
-                                <Text size={'5'}>
-                                    {totalTurnover ? <mrc-number>{totalTurnover}</mrc-number> : 'N/A'}
-                                </Text>
+                                <Text size={'5'}>{totalTurnover ? <MrcNumber>{totalTurnover}</MrcNumber> : 'N/A'}</Text>
                             </TextBox>
                             <TextBox header={lookup('mrc.topmanagement.bond')} footer={null} suffix={null}>
                                 <Text size={'5'}>N/A</Text>

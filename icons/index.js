@@ -56,7 +56,18 @@ export function iconClassNames(props) {
 }
 
 export const iconPropTypes = {
-    color: PropTypes.oneOf(['white', 'black', 'interaction', 'success', 'neutral', 'danger', 'attention']),
+    color: PropTypes.oneOf([
+        'white',
+        'black',
+        'interaction',
+        'success',
+        'neutral',
+        'danger',
+        'attention',
+        'muted',
+        'disabled',
+        'light-red',
+    ]),
     strokeWidth: PropTypes.oneOf(['thin', 'medium']),
     size: PropTypes.oneOf(['small', 'xsmall']),
 };

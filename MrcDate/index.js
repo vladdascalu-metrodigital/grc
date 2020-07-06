@@ -17,7 +17,7 @@ export default class MrcDate extends PureComponent {
             month: '2-digit',
             year: 'numeric',
         });
-        let className = classnames('mrc-ui-date', type && 'mrc-ui-currency-' + type);
+        let className = classnames('mrc-ui-date', type && 'mrc-ui-date-' + type);
         return (
             <time dateTime={dateString} className={className}>
                 {localeDateString}
