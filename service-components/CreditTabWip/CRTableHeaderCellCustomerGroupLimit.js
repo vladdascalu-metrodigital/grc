@@ -17,14 +17,14 @@ export default class CRTableHeaderCellCustomerGroupLimit extends PureComponent {
                 {exhausted && (
                     <span className="mrc-ui-crtable-cell-customer-group-limit-exhausted">
                         <MrcNumber isCurrency country={country}>
-                            {exhausted}
+                            {exhausted || exhausted === 0 ? exhausted : ''}
                         </MrcNumber>
                     </span>
                 )}
                 {exhausted && limit && ' / '}
                 <span className={className}>
                     <MrcNumber isCurrency country={country}>
-                        {limit}
+                        {limit || limit === 0 ? limit : ''}
                     </MrcNumber>
                 </span>
                 <div className="mrc-ui-crtable-cell-customer-group-limit-subtitle">{subtitle}</div>

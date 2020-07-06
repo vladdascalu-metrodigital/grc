@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Button from '../../Button';
 import CoinReceive from '../../icons/coin-receive.svg';
 import ProgressBar from '../../ProgressBar';
-import CreditData from '../CreditData';
 import Comments from '../../NewComments';
 import Attachments from '../../Attachments';
 import Sales from '../../Sales';
@@ -13,12 +12,7 @@ import ErrorHandledTabPanel from '../../ErrorHandledTabPanel';
 import '../../tabs.scss';
 import { Accordion, Collapsible } from '../../Accordion';
 import RequestSubmitted from './RequestSubmitted';
-import { displayName } from '../../Util';
-import CustomerTrigger from '../../CustomerTrigger/presentation';
-import CustomerGroupLimits from '../../CustomerGroupLimits';
 import { lookup } from '../../Util/translations';
-import CreditProgram from '../../CreditProgram';
-import AdditionalFieldsSection from '../../AdditionalFields/AdditionalFieldsSection';
 import './index.scss';
 import { RequestFieldPropTypes } from '../../AdditionalFieldsNew/AdditionalFieldsPropTypes';
 import { filterAdditionalFieldsList } from '../../AdditionalFieldsNew/additionalFielsUtil';
@@ -293,91 +287,6 @@ export default class LimitRequestLayout extends Component {
         );
     }
 
-    createToggles() {
-        return (
-            <div className="credit-options">
-                <div className="mrc-credit-options">
-                    <div className="mrc-radio-button">
-                        <label className="m-radioButton" htmlFor="one">
-                            <input
-                                type="checkbox"
-                                className="m-radioButton-input"
-                                id="one"
-                                value={this.state.applyCurrent}
-                                onClick={(e) => this.onApplyCurrentChange(e)}
-                                defaultChecked={this.state.applyCurrent === true}
-                            />
-                            <div className="m-radioButton-inputIcon" />
-
-                            <span className="m-radioButton-label">
-                                <p>{lookup('creditlimit.limitrequest.toggles.applyCurrent')}</p>
-                            </span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
-    createGroupLimitInfos() {
-        return (
-            <CustomerGroupLimits
-                country={this.props.request.data.requestedItems[0].customer.country}
-                exhaustionGroupLimit={this.state.exhaustionGroupLimit}
-                requestedGroupLimit={this.state.requestedGroupLimit}
-                currentGroupLimit={this.state.currentGroupLimit}
-                availableGroupLimit={this.state.availableGroupLimit}
-                hideApprovedGroupLimit={true}
-            />
-        );
-    }
-
-    onApplyCurrentChange(e) {
-        this.setState({
-            applyCurrent: !(e.currentTarget.value === 'true'),
-            applyCurrentLimitAndExpiry: !(e.currentTarget.value === 'true'),
-            applyCurrentPayments: !(e.currentTarget.value == 'true'),
-            isApplyCurrentLimitAndExpiryClicked: true,
-        });
-        if (this.state.isApplyCurrentLimitAndExpiryClickedCallbacks) {
-            for (const [id, callback] of Object.entries(this.state.isApplyCurrentLimitAndExpiryClickedCallbacks)) {
-                callback(id, !(e.currentTarget.value === 'true') ? true : false);
-            }
-        }
-    }
-
-    registerCallbackOnApplyCurrentLimitAndExpiryChange(id, callback) {
-        this.setState((state) => {
-            let isApplyCurrentLimitAndExpiryClickedCallbacks = [];
-            if (state.isApplyCurrentLimitAndExpiryClickedCallbacks) {
-                for (const [id, callback] of Object.entries(state.isApplyCurrentLimitAndExpiryClickedCallbacks)) {
-                    isApplyCurrentLimitAndExpiryClickedCallbacks[id] = callback;
-                }
-            }
-            isApplyCurrentLimitAndExpiryClickedCallbacks[id] = callback;
-
-            return { isApplyCurrentLimitAndExpiryClickedCallbacks: isApplyCurrentLimitAndExpiryClickedCallbacks };
-        });
-    }
-
-    handleRequestedGroupLimitChange() {
-        let requestedGroupLimitNew = 0;
-        if (this.props.request != null && this.props.request.data != null) {
-            this.props.request.data.requestedItems.map((item) => {
-                const amount =
-                    !_.isNil(item.creditData.amount) && !_.isNaN(item.creditData.amount)
-                        ? item.creditData.amount
-                        : !_.isNil(item.customer.creditLimit)
-                        ? item.customer.creditLimit
-                        : 0;
-                requestedGroupLimitNew += amount;
-            });
-            this.setState({
-                requestedGroupLimit: requestedGroupLimitNew,
-            });
-        }
-    }
-
     atLeastOneFieldIsInvalid(additionalFieldsList, additionalFieldsValidations) {
         if (additionalFieldsList === undefined || additionalFieldsList === null) {
             return false;
@@ -399,166 +308,6 @@ export default class LimitRequestLayout extends Component {
         return isInvalid;
     }
 
-    createGroupPanels(requestedItems) {
-        return requestedItems.map((item, i) => {
-            const limitRequest = this.props.request.data;
-            const customer = item.customer;
-
-            const additionalFieldsList = filterAdditionalFieldsList(
-                this.props.additionalFields !== undefined && this.props.additionalFields !== null
-                    ? this.props.additionalFields.requestFields
-                    : undefined,
-                'CUSTOMER',
-                'CREDIT_DATA',
-                customer.country,
-                customer.storeNumber,
-                customer.customerNumber
-            );
-            const hasAdditionalFields =
-                additionalFieldsList !== undefined && additionalFieldsList !== null && additionalFieldsList.length > 0
-                    ? true
-                    : false;
-            const creditDataClass = hasAdditionalFields ? 'span-1-2' : 'span-1-3';
-
-            const key = customer.storeNumber + '/' + customer.customerNumber;
-            const trigger = (
-                <CustomerTrigger
-                    customer={customer}
-                    current={customer.creditLimit}
-                    requested={item.creditData.amount ? item.creditData.amount : null}
-                    isWithWarning={
-                        (customer.blockingReason != undefined && customer.blockingReason != null) ||
-                        (customer.checkoutCheckCode != undefined && customer.checkoutCheckCode != null) ||
-                        (hasAdditionalFields &&
-                            this.atLeastOneFieldIsInvalid(additionalFieldsList, this.state.additionalFieldsValidations))
-                    }
-                />
-            );
-
-            const dateFormat = this.getDateFormatString();
-            return (
-                <Collapsible open={i === 0} key={key} trigger={trigger}>
-                    <div className="mrc-ui-col-3">
-                        <div className={creditDataClass}>
-                            <CreditData
-                                key={item.creditData.id}
-                                headerTitle={
-                                    lookup('creditlimit.limitrequest.headers.creditrequest') +
-                                    ' ' +
-                                    displayName(item.customer)
-                                }
-                                paymentReadyToBeSelected={true}
-                                requestedItem={item}
-                                setCreditData={this.props.setCreditData.bind(this, limitRequest)}
-                                setLimitExpiry={this.props.setLimitExpiry.bind(this, limitRequest)}
-                                setValidity={this.setComponentValidity.bind(this, item.id)}
-                                handleRequestedGroupLimitChange={this.handleRequestedGroupLimitChange.bind(this)}
-                                applyCurrentLimitAndExpiry={false}
-                                applyCurrentPayments={this.state.applyCurrentPayments}
-                                isApplyCurrentLimitAndExpiryClicked={false}
-                                dateFormat={dateFormat}
-                                currentPayment={this.defineCurrentPayment(item)}
-                                registerCallbackOnApplyCurrentLimitAndExpiryChange={this.registerCallbackOnApplyCurrentLimitAndExpiryChange.bind(
-                                    this
-                                )}
-                                countriesWithDifferentBlockingCodes={this.props.countriesWithDifferentBlockingCodes}
-                            />
-                        </div>
-                        {hasAdditionalFields ? (
-                            <div className="mrc-credit-data mrc-input-group">
-                                <AdditionalFieldsSection
-                                    requestFields={additionalFieldsList}
-                                    onChange={this.handleAdditionalFieldsOnChange}
-                                    onBlur={this.handleAdditionalFieldsOnBlur}
-                                />
-                            </div>
-                        ) : null}
-                    </div>
-                </Collapsible>
-            );
-        });
-    }
-
-    createRequestPanel() {
-        if (this.props.request.loading || !this.props.request.data || !this.props.request.data.requestedItems) {
-            return null;
-        }
-        const groupPanels = this.createGroupPanels(this.props.request.data.requestedItems);
-        const requestAdditionalFields = filterAdditionalFieldsList(
-            this.props.additionalFields !== undefined && this.props.additionalFields !== null
-                ? this.props.additionalFields.requestFields
-                : undefined,
-            'REQUEST',
-            'CREDIT_DATA'
-        );
-        const hasRequestAdditionalFields =
-            requestAdditionalFields !== undefined &&
-            requestAdditionalFields !== null &&
-            requestAdditionalFields.length > 0
-                ? true
-                : false;
-        const groupAdditionalFields = filterAdditionalFieldsList(
-            this.props.additionalFields !== undefined && this.props.additionalFields !== null
-                ? this.props.additionalFields.requestFields
-                : undefined,
-            'GROUP',
-            'CREDIT_DATA'
-        );
-        const hasGroupAdditionalFields =
-            groupAdditionalFields !== undefined && groupAdditionalFields !== null && groupAdditionalFields.length > 0
-                ? true
-                : false;
-        return (
-            <Accordion>
-                <div className="mrc-ui-col-3 small-margin-bottom">
-                    <div>
-                        {this.createCreditProgramSelection()}
-                        <div className="mrc-input-group">
-                            {this.createToggles()}
-                            {this.props.request.data.requestedItems.length > 1 ? this.createGroupLimitInfos() : null}
-                        </div>
-                    </div>
-                    {hasRequestAdditionalFields ? (
-                        <div className="mrc-credit-data mrc-input-group small-margin">
-                            <span
-                                className="additional-fields-background-text"
-                                title={lookup('additional.fields.request.title')}
-                            ></span>
-                            <AdditionalFieldsSection
-                                requestFields={requestAdditionalFields}
-                                onChange={this.handleAdditionalFieldsOnChange}
-                                onBlur={this.handleAdditionalFieldsOnBlur}
-                            />
-                        </div>
-                    ) : null}
-                    {hasGroupAdditionalFields ? (
-                        <div className="mrc-credit-data mrc-input-group small-margin">
-                            <span
-                                className="additional-fields-background-text"
-                                title={lookup('additional.fields.group.title')}
-                            ></span>
-                            <AdditionalFieldsSection
-                                requestFields={groupAdditionalFields}
-                                onChange={this.handleAdditionalFieldsOnChange}
-                                onBlur={this.handleAdditionalFieldsOnBlur}
-                            />
-                        </div>
-                    ) : null}
-                </div>
-                {groupPanels}{' '}
-            </Accordion>
-        );
-    }
-
-    defineCurrentPayment(requestedItem) {
-        const customer = requestedItem && requestedItem.customer;
-
-        const limit =
-            customer && customer.creditLimit != null && !Number.isNaN(customer.creditLimit) ? customer.creditLimit : '';
-        const payment = customer && customer.currentPayment;
-        return { limit: limit, payment: payment };
-    }
-
     getDateFormatString() {
         const formatObj = new Intl.DateTimeFormat().formatToParts(new Date());
         return formatObj
@@ -575,35 +324,6 @@ export default class LimitRequestLayout extends Component {
                 }
             })
             .join('');
-    }
-
-    createCreditProgramSelection() {
-        const limitRequest = this.props.request.data;
-        return (
-            <div className="mrc-detail">
-                <CreditProgram
-                    limitRequestId={limitRequest.id}
-                    setCreditPrograms={this.props.setCreditPrograms.bind(this)}
-                    getCreditPrograms={this.props.getCreditPrograms.bind(this)}
-                    setValidity={this.setCreditProgramValidity.bind(this)}
-                />
-            </div>
-        );
-    }
-
-    setComponentValidity(id, valid) {
-        const newValidity = this.state.creditDataComponentsValid;
-        newValidity[id] = valid;
-
-        const requestor = this.props.request.data.requestedItems.find((request) => request.customer.requestedCustomer);
-        const requestorCreditDataIsValid = newValidity[requestor.id];
-
-        this.setState({
-            ...this.state,
-            creditDataComponentsValid: newValidity,
-            creditDataValid:
-                Object.values(newValidity).every((v) => v == true || v == null) && requestorCreditDataIsValid == true,
-        });
     }
 
     setCreditProgramValidity(valid) {
@@ -674,7 +394,7 @@ export default class LimitRequestLayout extends Component {
         );
     }
 
-    _creditTab() {
+    createCreditTab() {
         if (this.props.request.loading || !this.props.request.data || !this.props.request.data.requestedItems) {
             return null;
         }
@@ -984,7 +704,7 @@ export default class LimitRequestLayout extends Component {
                                         <Tab>{lookup('mrc.attachments.title')}</Tab>
                                     </TabList>
                                     <ErrorHandledTabPanel>{this.createCustomerDetailsPanel(req)}</ErrorHandledTabPanel>
-                                    <ErrorHandledTabPanel>{this._creditTab()}</ErrorHandledTabPanel>
+                                    <ErrorHandledTabPanel>{this.createCreditTab()}</ErrorHandledTabPanel>
                                     <ErrorHandledTabPanel>{this.createSalesPanel()}</ErrorHandledTabPanel>
                                     <ErrorHandledTabPanel>{this.createCommentsPanel()}</ErrorHandledTabPanel>
                                     <ErrorHandledTabPanel>{this.createAttachmentsPanel()}</ErrorHandledTabPanel>
@@ -995,7 +715,7 @@ export default class LimitRequestLayout extends Component {
                                         {this.createCustomerDetailsPanel(req)}
                                     </Collapsible>
                                     <Collapsible trigger={lookup('mrc.creditdetails.title')}>
-                                        {this.createRequestPanel()}
+                                        {this.createCreditTab()}
                                     </Collapsible>
                                     <Collapsible trigger={lookup('mrc.sales.title')}>
                                         {this.createSalesPanel()}

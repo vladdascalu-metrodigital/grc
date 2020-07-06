@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import '../Util/imports';
 import SidebarNavigation from '../Navigation/SidebarNavigation';
@@ -39,7 +39,7 @@ import CreditLimitRequestSubmitted from '../CreditLimit/LimitRequest/RequestSubm
 import CreditLimitCustomerStatus from '../CreditLimit/CustomerStatus';
 
 import QuickCheck from '../QuickCheck';
-import { Tabs, TabList, Tab } from 'react-tabs';
+import { Tab, TabList, Tabs } from 'react-tabs';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
