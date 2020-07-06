@@ -278,7 +278,10 @@ export class ApprovalProcessPresentation extends Component {
     contractUrl(country) {
         switch (country) {
             case 'PL':
-                return 'https://confluence.metrosystems.net/display/MRC/Poland+strategy+and+scorecards';
+                return 'https://confluence.metrosystems.net/display/MRC/Contracts+PL';
+            case 'RO':
+                return 'https://confluence.metrosystems.net/display/MRC/Contracts+RO';
+
             default:
                 return null;
         }
