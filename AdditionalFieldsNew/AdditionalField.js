@@ -54,21 +54,28 @@ export default function AdditionalField(props) {
         switch (type) {
             //NUMBER, TEXT, TEXTAREA, DATE, CHECKBOX, DROPDOWN, DROPDOWN_MULTIPLE, RADIOBUTTON, ATTACHMENT_REF
             case 'NUMBER':
-                return <NumberInput value={oldValue} onChange={onChange} />;
+                return <NumberInput value={oldValue} onChange={onChange} disabled={props.disabled} />;
             case 'TEXT':
-                return <TextInput value={oldValue} onChange={onChange} />;
+                return <TextInput value={oldValue} onChange={onChange} disabled={props.disabled} />;
             case 'TEXTAREA':
-                return <TextArea value={oldValue} onChange={onChange} />;
+                return <TextArea value={oldValue} onChange={onChange} disabled={props.disabled} />;
             case 'DATE':
-                return <DatePicker selected={parseDateForAdditionalField(oldValue)} onChange={onChange} />;
+                return (
+                    <DatePicker
+                        selected={parseDateForAdditionalField(oldValue)}
+                        onChange={onChange}
+                        disabled={props.disabled}
+                    />
+                );
             case 'CHECKBOX':
-                return <CheckBox checked={oldValue} onChange={onChange} />;
+                return <CheckBox checked={oldValue} onChange={onChange} disabled={props.disabled} />;
             case 'DROPDOWN':
                 return (
                     <Select
                         options={getOptionValues(props.elem.countryField.options)}
                         value={oldValue}
                         onChange={onChange}
+                        disabled={props.disabled}
                     />
                 );
             case 'DROPDOWN_MULTIPLE':
@@ -77,6 +84,7 @@ export default function AdditionalField(props) {
                         options={getOptionValues(props.elem.countryField.options)}
                         value={getOptionValues(oldValue)}
                         onChange={onChange}
+                        disabled={props.disabled}
                     />
                 );
             case 'RADIOBUTTON':
@@ -85,6 +93,7 @@ export default function AdditionalField(props) {
                         options={getOptionValues(props.elem.countryField.options)}
                         value={oldValue}
                         onChange={onChange}
+                        disabled={props.disabled}
                     />
                 );
             default:
@@ -108,7 +117,13 @@ export default function AdditionalField(props) {
                 {lookup(props.elem.countryField.field.label)} {mandatory ? '*' : ''}
             </Key>
             <Value>
-                {_.isNil(oldValue) ? '-' : oldValue}
+                {_.isNil(oldValue)
+                    ? '-'
+                    : type !== 'CHECKBOX'
+                    ? oldValue
+                    : oldValue === true
+                    ? lookup('mrc.credittab.additionalFields.checked')
+                    : '-'}
                 {validation && validation === 'isPercentage' ? '%' : null}
             </Value>
         </KeyValueRow>

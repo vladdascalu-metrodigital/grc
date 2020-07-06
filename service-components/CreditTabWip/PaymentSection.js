@@ -18,6 +18,22 @@ export default class PaymentSection extends Component {
         return hasCurrentLimit ? 'CURRENT' : 'WISH';
     }
 
+    getTypeForApproval(customer) {
+        const approvedAmount = _.get(customer, 'limit.new.amount');
+        if (!_.isNil(approvedAmount)) {
+            return 'APPROVED';
+        }
+
+        const wishedAmount = _.get(customer, 'limit.wish.amount');
+        if (!_.isNil(wishedAmount)) {
+            return 'WISH';
+        }
+
+        const currentAmount = _.get(customer, 'limit.current.amount');
+        const hasCurrentLimit = !_.isNil(currentAmount) && !customer.isCashCustomer;
+        return hasCurrentLimit ? 'CURRENT' : 'NEW';
+    }
+
     getPaymentTypeForCreditLimit(customer) {
         const currentProduct = _.get(customer, 'limit.current.product');
         const currentAmount = _.get(customer, 'limit.current.amount');
@@ -29,11 +45,13 @@ export default class PaymentSection extends Component {
     render() {
         const { customer, parent, isCashCustomerRequest } = this.props;
         const isNewCredit = !isCashCustomerRequest;
+        const readOnly = _.get(customer, 'limit.readOnly') === true;
 
         // TODO: check for approval service
-        const applyCreditLimitType = parent === 'approval' ? 'CURRENT' : this.getLimitTypeForCreditLimit(customer);
+        const typeInApproval = parent === 'approval' ? this.getTypeForApproval(customer) : null;
+        const applyCreditLimitType = parent === 'approval' ? typeInApproval : this.getLimitTypeForCreditLimit(customer);
         const applyCreditPaymentMethodType =
-            parent === 'approval' ? 'CURRENT' : this.getPaymentTypeForCreditLimit(customer);
+            parent === 'approval' ? typeInApproval : this.getPaymentTypeForCreditLimit(customer);
         const cashAmount = customer.isCashCustomer ? null : 0;
         const creditOption = customer.isCashCustomer ? 'NONE' : 'CREDITTOCASH';
         return (
@@ -44,9 +62,10 @@ export default class PaymentSection extends Component {
                         title={ts.cash}
                         checked={isCashCustomerRequest}
                         onClick={() => {
+                            // TODO: currently only adapted for real cash customer, how this function works must be discussed in future
                             customer.onChangeCreditOption(cashAmount, null, null, null, creditOption);
                         }}
-                        disabled={!customer.isCashCustomer}
+                        disabled={!customer.isCashCustomer || readOnly}
                     />
                     <CheckCard
                         title={ts.credit}
@@ -65,6 +84,7 @@ export default class PaymentSection extends Component {
                                 );
                             }
                         }}
+                        disabled={readOnly}
                     />
                 </Grid>
             </CreditTableFormSection>

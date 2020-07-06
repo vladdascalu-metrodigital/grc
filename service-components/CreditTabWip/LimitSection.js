@@ -10,14 +10,9 @@ import MrcDatePickerInput from '../../DatePicker';
 import NumberInput from '../../NumberInputNew';
 import MrcCurrency from '../../MrcCurrency';
 import CheckCard from '../../CheckCard';
-import { translatePaymentIfNeeded } from '../../Util/paymentMethodsUtils';
+import { translatePaymentIfNeeded, getPaymentDataByType } from '../../Util/creditDataUtils';
 
 import * as _ from 'lodash';
-
-const _new = (parent, customer, field) => {
-    const prefix = parent === 'approval' ? 'limit.new' : 'limit.wish';
-    return _.get(customer, prefix + (field ? '.' + field : ''));
-};
 
 export default class LimitSection extends Component {
     constructor(props) {
@@ -26,10 +21,10 @@ export default class LimitSection extends Component {
     }
 
     stateFromProps(props) {
-        //TODO: status for approve
-        const { customer } = props;
+        const { customer, parent } = props;
         return {
-            amount: _.get(customer, 'limit.wish.amount'),
+            amount: parent === 'approval' ? _.get(customer, 'limit.new.amount') : _.get(customer, 'limit.wish.amount'),
+            newExpiryAmount: parent === 'approval' ? _.get(customer, 'limit.new.expiry.amount') : null,
         };
     }
 
@@ -40,8 +35,9 @@ export default class LimitSection extends Component {
 
     renderCredit() {
         const { customer, dateFormat } = this.props;
+        const readOnly = _.get(customer, 'limit.readOnly') === true;
 
-        // chosen data type
+        // selected data type
         const limitType = _.isNil(_.get(customer, 'limit.limitType')) ? 'CURRENT' : _.get(customer, 'limit.limitType');
         const paymentMethodType = _.isNil(_.get(customer, 'limit.paymentMethodType'))
             ? 'CURRENT'
@@ -56,14 +52,12 @@ export default class LimitSection extends Component {
         // requested data
         const wishedExpiryAmount = _.get(customer, 'limit.wish.expiry.amount');
         const wishedExpiryDate = _.get(customer, 'limit.wish.expiry.date');
-
         const wishedAmount = _.get(customer, 'limit.wish.amount');
-        const wishedProduct =
-            paymentMethodType === 'CURRENT' ? null : translatePaymentIfNeeded(_.get(customer, 'limit.wish.product'));
-        const wishedPeriod =
-            paymentMethodType === 'CURRENT' ? null : translatePaymentIfNeeded(_.get(customer, 'limit.wish.period'));
-        const wishedDebitType =
-            paymentMethodType === 'CURRENT' ? null : translatePaymentIfNeeded(_.get(customer, 'limit.wish.debitType'));
+        const selectedProduct = translatePaymentIfNeeded(getPaymentDataByType(customer, paymentMethodType, 'product'));
+        const selectedPeriod = translatePaymentIfNeeded(getPaymentDataByType(customer, paymentMethodType, 'period'));
+        const selectedDebitType = translatePaymentIfNeeded(
+            getPaymentDataByType(customer, paymentMethodType, 'debitType')
+        );
 
         const hasCurrentLimit = !_.isNil(currentAmount) && !customer.isCashCustomer;
         const isCurrentLimit = _.isNil(wishedAmount) && limitType === 'CURRENT' && hasCurrentLimit;
@@ -84,15 +78,16 @@ export default class LimitSection extends Component {
                                     this.setState({ amount: null });
                                     customer.onLimitAndExpiryChange(
                                         null,
-                                        wishedProduct,
-                                        wishedPeriod,
-                                        wishedDebitType,
+                                        selectedProduct,
+                                        selectedPeriod,
+                                        selectedDebitType,
                                         null,
                                         null,
                                         'CURRENT',
                                         paymentMethodType
                                     );
                                 }}
+                                disabled={readOnly}
                             >
                                 <CRLimitSetting
                                     limit={currentAmount}
@@ -109,9 +104,9 @@ export default class LimitSection extends Component {
                                     this.setState({ amount: null });
                                     customer.onLimitAndExpiryChange(
                                         null,
-                                        wishedProduct,
-                                        wishedPeriod,
-                                        wishedDebitType,
+                                        selectedProduct,
+                                        selectedPeriod,
+                                        selectedDebitType,
                                         null,
                                         null,
                                         'WISH',
@@ -119,6 +114,7 @@ export default class LimitSection extends Component {
                                     );
                                 }
                             }}
+                            disabled={readOnly}
                         >
                             <CRLimitSetting
                                 limit={wishedAmount}
@@ -143,9 +139,9 @@ export default class LimitSection extends Component {
                                                     if (amount === null || amount === '') {
                                                         customer.onLimitChange(
                                                             null,
-                                                            wishedProduct,
-                                                            wishedPeriod,
-                                                            wishedDebitType,
+                                                            selectedProduct,
+                                                            selectedPeriod,
+                                                            selectedDebitType,
                                                             'WISH',
                                                             paymentMethodType
                                                         );
@@ -154,14 +150,15 @@ export default class LimitSection extends Component {
                                                     if (amount === 'null' || !Number.isNaN(val)) {
                                                         customer.onLimitChange(
                                                             val,
-                                                            wishedProduct,
-                                                            wishedPeriod,
-                                                            wishedDebitType,
+                                                            selectedProduct,
+                                                            selectedPeriod,
+                                                            selectedDebitType,
                                                             'WISH',
                                                             paymentMethodType
                                                         );
                                                     }
                                                 }}
+                                                disabled={readOnly}
                                             />
                                         </div>
                                         <MrcCurrencySymbol />
@@ -175,8 +172,13 @@ export default class LimitSection extends Component {
                                         onClick={() => {
                                             customer.onExpiryChange(null, null);
                                         }}
+                                        disabled={readOnly}
                                     />
-                                    <CheckCard title={ts.expiryDate} checked={!_.isNil(wishedExpiryDate)}>
+                                    <CheckCard
+                                        title={ts.expiryDate}
+                                        checked={!_.isNil(wishedExpiryDate)}
+                                        disabled={readOnly}
+                                    >
                                         <MrcDatePickerInput
                                             className="m-input-element"
                                             onChange={(date) => customer.onExpiryChange(defaultLimitExpiryAmount, date)}
@@ -193,6 +195,7 @@ export default class LimitSection extends Component {
                                             minDate={new Date(new Date().getTime() + 86400000)} // + 1 day in ms
                                             placeholderText={dateFormat}
                                             id={'datepicker-' + this.props.customer.storeNumber + this.props.number}
+                                            disabled={readOnly}
                                         />
                                     </CheckCard>
                                     {/* TODO: tbd in future
@@ -211,6 +214,7 @@ export default class LimitSection extends Component {
                                             onClick={() => {
                                                 customer.onExpiryChange(0, wishedExpiryDate);
                                             }}
+                                            disabled={readOnly}
                                         >
                                             <MrcCurrency type="large-bold">0</MrcCurrency>
                                         </CheckCard>
@@ -221,6 +225,7 @@ export default class LimitSection extends Component {
                                                 onClick={() => {
                                                     customer.onExpiryChange(currentExpiryAmount, wishedExpiryDate);
                                                 }}
+                                                disabled={readOnly}
                                             >
                                                 <MrcCurrency type="large-bold">{currentExpiryAmount}</MrcCurrency>
                                             </CheckCard>
@@ -236,51 +241,74 @@ export default class LimitSection extends Component {
     }
 
     renderApproval() {
-        const { customer, parent } = this.props;
+        const { customer, dateFormat } = this.props;
+        const readOnly = _.get(customer, 'limit.readOnly') === true;
+
+        // TODO: adapted default later
+        // selected data type
+        const limitType = _.isNil(_.get(customer, 'limit.limitType')) ? 'CURRENT' : _.get(customer, 'limit.limitType');
+        const paymentMethodType = _.isNil(_.get(customer, 'limit.paymentMethodType'))
+            ? 'CURRENT'
+            : _.get(customer, 'limit.paymentMethodType');
+
+        const selectedProduct = translatePaymentIfNeeded(getPaymentDataByType(customer, paymentMethodType, 'product'));
+        const selectedPeriod = translatePaymentIfNeeded(getPaymentDataByType(customer, paymentMethodType, 'period'));
+        const selectedDebitType = translatePaymentIfNeeded(
+            getPaymentDataByType(customer, paymentMethodType, 'debitType')
+        );
+
         // current data
         const currentAmount = _.get(customer, 'limit.current.amount');
         const currentExpiryAmount = _.get(customer, 'limit.current.expiry.amount');
-        const currentExpiryDate = _.isNil(_.get(customer, 'limit.current.expiry.date'))
-            ? null
-            : new Date(_.get(customer, 'limit.current.expiry.date'));
+        const currentExpiryDate = _.get(customer, 'limit.current.expiry.date');
 
-        // requested or approved data
-        const wishedForExpiryAmount = _.get(customer, 'limit.wish.expiry.amount');
-        const wishedForExpiryDate = _.get(customer, 'limit.wish.expiry.date');
+        // requested data
+        const wishedExpiryAmount = _.get(customer, 'limit.wish.expiry.amount');
+        const wishedExpiryDate = _.get(customer, 'limit.wish.expiry.date');
         const wishedAmount = _.get(customer, 'limit.wish.amount');
+
+        // last applied data
+        const appliedExpiryAmount = _.get(customer, 'limit.applied.expiry.amount');
+        const appliedExpiryDate = _.get(customer, 'limit.applied.expiry.date');
+        const appliedAmount = _.get(customer, 'limit.applied.amount');
+
+        // new data
+        const newExpiryDate = _.get(customer, 'limit.new.expiry.date');
         const newAmount = _.get(customer, 'limit.new.amount');
 
-        // TODO: check in approval service one by one
-        const newProduct = _new(parent, customer, 'product');
-        const newPeriod = _new(parent, customer, 'period');
-        const newDebitType = _new(parent, customer, 'debitType');
-
-        const isCurrentRequest = _.isNil(wishedAmount) && _.isNil(newAmount);
-        // TODO: this must be adapted for approval service we also need isApprovedRequest
-        const isNewRequest = !_.isNil(_new(parent, customer)) && !isCurrentRequest;
-        const hasLimit = !_.isNil(currentAmount);
-        const isWithoutExpiry = _.isNil(wishedForExpiryAmount) || _.isNil(wishedForExpiryDate);
+        const hasCurrentLimit = !_.isNil(currentAmount) && !customer.isCashCustomer;
+        const isCurrentLimit = _.isNil(newAmount) && limitType === 'CURRENT' && hasCurrentLimit;
+        const hasWishedRequest = !_.isNil(wishedAmount);
+        const isWishedRequest = (!isCurrentLimit || !hasCurrentLimit) && limitType === 'WISH' && !_.isNil(wishedAmount);
+        const hasAppliedRequest = !_.isNil(appliedAmount);
+        const isAppliedRequest =
+            (!isCurrentLimit || !hasCurrentLimit) && limitType === 'APPLIED' && !_.isNil(appliedAmount);
+        const isNewRequest = (!isCurrentLimit || !hasCurrentLimit) && !isWishedRequest && !isAppliedRequest;
+        const isWithoutExpiry = _.isNil(newExpiryDate);
 
         return (
             <CreditTableFormSection title={ts.limit} description={ts.limitdescription}>
                 <React.Fragment>
                     <h4 className="mrc-ui-form-label mb-2">{ts.chooseamount}</h4>
                     <Grid cols={4}>
-                        {hasLimit ? (
+                        {hasCurrentLimit ? (
                             <CheckCard
                                 title={ts.current}
-                                checked={isCurrentRequest}
+                                checked={isCurrentLimit}
                                 onClick={() => {
+                                    this.setState({ amount: null });
                                     customer.onLimitAndExpiryChange(
-                                        currentAmount === 0 ? null : currentAmount,
-                                        newProduct,
-                                        newPeriod,
-                                        newDebitType,
-                                        currentExpiryAmount,
-                                        currentExpiryDate,
-                                        'CURRENT'
+                                        null,
+                                        selectedProduct,
+                                        selectedPeriod,
+                                        selectedDebitType,
+                                        null,
+                                        null,
+                                        'CURRENT',
+                                        paymentMethodType
                                     );
                                 }}
+                                disabled={readOnly}
                             >
                                 <CRLimitSetting
                                     limit={currentAmount}
@@ -289,14 +317,83 @@ export default class LimitSection extends Component {
                                 />
                             </CheckCard>
                         ) : null}
+                        {hasWishedRequest ? (
+                            <CheckCard
+                                title={ts.customerWish}
+                                checked={isWishedRequest}
+                                onClick={() => {
+                                    this.setState({ amount: null });
+                                    customer.onLimitAndExpiryChange(
+                                        wishedAmount,
+                                        selectedProduct,
+                                        selectedPeriod,
+                                        selectedDebitType,
+                                        null,
+                                        null,
+                                        'WISH',
+                                        paymentMethodType
+                                    );
+                                }}
+                                disabled={readOnly}
+                            >
+                                <CRLimitSetting
+                                    limit={wishedAmount}
+                                    limitAfterExpiry={wishedExpiryAmount}
+                                    expiryDate={wishedExpiryDate}
+                                />
+                            </CheckCard>
+                        ) : null}
+                        {hasAppliedRequest ? (
+                            <CheckCard
+                                title={_.get(customer, 'limit.applied.position')}
+                                checked={isAppliedRequest}
+                                onClick={() => {
+                                    this.setState({ amount: null });
+                                    customer.onLimitAndExpiryChange(
+                                        appliedAmount,
+                                        selectedProduct,
+                                        selectedPeriod,
+                                        selectedDebitType,
+                                        null,
+                                        null,
+                                        'APPLIED',
+                                        paymentMethodType
+                                    );
+                                }}
+                                disabled={readOnly}
+                            >
+                                <CRLimitSetting
+                                    limit={appliedAmount}
+                                    limitAfterExpiry={appliedExpiryAmount}
+                                    expiryDate={appliedExpiryDate}
+                                />
+                            </CheckCard>
+                        ) : null}
                         <CheckCard
                             title={ts.new}
                             checked={isNewRequest}
                             onClick={() => {
-                                customer.onLimitAndExpiryChange(null, newProduct, newPeriod, newDebitType, null, null);
+                                if (!isNewRequest) {
+                                    this.setState({ amount: null });
+                                    customer.onLimitAndExpiryChange(
+                                        null,
+                                        selectedProduct,
+                                        selectedPeriod,
+                                        selectedDebitType,
+                                        null,
+                                        null,
+                                        'WISH',
+                                        paymentMethodType
+                                    );
+                                }
                             }}
+                            disabled={readOnly}
                         >
-                            <CRLimitSetting limit={null} limitAfterExpiry={null} expiryDate={null} />
+                            <CRLimitSetting
+                                limit={wishedAmount}
+                                limitAfterExpiry={wishedExpiryAmount}
+                                expiryDate={wishedExpiryDate}
+                            />
                         </CheckCard>
                     </Grid>
                     {isNewRequest ? (
@@ -308,18 +405,33 @@ export default class LimitSection extends Component {
                                     <FlexRow alignItems="baseline">
                                         <div className="mr-3">
                                             <NumberInput
-                                                value={wishedAmount}
-                                                onBlur={() => {
-                                                    customer.onLimitChange(
-                                                        wishedAmount,
-                                                        newProduct,
-                                                        newPeriod,
-                                                        newDebitType,
-                                                        'WISH',
-                                                        null
-                                                    );
+                                                required={true}
+                                                value={_.isNil(this.state.amount) ? '' : this.state.amount}
+                                                onChange={(amount) => {
+                                                    this.setState({ amount: amount });
+                                                    if (amount === null || amount === '') {
+                                                        customer.onLimitChange(
+                                                            null,
+                                                            selectedProduct,
+                                                            selectedPeriod,
+                                                            selectedDebitType,
+                                                            'NEW',
+                                                            paymentMethodType
+                                                        );
+                                                    }
+                                                    const val = parseFloat(amount);
+                                                    if (amount === 'null' || !Number.isNaN(val)) {
+                                                        customer.onLimitChange(
+                                                            val,
+                                                            selectedProduct,
+                                                            selectedPeriod,
+                                                            selectedDebitType,
+                                                            'NEW',
+                                                            paymentMethodType
+                                                        );
+                                                    }
                                                 }}
-                                                onChange={(x) => this.setState({ amount: x })}
+                                                disabled={readOnly}
                                             />
                                         </div>
                                         <MrcCurrencySymbol />
@@ -333,82 +445,63 @@ export default class LimitSection extends Component {
                                         onClick={() => {
                                             customer.onExpiryChange(null, null);
                                         }}
+                                        disabled={readOnly}
                                     />
-                                    <CheckCard title={ts.expiryDate} checked={!_.isNil(wishedForExpiryDate)}>
+                                    <CheckCard
+                                        title={ts.expiryDate}
+                                        checked={!_.isNil(newExpiryDate)}
+                                        disabled={readOnly}
+                                    >
                                         <MrcDatePickerInput
                                             className="m-input-element"
-                                            onChange={(date) => customer.onExpiryChange(wishedForExpiryAmount, date)}
-                                            selected={
-                                                !_.isNil(wishedForExpiryDate) ? new Date(wishedForExpiryDate) : null
+                                            onChange={(date) =>
+                                                customer.onExpiryChange(this.state.newExpiryAmount, date)
                                             }
+                                            onBlur={(event) =>
+                                                customer.onExpiryOnBlur(
+                                                    this.state.newExpiryAmount,
+                                                    event,
+                                                    wishedExpiryDate
+                                                )
+                                            }
+                                            selected={_.isNil(wishedExpiryDate) ? null : new Date(wishedExpiryDate)}
                                             showYearDropdown={true}
-                                            dateFormat={'MM/dd/yyyy'}
+                                            dateFormat={dateFormat}
+                                            minDate={new Date(new Date().getTime() + 86400000)} // + 1 day in ms
+                                            placeholderText={dateFormat}
+                                            id={'datepicker-' + this.props.customer.storeNumber + this.props.number}
+                                            disabled={readOnly}
                                         />
                                     </CheckCard>
-                                    {/* TODO:
+                                    {/* TODO: tbd in future
                                     <GridItem alignSelf="center">
                                         <a>{ts.setExpiryDateForAll}</a>
                                     </GridItem>
                                     */}
                                 </Grid>
-                                <h4 className="mrc-ui-form-label mt-4 mb-2">{ts.resetLimit}</h4>
-                                {!_.isNil(wishedForExpiryDate) ? (
+                                {!_.isNil(newExpiryDate) ? (
+                                    <h4 className="mrc-ui-form-label mt-4 mb-2">{ts.resetLimit}</h4>
+                                ) : null}
+                                {!_.isNil(newExpiryDate) ? (
                                     <Grid cols={3}>
-                                        <CheckCard
-                                            checked={wishedForExpiryAmount === 0}
-                                            onClick={() => {
-                                                customer.onExpiryChange(0, wishedForExpiryDate);
-                                            }}
-                                        >
-                                            <MrcCurrency type="large-bold">0</MrcCurrency>
-                                        </CheckCard>
-                                        {currentExpiryAmount ? (
-                                            <CheckCard
-                                                title={ts.current}
-                                                checked={wishedForExpiryAmount === currentExpiryAmount}
-                                                onClick={() => {
-                                                    customer.onExpiryChange(currentExpiryAmount, wishedForExpiryDate);
-                                                }}
-                                            >
-                                                <MrcCurrency type="large-bold">{currentExpiryAmount}</MrcCurrency>
-                                            </CheckCard>
-                                        ) : null}
-                                        {/* TODO: only in approval service!
-                                        <CheckCard
-                                            title={ts.pick}
-                                            checked={
-                                                wishedForExpiryAmount !== 0 &&
-                                                !_.isNil(wishedForExpiryAmount) &&
-                                                (currentExpiryAmount
-                                                    ? wishedForExpiryAmount !== currentExpiryAmount
-                                                    : true)
-                                            }
-                                            onClick={() => {
-                                                this.state.expiryAmount &&
-                                                    customer.onExpiryChange(
-                                                        this.state.expiryAmount,
-                                                        wishedForExpiryDate
-                                                    );
-                                            }}
-                                        >
-                                            <FlexRow alignItems="baseline">
-                                                <div className="mr-3">
-                                                    <NumberInput
-                                                        onBlur={() => {
-                                                            customer.onExpiryChange(
-                                                                this.state.expiryAmount,
-                                                                wishedForExpiryDate
-                                                            );
-                                                        }}
-                                                        onChange={x => {
-                                                            this.setState({ expiryAmount: x });
-                                                        }}
-                                                    />
-                                                </div>
-                                                <MrcCurrencySymbol type="small" />
-                                            </FlexRow>
-                                        </CheckCard>
-                                        */}
+                                        <FlexRow alignItems="baseline">
+                                            <div className="mr-3">
+                                                <NumberInput
+                                                    required={true}
+                                                    value={
+                                                        _.isNil(this.state.newExpiryAmount)
+                                                            ? ''
+                                                            : this.state.newExpiryAmount
+                                                    }
+                                                    onChange={(amount) => {
+                                                        this.setState({ newExpiryAmount: amount });
+                                                        customer.onExpiryChange(amount, newExpiryDate);
+                                                    }}
+                                                    disabled={readOnly}
+                                                />
+                                            </div>
+                                            <MrcCurrencySymbol type="small" />
+                                        </FlexRow>
                                     </Grid>
                                 ) : null}
                             </Card>

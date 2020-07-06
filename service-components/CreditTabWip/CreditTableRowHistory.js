@@ -11,14 +11,14 @@ import ToggleIndicator from '../../ToggleIndicator';
 import { lookup } from '../../Util/translations';
 import { translations as ts } from './index';
 
-// TODO check change from without new limit class
-export default class CreditTableRowWithNewLimit extends Component {
+export default class CreditTableRowHistory extends Component {
     render() {
         const _new = (parent, obj, path) =>
             parent === 'history' ? _.get(obj, 'limit.current.' + path) : _.get(obj, 'limit.new.' + path);
 
         const _current = (parent, customer, path) =>
             parent === 'history' ? _.get(customer, 'limit.old.' + path) : _.get(customer, 'limit.current.' + path);
+
         const {
             isCashCustomer,
             requestsCash,

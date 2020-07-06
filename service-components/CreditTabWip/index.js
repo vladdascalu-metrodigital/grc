@@ -170,6 +170,16 @@ CreditTab.propTypes = {
                         amount: PropTypes.number,
                     }),
                 }),
+                applied: PropTypes.shape({
+                    amount: PropTypes.number,
+                    debitType: PropTypes.string,
+                    product: PropTypes.string,
+                    period: PropTypes.string,
+                    expiry: PropTypes.shape({
+                        date: PropTypes.string,
+                        amount: PropTypes.number,
+                    }),
+                }),
                 new: PropTypes.shape({
                     amount: PropTypes.number,
                     debitType: PropTypes.string,
@@ -184,6 +194,7 @@ CreditTab.propTypes = {
                 paymentMethodType: PropTypes.string.isRequired,
                 creditOption: PropTypes.string.isRequired,
                 valid: PropTypes.bool.isRequired,
+                readOnly: PropTypes.bool.isRequired,
             }).isRequired,
             availablePayments: PropTypes.array,
             name: PropTypes.string.isRequired,
@@ -197,7 +208,6 @@ CreditTab.propTypes = {
                 hasCustomerAdditionalFields: PropTypes.bool,
                 customerAdditionalFieldsList: PropTypes.arrayOf(PropTypes.object),
                 onChange: PropTypes.func,
-                onBlur: PropTypes.func,
                 editable: PropTypes.bool,
                 disabled: PropTypes.bool,
             }),

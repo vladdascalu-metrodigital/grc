@@ -11,13 +11,11 @@ import ToggleIndicator from '../../ToggleIndicator';
 import { lookup } from '../../Util/translations';
 import { translations as ts } from './index';
 
-export default class CreditTableRowWithoutNewLimit extends Component {
+export default class CreditTableRowCreditLimit extends Component {
     render() {
-        const _current = (parent, customer, path) =>
-            parent === 'history' ? _.get(customer, 'limit.old.' + path) : _.get(customer, 'limit.current.' + path);
+        const _current = (customer, path) => _.get(customer, 'limit.current.' + path);
         const {
             requestsCash,
-            parent,
             customer,
             country,
             id,
@@ -44,13 +42,13 @@ export default class CreditTableRowWithoutNewLimit extends Component {
         const isCurrentAmountWithNewPaymentMethod =
             _.isNil(_.get(customer, 'limit.wish.amount')) && limitType === 'CURRENT' && paymentMethodType !== 'CURRENT';
         const wishedAmount = isCurrentAmountWithNewPaymentMethod
-            ? _current(parent, customer, 'amount')
-            : _.get(customer, 'limit.wish.amount');
+            ? _current(customer, 'amount')
+            : _.get('limit.wish.amount');
         const wishedExpiryAmount = isCurrentAmountWithNewPaymentMethod
-            ? _current(parent, customer, 'expiry.amount')
+            ? _current(customer, 'expiry.amount')
             : _.get(customer, 'limit.wish.expiry.amount');
         const wishedExpiryDate = isCurrentAmountWithNewPaymentMethod
-            ? _current(parent, customer, 'expiry.date')
+            ? _current(customer, 'expiry.date')
             : _.get(customer, 'limit.wish.expiry.date');
 
         // null check is only for existing request
@@ -61,13 +59,13 @@ export default class CreditTableRowWithoutNewLimit extends Component {
             _.isNil(_.get(customer, 'limit.wish.debitType')) &&
             (limitType !== 'CURRENT' || (creditOption === 'NONE' && !_.isNil(wishedAmount)));
         const wishedProduct = isCurrentPaymentMethodWithNewAmount
-            ? _current(parent, customer, 'product')
+            ? _current(customer, 'product')
             : _.get(customer, 'limit.wish.product');
         const wishedPeriod = isCurrentPaymentMethodWithNewAmount
-            ? _current(parent, customer, 'period')
+            ? _current(customer, 'period')
             : _.get(customer, 'limit.wish.period');
         const wishedDebitType = isCurrentPaymentMethodWithNewAmount
-            ? _current(parent, customer, 'debitType')
+            ? _current(customer, 'debitType')
             : _.get(customer, 'limit.wish.debitType');
 
         const isNoChange = limitType === 'CURRENT' && paymentMethodType === 'CURRENT' && _.isNil(wishedAmount);
@@ -109,25 +107,25 @@ export default class CreditTableRowWithoutNewLimit extends Component {
                                 <CRTableCellLimit
                                     country={country}
                                     exhausted={null}
-                                    limit={_current(parent, customer, 'amount')}
+                                    limit={_current(customer, 'amount')}
                                     isBlue
                                 />
                             </Table.D>
                             <Table.D>
                                 <CRTableCellExpiry
-                                    expiryLimit={_current(parent, customer, 'expiry.amount')}
-                                    expiryDate={_current(parent, customer, 'expiry.date')}
+                                    expiryLimit={_current(customer, 'expiry.amount')}
+                                    expiryDate={_current(customer, 'expiry.date')}
                                     isBlue
                                 />
                             </Table.D>
                             <Table.D>
                                 <CRTableCellCreditProduct
-                                    productName={lookup(_current(parent, customer, 'product'))}
+                                    productName={lookup(_current(customer, 'product'))}
                                     productTimePeriod={[
-                                        lookup(_current(parent, customer, 'period')),
-                                        _current(parent, customer, 'period') ? ts.days : '-',
+                                        lookup(_current(customer, 'period')),
+                                        _current(customer, 'period') ? ts.days : '-',
                                     ].join(' ')}
-                                    productPaymentMethod={lookup(_current(parent, customer, 'debitType'))}
+                                    productPaymentMethod={lookup(_current(customer, 'debitType'))}
                                     isBlue
                                 />
                             </Table.D>

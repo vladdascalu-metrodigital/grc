@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import CreditTableRowWithNewLimit from './CreditTableRowWithNewLimit';
-import CreditTableRowWithoutNewLimit from './CreditTableRowWithoutNewLimit';
+import CreditTableRowApproval from './CreditTableRowApproval';
+import CreditTableRowCreditLimit from './CreditTableRowCreditLimit';
+import CreditTableRowHistory from './CreditTableRowHistory';
 
 import * as _ from 'lodash';
 
@@ -29,7 +30,7 @@ export default class CreditTableRow extends Component {
         });
     }
 
-    isCashCustomerMarkedInCreditLimit(customer) {
+    isCashCustomerMarked(customer) {
         // TODO: currently credit customer can't apply this, remove the check later
         if (!customer.isCashCustomer) {
             return false;
@@ -42,7 +43,7 @@ export default class CreditTableRow extends Component {
         return (
             _.get(customer, 'limit.limitType') === 'CURRENT' &&
             _.get(customer, 'limit.paymentMethodType') === 'CURRENT' &&
-            (_.isNil(_.get(customer, 'limit.creditOption')) || _.get(customer, 'limit.creditOption') == 'NONE') &&
+            (_.isNil(_.get(customer, 'limit.creditOption')) || _.get(customer, 'limit.creditOption') === 'NONE') &&
             customer.isCashCustomer
         );
     }
@@ -61,21 +62,19 @@ export default class CreditTableRow extends Component {
         };
 
         // in history, new limit is called current
+        /*
         const hasNewLimit = !_.isNil(
             parent === 'history' ? _.get(customer, 'limit.current') : _.get(customer, 'limit.new')
-        );
+        ) || parent === 'approval';*/
 
-        // TODO: for approval
-        const requestsCash =
-            parent === 'approval'
-                ? _.get(customer, 'limit.new.amount') === 0
-                : this.isCashCustomerMarkedInCreditLimit(customer);
+        const requestsCash = this.isCashCustomerMarked(customer);
 
-        if (hasNewLimit) {
-            // TODO: adapted logic from CreditTableRowWithoutNewLimit in approve and history process
-            return <CreditTableRowWithNewLimit {...{ ...this.props, ...rowProps, requestsCash }} />;
+        if (parent === 'approval') {
+            return <CreditTableRowApproval {...{ ...this.props, ...rowProps, requestsCash }} />;
+        } else if (parent === 'creditlimit') {
+            return <CreditTableRowCreditLimit {...{ ...this.props, ...rowProps, requestsCash }} />;
         } else {
-            return <CreditTableRowWithoutNewLimit {...{ ...this.props, ...rowProps, requestsCash }} />;
+            return <CreditTableRowHistory {...{ ...this.props, ...rowProps, requestsCash }} />;
         }
     }
 }

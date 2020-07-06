@@ -900,6 +900,7 @@ export default class LimitRequestLayout extends Component {
                                       paymentMethodType: _.get(item, 'paymentMethodType'),
                                       creditOption: _.get(item, 'creditOption'),
                                       valid: _.get(item, 'valid') && isAtLeastOneFieldIsInvalid,
+                                      readOnly: readOnly,
                                   },
                                   additionalFields: {
                                       hasCustomerAdditionalFields: hasCustomerAdditionalFields,

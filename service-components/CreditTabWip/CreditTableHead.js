@@ -8,7 +8,7 @@ import { translations as ts } from './index';
 
 export default class CreditTableHead extends Component {
     render() {
-        const { groupLimit, service, country } = this.props;
+        const { groupLimit, parent, country } = this.props;
         return (
             <React.Fragment>
                 <Table.R sticky="credit-table-head-sticky" type="head-light">
@@ -18,7 +18,7 @@ export default class CreditTableHead extends Component {
                     <Table.H colSpan="3">
                         {groupLimit ? (
                             <CRTableHeaderCellCustomerGroupLimit
-                                limit={service === 'history' ? groupLimit.old : groupLimit.current}
+                                limit={parent === 'history' ? groupLimit.old : groupLimit.current}
                                 exhausted={groupLimit.exhausted}
                                 country={country}
                                 subtitle={groupLimit.exhausted ? [ts.exhausted, ts.granted].join('/') : ts.granted}
@@ -30,14 +30,14 @@ export default class CreditTableHead extends Component {
                         {groupLimit ? (
                             <CRTableHeaderCellCustomerGroupLimit
                                 limit={
-                                    service === 'history'
+                                    parent === 'history'
                                         ? groupLimit.current
-                                        : service === 'approval'
+                                        : parent === 'approval'
                                         ? groupLimit.new
                                         : groupLimit.wish
                                 }
                                 country={country}
-                                subtitle={service === 'history' ? ts.newlyGranted : ts.toBeGranted}
+                                subtitle={parent === 'history' ? ts.newlyGranted : ts.toBeGranted}
                                 isGreen
                             />
                         ) : null}
@@ -47,17 +47,22 @@ export default class CreditTableHead extends Component {
                 <Table.R sticky="credit-table-head-sticky" type="head">
                     <Table.H rowSpan="2">{ts.customer}</Table.H>
                     <Table.H colSpan="3">
-                        <CRTableHeaderCellLimitColSpanTitle
-                            title={service === 'history' ? ts.old : ts.current}
-                            isBlue
-                        />
+                        <CRTableHeaderCellLimitColSpanTitle title={parent === 'history' ? ts.old : ts.current} isBlue />
                     </Table.H>
                     <Table.H colSpan="3">
-                        <CRTableHeaderCellLimitColSpanTitle
-                            title={service === 'history' ? ts.current : groupLimit.new ? ts.new : ts.customerWish}
-                            prefix={groupLimit.new ? ts.customerWish : ''}
-                            isGreen
-                        />
+                        {parent === 'creditlimit' ? (
+                            <CRTableHeaderCellLimitColSpanTitle title={ts.customerWish} prefix={''} isGreen />
+                        ) : null}
+                        {parent === 'approval' ? (
+                            <CRTableHeaderCellLimitColSpanTitle title={ts.new} prefix={ts.customerWish} isGreen />
+                        ) : null}
+                        {parent === 'history' ? (
+                            <CRTableHeaderCellLimitColSpanTitle
+                                title={parent === 'history' ? ts.current : groupLimit.new ? ts.new : ts.customerWish}
+                                prefix={groupLimit.new ? ts.customerWish : ''}
+                                isGreen
+                            />
+                        ) : null}
                     </Table.H>
                     <Table.H rowSpan="2"></Table.H>
                 </Table.R>

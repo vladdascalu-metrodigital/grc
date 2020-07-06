@@ -26,6 +26,19 @@ export const getDefaultPayment = (country, availablePayments) => {
     };
 };
 
+export const getPaymentDataByType = (customer, type, field) => {
+    switch (type) {
+        case 'WISH':
+            return _.get(customer, 'limit.wish.' + field);
+        case 'APPLIED':
+            return _.get(customer, 'limit.applied.' + field);
+        case 'NEW':
+            return _.get(customer, 'limit.new.' + field);
+        default:
+            return null;
+    }
+};
+
 export const translatePaymentIfNeeded = (payment) => {
     return _.isNil(payment)
         ? null
