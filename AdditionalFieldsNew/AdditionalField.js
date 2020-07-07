@@ -21,7 +21,7 @@ export default function AdditionalField(props) {
     const mandatory = elem.countryField.mandatory;
     const validation = elem.countryField.validation;
     const type = elem.countryField.field.type;
-    const label = elem.countryField.field.label;
+    const label = lookup(elem.countryField.field.label);
     let oldValue = elem.countryField.field.type === 'TEXTAREA' ? elem.textValue : elem.value;
     const isValidNow =
         props.disabled ||

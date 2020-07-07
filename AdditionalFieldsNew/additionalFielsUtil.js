@@ -1,4 +1,6 @@
-export const orderRequestFields = requestFieldsList => {
+import { lookup } from '../Util/translations';
+
+export const orderRequestFields = (requestFieldsList) => {
     return requestFieldsList && requestFieldsList != null && requestFieldsList.length > 0
         ? requestFieldsList.sort((a, b) => {
               const aOrder =
@@ -34,17 +36,17 @@ export const filterAdditionalFieldsList = (requestFieldList, level, section, cou
         return [];
     }
     const filteredByFieldLevel = requestFieldList.filter(
-        rf => rf.countryField && rf.countryField.level && rf.countryField.level === level
+        (rf) => rf.countryField && rf.countryField.level && rf.countryField.level === level
     );
     const filteredBySection = filteredByFieldLevel.filter(
-        rf =>
+        (rf) =>
             section === undefined ||
             section === null ||
             (rf.countryField && rf.countryField.section && rf.countryField.section === section)
     );
 
     if (level === 'CUSTOMER') {
-        return filteredBySection.filter(rf => rf.storeNumber === storeNumber && rf.customerNumber === customerNumber);
+        return filteredBySection.filter((rf) => rf.storeNumber === storeNumber && rf.customerNumber === customerNumber);
     }
 
     return filteredBySection;
@@ -62,7 +64,7 @@ export const filterAdditionalFieldsByCode = (requestFieldList, code) => {
     }
 
     const filteredByCode = requestFieldList.filter(
-        rf =>
+        (rf) =>
             rf.countryField &&
             rf.countryField.field &&
             rf.countryField.field.code &&
@@ -75,7 +77,7 @@ export const filterAdditionalFieldsByCode = (requestFieldList, code) => {
 export function getDateFormatString() {
     const formatObj = new Intl.DateTimeFormat().formatToParts(new Date());
     return formatObj
-        .map(obj => {
+        .map((obj) => {
             switch (obj.type) {
                 case 'day':
                     return 'dd';
@@ -134,7 +136,7 @@ export function getOptionValues(optionsStr) {
         return [];
     }
 
-    return optionsStr.split(additionalFieldsOptionSeparator);
+    return optionsStr.split(additionalFieldsOptionSeparator).map((v) => [v, lookup(v)]);
 }
 
 export function formatOptionValues(optionsListValues) {
