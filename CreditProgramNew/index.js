@@ -159,7 +159,9 @@ export default class CreditProgram extends Component {
                     <KeyValueGroup>
                         <Key>{lookup('mrc.credittab.creditprogramselection') + ' *'}</Key>
                         <Value>
-                            {_.isEmpty(this.state.selectedCreditProgram) ? '-' : this.state.selectedCreditProgram}
+                            {_.isEmpty(this.state.selectedCreditProgram)
+                                ? '-'
+                                : lookup(this.state.selectedCreditProgram)}
                         </Value>
                     </KeyValueGroup>
                 </BoxWithTitle>

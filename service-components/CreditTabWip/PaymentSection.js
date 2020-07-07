@@ -12,59 +12,28 @@ export default class PaymentSection extends Component {
         super(props);
     }
 
-    getLimitTypeForCreditLimit(customer) {
-        const currentAmount = _.get(customer, 'limit.current.amount');
-        const hasCurrentLimit = !_.isNil(currentAmount) && !customer.isCashCustomer;
-
-        return hasCurrentLimit ? 'CURRENT' : 'WISH';
-    }
-
-    getLimitTypeForApproval(customer) {
-        const currentAmount = _.get(customer, 'limit.current.amount');
-        const hasCurrentLimit = !_.isNil(currentAmount) && !customer.isCashCustomer;
-        return hasCurrentLimit ? 'CURRENT' : 'NEW';
-    }
-
-    getPaymentTypeForCreditLimit(customer) {
+    getTypeToInitializeCredit(customer, parent) {
         const currentProduct = _.get(customer, 'limit.current.product');
         const currentAmount = _.get(customer, 'limit.current.amount');
         const hasCurrentPaymentMethod = !_.isNil(currentAmount) && !_.isNil(currentProduct) && !customer.isCashCustomer;
 
-        return hasCurrentPaymentMethod ? 'CURRENT' : 'WISH';
-    }
-
-    getPaymentTypeForApproval(customer) {
-        const currentProduct = _.get(customer, 'limit.current.product');
-        const currentAmount = _.get(customer, 'limit.current.amount');
-        const hasCurrentPaymentMethod = !_.isNil(currentAmount) && !_.isNil(currentProduct) && !customer.isCashCustomer;
-
-        return hasCurrentPaymentMethod ? 'CURRENT' : 'NEW';
+        return hasCurrentPaymentMethod ? 'CURRENT' : parent === 'approval' ? 'NEW' : 'WISH';
     }
 
     render() {
-        const { customer, parent, isCashCustomerRequest, country } = this.props;
+        const { customer, isCashCustomerRequest, country } = this.props;
         const isNewCredit = !isCashCustomerRequest;
         const readOnly = _.get(customer, 'limit.readOnly') === true;
 
-        // TODO: need to decide what is the default behavior
-        const applyCreditLimitType =
-            parent === 'approval' ? this.getLimitTypeForApproval(customer) : this.getLimitTypeForCreditLimit(customer);
-        const applyCreditPaymentMethodType =
-            parent === 'approval'
-                ? this.getPaymentTypeForApproval(customer)
-                : this.getPaymentTypeForCreditLimit(customer);
+        const applyType = this.getTypeToInitializeCredit(customer);
+        // TODO: To Cash -- should be checked which data is correct if in future this function is implemented
         const cashAmount = customer.isCashCustomer ? null : 0;
         const creditOption = 'CREDITTOCASH';
 
-        // TODO: check for approval service
-        const defaultNewPaymentStats = parent === 'approval' ? 'NEW' : 'WISH';
         const defaultPayment = getDefaultPayment(country, customer.availablePayments);
-        const defaultProduct =
-            applyCreditPaymentMethodType === defaultNewPaymentStats ? defaultPayment.defaultProduct : null;
-        const defaultPeriod =
-            applyCreditPaymentMethodType === defaultNewPaymentStats ? defaultPayment.defaultPeriod : null;
-        const defaultDebitType =
-            applyCreditPaymentMethodType === defaultNewPaymentStats ? defaultPayment.defaultDebitType : null;
+        const defaultProduct = applyType === 'CURRENT' ? null : defaultPayment.defaultProduct;
+        const defaultPeriod = applyType === 'CURRENT' ? null : defaultPayment.defaultPeriod;
+        const defaultDebitType = applyType === 'CURRENT' ? null : defaultPayment.defaultDebitType;
         return (
             <CreditTableFormSection title={ts.payment} description={ts.paymentdescription}>
                 <h4 className="mrc-ui-form-label mb-2">{ts.choosepayment}</h4>
@@ -73,7 +42,7 @@ export default class PaymentSection extends Component {
                         title={ts.cash}
                         checked={isCashCustomerRequest}
                         onClick={() => {
-                            // TODO: currently only adapted for real cash customer, how this function works must be discussed in future
+                            // TODO: To Cash -- currently only adapted for real cash customer, how this works must be discussed in future
                             customer.onChangeCreditOption(cashAmount, null, null, null, creditOption);
                         }}
                         disabled={!customer.isCashCustomer || readOnly}
@@ -90,8 +59,8 @@ export default class PaymentSection extends Component {
                                     defaultDebitType,
                                     null,
                                     null,
-                                    applyCreditLimitType,
-                                    applyCreditPaymentMethodType
+                                    applyType,
+                                    applyType
                                 );
                             }
                         }}
