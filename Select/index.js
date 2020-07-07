@@ -37,10 +37,10 @@ export default class Select extends PureComponent {
     }
 
     validate(v) {
-        let { required, onValidChange, noValue } = this.props;
+        let { required, onValidChange, nullValue } = this.props;
         let isValid = true;
         let nextValidationMessages = [];
-        if (v === noValue && required) {
+        if (v === nullValue && required) {
             isValid = false;
             nextValidationMessages.push(MESSAGE.REQUIRED);
         }
@@ -114,7 +114,7 @@ Select.propTypes = {
     value: numberOrStringType,
     onChange: PropTypes.func,
 
-    noValue: numberOrStringType,
+    nullValue: numberOrStringType,
     status: PropTypes.oneOf(['invalid']),
     onValidChange: PropTypes.func,
     validationMessages: PropTypes.array,

@@ -38,7 +38,6 @@ storiesOf('Forms/Select', module)
                     validationMessages={['mrc.my.custom_message']}
                     options={options}
                     value={selected}
-                    noValue="NULL"
                     onChange={(v) => {
                         action('selection change')(v);
                         setSelected(v);
@@ -55,7 +54,7 @@ storiesOf('Forms/Select', module)
                     required
                     options={options}
                     value={selected}
-                    noValue="NULL"
+                    nullValue="NULL"
                     onChange={(v) => {
                         action('selection change')(v);
                         setSelected(v);
