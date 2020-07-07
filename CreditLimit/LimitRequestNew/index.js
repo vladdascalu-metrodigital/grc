@@ -55,6 +55,7 @@ export default class LimitRequestLayout extends Component {
         this.handleAdditionalFieldsOnChange = this.handleAdditionalFieldsOnChange.bind(this);
         this.handleAdditionalFieldsOnSave = this.handleAdditionalFieldsOnSave.bind(this);
         this.handleAdditionalFieldsOnBlur = this.handleAdditionalFieldsOnBlur.bind(this);
+        this.handleFormSubmit = this.handleFormSubmit.bind(this);
     }
 
     componentWillUnmount() {
@@ -209,7 +210,7 @@ export default class LimitRequestLayout extends Component {
                     !(valid && this.additionalFieldsValid() && this.state.creditProgramValid) ||
                     this.props.request.data.requestDisabled
                 }
-                onClick={this.handleFormSubmit.bind(this, valid)}
+                onClick={(e) => this.handleFormSubmit(e, valid)}
             />
         );
     }
@@ -239,14 +240,14 @@ export default class LimitRequestLayout extends Component {
         }
     }.bind(this);
 
-    handleFormSubmit(e, creditDataValid) {
+    handleFormSubmit = (e, creditDataValid) => {
         e.preventDefault();
         if (!creditDataValid) {
             console.warn('LimitRequest: Form is not valid, abort submit.');
             return;
         }
         this.props.submitRequest(this.props.request.data.id);
-    }
+    };
 
     handleAdditionalFieldsOnSave = (fields) => {
         const newAdditionalFieldsValidations = this.state.additionalFieldsValidations;
