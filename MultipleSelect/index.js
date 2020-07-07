@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import isEqual from 'lodash/isEqual';
 
-import { STATUS, VALIDATION_MESSAGE, CHANGE_DELAY } from '../Util/inputCommons';
+import { STATUS, MESSAGE, CHANGE_DELAY } from '../Util/inputCommons';
 import InputLabel from '../InputLabel';
 import InputValidationMessages from '../InputValidationMessages';
 
@@ -58,7 +58,7 @@ export default class MultipleSelect extends PureComponent {
         let nextValidationMessages = [];
         if (!v && required) {
             isValid = false;
-            nextValidationMessages.push(VALIDATION_MESSAGE.REQUIRED);
+            nextValidationMessages.push(MESSAGE.REQUIRED);
         }
         if (
             this.state &&

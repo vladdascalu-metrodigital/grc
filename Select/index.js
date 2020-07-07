@@ -5,7 +5,7 @@ import isEqual from 'lodash/isEqual';
 
 import SelectIcon from '../icons/SelectIcon';
 import { COLOR as IC } from '../icons';
-import { STATUS, VALIDATION_MESSAGE } from '../Util/inputCommons';
+import { STATUS, MESSAGE } from '../Util/inputCommons';
 import InputLabel from '../InputLabel';
 import InputValidationMessages from '../InputValidationMessages';
 
@@ -37,12 +37,12 @@ export default class Select extends PureComponent {
     }
 
     validate(v) {
-        let { required, onValidChange, noValue } = this.props;
+        let { required, onValidChange, nullValue } = this.props;
         let isValid = true;
         let nextValidationMessages = [];
-        if (v === noValue && required) {
+        if (v === nullValue && required) {
             isValid = false;
-            nextValidationMessages.push(VALIDATION_MESSAGE.REQUIRED);
+            nextValidationMessages.push(MESSAGE.REQUIRED);
         }
         if (
             this.state &&
@@ -114,7 +114,7 @@ Select.propTypes = {
     value: numberOrStringType,
     onChange: PropTypes.func,
 
-    noValue: numberOrStringType,
+    nullValue: numberOrStringType,
     status: PropTypes.oneOf(['invalid']),
     onValidChange: PropTypes.func,
     validationMessages: PropTypes.array,

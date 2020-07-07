@@ -41,6 +41,9 @@ export default function AdditionalField(props) {
             props.onChange(elem, val, isValid);
         }
     };
+
+    let fieldStatus = valid ? null : 'invalid';
+
     // const onBlur = () => {
     //     const theValue = type === 'TEXTAREA' ? elem.textValue : elem.value;
 
@@ -57,6 +60,7 @@ export default function AdditionalField(props) {
             case 'NUMBER':
                 return (
                     <NumberInput
+                        status={fieldStatus}
                         label={label}
                         required={mandatory}
                         value={oldValue}
@@ -67,6 +71,7 @@ export default function AdditionalField(props) {
             case 'TEXT':
                 return (
                     <TextInput
+                        status={fieldStatus}
                         label={label}
                         required={mandatory}
                         value={oldValue}
@@ -77,6 +82,7 @@ export default function AdditionalField(props) {
             case 'TEXTAREA':
                 return (
                     <TextArea
+                        status={fieldStatus}
                         label={label}
                         required={mandatory}
                         value={oldValue}
@@ -87,6 +93,7 @@ export default function AdditionalField(props) {
             case 'DATE':
                 return (
                     <DatePicker
+                        status={fieldStatus}
                         label={label}
                         required={mandatory}
                         selected={parseDateForAdditionalField(oldValue)}
@@ -95,13 +102,22 @@ export default function AdditionalField(props) {
                     />
                 );
             case 'CHECKBOX':
-                return <CheckBox label={label} checked={oldValue} onChange={onChange} disabled={props.disabled} />;
+                return (
+                    <CheckBox
+                        status={fieldStatus}
+                        label={label}
+                        checked={oldValue}
+                        onChange={onChange}
+                        disabled={props.disabled}
+                    />
+                );
             case 'DROPDOWN':
                 return (
                     <Select
+                        status={fieldStatus}
                         label={label}
                         required={mandatory}
-                        options={getOptionValues(props.elem.countryField.options)}
+                        options={getOptionValues(props.elem.countryField.options, label)}
                         value={oldValue}
                         onChange={onChange}
                         disabled={props.disabled}
@@ -110,10 +126,11 @@ export default function AdditionalField(props) {
             case 'DROPDOWN_MULTIPLE':
                 return (
                     <MultipleSelect
+                        status={fieldStatus}
                         label={label}
                         required={mandatory}
-                        options={getOptionValues(props.elem.countryField.options)}
-                        value={getOptionValues(oldValue)}
+                        options={getOptionValues(props.elem.countryField.options, label)}
+                        value={getOptionValues(oldValue, label)}
                         onChange={onChange}
                         disabled={props.disabled}
                     />
@@ -121,9 +138,10 @@ export default function AdditionalField(props) {
             case 'RADIOBUTTON':
                 return (
                     <RadioButtons
+                        status={fieldStatus}
                         label={label}
                         required={mandatory}
-                        options={getOptionValues(props.elem.countryField.options)}
+                        options={getOptionValues(props.elem.countryField.options, label)}
                         value={oldValue}
                         onChange={onChange}
                         disabled={props.disabled}
@@ -136,7 +154,7 @@ export default function AdditionalField(props) {
     };
 
     return props.editable ? (
-        <div className={valid ? 'mrc-input' : 'mrc-input not-valid'}>{generateField()}</div>
+        generateField()
     ) : (
         <KeyValueRow>
             <Key>

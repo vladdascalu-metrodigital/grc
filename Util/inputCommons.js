@@ -6,7 +6,8 @@ export const STATUS = {
     INVALID: 'invalid',
 };
 
-export const VALIDATION_MESSAGE = {
+export const MESSAGE = {
+    PLEASE_SELECT: lookup('mrc.forms.please_select'),
     REQUIRED: lookup('mrc.forms.required'),
     TOO_LOW: lookup('mrc.forms.number_too_low'),
     TOO_HIGH: lookup('mrc.forms.number_too_high'),

@@ -121,7 +121,7 @@ export default class RecentRequestsInfo extends Component {
                     {requestStatus.status != null ? (
                         <p>
                             <span className={requestStatus.status}>
-                                <b>{this.createStatus(requestStatus.status)}</b>
+                                <b>{this.createStatus(requestStatus)}</b>
                                 {requestStatus.status === 'Pending' ? (
                                     <span className="mrc-position"> {lookup('mrc.status.at')}</span>
                                 ) : (
@@ -139,7 +139,7 @@ export default class RecentRequestsInfo extends Component {
                     {requestStatus.status != null ? (
                         <p>
                             <span className={requestStatus.status}>
-                                <b>{this.createStatus(requestStatus.status)}</b>
+                                <b>{this.createStatus(requestStatus)}</b>
                                 <span className="mrc-position"> {lookup('mrc.status.by')}</span>
                                 <span className="mrc-position"> {requestStatus.position}</span>
                             </span>
@@ -166,7 +166,7 @@ export default class RecentRequestsInfo extends Component {
                         {requestStatus.status != null ? (
                             <p>
                                 <span className={requestStatus.status}>
-                                    <b>{this.createStatus(requestStatus.status)}</b>
+                                    <b>{this.createStatus(requestStatus)}</b>
                                     {requestStatus.status != 'Aborted' ? (
                                         <span className="mrc-position"> {lookup('mrc.status.by')}</span>
                                     ) : null}
@@ -235,8 +235,8 @@ export default class RecentRequestsInfo extends Component {
         }
     }
 
-    createStatus(status) {
-        switch (status) {
+    createStatus(requestStatus) {
+        switch (requestStatus.status) {
             case 'Failed':
                 return <span className="span-error uppercase">{lookup('mrc.status.failed')}</span>;
             case 'Activated':
@@ -272,7 +272,7 @@ export default class RecentRequestsInfo extends Component {
             case 'Retry_Getting_Indicators':
                 return <span className="span-error uppercase">{lookup('mrc.status.retry_getting_indicators')}</span>;
             case 'Changed':
-                return <span className="span-success uppercase">{lookup('mrc.status.changed')}</span>;
+                return this.createCustomerStatusForCreditCorrection(requestStatus);
             case 'Manual':
                 return <span className="uppercase">{lookup('mrc.status.manual')}</span>;
             case 'Contract_signed':
@@ -281,6 +281,23 @@ export default class RecentRequestsInfo extends Component {
                 return <span className="span-blue uppercase">{lookup('mrc.status.contractValidated')}</span>;
             default:
                 return <span></span>;
+        }
+    }
+
+    createCustomerStatusForCreditCorrection(requestStatus) {
+        switch (requestStatus.searchedCustomerStatus) {
+            case 'CHANGETOCASH':
+                return <span className="span-success uppercase">{lookup('mrc.status.changed-to-cash')}</span>;
+            case 'HARDBLOCK':
+                return <span className="span-success uppercase">{lookup('mrc.status.hard-blocked')}</span>;
+            case 'SOFTBLOCK':
+                return <span className="span-success uppercase">{lookup('mrc.status.soft-blocked')}</span>;
+            case 'REMOVEBLOCK':
+                return <span className="span-success uppercase">{lookup('mrc.status.block-removed')}</span>;
+            case 'GENERALBLOCK':
+                return <span className="span-success uppercase">{lookup('mrc.status.general-blocked')}</span>;
+            default:
+                return <span className="span-success uppercase">{lookup('mrc.status.changed')}</span>;
         }
     }
 }

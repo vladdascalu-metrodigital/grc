@@ -6,7 +6,7 @@ import isEqual from 'lodash/isEqual';
 
 import { COLOR as IC } from '../icons';
 import CalendarIcon from '../icons/CalendarIcon';
-import { STATUS, VALIDATION_MESSAGE, CHANGE_DELAY } from '../Util/inputCommons';
+import { STATUS, MESSAGE, CHANGE_DELAY } from '../Util/inputCommons';
 import InputLabel from '../InputLabel';
 import InputValidationMessages from '../InputValidationMessages';
 
@@ -53,7 +53,7 @@ export default class DatePicker extends Component {
         let nextValidationMessages = [];
         if (!v && required) {
             isValid = false;
-            nextValidationMessages.push(VALIDATION_MESSAGE.REQUIRED);
+            nextValidationMessages.push(MESSAGE.REQUIRED);
         }
         if (
             this.state &&

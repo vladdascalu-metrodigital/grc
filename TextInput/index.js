@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import { STATUS, VALIDATION_MESSAGE, CHANGE_DELAY } from '../Util/inputCommons';
+import { STATUS, MESSAGE, CHANGE_DELAY } from '../Util/inputCommons';
 import InputLabel from '../InputLabel';
 import InputValidationMessages from '../InputValidationMessages';
 
@@ -39,7 +39,7 @@ export default class TextInput extends Component {
         let nextValidationMessages = [];
         if (required && !v) {
             isValid = false;
-            nextValidationMessages.push(VALIDATION_MESSAGE.REQUIRED);
+            nextValidationMessages.push(MESSAGE.REQUIRED);
         }
         this.setState({
             valid: isValid,
