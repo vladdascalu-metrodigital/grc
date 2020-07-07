@@ -325,8 +325,6 @@ export default class CreditData extends Component {
                 ? null
                 : currentLimitExpiry.resetToLimitAmount;
         if (value) {
-            console.log('-->');
-            console.log(value);
             return (
                 <span className="test">
                     <MrcNumber isCurrency country={this.props.countryForCurrency}>

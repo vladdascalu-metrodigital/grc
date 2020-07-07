@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { displayName } from '../Util';
 import { lookup } from '../Util/translations';
 import Attention from '../icons/attention.svg';
+import MrcNumber from '../MrcNumber';
 
 export default class DetailedCustomerTrigger extends Component {
     PLACEHOLDER = '-';
@@ -19,18 +20,18 @@ export default class DetailedCustomerTrigger extends Component {
     asNumber = (value, country) => {
         if (this.isValidAmount(value))
             return (
-                <mrc-number dynamic={value} show-currency-for-country={country}>
+                <MrcNumber isCurrency country={country}>
                     {value}
-                </mrc-number>
+                </MrcNumber>
             );
         else return this.PLACEHOLDER;
     };
     asNumberForAvailable = (value1, value2, country) => {
         if (this.isValidAmount(value1))
             return (
-                <mrc-number dynamic={value1} show-currency-for-country={country}>
+                <MrcNumber isCurrency country={country}>
                     {value1 - value2}
-                </mrc-number>
+                </MrcNumber>
             );
         else return this.PLACEHOLDER;
     };

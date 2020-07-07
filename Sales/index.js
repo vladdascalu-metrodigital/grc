@@ -6,6 +6,7 @@ import { lookup } from '../Util/translations.js';
 import { Accordion, Collapsible } from '../Accordion';
 import CustomerTrigger from '../CustomerTrigger/presentation';
 import { Table } from '../Table';
+import MrcNumber from '../MrcNumber';
 import * as _ from 'lodash';
 
 export default class Sales extends Component {
@@ -95,7 +96,7 @@ export default class Sales extends Component {
 
     componentDidMount() {
         if (!this.props.mdwData && this.props.getMdwData) {
-            this.props.getMdwData().then(result => {
+            this.props.getMdwData().then((result) => {
                 this.setState({ mdwData: result });
             });
         }
@@ -106,15 +107,19 @@ export default class Sales extends Component {
             return <span>n/a</span>;
         }
         if (sales.original.tag === 'purchase' || sales.original.tag === 'invoices') {
-            return <mrc-number>{value}</mrc-number>;
+            return <MrcNumber>{value}</MrcNumber>;
         } else if (sales.original.tag === 'margin') {
             return (
                 <span>
-                    <mrc-number>{_.isNil(value) ? value : Number(value).toFixed(2)}</mrc-number>%
+                    <MrcNumber>{_.isNil(value) ? value : Number(value).toFixed(2)}</MrcNumber>%
                 </span>
             );
         } else {
-            return <mrc-number show-currency-for-country={sales.original.country}>{value}</mrc-number>;
+            return (
+                <MrcNumber isCurrency country={sales.original.country}>
+                    {value}
+                </MrcNumber>
+            );
         }
     }
 
@@ -197,7 +202,7 @@ export default class Sales extends Component {
             },
         ];
 
-        const behaviourRows = data.behaviourDataList.map(x => {
+        const behaviourRows = data.behaviourDataList.map((x) => {
             return {
                 name: lookup('mrc.mdw.behaviour-' + x.behaviouralCode + '-' + x.country),
                 country: country,
@@ -238,7 +243,7 @@ export default class Sales extends Component {
         }
 
         //For group
-        const collapsibles = mdwData.map(mdwCustomer => {
+        const collapsibles = mdwData.map((mdwCustomer) => {
             const key =
                 mdwCustomer.customerCreditData.storeNumber + '/' + mdwCustomer.customerCreditData.customerNumber;
             const trigger = (
@@ -271,7 +276,7 @@ export default class Sales extends Component {
         return <div>{accordion};</div>;
     }
 
-    createRow = item => {
+    createRow = (item) => {
         return (
             <tr key={item.behaviouralCode}>
                 <th className="row-title">

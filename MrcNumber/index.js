@@ -68,7 +68,7 @@ MrcNumber.defaultProps = {
 };
 
 MrcNumber.propTypes = {
-    children: PropTypes.string,
+    children: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     country: PropTypes.string,
     locale: PropTypes.string,
     isCurrency: PropTypes.bool,

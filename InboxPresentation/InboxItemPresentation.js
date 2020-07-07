@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Bullet, { MODE as BM } from '../Bullet';
 import { lookup } from '../Util/translations';
+
+import Bullet, { MODE as BM } from '../Bullet';
+import MrcNumber from '../MrcNumber';
+import MrcDate from '../MrcDate';
+import MrcDateTime from '../MrcDateTime';
 
 export default class InboxItemPresentation extends Component {
     constructor(props) {
@@ -17,8 +21,8 @@ export default class InboxItemPresentation extends Component {
             this.props.entry.type === 'LIMIT_EXPIRY_REMINDER' ||
             this.props.entry.type === 'LIMIT_EXPIRY_ACTIVATION' ||
             this.props.topic === 'ATTACHMENT_EXPIRY_NOTIFICATION'
-                ? event => this.props.openDetailsOnNewTab(event, this.props.markAsReadURI, this.props.detailsURI)
-                : event => this.props.navigateToDetails(event, this.props.markAsReadURI, this.props.detailsURI);
+                ? (event) => this.props.openDetailsOnNewTab(event, this.props.markAsReadURI, this.props.detailsURI)
+                : (event) => this.props.navigateToDetails(event, this.props.markAsReadURI, this.props.detailsURI);
         return (
             <div className="item-content-wrapper">
                 <a
@@ -59,16 +63,16 @@ export default class InboxItemPresentation extends Component {
                 return (
                     <li>
                         <p>
-                            <mrc-date>{this.props.entry.creationDate}</mrc-date>,&nbsp;
+                            <MrcDate>{this.props.entry.creationDate}</MrcDate>,&nbsp;
                             <span>
                                 {lookup('inbox.auto.reject')}&nbsp;
                                 {this.getPositionText(this.props.entry)}
-                                <mrc-number show-currency-for-country={this.props.entry.country}>
+                                <MrcNumber isCurrency country={this.props.entry.country}>
                                     {this.props.entry.approvedLimit !== undefined &&
                                     this.props.entry.approvedLimit != null
                                         ? this.props.entry.approvedLimit
                                         : this.props.entry.amount}
-                                </mrc-number>
+                                </MrcNumber>
                                 &nbsp;{this.groupLimit()}
                             </span>
                         </p>
@@ -82,16 +86,16 @@ export default class InboxItemPresentation extends Component {
                 return (
                     <li>
                         <p>
-                            <mrc-date>{this.props.entry.creationDate}</mrc-date>,&nbsp;
+                            <MrcDate>{this.props.entry.creationDate}</MrcDate>,&nbsp;
                             <span>
                                 {lookup('inbox.auto.blocked')}&nbsp;
                                 {this.getPositionText(this.props.entry)}
-                                <mrc-number show-currency-for-country={this.props.entry.country}>
+                                <MrcNumber isCurrency country={this.props.entry.country}>
                                     {this.props.entry.approvedLimit !== undefined &&
                                     this.props.entry.approvedLimit != null
                                         ? this.props.entry.approvedLimit
                                         : this.props.entry.amount}
-                                </mrc-number>
+                                </MrcNumber>
                                 &nbsp;{this.groupLimit()}
                             </span>
                         </p>
@@ -101,15 +105,15 @@ export default class InboxItemPresentation extends Component {
                 return (
                     <li>
                         <p>
-                            <mrc-date>{this.props.entry.creationDate}</mrc-date>,&nbsp;
+                            <MrcDate>{this.props.entry.creationDate}</MrcDate>,&nbsp;
                             <span>
                                 {this.props.title}&nbsp;
-                                <mrc-number show-currency-for-country={this.props.entry.country}>
+                                <MrcNumber isCurrency country={this.props.entry.country}>
                                     {this.props.entry.approvedLimit !== undefined &&
                                     this.props.entry.approvedLimit != null
                                         ? this.props.entry.approvedLimit
                                         : this.props.entry.amount}
-                                </mrc-number>
+                                </MrcNumber>
                                 &nbsp;{this.groupLimit()}
                             </span>
                         </p>
@@ -127,8 +131,8 @@ export default class InboxItemPresentation extends Component {
             return (
                 <p>
                     <span className="mrc-inbox-header-title">
-                        <mrc-date>{this.props.entry.issueDate}</mrc-date>, {lookup('inbox.attachmentexpiry.on')}{' '}
-                        <mrc-date>{this.props.entry.expiryDate}</mrc-date>
+                        <MrcDate>{this.props.entry.issueDate}</MrcDate>, {lookup('inbox.attachmentexpiry.on')}{' '}
+                        <MrcDate>{this.props.entry.expiryDate}</MrcDate>
                     </span>
                 </p>
             );
@@ -137,8 +141,8 @@ export default class InboxItemPresentation extends Component {
             return (
                 <li>
                     <p>
-                        <mrc-date>{this.props.entry.creationDate}</mrc-date>,&nbsp;
-                        <span>{this.props.title}</span> <mrc-datetime>{this.props.timeoutAt}</mrc-datetime>
+                        <MrcDate>{this.props.entry.creationDate}</MrcDate>,&nbsp;
+                        <span>{this.props.title}</span> <MrcDateTime>{this.props.timeoutAt}</MrcDateTime>
                     </p>
                 </li>
             );
@@ -147,7 +151,7 @@ export default class InboxItemPresentation extends Component {
             return (
                 <li>
                     <p>
-                        <mrc-date>{this.props.entry.creationDate}</mrc-date>,&nbsp;<span>{this.props.title}</span>
+                        <MrcDate>{this.props.entry.creationDate}</MrcDate>,&nbsp;<span>{this.props.title}</span>
                     </p>
                 </li>
             );
@@ -155,7 +159,7 @@ export default class InboxItemPresentation extends Component {
         return (
             <li>
                 <p>
-                    <mrc-date>{this.props.entry.creationDate}</mrc-date>,&nbsp;<span>{this.props.title}</span>
+                    <MrcDate>{this.props.entry.creationDate}</MrcDate>,&nbsp;<span>{this.props.title}</span>
                 </p>
             </li>
         );
@@ -173,9 +177,9 @@ export default class InboxItemPresentation extends Component {
             return (
                 <span>
                     ({lookup('mrc.groupLimit')}{' '}
-                    <mrc-number show-currency-for-country={this.props.entry.country}>
+                    <MrcNumber isCurrency country={this.props.entry.country}>
                         {this.props.entry.groupAmount}
-                    </mrc-number>
+                    </MrcNumber>
                     ){' '}
                 </span>
             );
@@ -243,7 +247,7 @@ export default class InboxItemPresentation extends Component {
         if (this.props.result === 'inbox.approval.qcr.approved') {
             return (
                 <span className="mrc-inbox-header-title">
-                    <mrc-date>{this.props.creationDate}</mrc-date>, {this.props.title}{' '}
+                    <MrcDate>{this.props.creationDate}</MrcDate>, {this.props.title}{' '}
                     <span className="span-success uppercase">{lookup(this.props.result)}</span>
                     <span> {lookup('mrc.status.by')} MRC System</span>
                 </span>
@@ -252,7 +256,7 @@ export default class InboxItemPresentation extends Component {
         if (this.props.result === 'inbox.approval.qcr.rejected') {
             return (
                 <span className="mrc-inbox-header-title">
-                    <mrc-date>{this.props.creationDate}</mrc-date>, {this.props.title}{' '}
+                    <MrcDate>{this.props.creationDate}</MrcDate>, {this.props.title}{' '}
                     <span className="span-error uppercase">{lookup(this.props.result)}</span>
                     <span> {lookup('mrc.status.by')} MRC System</span>
                 </span>
@@ -260,7 +264,7 @@ export default class InboxItemPresentation extends Component {
         }
         return (
             <span className="mrc-inbox-header-title">
-                <mrc-date>{this.props.creationDate}</mrc-date>, {this.props.title}{' '}
+                <MrcDate>{this.props.creationDate}</MrcDate>, {this.props.title}{' '}
                 <span className="span-blue uppercase">{lookup('inbox.approval.qcr.aborted')}</span>
                 <span> {lookup('mrc.status.by')} MRC System</span>
             </span>
@@ -272,14 +276,14 @@ export default class InboxItemPresentation extends Component {
             const transKey = 'inbox.limitexpiry.in.' + this.props.entry.reminderDays;
             return (
                 <span className="mrc-inbox-header-title">
-                    <mrc-date>{this.props.entry.issueDate}</mrc-date>, {lookup(transKey)}
+                    <MrcDate>{this.props.entry.issueDate}</MrcDate>, {lookup(transKey)}
                 </span>
             );
         }
         if (this.props.entry.type === 'LIMIT_EXPIRY_ACTIVATION') {
             return (
                 <span className="mrc-inbox-header-title">
-                    <mrc-date>{this.props.entry.issueDate}</mrc-date>, {lookup('inbox.limitexpiry.expiration.reset')}
+                    <MrcDate>{this.props.entry.issueDate}</MrcDate>, {lookup('inbox.limitexpiry.expiration.reset')}
                 </span>
             );
         }
@@ -287,7 +291,7 @@ export default class InboxItemPresentation extends Component {
     }
 
     details = () => {
-        return React.Children.map(this.props.children, child => {
+        return React.Children.map(this.props.children, (child) => {
             return React.cloneElement(child, {
                 collapsed: this.state.collapsed,
             });

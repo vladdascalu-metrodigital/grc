@@ -27,7 +27,6 @@ import { NavLink } from 'react-router-dom';
 
 import SegmentedControl from '../SegmentedControl';
 
-import InboxPresentation from '../InboxPresentation';
 import LaunchPad from '../LaunchPad';
 import CustomerSearch from '../CustomerSearch';
 import RecentRequestsInfo from '../RecentRequestsInfo';
@@ -576,62 +575,6 @@ storiesOf('NavLink', module).add('MRC-3820', () => {
 
     return <div>{[someLink, lineBreak, activeLink]}</div>;
 });
-
-storiesOf('InboxPresentation', module).add('standard', () => (
-    <InboxPresentation
-        data={[
-            {
-                amount: '5000',
-                approvedLimit: '20',
-                assignedUserName: null,
-                autoDecision: null,
-                country: 'RU',
-                creationDate: '2020-04-16T11:30:44Z',
-                currentLimit: null,
-                customerName: 'test',
-                customerNumber: '123354',
-                customerStoreNumber: '125',
-                detailsURI: 'test',
-                groupAmount: 7000,
-                groupSize: 2,
-                id: '1',
-                new: true,
-                position: 'CM',
-                requestDate: '2020-04-16T11:30:44Z',
-                topic: 'APPROVAL_STEP_READY',
-                translateKey: 'mrc.label.appliedLimit',
-            },
-            {
-                amount: '5000',
-                confirmationURI: 'test',
-                creationDate: '2020-04-16T11:30:44Z',
-                approvedLimit: '5000',
-                assignedUserName: null,
-                autoDecision: null,
-                country: 'RU',
-                issueDate: '2020-04-16T11:30:44Z',
-                currentLimit: null,
-                customerName: 'test',
-                customerNumber: '123354',
-                customerStoreNumber: '125',
-                detailsURI: 'test',
-                groupAmount: 5000,
-                groupSize: 1,
-                id: '2',
-                new: true,
-                position: 'HOT',
-                requestDate: '2020-04-16T11:30:44Z',
-                topic: 'GENERAL_NOTIFICATION',
-                translateKey: 'mrc.label.appliedLimit',
-            },
-        ]}
-        filterAvailable={true}
-        isTablet={false}
-        confirmNotification={(uri) => console.log('confirmed uri: ' + uri)}
-        onFilterChanged={(filter) => console.log('onchanged filter: ' + filter)}
-        currentFilterValue={() => console.log('currentFilterValue')}
-    />
-));
 
 storiesOf('LaunchPad', module)
     .add('standard desktop', () => (
