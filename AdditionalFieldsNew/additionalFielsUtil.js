@@ -1,4 +1,5 @@
 import { lookup } from '../Util/translations';
+import { MESSAGE } from '../Util/inputCommons';
 
 export const orderRequestFields = (requestFieldsList) => {
     return requestFieldsList && requestFieldsList != null && requestFieldsList.length > 0
@@ -131,12 +132,14 @@ export function formatDateForAdditionalField(date) {
 
 const additionalFieldsOptionSeparator = '|';
 
-export function getOptionValues(optionsStr) {
+export function getOptionValues(optionsStr, fieldLabel) {
     if (optionsStr === undefined || optionsStr === null || optionsStr.trim() === '') {
         return [];
     }
-
-    return optionsStr.split(additionalFieldsOptionSeparator).map((v) => [v, lookup(v)]);
+    return [
+        ['', MESSAGE.PLEASE_SELECT],
+        ...optionsStr.split(additionalFieldsOptionSeparator).map((v) => [v, lookup(fieldLabel + '.' + v)]),
+    ];
 }
 
 export function formatOptionValues(optionsListValues) {
