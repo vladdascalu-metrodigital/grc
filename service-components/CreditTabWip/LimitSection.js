@@ -270,6 +270,7 @@ export default class LimitSection extends Component {
 
         // new data
         const newExpiryDate = _.get(customer, 'limit.new.expiry.date');
+        const newExpiryAmount = _.get(customer, 'limit.new.expiry.amount');
         const newAmount = _.get(customer, 'limit.new.amount');
 
         const hasCurrentLimit = !_.isNil(currentAmount) && !customer.isCashCustomer;
@@ -386,9 +387,9 @@ export default class LimitSection extends Component {
                             disabled={readOnly}
                         >
                             <CRLimitSetting
-                                limit={wishedAmount}
-                                limitAfterExpiry={wishedExpiryAmount}
-                                expiryDate={wishedExpiryDate}
+                                limit={newAmount}
+                                limitAfterExpiry={newExpiryAmount}
+                                expiryDate={newExpiryDate}
                             />
                         </CheckCard>
                     </Grid>
@@ -457,10 +458,10 @@ export default class LimitSection extends Component {
                                                 customer.onExpiryOnBlur(
                                                     this.state.newExpiryAmount,
                                                     event,
-                                                    wishedExpiryDate
+                                                    newExpiryDate
                                                 )
                                             }
-                                            selected={_.isNil(wishedExpiryDate) ? null : new Date(wishedExpiryDate)}
+                                            selected={_.isNil(newExpiryDate) ? null : new Date(newExpiryDate)}
                                             showYearDropdown={true}
                                             dateFormat={dateFormat}
                                             minDate={new Date(new Date().getTime() + 86400000)} // + 1 day in ms

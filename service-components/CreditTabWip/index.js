@@ -67,14 +67,13 @@ export default class CreditTab extends Component {
     }
 
     render() {
-        const { customers, parent, country } = this.props;
+        const { customers, parent, country, dateFormat } = this.props;
         console.log('credit data wip props');
         console.log(this.props);
         return (
             <MainContent>
                 <Grid>
                     {this.props.additionalFields && this.props.additionalFields.hasGroup ? (
-                        // TODO implement additional fields for group
                         <AdditionalFieldsSectionWithDialog
                             onChange={this.props.additionalFields.group.onChange}
                             onBlur={this.props.additionalFields.group.onBlur}
@@ -85,7 +84,6 @@ export default class CreditTab extends Component {
                         />
                     ) : null}
                     {this.props.additionalFields && this.props.additionalFields.hasRequest ? (
-                        // TODO implement additional fields for request
                         <AdditionalFieldsSectionWithDialog
                             onChange={this.props.additionalFields.request.onChange}
                             onBlur={this.props.additionalFields.request.onBlur}
@@ -118,6 +116,7 @@ export default class CreditTab extends Component {
                                               id={'credit-table-sticky-row-' + i}
                                               isZebra={!!(i % 2)}
                                               country={country}
+                                              dateFormat={dateFormat}
                                           />
                                       ))
                                     : null}

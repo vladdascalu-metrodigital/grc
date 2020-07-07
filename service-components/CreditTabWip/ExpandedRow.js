@@ -14,17 +14,36 @@ import { translations as ts } from './index';
 import Grid from '../../Grid';
 
 export default class ExpandedRow extends Component {
+    isNewCreditMarked(customer, parent, isCashCustomerRequest) {
+        if (parent === 'approval') {
+            if (isCashCustomerRequest) {
+                return false;
+            }
+            if (_.get(customer, 'limit.limitType') === 'NEW' || _.get(customer, 'limit.paymentMethodType') === 'NEW') {
+                return true;
+            }
+            // TODO: adapt to existing approval item, need to be tested
+            if (
+                _.get(customer, 'limit.limitType') === 'CURRENT' &&
+                _.get(customer, 'limit.paymentMethodType') === 'CURRENT' &&
+                (!_.isNil(_.get(customer, 'limit.new.amount')) ||
+                    !_.isNil(_.get(customer, 'limit.new.product')) ||
+                    !_.isNil(_.get(customer, 'limit.new.period')) ||
+                    !_.isNil(_.get(customer, 'limit.new.debitType')))
+            ) {
+                return true;
+            }
+        }
+
+        return !isCashCustomerRequest;
+    }
+
     render() {
         const { customer, isExpanded, id, parent } = this.props;
 
-        // TODO: approval service will have more status
-        const newAmount =
-            parent === 'approval' ? _.get(customer, 'limit.new.amount') : _.get(customer, 'limit.wish.amount');
+        const isCashCustomerRequest = this.props.requestsCash;
+        const isNewCredit = this.isNewCreditMarked(customer, parent, isCashCustomerRequest);
 
-        // TODO: this must adapted in approval service
-        const isCashCustomerRequest =
-            parent === 'approval' ? _.get(customer, 'limit.new.amount') === 0 : this.props.requestsCash;
-        const isNewCredit = parent === 'approval' ? _.isNil(newAmount) || newAmount !== 0 : !isCashCustomerRequest;
         const isBlocked = _.get(customer, 'blockingInfo.isBlocked');
         const blockingReasonText = isBlocked ? _.get(customer, 'blockingInfo.blockingReasonText') : null;
         const checkoutCheckCodeText = isBlocked ? _.get(customer, 'blockingInfo.checkoutCheckCodeText') : null;

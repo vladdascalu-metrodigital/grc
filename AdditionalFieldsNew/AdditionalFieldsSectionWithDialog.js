@@ -73,7 +73,7 @@ export default class AdditionalFieldsSectionWithDialog extends React.Component {
                         }}
                         disabled={!this.isAllValid()}
                     >
-                        {lookup('mrc.comments.save')}
+                        {lookup('mrc.additionalFields.save')}
                     </button>
                     <button
                         type="button"
@@ -83,7 +83,7 @@ export default class AdditionalFieldsSectionWithDialog extends React.Component {
                             this.toggleModal();
                         }}
                     >
-                        {lookup('mrc.comments.cancel')}
+                        {lookup('mrc.additionalFields.cancel')}
                     </button>
                 </div>
             </div>
@@ -156,7 +156,7 @@ export default class AdditionalFieldsSectionWithDialog extends React.Component {
                                 this.toggleModal();
                             }}
                             content={this.modalDialogContent()}
-                            title={lookup('mrc.comments.modaltitle')}
+                            title={lookup('mrc.additionalFields.modaltitle')}
                         />
                     ) : null}
                 </BoxWithTitle>

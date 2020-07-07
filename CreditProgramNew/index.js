@@ -130,7 +130,7 @@ export default class CreditProgram extends Component {
                         }}
                         disabled={_.isEmpty(this.state.selectedOption)}
                     >
-                        {lookup('mrc.comments.save')}
+                        {lookup('mrc.creditprogram.save')}
                     </button>
                     <button
                         type="button"
@@ -141,7 +141,7 @@ export default class CreditProgram extends Component {
                             this.toggleModal();
                         }}
                     >
-                        {lookup('mrc.comments.cancel')}
+                        {lookup('mrc.creditprogram.cancel')}
                     </button>
                 </div>
             </div>
@@ -186,7 +186,7 @@ export default class CreditProgram extends Component {
                             this.toggleModal();
                         }}
                         content={this.modalDialogContent()}
-                        title={lookup('mrc.comments.modaltitle')}
+                        title={lookup('mrc.creditprogram.modaltitle')}
                     />
                 ) : null}
             </BoxWithTitle>

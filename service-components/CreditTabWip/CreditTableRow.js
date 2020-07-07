@@ -31,7 +31,7 @@ export default class CreditTableRow extends Component {
     }
 
     isCashCustomerMarked(customer) {
-        // TODO: currently credit customer can't apply this, remove the check later
+        // TODO: To Cash -- currently credit customer can't apply this, remove the check later
         if (!customer.isCashCustomer) {
             return false;
         }

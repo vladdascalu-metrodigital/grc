@@ -12,15 +12,69 @@ import { lookup } from '../../Util/translations';
 import { translations as ts } from './index';
 
 export default class CreditTableRowApproval extends Component {
-    render() {
-        const _new = (customer, path) => _.get(customer, 'limit.new.' + path);
+    retrieveNewCreditData(customer, isNoChangeInNew, limitType, paymentMethodType) {
+        if (isNoChangeInNew) {
+            return null;
+        }
 
+        let amount = null;
+        let product = null;
+        let period = null;
+        let debitType = null;
+        let expiryAmount = null;
+        let expiryDate = null;
+
+        if (limitType === 'CURRENT' && !_.isNil(_.get(customer, 'limit.current.amount'))) {
+            amount = _.get(customer, 'limit.current.amount');
+            expiryAmount = _.get(customer, 'limit.current.expiry.amount');
+            expiryDate = _.get(customer, 'limit.current.expiry.date');
+        } else if (limitType === 'WISH' && !_.isNil(_.get(customer, 'limit.wish.amount'))) {
+            amount = _.get(customer, 'limit.wish.amount');
+            expiryAmount = _.get(customer, 'limit.wish.expiry.amount');
+            expiryDate = _.get(customer, 'limit.wish.expiry.date');
+        } else if (limitType === 'APPLIED' && !_.isNil(_.get(customer, 'limit.applied.amount'))) {
+            amount = _.get(customer, 'limit.applied.amount');
+            expiryAmount = _.get(customer, 'limit.applied.expiry.amount');
+            expiryDate = _.get(customer, 'limit.applied.expiry.date');
+        } else {
+            amount = _.get(customer, 'limit.new.amount');
+            expiryAmount = _.get(customer, 'limit.new.expiry.amount');
+            expiryDate = _.get(customer, 'limit.new.expiry.date');
+        }
+
+        if (paymentMethodType === 'CURRENT' && !_.isNil(_.get(customer, 'limit.current.product'))) {
+            product = _.get(customer, 'limit.current.product');
+            period = _.get(customer, 'limit.current.period');
+            debitType = _.get(customer, 'limit.current.debitType');
+        } else if (paymentMethodType === 'WISH' && !_.isNil(_.get(customer, 'limit.wish.product'))) {
+            product = _.get(customer, 'limit.wish.product');
+            period = _.get(customer, 'limit.wish.period');
+            debitType = _.get(customer, 'limit.wish.debitType');
+        } else if (paymentMethodType === 'APPLIED' && !_.isNil(_.get(customer, 'limit.applied.product'))) {
+            product = _.get(customer, 'limit.applied.product');
+            period = _.get(customer, 'limit.applied.period');
+            debitType = _.get(customer, 'limit.applied.debitType');
+        } else {
+            product = _.get(customer, 'limit.new.product');
+            period = _.get(customer, 'limit.new.period');
+            debitType = _.get(customer, 'limit.new.debitType');
+        }
+
+        return {
+            amount: amount,
+            product: product,
+            period: period,
+            debitType: debitType,
+            expiryAmount: expiryAmount,
+            expiryDate: expiryDate,
+        };
+    }
+
+    render() {
         const _current = (customer, path) => _.get(customer, 'limit.current.' + path);
 
         const {
-            isCashCustomer,
             requestsCash,
-            parent,
             customer,
             country,
             id,
@@ -32,16 +86,16 @@ export default class CreditTableRowApproval extends Component {
             rowType,
         } = this.props;
 
-        const paymentMethodType = _.isNil(_.get(customer, 'limit.paymentMethodType'))
-            ? 'CURRENT'
-            : _.get(customer, 'limit.paymentMethodType');
-        const limitType = _.isNil(_.get(customer, 'limit.limitType')) ? 'CURRENT' : _.get(customer, 'limit.limitType');
+        const isCashCustomer = customer.isCashCustomer;
+
+        const paymentMethodType = _.get(customer, 'limit.paymentMethodType');
+        const limitType = _.get(customer, 'limit.limitType');
 
         const blockingInfo = customer.blockingInfo;
         const isBlocked = _.isNil(blockingInfo) ? false : blockingInfo.isBlocked;
 
         // wish data flag
-        // TODO: wished to cash for credit customer
+        // TODO: To Cash -- wished to cash for credit customer
         const wishedToCash =
             _.get(customer, 'limit.wish.creditOption') === 'CREDITTOCASH' ||
             (_.isNil(_.get(customer, 'limit.wish.amount')) && isCashCustomer) ||
@@ -56,9 +110,7 @@ export default class CreditTableRowApproval extends Component {
         // new data flag
         const isNoChangeInNew =
             limitType === 'CURRENT' && paymentMethodType === 'CURRENT' && _.isNil(_.get(customer, 'limit.new.amount'));
-        // TODO:
-        //const creditOption = _.isNil(_.get(customer, 'limit.creditOption'))? 'NONE' : _.get(customer, 'limit.creditOption');
-        //const newAmount = isNoChangeInNew ? null : 0;
+        const newCreditData = this.retrieveNewCreditData(customer, isNoChangeInNew, limitType, paymentMethodType);
 
         const isValid = _.get(customer, 'limit.valid');
         return (
@@ -89,7 +141,7 @@ export default class CreditTableRowApproval extends Component {
                     </Table.D>
 
                     {isCashCustomer ? (
-                        <Table.D colSpan="3">
+                        <Table.D colSpan="3" rowSpan="2">
                             <CRTableCellPrepaymentCash name={ts.cash} isBlue />
                         </Table.D>
                     ) : (
@@ -154,10 +206,10 @@ export default class CreditTableRowApproval extends Component {
                                 <CRTableCellCreditProduct
                                     productName={_.get(customer, 'limit.wish.product')}
                                     productTimePeriod={[
-                                        lookup(_current(customer, 'limit.wish.period')),
-                                        _current(customer, 'limit.wish.period') ? ts.days : '-',
+                                        lookup(_.get(customer, 'limit.wish.period')),
+                                        _.get(customer, 'limit.wish.period') ? ts.days : '-',
                                     ].join(' ')}
-                                    productPaymentMethod={_.get(customer, 'limit.wish.method')}
+                                    productPaymentMethod={_.get(customer, 'limit.wish.debitType')}
                                 />
                             </Table.D>
                         </React.Fragment>
@@ -182,7 +234,7 @@ export default class CreditTableRowApproval extends Component {
                     onMouseLeave={canToggle ? () => onHover(false) : null}
                 >
                     {requestsCash && !isCashCustomer ? (
-                        <Table.D colSpan="3" rowSpan="2">
+                        <Table.D colSpan="3">
                             <CRTableCellPrepaymentCash name={ts.cash} isGreen />
                         </Table.D>
                     ) : (requestsCash && isCashCustomer) || (!isCashCustomer && isNoChangeInNew) ? (
@@ -195,28 +247,26 @@ export default class CreditTableRowApproval extends Component {
                                 <CRTableCellLimit
                                     country={country}
                                     exhausted={null}
-                                    limit={_new(parent, customer, 'amount')}
+                                    limit={newCreditData.amount}
                                     isGreen
                                 />
                             </Table.D>
 
                             <Table.D>
                                 <CRTableCellExpiry
-                                    expiryLimit={_.get(customer, 'limit.new.expiry.amount')}
-                                    expiryDate={_.get(customer, 'limit.new.expiry.date')}
+                                    expiryLimit={newCreditData.expiryAmount}
+                                    expiryDate={newCreditData.expiryDate}
                                     isGreen
                                 />
                             </Table.D>
 
                             <Table.D borderFix>
                                 <CRTableCellCreditProduct
-                                    productName={_new(parent, customer, 'product')}
+                                    productName={newCreditData.product}
                                     productTimePeriod={
-                                        _new(parent, customer, 'period')
-                                            ? [lookup(_new(parent, customer, 'period')), ts.days].join(' ')
-                                            : '-'
+                                        newCreditData.period ? [lookup(newCreditData.period), ts.days].join(' ') : '-'
                                     }
-                                    productPaymentMethod={_new(parent, customer, 'method')}
+                                    productPaymentMethod={newCreditData.debitType}
                                     isGreen
                                 />
                             </Table.D>
