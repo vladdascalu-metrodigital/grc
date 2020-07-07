@@ -57,8 +57,8 @@ export default class CreditTableRowApproval extends Component {
         const isNoChangeInNew =
             limitType === 'CURRENT' && paymentMethodType === 'CURRENT' && _.isNil(_.get(customer, 'limit.new.amount'));
         // TODO:
-        // const newAmount = isNoChangeInNew ? null : 0;
         //const creditOption = _.isNil(_.get(customer, 'limit.creditOption'))? 'NONE' : _.get(customer, 'limit.creditOption');
+        //const newAmount = isNoChangeInNew ? null : 0;
 
         const isValid = _.get(customer, 'limit.valid');
         return (
@@ -202,8 +202,8 @@ export default class CreditTableRowApproval extends Component {
 
                             <Table.D>
                                 <CRTableCellExpiry
-                                    expiryLimit={_.get(customer, 'limit.wish.expiry.amount')}
-                                    expiryDate={_.get(customer, 'limit.wish.expiry.date')}
+                                    expiryLimit={_.get(customer, 'limit.new.expiry.amount')}
+                                    expiryDate={_.get(customer, 'limit.new.expiry.date')}
                                     isGreen
                                 />
                             </Table.D>
@@ -211,7 +211,11 @@ export default class CreditTableRowApproval extends Component {
                             <Table.D borderFix>
                                 <CRTableCellCreditProduct
                                     productName={_new(parent, customer, 'product')}
-                                    productTimePeriod={[_new(parent, customer, 'period'), ts.days].join(' ')}
+                                    productTimePeriod={
+                                        _new(parent, customer, 'period')
+                                            ? [lookup(_new(parent, customer, 'period')), ts.days].join(' ')
+                                            : '-'
+                                    }
                                     productPaymentMethod={_new(parent, customer, 'method')}
                                     isGreen
                                 />

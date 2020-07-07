@@ -27,13 +27,9 @@ export default class CreditTableRowCreditLimit extends Component {
             rowType,
         } = this.props;
 
-        const paymentMethodType = _.isNil(_.get(customer, 'limit.paymentMethodType'))
-            ? 'CURRENT'
-            : _.get(customer, 'limit.paymentMethodType');
-        const limitType = _.isNil(_.get(customer, 'limit.limitType')) ? 'CURRENT' : _.get(customer, 'limit.limitType');
-        const creditOption = _.isNil(_.get(customer, 'limit.creditOption'))
-            ? 'NONE'
-            : _.get(customer, 'limit.creditOption');
+        const paymentMethodType = _.get(customer, 'limit.paymentMethodType');
+        const limitType = _.get(customer, 'limit.limitType');
+        const creditOption = _.get(customer, 'limit.creditOption');
 
         const isCashCustomer = customer.isCashCustomer;
         const blockingInfo = customer.blockingInfo;
@@ -43,7 +39,7 @@ export default class CreditTableRowCreditLimit extends Component {
             _.isNil(_.get(customer, 'limit.wish.amount')) && limitType === 'CURRENT' && paymentMethodType !== 'CURRENT';
         const wishedAmount = isCurrentAmountWithNewPaymentMethod
             ? _current(customer, 'amount')
-            : _.get('limit.wish.amount');
+            : _.get(customer, 'limit.wish.amount');
         const wishedExpiryAmount = isCurrentAmountWithNewPaymentMethod
             ? _current(customer, 'expiry.amount')
             : _.get(customer, 'limit.wish.expiry.amount');

@@ -43,7 +43,7 @@ export default class CreditTableRow extends Component {
         return (
             _.get(customer, 'limit.limitType') === 'CURRENT' &&
             _.get(customer, 'limit.paymentMethodType') === 'CURRENT' &&
-            (_.isNil(_.get(customer, 'limit.creditOption')) || _.get(customer, 'limit.creditOption') === 'NONE') &&
+            _.get(customer, 'limit.creditOption') === 'NONE' &&
             customer.isCashCustomer
         );
     }

@@ -5,6 +5,7 @@ import CreditTableFormSection from './CreditTableFormSection';
 import { translations as ts } from './index';
 
 import * as _ from 'lodash';
+import { getDefaultPayment } from '../../Util/creditDataUtils';
 
 export default class PaymentSection extends Component {
     constructor(props) {
@@ -18,17 +19,7 @@ export default class PaymentSection extends Component {
         return hasCurrentLimit ? 'CURRENT' : 'WISH';
     }
 
-    getTypeForApproval(customer) {
-        const approvedAmount = _.get(customer, 'limit.new.amount');
-        if (!_.isNil(approvedAmount)) {
-            return 'APPROVED';
-        }
-
-        const wishedAmount = _.get(customer, 'limit.wish.amount');
-        if (!_.isNil(wishedAmount)) {
-            return 'WISH';
-        }
-
+    getLimitTypeForApproval(customer) {
         const currentAmount = _.get(customer, 'limit.current.amount');
         const hasCurrentLimit = !_.isNil(currentAmount) && !customer.isCashCustomer;
         return hasCurrentLimit ? 'CURRENT' : 'NEW';
@@ -42,18 +33,38 @@ export default class PaymentSection extends Component {
         return hasCurrentPaymentMethod ? 'CURRENT' : 'WISH';
     }
 
+    getPaymentTypeForApproval(customer) {
+        const currentProduct = _.get(customer, 'limit.current.product');
+        const currentAmount = _.get(customer, 'limit.current.amount');
+        const hasCurrentPaymentMethod = !_.isNil(currentAmount) && !_.isNil(currentProduct) && !customer.isCashCustomer;
+
+        return hasCurrentPaymentMethod ? 'CURRENT' : 'NEW';
+    }
+
     render() {
-        const { customer, parent, isCashCustomerRequest } = this.props;
+        const { customer, parent, isCashCustomerRequest, country } = this.props;
         const isNewCredit = !isCashCustomerRequest;
         const readOnly = _.get(customer, 'limit.readOnly') === true;
 
-        // TODO: check for approval service
-        const typeInApproval = parent === 'approval' ? this.getTypeForApproval(customer) : null;
-        const applyCreditLimitType = parent === 'approval' ? typeInApproval : this.getLimitTypeForCreditLimit(customer);
+        // TODO: need to decide what is the default behavior
+        const applyCreditLimitType =
+            parent === 'approval' ? this.getLimitTypeForApproval(customer) : this.getLimitTypeForCreditLimit(customer);
         const applyCreditPaymentMethodType =
-            parent === 'approval' ? typeInApproval : this.getPaymentTypeForCreditLimit(customer);
+            parent === 'approval'
+                ? this.getPaymentTypeForApproval(customer)
+                : this.getPaymentTypeForCreditLimit(customer);
         const cashAmount = customer.isCashCustomer ? null : 0;
-        const creditOption = customer.isCashCustomer ? 'NONE' : 'CREDITTOCASH';
+        const creditOption = 'CREDITTOCASH';
+
+        // TODO: check for approval service
+        const defaultNewPaymentStats = parent === 'approval' ? 'NEW' : 'WISH';
+        const defaultPayment = getDefaultPayment(country, customer.availablePayments);
+        const defaultProduct =
+            applyCreditPaymentMethodType === defaultNewPaymentStats ? defaultPayment.defaultProduct : null;
+        const defaultPeriod =
+            applyCreditPaymentMethodType === defaultNewPaymentStats ? defaultPayment.defaultPeriod : null;
+        const defaultDebitType =
+            applyCreditPaymentMethodType === defaultNewPaymentStats ? defaultPayment.defaultDebitType : null;
         return (
             <CreditTableFormSection title={ts.payment} description={ts.paymentdescription}>
                 <h4 className="mrc-ui-form-label mb-2">{ts.choosepayment}</h4>
@@ -74,9 +85,9 @@ export default class PaymentSection extends Component {
                             if (!isNewCredit) {
                                 customer.onLimitAndExpiryChange(
                                     null,
-                                    null,
-                                    null,
-                                    null,
+                                    defaultProduct,
+                                    defaultPeriod,
+                                    defaultDebitType,
                                     null,
                                     null,
                                     applyCreditLimitType,

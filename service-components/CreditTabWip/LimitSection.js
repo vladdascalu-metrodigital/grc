@@ -38,10 +38,8 @@ export default class LimitSection extends Component {
         const readOnly = _.get(customer, 'limit.readOnly') === true;
 
         // selected data type
-        const limitType = _.isNil(_.get(customer, 'limit.limitType')) ? 'CURRENT' : _.get(customer, 'limit.limitType');
-        const paymentMethodType = _.isNil(_.get(customer, 'limit.paymentMethodType'))
-            ? 'CURRENT'
-            : _.get(customer, 'limit.paymentMethodType');
+        const limitType = _.get(customer, 'limit.limitType');
+        const paymentMethodType = _.get(customer, 'limit.paymentMethodType');
 
         // current data
         const currentAmount = _.get(customer, 'limit.current.amount');
@@ -246,10 +244,8 @@ export default class LimitSection extends Component {
 
         // TODO: adapted default later
         // selected data type
-        const limitType = _.isNil(_.get(customer, 'limit.limitType')) ? 'CURRENT' : _.get(customer, 'limit.limitType');
-        const paymentMethodType = _.isNil(_.get(customer, 'limit.paymentMethodType'))
-            ? 'CURRENT'
-            : _.get(customer, 'limit.paymentMethodType');
+        const limitType = _.get(customer, 'limit.limitType');
+        const paymentMethodType = _.get(customer, 'limit.paymentMethodType');
 
         const selectedProduct = translatePaymentIfNeeded(getPaymentDataByType(customer, paymentMethodType, 'product'));
         const selectedPeriod = translatePaymentIfNeeded(getPaymentDataByType(customer, paymentMethodType, 'period'));
