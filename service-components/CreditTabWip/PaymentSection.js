@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Grid from '../../Grid';
 import CheckCard from '../../CheckCard';
 import CreditTableFormSection from './CreditTableFormSection';
-import { translations as ts } from './index';
 
 import * as _ from 'lodash';
 import { getDefaultPayment } from '../../Util/creditDataUtils';
@@ -21,7 +20,8 @@ export default class PaymentSection extends Component {
     }
 
     render() {
-        const { customer, isCashCustomerRequest, country } = this.props;
+        const { customer, isCashCustomerRequest, country, translations } = this.props;
+        const ts = translations;
         const isNewCredit = !isCashCustomerRequest;
         const readOnly = _.get(customer, 'limit.readOnly') === true;
 

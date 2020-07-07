@@ -9,7 +9,6 @@ import CRTableCellCreditProduct from './CRTableCellCreditProduct';
 import CRTableCellPrepaymentCash from './CRTableCellPrepaymentCash';
 import ToggleIndicator from '../../ToggleIndicator';
 import { lookup } from '../../Util/translations';
-import { translations as ts } from './index';
 
 export default class CreditTableRowCreditLimit extends Component {
     render() {
@@ -25,7 +24,9 @@ export default class CreditTableRowCreditLimit extends Component {
             isHovered,
             canToggle,
             rowType,
+            translations,
         } = this.props;
+        const ts = translations;
 
         const paymentMethodType = _.get(customer, 'limit.paymentMethodType');
         const limitType = _.get(customer, 'limit.limitType');

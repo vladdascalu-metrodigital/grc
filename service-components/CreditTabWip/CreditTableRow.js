@@ -90,4 +90,5 @@ CreditTableRow.propTypes = {
     customer: PropTypes.object,
     stickyOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     dateFormat: PropTypes.string,
+    translations: PropTypes.object.isRequired,
 };

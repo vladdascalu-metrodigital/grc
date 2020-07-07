@@ -24,6 +24,7 @@ import CreditTabWip from '../../service-components/CreditTabWip';
 
 import * as _ from 'lodash';
 import CustomerDataGroup from '../../CustomerDataGroup';
+import { displayName } from '../../Util';
 
 export default class LimitRequestLayout extends Component {
     FILE_TYPES = [''];
@@ -400,8 +401,6 @@ export default class LimitRequestLayout extends Component {
             return null;
         }
         const request = _.get(this.props, 'request.data');
-        const customerName = (firstName, lastName) =>
-            firstName && lastName ? firstName + ' ' + lastName : lastName ? lastName : null;
         const requestAdditionalFields = filterAdditionalFieldsList(
             _.get(this.props, 'additionalFields') ? this.props.additionalFields.requestFields : undefined,
             'REQUEST',
@@ -584,10 +583,7 @@ export default class LimitRequestLayout extends Component {
                                           creditOption
                                       );
                                   },
-                                  name: customerName(
-                                      _.get(item, 'customer.firstName'),
-                                      _.get(item, 'customer.lastName')
-                                  ),
+                                  name: displayName(_.get(item, 'customer')),
                                   storeNumber: _.get(item, 'customer.storeNumber'),
                                   number: _.get(item, 'customer.customerNumber'),
                                   blockingInfo: {

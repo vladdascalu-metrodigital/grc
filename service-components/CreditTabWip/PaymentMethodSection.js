@@ -3,7 +3,6 @@ import Select from '../../Select';
 import Card from '../../Card';
 import Grid from '../../Grid';
 import { lookup } from '../../Util/translations';
-import { translations as ts } from './index';
 // import NumberInput from '../../NumberInput';
 import CreditTableFormSection from './CreditTableFormSection';
 import CheckCard from '../../CheckCard';
@@ -71,7 +70,8 @@ export default class PaymentMethodSection extends Component {
     }
 
     renderCredit() {
-        const { customer } = this.props;
+        const { customer, translations } = this.props;
+        const ts = translations;
         const readOnly = _.get(customer, 'limit.readOnly') === true;
 
         const paymentMethodType = _.get(customer, 'limit.paymentMethodType');
@@ -296,7 +296,8 @@ export default class PaymentMethodSection extends Component {
     }
 
     renderApproval() {
-        const { customer } = this.props;
+        const { customer, translations } = this.props;
+        const ts = translations;
         const readOnly = _.get(customer, 'limit.readOnly') === true;
 
         const paymentMethodType = _.get(customer, 'limit.paymentMethodType');

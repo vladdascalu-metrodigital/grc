@@ -4,11 +4,11 @@ import CRTableHeaderCellCustomerGroup from './CRTableHeaderCellCustomerGroup';
 import CRTableHeaderCellCustomerGroupLimit from './CRTableHeaderCellCustomerGroupLimit';
 import CRTableHeaderCellLimitColSpanTitle from './CRTableHeaderCellLimitColSpanTitle';
 import CRTableHeaderCellLimit from './CRTableHeaderCellLimit';
-import { translations as ts } from './index';
 
 export default class CreditTableHead extends Component {
     render() {
-        const { groupLimit, parent, country } = this.props;
+        const { groupLimit, parent, country, translations } = this.props;
+        const ts = translations;
         return (
             <React.Fragment>
                 <Table.R sticky="credit-table-head-sticky" type="head-light">

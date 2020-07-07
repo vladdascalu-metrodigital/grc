@@ -9,7 +9,6 @@ import CRTableCellCreditProduct from './CRTableCellCreditProduct';
 import CRTableCellPrepaymentCash from './CRTableCellPrepaymentCash';
 import ToggleIndicator from '../../ToggleIndicator';
 import { lookup } from '../../Util/translations';
-import { translations as ts } from './index';
 
 export default class CreditTableRowApproval extends Component {
     retrieveNewCreditData(customer, isNoChangeInNew, limitType, paymentMethodType) {
@@ -84,7 +83,9 @@ export default class CreditTableRowApproval extends Component {
             isHovered,
             canToggle,
             rowType,
+            translations,
         } = this.props;
+        const ts = translations;
 
         const isCashCustomer = customer.isCashCustomer;
 

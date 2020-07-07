@@ -10,7 +10,6 @@ import CustomerAdditionalFieldsSection from './CustomerAdditionalFieldsSection';
 
 import * as _ from 'lodash';
 import CreditTableFormSection from './CreditTableFormSection';
-import { translations as ts } from './index';
 import Grid from '../../Grid';
 
 export default class ExpandedRow extends Component {
@@ -39,7 +38,8 @@ export default class ExpandedRow extends Component {
     }
 
     render() {
-        const { customer, isExpanded, id, parent } = this.props;
+        const { customer, isExpanded, id, parent, translations } = this.props;
+        const ts = translations;
 
         const isCashCustomerRequest = this.props.requestsCash;
         const isNewCredit = this.isNewCreditMarked(customer, parent, isCashCustomerRequest);
@@ -94,6 +94,7 @@ export default class ExpandedRow extends Component {
                                         <PaymentMethodSection {...this.props} />
                                         <CustomerAdditionalFieldsSection
                                             additionalFields={this.props.customer.additionalFields}
+                                            translations={ts}
                                         />
                                     </React.Fragment>
                                 ) : null}
@@ -110,6 +111,7 @@ export default class ExpandedRow extends Component {
                                         <PaymentMethodSection {...this.props} />
                                         <CustomerAdditionalFieldsSection
                                             additionalFields={this.props.customer.additionalFields}
+                                            translations={ts}
                                         />
                                     </React.Fragment>
                                 ) : null}
@@ -134,4 +136,5 @@ ExpandedRow.propTypes = {
     stickyOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     dateFormat: PropTypes.string,
     requestsCash: PropTypes.bool,
+    translations: PropTypes.object.isRequired,
 };

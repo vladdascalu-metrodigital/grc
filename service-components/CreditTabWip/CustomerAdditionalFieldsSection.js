@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { translations as ts } from './index';
 import CreditTableFormSection from './CreditTableFormSection';
 import PropTypes from 'prop-types';
 import AdditionalFieldsSection from '../../AdditionalFieldsNew/AdditionalFieldsSection';
@@ -9,6 +8,9 @@ export default class CustomerAdditionalFieldsSection extends Component {
         super(props);
     }
     render() {
+        const { translations } = this.props;
+        const ts = translations;
+
         return this.props.additionalFields && this.props.additionalFields.hasCustomerAdditionalFields ? (
             <CreditTableFormSection
                 title={ts.customerAdditionalFields}
@@ -29,4 +31,5 @@ export default class CustomerAdditionalFieldsSection extends Component {
 }
 CustomerAdditionalFieldsSection.propTypes = {
     additionalFields: PropTypes.object,
+    translations: PropTypes.object.isRequired,
 };

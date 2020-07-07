@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import CreditTableFormSection from './CreditTableFormSection';
-import { translations as ts } from './index';
 import Grid from '../../Grid';
 import Card from '../../Card';
 import CRLimitSetting from './CRLimitSetting';
@@ -34,7 +33,8 @@ export default class LimitSection extends Component {
     }
 
     renderCredit() {
-        const { customer, dateFormat } = this.props;
+        const { customer, dateFormat, translations } = this.props;
+        const ts = translations;
         const readOnly = _.get(customer, 'limit.readOnly') === true;
 
         // selected data type
@@ -239,7 +239,8 @@ export default class LimitSection extends Component {
     }
 
     renderApproval() {
-        const { customer, dateFormat } = this.props;
+        const { customer, dateFormat, translations } = this.props;
+        const ts = translations;
         const readOnly = _.get(customer, 'limit.readOnly') === true;
 
         // TODO: adapted default later
