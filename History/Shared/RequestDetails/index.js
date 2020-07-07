@@ -57,7 +57,7 @@ export default class RequestDetails extends Component {
                     {requestStatus.status != null ? (
                         <p>
                             <span className={requestStatus.status}>
-                                <b>{this.createStatus(requestStatus.status, requestStatus.requestType)}</b>
+                                <b>{this.createStatus(requestStatus, requestStatus.requestType)}</b>
                                 {requestStatus.status === 'Pending' ? (
                                     <span className="mrc-position"> {lookup('mrc.status.at')}</span>
                                 ) : (
@@ -75,7 +75,7 @@ export default class RequestDetails extends Component {
                     {requestStatus.status != null ? (
                         <p>
                             <span className={requestStatus.status}>
-                                <b>{this.createStatus(requestStatus.status)}</b>
+                                <b>{this.createStatus(requestStatus)}</b>
                                 <span className="mrc-position"> {lookup('mrc.status.by')}</span>
                                 <span className="mrc-position"> {requestStatus.position}</span>
                             </span>
@@ -126,15 +126,15 @@ export default class RequestDetails extends Component {
         }
     }
 
-    createStatus(status, requestType) {
-        if (requestType === 'LIMIT_EXPIRY' && status === 'Failed') {
+    createStatus(requestStatus, requestType) {
+        if (requestType === 'LIMIT_EXPIRY' && requestStatus.status === 'Failed') {
             return <span className="span-error uppercase">{lookup('mrc.status.limitExpiryFailed')}</span>;
         }
 
-        if (requestType === 'LIMIT_EXPIRY' && status === 'Activated') {
+        if (requestType === 'LIMIT_EXPIRY' && requestStatus.status === 'Activated') {
             return <span className="span-success uppercase">{lookup('mrc.status.limitExpiryActivated')}</span>;
         }
-        switch (status) {
+        switch (requestStatus.status) {
             case 'Failed':
                 return <span className="span-error uppercase">{lookup('mrc.status.failed')}</span>;
             case 'Activated':
@@ -174,11 +174,28 @@ export default class RequestDetails extends Component {
             case 'Retry_Getting_Indicators':
                 return <span className="span-error uppercase">{lookup('mrc.status.retry_getting_indicators')}</span>;
             case 'Changed':
-                return <span className="span-success uppercase">{lookup('mrc.status.changed')}</span>;
+                return this.createCustomerStatusForCreditCorrection(requestStatus);
             case 'Manual':
                 return <span className="uppercase">{lookup('mrc.status.manual')}</span>;
             default:
                 return <span></span>;
+        }
+    }
+
+    createCustomerStatusForCreditCorrection(requestStatus) {
+        switch (requestStatus.searchedCustomerStatus) {
+            case 'CHANGETOCASH':
+                return <span className="span-success uppercase">{lookup('mrc.status.changed-to-cash')}</span>;
+            case 'HARDBLOCK':
+                return <span className="span-success uppercase">{lookup('mrc.status.hard-blocked')}</span>;
+            case 'SOFTBLOCK':
+                return <span className="span-success uppercase">{lookup('mrc.status.soft-blocked')}</span>;
+            case 'REMOVEBLOCK':
+                return <span className="span-success uppercase">{lookup('mrc.status.block-removed')}</span>;
+            case 'GENERALBLOCK':
+                return <span className="span-success uppercase">{lookup('mrc.status.general-blocked')}</span>;
+            default:
+                return <span className="span-success uppercase">{lookup('mrc.status.changed')}</span>;
         }
     }
 
@@ -218,7 +235,7 @@ export default class RequestDetails extends Component {
                         {requestStatus.status ? (
                             <p>
                                 <span className={requestStatus.status}>
-                                    <b>{this.createStatus(requestStatus.status)}</b>
+                                    <b>{this.createStatus(requestStatus)}</b>
                                     {requestStatus.status !== 'Aborted' ? (
                                         <span className="mrc-position"> {lookup('mrc.status.by')}</span>
                                     ) : null}
