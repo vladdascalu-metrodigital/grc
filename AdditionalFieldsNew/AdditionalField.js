@@ -154,6 +154,26 @@ export default function AdditionalField(props) {
         }
     };
 
+    const generateValue = (oldValue, type, fieldLabel) => {
+        if (_.isNil(oldValue)) {
+            return '-';
+        }
+
+        if (type === 'CHECKBOX') {
+            if (oldValue === true) {
+                return lookup('mrc.credittab.additionalFields.checked');
+            } else {
+                return '-';
+            }
+        }
+
+        if (type === 'DROPDOWN' || type === 'DROPDOWN_MULTIPLE' || type === 'RADIOBUTTON') {
+            return lookup(fieldLabel + '.' + oldValue);
+        }
+
+        return oldValue;
+    };
+
     return props.editable ? (
         generateField()
     ) : (
@@ -162,13 +182,7 @@ export default function AdditionalField(props) {
                 {lookup(props.elem.countryField.field.label)} {mandatory ? '*' : ''}
             </Key>
             <Value>
-                {_.isNil(oldValue)
-                    ? '-'
-                    : type !== 'CHECKBOX'
-                    ? oldValue
-                    : oldValue === true
-                    ? lookup('mrc.credittab.additionalFields.checked')
-                    : '-'}
+                {generateValue(oldValue, type, props.elem.countryField.field.label)}
                 {validation && validation === 'isPercentage' ? '%' : null}
             </Value>
         </KeyValueRow>
