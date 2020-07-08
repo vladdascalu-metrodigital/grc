@@ -8,13 +8,19 @@ import './CRLimitSetting.scss';
 
 export default class CRLimitSetting extends PureComponent {
     render() {
-        let { limit, limitAfterExpiry, expiryDate } = this.props;
+        let { limit, limitAfterExpiry, expiryDate, country } = this.props;
         return (
             <div className="mrc-ui-cr-limit-setting">
-                {!_.isNil(limit) ? <MrcCurrency type="large-bold">{limit}</MrcCurrency> : null}
+                {!_.isNil(limit) ? (
+                    <MrcCurrency country={country} type="large-bold">
+                        {limit}
+                    </MrcCurrency>
+                ) : null}
                 <br />
                 {limitAfterExpiry || limitAfterExpiry === 0 ? (
-                    <MrcCurrency type="small">{limitAfterExpiry}</MrcCurrency>
+                    <MrcCurrency country={country} type="small">
+                        {limitAfterExpiry}
+                    </MrcCurrency>
                 ) : null}
                 <br />
                 {expiryDate ? <MrcDate type="small">{expiryDate}</MrcDate> : null}
@@ -27,4 +33,5 @@ CRLimitSetting.propTypes = {
     limit: PropTypes.number,
     limitAfterExpiry: PropTypes.number,
     expiryDate: PropTypes.string,
+    country: PropTypes.string,
 };

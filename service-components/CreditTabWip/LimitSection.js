@@ -33,7 +33,7 @@ export default class LimitSection extends Component {
     }
 
     renderCredit() {
-        const { customer, dateFormat, translations } = this.props;
+        const { customer, dateFormat, translations, country } = this.props;
         const ts = translations;
         const readOnly = _.get(customer, 'limit.readOnly') === true;
 
@@ -88,6 +88,7 @@ export default class LimitSection extends Component {
                                 disabled={readOnly}
                             >
                                 <CRLimitSetting
+                                    country={country}
                                     limit={currentAmount}
                                     limitAfterExpiry={currentExpiryAmount}
                                     expiryDate={currentExpiryDate}
@@ -115,6 +116,7 @@ export default class LimitSection extends Component {
                             disabled={readOnly}
                         >
                             <CRLimitSetting
+                                country={country}
                                 limit={wishedAmount}
                                 limitAfterExpiry={wishedExpiryAmount}
                                 expiryDate={wishedExpiryDate}
@@ -159,7 +161,7 @@ export default class LimitSection extends Component {
                                                 disabled={readOnly}
                                             />
                                         </div>
-                                        <MrcCurrencySymbol />
+                                        <MrcCurrencySymbol country={country} />
                                     </FlexRow>
                                 </Grid>
                                 <h4 className="mrc-ui-form-label mt-4 mb-1">{ts.chooseexpiry}</h4>
@@ -214,18 +216,25 @@ export default class LimitSection extends Component {
                                             }}
                                             disabled={readOnly}
                                         >
-                                            <MrcCurrency type="large-bold">0</MrcCurrency>
+                                            <MrcCurrency country={country} type="large-bold">
+                                                0
+                                            </MrcCurrency>
                                         </CheckCard>
                                         {!_.isNil(currentExpiryAmountOption) && currentExpiryAmountOption !== 0 ? (
                                             <CheckCard
                                                 title={ts.current}
                                                 checked={wishedExpiryAmount === currentExpiryAmountOption}
                                                 onClick={() => {
-                                                    customer.onExpiryChange(currentExpiryAmount, wishedExpiryDate);
+                                                    customer.onExpiryChange(
+                                                        currentExpiryAmountOption,
+                                                        wishedExpiryDate
+                                                    );
                                                 }}
                                                 disabled={readOnly}
                                             >
-                                                <MrcCurrency type="large-bold">{currentExpiryAmount}</MrcCurrency>
+                                                <MrcCurrency country={country} type="large-bold">
+                                                    {currentExpiryAmountOption}
+                                                </MrcCurrency>
                                             </CheckCard>
                                         ) : null}
                                     </Grid>
@@ -239,7 +248,7 @@ export default class LimitSection extends Component {
     }
 
     renderApproval() {
-        const { customer, dateFormat, translations } = this.props;
+        const { customer, dateFormat, translations, country } = this.props;
         const ts = translations;
         const readOnly = _.get(customer, 'limit.readOnly') === true;
 
@@ -309,6 +318,7 @@ export default class LimitSection extends Component {
                                 disabled={readOnly}
                             >
                                 <CRLimitSetting
+                                    country={country}
                                     limit={currentAmount}
                                     limitAfterExpiry={currentExpiryAmount}
                                     expiryDate={currentExpiryDate}
@@ -335,6 +345,7 @@ export default class LimitSection extends Component {
                                 disabled={readOnly}
                             >
                                 <CRLimitSetting
+                                    country={country}
                                     limit={wishedAmount}
                                     limitAfterExpiry={wishedExpiryAmount}
                                     expiryDate={wishedExpiryDate}
@@ -361,6 +372,7 @@ export default class LimitSection extends Component {
                                 disabled={readOnly}
                             >
                                 <CRLimitSetting
+                                    country={country}
                                     limit={appliedAmount}
                                     limitAfterExpiry={appliedExpiryAmount}
                                     expiryDate={appliedExpiryDate}
@@ -388,6 +400,7 @@ export default class LimitSection extends Component {
                             disabled={readOnly}
                         >
                             <CRLimitSetting
+                                country={country}
                                 limit={newAmount}
                                 limitAfterExpiry={newExpiryAmount}
                                 expiryDate={newExpiryDate}
@@ -432,7 +445,7 @@ export default class LimitSection extends Component {
                                                 disabled={readOnly}
                                             />
                                         </div>
-                                        <MrcCurrencySymbol />
+                                        <MrcCurrencySymbol country={country} />
                                     </FlexRow>
                                 </Grid>
                                 <h4 className="mrc-ui-form-label mt-4 mb-1">{ts.chooseexpiry}</h4>
@@ -498,7 +511,7 @@ export default class LimitSection extends Component {
                                                     disabled={readOnly}
                                                 />
                                             </div>
-                                            <MrcCurrencySymbol type="small" />
+                                            <MrcCurrencySymbol country={country} type="small" />
                                         </FlexRow>
                                     </Grid>
                                 ) : null}

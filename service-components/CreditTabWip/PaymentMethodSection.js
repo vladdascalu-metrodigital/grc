@@ -123,9 +123,21 @@ export default class PaymentMethodSection extends Component {
                                 disabled={readOnly}
                             >
                                 <CRPaymentMethodSetting
-                                    product={_.get(customer, 'limit.current.product')}
-                                    period={_.get(customer, 'limit.current.period')}
-                                    directDebit={_.get(customer, 'limit.current.debitType')}
+                                    product={
+                                        _.isNil(_.get(customer, 'limit.current.product'))
+                                            ? null
+                                            : lookup(_.get(customer, 'limit.current.product'))
+                                    }
+                                    period={
+                                        _.isNil(_.get(customer, 'limit.current.period'))
+                                            ? null
+                                            : lookup(_.get(customer, 'limit.current.period'))
+                                    }
+                                    directDebit={
+                                        _.isNil(_.get(customer, 'limit.current.debitType'))
+                                            ? null
+                                            : lookup(_.get(customer, 'limit.current.debitType'))
+                                    }
                                 />
                             </CheckCard>
                         ) : null}
@@ -369,9 +381,9 @@ export default class PaymentMethodSection extends Component {
                                 disabled={readOnly}
                             >
                                 <CRPaymentMethodSetting
-                                    product={currentProduct}
-                                    period={currentPeriod}
-                                    directDebit={currentDebitType}
+                                    product={_.isNil(currentProduct) ? null : lookup(currentProduct)}
+                                    period={_.isNil(currentPeriod) ? null : lookup(currentPeriod)}
+                                    directDebit={_.isNil(currentDebitType) ? null : lookup(currentDebitType)}
                                 />
                             </CheckCard>
                         ) : null}
@@ -392,9 +404,9 @@ export default class PaymentMethodSection extends Component {
                                 disabled={readOnly}
                             >
                                 <CRPaymentMethodSetting
-                                    product={wishedProduct}
-                                    period={wishedPeriod}
-                                    directDebit={wishedDebitType}
+                                    product={_.isNil(wishedProduct) ? null : lookup(wishedProduct)}
+                                    period={_.isNil(wishedPeriod) ? null : lookup(wishedPeriod)}
+                                    directDebit={_.isNil(wishedDebitType) ? null : lookup(wishedDebitType)}
                                 />
                             </CheckCard>
                         ) : null}
@@ -415,9 +427,9 @@ export default class PaymentMethodSection extends Component {
                                 disabled={readOnly}
                             >
                                 <CRPaymentMethodSetting
-                                    product={appliedProduct}
-                                    period={appliedPeriod}
-                                    directDebit={appliedDebitType}
+                                    product={_.isNil(appliedProduct) ? null : lookup(appliedProduct)}
+                                    period={_.isNil(appliedPeriod) ? null : lookup(appliedPeriod)}
+                                    directDebit={_.isNil(appliedDebitType) ? null : lookup(appliedDebitType)}
                                 />
                             </CheckCard>
                         ) : null}

@@ -17,62 +17,59 @@ import CreditProgram from '../../CreditProgramNew';
 export default class CreditTab extends Component {
     constructor(props) {
         super(props);
-        this.state = this.createTranslationsState();
     }
 
-    createTranslationsState() {
+    createTranslations() {
         return {
-            translations: {
-                blocked: lookup('mrc.status.blocked'),
-                customerWish: lookup('mrc.credittab.customerWish'),
-                current: lookup('mrc.creditdata.current'),
-                pick: lookup('mrc.credittab.pick'),
-                old: lookup('mrc.credittab.old'),
-                new: lookup('mrc.credittab.new'),
-                days: lookup('mrc.credittab.days'),
-                choosepayment: lookup('mrc.credittab.choosepayment'),
-                choosepaymentmethod: lookup('mrc.credittab.choosepaymentmethod'),
-                choosenewpaymentmethod: lookup('mrc.credittab.choosenewpaymentmethod'),
-                chooseamount: lookup('mrc.credittab.chooseamount'),
-                chooselimit: lookup('mrc.credittab.chooselimit'),
-                chooseexpiry: lookup('mrc.credittab.chooseexpiry'),
-                chooseproduct: lookup('mrc.credittab.chooseproduct'),
-                choosedebittype: lookup('mrc.credittab.choosedebittype'),
-                creditperiod: lookup('mrc.creditdetails.creditperiod'),
-                prepayment: lookup('mrc.payment.Prepayment'),
-                cash: lookup('mrc.credittab.cash'),
-                payment: lookup('mrc.credittab.payment'),
-                paymentdescription: lookup('mrc.credittab.paymentdescription'),
-                paymentmethod: lookup('mrc.credittab.paymentmethod'),
-                paymentmethoddescription: lookup('mrc.credittab.paymentmethoddescription'),
-                credit: lookup('mrc.creditdata.title'),
-                limit: lookup('mrc.credittab.limit'),
-                limitdescription: lookup('mrc.credittab.limitdescription'),
-                block: lookup('mrc.credittab.block'),
-                blockdescription: lookup('mrc.credittab.blockdescription'),
-                amount: lookup('mrc.attachments.amount'),
-                resetLimit: lookup('mrc.credittab.resetLimit'),
-                setExpiryDateForAll: lookup('mrc.credittab.setExpiryDateForAll'),
-                withoutExpiry: lookup('mrc.credittab.withoutExpiry'),
-                expiryDate: lookup('mrc.creditdetails.limitExpiryDate'),
-                exhausted: lookup('mrc.credittab.exhausted'),
-                granted: lookup('mrc.credittab.granted'),
-                newlyGranted: lookup('mrc.credittab.newlyGranted'),
-                customerGroup: lookup('mrc.credittab.customerGroup'),
-                toBeGranted: lookup('mrc.credittab.toBeGranted'),
-                expiry: lookup('mrc.credittab.expiry'),
-                customer: lookup('mrc.customerdata.title'),
-                creditproduct: lookup('mrc.creditdetails.creditproduct'),
-                customerAdditionalFields: lookup('mrc.creditdetails.customerAdditionalFields'),
-                customerAdditionalFieldsDescription: lookup('mrc.creditdetails.customerAdditionalFieldsDescription'),
-                nochange: lookup('mrc.credittab.nochange'),
-            },
+            blocked: lookup('mrc.status.blocked'),
+            customerWish: lookup('mrc.credittab.customerWish'),
+            current: lookup('mrc.creditdata.current'),
+            pick: lookup('mrc.credittab.pick'),
+            old: lookup('mrc.credittab.old'),
+            new: lookup('mrc.credittab.new'),
+            days: lookup('mrc.credittab.days'),
+            choosepayment: lookup('mrc.credittab.choosepayment'),
+            choosepaymentmethod: lookup('mrc.credittab.choosepaymentmethod'),
+            choosenewpaymentmethod: lookup('mrc.credittab.choosenewpaymentmethod'),
+            chooseamount: lookup('mrc.credittab.chooseamount'),
+            chooselimit: lookup('mrc.credittab.chooselimit'),
+            chooseexpiry: lookup('mrc.credittab.chooseexpiry'),
+            chooseproduct: lookup('mrc.credittab.chooseproduct'),
+            choosedebittype: lookup('mrc.credittab.choosedebittype'),
+            creditperiod: lookup('mrc.creditdetails.creditperiod'),
+            prepayment: lookup('mrc.payment.Prepayment'),
+            cash: lookup('mrc.credittab.cash'),
+            payment: lookup('mrc.credittab.payment'),
+            paymentdescription: lookup('mrc.credittab.paymentdescription'),
+            paymentmethod: lookup('mrc.credittab.paymentmethod'),
+            paymentmethoddescription: lookup('mrc.credittab.paymentmethoddescription'),
+            credit: lookup('mrc.creditdata.title'),
+            limit: lookup('mrc.credittab.limit'),
+            limitdescription: lookup('mrc.credittab.limitdescription'),
+            block: lookup('mrc.credittab.block'),
+            blockdescription: lookup('mrc.credittab.blockdescription'),
+            amount: lookup('mrc.attachments.amount'),
+            resetLimit: lookup('mrc.credittab.resetLimit'),
+            setExpiryDateForAll: lookup('mrc.credittab.setExpiryDateForAll'),
+            withoutExpiry: lookup('mrc.credittab.withoutExpiry'),
+            expiryDate: lookup('mrc.creditdetails.limitExpiryDate'),
+            exhausted: lookup('mrc.credittab.exhausted'),
+            granted: lookup('mrc.credittab.granted'),
+            newlyGranted: lookup('mrc.credittab.newlyGranted'),
+            customerGroup: lookup('mrc.credittab.customerGroup'),
+            toBeGranted: lookup('mrc.credittab.toBeGranted'),
+            expiry: lookup('mrc.credittab.expiry'),
+            customer: lookup('mrc.customerdata.title'),
+            creditproduct: lookup('mrc.creditdetails.creditproduct'),
+            customerAdditionalFields: lookup('mrc.creditdetails.customerAdditionalFields'),
+            customerAdditionalFieldsDescription: lookup('mrc.creditdetails.customerAdditionalFieldsDescription'),
+            nochange: lookup('mrc.credittab.nochange'),
         };
     }
 
     render() {
         const { customers, parent, country, dateFormat } = this.props;
-        const translations = this.state.translations;
+        const translations = this.createTranslations();
         return (
             <MainContent>
                 <Grid>
