@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import isEqual from 'lodash/isEqual';
+import { lookup } from '../Util/translations';
 
-import { STATUS, MESSAGE, CHANGE_DELAY } from '../Util/inputCommons';
+import { STATUS, CHANGE_DELAY } from '../Util/inputCommons';
 import InputLabel from '../InputLabel';
 import InputValidationMessages from '../InputValidationMessages';
 
@@ -55,23 +56,23 @@ export default class NumberInputNew extends Component {
             v = v.toString();
             if (integer && v.match(int) === null) {
                 isValid = false;
-                nextValidationMessages.push(MESSAGE.NO_INTEGER);
+                nextValidationMessages.push(lookup('mrc.forms.no_integer_number'));
             } else if (v.match(intOrFloat) === null) {
                 isValid = false;
-                nextValidationMessages.push(MESSAGE.NO_NUMBER);
+                nextValidationMessages.push(lookup('mrc.forms.no_number'));
             } else {
                 v = parseFloat(v);
                 if ((min || min === 0) && v < min) {
                     isValid = false;
-                    nextValidationMessages.push(MESSAGE.TOO_LOW);
+                    nextValidationMessages.push(lookup('mrc.forms.number_too_low'));
                 } else if (max && v > max) {
                     isValid = false;
-                    nextValidationMessages.push(MESSAGE.TOO_HIGH);
+                    nextValidationMessages.push(lookup('mrc.forms.number_too_high'));
                 }
             }
         } else if (!v && v !== 0 && required) {
             isValid = false;
-            nextValidationMessages.push(MESSAGE.REQUIRED);
+            nextValidationMessages.push(lookup('mrc.forms.required'));
         }
 
         if (

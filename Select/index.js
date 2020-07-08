@@ -2,10 +2,11 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import isEqual from 'lodash/isEqual';
+import { lookup } from '../Util/translations';
 
 import SelectIcon from '../icons/SelectIcon';
 import { COLOR as IC } from '../icons';
-import { STATUS, MESSAGE } from '../Util/inputCommons';
+import { STATUS } from '../Util/inputCommons';
 import InputLabel from '../InputLabel';
 import InputValidationMessages from '../InputValidationMessages';
 
@@ -42,7 +43,7 @@ export default class Select extends PureComponent {
         let nextValidationMessages = [];
         if (v === nullValue && required) {
             isValid = false;
-            nextValidationMessages.push(MESSAGE.REQUIRED);
+            nextValidationMessages.push(lookup('mrc.forms.required'));
         }
         if (
             this.state &&

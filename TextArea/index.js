@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { lookup } from '../Util/translations';
 import './index.scss';
 
-import { STATUS, MESSAGE, CHANGE_DELAY } from '../Util/inputCommons';
+import { STATUS, CHANGE_DELAY } from '../Util/inputCommons';
 import InputLabel from '../InputLabel';
 import InputValidationMessages from '../InputValidationMessages';
 
@@ -38,7 +39,7 @@ export default class TextArea extends Component {
         let nextValidationMessages = [];
         if (required && !v) {
             isValid = false;
-            nextValidationMessages.push(MESSAGE.REQUIRED);
+            nextValidationMessages.push(lookup('mrc.forms.required'));
         }
         this.setState({
             valid: isValid,

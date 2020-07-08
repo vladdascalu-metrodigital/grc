@@ -1,5 +1,4 @@
 import { lookup } from '../Util/translations';
-import { MESSAGE } from '../Util/inputCommons';
 
 export const orderRequestFields = (requestFieldsList) => {
     return requestFieldsList && requestFieldsList != null && requestFieldsList.length > 0
@@ -137,7 +136,7 @@ export function getOptionValues(optionsStr, fieldLabel) {
         return [];
     }
     return [
-        ['', MESSAGE.PLEASE_SELECT],
+        ['', lookup('mrc.forms.please_select')],
         ...optionsStr.split(additionalFieldsOptionSeparator).map((v) => [v, lookup(fieldLabel + '.' + v)]),
     ];
 }

@@ -3,10 +3,11 @@ import ReactDatePicker from 'react-datepicker';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import isEqual from 'lodash/isEqual';
+import { lookup } from '../Util/translations';
 
 import { COLOR as IC } from '../icons';
 import CalendarIcon from '../icons/CalendarIcon';
-import { STATUS, MESSAGE, CHANGE_DELAY } from '../Util/inputCommons';
+import { STATUS, CHANGE_DELAY } from '../Util/inputCommons';
 import InputLabel from '../InputLabel';
 import InputValidationMessages from '../InputValidationMessages';
 
@@ -53,7 +54,7 @@ export default class DatePicker extends Component {
         let nextValidationMessages = [];
         if (!v && required) {
             isValid = false;
-            nextValidationMessages.push(MESSAGE.REQUIRED);
+            nextValidationMessages.push(lookup('mrc.forms.required'));
         }
         if (
             this.state &&
