@@ -40,6 +40,7 @@ export default class CreditTableRow extends Component {
             return true;
         }
 
+        // edge case for existing old data
         return (
             _.get(customer, 'limit.limitType') === 'CURRENT' &&
             _.get(customer, 'limit.paymentMethodType') === 'CURRENT' &&

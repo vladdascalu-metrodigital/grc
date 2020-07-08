@@ -56,7 +56,7 @@ export default class CreditTab extends Component {
             exhausted: lookup('mrc.credittab.exhausted'),
             granted: lookup('mrc.credittab.granted'),
             newlyGranted: lookup('mrc.credittab.newlyGranted'),
-            customerGroup: lookup('mrc.credittab.customerGroup'),
+            customergroup: lookup('mrc.credittab.customergroup'),
             toBeGranted: lookup('mrc.credittab.toBeGranted'),
             expiry: lookup('mrc.credittab.expiry'),
             customer: lookup('mrc.customerdata.title'),

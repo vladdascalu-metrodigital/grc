@@ -35,6 +35,7 @@ storiesOf('Services/Credit Tab WIP', module)
                         paymentMethodType: 'WISH',
                         valid: true,
                         readOnly: false,
+                        creditOption: 'NEWCREDIT',
                     },
                     availablePayments: [
                         {
@@ -319,6 +320,7 @@ storiesOf('Services/Credit Tab WIP', module)
                         limitType: 'CURRENT',
                         paymentMethodType: 'CURRENT',
                         valid: true,
+                        creditOption: 'NEWCREDIT',
                     },
                     availablePayments: [
                         {
@@ -603,6 +605,7 @@ storiesOf('Services/Credit Tab WIP', module)
                         limitType: 'CURRENT',
                         paymentMethodType: 'CURRENT',
                         valid: true,
+                        creditOption: 'NEWCREDIT',
                     },
                     availablePayments: [
                         {
@@ -880,8 +883,8 @@ storiesOf('Services/Credit Tab WIP', module)
                         wish: {},
                         limitType: 'CURRENT',
                         paymentMethodType: 'CURRENT',
-                        valid: false,
-                        creditOption: 'NEWCREDIT',
+                        valid: true,
+                        creditOption: 'CREDITTOCASH',
                     },
                     availablePayments: [
                         {
@@ -1162,6 +1165,7 @@ storiesOf('Services/Credit Tab WIP', module)
                         limitType: 'WISH',
                         paymentMethodType: 'WISH',
                         valid: false,
+                        creditOption: 'NEWCREDIT',
                     },
                     availablePayments: [
                         {
@@ -1441,7 +1445,7 @@ storiesOf('Services/Credit Tab WIP', module)
                         limitType: 'CURRENT',
                         paymentMethodType: 'CURRENT',
                         valid: true,
-                        creditOption: 'NONE',
+                        creditOption: 'CREDITTOCASH',
                     },
                     availablePayments: [
                         {
@@ -1726,7 +1730,7 @@ storiesOf('Services/Credit Tab WIP', module)
                         },
                         limitType: 'CURRENT',
                         paymentMethodType: 'CURRENT',
-                        creditOption: 'NONE',
+                        creditOption: 'NEWCREDIT',
                         valid: true,
                     },
                     availablePayments: [
@@ -2009,6 +2013,7 @@ storiesOf('Services/Credit Tab WIP', module)
                         limitType: 'CURRENT',
                         paymentMethodType: 'CURRENT',
                         valid: true,
+                        creditOption: 'CREDITTOCASH',
                     },
                     availablePayments: [
                         {
@@ -2298,6 +2303,7 @@ storiesOf('Services/Credit Tab WIP', module)
                         limitType: 'WISH',
                         paymentMethodType: 'WISH',
                         valid: false,
+                        creditOption: 'NEWCREDIT',
                     },
                     availablePayments: [
                         {
@@ -2586,6 +2592,7 @@ storiesOf('Services/Credit Tab WIP', module)
                         limitType: 'WISH',
                         paymentMethodType: 'WISH',
                         valid: true,
+                        creditOption: 'NEWCREDIT',
                     },
                     availablePayments: [
                         {
@@ -2873,7 +2880,7 @@ storiesOf('Services/Credit Tab WIP', module)
                         },
                         limitType: 'CURRENT',
                         paymentMethodType: 'WISH',
-                        creditOption: 'NONE',
+                        creditOption: 'NEWCREDIT',
                         valid: true,
                     },
                     availablePayments: [
@@ -3166,9 +3173,10 @@ storiesOf('Services/Credit Tab WIP', module)
                             debitType: 'Basislastschriftmandat',
                             expiry: { amount: 1000, date: '4/2/2020' },
                         },
-                        limitType: 'CURRENT',
-                        paymentMethodType: 'CURRENT',
+                        limitType: 'WISH',
+                        paymentMethodType: 'WISH',
                         valid: true,
+                        creditOption: 'NEWCREDIT',
                     },
                     availablePayments: [
                         {
@@ -3515,6 +3523,7 @@ storiesOf('Services/Credit Tab WIP', module)
                         paymentMethodType: 'CURRENT',
                         valid: true,
                         readOnly: false,
+                        creditOption: 'NEWCREDIT',
                     },
                     availablePayments: [
                         {
@@ -4126,7 +4135,7 @@ storiesOf('Services/Credit Tab WIP', module)
                         paymentMethodType: 'CURRENT',
                         valid: true,
                         readOnly: false,
-                        creditOption: 'NONE',
+                        creditOption: 'CREDITTOCASH',
                     },
                     availablePayments: [
                         {
@@ -4479,12 +4488,11 @@ storiesOf('Services/Credit Tab WIP', module)
                             expiry: { amount: null, date: null },
                         },
                         applied: {
-                            amount: 12000,
-                            product: 'METRO Cash',
-                            period: '12',
-                            debitType: 'Basislastschriftmandat',
-                            expiry: { amount: 1000, date: '4/2/2020' },
-                            position: 'CM',
+                            amount: null,
+                            product: null,
+                            period: null,
+                            debitType: null,
+                            expiry: null,
                         },
                         new: {
                             amount: null,
@@ -4803,7 +4811,7 @@ storiesOf('Services/Credit Tab WIP', module)
                         paymentMethodType: 'CURRENT',
                         valid: true,
                         readOnly: false,
-                        creditOption: 'NONE',
+                        creditOption: 'CREDITTOCASH',
                     },
                     availablePayments: [
                         {
@@ -4850,12 +4858,11 @@ storiesOf('Services/Credit Tab WIP', module)
                             expiry: { amount: 1000, date: '4/2/2020' },
                         },
                         applied: {
-                            amount: 12000,
-                            product: 'METRO Cash',
-                            period: '12',
-                            debitType: 'Basislastschriftmandat',
-                            expiry: { amount: 1000, date: '4/2/2020' },
-                            position: 'CM',
+                            amount: null,
+                            product: null,
+                            period: null,
+                            debitType: null,
+                            expiry: null,
                         },
                         new: {
                             amount: null,
@@ -5136,7 +5143,7 @@ storiesOf('Services/Credit Tab WIP', module)
                 },
                 {
                     onAmountChange: () => null,
-                    name: 'Approval 1: Cash customer, has wish, applied current',
+                    name: 'Approval 1: Cash customer, has wish, applied cash',
                     storeNumber: 10,
                     number: 997,
                     isCashCustomer: true,
@@ -5221,11 +5228,11 @@ storiesOf('Services/Credit Tab WIP', module)
                             expiry: { amount: 1000, date: '4/2/2020' },
                         },
                         applied: {
-                            amount: 15000,
-                            product: 'METRO Cash',
-                            period: '15',
-                            debitType: 'Basislastschriftmandat',
-                            expiry: { amount: 1000, date: '4/2/2020' },
+                            amount: null,
+                            product: null,
+                            period: null,
+                            debitType: null,
+                            expiry: null,
                         },
                         new: {
                             amount: null,
@@ -5526,12 +5533,11 @@ storiesOf('Services/Credit Tab WIP', module)
                             expiry: { amount: 1000, date: '4/2/2020' },
                         },
                         applied: {
-                            amount: 15000,
-                            product: 'METRO Cash',
-                            period: '15',
-                            debitType: 'Basislastschriftmandat',
-                            expiry: { amount: 1000, date: '4/2/2020' },
-                            position: 'CM',
+                            amount: null,
+                            product: null,
+                            period: null,
+                            debitType: null,
+                            expiry: null,
                         },
                         new: {
                             amount: null,
@@ -5544,7 +5550,7 @@ storiesOf('Services/Credit Tab WIP', module)
                         paymentMethodType: 'WISH',
                         valid: true,
                         readOnly: false,
-                        creditOption: 'NONE',
+                        creditOption: 'NEWCREDIT',
                     },
                     availablePayments: [
                         {
@@ -5877,9 +5883,9 @@ storiesOf('Services/Credit Tab WIP', module)
                 },
                 {
                     onAmountChange: () => null,
-                    name: 'Approval 1: Cash customer, has wish, applied wish',
+                    name: 'Approval 1: Cash customer, has wish, applied new',
                     storeNumber: 10,
-                    number: 999,
+                    number: 9902,
                     isCashCustomer: true,
                     limit: {
                         current: {
@@ -5897,11 +5903,11 @@ storiesOf('Services/Credit Tab WIP', module)
                             expiry: { amount: 1000, date: '4/2/2020' },
                         },
                         applied: {
-                            amount: 15000,
+                            amount: 19000,
                             product: 'METRO Cash',
                             period: '15',
                             debitType: 'Basislastschriftmandat',
-                            expiry: { amount: 1000, date: '4/2/2020' },
+                            expiry: { amount: 1000, date: '4/3/2020' },
                             position: 'CM',
                         },
                         new: {
@@ -5911,11 +5917,11 @@ storiesOf('Services/Credit Tab WIP', module)
                             debitType: null,
                             expiry: { amount: null, date: null },
                         },
-                        limitType: 'WISH',
-                        paymentMethodType: 'WISH',
+                        limitType: 'APPLIED',
+                        paymentMethodType: 'APPLIED',
                         valid: true,
                         readOnly: false,
-                        creditOption: 'NONE',
+                        creditOption: 'NEWCREDIT',
                     },
                     availablePayments: [
                         {

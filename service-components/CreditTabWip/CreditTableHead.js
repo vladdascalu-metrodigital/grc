@@ -13,7 +13,7 @@ export default class CreditTableHead extends Component {
             <React.Fragment>
                 <Table.R sticky="credit-table-head-sticky" type="head-light">
                     <Table.H>
-                        <CRTableHeaderCellCustomerGroup title={ts.customerGroup} />
+                        <CRTableHeaderCellCustomerGroup title={ts.customergroup} />
                     </Table.H>
                     <Table.H colSpan="3">
                         {groupLimit ? (

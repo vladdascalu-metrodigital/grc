@@ -48,7 +48,7 @@ export default class CreditTableRowCreditLimit extends Component {
             ? _current(customer, 'expiry.date')
             : _.get(customer, 'limit.wish.expiry.date');
 
-        // null check is only for existing request
+        // null check is only for existing old request
         const isCurrentPaymentMethodWithNewAmount =
             paymentMethodType === 'CURRENT' &&
             _.isNil(_.get(customer, 'limit.wish.product')) &&

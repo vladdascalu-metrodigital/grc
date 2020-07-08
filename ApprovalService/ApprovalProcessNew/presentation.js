@@ -1,5 +1,6 @@
 import './index.scss';
-import CreditTabWip from '../../service-components/CreditTabWip';
+import 'react-sliding-pane/dist/react-sliding-pane.css';
+
 import React, { Component } from 'react';
 import ProgressBar from '../../ProgressBar';
 import AuditTrailPresentation from '../AuditTrail/AuditTrailPresentation';
@@ -27,7 +28,10 @@ import SlidingPane from 'react-sliding-pane/dist/react-sliding-pane.js';
 import RecentRequestsInfo from '../RecentRequests/RecentRequestsInfo';
 import AdditionalFieldsSection from '../../AdditionalFields/AdditionalFieldsSection';
 import { RequestFieldPropTypes } from '../../AdditionalFields/AdditionalFieldsPropTypes';
-import { filterAdditionalFieldsList, filterAdditionalFieldsByCode } from '../../AdditionalFields/additionalFielsUtil';
+import {
+    filterAdditionalFieldsList,
+    filterAdditionalFieldsByCode,
+} from '../../AdditionalFieldsNew/additionalFielsUtil';
 import ErrorHandler from '../../ErrorHandler';
 import CustomerGroupLimits from '../../CustomerGroupLimits';
 
@@ -277,7 +281,10 @@ export class ApprovalProcessPresentation extends Component {
     contractUrl(country) {
         switch (country) {
             case 'PL':
-                return 'https://confluence.metrosystems.net/display/MRC/Poland+strategy+and+scorecards';
+                return 'https://confluence.metrosystems.net/display/MRC/Contracts+PL';
+            case 'RO':
+                return 'https://confluence.metrosystems.net/display/MRC/Contracts+RO';
+
             default:
                 return null;
         }
@@ -816,6 +823,269 @@ export class ApprovalProcessPresentation extends Component {
         );
     }
 
+    // TODO: NEW TAB
+    /*
+    createCreditTab(approvalItems, readOnly) {
+        const approval = this.props.process.data || {};
+        if (approval || !approvalItems) {
+            return null;
+        }
+
+        const requestFields =
+            this.props.additionalFields !== undefined &&
+            this.props.additionalFields.data !== undefined &&
+            this.props.additionalFields.data !== null
+                ? this.props.additionalFields.data.requestFields
+                : undefined;
+
+        const requestAdditionalFields = filterAdditionalFieldsList(requestFields, 'REQUEST', 'CREDIT_DATA');
+        const hasRequestAdditionalFields =
+            requestAdditionalFields !== undefined &&
+            requestAdditionalFields !== null &&
+            requestAdditionalFields.length > 0
+                ? true
+                : false;
+
+        const groupAdditionalFields = filterAdditionalFieldsList(requestFields, 'GROUP', 'CREDIT_DATA');
+        const hasGroupAdditionalFields =
+            groupAdditionalFields !== undefined && groupAdditionalFields !== null && groupAdditionalFields.length > 0
+                ? true
+                : false;
+
+        const dateFormat = util.dateFormatString();
+        return (
+            <CreditTabWip
+                country={approval.request.country}
+                parent={'approval'}
+                groupLimit={{
+                    exhausted: _.get(process, 'approvalItems')
+                        ? _.sum(approvalItems.map((x) => _.get(x, 'customer.limitExhaustion')))
+                        : null,
+                    current: this.state.currentGroupLimit,
+                    wish: this.state.requestedGroupLimit,
+                    new: this.state.approvedGroupLimit,
+                }}
+                customers={
+                    _.get(request, 'requestedItems')
+                        ? request.requestedItems.map((item) => {
+                            const customerAdditionalFieldsList = filterAdditionalFieldsList(
+                                this.props.additionalFields ? this.props.additionalFields.requestFields : undefined,
+                                'CUSTOMER',
+                                'CREDIT_DATA',
+                                _.get(item, 'customer.country'),
+                                _.get(item, 'customer.storeNumber'),
+                                _.get(item, 'customer.customerNumber')
+                            );
+                            const hasCustomerAdditionalFields =
+                                customerAdditionalFieldsList !== undefined &&
+                                customerAdditionalFieldsList !== null &&
+                                customerAdditionalFieldsList.length > 0
+                                    ? true
+                                    : false;
+                            const isAtLeastOneFieldIsInvalid =
+                                hasCustomerAdditionalFields &&
+                                this.atLeastOneFieldIsInvalid(
+                                    customerAdditionalFieldsList,
+                                    this.state.additionalFieldsValidations
+                                );
+                            const itemId = _.get(item, 'id');
+                            const availablePayments = _.get(item, 'customer.availablePayments');
+                            const isCustomerBlocked =
+                                !_.isNil(_.get(item, 'customer.blockingReason')) ||
+                                !_.isNil(_.get(item, 'customer.checkoutCheckCode'));
+                            const countriesWithDifferentBlockingCodes = this.props
+                                .countriesWithDifferentBlockingCodes;
+                            const msgKeyPartCountry =
+                                _.get(item, 'customer.country') &&
+                                countriesWithDifferentBlockingCodes &&
+                                countriesWithDifferentBlockingCodes.length > 0 &&
+                                countriesWithDifferentBlockingCodes.includes(_.get(item, 'customer.country'))
+                                    ? _.get(item, 'customer.country') + '.'
+                                    : '';
+                            const blockingReasonText = !_.isNil(_.get(item, 'customer.blockingReason'))
+                                ? lookup('mrc.blockingReason') +
+                                ': ' +
+                                lookup(
+                                    'mrc.blockingReason.message.' +
+                                    msgKeyPartCountry +
+                                    _.get(item, 'customer.blockingReason')
+                                )
+                                : null;
+                            const checkoutCheckCodeText = !_.isNil(_.get(item, 'customer.checkoutCheckCode'))
+                                ? lookup('mrc.checkoutCheckCode') +
+                                ': ' +
+                                lookup(
+                                    'mrc.checkoutCheckCode.message.' +
+                                    msgKeyPartCountry +
+                                    _.get(item, 'customer.checkoutCheckCode')
+                                )
+                                : null;
+                            return {
+                                onLimitChange: (
+                                    amount,
+                                    creditProduct,
+                                    creditPeriod,
+                                    debitType,
+                                    limitType,
+                                    paymentType
+                                ) => {
+                                    this.props.setCreditDataWithType(
+                                        request,
+                                        {
+                                            id: _.get(item, 'creditData.id'),
+                                            amount,
+                                            creditProduct,
+                                            creditPeriod,
+                                            debitType,
+                                        },
+                                        limitType,
+                                        paymentType
+                                    );
+                                },
+                                onExpiryChange: (amount, date) => {
+                                    this.props.setLimitExpiry(request, itemId, {
+                                        resetToLimitAmount: amount,
+                                        limitExpiryDate: date,
+                                        limitExpiryReminderDays: 14,
+                                    });
+                                },
+                                onExpiryOnBlur(amount, event, currentDate) {
+                                    const date = new Date(event.target.value);
+                                    if (date >= new Date() + 1) {
+                                        this.onExpiryChange(amount, date);
+                                    } else {
+                                        this.onExpiryChange(
+                                            amount,
+                                            currentDate == null ? null : new Date(currentDate)
+                                        );
+                                    }
+                                },
+                                onLimitAndExpiryChange: (
+                                    amount,
+                                    creditProduct,
+                                    creditPeriod,
+                                    debitType,
+                                    expiryAmount,
+                                    expiryDate,
+                                    limitType,
+                                    paymentType
+                                ) => {
+                                    this.props.setCreditDataAndExpiry(
+                                        request,
+                                        itemId,
+                                        {
+                                            id: _.get(item, 'creditData.id'),
+                                            amount,
+                                            creditProduct,
+                                            creditPeriod,
+                                            debitType,
+                                        },
+                                        {
+                                            resetToLimitAmount: expiryAmount,
+                                            limitExpiryDate: expiryDate,
+                                            limitExpiryReminderDays: 14,
+                                        },
+                                        limitType,
+                                        paymentType
+                                    );
+                                },
+                                onChangeCreditOption: (
+                                    amount,
+                                    creditProduct,
+                                    creditPeriod,
+                                    debitType,
+                                    creditOption
+                                ) => {
+                                    this.props.setCreditDataWithCreditOption(
+                                        request,
+                                        {
+                                            id: _.get(item, 'creditData.id'),
+                                            amount,
+                                            creditProduct,
+                                            creditPeriod,
+                                            debitType,
+                                        },
+                                        creditOption
+                                    );
+                                },
+                                name: displayName(_.get(item, 'customer')),
+                                storeNumber: _.get(item, 'customer.storeNumber'),
+                                number: _.get(item, 'customer.customerNumber'),
+                                blockingInfo: {
+                                    isBlocked: isCustomerBlocked,
+                                    blockingReasonText: blockingReasonText,
+                                    checkoutCheckCodeText: checkoutCheckCodeText,
+                                },
+                                availablePayments: availablePayments,
+                                limit: {
+                                    current: {
+                                        amount: _.get(item, 'customer.creditLimit'),
+                                        product: _.get(item, 'customer.currentPayment.creditProduct'),
+                                        period: _.get(item, 'customer.currentPayment.creditPeriod'),
+                                        debitType: _.get(item, 'customer.currentPayment.debitType'),
+                                        expiry: {
+                                            date: _.get(item, 'currentLimitExpiry.limitExpiryDate'),
+                                            amount: _.get(item, 'currentLimitExpiry.resetToLimitAmount'),
+                                        },
+                                    },
+                                    wish: {
+                                        amount: _.get(item, 'creditData.amount'),
+                                        product: _.get(item, 'creditData.creditProduct'),
+                                        period: _.get(item, 'creditData.creditPeriod'),
+                                        debitType: _.get(item, 'creditData.debitType'),
+                                        expiry: {
+                                            date: _.get(item, 'requestedLimitExpiry.limitExpiryDate'),
+                                            amount: _.get(item, 'requestedLimitExpiry.resetToLimitAmount'),
+                                        },
+                                    },
+                                    limitType: _.get(item, 'limitType'),
+                                    paymentMethodType: _.get(item, 'paymentMethodType'),
+                                    creditOption: _.get(item, 'creditOption'),
+                                    valid: _.get(item, 'valid') && !isAtLeastOneFieldIsInvalid,
+                                    readOnly: readOnly,
+                                },
+                                additionalFields: {
+                                    hasCustomerAdditionalFields: hasCustomerAdditionalFields,
+                                    customerAdditionalFieldsList: customerAdditionalFieldsList,
+                                    onChange: this.handleAdditionalFieldsOnChange,
+                                    disabled: readOnly,
+                                    editable: true,
+                                },
+                                isCashCustomer:
+                                    _.isNil(_.get(item, 'customer.paymentAllowanceCd')) ||
+                                    _.get(item, 'customer.paymentAllowanceCd') !== '3',
+                            };
+                        })
+                        : []
+                }
+                creditProgram={{
+                    limitRequestId: _.get(request, 'id'),
+                    setCreditPrograms: this.props.setCreditPrograms.bind(this),
+                    getCreditPrograms: this.props.getCreditPrograms.bind(this),
+                    setValidity: this.setCreditProgramValidity.bind(this),
+                    readOnly: readOnly,
+                }}
+                additionalFields={{
+                    request: {
+                        requestFields: requestAdditionalFields,
+                        onChange: this.handleAdditionalFieldsOnSave,
+                        editable: true,
+                        disabled: readOnly,
+                    },
+                    hasRequest: hasRequestAdditionalFields,
+                    group: {
+                        requestFields: groupAdditionalFields,
+                        onChange: this.handleAdditionalFieldsOnSave,
+                        editable: true,
+                        disabled: readOnly,
+                    },
+                    hasGroup: hasGroupAdditionalFields,
+                }}
+                dateFormat={dateFormat}
+            />
+        );
+    }*/
+
     //
     // snip with customer groups
     //
@@ -1004,8 +1274,6 @@ export class ApprovalProcessPresentation extends Component {
     }
 
     tabContents(process, currency, l12mTurnover, customerData, creditData) {
-        const customerName = (firstName, lastName) =>
-            firstName && lastName ? firstName + ' ' + lastName : lastName ? lastName : null;
         if (util.isContractingStep(this.state.currentStepType)) {
             return [
                 <ErrorHandledTabPanel key="1">{customerData}</ErrorHandledTabPanel>,
@@ -1021,146 +1289,7 @@ export class ApprovalProcessPresentation extends Component {
                     </ErrorHandledTabPanel>
                 ) : null,
                 <ErrorHandledTabPanel key="6">{customerData}</ErrorHandledTabPanel>,
-                <ErrorHandledTabPanel key="14">
-                    <CreditTabWip
-                        country={process.country}
-                        parent={'approval'}
-                        groupLimit={{
-                            exhausted: _.get(process, 'approvalItems')
-                                ? _.sum(process.approvalItems.map((x) => _.get(x, 'customer.limitExhaustion')))
-                                : null,
-                            current: this.state.currentGroupLimit,
-                            wish: this.state.requestedGroupLimit,
-                            new: this.state.approvedGroupLimit,
-                        }}
-                        customers={
-                            process.approvalItems
-                                ? process.approvalItems.map((item) => {
-                                      console.log(this.props);
-                                      const itemId = _.get(item, 'id');
-                                      const _lastCreditData = _.get(item, 'lastCreditDataJson');
-                                      const _approvedCreditData = _.get(item, 'approvedCreditData');
-                                      const approvedCreditData = _lastCreditData
-                                          ? _lastCreditData
-                                          : _approvedCreditData;
-                                      const payments = _.get(item, 'customer.availablePayments');
-                                      return {
-                                          onLimitChange: (amount, creditProduct, creditPeriod, debitType) => {
-                                              this.props.setLastCreditData(
-                                                  process,
-                                                  itemId,
-                                                  {
-                                                      amount,
-                                                      creditProduct,
-                                                      creditPeriod,
-                                                      debitType,
-                                                  },
-                                                  true
-                                              );
-                                          },
-                                          onExpiryChange: (amount, date) => {
-                                              this.props.setLimitExpiry(
-                                                  process,
-                                                  itemId,
-                                                  {
-                                                      resetToLimitAmount: amount,
-                                                      limitExpiryDate: date,
-                                                      limitExpiryReminderDays: 14,
-                                                  },
-                                                  true
-                                              );
-                                          },
-                                          onLimitAndExpiryChange: (
-                                              amount,
-                                              creditProduct,
-                                              creditPeriod,
-                                              debitType,
-                                              expiryAmount,
-                                              expiryDate
-                                          ) => {
-                                              this.props.setCreditDataAndExpiry(
-                                                  process,
-                                                  itemId,
-                                                  {
-                                                      id: _.get(item, 'creditData.id'),
-                                                      amount,
-                                                      creditProduct,
-                                                      creditPeriod,
-                                                      debitType,
-                                                  },
-                                                  {
-                                                      resetToLimitAmount: expiryAmount,
-                                                      limitExpiryDate: expiryDate,
-                                                      limitExpiryReminderDays: 14,
-                                                  }
-                                              );
-                                          },
-                                          name: customerName(
-                                              _.get(item, 'customer.firstName'),
-                                              _.get(item, 'customer.lastName')
-                                          ),
-                                          storeNumber: _.get(item, 'customer.storeNumber'),
-                                          number: _.get(item, 'customer.customerNumber'),
-                                          isBlocked: !_.isNil(_.get(item, 'customer.blockingReason')),
-                                          payments: {
-                                              products: _.uniqBy(payments, 'creditProduct')
-                                                  .map((x) => x.creditProduct)
-                                                  .filter((x) => !_.isNil(x)),
-                                              debitTypes: _.uniqBy(payments, 'debitType')
-                                                  .map((x) => x.debitType)
-                                                  .filter((x) => !_.isNil(x)),
-                                              periods: _.uniqBy(payments, 'creditPeriod')
-                                                  .map((x) => x.creditPeriod)
-                                                  .filter((x) => !_.isNil(x)),
-                                          },
-                                          limit: {
-                                              current: _.get(item, 'currentCreditData')
-                                                  ? {
-                                                        amount: _.get(item, 'currentCreditData.amount'),
-                                                        product: _.get(item, 'currentCreditData.creditProduct'),
-                                                        period: _.get(item, 'currentCreditData.creditPeriod'),
-                                                        debitType: _.get(item, 'currentCreditData.debitType'),
-                                                        expiry: {
-                                                            date: _.get(item, 'currentLimitExpiry.limitExpiryDate'),
-                                                            amount: _.get(
-                                                                item,
-                                                                'currentLimitExpiry.resetToLimitAmount'
-                                                            ),
-                                                        },
-                                                    }
-                                                  : null,
-                                              wish: {
-                                                  amount: _.get(item, 'requestedCreditData.amount'),
-                                                  product: _.get(item, 'requestedCreditData.creditProduct'),
-                                                  period: _.get(item, 'requestedCreditData.creditPeriod'),
-                                                  debitType: _.get(item, 'requestedCreditData.debitType'),
-                                                  expiry: {
-                                                      date: _.get(item, 'requestedLimitExpiry.limitExpiryDate'),
-                                                      amount: _.get(item, 'requestedLimitExpiry.resetToLimitAmount'),
-                                                  },
-                                              },
-                                              new: _.get(item, 'lastCreditDataJson')
-                                                  ? {
-                                                        amount: _.get(item, 'lastCreditDataJson.amount'),
-                                                        product: _.get(item, 'lastCreditDataJson.creditProduct'),
-                                                        period: _.get(item, 'lastCreditDataJson.creditPeriod'),
-                                                        debitType: _.get(item, 'lastCreditDataJson.debitType'),
-                                                    }
-                                                  : approvedCreditData
-                                                  ? {
-                                                        amount: _.get(approvedCreditData, 'amount'),
-                                                        product: _.get(approvedCreditData, 'creditProduct'),
-                                                        period: _.get(approvedCreditData, 'creditPeriod'),
-                                                        debitType: _.get(approvedCreditData, 'debitType'),
-                                                    }
-                                                  : null,
-                                          },
-                                      };
-                                  })
-                                : []
-                        }
-                    />
-                </ErrorHandledTabPanel>,
+                <ErrorHandledTabPanel key="7">{creditData}</ErrorHandledTabPanel>,
                 <ErrorHandledTabPanel key="8">
                     <Sales mdwData={this.state.mdwData} />
                 </ErrorHandledTabPanel>,
@@ -1468,8 +1597,7 @@ export class ApprovalProcessPresentation extends Component {
         if (process === null) {
             return null;
         }
-        const currentCreditAmounts =
-            process.approvalItems && process.approvalItems.map((x) => _.get(x, 'currentCreditData.amount', null));
+        const currentCreditAmounts = process.approvalItems.map((x) => _.get(x, 'currentCreditData.amount', null));
         const _approvedAmounts = !_.isNil(this.state.approvedLimits)
             ? this.state.approvedLimits.map((a, i) =>
                   _.isNil(a) ? (_.isNil(currentCreditAmounts[i]) ? 0 : currentCreditAmounts[i]) : a
@@ -1477,6 +1605,9 @@ export class ApprovalProcessPresentation extends Component {
             : [];
 
         const approveButtonGroupLimit = _.sum(_approvedAmounts);
+
+        // TODO:
+        //const newCreditData = this.createCreditTab(process.approvalItems, process.supportsConfirm || process.supportsProvideInfo);
 
         const creditData = this.creditDatas(
             process.approvalItems,
@@ -1616,10 +1747,9 @@ ApprovalProcessPresentation.propTypes = {
     assignUser: PropTypes.func,
     collateralRetry: PropTypes.func,
     fetchHistoricCollateral: PropTypes.func,
-    getHistoricScoringData: PropTypes.func,
     setLimitExpiry: PropTypes.func,
+    getHistoricScoringData: PropTypes.func,
     setLastCreditData: PropTypes.func,
-    setCreditDataAndExpiry: PropTypes.func,
     getValidMccScore: PropTypes.func,
     countriesWithDifferentBlockingCodes: PropTypes.array,
 };

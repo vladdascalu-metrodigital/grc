@@ -60,7 +60,7 @@ let translations = {
     'mrc.credittab.toBeGranted': 'To be granted',
     'mrc.credittab.newlyGranted': 'Newly granted',
     'mrc.credittab.customerWish': 'Customer Wish',
-    'mrc.credittab.customerGroup': 'Customer Group',
+    'mrc.credittab.customergroup': 'Customer Group',
     'mrc.credittab.days': 'Days',
     'addfield.profitability': 'Profitability',
     'mrc.credittab.choosepayment': 'Choose Payment',
