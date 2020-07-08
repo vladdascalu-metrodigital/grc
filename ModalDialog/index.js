@@ -33,5 +33,5 @@ export default class ModalDialog extends Component {
 ModalDialog.propTypes = {
     toggle: PropTypes.func,
     content: PropTypes.node,
-    title: PropTypes.string,
+    title: PropTypes.string.isRequired,
 };
