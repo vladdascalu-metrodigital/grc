@@ -71,3 +71,9 @@
     order: -1;
   }
 }
+
+// quick fix to avoid overflow problems in modal context
+.mrc-ui-modal .react-datepicker-popper {
+  position: relative !important;
+  transform: none !important;
+}

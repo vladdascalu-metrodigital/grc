@@ -2,6 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import MainContent from '../MainContent';
 import ModalDialog from '../ModalDialog';
+import DatePicker from '../DatePicker';
+import TextInput from '../TextInput';
 
 storiesOf('Fundamentals/ModalDialog', module)
     .add('ModalDialog', () => {
@@ -94,6 +96,28 @@ storiesOf('Fundamentals/ModalDialog', module)
         return (
             <MainContent>
                 <ModalDialog toggle={() => {}} content={modalContent} title="A Modal Story" />
+            </MainContent>
+        );
+    })
+    .add('Date Overflow', () => {
+        let modalContent = (
+            <div style={{ display: 'grid', gridGap: '1rem' }}>
+                <TextInput requried />
+                <TextInput requried />
+                <TextInput requried />
+                <TextInput requried />
+                <TextInput requried />
+                <DatePicker />
+                <TextInput requried />
+                <TextInput requried />
+                <TextInput requried />
+                <TextInput requried />
+                <TextInput requried />
+            </div>
+        );
+        return (
+            <MainContent>
+                <ModalDialog toggle={() => {}} content={modalContent} title="A Date" />
             </MainContent>
         );
     });
