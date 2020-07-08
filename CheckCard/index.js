@@ -21,6 +21,7 @@ export default class CheckCard extends Component {
 
     render() {
         let { children, checked, disabled, title } = this.props;
+        children = typeof children === 'string' ? children.trim() : children;
         let className = classnames('mrc-ui-check-card', {
             'mrc-ui-check-card-no-content': !children,
             'mrc-ui-check-card-checked': checked && !disabled,

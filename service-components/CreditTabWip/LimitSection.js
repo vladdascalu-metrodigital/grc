@@ -114,14 +114,7 @@ export default class LimitSection extends Component {
                                 }
                             }}
                             disabled={readOnly}
-                        >
-                            <CRLimitSetting
-                                country={country}
-                                limit={wishedAmount}
-                                limitAfterExpiry={wishedExpiryAmount}
-                                expiryDate={wishedExpiryDate}
-                            />
-                        </CheckCard>
+                        />
                     </Grid>
                     {isNewRequest ? (
                         <React.Fragment>
@@ -280,7 +273,7 @@ export default class LimitSection extends Component {
 
         // new data
         const newExpiryDate = _.get(customer, 'limit.new.expiry.date');
-        const newExpiryAmount = _.get(customer, 'limit.new.expiry.amount');
+        // const newExpiryAmount = _.get(customer, 'limit.new.expiry.amount');
         const newAmount = _.get(customer, 'limit.new.amount');
 
         const hasCurrentLimit = !_.isNil(currentAmount) && !customer.isCashCustomer;
@@ -398,14 +391,7 @@ export default class LimitSection extends Component {
                                 }
                             }}
                             disabled={readOnly}
-                        >
-                            <CRLimitSetting
-                                country={country}
-                                limit={newAmount}
-                                limitAfterExpiry={newExpiryAmount}
-                                expiryDate={newExpiryDate}
-                            />
-                        </CheckCard>
+                        />
                     </Grid>
                     {isNewRequest ? (
                         <React.Fragment>
