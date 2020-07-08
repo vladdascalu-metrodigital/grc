@@ -21,7 +21,8 @@ export default function AdditionalField(props) {
     const mandatory = elem.countryField.mandatory;
     const validation = elem.countryField.validation;
     const type = elem.countryField.field.type;
-    const label = lookup(elem.countryField.field.label);
+    const labelKey = elem.countryField.field.label;
+    const label = lookup(labelKey);
     let oldValue = elem.countryField.field.type === 'TEXTAREA' ? elem.textValue : elem.value;
     const isValidNow =
         props.disabled ||
@@ -117,7 +118,7 @@ export default function AdditionalField(props) {
                         status={fieldStatus}
                         label={label}
                         required={mandatory}
-                        options={getOptionValues(props.elem.countryField.options, label)}
+                        options={getOptionValues(props.elem.countryField.options, labelKey)}
                         value={oldValue}
                         onChange={onChange}
                         disabled={props.disabled}
@@ -129,7 +130,7 @@ export default function AdditionalField(props) {
                         status={fieldStatus}
                         label={label}
                         required={mandatory}
-                        options={getOptionValues(props.elem.countryField.options, label)}
+                        options={getOptionValues(props.elem.countryField.options, labelKey)}
                         value={getOptionValues(oldValue, label)}
                         onChange={onChange}
                         disabled={props.disabled}
@@ -141,7 +142,7 @@ export default function AdditionalField(props) {
                         status={fieldStatus}
                         label={label}
                         required={mandatory}
-                        options={getOptionValues(props.elem.countryField.options, label)}
+                        options={getOptionValues(props.elem.countryField.options, labelKey)}
                         value={oldValue}
                         onChange={onChange}
                         disabled={props.disabled}
