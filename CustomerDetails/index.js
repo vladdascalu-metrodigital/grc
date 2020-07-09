@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import './index.scss';
-import { displayName } from '../Util/index';
-import { lookup } from '../Util/translations';
-import DefinitionList from '../DefinitionList';
-import printDate from '../Util/DateUtils';
 import * as _ from 'lodash';
+
+import { lookup } from '../Util/translations';
+import { displayName } from '../Util/index';
+import printDate from '../Util/DateUtils';
+
+import DefinitionList from '../DefinitionList';
+import MrcDate from '../MrcDate';
+
+import './index.scss';
 
 export default class CustomerDetails extends Component {
     describeTerm(term, description) {
@@ -13,7 +17,7 @@ export default class CustomerDetails extends Component {
     }
 
     printAndBr() {
-        const nonNullArgs = Array.prototype.slice.call(arguments).filter(a => a !== null && a !== undefined);
+        const nonNullArgs = Array.prototype.slice.call(arguments).filter((a) => a !== null && a !== undefined);
         return nonNullArgs.length > 0 ? [nonNullArgs.join(' '), <br key="br" />] : null;
     }
 
@@ -53,7 +57,7 @@ export default class CustomerDetails extends Component {
         !_.isEmpty(birthDay) &&
             list.push({
                 term: 'mrc.customerdetails.fields.birthDay',
-                description: <mrc-date>{birthDay}</mrc-date>,
+                description: <MrcDate>{birthDay}</MrcDate>,
             });
 
         return !_.isEmpty(list) ? <DefinitionList list={list} /> : null;
