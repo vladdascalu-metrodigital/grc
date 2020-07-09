@@ -286,7 +286,7 @@ export default class RecentRequestsInfo extends Component {
 
     createCustomerStatusForCreditCorrection(requestStatus) {
         switch (requestStatus.searchedCustomerStatus) {
-            case 'CHANGETOCASH':
+            case 'CREDITTOCASH':
                 return <span className="span-success uppercase">{lookup('mrc.status.changed-to-cash')}</span>;
             case 'HARDBLOCK':
                 return <span className="span-success uppercase">{lookup('mrc.status.hard-blocked')}</span>;

@@ -281,7 +281,8 @@ export class ApprovalProcessPresentation extends Component {
                 return 'https://confluence.metrosystems.net/display/MRC/Contracts+PL';
             case 'RO':
                 return 'https://confluence.metrosystems.net/display/MRC/Contracts+RO';
-
+            case 'RS':
+                return 'https://confluence.metrosystems.net/display/MRC/Contracts+RS';
             default:
                 return null;
         }
