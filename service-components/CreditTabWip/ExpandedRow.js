@@ -98,6 +98,10 @@ export default class ExpandedRow extends Component {
                                         />
                                     </React.Fragment>
                                 ) : null}
+                                <CustomerAdditionalFieldsSection
+                                    additionalFields={this.props.customer.additionalFields}
+                                    translations={ts}
+                                />
                             </Table.D>
                         </Table.R>
                     ) : (
@@ -109,12 +113,12 @@ export default class ExpandedRow extends Component {
                                         <hr />
                                         <LimitSection {...this.props} />
                                         <PaymentMethodSection {...this.props} />
-                                        <CustomerAdditionalFieldsSection
-                                            additionalFields={this.props.customer.additionalFields}
-                                            translations={ts}
-                                        />
                                     </React.Fragment>
                                 ) : null}
+                                <CustomerAdditionalFieldsSection
+                                    additionalFields={this.props.customer.additionalFields}
+                                    translations={ts}
+                                />
                             </Table.D>
                         </Table.R>
                     ),
