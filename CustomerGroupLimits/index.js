@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import './index.scss';
 import { lookup } from '../Util/translations';
+
+import MrcNumber from '../MrcNumber';
+
+import './index.scss';
 
 export default class CustomerGroupLimits extends Component {
     constructor(props) {
@@ -21,9 +24,9 @@ export default class CustomerGroupLimits extends Component {
                                 </p>
                             </td>
                             <td className="td-right">
-                                <mrc-number show-currency-for-country={this.props.country}>
+                                <MrcNumber isCurrency country={this.props.country}>
                                     {this.props.availableGroupLimit}
-                                </mrc-number>
+                                </MrcNumber>
                             </td>
                         </tr>
                         <tr>
@@ -33,9 +36,9 @@ export default class CustomerGroupLimits extends Component {
                                 </p>
                             </td>
                             <td className="td-right">
-                                <mrc-number show-currency-for-country={this.props.country}>
+                                <MrcNumber isCurrency country={this.props.country}>
                                     {this.props.exhaustionGroupLimit}
-                                </mrc-number>
+                                </MrcNumber>
                             </td>
                         </tr>
                         <tr>
@@ -45,9 +48,9 @@ export default class CustomerGroupLimits extends Component {
                                 </p>
                             </td>
                             <td className="td-right">
-                                <mrc-number show-currency-for-country={this.props.country}>
+                                <MrcNumber isCurrency country={this.props.country}>
                                     {this.props.currentGroupLimit}
-                                </mrc-number>
+                                </MrcNumber>
                             </td>
                         </tr>
                         <tr>
@@ -57,12 +60,13 @@ export default class CustomerGroupLimits extends Component {
                                 </p>
                             </td>
                             <td className="td-right">
-                                <mrc-number
+                                <MrcNumber
                                     dynamic={this.props.requestedGroupLimit}
-                                    show-currency-for-country={this.props.country}
+                                    isCurrency
+                                    country={this.props.country}
                                 >
                                     {this.props.requestedGroupLimit}
-                                </mrc-number>
+                                </MrcNumber>
                             </td>
                         </tr>
                         {this.props.hideApprovedGroupLimit ? null : (
@@ -73,12 +77,13 @@ export default class CustomerGroupLimits extends Component {
                                     </p>
                                 </td>
                                 <td className="td-right">
-                                    <mrc-number
+                                    <MrcNumber
                                         dynamic={this.props.approvedGroupLimitInst}
-                                        show-currency-for-country={this.props.country}
+                                        isCurrency
+                                        country={this.props.country}
                                     >
                                         {this.props.approvedGroupLimitInst}
-                                    </mrc-number>
+                                    </MrcNumber>
                                 </td>
                             </tr>
                         )}
