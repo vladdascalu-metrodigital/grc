@@ -7,7 +7,7 @@ import CardHoldersSearchHistory from '../../service-components/CardHolders_WIP/C
 import CardHoldersSearchResult from '../../service-components/CardHolders_WIP/CardHoldersSearchResult.js';
 import CardHoldersCustomerGroup from '../../service-components/CardHolders_WIP/CardHoldersCustomerGroup';
 
-storiesOf('Services/Card Holders WIP', module)
+storiesOf('New UI Topics/Card Holders WIP', module)
     .add('Card Holders', () => (
         <MainContent>
             <CardHolders />
