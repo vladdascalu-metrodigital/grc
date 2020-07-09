@@ -62,7 +62,11 @@ export default class LimitSection extends Component {
         const isNewRequest = !isCurrentLimit || !hasCurrentLimit;
         const isWithoutExpiry = _.isNil(wishedExpiryDate);
 
-        const defaultLimitExpiryAmount = _.isNil(wishedExpiryAmount) ? currentExpiryAmountOption : wishedExpiryAmount;
+        const defaultLimitExpiryAmount = _.isNil(wishedExpiryAmount)
+            ? _.isNil(currentExpiryAmountOption)
+                ? 0
+                : currentExpiryAmountOption
+            : wishedExpiryAmount;
         return (
             <CreditTableFormSection title={ts.limit} description={ts.limitdescription}>
                 <React.Fragment>
