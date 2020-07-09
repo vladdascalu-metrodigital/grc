@@ -19,7 +19,6 @@ import ErrorHandler from '../ErrorHandler';
 import ErrorHandledTabPanel from '../ErrorHandledTabPanel';
 
 import Recommendations from '../Recommendations';
-import Comments from '../NewComments';
 
 import Attachments from '../Attachments';
 
@@ -402,59 +401,6 @@ storiesOf('IFrame', module).add('standard', () => (
         src="https://datastudio.google.com/embed/reporting/ff59c160-b8ce-45b8-9f3c-1e82a74df15c/page/kITLB"
     />
 ));
-
-storiesOf('Comments', module)
-    .add('standard', () => (
-        <Comments
-            comments={[
-                {
-                    comment: 'foo',
-                    uploaderPrincipalName: 'John Doe',
-                    uploaderPosition: 'HOT',
-                    uploadTimestamp: '2019-02-02',
-                },
-            ]}
-            onSave={(newValue) => console.log(newValue)}
-        />
-    ))
-    .add('2-comments', () => (
-        <Comments
-            comments={[
-                {
-                    comment: 'foo',
-                    uploaderPrincipalName: 'John Doe',
-                    uploaderPosition: 'HOT',
-                    uploadTimestamp: '2019-02-02',
-                },
-                {
-                    comment: 'bar',
-                    uploaderPrincipalName: 'John Doe',
-                    uploaderPosition: 'HOT',
-                    uploadTimestamp: '2019-02-02',
-                },
-                {
-                    comment: 'bar',
-                    uploaderPrincipalName: 'John Doe',
-                    uploaderPosition: 'HOT',
-                    uploadTimestamp: '2019-02-02',
-                },
-                {
-                    comment: 'bar',
-                    uploaderPrincipalName: 'John Doe',
-                    uploaderPosition: 'HOT',
-                    uploadTimestamp: '2019-02-02',
-                },
-                {
-                    comment: 'bar',
-                    uploaderPrincipalName: 'John Doe',
-                    uploaderPosition: 'HOT',
-                    uploadTimestamp: '2019-02-02',
-                },
-            ]}
-            onSave={(newValue) => console.log(newValue)}
-        />
-    ))
-    .add('no-comments', () => <Comments onSave={(newValue) => console.log(newValue)} />);
 
 storiesOf('Recommendations', module)
     .add('standard', () => (
