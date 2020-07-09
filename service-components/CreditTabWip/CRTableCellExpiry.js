@@ -9,7 +9,7 @@ import * as _ from 'lodash';
 
 export default class CRTableCellExpiry extends PureComponent {
     render() {
-        let { expiryLimit, expiryDate, isGreen, isBlue } = this.props;
+        let { country, expiryLimit, expiryDate, isGreen, isBlue } = this.props;
         let className = classnames('mrc-ui-crtable-cell-expiry-limit', {
             'mrc-ui-crtable-cell-highlight-color-green': isGreen,
             'mrc-ui-crtable-cell-highlight-color-blue': isBlue,
@@ -19,7 +19,15 @@ export default class CRTableCellExpiry extends PureComponent {
 
         return (
             <div className="mrc-ui-crtable-cell-expiry">
-                <div className={className}>{dataPresent ? <MrcNumber isCurrency>{expiryLimit}</MrcNumber> : '-'}</div>
+                <div className={className}>
+                    {dataPresent ? (
+                        <MrcNumber country={country} isCurrency>
+                            {expiryLimit}
+                        </MrcNumber>
+                    ) : (
+                        '-'
+                    )}
+                </div>
                 <div className="mrc-ui-crtable-cell-expiry-date">
                     {dataPresent ? <MrcDate>{expiryDate}</MrcDate> : null}
                 </div>

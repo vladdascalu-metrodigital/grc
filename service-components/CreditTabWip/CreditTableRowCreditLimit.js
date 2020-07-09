@@ -110,6 +110,7 @@ export default class CreditTableRowCreditLimit extends Component {
                             </Table.D>
                             <Table.D>
                                 <CRTableCellExpiry
+                                    country={country}
                                     expiryLimit={_current(customer, 'expiry.amount')}
                                     expiryDate={_current(customer, 'expiry.date')}
                                     isBlue
@@ -142,7 +143,11 @@ export default class CreditTableRowCreditLimit extends Component {
                                 <CRTableCellLimit country={country} exhausted={null} limit={wishedAmount} />
                             </Table.D>
                             <Table.D>
-                                <CRTableCellExpiry expiryLimit={wishedExpiryAmount} expiryDate={wishedExpiryDate} />
+                                <CRTableCellExpiry
+                                    country={country}
+                                    expiryLimit={wishedExpiryAmount}
+                                    expiryDate={wishedExpiryDate}
+                                />
                             </Table.D>
                             <Table.D>
                                 <CRTableCellCreditProduct

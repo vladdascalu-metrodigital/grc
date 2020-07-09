@@ -765,5 +765,4 @@ LimitRequestLayout.propTypes = {
     updateAdditionalField: PropTypes.func.isRequired,
     updateAdditionalFields: PropTypes.func.isRequired,
     countriesWithDifferentBlockingCodes: PropTypes.array,
-    additionalFieldsInitValidations: PropTypes.object,
 };

@@ -158,6 +158,7 @@ export default class CreditTableRowApproval extends Component {
 
                             <Table.D rowSpan="2">
                                 <CRTableCellExpiry
+                                    country={country}
                                     expiryLimit={_current(customer, 'expiry.amount')}
                                     expiryDate={_current(customer, 'expiry.date')}
                                     isBlue
@@ -198,6 +199,7 @@ export default class CreditTableRowApproval extends Component {
 
                             <Table.D>
                                 <CRTableCellExpiry
+                                    country={country}
                                     expiryLimit={_.get(customer, 'limit.wish.expiry.amount')}
                                     expiryDate={_.get(customer, 'limit.wish.expiry.date')}
                                 />
@@ -225,7 +227,7 @@ export default class CreditTableRowApproval extends Component {
                     isHovered={isHovered}
                     sticky={id}
                     stickyOffset={'tr[data-sticky="credit-table-head-sticky"]'}
-                    type={rowType}
+                    type={isValid ? rowType : 'invalid'}
                     style={{
                         cursor: canToggle ? 'pointer' : 'auto',
                         '--sticky-override': isExpanded ? 'sticky' : 'static',
@@ -255,6 +257,7 @@ export default class CreditTableRowApproval extends Component {
 
                             <Table.D>
                                 <CRTableCellExpiry
+                                    country={country}
                                     expiryLimit={newCreditData.expiryAmount}
                                     expiryDate={newCreditData.expiryDate}
                                     isGreen

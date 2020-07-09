@@ -12,7 +12,8 @@ export default class CreditProgram extends Component {
         super(props);
         this.state = {
             availableCreditPrograms: [],
-            selectedCreditProgram: '',
+            selectedCreditProgram:
+                props.defaultText !== undefined && !_.isNil(props.defaultText) ? props.defaultText : '',
             selectedOption: '',
         };
         this.toggleModal = this.toggleModal.bind(this);
@@ -47,6 +48,9 @@ export default class CreditProgram extends Component {
     }
 
     setAvailableCreditProgramsToState(requestId) {
+        if (this.props.defaultText) {
+            return;
+        }
         this.props.getCreditPrograms(requestId).then((data) => {
             let selectedCreditProgram = data['selectedCreditProgram'];
             let availableCreditPrograms = data['availableCreditPrograms'];
@@ -57,11 +61,15 @@ export default class CreditProgram extends Component {
             if (availableCreditPrograms && availableCreditPrograms.length === 1) {
                 selectedCreditProgram = availableCreditPrograms[0];
                 const creditProgram = this.createCreditProgram(selectedCreditProgram);
-                this.props.setCreditPrograms(this.props.limitRequestId, creditProgram);
+                if (!this.props.readOnly) {
+                    this.props.setCreditPrograms(this.props.limitRequestId, creditProgram);
+                }
             }
             this.setState({ ...this.state, selectedCreditProgram: selectedCreditProgram });
             this.setState({ ...this.state, selectedOption: selectedCreditProgram });
-            this.props.setValidity(this.setValidCreditProgram(this.state.selectedCreditProgram));
+            if (!this.props.readOnly) {
+                this.props.setValidity(this.setValidCreditProgram(this.state.selectedCreditProgram));
+            }
         });
     }
 
@@ -199,5 +207,6 @@ CreditProgram.propTypes = {
     getCreditPrograms: PropTypes.func,
     setCreditPrograms: PropTypes.func,
     setValidity: PropTypes.func,
+    defaultText: PropTypes.string,
     readOnly: PropTypes.bool,
 };

@@ -100,6 +100,7 @@ export default class CreditTab extends Component {
                             setCreditPrograms={this.props.creditProgram.setCreditPrograms}
                             setValidity={this.props.creditProgram.setValidity}
                             readOnly={this.props.creditProgram.readOnly}
+                            defaultText={this.props.creditProgram.defaultText}
                         />
                     ) : null}
 
