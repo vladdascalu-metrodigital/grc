@@ -102,17 +102,17 @@ storiesOf('Fundamentals/ModalDialog', module)
     .add('Date Overflow', () => {
         let modalContent = (
             <div style={{ display: 'grid', gridGap: '1rem' }}>
-                <TextInput requried />
-                <TextInput requried />
-                <TextInput requried />
-                <TextInput requried />
-                <TextInput requried />
+                <TextInput />
+                <TextInput />
+                <TextInput />
+                <TextInput />
+                <TextInput />
                 <DatePicker />
-                <TextInput requried />
-                <TextInput requried />
-                <TextInput requried />
-                <TextInput requried />
-                <TextInput requried />
+                <TextInput />
+                <TextInput />
+                <TextInput />
+                <TextInput />
+                <TextInput />
             </div>
         );
         return (
