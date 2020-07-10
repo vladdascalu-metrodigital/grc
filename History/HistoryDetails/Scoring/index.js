@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-import './index.scss';
 import PropTypes from 'prop-types';
-import { lookup } from '../../../Util/translations';
-import DownloadIcon from '../../../icons/download-file.svg';
 import * as _ from 'lodash';
+import { lookup } from '../../../Util/translations';
+
+import DownloadIcon from '../../../icons/download-file.svg';
 import Bullet, { MODE as BM } from '../../../Bullet';
 import { Table } from '../../../Table';
 import ExcelIcon from '../../../icons/xls.svg';
 import PdfIcon from '../../../icons/pdf.svg';
+import MrcNumber from '../../../MrcNumber';
+import MrcDateTime from '../../../MrcDateTime';
+
+import './index.scss';
 
 export default class Scoring extends Component {
     constructor(props) {
@@ -15,7 +19,7 @@ export default class Scoring extends Component {
         this.state = {};
     }
 
-    downloadReport = scoring => {
+    downloadReport = (scoring) => {
         const url = this.props.host + scoring.reportPath;
         window.open(url, '_blank');
     };
@@ -61,7 +65,7 @@ export default class Scoring extends Component {
             );
         };
 
-        const makeLimit = limit => {
+        const makeLimit = (limit) => {
             const limitUnavailable = limit == null || limit === '';
             const limitString = limitUnavailable ? lookup('mrc.scores.limitunavailable') : limit;
             return (
@@ -69,16 +73,16 @@ export default class Scoring extends Component {
                     {limitUnavailable ? (
                         limitString
                     ) : (
-                        <mrc-number dynamic={true} show-currency-for-country={this.props.country}>
+                        <MrcNumber isCurrency country={this.props.country}>
                             {limitString}
-                        </mrc-number>
+                        </MrcNumber>
                     )}
                 </div>
             );
         };
 
         const makeDownload = (scoring, downloadContent, noContent) => {
-            const isBlank = str => !str || str === null || /^\s*$/.test(str);
+            const isBlank = (str) => !str || str === null || /^\s*$/.test(str);
             var noReport = true;
             var scoreAvailable = false;
             var hasInternalScoreReport = false;
@@ -125,7 +129,7 @@ export default class Scoring extends Component {
             {
                 Header: lookup('mrc.scores.table.requestedat'),
                 accessor: 'requestedAt',
-                renderFn: value => <mrc-datetime>{value}</mrc-datetime>,
+                renderFn: (value) => <MrcDateTime>{value}</MrcDateTime>,
             },
             { Header: lookup('mrc.scores.table.uploadedby'), accessor: 'uploadedBy' },
             {
@@ -155,7 +159,7 @@ export default class Scoring extends Component {
 
     createScores(scores, isHistoricExtScores) {
         if (scores) {
-            scores = scores.filter(score => score && score.errorCode !== 'NOT_NEEDED');
+            scores = scores.filter((score) => score && score.errorCode !== 'NOT_NEEDED');
             scores.sort(Scoring.scoringItemsSorter);
         }
         if (_.some(scores)) {

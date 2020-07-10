@@ -13,31 +13,30 @@ import { RequestFieldPropTypes } from '../../../AdditionalFields/AdditionalField
 import { filterAdditionalFieldsList } from '../../../AdditionalFields/additionalFielsUtil';
 import AdditionalFieldsSection from '../../../AdditionalFields/AdditionalFieldsSection';
 import CustomerGroupLimits from '../../../CustomerGroupLimits';
+import MrcNumber from '../../../MrcNumber';
 
 export default class CreditData extends Component {
     groupLimit(countryCode, current, requested, applied, limitExhaustion) {
         const list = [
             {
                 term: 'mrc.label.availablegrouplimit',
-                description: (
-                    <mrc-number show-currency-for-country={countryCode}>{current - limitExhaustion}</mrc-number>
-                ),
+                description: <MrcNumber show-currency-for-country={countryCode}>{current - limitExhaustion}</MrcNumber>,
             },
             {
                 term: 'mrc.label.exhaustiongrouplimit',
-                description: <mrc-number show-currency-for-country={countryCode}>{limitExhaustion}</mrc-number>,
+                description: <MrcNumber show-currency-for-country={countryCode}>{limitExhaustion}</MrcNumber>,
             },
             {
                 term: 'mrc.label.currentgrouplimit',
-                description: <mrc-number show-currency-for-country={countryCode}>{current}</mrc-number>,
+                description: <MrcNumber show-currency-for-country={countryCode}>{current}</MrcNumber>,
             },
             {
                 term: 'mrc.label.requestedgrouplimit',
-                description: <mrc-number show-currency-for-country={countryCode}>{requested}</mrc-number>,
+                description: <MrcNumber show-currency-for-country={countryCode}>{requested}</MrcNumber>,
             },
             {
                 term: 'mrc.label.approvedgrouplimit',
-                description: <mrc-number show-currency-for-country={countryCode}>{applied}</mrc-number>,
+                description: <MrcNumber show-currency-for-country={countryCode}>{applied}</MrcNumber>,
             },
         ];
 

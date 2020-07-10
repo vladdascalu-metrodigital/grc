@@ -1,26 +1,33 @@
 import React, { Component } from 'react';
-import TrafficLight from './TrafficLight';
-import { lookup } from '../../../Util/translations';
-import ArrowRightIcon from '../../../icons/arrow-right.svg';
 import * as _ from 'lodash';
+import { lookup } from '../../../Util/translations';
+
+import TrafficLight from './TrafficLight';
+import ArrowRightIcon from '../../../icons/arrow-right.svg';
+import MrcNumber from '../../../MrcNumber';
+import MrcDate from '../../../MrcDate';
 
 export default class RequestDetails extends Component {
     title(requestStatus, country) {
         if (requestStatus.requestType === 'LIMIT_EXPIRY') {
             return (
                 <div className="mrc-request-details-title">
-                    <mrc-date>{requestStatus.creationDate}</mrc-date> &nbsp;
+                    <MrcDate>{requestStatus.creationDate}</MrcDate> &nbsp;
                     {lookup('history.status.item.from')} &nbsp;
-                    <mrc-number show-currency-for-country={country}>{requestStatus.amountBeforeExpiry}</mrc-number>{' '}
+                    <MrcNumber isCurrency country={country}>
+                        {requestStatus.amountBeforeExpiry}
+                    </MrcNumber>{' '}
                     &nbsp;
                     {lookup('history.status.item.to')} &nbsp;
-                    <mrc-number show-currency-for-country={country}>{requestStatus.amount}</mrc-number>
+                    <MrcNumber isCurrency country={country}>
+                        {requestStatus.amount}
+                    </MrcNumber>
                 </div>
             );
         } else if (requestStatus.requestType === 'QUICK_CHECK') {
             return (
                 <div className="mrc-request-details-title">
-                    <mrc-date>{requestStatus.creationDate}</mrc-date>
+                    <MrcDate>{requestStatus.creationDate}</MrcDate>
                     &nbsp;/&nbsp;
                     <span>{lookup('mrc.requesttype.quickcheck')}</span>
                 </div>
@@ -29,20 +36,22 @@ export default class RequestDetails extends Component {
             const shouldRenderGroupLimit = requestStatus.groupMembers > 1 && requestStatus.groupAmount >= 0.0;
             return (
                 <div className="mrc-request-details-title">
-                    <mrc-date>{requestStatus.creationDate}</mrc-date>
+                    <MrcDate>{requestStatus.creationDate}</MrcDate>
                     &nbsp;
                     <span>{lookup(requestStatus.applied ? 'mrc.label.appliedLimit' : 'mrc.label.requestedLimit')}</span>
                     &nbsp;
-                    <mrc-number show-currency-for-country={country}>{requestStatus.amount}</mrc-number>
+                    <MrcNumber isCurrency country={country}>
+                        {requestStatus.amount}
+                    </MrcNumber>
                     {shouldRenderGroupLimit ? (
                         <span className="mrc-position"> ({lookup('mrc.groupLimit')} </span>
                     ) : null}
                     {shouldRenderGroupLimit ? (
-                        <mrc-number show-currency-for-country={country}>
+                        <MrcNumber isCurrency country={country}>
                             {requestStatus.amount > requestStatus.groupAmount
                                 ? requestStatus.amount
                                 : requestStatus.groupAmount}
-                        </mrc-number>
+                        </MrcNumber>
                     ) : null}
                     {shouldRenderGroupLimit ? <span className="mrc-position">)</span> : null}
                 </div>
@@ -222,8 +231,7 @@ export default class RequestDetails extends Component {
             <div className="mrc-request-details">
                 <TrafficLight requestStatus={requestStatus} />
                 <div className="mrc-request-details-title">
-                    <mrc-date>{requestStatus.creationDate}</mrc-date>{' '}
-                    <span>{lookup('mrc.requesttype.quickcheck')}</span>
+                    <MrcDate>{requestStatus.creationDate}</MrcDate> <span>{lookup('mrc.requesttype.quickcheck')}</span>
                 </div>
                 {withArrow ? (
                     <div className="mrc-request-details-arrow-right-container">
