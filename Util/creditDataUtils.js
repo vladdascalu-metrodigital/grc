@@ -40,7 +40,7 @@ export const getPaymentDataByType = (customer, type, field) => {
 };
 
 export const translatePaymentIfNeeded = (payment) => {
-    return _.isNil(payment)
+    return _.isNil(payment) || payment === ''
         ? null
         : payment.includes('mrc.payment.')
         ? payment
@@ -60,7 +60,7 @@ export const extractCreditProducts = (defaultProduct, availablePayments) => {
                 defaultProduct !== p &&
                 'mrc.payment.' + p.split(' ').join('_').toLowerCase() !== defaultProduct.toLowerCase()
             ) {
-                products.push(p);
+                products.push(translatePaymentIfNeeded(p));
             }
         });
     return products;
@@ -73,7 +73,7 @@ export const extractCreditPeriods = (availablePayments, creditProduct) => {
                 p.creditProduct === creditProduct ||
                 'mrc.payment.' + p.creditProduct.split(' ').join('_').toLowerCase() === creditProduct.toLowerCase()
         )
-        .map((p) => p.creditPeriod);
+        .map((p) => translatePaymentIfNeeded(p.creditPeriod));
     return Array.from(new Set(creditPeriods)).sort(function (a, b) {
         return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
     });
@@ -92,7 +92,7 @@ export const extractDebitTypes = (availablePayments, creditProduct, creditPeriod
                 'mrc.payment.' + p.creditPeriod.split(' ').join('_').toLowerCase() === creditPeriod.toLowerCase()
         )
         .filter((p) => p.debitType)
-        .map((p) => p.debitType);
+        .map((p) => translatePaymentIfNeeded(p.debitType));
     return Array.from(new Set(debitTypes)).sort();
 };
 

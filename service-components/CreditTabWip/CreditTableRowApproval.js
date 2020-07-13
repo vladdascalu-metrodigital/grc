@@ -150,7 +150,7 @@ export default class CreditTableRowApproval extends Component {
                             <Table.D rowSpan="2">
                                 <CRTableCellLimit
                                     country={country}
-                                    exhausted={null}
+                                    exhausted={_.get(customer, 'limitExhaustion')}
                                     limit={_current(customer, 'amount')}
                                     isBlue
                                 />

@@ -300,6 +300,7 @@ storiesOf('Services/Credit Tab WIP', module)
                         editable: true,
                         disabled: false,
                     },
+                    limitExhaustion: 100,
                 },
                 {
                     onAmountChange: () => null,

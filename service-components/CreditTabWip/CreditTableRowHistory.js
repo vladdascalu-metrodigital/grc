@@ -72,7 +72,7 @@ export default class CreditTableRowHistory extends Component {
                             <Table.D rowSpan="2">
                                 <CRTableCellLimit
                                     country={country}
-                                    exhausted={null}
+                                    exhausted={_.get(customer, 'limitExhaustion')}
                                     limit={_current(parent, customer, 'amount')}
                                     isBlue
                                 />

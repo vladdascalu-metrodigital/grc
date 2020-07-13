@@ -14,14 +14,13 @@ export default class CRTableHeaderCellCustomerGroupLimit extends PureComponent {
         });
         return (
             <div className="mrc-ui-crtable-cell-group-limit">
-                {exhausted ||
-                    (exhausted === 0 && (
-                        <span className="mrc-ui-crtable-cell-customer-group-limit-exhausted">
-                            <MrcNumber isCurrency country={country}>
-                                {exhausted || exhausted === 0 ? exhausted : ''}
-                            </MrcNumber>
-                        </span>
-                    ))}
+                {exhausted || exhausted === 0 ? (
+                    <span className="mrc-ui-crtable-cell-customer-group-limit-exhausted">
+                        <MrcNumber isCurrency country={country}>
+                            {exhausted || exhausted === 0 ? exhausted : ''}
+                        </MrcNumber>
+                    </span>
+                ) : null}
                 {(exhausted || exhausted === 0) && (limit || limit === 0) && ' / '}
                 <span className={className}>
                     <MrcNumber isCurrency country={country}>
