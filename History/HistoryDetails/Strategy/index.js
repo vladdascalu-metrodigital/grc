@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import './index.scss';
 import PropTypes from 'prop-types';
-import { Table } from '../../../Table';
-import { lookup } from '../../../Util/translations';
 import * as _ from 'lodash';
+import { lookup } from '../../../Util/translations';
+
+import { Table } from '../../../Table';
 import DefinitionList from '../../../DefinitionList';
 import Bullet, { MODE as BM } from '../../../Bullet';
+import MrcNumber from '../../../MrcNumber';
+import MrcDateTime from '../../../MrcDateTime';
+
+import './index.scss';
 
 export default class Strategy extends Component {
     constructor(props) {
@@ -35,7 +39,7 @@ export default class Strategy extends Component {
             ? selectedCreditProgramKey
             : approvalProcess.request.selectedCreditProgram;
 
-        const renderIndicatorName = indicatorName => {
+        const renderIndicatorName = (indicatorName) => {
             const prefix =
                 !_.isNil(approvalProcess.decisiveIndicators) &&
                 approvalProcess.decisiveIndicators.includes(indicatorName)
@@ -64,9 +68,13 @@ export default class Strategy extends Component {
             if (isNaN(value)) {
                 return lookup(value);
             } else if (limitDescriptors.includes(indicator.original.indicatorName)) {
-                return <mrc-number show-currency-for-country={countryCode}>{value}</mrc-number>;
+                return (
+                    <MrcNumber isCurrency country={countryCode}>
+                        {value}
+                    </MrcNumber>
+                );
             } else {
-                return <mrc-number>{value}</mrc-number>;
+                return <MrcNumber>{value}</MrcNumber>;
             }
         };
 
@@ -80,7 +88,7 @@ export default class Strategy extends Component {
             {
                 Header: lookup('strategy.data.rating'),
                 accessor: 'status',
-                renderFn: status => {
+                renderFn: (status) => {
                     return (
                         <span className="cell-score">
                             <Bullet mode={this.statusToIcon(status)} />
@@ -115,7 +123,7 @@ export default class Strategy extends Component {
                 list={[
                     {
                         term: 'historyDetails.approvalProcess.automaticDecisionAt',
-                        description: <mrc-datetime>{approvalProcess.automaticDecisionAt}</mrc-datetime>,
+                        description: <MrcDateTime>{approvalProcess.automaticDecisionAt}</MrcDateTime>,
                     },
                 ]}
             />

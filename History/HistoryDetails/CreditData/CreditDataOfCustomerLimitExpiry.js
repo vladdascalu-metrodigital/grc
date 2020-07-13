@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import DefinitionList from '../../../DefinitionList';
 import { PropTypes } from 'prop-types';
 import { lookup } from '../../../Util/translations';
+import MrcNumber from '../../../MrcNumber';
+import MrcDate from '../../../MrcDate';
 
 export default class CreditDataOfCustomerLimitExpiry extends Component {
     render() {
@@ -34,22 +36,24 @@ export default class CreditDataOfCustomerLimitExpiry extends Component {
                 : null;
 
         const list = [
-            { term: 'mrc.creditdetails.limitExpiryDate', description: <mrc-date>{this.props.creationDate}</mrc-date> },
+            { term: 'mrc.creditdetails.limitExpiryDate', description: <MrcDate>{this.props.creationDate}</MrcDate> },
             { term: 'mrc.creditdetails.creditproduct', description: lookup(appliedCreditProductLabel) },
             { term: 'mrc.creditdetails.creditperiod', description: lookup(appliedCreditPeriodLabel) },
             { term: 'mrc.creditdetails.debitType', description: lookup(appliedDebitTypeLabel) },
             {
                 term: 'mrc.creditdetails.amountBeforeLimitExpiry',
                 description: (
-                    <mrc-number show-currency-for-country={this.props.countryCode}>
+                    <MrcNumber isCurrency country={this.props.countryCode}>
                         {this.props.amountBeforeExpiry}
-                    </mrc-number>
+                    </MrcNumber>
                 ),
             },
             {
                 term: 'mrc.creditdetails.amountAfterLimitExpiry',
                 description: (
-                    <mrc-number show-currency-for-country={this.props.countryCode}>{this.props.amount}</mrc-number>
+                    <MrcNumber isCurrency country={this.props.countryCode}>
+                        {this.props.amount}
+                    </MrcNumber>
                 ),
             },
             {

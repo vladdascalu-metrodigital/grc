@@ -291,7 +291,8 @@ export class ApprovalProcessPresentation extends Component {
                 return 'https://confluence.metrosystems.net/display/MRC/Contracts+PL';
             case 'RO':
                 return 'https://confluence.metrosystems.net/display/MRC/Contracts+RO';
-
+            case 'RS':
+                return 'https://confluence.metrosystems.net/display/MRC/Contracts+RS';
             default:
                 return null;
         }
@@ -1032,6 +1033,7 @@ export class ApprovalProcessPresentation extends Component {
                         onChangeCreditOption: (amount, creditProduct, creditPeriod, debitType, creditOption) => {
                             this.props.setCreditDataWithCreditOption(
                                 process,
+                                itemId,
                                 {
                                     amount,
                                     creditProduct,
@@ -1069,10 +1071,10 @@ export class ApprovalProcessPresentation extends Component {
                                 expiry: {
                                     date: _.isNil(_.get(item, 'requestedCreditData.amount'))
                                         ? null
-                                        : _.get(item, 'wishedLimitExpiry.limitExpiryDate'),
+                                        : _.get(item, 'wishLimitExpiry.limitExpiryDate'),
                                     amount: _.isNil(_.get(item, 'requestedCreditData.amount'))
                                         ? 0
-                                        : _.get(item, 'wishedLimitExpiry.resetToLimitAmount'),
+                                        : _.get(item, 'wishLimitExpiry.resetToLimitAmount'),
                                 },
                             },
                             applied:

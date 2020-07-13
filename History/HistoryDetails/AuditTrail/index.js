@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { lookup } from '../../../Util/translations.js';
 import classNames from 'classnames';
-import { Accordion, Collapsible } from '../../../Accordion';
 import * as _ from 'lodash';
-import './index.css';
+
+import { Accordion, Collapsible } from '../../../Accordion';
 import { Table } from '../../../Table';
+import MrcDate from '../../../MrcDate';
+
+import './index.css';
 
 export default class AuditTrail extends Component {
     actionToTranslationKey = {
@@ -35,7 +38,7 @@ export default class AuditTrail extends Component {
         SENT_BACK_CONTRACTING: 'mrc.status.sentback_contracting',
     };
 
-    actionTranslation = action => {
+    actionTranslation = (action) => {
         const capitalized = action.toUpperCase();
         return lookup(this.actionToTranslationKey[capitalized] || capitalized);
     };
@@ -74,8 +77,8 @@ export default class AuditTrail extends Component {
         );
     };
 
-    createDateTimeEntry = key => {
-        return key ? <mrc-date class="when">{key}</mrc-date> : <span className="when">-</span>;
+    createDateTimeEntry = (key) => {
+        return key ? <MrcDate class="when">{key}</MrcDate> : <span className="when">-</span>;
     };
 
     additionalInfoTable(responses) {
@@ -86,7 +89,7 @@ export default class AuditTrail extends Component {
             {
                 Header: lookup('history.resultMessage'),
                 accessor: 'resultMessage',
-                renderFn: resultMessage => lookup('history.' + resultMessage),
+                renderFn: (resultMessage) => lookup('history.' + resultMessage),
             },
         ];
 
@@ -108,7 +111,7 @@ export default class AuditTrail extends Component {
         if (_.isNil(phaseSet) || _.isEmpty(phaseSet)) {
             return <div className="mrc-detail">{lookup('history.auditTrail.loadingError')}</div>;
         } else {
-            return phaseSet.map(phase => {
+            return phaseSet.map((phase) => {
                 return (
                     <section className="mrc-logs" key={phase.auditStep}>
                         <h5 className="span-metro-blue uppercase" key={'mrc-audit-trail-init-uppercase'}>

@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
+import moment from 'moment';
+import * as _ from 'lodash';
 import { lookup } from '../../../Util/translations';
+
 import ColoredBox from '../../../Layout/ColoredBox';
 // import Recommendation from '../../../Recommendation';
 import { getMccScoreTranslation, getMccScoreColor } from '../../../Util/topManagementHelper';
@@ -9,11 +13,10 @@ import Text from '../../../TextBox/Text';
 import TextBox from '../../../TextBox';
 import { Accordion, Collapsible } from '../../../Accordion';
 import { Table } from '../../../Table';
-import '../Table/index.scss';
-import { PropTypes } from 'prop-types';
-import * as _ from 'lodash';
-import moment from 'moment';
+import MrcNumber from '../../../MrcNumber';
+import MrcDate from '../../../MrcDate';
 
+import '../Table/index.scss';
 import './index.scss';
 
 const joinOrNull = (x, y, z) => (!_.isNil(x) && !_.isNil(z) && !_.isNil(y) ? x + y + z : null);
@@ -57,10 +60,10 @@ export default class Management extends Component {
         ]);
         const fmtCreditLimit = (x) => {
             const creditLimit = _.get(x, 'creditLimit');
-            return creditLimit ? <mrc-number show-currency-for-country={country}>{creditLimit}</mrc-number> : '-';
+            return creditLimit ? <MrcNumber show-currency-for-country={country}>{creditLimit}</MrcNumber> : '-';
         };
         const fmtLimitExpiry = (x) => {
-            return x ? <mrc-date>{x}</mrc-date> : '-';
+            return x ? <MrcDate>{x}</MrcDate> : '-';
         };
         const columns = [
             {
@@ -106,7 +109,7 @@ export default class Management extends Component {
                 suffix={currency}
             >
                 <Text color={contentColor} size={contentSize}>
-                    <mrc-number>{groupLimit}</mrc-number>
+                    <MrcNumber>{groupLimit}</MrcNumber>
                 </Text>
             </TextBox>
         );
@@ -253,7 +256,7 @@ export default class Management extends Component {
                                 footer={totalTurnover ? lookup('mrc.topmanagement.l12m') : null}
                                 suffix={totalTurnover ? currency : null}
                             >
-                                <Text size="5">{totalTurnover ? <mrc-number>{totalTurnover}</mrc-number> : 'N/A'}</Text>
+                                <Text size="5">{totalTurnover ? <MrcNumber>{totalTurnover}</MrcNumber> : 'N/A'}</Text>
                             </TextBox>
                             <TextBox header={lookup('mrc.topmanagement.bond')} footer={null} suffix={null}>
                                 <Text size="5">N/A</Text>

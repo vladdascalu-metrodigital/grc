@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { lookup } from '../../../Util/translations';
-import { Accordion, Collapsible } from '../../../Accordion';
-import './index.css';
 import * as _ from 'lodash';
-import { Table } from '../../../Table';
+import { lookup } from '../../../Util/translations';
 
-const parseIntOrVal = x => {
+import { Accordion, Collapsible } from '../../../Accordion';
+import { Table } from '../../../Table';
+import MrcNumber from '../../../MrcNumber';
+import MrcDate from '../../../MrcDate';
+
+import './index.css';
+
+const parseIntOrVal = (x) => {
     return typeof x === 'string' || x instanceof String ? parseInt(x, 10) : x;
 };
 
@@ -21,7 +25,7 @@ export default class Payments extends Component {
                 const arrears = _.map(sapDatas, 'arrears');
                 const dunningLevel = _.map(sapDatas, 'dunningLevel');
                 country = _.get(
-                    _.find(sapDatas, x => !_.isNil(x.countryId)),
+                    _.find(sapDatas, (x) => !_.isNil(x.countryId)),
                     'countryId'
                 );
                 return {
@@ -42,8 +46,12 @@ export default class Payments extends Component {
             {
                 Header: lookup('sap.field.value-sum'),
                 accessor: 'value',
-                renderFn: value => {
-                    return <mrc-number show-currency-for-country={country}>{value}</mrc-number>;
+                renderFn: (value) => {
+                    return (
+                        <MrcNumber isCurrency country={country}>
+                            {value}
+                        </MrcNumber>
+                    );
                 },
             },
             { Header: lookup('sap.field.arreras-avg'), accessor: 'arrear' },
@@ -67,7 +75,7 @@ export default class Payments extends Component {
             {
                 Header: lookup('sap.field.document-date'),
                 accessor: 'documentDate',
-                renderFn: data => <mrc-date>{data}</mrc-date>,
+                renderFn: (data) => <MrcDate>{data}</MrcDate>,
             },
             {
                 Header: lookup('sap.field.value'),
@@ -75,7 +83,7 @@ export default class Payments extends Component {
                 renderFn: (value, raw) => (
                     <span>
                         {raw.original.specialDCIndicator === 'H' ? '-' : ''}
-                        <mrc-number>{value}</mrc-number>
+                        <MrcNumber>{value}</MrcNumber>
                     </span>
                 ),
             },
@@ -86,7 +94,7 @@ export default class Payments extends Component {
             {
                 Header: lookup('sap.field.due-date'),
                 accessor: 'dueDateInvoice',
-                renderFn: data => <mrc-date>{data}</mrc-date>,
+                renderFn: (data) => <MrcDate>{data}</MrcDate>,
             },
         ];
 
@@ -122,7 +130,7 @@ export default class Payments extends Component {
             );
         }
 
-        const singleCustomerViews = this.props.paymentsOverviews.sapDataForCustomers.map(paymentsOverview => {
+        const singleCustomerViews = this.props.paymentsOverviews.sapDataForCustomers.map((paymentsOverview) => {
             const key = paymentsOverview.displayName;
             const trigger = (
                 <div className="mrc-customer-trigger">

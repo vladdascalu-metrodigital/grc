@@ -27,7 +27,7 @@ import { NavLink } from 'react-router-dom';
 import SegmentedControl from '../SegmentedControl';
 
 import LaunchPad from '../LaunchPad';
-import CustomerSearch from '../CustomerSearch';
+
 import RecentRequestsInfo from '../RecentRequestsInfo';
 
 import CreditLimitCustomerDetailsGroup from '../CreditLimit/CustomerDetailsGroup';
@@ -622,133 +622,6 @@ storiesOf('LaunchPad', module)
             updateActiveItem={(value) => console.log(value)}
             showAuxControl={(value) => console.log(value)}
             updateUiPageTitle={(value) => console.log(value)}
-        />
-    ));
-
-storiesOf('CustomerSearch', module)
-    .add('standard search', () => (
-        <CustomerSearch
-            results={null}
-            isLoading={false}
-            doSearch={(value) => console.log(value)}
-            updateSearchTerm={(value) => console.log(value)}
-            updateUiPageTitle={(value) => console.log(value)}
-            showAuxControl={(value) => console.log(value)}
-            hideNotification={(value) => console.log(value)}
-            searchTerm={null}
-            cleanSearchResult={(value) => console.log(value)}
-            match={{
-                isExact: true,
-                params: {
-                    roleKey: 'limitCheck',
-                    template: '%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
-                },
-                path: '/search/:roleKey/:template',
-                url: '/search/limitCheck/%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
-            }}
-        />
-    ))
-    .add('standard loading', () => (
-        <CustomerSearch
-            results={null}
-            isLoading={true}
-            doSearch={(value) => console.log(value)}
-            updateSearchTerm={(value) => console.log(value)}
-            updateUiPageTitle={(value) => console.log(value)}
-            showAuxControl={(value) => console.log(value)}
-            hideNotification={(value) => console.log(value)}
-            searchTerm={'test1'}
-            cleanSearchResult={(value) => console.log(value)}
-            match={{
-                isExact: false,
-                params: {
-                    roleKey: 'limitCheck',
-                    template: '%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
-                },
-                path: '/search/:roleKey/:template',
-                url: '/search/limitCheck/%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
-            }}
-        />
-    ))
-    .add('standard found', () => (
-        <CustomerSearch
-            results={[
-                {
-                    customerId: {
-                        country: 'DE',
-                        customerNumber: '12',
-                        storeNumber: '1',
-                    },
-                    vatSpecNumber: 't11',
-                    names: {
-                        customer: {
-                            firstName: 'foo1',
-                            lastName: 'bar1',
-                        },
-                        companyOwner: {
-                            firstName: 'foo11',
-                            lastName: 'bar11',
-                        },
-                    },
-                },
-                {
-                    customerId: {
-                        country: 'DE',
-                        customerNumber: '13',
-                        storeNumber: '1',
-                    },
-                    vatSpecNumber: 't12',
-                    names: {
-                        customer: {
-                            firstName: 'foo2',
-                            lastName: 'bar2',
-                        },
-                        companyOwner: {
-                            firstName: 'foo22',
-                            lastName: 'bar22',
-                        },
-                    },
-                },
-            ]}
-            isLoading={false}
-            doSearch={(value) => console.log(value)}
-            updateSearchTerm={(value) => console.log(value)}
-            updateUiPageTitle={(value) => console.log(value)}
-            showAuxControl={(value) => console.log(value)}
-            hideNotification={(value) => console.log(value)}
-            searchTerm={'test1'}
-            cleanSearchResult={(value) => console.log(value)}
-            match={{
-                isExact: false,
-                params: {
-                    roleKey: 'limitCheck',
-                    template: '%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
-                },
-                path: '/search/:roleKey/:template',
-                url: '/search/limitCheck/%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
-            }}
-        />
-    ))
-    .add('standard not found', () => (
-        <CustomerSearch
-            results={[]}
-            isLoading={false}
-            doSearch={(value) => console.log(value)}
-            updateSearchTerm={(value) => console.log(value)}
-            updateUiPageTitle={(value) => console.log(value)}
-            showAuxControl={(value) => console.log(value)}
-            hideNotification={(value) => console.log(value)}
-            searchTerm={'test1'}
-            cleanSearchResult={(value) => console.log(value)}
-            match={{
-                isExact: true,
-                params: {
-                    roleKey: 'limitCheck',
-                    template: '%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
-                },
-                path: '/search/:roleKey/:template',
-                url: '/search/limitCheck/%2Fcustomerstatus%2F{country}%2F{storeNumber}%2F{customerNumber}',
-            }}
         />
     ));
 

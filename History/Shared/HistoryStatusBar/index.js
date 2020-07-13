@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import StatusBar from '../../../StatusBar';
-import { lookup } from '../../../Util/translations.js';
-import ReportProblemTriangle from '../../../icons/report-problem-triangle.svg';
 import PropTypes from 'prop-types';
-import CoinReceive from '../../../icons/coin-receive.svg';
 import * as _ from 'lodash';
+import { lookup } from '../../../Util/translations.js';
+
+import StatusBar from '../../../StatusBar';
+import ReportProblemTriangle from '../../../icons/report-problem-triangle.svg';
+import CoinReceive from '../../../icons/coin-receive.svg';
+import MrcNumber from '../../../MrcNumber';
 
 export default class HistoryStatusBar extends Component {
     actionToTranslationKey = {
@@ -38,7 +40,7 @@ export default class HistoryStatusBar extends Component {
         const color = _.get(this.props, 'statusBar.color');
         const parameters = _.get(this.props, 'statusBar.parameters');
 
-        const makeDisplayText = text => {
+        const makeDisplayText = (text) => {
             const actionKey = this.actionToTranslationKey[text.toUpperCase()];
             const withHistoryPrefix = 'history.' + text;
             const translation = lookup(withHistoryPrefix);
@@ -61,7 +63,9 @@ export default class HistoryStatusBar extends Component {
                     message={
                         <span>
                             {makeDisplayText(text)}{' '}
-                            <mrc-number show-currency-for-country={countryCode}>{amount}</mrc-number>
+                            <MrcNumber isCurrency country={countryCode}>
+                                {amount}
+                            </MrcNumber>
                         </span>
                     }
                     icon={CoinReceive}

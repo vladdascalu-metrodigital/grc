@@ -4,6 +4,9 @@ import '../Util/imports';
 
 import HistoryDetails from '../History/HistoryDetails';
 import CustomerSummary from '../History/CustomerSummary';
+import HistoryStatusBar from '../History/Shared/HistoryStatusBar';
+import RequestDetails from '../History/Shared/RequestDetails';
+import Management from '../History/HistoryDetails/Management';
 
 let historyCustomerData = {
     limitRequests: {
@@ -1338,6 +1341,22 @@ let additionalFields = {
     ],
 };
 
+let requestStatus = {
+    trafficLight: null,
+    creationDate: '2020-05-08T13:32:19Z',
+    amount: 11000,
+    groupAmount: 0,
+    creditProduct: 'Metro Top',
+    creditPeriod: 'Ende des Monats',
+    debitType: 'Basislaftshiftmandat',
+    status: 'activated',
+    position: 'HALJ',
+    requestType: 'LIMIT_REQUEST',
+    amountBeforeExpiry: 10123,
+    groupMembers: 1,
+    applied: true,
+};
+
 storiesOf('History/CustomerSummary', module)
     .add('with history', () => <CustomerSummary {...historyCustomerData} noHistory={false} />)
     .add('no history', () => <CustomerSummary {...historyCustomerData} noHistory={true} />);
@@ -1363,9 +1382,9 @@ storiesOf('History/HistoryDetails', module).add('history details', () => (
         validMccScore={historyData.historyDetails.validMccScore}
         statusBar={historyData.statusBar}
         countryCode={historyData.countryCode}
-        retry={value => console.log(value)}
-        cancelActivation={value => console.log(value)}
-        cancelApproval={value => console.log(value)}
+        retry={(value) => console.log(value)}
+        cancelActivation={(value) => console.log(value)}
+        cancelApproval={(value) => console.log(value)}
         recommendations={historyData.historyDetails.recommendations}
         additionalFields={additionalFields}
         countriesWithDifferentBlockingCodes={historyData.countriesWithDifferentBlockingCodes}
@@ -1373,3 +1392,66 @@ storiesOf('History/HistoryDetails', module).add('history details', () => (
         // history: PropTypes.object // not used!?
     />
 ));
+
+storiesOf('History/Management', module).add('Management', () => (
+    <Management
+        requestData={historyData.historyDetails.requestData}
+        totalTurnover={123000}
+        profitability={42}
+        requestedCustomerId={historyCustomerData.limitRequests.requestedCustomerId}
+        country={'DE'}
+        mobile={false}
+        recommendations={historyData.historyDetails.recommendations}
+        validMccScore={historyData.historyDetails.validMccScore}
+    />
+));
+
+storiesOf('History/StatusBar', module).add('with history', () => (
+    <HistoryStatusBar
+        countryCode="DE"
+        statusBar={{
+            id: '1',
+            color: 'green',
+            limit: 11000,
+            text: 'activated',
+            parameters: null,
+        }}
+    />
+));
+
+storiesOf('History/RequestDetails', module)
+    .add('Red, LIMIT_EXPIRY', () => (
+        <RequestDetails
+            requestStatus={{
+                ...requestStatus,
+                trafficLight: 'red',
+                requestType: 'LIMIT_EXPIRY',
+            }}
+            countryCode="DE"
+            withArrow
+        />
+    ))
+    .add('Quickcheck, QUICK_CHECK', () => (
+        <RequestDetails
+            requestStatus={{
+                ...requestStatus,
+                trafficLight: 'quickcheck',
+                requestType: 'QUICK_CHECK',
+            }}
+            countryCode="DE"
+            withArrow
+        />
+    ))
+    .add('Yellow, other type', () => (
+        <RequestDetails
+            requestStatus={{
+                ...requestStatus,
+                trafficLight: 'yellow',
+                requestType: '__OTHER',
+                groupMembers: 2,
+                groupAmount: 12777,
+            }}
+            countryCode="DE"
+            withArrow
+        />
+    ));

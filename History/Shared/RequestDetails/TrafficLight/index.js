@@ -3,7 +3,7 @@ import ApprovedIcon from '../../../../icons/signal-approved.svg';
 import CreditCorrectionIcon from '../../../../icons/credit-correction-blue.svg';
 import BlockedIcon from '../../../../icons/signal-blocked.svg';
 import PendingIcon from '../../../../icons/signal-pending.svg';
-import QuickCheckIcon from '../../../../icons/quick-check.svg';
+import QuickCheckIcon from '../../../../icons/quick-check-blue.svg';
 import OpenIcon from '../../../../icons/signal-open.svg';
 
 export default class TrafficLight extends Component {
