@@ -12,8 +12,8 @@ import './index.scss';
 
 export default class Grid extends Component {
     render() {
-        let { cols, justifyContent, alignItems } = this.props;
-        let className = classnames('mrc-ui-grid', {
+        let { cols, justifyContent, alignItems, className: outerClassName } = this.props;
+        let className = classnames(outerClassName, 'mrc-ui-grid', {
             'mrc-ui-grid-cols': cols && cols > 0,
         });
         let style = {
@@ -35,6 +35,7 @@ Grid.propTypes = {
     justifyContent: PropTypes.string,
     alignItems: PropTypes.string,
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+    className: PropTypes.string,
 };
 
 export class GridItem extends Component {

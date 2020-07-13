@@ -1,0 +1,7 @@
+@import '../../lib/scss/colors';
+@import '../../lib/scss/variables';
+
+.mrc-ui-credit-correction-group-action {
+    padding: $spacing-large $spacing-medium;
+    background-color: $color-form-background-grey !important;
+}

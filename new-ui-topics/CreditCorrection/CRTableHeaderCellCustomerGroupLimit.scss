@@ -1,0 +1,24 @@
+@import '../../lib/scss/colors';
+@import '../../lib/scss/typography';
+@import '../../lib/scss/variables';
+
+
+.mrc-ui-crtable-cell-group-limit {
+    font-size: $font-size-8;
+    font-weight: 400;
+    text-align: center;
+    color: $color-palette-grey-tint-40;
+    padding: $spacing-small 0;
+}
+
+.mrc-ui-crtable-cell-customer-group-limit-exhausted {
+}
+
+.mrc-ui-crtable-cell-customer-group-limit-granted {
+    font-size: $font-size-5;
+    font-weight: 600;
+}
+
+.mrc-ui-crtable-cell-customer-group-limit-subtitle {
+    line-height: $line-height-copy-narrow;
+}
