@@ -629,6 +629,7 @@ export default class LimitRequestLayout extends Component {
                                   isCashCustomer:
                                       _.isNil(_.get(item, 'customer.paymentAllowanceCd')) ||
                                       _.get(item, 'customer.paymentAllowanceCd') !== '3',
+                                  limitExhaustion: _.get(item, 'customer.limitExhaustion'),
                               };
                           })
                         : []

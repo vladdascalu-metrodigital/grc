@@ -103,7 +103,7 @@ export default class CreditTableRowCreditLimit extends Component {
                             <Table.D>
                                 <CRTableCellLimit
                                     country={country}
-                                    exhausted={null}
+                                    exhausted={_.get(customer, 'limitExhaustion')}
                                     limit={_current(customer, 'amount')}
                                     isBlue
                                 />

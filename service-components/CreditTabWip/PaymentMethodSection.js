@@ -106,7 +106,7 @@ export default class PaymentMethodSection extends Component {
         productOptionsContent =
             _.isNil(periodOptions) || periodOptions.length === 0
                 ? productOptionsContent
-                : productOptionsContent.concat(periodOptions.map((x) => [x, lookup(x)]));
+                : productOptionsContent.concat(periodOptions.map((x) => [translatePaymentIfNeeded(x), lookup(x)]));
 
         return (
             <CreditTableFormSection title={ts.paymentmethod} description={ts.paymentmethoddescription}>
@@ -357,10 +357,10 @@ export default class PaymentMethodSection extends Component {
             (!isCurrentPaymentMethod || !hasCurrentPaymentMethod) && !isWishedPaymentMethod && !isAppliedPaymentMethod;
 
         const productOptions = this.createCreditProductOptions(customer.availablePayments);
-        const periodOptions = this.createCreditPeriodOptions(customer.availablePayments, wishedProduct);
-        const debitTypeOptions = this.createDebitTypeOptions(customer.availablePayments, wishedProduct, wishedPeriod);
+        const periodOptions = this.createCreditPeriodOptions(customer.availablePayments, newProduct);
+        const debitTypeOptions = this.createDebitTypeOptions(customer.availablePayments, newProduct, newPeriod);
 
-        let productOptionsContent = _.isNil(wishedPeriod) ? [['', '']] : [];
+        let productOptionsContent = _.isNil(newPeriod) ? [['', '']] : [];
         productOptionsContent =
             _.isNil(periodOptions) || periodOptions.length === 0
                 ? productOptionsContent
@@ -575,7 +575,7 @@ export default class PaymentMethodSection extends Component {
                                             <CheckCard
                                                 key={x}
                                                 title={lookup(x)}
-                                                checked={wishedDebitType === x}
+                                                checked={newDebitType === x}
                                                 onClick={() =>
                                                     customer.onLimitChange(
                                                         selectedAmount,

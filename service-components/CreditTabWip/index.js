@@ -213,6 +213,7 @@ CreditTab.propTypes = {
                 disabled: PropTypes.bool,
             }),
             isCashCustomer: PropTypes.bool.isRequired,
+            limitExhaustion: PropTypes.number,
         })
     ).isRequired,
     groupLimit: PropTypes.shape({

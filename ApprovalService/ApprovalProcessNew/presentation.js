@@ -4,7 +4,7 @@ import 'react-sliding-pane/dist/react-sliding-pane.css';
 import React, { Component } from 'react';
 import ProgressBar from '../../ProgressBar';
 import AuditTrailPresentation from '../AuditTrail/AuditTrailPresentation';
-import CreditData from '../CreditData/presentation';
+
 import { Tab, TabList, Tabs } from 'react-tabs';
 import ErrorHandledTabPanel from '../../ErrorHandledTabPanel';
 import { Accordion, Collapsible } from '../../Accordion';
@@ -19,21 +19,19 @@ import Strategy from '../Strategy';
 import Management from '../Management';
 import Attachments from '../../Attachments';
 import MrcSpinner from '../../Util/MrcSpinner';
-import DetailedCustomerTrigger from '../../DetailedCustomerTrigger/presentation';
+
 import { lookup } from '../../Util/translations';
 import RequestInfoAction from '../../RequestInfoAction';
 import HistoryRequestsIcon from '../../icons/request-history.svg';
 import ArrowRightIcon from '../../icons/arrow-right.svg';
 import SlidingPane from 'react-sliding-pane/dist/react-sliding-pane.js';
 import RecentRequestsInfo from '../RecentRequests/RecentRequestsInfo';
-import AdditionalFieldsSection from '../../AdditionalFields/AdditionalFieldsSection';
+
 import { RequestFieldPropTypes } from '../../AdditionalFields/AdditionalFieldsPropTypes';
 import {
     filterAdditionalFieldsList,
     filterAdditionalFieldsByCode,
 } from '../../AdditionalFieldsNew/additionalFielsUtil';
-import ErrorHandler from '../../ErrorHandler';
-import CustomerGroupLimits from '../../CustomerGroupLimits';
 
 import * as util from './util';
 import * as _ from 'lodash';
@@ -76,7 +74,6 @@ export class ApprovalProcessPresentation extends Component {
             attachments: [],
             currentGroupLimit: 0,
             requestedGroupLimit: 0,
-            approvedGroupLimit: 0,
             availableGroupLimit: 0,
             exhaustionGroupLimit: 0,
             approvedLimits: null,
@@ -600,7 +597,7 @@ export class ApprovalProcessPresentation extends Component {
                 newRecommendation={this.state.newRecommendation}
                 editedRecommendation={this.state.editedRecommendation}
                 validMccScore={this.state.validMccScore}
-                approvedGroupLimit={this.approvedGroupLimit(process, this.state.creditData)}
+                approvedGroupLimit={this.newGroupLimit(process.approvalItems)}
                 requestedGroupLimit={this.state.requestedGroupLimit}
             />
         );
@@ -658,89 +655,65 @@ export class ApprovalProcessPresentation extends Component {
             //
 
             let cds = this.state.creditData || {};
-            let valids = this.state.isCreditDataValid || {};
             let cgl = 0;
             let rgl = 0;
-            let agl = 0;
             let exhaustiongl = 0;
 
             process.approvalItems.map((approvalItem) => {
                 const custId = approvalItem.customer.id;
                 const creditData = approvalItem.approvedCreditData || approvalItem.requestedCreditData;
 
-                if (approvalItem.currentCreditData != null) {
+                if (!_.isNil(approvalItem.currentCreditData)) {
                     cgl += approvalItem.currentCreditData.amount;
                 }
                 const requested = _.get(approvalItem, 'requestedCreditData.amount');
                 const current = _.get(approvalItem, 'currentCreditData.amount');
-                const approved = _.get(approvalItem, 'approvedCreditData.amount');
                 const requestedAmount =
                     !_.isNil(requested) && !_.isNaN(requested) ? requested : !_.isNil(current) ? current : 0;
-                const approvedAmount =
-                    !_.isNil(approved) && !_.isNaN(approved) ? approved : !_.isNil(current) ? current : 0;
                 rgl += requestedAmount;
-                agl += approvedAmount;
                 if (approvalItem.customer.limitExhaustion != null) {
                     exhaustiongl += approvalItem.customer.limitExhaustion;
                 }
 
                 cds[custId] = creditData;
-                valids[custId] = true;
             });
-            // this.setState({creditData: cds, isCreditDataValid: valids});
             this.setState({
                 creditData: cds,
-                isCreditDataValid: valids,
                 currentGroupLimit: cgl,
                 requestedGroupLimit: rgl,
-                approvedGroupLimit: agl,
                 availableGroupLimit: cgl - exhaustiongl,
                 exhaustionGroupLimit: exhaustiongl,
             });
         }
     }
 
-    approvedGroupLimit(approval, creditData) {
-        if (!_.get(approval, 'approvalItems')) {
+    newGroupLimit(approvalItems) {
+        if (!approvalItems) {
             return 0;
         }
-        const currentCreditAmounts = approval.approvalItems.map((x) => _.get(x, 'currentCreditData.amount', null));
-        var approvedGroupLimitInst = 0;
-        let i = 0;
-        for (const [key, value] of Object.entries(creditData)) {
-            if (value !== undefined && key !== undefined) {
-                const _valuesafe =
-                    !_.isNaN(value.amount) && !_.isNil(value.amount)
-                        ? value.amount
-                        : !_.isNil(currentCreditAmounts[i])
-                        ? currentCreditAmounts[i]
-                        : 0;
-                i++;
-                approvedGroupLimitInst = approvedGroupLimitInst + _valuesafe;
-            }
-        }
-        approvedGroupLimitInst = isNaN(approvedGroupLimitInst) ? 0 : approvedGroupLimitInst;
-        return approvedGroupLimitInst;
+        let newGroupLimitInst = 0;
+        approvalItems.forEach((approvalItem) => {
+            const limitType = approvalItem.limitType;
+            const newLimitForCustomer = this.customerLimitByType(approvalItem, limitType);
+            newGroupLimitInst = newGroupLimitInst + (isNaN(newLimitForCustomer) ? 0 : newLimitForCustomer);
+        });
+        newGroupLimitInst = isNaN(newGroupLimitInst) ? 0 : newGroupLimitInst;
+        return newGroupLimitInst;
     }
 
-    groupLimitInfos(
-        approval,
-        creditData,
-        currentGroupLimit,
-        requestedGroupLimit,
-        availableGroupLimit,
-        exhaustionGroupLimit
-    ) {
-        return (
-            <CustomerGroupLimits
-                country={approval.country}
-                exhaustionGroupLimit={exhaustionGroupLimit}
-                requestedGroupLimit={requestedGroupLimit}
-                approvedGroupLimitInst={this.approvedGroupLimit(approval, creditData)}
-                currentGroupLimit={currentGroupLimit}
-                availableGroupLimit={availableGroupLimit}
-            />
-        );
+    customerLimitByType(approvalItem, limitType) {
+        switch (limitType) {
+            case 'CURRENT':
+                return _.get(approvalItem, 'currentCreditData.amount');
+            case 'WISH':
+                return _.get(approvalItem, 'requestedCreditData.amount');
+            case 'APPLIED':
+                return _.get(approvalItem, 'approvedCreditData.amount');
+            case 'NEW':
+                return _.get(approvalItem, 'lastCreditDataJson.amount');
+            default:
+                return 0;
+        }
     }
 
     //
@@ -756,99 +729,6 @@ export class ApprovalProcessPresentation extends Component {
                 customers={customers}
                 countriesWithDifferentBlockingCodes={this.props.countriesWithDifferentBlockingCodes}
             />
-        );
-    }
-
-    requestAdditionalFields(approval) {
-        const requestFields =
-            this.props.additionalFields !== undefined &&
-            this.props.additionalFields.data !== undefined &&
-            this.props.additionalFields.data !== null
-                ? this.props.additionalFields.data.requestFields
-                : undefined;
-
-        const requestAdditionalFields = filterAdditionalFieldsList(requestFields, 'REQUEST', 'CREDIT_DATA');
-        const hasRequestAdditionalFields =
-            requestAdditionalFields !== undefined &&
-            requestAdditionalFields !== null &&
-            requestAdditionalFields.length > 0
-                ? true
-                : false;
-        if (!hasRequestAdditionalFields) {
-            return null;
-        }
-        return (
-            <div className="mrc-credit-data mrc-input-group small-margin">
-                <span
-                    className="additional-fields-background-text"
-                    title={lookup('additional.fields.request.title')}
-                ></span>
-                <AdditionalFieldsSection
-                    requestFields={requestAdditionalFields}
-                    onChange={this.handleAdditionalFieldsOnChange}
-                    onBlur={this.handleAdditionalFieldsOnBlur}
-                    disabled={!approval.editableByCurrentUser}
-                />
-            </div>
-        );
-    }
-
-    groupAdditionalFields(approval) {
-        const requestFields =
-            this.props.additionalFields !== undefined &&
-            this.props.additionalFields.data !== undefined &&
-            this.props.additionalFields.data !== null
-                ? this.props.additionalFields.data.requestFields
-                : undefined;
-        const groupAdditionalFields = filterAdditionalFieldsList(requestFields, 'GROUP', 'CREDIT_DATA');
-        const hasGroupAdditionalFields =
-            groupAdditionalFields !== undefined && groupAdditionalFields !== null && groupAdditionalFields.length > 0
-                ? true
-                : false;
-        if (!hasGroupAdditionalFields) {
-            return null;
-        }
-        return (
-            <div className="mrc-credit-data mrc-input-group small-margin">
-                <span
-                    className="additional-fields-background-text"
-                    title={lookup('additional.fields.group.title')}
-                ></span>
-                <AdditionalFieldsSection
-                    requestFields={groupAdditionalFields}
-                    onChange={this.handleAdditionalFieldsOnChange}
-                    onBlur={this.handleAdditionalFieldsOnBlur}
-                    disabled={!approval.editableByCurrentUser}
-                />
-            </div>
-        );
-    }
-
-    groupLimitInfosAndAdditionalFields(hasGroupLimitInfos) {
-        const approval = this.props.process.data || {};
-        const creditData = this.state.creditData || {};
-        const currentGroupLimit = this.state.currentGroupLimit !== undefined ? this.state.currentGroupLimit : 0;
-        const requestedGroupLimit = this.state.requestedGroupLimit !== undefined ? this.state.requestedGroupLimit : 0;
-        const availableGroupLimit = this.state.availableGroupLimit !== undefined ? this.state.availableGroupLimit : 0;
-        const exhaustionGroupLimit =
-            this.state.exhaustionGroupLimit !== undefined ? this.state.exhaustionGroupLimit : 0;
-
-        const groupLimitAndAdditionalFieldsClass = hasGroupLimitInfos ? 'mrc-ui-col-3' : 'mrc-ui-col-2';
-        return (
-            <div className={groupLimitAndAdditionalFieldsClass}>
-                {hasGroupLimitInfos
-                    ? this.groupLimitInfos(
-                          approval,
-                          creditData,
-                          currentGroupLimit,
-                          requestedGroupLimit,
-                          availableGroupLimit,
-                          exhaustionGroupLimit
-                      )
-                    : null}
-                {this.requestAdditionalFields(approval)}
-                {this.groupAdditionalFields(approval)}
-            </div>
         );
     }
 
@@ -903,6 +783,12 @@ export class ApprovalProcessPresentation extends Component {
 
         const dateFormat = util.dateFormatString();
         const selectedCreditProgram = process.selectedCreditProgram;
+        const creditReadOnly =
+            util.isContractingStep(this.state.currentStepType) ||
+            readOnly ||
+            process.waitingForReview ||
+            process.reviewed;
+
         return (
             <CreditTabWip
                 country={process.request.country}
@@ -913,7 +799,7 @@ export class ApprovalProcessPresentation extends Component {
                         : null,
                     current: this.state.currentGroupLimit,
                     wish: this.state.requestedGroupLimit,
-                    new: this.state.approvedGroupLimit,
+                    new: this.newGroupLimit(approvalItems),
                 }}
                 customers={approvalItems.map((item) => {
                     const customerAdditionalFieldsList = filterAdditionalFieldsList(
@@ -971,6 +857,7 @@ export class ApprovalProcessPresentation extends Component {
                         onLimitChange: (amount, creditProduct, creditPeriod, debitType, limitType, paymentType) => {
                             this.props.setCreditDataWithType(
                                 process,
+                                itemId,
                                 {
                                     amount,
                                     creditProduct,
@@ -1085,8 +972,8 @@ export class ApprovalProcessPresentation extends Component {
                                           period: _.get(item, 'approvedCreditData.creditPeriod'),
                                           debitType: _.get(item, 'approvedCreditData.debitType'),
                                           expiry: {
-                                              date: _.get(item, 'requestedLimitExpiry.limitExpiryDate'),
-                                              amount: _.get(item, 'requestedLimitExpiry.resetToLimitAmount'),
+                                              date: _.get(item, 'appliedLimitExpiry.limitExpiryDate'),
+                                              amount: _.get(item, 'appliedLimitExpiry.resetToLimitAmount'),
                                           },
                                           position: process.lastApproverPosition,
                                       }
@@ -1133,18 +1020,19 @@ export class ApprovalProcessPresentation extends Component {
                             paymentMethodType: _.get(item, 'paymentMethodType'),
                             creditOption: _.get(item, 'creditOption'),
                             valid: _.get(item, 'valid') && !isAtLeastOneFieldIsInvalid,
-                            readOnly: readOnly,
+                            readOnly: creditReadOnly,
                         },
                         additionalFields: {
                             hasCustomerAdditionalFields: hasCustomerAdditionalFields,
                             customerAdditionalFieldsList: customerAdditionalFieldsList,
                             onChange: this.handleAdditionalFieldsOnChange,
-                            disabled: readOnly,
+                            disabled: creditReadOnly,
                             editable: true,
                         },
                         isCashCustomer:
                             _.isNil(_.get(item, 'customer.paymentAllowanceCd')) ||
                             _.get(item, 'customer.paymentAllowanceCd') !== '3',
+                        limitExhaustion: _.get(item, 'customer.limitExhaustion'),
                     };
                 })}
                 creditProgram={
@@ -1160,176 +1048,19 @@ export class ApprovalProcessPresentation extends Component {
                         requestFields: requestAdditionalFields,
                         onChange: this.handleAdditionalFieldsOnSave,
                         editable: true,
-                        disabled: readOnly,
+                        disabled: creditReadOnly,
                     },
                     hasRequest: hasRequestAdditionalFields,
                     group: {
                         requestFields: groupAdditionalFields,
                         onChange: this.handleAdditionalFieldsOnSave,
                         editable: true,
-                        disabled: readOnly,
+                        disabled: creditReadOnly,
                     },
                     hasGroup: hasGroupAdditionalFields,
                 }}
                 dateFormat={dateFormat}
             />
-        );
-    }
-
-    //
-    // snip with customer groups
-    //
-    creditDatas(approvalItems, readOnly) {
-        const approval = this.props.process.data || {};
-        const collapsibles = approvalItems.map((approvalItem, i) => {
-            const customer = approvalItem.customer;
-            const custId = customer.id;
-            const dateFormat = util.dateFormatString();
-            const additionalFieldsList = filterAdditionalFieldsList(
-                this.props.additionalFields !== undefined &&
-                    this.props.additionalFields.data !== undefined &&
-                    this.props.additionalFields.data !== null
-                    ? this.props.additionalFields.data.requestFields
-                    : undefined,
-                'CUSTOMER',
-                'CREDIT_DATA',
-                customer.country,
-                customer.storeNumber,
-                customer.customerNumber
-            );
-            const hasAdditionalFields =
-                additionalFieldsList !== undefined && additionalFieldsList !== null && additionalFieldsList.length > 0
-                    ? true
-                    : false;
-            const creditDataClass = hasAdditionalFields ? 'span-1-2' : 'span-1-3';
-            // const trigger   = approvalItem.customer.storeNumber+'/'+approvalItem.customer.customerNumber;
-            const trigger = (
-                <DetailedCustomerTrigger
-                    customer={approvalItem.customer}
-                    current={approvalItem.currentCreditData ? approvalItem.currentCreditData.amount : null}
-                    requested={approvalItem.requestedCreditData.amount}
-                    approved={
-                        approvalItem.approvedCreditData != null ? approvalItem.approvedCreditData.amount : undefined
-                    }
-                    aProduct={
-                        approvalItem.approvedCreditData != null
-                            ? approvalItem.approvedCreditData.creditProduct
-                            : undefined
-                    }
-                    cProduct={approvalItem.currentCreditData ? approvalItem.currentCreditData.creditProduct : null}
-                    rProduct={approvalItem.requestedCreditData.creditProduct}
-                    aPeriod={
-                        approvalItem.approvedCreditData != null
-                            ? approvalItem.approvedCreditData.creditPeriod
-                            : undefined
-                    }
-                    cPeriod={approvalItem.currentCreditData ? approvalItem.currentCreditData.creditPeriod : null}
-                    rPeriod={approvalItem.requestedCreditData.creditPeriod}
-                    aDebitType={
-                        approvalItem.approvedCreditData != null ? approvalItem.approvedCreditData.debitType : undefined
-                    }
-                    cDebitType={approvalItem.currentCreditData ? approvalItem.currentCreditData.debitType : null}
-                    rDebitType={approvalItem.requestedCreditData.debitType}
-                    cLimitExpiryDate={
-                        approvalItem.currentLimitExpiry != null &&
-                        approvalItem.currentLimitExpiry.limitExpiryDate != null
-                            ? approvalItem.currentLimitExpiry.limitExpiryDate
-                            : undefined
-                    }
-                    rLimitExpiryDate={
-                        approvalItem.requestedLimitExpiry != null &&
-                        approvalItem.requestedLimitExpiry.limitExpiryDate != null
-                            ? approvalItem.requestedLimitExpiry.limitExpiryDate
-                            : undefined
-                    }
-                    cLimitExpiryValue={
-                        approvalItem.currentLimitExpiry != null &&
-                        approvalItem.currentLimitExpiry.resetToLimitAmount != null &&
-                        approvalItem.currentLimitExpiry.limitExpiryDate != null
-                            ? approvalItem.currentLimitExpiry.resetToLimitAmount
-                            : undefined
-                    }
-                    rLimitExpiryValue={
-                        approvalItem.requestedLimitExpiry != null &&
-                        approvalItem.requestedLimitExpiry.resetToLimitAmount != null &&
-                        approvalItem.requestedLimitExpiry.limitExpiryDate != null
-                            ? approvalItem.requestedLimitExpiry.resetToLimitAmount
-                            : undefined
-                    }
-                    isWithWarning={
-                        (approvalItem.customer.blockingReason != undefined &&
-                            approvalItem.customer.blockingReason != null) ||
-                        (approvalItem.customer.checkoutCheckCode != undefined &&
-                            approvalItem.customer.checkoutCheckCode != null)
-                    }
-                />
-            );
-            const creditData = (
-                <Collapsible open={i === 0} key={custId} trigger={trigger}>
-                    <div className="mrc-ui-col-3">
-                        <div className={creditDataClass}>
-                            <CreditData
-                                currentStepType={this.state.currentStepType}
-                                current={approvalItem.currentCreditData || {}}
-                                index={i}
-                                countryForCurrency={approvalItem.customer.country}
-                                readOnly={
-                                    util.isContractingStep(this.state.currentStepType) ||
-                                    readOnly ||
-                                    approval.waitingForReview ||
-                                    approval.reviewed
-                                }
-                                requested={approvalItem.requestedCreditData}
-                                approved={
-                                    approvalItem.lastCreditDataJson != null &&
-                                    approvalItem.lastCreditDataJson != undefined
-                                        ? approvalItem.lastCreditDataJson
-                                        : this.state.creditData[custId]
-                                }
-                                availablePayments={approvalItem.customer.availablePayments}
-                                setLimitExpiry={this.props.setLimitExpiry.bind(this, approval)}
-                                setCreditData={this.props.setLastCreditData.bind(this, approval)}
-                                approvalItem={approvalItem}
-                                approval={approval}
-                                dateFormat={dateFormat}
-                                creditDataEntered={(creditData, valid) => {
-                                    let cds = this.state.creditData;
-                                    let valids = this.state.isCreditDataValid;
-
-                                    cds[custId] = creditData;
-                                    valids[custId] = valid;
-
-                                    this.setState({
-                                        creditData: cds,
-                                        isCreditDataValid: valids,
-                                    });
-                                }}
-                                handleAmountChange={this.handleAmountChange}
-                                countriesWithDifferentBlockingCodes={this.props.countriesWithDifferentBlockingCodes}
-                            />
-                        </div>
-                        {hasAdditionalFields ? (
-                            <div className="mrc-input-group">
-                                <ErrorHandler>
-                                    <AdditionalFieldsSection
-                                        requestFields={additionalFieldsList}
-                                        onChange={this.handleAdditionalFieldsOnChange}
-                                        onBlur={this.handleAdditionalFieldsOnBlur}
-                                        disabled={!approval.editableByCurrentUser}
-                                    />
-                                </ErrorHandler>
-                            </div>
-                        ) : null}
-                    </div>
-                </Collapsible>
-            );
-            return creditData;
-        });
-        return (
-            <Accordion>
-                {this.groupLimitInfosAndAdditionalFields(approvalItems.length > 1)}
-                {collapsibles}
-            </Accordion>
         );
     }
 
@@ -1445,12 +1176,7 @@ export class ApprovalProcessPresentation extends Component {
     }
 
     requestInfo = (approvalStep) => {
-        this.props.requestInfo(
-            this.props.process.data.id,
-            approvalStep,
-            this.props.process.data.version,
-            this.state.creditData
-        );
+        this.props.requestInfo(this.props.process.data.id, approvalStep, this.props.process.data.version);
     };
 
     contractingSubmitButton(process) {
@@ -1516,6 +1242,27 @@ export class ApprovalProcessPresentation extends Component {
         return !(Object.values(this.state.additionalFieldsValidations).filter((value) => !value).length > 0);
     }
 
+    anyCreditDataChanged(items) {
+        const changedItem = items.find((item) => {
+            const _limitType = _.get(item, 'limitType');
+            const _paymentMethodType = _.get(item, 'paymentMethodType');
+            if (_limitType !== 'CURRENT' || _paymentMethodType !== 'CURRENT') {
+                return true;
+            }
+
+            const _isCashCustomer =
+                _.isNil(_.get(item, 'customer.paymentAllowanceCd')) ||
+                _.get(item, 'customer.paymentAllowanceCd') !== '3';
+            return !_isCashCustomer && _.get(item, 'creditOption') === 'CREDITTOCASH';
+        });
+        return !_.isNil(changedItem);
+    }
+
+    creditDataValid(item) {
+        const valid = _.get(item, 'valid');
+        return !_.isNil(valid) && valid === true;
+    }
+
     buttons(groupLimit, currency) {
         const process = this.props.process.data || {};
         const isContracting = util.isContractingStep(this.state.currentStepType);
@@ -1523,6 +1270,12 @@ export class ApprovalProcessPresentation extends Component {
             this.state.selectedTabIndex === 0 &&
             TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES.includes(process.country) &&
             !isContracting;
+
+        const allCreditDataValid =
+            _.get(process, 'approvalItems') && process.approvalItems.every((item) => this.creditDataValid(item));
+        const anyCreditDataChanged =
+            _.get(process, 'approvalItems') && this.anyCreditDataChanged(process.approvalItems);
+        const creditDataValid = allCreditDataValid && anyCreditDataChanged;
         return (
             <div className="mrc-btn-group">
                 {isContracting ? this.contractingSubmitButton(process) : null}
@@ -1598,18 +1351,10 @@ export class ApprovalProcessPresentation extends Component {
                                 : lookup('approval.action.approve')
                         }
                         id="mrc-approve-button"
-                        status={
-                            process.editableByCurrentUser && util.allCreditDataValid(this.state.isCreditDataValid)
-                                ? 'primary'
-                                : 'secondary'
-                        }
-                        disabled={
-                            !process.editableByCurrentUser ||
-                            !util.allCreditDataValid(this.state.isCreditDataValid) ||
-                            !this.additionalFieldsValid()
-                        }
+                        status={process.editableByCurrentUser && creditDataValid ? 'primary' : 'secondary'}
+                        disabled={!process.editableByCurrentUser || !creditDataValid || !this.additionalFieldsValid()}
                         onClick={() => {
-                            this.props.approve(process.id, process.version, this.state.creditData);
+                            this.props.approve(process.id, process.version);
                         }}
                     />
                 ) : null}
@@ -1635,7 +1380,7 @@ export class ApprovalProcessPresentation extends Component {
                         status={process.editableByCurrentUser ? 'success' : 'secondary'}
                         disabled={!process.editableByCurrentUser}
                         onClick={() => {
-                            this.props.provideInfo(process.id, process.version, this.state.creditData);
+                            this.props.provideInfo(process.id, process.version);
                         }}
                     />
                 ) : null}
@@ -1698,14 +1443,8 @@ export class ApprovalProcessPresentation extends Component {
         if (process === null) {
             return null;
         }
-        const currentCreditAmounts = process.approvalItems.map((x) => _.get(x, 'currentCreditData.amount', null));
-        const _approvedAmounts = !_.isNil(this.state.approvedLimits)
-            ? this.state.approvedLimits.map((a, i) =>
-                  _.isNil(a) ? (_.isNil(currentCreditAmounts[i]) ? 0 : currentCreditAmounts[i]) : a
-              )
-            : [];
 
-        const approveButtonGroupLimit = _.sum(_approvedAmounts);
+        const approveButtonGroupLimit = this.newGroupLimit(process.approvalItems);
 
         const creditData = this.createCreditTab(
             process.approvalItems,

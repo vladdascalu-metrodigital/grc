@@ -333,8 +333,8 @@ export default class LimitSection extends Component {
                                         selectedProduct,
                                         selectedPeriod,
                                         selectedDebitType,
-                                        null,
-                                        null,
+                                        wishedExpiryAmount,
+                                        wishedExpiryDate,
                                         'WISH',
                                         paymentMethodType
                                     );
@@ -360,8 +360,8 @@ export default class LimitSection extends Component {
                                         selectedProduct,
                                         selectedPeriod,
                                         selectedDebitType,
-                                        null,
-                                        null,
+                                        appliedExpiryAmount,
+                                        appliedExpiryDate,
                                         'APPLIED',
                                         paymentMethodType
                                     );
@@ -381,7 +381,7 @@ export default class LimitSection extends Component {
                             checked={isNewRequest}
                             onClick={() => {
                                 if (!isNewRequest) {
-                                    this.setState({ amount: null });
+                                    this.setState({ amount: null, newExpiryAmount: null });
                                     customer.onLimitAndExpiryChange(
                                         null,
                                         selectedProduct,
@@ -389,7 +389,7 @@ export default class LimitSection extends Component {
                                         selectedDebitType,
                                         null,
                                         null,
-                                        'WISH',
+                                        'NEW',
                                         paymentMethodType
                                     );
                                 }
