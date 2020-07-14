@@ -134,28 +134,17 @@ export default class LimitSection extends Component {
                                                 required={true}
                                                 value={_.isNil(this.state.amount) ? '' : this.state.amount}
                                                 onChange={(amount) => {
-                                                    this.setState({ amount: amount });
-                                                    if (amount === null || amount === '') {
-                                                        customer.onLimitChange(
-                                                            null,
-                                                            selectedProduct,
-                                                            selectedPeriod,
-                                                            selectedDebitType,
-                                                            'WISH',
-                                                            paymentMethodType
-                                                        );
-                                                    }
                                                     const val = parseFloat(amount);
-                                                    if (amount === 'null' || !Number.isNaN(val)) {
-                                                        customer.onLimitChange(
-                                                            val,
-                                                            selectedProduct,
-                                                            selectedPeriod,
-                                                            selectedDebitType,
-                                                            'WISH',
-                                                            paymentMethodType
-                                                        );
-                                                    }
+                                                    const validAmount = !Number.isNaN(val) ? val : null;
+                                                    this.setState({ amount: validAmount });
+                                                    customer.onLimitChange(
+                                                        validAmount,
+                                                        selectedProduct,
+                                                        selectedPeriod,
+                                                        selectedDebitType,
+                                                        'WISH',
+                                                        paymentMethodType
+                                                    );
                                                 }}
                                                 disabled={readOnly}
                                             />
@@ -436,28 +425,17 @@ export default class LimitSection extends Component {
                                                 required={true}
                                                 value={_.isNil(this.state.amount) ? '' : this.state.amount}
                                                 onChange={(amount) => {
-                                                    this.setState({ amount: amount });
-                                                    if (amount === null || amount === '') {
-                                                        customer.onLimitChange(
-                                                            null,
-                                                            selectedProduct,
-                                                            selectedPeriod,
-                                                            selectedDebitType,
-                                                            'NEW',
-                                                            paymentMethodType
-                                                        );
-                                                    }
                                                     const val = parseFloat(amount);
-                                                    if (amount === 'null' || !Number.isNaN(val)) {
-                                                        customer.onLimitChange(
-                                                            val,
-                                                            selectedProduct,
-                                                            selectedPeriod,
-                                                            selectedDebitType,
-                                                            'NEW',
-                                                            paymentMethodType
-                                                        );
-                                                    }
+                                                    const validAmount = !Number.isNaN(val) ? val : null;
+                                                    this.setState({ amount: validAmount });
+                                                    customer.onLimitChange(
+                                                        validAmount,
+                                                        selectedProduct,
+                                                        selectedPeriod,
+                                                        selectedDebitType,
+                                                        'NEW',
+                                                        paymentMethodType
+                                                    );
                                                 }}
                                                 disabled={readOnly}
                                             />
@@ -522,8 +500,10 @@ export default class LimitSection extends Component {
                                                             : this.state.newExpiryAmount
                                                     }
                                                     onChange={(amount) => {
-                                                        this.setState({ newExpiryAmount: amount });
-                                                        customer.onExpiryChange(amount, newExpiryDate);
+                                                        const val = parseFloat(amount);
+                                                        const validAmount = !Number.isNaN(val) ? val : null;
+                                                        this.setState({ newExpiryAmount: validAmount });
+                                                        customer.onExpiryChange(validAmount, newExpiryDate);
                                                     }}
                                                     disabled={readOnly}
                                                 />
