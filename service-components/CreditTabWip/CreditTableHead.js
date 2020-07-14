@@ -7,7 +7,7 @@ import CRTableHeaderCellLimit from './CRTableHeaderCellLimit';
 
 export default class CreditTableHead extends Component {
     render() {
-        const { groupLimit, parent, country, translations } = this.props;
+        const { groupLimit, parent, country, translations, historyRequestType } = this.props;
         const ts = translations;
         return (
             <React.Fragment>
@@ -45,7 +45,7 @@ export default class CreditTableHead extends Component {
                         </Table.H>
                         <Table.H className="border-fix"></Table.H>
                     </Table.R>
-                ) : (
+                ) : parent === 'history' && historyRequestType === 'LIMIT_EXPIRY' ? null : (
                     <React.Fragment>
                         <Table.R sticky="credit-table-head-sticky" type="head-light">
                             <Table.H rowSpan="2">
@@ -113,7 +113,13 @@ export default class CreditTableHead extends Component {
                         {parent === 'history' ? (
                             <CRTableHeaderCellLimitColSpanTitle
                                 title={parent === 'history' ? ts.current : groupLimit.new ? ts.new : ts.customerWish}
-                                prefix={parent === 'history' ? ts.customerWish : groupLimit.new ? ts.customerWish : ''}
+                                prefix={
+                                    parent === 'history' && historyRequestType === 'LIMIT_REQUEST'
+                                        ? ts.customerWish
+                                        : groupLimit.new
+                                        ? ts.customerWish
+                                        : ''
+                                }
                                 isGreen
                             />
                         ) : null}
@@ -122,7 +128,10 @@ export default class CreditTableHead extends Component {
                 </Table.R>
                 <Table.R sticky="credit-table-head-sticky" type="head">
                     <Table.H>
-                        <CRTableHeaderCellLimit prefix={ts.exhausted} title={ts.granted} />
+                        <CRTableHeaderCellLimit
+                            prefix={parent === 'history' && historyRequestType === 'LIMIT_EXPIRY' ? null : ts.exhausted}
+                            title={ts.granted}
+                        />
                     </Table.H>
                     <Table.H>{ts.expiry}</Table.H>
                     <Table.H>{ts.creditproduct}</Table.H>

@@ -403,6 +403,7 @@ export const createCreditDataProps = (params) => {
         additionalFields: params.additionalFields,
         creditProgram: params.selectedCreditProgram,
         dateFormat: util.dateFormatString(),
+        historyRequestType: _.get(params, 'requestStatus.requestType'),
         // All customers
         customers:
             /* eslint-disable */
@@ -436,36 +437,90 @@ export const createCreditDataProps = (params) => {
                               _.get(data, 'customerData.country')
                           ),
                           limit: {
-                              old: {
-                                  amount: _.get(data, 'current.creditLimit'),
-                                  product: _.get(data, 'current.creditProduct'),
-                                  period: _.get(data, 'current.creditPeriod'),
-                                  debitType: _.get(data, 'current.debitType'),
-                                  expiry: {
-                                      date: _.get(data, 'currentLimitExpiryDate'),
-                                      amount: _.get(data, 'currentResetToLimitAmount'),
-                                  },
-                              },
-                              wish: {
-                                  amount: _.get(data, 'requested.creditLimit'),
-                                  product: _.get(data, 'requested.creditProduct'),
-                                  period: _.get(data, 'requested.creditPeriod'),
-                                  debitType: _.get(data, 'requested.debitType'),
-                                  expiry: {
-                                      date: _.get(data, 'requestedLimitExpiryDate'),
-                                      amount: _.get(data, 'requestedResetToLimitAmount'),
-                                  },
-                              },
-                              current: {
-                                  amount: _.get(data, 'applied.creditLimit'),
-                                  product: _.get(data, 'applied.creditProduct'),
-                                  period: _.get(data, 'applied.creditPeriod'),
-                                  debitType: _.get(data, 'applied.debitType'),
-                                  expiry: {
-                                      date: _.get(data, 'limitExpiryDate'),
-                                      amount: _.get(data, 'resetToLimitAmount'),
-                                  },
-                              },
+                              old:
+                                  _.get(params, 'requestStatus.requestType') === 'LIMIT_EXPIRY'
+                                      ? {
+                                            amount: _.get(params, 'requestStatus.amountBeforeExpiry'),
+                                            product: _.get(params, 'requestStatus.creditProduct'),
+                                            period: _.get(params, 'requestStatus.creditPeriod'),
+                                            debitType: _.get(params, 'requestStatus.debitType'),
+                                            expiry: {
+                                                date: _.get(params, 'requestStatus.creationDate'),
+                                                amount: _.get(params, 'requestStatus.amount'),
+                                            },
+                                        }
+                                      : {
+                                            amount: _.get(data, 'current.creditLimit'),
+                                            product: _.get(data, 'current.creditProduct'),
+                                            period: _.get(data, 'current.creditPeriod'),
+                                            debitType: _.get(data, 'current.debitType'),
+                                            expiry: {
+                                                date: _.get(data, 'currentLimitExpiryDate'),
+                                                amount: _.get(data, 'currentResetToLimitAmount'),
+                                            },
+                                        },
+                              wish:
+                                  _.get(params, 'requestStatus.requestType') === 'LIMIT_EXPIRY'
+                                      ? {
+                                            amount: null,
+                                            product: null,
+                                            period: null,
+                                            debitType: null,
+                                            expiry: {
+                                                date: null,
+                                                amount: null,
+                                            },
+                                        }
+                                      : {
+                                            amount: _.get(data, 'requested.creditLimit'),
+                                            product: _.get(data, 'requested.creditProduct'),
+                                            period: _.get(data, 'requested.creditPeriod'),
+                                            debitType: _.get(data, 'requested.debitType'),
+                                            expiry: {
+                                                date: _.get(data, 'requestedLimitExpiryDate'),
+                                                amount: _.get(data, 'requestedResetToLimitAmount'),
+                                            },
+                                        },
+                              current:
+                                  _.get(params, 'requestStatus.requestType') === 'LIMIT_EXPIRY'
+                                      ? {
+                                            amount:
+                                                _.get(params, 'requestStatus.status') === 'Failed'
+                                                    ? null
+                                                    : _.get(params, 'requestStatus.amount'),
+                                            product:
+                                                _.get(params, 'requestStatus.status') === 'Failed'
+                                                    ? null
+                                                    : _.get(params, 'requestStatus.creditProduct'),
+                                            period:
+                                                _.get(params, 'requestStatus.status') === 'Failed'
+                                                    ? null
+                                                    : _.get(params, 'requestStatus.creditPeriod'),
+                                            debitType:
+                                                _.get(params, 'requestStatus.status') === 'Failed'
+                                                    ? null
+                                                    : _.get(params, 'requestStatus.debitType'),
+                                            expiry: {
+                                                date: null,
+                                                amount: null,
+                                            },
+                                        }
+                                      : {
+                                            amount: _.get(data, 'applied.creditLimit'),
+                                            product: _.get(data, 'applied.creditProduct'),
+                                            period: _.get(data, 'applied.creditPeriod'),
+                                            debitType: _.get(data, 'applied.debitType'),
+                                            expiry: {
+                                                date:
+                                                    _.get(params, 'requestStatus.status') === 'Blocked'
+                                                        ? null
+                                                        : _.get(data, 'limitExpiryDate'),
+                                                amount:
+                                                    _.get(params, 'requestStatus.status') === 'Blocked'
+                                                        ? null
+                                                        : _.get(data, 'resetToLimitAmount'),
+                                            },
+                                        },
                               readOnly: true,
                           },
                           availablePayments: [], //TBD: here we should add maybe all the values already selected for customers ?!?!??!
