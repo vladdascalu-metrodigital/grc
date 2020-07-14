@@ -52,13 +52,15 @@ export default class CreditTableRow extends Component {
     render() {
         const { parent, customer, isZebra } = this.props;
         const blockingInfo = _.get(customer, 'blockingInfo');
+        const additionalFields = _.get(customer, 'additionalFields');
         const isBlocked = blockingInfo && _.get(blockingInfo, 'isBlocked');
+        const hasCustomerAdditionalFields = additionalFields && _.get(additionalFields, 'hasCustomerAdditionalFields');
         const rowProps = {
             onExpand: () => this.toggle(),
             onHover: (flag) => this.hover(flag),
             isExpanded: this.state.isExpanded,
             isHovered: this.state.isHovered,
-            canToggle: parent !== 'history' || isBlocked,
+            canToggle: parent !== 'history' || isBlocked || hasCustomerAdditionalFields,
             rowType: isZebra ? 'zebra' : null,
         };
 

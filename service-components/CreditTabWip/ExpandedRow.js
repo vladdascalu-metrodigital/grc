@@ -59,14 +59,22 @@ export default class ExpandedRow extends Component {
                 <CreditTableRowShadow />
             </Table.R>,
             parent === 'history' ? (
-                <Table.R>
-                    <Table.D>
-                        <Table.D>
+                <React.Fragment>
+                    <Table.R>
+                        <Table.D colSpan="8">
                             {!_.isEmpty(blockingReasonText) ? <ClientBlocked text={blockingReasonText} /> : null}
                             {!_.isEmpty(checkoutCheckCodeText) ? <ClientBlocked text={checkoutCheckCodeText} /> : null}
                         </Table.D>
-                    </Table.D>
-                </Table.R>
+                    </Table.R>
+                    <Table.R>
+                        <Table.D colSpan="8">
+                            <CustomerAdditionalFieldsSection
+                                additionalFields={this.props.customer.additionalFields}
+                                translations={ts}
+                            />
+                        </Table.D>
+                    </Table.R>
+                </React.Fragment>
             ) : (
                 [
                     isBlocked ? (
