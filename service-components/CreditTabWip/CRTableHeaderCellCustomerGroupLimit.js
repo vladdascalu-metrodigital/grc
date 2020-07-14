@@ -7,10 +7,11 @@ import './CRTableHeaderCellCustomerGroupLimit.scss';
 
 export default class CRTableHeaderCellCustomerGroupLimit extends PureComponent {
     render() {
-        let { limit, exhausted, country, subtitle, isGreen, isBlue, inSameRow } = this.props;
+        let { limit, exhausted, country, subtitle, isGreen, isBlue, isRed, inSameRow } = this.props;
         let className = classnames('mrc-ui-crtable-cell-customer-group-limit-granted', {
             'mrc-ui-crtable-cell-highlight-color-green': isGreen,
             'mrc-ui-crtable-cell-highlight-color-blue': isBlue,
+            'mrc-ui-crtable-cell-highlight-color-red': isRed,
         });
         return (
             <div className="mrc-ui-crtable-cell-group-limit">

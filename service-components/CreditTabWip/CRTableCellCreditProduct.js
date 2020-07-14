@@ -5,10 +5,11 @@ import './CRTableCellTypoHighlight.scss';
 
 export default class CRTableCellCreditProduct extends PureComponent {
     render() {
-        let { productName, productTimePeriod, productPaymentMethod, isBlue, isGreen } = this.props;
+        let { productName, productTimePeriod, productPaymentMethod, isBlue, isGreen, isRed } = this.props;
         let className = classnames('mrc-ui-crtable-cell-product-name', {
             'mrc-ui-crtable-cell-highlight-color-green': isGreen,
             'mrc-ui-crtable-cell-highlight-color-blue': isBlue,
+            'mrc-ui-crtable-cell-highlight-color-red': isRed,
         });
         return (
             <div className="mrc-ui-crtable-cell-credit-product">

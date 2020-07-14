@@ -7,10 +7,11 @@ import './CRTableCellTypoHighlight.scss';
 
 export default class CRTableCellLimit extends PureComponent {
     render() {
-        let { limit, exhausted, country, isGreen, isBlue } = this.props;
+        let { limit, exhausted, country, isGreen, isBlue, isRed } = this.props;
         let className = classnames('mrc-ui-crtable-cell-customer-limit-granted', {
             'mrc-ui-crtable-cell-highlight-color-green': isGreen,
             'mrc-ui-crtable-cell-highlight-color-blue': isBlue,
+            'mrc-ui-crtable-cell-highlight-color-red': isRed,
         });
         return (
             <div className="mrc-ui-crtable-cell-limit">

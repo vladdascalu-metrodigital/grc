@@ -9,10 +9,11 @@ import * as _ from 'lodash';
 
 export default class CRTableCellExpiry extends PureComponent {
     render() {
-        let { country, expiryLimit, expiryDate, isGreen, isBlue } = this.props;
+        let { country, expiryLimit, expiryDate, isGreen, isBlue, isRed } = this.props;
         let className = classnames('mrc-ui-crtable-cell-expiry-limit', {
             'mrc-ui-crtable-cell-highlight-color-green': isGreen,
             'mrc-ui-crtable-cell-highlight-color-blue': isBlue,
+            'mrc-ui-crtable-cell-highlight-color-red': isRed,
         });
 
         const dataPresent = !_.isNil(expiryLimit) && !_.isNil(expiryDate);

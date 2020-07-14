@@ -6,10 +6,11 @@ import './CRTableCellTypoHighlight.scss';
 
 export default class CRTableHeaderCellLimitColSpanTitle extends PureComponent {
     render() {
-        let { prefix, title, isGreen, isBlue } = this.props;
+        let { prefix, title, isGreen, isBlue, isRed } = this.props;
         let className = classnames('mrc-ui-crtable-header-cell-limit-colspan-title', {
             'mrc-ui-crtable-cell-highlight-color-green': isGreen,
             'mrc-ui-crtable-cell-highlight-color-blue': isBlue,
+            'mrc-ui-crtable-cell-highlight-color-red': isRed,
         });
         return (
             <div className="mrc-ui-crtable-header-cell-copspan-title">
