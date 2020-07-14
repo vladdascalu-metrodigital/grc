@@ -24,9 +24,10 @@ export default class Button extends Component {
     }
 
     render() {
-        const { status, icon, id, text, type, disabled, onClick, size, color, isOutlined } = this.props;
+        const { status, icon, id, text, type, disabled, onClick, size, color, isOutlined, wide } = this.props;
         let buttonClasses;
         let iconClasses;
+        // if statement for old implementation
         if (status) {
             buttonClasses = classNames(
                 'mrc-btn',
@@ -45,7 +46,8 @@ export default class Button extends Component {
                 { 'mrc-ui-btn-success': color === COLOR.SUCCESS },
                 { 'mrc-ui-btn-neutral': color === COLOR.NEUTRAL },
                 { 'mrc-ui-btn-danger': color === COLOR.DANGER },
-                { 'mrc-ui-btn-outlined': isOutlined }
+                { 'mrc-ui-btn-outlined': isOutlined },
+                { 'mrc-ui-btn-wide-medium': wide === 'medium' }
             );
             iconClasses = classNames('mrc-ui-btn-icon');
         }
