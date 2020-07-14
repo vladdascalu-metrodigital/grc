@@ -131,10 +131,14 @@ export function formatDateForAdditionalField(date) {
 
 const additionalFieldsOptionSeparator = '|';
 
-export function getOptionValues(optionsStr, fieldLabel) {
+export function getOptionValues(optionsStr, fieldLabel, withoutEmptyOption) {
     if (optionsStr === undefined || optionsStr === null || optionsStr.trim() === '') {
         return [];
     }
+    if (withoutEmptyOption) {
+        return [...optionsStr.split(additionalFieldsOptionSeparator).map((v) => [v, lookup(fieldLabel + '.' + v)])];
+    }
+
     return [
         ['', lookup('mrc.forms.please_select')],
         ...optionsStr.split(additionalFieldsOptionSeparator).map((v) => [v, lookup(fieldLabel + '.' + v)]),

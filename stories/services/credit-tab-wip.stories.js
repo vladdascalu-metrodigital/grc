@@ -9777,6 +9777,36 @@ storiesOf('Services/Credit Tab WIP', module)
                         },
                     },
                 },
+                {
+                    id: '2a582234-838c-4b6d-9ef4-3de4115c1da5',
+                    requestId: '1',
+                    country: 'DE',
+                    storeNumber: '15',
+                    customerNumber: '125',
+                    groupId: null,
+                    creationTimestamp: '2020-07-14T09:58:59.172756800Z',
+                    value: 'Computer_peripheral_equipment|Recreational_Products_Toys',
+                    textValue: null,
+                    countryField: {
+                        id: 'e3992ab5-425c-45ed-99f6-c82f63ea9be0',
+                        mandatory: false,
+                        validation: null,
+                        level: 'CUSTOMER',
+                        order: 5,
+                        section: 'CREDIT_DATA',
+                        reusable: true,
+                        endTimestamp: null,
+                        country: 'DE',
+                        options:
+                            'Oil_Gas_Production|Computer_peripheral_equipment|Recreational_Products_Toys|Electric_Utilities_Central|Package_Goods_Cosmetics|EDP_Services|Commercial_Banks|Metal_Fabrications|Industrial_Machinery_Components',
+                        field: {
+                            id: '2bcc9833-1aa8-40ed-8b31-985a28fa906e',
+                            code: 'DMY_CUSTOMER_INDUSTRY',
+                            label: 'mrc.customerdetails.industry',
+                            type: 'DROPDOWN_MULTIPLE',
+                        },
+                    },
+                },
             ],
         };
         historyResponse.groupLimit = {
