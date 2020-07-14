@@ -59,7 +59,7 @@ export default class CreditTableHead extends Component {
                         {parent === 'history' ? (
                             <CRTableHeaderCellLimitColSpanTitle
                                 title={parent === 'history' ? ts.current : groupLimit.new ? ts.new : ts.customerWish}
-                                prefix={groupLimit.new ? ts.customerWish : ''}
+                                prefix={parent === 'history' ? ts.customerWish : groupLimit.new ? ts.customerWish : ''}
                                 isGreen
                             />
                         ) : null}

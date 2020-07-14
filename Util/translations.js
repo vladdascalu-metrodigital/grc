@@ -37,8 +37,11 @@ let translations = {
     'mrc.attachments.showDeletedAttachments': 'Show Deleted Attachments',
     'mrc.customerdata.name': 'Customer Name',
 
-    'mrc.blockingReason.message.2': 'card misuse by customer',
-    'mrc.checkoutCheckCode.message.30': 'credit block',
+    'mrc.blockingReason.message.2': 'Card misuse by customer',
+    'mrc.blockingReason.message.9': 'Inactive customer',
+    'mrc.blockingReason.message.ES.9': 'Cliente inactiva',
+    'mrc.checkoutCheckCode.message.30': 'Credit block',
+    'mrc.checkoutCheckCode.message.ES.30': 'Bloque de crédito',
     'mrc.customerdata.title': 'Customer',
 
     'mrc.customerdata.blocked': 'Blocked Customer',

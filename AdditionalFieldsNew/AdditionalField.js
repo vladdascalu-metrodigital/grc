@@ -155,7 +155,7 @@ export default function AdditionalField(props) {
     };
 
     const generateValue = (oldValue, type, fieldLabel) => {
-        if (_.isNil(oldValue)) {
+        if (_.isNil(oldValue) || _.isEmpty(oldValue)) {
             return '-';
         }
 

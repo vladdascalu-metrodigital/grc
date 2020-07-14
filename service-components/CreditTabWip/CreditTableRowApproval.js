@@ -241,7 +241,7 @@ export default class CreditTableRowApproval extends Component {
                             <CRTableCellPrepaymentCash name={ts.cash} isGreen />
                         </Table.D>
                     ) : (requestsCash && isCashCustomer) || (!isCashCustomer && isNoChangeInNew) ? (
-                        <Table.D colSpan="3">
+                        <Table.D colSpan="3" borderFix>
                             <CRTableCellPrepaymentCash name={ts.nochange} isGreen />
                         </Table.D>
                     ) : (
