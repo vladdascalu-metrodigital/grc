@@ -25,7 +25,6 @@ export default class CreditTableRowHistory extends Component {
             translations,
         } = this.props;
 
-        console.log(this.props);
         const isCashCustomer = customer.isCashCustomer;
         const ts = translations;
         const blockingInfo = customer.blockingInfo;
