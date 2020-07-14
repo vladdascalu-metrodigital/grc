@@ -48,7 +48,6 @@ export default class ExpandedRow extends Component {
         const blockingReasonText = isBlocked ? _.get(customer, 'blockingInfo.blockingReasonText') : null;
         const checkoutCheckCodeText = isBlocked ? _.get(customer, 'blockingInfo.checkoutCheckCodeText') : null;
 
-        // TODO: blocking for history
         return [
             <Table.R
                 key="sticky"
@@ -62,16 +61,12 @@ export default class ExpandedRow extends Component {
                 <React.Fragment>
                     <Table.R>
                         <Table.D colSpan="8">
-                            {!_.isEmpty(blockingReasonText) ? <ClientBlocked text={blockingReasonText} /> : null}
-                            {!_.isEmpty(checkoutCheckCodeText) ? <ClientBlocked text={checkoutCheckCodeText} /> : null}
+                            {this.createBlockingSection(blockingReasonText, checkoutCheckCodeText, ts)}
                         </Table.D>
                     </Table.R>
                     <Table.R>
                         <Table.D colSpan="8">
-                            <CustomerAdditionalFieldsSection
-                                additionalFields={this.props.customer.additionalFields}
-                                translations={ts}
-                            />
+                            {this.createAdditionalFieldSection(ts, this.props.customer.additionalFields)}
                         </Table.D>
                     </Table.R>
                 </React.Fragment>
@@ -80,55 +75,53 @@ export default class ExpandedRow extends Component {
                     isBlocked ? (
                         <Table.R key="blocked" type="form">
                             <Table.D colSpan="8">
-                                <CreditTableFormSection title={ts.block} description={ts.blockdescription}>
-                                    <React.Fragment>
-                                        <Grid cols={1}>
-                                            {!_.isEmpty(blockingReasonText) ? (
-                                                <ClientBlocked text={blockingReasonText} />
-                                            ) : null}
-                                        </Grid>
-                                        <Grid cols={1}>
-                                            {!_.isEmpty(checkoutCheckCodeText) ? (
-                                                <ClientBlocked text={checkoutCheckCodeText} />
-                                            ) : null}
-                                        </Grid>
-                                    </React.Fragment>
-                                </CreditTableFormSection>
+                                {this.createBlockingSection(blockingReasonText, checkoutCheckCodeText, ts)}
                                 <PaymentSection {...{ ...this.props, isCashCustomerRequest }} />
-                                {isNewCredit ? (
-                                    <React.Fragment>
-                                        <hr />
-                                        <LimitSection {...this.props} />
-                                        <PaymentMethodSection {...this.props} />
-                                    </React.Fragment>
-                                ) : null}
-                                <CustomerAdditionalFieldsSection
-                                    additionalFields={this.props.customer.additionalFields}
-                                    translations={ts}
-                                />
+                                {isNewCredit ? this.createNewCreditSection() : null}
+                                {this.createAdditionalFieldSection(ts, this.props.customer.additionalFields)}
                             </Table.D>
                         </Table.R>
                     ) : (
                         <Table.R key={'form'} type="form">
                             <Table.D colSpan="8">
                                 <PaymentSection {...{ ...this.props, isCashCustomerRequest }} />
-                                {isNewCredit ? (
-                                    <React.Fragment>
-                                        <hr />
-                                        <LimitSection {...this.props} />
-                                        <PaymentMethodSection {...this.props} />
-                                    </React.Fragment>
-                                ) : null}
-                                <CustomerAdditionalFieldsSection
-                                    additionalFields={this.props.customer.additionalFields}
-                                    translations={ts}
-                                />
+                                {isNewCredit ? this.createNewCreditSection() : null}
+                                {this.createAdditionalFieldSection(ts, this.props.customer.additionalFields)}
                             </Table.D>
                         </Table.R>
                     ),
                 ]
             ),
         ];
+    }
+
+    createNewCreditSection() {
+        return (
+            <React.Fragment>
+                <hr />
+                <LimitSection {...this.props} />
+                <PaymentMethodSection {...this.props} />
+            </React.Fragment>
+        );
+    }
+
+    createBlockingSection(blockingReasonText, checkoutCheckCodeText, ts) {
+        return (
+            <CreditTableFormSection title={ts.block} description={ts.blockdescription}>
+                <React.Fragment>
+                    <Grid cols={1}>
+                        {!_.isEmpty(blockingReasonText) ? <ClientBlocked text={blockingReasonText} /> : null}
+                    </Grid>
+                    <Grid cols={1}>
+                        {!_.isEmpty(checkoutCheckCodeText) ? <ClientBlocked text={checkoutCheckCodeText} /> : null}
+                    </Grid>
+                </React.Fragment>
+            </CreditTableFormSection>
+        );
+    }
+
+    createAdditionalFieldSection(ts, additionalFields) {
+        return <CustomerAdditionalFieldsSection additionalFields={additionalFields} translations={ts} />;
     }
 }
 
