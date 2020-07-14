@@ -95,4 +95,5 @@ CreditTableRow.propTypes = {
     dateFormat: PropTypes.string,
     translations: PropTypes.object.isRequired,
     isContractingStepEditable: PropTypes.bool,
+    historyRequestType: PropTypes.oneOf(['LIMIT_EXPIRY', 'LIMIT_REQUEST', 'CREDIT_CORRECTION']).isRequired,
 };

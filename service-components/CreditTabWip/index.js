@@ -69,7 +69,7 @@ export default class CreditTab extends Component {
     }
 
     render() {
-        const { customers, parent, country, dateFormat, isContractingStepEditable } = this.props;
+        const { customers, parent, country, dateFormat, isContractingStepEditable, historyRequestType } = this.props;
         const translations = this.createTranslations();
         return (
             <MainContent>
@@ -121,6 +121,7 @@ export default class CreditTab extends Component {
                                               dateFormat={dateFormat}
                                               translations={translations}
                                               isContractingStepEditable={isContractingStepEditable}
+                                              historyRequestType={historyRequestType}
                                           />
                                       ))
                                     : null}
@@ -230,4 +231,5 @@ CreditTab.propTypes = {
     parent: PropTypes.oneOf(['creditlimit', 'history', 'approval']).isRequired,
     dateFormat: PropTypes.string.isRequired,
     isContractingStepEditable: PropTypes.bool,
+    historyRequestType: PropTypes.oneOf(['LIMIT_EXPIRY', 'LIMIT_REQUEST', 'CREDIT_CORRECTION']),
 };

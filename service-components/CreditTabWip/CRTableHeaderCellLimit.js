@@ -8,7 +8,7 @@ export default class CRTableHeaderCellLimit extends PureComponent {
         return (
             <div className="mrc-ui-crtable-header-cell-limit">
                 <span className="mrc-ui-crtable-header-cell-limit-prefix">{prefix}</span>
-                <span> / </span>
+                {prefix && title ? <span> / </span> : null}
                 <span className="mrc-ui-crtable-header-cell-limit-title">{title}</span>
             </div>
         );
