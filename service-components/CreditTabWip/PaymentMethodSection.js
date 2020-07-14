@@ -118,7 +118,9 @@ export default class PaymentMethodSection extends Component {
                                 title={ts.current}
                                 checked={isCurrentPaymentMethod}
                                 onClick={() => {
-                                    customer.onLimitChange(wishedAmount, null, null, null, limitType, 'CURRENT');
+                                    if (!isCurrentPaymentMethod) {
+                                        customer.onLimitChange(wishedAmount, null, null, null, limitType, 'CURRENT');
+                                    }
                                 }}
                                 disabled={readOnly}
                             >
@@ -376,7 +378,9 @@ export default class PaymentMethodSection extends Component {
                                 title={ts.current}
                                 checked={isCurrentPaymentMethod}
                                 onClick={() => {
-                                    customer.onLimitChange(selectedAmount, null, null, null, limitType, 'CURRENT');
+                                    if (!isCurrentPaymentMethod) {
+                                        customer.onLimitChange(selectedAmount, null, null, null, limitType, 'CURRENT');
+                                    }
                                 }}
                                 disabled={readOnly}
                             >
@@ -392,14 +396,16 @@ export default class PaymentMethodSection extends Component {
                                 title={ts.customerWish}
                                 checked={isWishedPaymentMethod}
                                 onClick={() => {
-                                    customer.onLimitChange(
-                                        selectedAmount,
-                                        wishedProduct,
-                                        wishedPeriod,
-                                        wishedDebitType,
-                                        limitType,
-                                        'WISH'
-                                    );
+                                    if (!isWishedPaymentMethod) {
+                                        customer.onLimitChange(
+                                            selectedAmount,
+                                            wishedProduct,
+                                            wishedPeriod,
+                                            wishedDebitType,
+                                            limitType,
+                                            'WISH'
+                                        );
+                                    }
                                 }}
                                 disabled={readOnly}
                             >
@@ -415,14 +421,16 @@ export default class PaymentMethodSection extends Component {
                                 title={_.get(customer, 'limit.applied.position')}
                                 checked={isAppliedPaymentMethod}
                                 onClick={() => {
-                                    customer.onLimitChange(
-                                        selectedAmount,
-                                        appliedProduct,
-                                        appliedPeriod,
-                                        appliedDebitType,
-                                        limitType,
-                                        'APPLIED'
-                                    );
+                                    if (!isAppliedPaymentMethod) {
+                                        customer.onLimitChange(
+                                            selectedAmount,
+                                            appliedProduct,
+                                            appliedPeriod,
+                                            appliedDebitType,
+                                            limitType,
+                                            'APPLIED'
+                                        );
+                                    }
                                 }}
                                 disabled={readOnly}
                             >

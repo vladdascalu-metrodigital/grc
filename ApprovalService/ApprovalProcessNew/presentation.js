@@ -784,10 +784,10 @@ export class ApprovalProcessPresentation extends Component {
         const dateFormat = util.dateFormatString();
         const selectedCreditProgram = process.selectedCreditProgram;
         const creditReadOnly =
-            (util.isContractingStep(this.state.currentStepType) ||
-                readOnly ||
-                process.waitingForReview ||
-                process.reviewed) &&
+            util.isContractingStep(this.state.currentStepType) ||
+            readOnly ||
+            process.waitingForReview ||
+            process.reviewed ||
             !process.editableByCurrentUser;
 
         return (

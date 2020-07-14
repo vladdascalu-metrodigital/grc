@@ -321,7 +321,7 @@ export default class LimitSection extends Component {
                                 title={ts.current}
                                 checked={isCurrentLimit}
                                 onClick={() => {
-                                    if (isCurrentLimit) {
+                                    if (!isCurrentLimit) {
                                         this.setState({ amount: null });
                                         customer.onLimitAndExpiryChange(
                                             null,
@@ -572,17 +572,15 @@ export default class LimitSection extends Component {
                             <MrcDatePickerInput
                                 className="m-input-element"
                                 onChange={(date) => {
-                                    if (date !== null && date >= new Date() + 1) {
+                                    if (date !== null) {
                                         customer.onExpiryChange(expiryAmountInContracting, date);
                                     } else {
                                         customer.onExpiryChange(expiryAmountInContracting, expiryDateInContracting);
                                     }
                                 }}
-                                onBlur={(event) => {
-                                    const date = new Date(event.target.value);
-                                    const newDate = date >= new Date() + 1 ? date : expiryDateInContracting;
-                                    customer.onExpiryOnBlur(expiryAmountInContracting, event, newDate);
-                                }}
+                                onBlur={(event) =>
+                                    customer.onExpiryOnBlur(expiryAmountInContracting, event, expiryDateInContracting)
+                                }
                                 selected={_.isNil(expiryDateInContracting) ? null : new Date(expiryDateInContracting)}
                                 showYearDropdown={true}
                                 dateFormat={dateFormat}
