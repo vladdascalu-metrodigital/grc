@@ -94,4 +94,5 @@ CreditTableRow.propTypes = {
     stickyOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     dateFormat: PropTypes.string,
     translations: PropTypes.object.isRequired,
+    isContractingStepEditable: PropTypes.bool,
 };

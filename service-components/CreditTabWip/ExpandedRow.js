@@ -145,4 +145,5 @@ ExpandedRow.propTypes = {
     dateFormat: PropTypes.string,
     requestsCash: PropTypes.bool,
     translations: PropTypes.object.isRequired,
+    isContractingStepEditable: PropTypes.bool,
 };
