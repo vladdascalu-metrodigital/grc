@@ -11,6 +11,7 @@ import CreditCorrectionTableRowC from './CreditCorrectionTableRowC';
 import CreditCorrectionTableRowD from './CreditCorrectionTableRowD';
 
 import CreditCorrectionGroupActions from './CreditCorrectionGroupActions';
+import { SimpleActionDock } from '../../ActionDock';
 
 import './index.scss';
 
@@ -24,12 +25,22 @@ export default class CreditCorrection extends Component {
     render() {
         return (
             <MainContent>
+                <SimpleActionDock />
                 <CreditCorrectionGroupActions />
                 <div style={{ position: 'relative' }}>
                     <Table.Root style={{ tableLayout: 'fixed' }}>
                         <Table.Body>
                             <CreditCorrectionTableHead />
 
+                            {[...Array(10).keys()].map((e, i) => (
+                                <React.Fragment>
+                                    <CreditCorrectionTableRow
+                                        key={i}
+                                        id={'credit-table-sticky-row-' + i}
+                                        isZebra={!!(i % 2)}
+                                    />
+                                </React.Fragment>
+                            ))}
                             <CreditCorrectionTableRow />
                             <CreditCorrectionTableRowA />
                             <CreditCorrectionTableRowB />
