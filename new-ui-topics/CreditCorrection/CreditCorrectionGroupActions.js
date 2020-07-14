@@ -19,7 +19,7 @@ export default class CreditCorrectionGroupActions extends Component {
                     description="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                 >
                     <h4 className="mrc-ui-form-label mb-2">Choose Action</h4>
-                    <Grid cols={4}>
+                    <Grid colMin="10rem">
                         <CheckCard title="Set on customer level" checked />
                         <CheckCard title="Block group for any purchase" />
                         <CheckCard title="Block group to buy on credit" />

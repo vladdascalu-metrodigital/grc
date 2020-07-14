@@ -12,14 +12,16 @@ import './index.scss';
 
 export default class Grid extends Component {
     render() {
-        let { cols, justifyContent, alignItems, className: outerClassName } = this.props;
+        let { cols, colMin, colMax, justifyContent, alignItems, className: outerClassName } = this.props;
         let className = classnames(outerClassName, 'mrc-ui-grid', {
             'mrc-ui-grid-cols': cols && cols > 0,
         });
         let style = {
-            '--grid-cols': cols && cols > 0 ? cols : undefined,
-            '--justify-content': justifyContent,
-            '--align-items': alignItems,
+            '--mrc-ui-grid-grid-cols': cols && cols > 0 ? cols : undefined,
+            '--mrc-ui-grid-justify-content': justifyContent,
+            '--mrc-ui-grid-align-items': alignItems,
+            '--mrc-ui-grid-col-min': colMin,
+            '--mrc-ui-grid-col-max': colMax,
         };
         return (
             <div style={style} className={className}>
@@ -36,6 +38,8 @@ Grid.propTypes = {
     alignItems: PropTypes.string,
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     className: PropTypes.string,
+    colMin: PropTypes.string,
+    colMax: PropTypes.string,
 };
 
 export class GridItem extends Component {

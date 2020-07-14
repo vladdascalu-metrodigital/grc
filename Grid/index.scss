@@ -3,17 +3,17 @@
 .mrc-ui-grid {
   display: grid;
   // TODO: set a cool min width
-  grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(var(--mrc-ui-grid-col-min, 22rem), var(--mrc-ui-grid-col-max, 1fr)));
   grid-gap: $spacing-row-gap $spacing-column-gap;
-  justify-content: var(--justify-content);
-  align-items: var(--align-items);
+  justify-content: var(--mrc-ui-grid-justify-content);
+  align-items: var(--mrc-ui-grid-align-items);
 }
 
 .mrc-ui-grid-cols {
-  grid-template-columns: repeat(var(--grid-cols), 1fr);
+  grid-template-columns: repeat(var(--mrc-ui-grid-grid-cols), 1fr);
 }
 
 .mrc-ui-grid-item {
-  justify-self: var(--justify-self);
-  align-self: var(--align-self);
+  justify-self: var(--mrc-ui-grid-justify-self);
+  align-self: var(--mrc-ui-grid-align-self);
 }
