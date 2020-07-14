@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import ReactDatePicker from 'react-datepicker';
+import ReactDatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
+import de from 'date-fns/locale/de';
+import es from 'date-fns/locale/es';
+import pt from 'date-fns/locale/pt';
+import ru from 'date-fns/locale/ru';
+import en from 'date-fns/locale/en-GB';
+import hr from 'date-fns/locale/hr';
+import ro from 'date-fns/locale/ro';
+import pl from 'date-fns/locale/pl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import isEqual from 'lodash/isEqual';
@@ -14,9 +22,21 @@ import InputValidationMessages from '../InputValidationMessages';
 import 'react-datepicker/dist/react-datepicker.css';
 import './index.scss';
 
+registerLocale('DE', de);
+registerLocale('ES', es);
+registerLocale('PT', pt);
+// registerLocale('RS', rs);
+registerLocale('RU', ru);
+registerLocale('EN', en);
+registerLocale('HR', hr);
+registerLocale('RO', ro);
+// registerLocale('PK', pk);
+registerLocale('PL', pl);
+
 export default class DatePicker extends Component {
     constructor(props) {
         super(props);
+        setDefaultLocale((props.locale && props.locale.toUpperCase()) || 'EN');
         this.validate.bind(this);
         this.delayedChangeTimeout = null;
         this.state = {
@@ -32,6 +52,9 @@ export default class DatePicker extends Component {
     componentDidUpdate(prevProps) {
         if (!isEqual(this.props.selected, prevProps.selected)) {
             this.validate(this.props.selected);
+        }
+        if (this.props.locale !== prevProps.locale) {
+            setDefaultLocale(this.props.locale);
         }
     }
 
@@ -121,6 +144,7 @@ DatePicker.propTypes = {
     dateFormat: PropTypes.string,
     placeholderText: PropTypes.string,
 
+    locale: PropTypes.string,
     status: PropTypes.oneOf(['invalid']),
     onValidChange: PropTypes.func,
     validationMessages: PropTypes.array,

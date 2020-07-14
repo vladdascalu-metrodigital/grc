@@ -5,6 +5,7 @@ import { displayName } from '../Util';
 import { lookup } from '../Util/translations';
 import Attention from '../icons/attention.svg';
 import MrcNumber from '../MrcNumber';
+import MrcDate from '../MrcDate';
 
 export default class DetailedCustomerTrigger extends Component {
     PLACEHOLDER = '-';
@@ -147,7 +148,7 @@ export default class DetailedCustomerTrigger extends Component {
         if (limitExpiry !== undefined && limitExpiry !== null) {
             return (
                 <td>
-                    <mrc-date>{limitExpiry}</mrc-date>
+                    <MrcDate>{limitExpiry}</MrcDate>
                 </td>
             );
         }

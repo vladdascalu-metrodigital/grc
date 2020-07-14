@@ -34,6 +34,7 @@ export default class CreditTab extends Component {
             chooseamount: lookup('mrc.credittab.chooseamount'),
             chooselimit: lookup('mrc.credittab.chooselimit'),
             chooseexpiry: lookup('mrc.credittab.chooseexpiry'),
+            updateexpiry: lookup('mrc.credittab.updateexpiry'),
             chooseproduct: lookup('mrc.credittab.chooseproduct'),
             choosedebittype: lookup('mrc.credittab.choosedebittype'),
             creditperiod: lookup('mrc.creditdetails.creditperiod'),
@@ -68,7 +69,7 @@ export default class CreditTab extends Component {
     }
 
     render() {
-        const { customers, parent, country, dateFormat } = this.props;
+        const { customers, parent, country, dateFormat, isContractingStepEditable } = this.props;
         const translations = this.createTranslations();
         return (
             <MainContent>
@@ -119,6 +120,7 @@ export default class CreditTab extends Component {
                                               country={country}
                                               dateFormat={dateFormat}
                                               translations={translations}
+                                              isContractingStepEditable={isContractingStepEditable}
                                           />
                                       ))
                                     : null}
@@ -227,4 +229,5 @@ CreditTab.propTypes = {
     creditProgram: PropTypes.object,
     parent: PropTypes.oneOf(['creditlimit', 'history', 'approval']).isRequired,
     dateFormat: PropTypes.string.isRequired,
+    isContractingStepEditable: PropTypes.bool,
 };

@@ -4,6 +4,7 @@ import { action } from '@storybook/addon-actions';
 import MainContent from '../MainContent';
 import Grid from '../Grid';
 import DatePicker from '../DatePicker';
+import Select from '../Select';
 
 storiesOf('Forms/DatePicker', module)
     .add('DatePicker', () => {
@@ -93,6 +94,26 @@ storiesOf('Forms/DatePicker', module)
             <MainContent>
                 <Grid cols="3" alignItems="center" justifyContent="center">
                     <DatePicker onChange={changeHandler} disabled={true} />
+                </Grid>
+            </MainContent>
+        );
+    })
+    .add('i18n DatePicker', () => {
+        const [selectedDate, setDate] = useState(new Date());
+        const [locale, setLocale] = useState(null);
+        const changeHandler = (value) => {
+            action('date changed')(value);
+            setDate(value);
+        };
+        return (
+            <MainContent>
+                <Grid cols="3" alignItems="center" justifyContent="center">
+                    <Select
+                        label="Set Locale"
+                        onChange={(locale) => setLocale(locale)}
+                        options={[[null, 'NULL'], 'DE', 'ES', 'PT', 'RS', 'RU', 'EN', 'HR', 'RO', 'PK', 'PL']}
+                    />
+                    <DatePicker locale={locale} label="Choose Date" selected={selectedDate} onChange={changeHandler} />
                 </Grid>
             </MainContent>
         );

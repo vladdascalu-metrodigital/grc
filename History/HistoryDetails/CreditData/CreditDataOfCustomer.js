@@ -4,21 +4,35 @@ import { lookup } from '../../../Util/translations';
 import { PropTypes } from 'prop-types';
 import { addBlockingCodesWarnings } from '../../Shared/WarningUtils';
 import * as _ from 'lodash';
+import MrcNumber from '../../../MrcNumber';
+import MrcDate from '../../../MrcDate';
 
 export default class CreditDataOfCustomer extends Component {
     creditLimit(countryCode, current, requested, applied) {
         const list = [
             {
                 term: 'mrc.creditdetails.current',
-                description: <mrc-number show-currency-for-country={countryCode}>{current.creditLimit}</mrc-number>,
+                description: (
+                    <MrcNumber isCurrency country={countryCode}>
+                        {current.creditLimit}
+                    </MrcNumber>
+                ),
             },
             {
                 term: 'mrc.creditdetails.requested',
-                description: <mrc-number show-currency-for-country={countryCode}>{requested.creditLimit}</mrc-number>,
+                description: (
+                    <MrcNumber isCurrency country={countryCode}>
+                        {requested.creditLimit}
+                    </MrcNumber>
+                ),
             },
             {
                 term: 'mrc.creditdetails.applied',
-                description: <mrc-number show-currency-for-country={countryCode}>{applied.creditLimit}</mrc-number>,
+                description: (
+                    <MrcNumber isCurrency country={countryCode}>
+                        {applied.creditLimit}
+                    </MrcNumber>
+                ),
             },
         ];
 
@@ -90,11 +104,15 @@ export default class CreditDataOfCustomer extends Component {
         const list = [
             {
                 term: 'mrc.creditdetails.limitExpiryDate',
-                description: expiryDate !== null ? <mrc-date>{expiryDate}</mrc-date> : null,
+                description: expiryDate !== null ? <MrcDate>{expiryDate}</MrcDate> : null,
             },
             {
                 term: 'mrc.creditdetails.limitExpiryReset',
-                description: <mrc-number show-currency-for-country={countryCode}>{resetAmount}</mrc-number>,
+                description: (
+                    <MrcNumber isCurrency country={countryCode}>
+                        {resetAmount}
+                    </MrcNumber>
+                ),
             },
         ];
 

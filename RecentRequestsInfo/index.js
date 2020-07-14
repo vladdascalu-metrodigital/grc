@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+import { lookup } from '../Util/translations';
+
 import BlockedIcon from '../icons/signal-blocked-new.svg';
 import PendingIcon from '../icons/signal-pending-new.svg';
 import ApprovedIcon from '../icons/signal-approved-new.svg';
@@ -7,9 +11,9 @@ import CreditCorrectionIcon from '../icons/credit-correction-blue.svg';
 import OpenIcon from '../icons/signal-open-new.svg';
 import ArrowRightIcon from '../icons/arrow-right.svg';
 import ProgressBar from '../ProgressBar';
-import { lookup } from '../Util/translations';
-import PropTypes from 'prop-types';
 import MrcNumber from '../MrcNumber';
+import MrcDate from '../MrcDate';
+
 import './index.scss';
 
 export default class RecentRequestsInfo extends Component {
@@ -82,7 +86,7 @@ export default class RecentRequestsInfo extends Component {
         if (requestStatus.requestType === 'LIMIT_EXPIRY') {
             return (
                 <div className="mrc-request-details-title">
-                    <mrc-date>{requestStatus.creationDate}</mrc-date> / {lookup('history.status.item.from')}{' '}
+                    <MrcDate>{requestStatus.creationDate}</MrcDate> / {lookup('history.status.item.from')}{' '}
                     <MrcNumber isCurrency country={country}>
                         {requestStatus.amount}
                     </MrcNumber>{' '}
@@ -96,7 +100,7 @@ export default class RecentRequestsInfo extends Component {
         const shouldRenderGroupLimit = requestStatus.groupMembers > 1 && requestStatus.groupAmount >= 0.0;
         return (
             <div className="mrc-request-details-title">
-                <mrc-date>{requestStatus.creationDate}</mrc-date> /{' '}
+                <MrcDate>{requestStatus.creationDate}</MrcDate> /{' '}
                 <span>{lookup(requestStatus.applied ? 'mrc.label.appliedLimit' : 'mrc.label.requestedLimit')}</span>{' '}
                 <MrcNumber isCurrency country={country}>
                     {requestStatus.amount}
@@ -155,8 +159,7 @@ export default class RecentRequestsInfo extends Component {
             <div className="mrc-request-details">
                 {this.createTrafficLight(requestStatus)}
                 <div className="mrc-request-details-title">
-                    <mrc-date>{requestStatus.creationDate}</mrc-date>,{' '}
-                    <span>{lookup('mrc.requesttype.quickcheck')}</span>
+                    <MrcDate>{requestStatus.creationDate}</MrcDate>, <span>{lookup('mrc.requesttype.quickcheck')}</span>
                 </div>
                 <div className="mrc-request-details-arrow-right-container">
                     <img src={ArrowRightIcon} alt="Details"></img>
@@ -286,7 +289,7 @@ export default class RecentRequestsInfo extends Component {
 
     createCustomerStatusForCreditCorrection(requestStatus) {
         switch (requestStatus.searchedCustomerStatus) {
-            case 'CHANGETOCASH':
+            case 'CREDITTOCASH':
                 return <span className="span-success uppercase">{lookup('mrc.status.changed-to-cash')}</span>;
             case 'HARDBLOCK':
                 return <span className="span-success uppercase">{lookup('mrc.status.hard-blocked')}</span>;

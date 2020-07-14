@@ -3484,6 +3484,7 @@ storiesOf('Services/Credit Tab WIP', module)
             parent={'approval'}
             country={'DE'}
             groupLimit={{ exhausted: 35000, current: 36000, wish: 90000, new: 100000 }}
+            isContractingStepEditable={true}
             customers={[
                 {
                     onAmountChange: () => null,

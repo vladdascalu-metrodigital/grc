@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { lookup } from '../Util/translations';
 
+import MrcDate from '../MrcDate';
+
 export default class ReviewInboxItemPresentation extends Component {
     render() {
         const entry = this.props.entry || {};
@@ -12,7 +14,7 @@ export default class ReviewInboxItemPresentation extends Component {
                     <span>
                         <p>
                             <label>{lookup('inbox.requestDate')}:&nbsp;</label>
-                            <mrc-date>{entry.requestDate ? entry.requestDate : entry.issueDate}</mrc-date>
+                            <MrcDate>{entry.requestDate ? entry.requestDate : entry.issueDate}</MrcDate>
                         </p>
                         {entry.assignedUserName != null ? (
                             <p>
@@ -30,7 +32,7 @@ export default class ReviewInboxItemPresentation extends Component {
         return (
             <div>
                 <div>
-                    <label>{lookup('inbox.notification.issueDate')}:</label> <mrc-date>{entry.issueDate}</mrc-date>
+                    <label>{lookup('inbox.notification.issueDate')}:</label> <MrcDate>{entry.issueDate}</MrcDate>
                 </div>
                 <div>
                     <label>{lookup('inbox.notification.message')}:</label> <span>{lookup(entry.message)}</span>

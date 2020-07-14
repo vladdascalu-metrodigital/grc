@@ -1,0 +1,14 @@
+@import '../../lib/scss/card-styles';
+@import '../../lib//scss/variables';
+@import '../../lib//scss/typography';
+
+.mrc-ui-cr-payment-method-setting {
+  line-height: 1.075em;
+}
+
+.mrc-ui-check-card-product {
+  color: $color-palette-grey-tint-40;
+  font-weight: 600;
+  line-height: $line-height-title;
+  font-size: $font-size-6;
+}

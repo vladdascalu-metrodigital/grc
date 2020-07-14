@@ -104,7 +104,7 @@ export default class RecentRequestsInfo extends Component {
                     {requestStatus.status != null ? (
                         <p>
                             <span className={requestStatus.status}>
-                                <b>{this.createStatus(requestStatus.status, requestStatus.requestType)}</b>
+                                <b>{this.createStatus(requestStatus, requestStatus.requestType)}</b>
                                 {requestStatus.status === 'Pending' ? (
                                     <span className="mrc-position"> {lookup('mrc.status.at')}</span>
                                 ) : (
@@ -122,7 +122,7 @@ export default class RecentRequestsInfo extends Component {
                     {requestStatus.status != null ? (
                         <p>
                             <span className={requestStatus.status}>
-                                <b>{this.createStatus(requestStatus.status)}</b>
+                                <b>{this.createStatus(requestStatus)}</b>
                                 <span className="mrc-position"> {lookup('mrc.status.by')}</span>
                                 <span className="mrc-position"> {requestStatus.position}</span>
                             </span>
@@ -148,7 +148,7 @@ export default class RecentRequestsInfo extends Component {
                         {requestStatus.status != null ? (
                             <p>
                                 <span className={requestStatus.status}>
-                                    <b>{this.createStatus(requestStatus.status)}</b>
+                                    <b>{this.createStatus(requestStatus)}</b>
                                     {requestStatus.status != 'Aborted' ? (
                                         <span className="mrc-position"> {lookup('mrc.status.by')}</span>
                                     ) : null}
@@ -219,68 +219,88 @@ export default class RecentRequestsInfo extends Component {
         }
     }
 
-    createStatus(status, requestType) {
-        if (status == 'Approved') {
+    createStatus(requestStatus, requestType) {
+        if (requestStatus.status == 'Approved') {
             return <span className="span-success uppercase">{lookup('mrc.status.approved')}</span>;
         }
-        if (status == 'Failed') {
+        if (requestStatus.status == 'Failed') {
             if (requestType == 'LIMIT_EXPIRY') {
                 return <span className="span-error uppercase">{lookup('mrc.status.limitExpiryFailed')}</span>;
             }
             return <span className="span-error uppercase">{lookup('mrc.status.failed')}</span>;
         }
-        if (status == 'Blocked') {
+        if (requestStatus.status == 'Blocked') {
             return <span className="span-error uppercase">{lookup('mrc.status.blocked')}</span>;
         }
-        if (status == 'Retried') {
+        if (requestStatus.status == 'Retried') {
             return <span className="retried uppercase">{lookup('mrc.status.retried')}</span>;
         }
-        if (status == 'Claimed') {
+        if (requestStatus.status == 'Claimed') {
             return <span className="claimed uppercase">{lookup('mrc.status.claimed')}</span>;
         }
-        if (status == 'Pending') {
+        if (requestStatus.status == 'Pending') {
             return <span className="span-blue uppercase">{lookup('mrc.status.pending')}</span>;
         }
-        if (status == 'Activated') {
+        if (requestStatus.status == 'Activated') {
             if (requestType == 'LIMIT_EXPIRY') {
                 return <span className="span-success uppercase">{lookup('mrc.status.limitExpiryActivated')}</span>;
             }
             return <span className="span-success uppercase">{lookup('mrc.status.activated')}</span>;
         }
-        if (status == 'Cancelled') {
+        if (requestStatus.status == 'Cancelled') {
             return <span className="span-error uppercase">{lookup('mrc.status.cancelled')}</span>;
         }
-        if (status == 'Requested') {
+        if (requestStatus.status == 'Requested') {
             return <span className="span-blue uppercase">{lookup('mrc.status.requested')}</span>;
         }
-        if (status == 'Sent_back') {
+        if (requestStatus.status == 'Sent_back') {
             return <span className="span-blue uppercase">{lookup('mrc.status.sentback')}</span>;
         }
-        if (status == 'Provided') {
+        if (requestStatus.status == 'Provided') {
             return <span className="span-blue uppercase">{lookup('mrc.status.infoprovided')}</span>;
         }
-        if (status == 'Rejected') {
+        if (requestStatus.status == 'Rejected') {
             return <span className="span-error uppercase">{lookup('mrc.status.rejected')}</span>;
         }
-        if (status == 'Review') {
+        if (requestStatus.status == 'Review') {
             return <span className="span-blue uppercase">{lookup('mrc.status.review')}</span>;
         }
-        if (status == 'Aborted') {
+        if (requestStatus.status == 'Aborted') {
             return <span className="span-blue uppercase">{lookup('mrc.status.aborted')}</span>;
         }
-        if (status == 'Review_Pending') {
+        if (requestStatus.status == 'Review_Pending') {
             return <span className="span-blue uppercase">{lookup('mrc.status.review_pending')}</span>;
         }
-        if (status == 'Retry_Getting_Indicators') {
+        if (requestStatus.status == 'Retry_Getting_Indicators') {
             return <span className="span-error uppercase">{lookup('mrc.status.retry_getting_indicators')}</span>;
         }
-        if (status == 'Contract_signed') {
+        if (requestStatus.status == 'Contract_signed') {
             return <span className="span-blue uppercase">{lookup('mrc.status.contractSigned')}</span>;
         }
-        if (status == 'Contract_validated') {
+        if (requestStatus.status == 'Contract_validated') {
             return <span className="span-blue uppercase">{lookup('mrc.status.contractValidated')}</span>;
         }
+        if (requestStatus.status == 'Changed') {
+            return this.createCustomerStatusForCreditCorrection(requestStatus);
+        }
         return <span></span>;
+    }
+
+    createCustomerStatusForCreditCorrection(requestStatus) {
+        switch (requestStatus.searchedCustomerStatus) {
+            case 'CREDITTOCASH':
+                return <span className="span-success uppercase">{lookup('mrc.status.changed-to-cash')}</span>;
+            case 'HARDBLOCK':
+                return <span className="span-success uppercase">{lookup('mrc.status.hard-blocked')}</span>;
+            case 'SOFTBLOCK':
+                return <span className="span-success uppercase">{lookup('mrc.status.soft-blocked')}</span>;
+            case 'REMOVEBLOCK':
+                return <span className="span-success uppercase">{lookup('mrc.status.block-removed')}</span>;
+            case 'GENERALBLOCK':
+                return <span className="span-success uppercase">{lookup('mrc.status.general-blocked')}</span>;
+            default:
+                return <span className="span-success uppercase">{lookup('mrc.status.changed')}</span>;
+        }
     }
 }
 

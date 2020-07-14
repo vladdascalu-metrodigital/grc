@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import * as _ from 'lodash';
+import { lookup } from '../../../Util/translations';
+
+import { Accordion, Collapsible } from '../../../Accordion';
+import { Table } from '../../../Table';
+import MrcNumber from '../../../MrcNumber';
+
 import '../../../Sales/sales.scss';
 import '../../../Sales/data-table.scss';
-import { lookup } from '../../../Util/translations';
-import { Accordion, Collapsible } from '../../../Accordion';
-import * as _ from 'lodash';
-import { Table } from '../../../Table';
 
 export default class Sales extends Component {
     wrapCurrency(value, sales) {
@@ -13,15 +16,19 @@ export default class Sales extends Component {
             return <span>n/a</span>;
         }
         if (sales.original.tag === 'purchase' || sales.original.tag === 'invoices') {
-            return <mrc-number>{value}</mrc-number>;
+            return <MrcNumber>{value}</MrcNumber>;
         } else if (sales.original.tag === 'margin') {
             return (
                 <span>
-                    <mrc-number>{value}</mrc-number>%
+                    <MrcNumber>{value}</MrcNumber> %
                 </span>
             );
         } else {
-            return <mrc-number show-currency-for-country={sales.original.country}>{value}</mrc-number>;
+            return (
+                <MrcNumber isCurrency country={sales.original.country}>
+                    {value}
+                </MrcNumber>
+            );
         }
     }
 
@@ -50,7 +57,7 @@ export default class Sales extends Component {
             <div className="mrc-scoring-data">
                 <Table
                     columns={columns}
-                    data={data.map(e => {
+                    data={data.map((e) => {
                         return { ...e, country: country };
                     })}
                     className={'mrc-data-table'}
@@ -74,7 +81,7 @@ export default class Sales extends Component {
             { Header: 'L12M', accessor: 'quintetValues.l12m', renderFn: this.wrapCurrency },
         ];
 
-        const data = customer.behaviorQuintets.map(bq => {
+        const data = customer.behaviorQuintets.map((bq) => {
             return {
                 name: lookup('mrc.mdw.behaviour-' + bq.behaviouralCode + countrySufix),
                 country: country,
@@ -101,7 +108,7 @@ export default class Sales extends Component {
         // Country is retrieved from the first customer in the list that has a country.
         const realCustomer = _.find(
             this.props.salesOverviews,
-            customer => !_.isNil(_.get(customer, 'customerId.country'))
+            (customer) => !_.isNil(_.get(customer, 'customerId.country'))
         );
         const country = realCustomer ? realCustomer.customerId.country : '';
 

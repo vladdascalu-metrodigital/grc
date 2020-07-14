@@ -77,17 +77,19 @@ export default class LimitSection extends Component {
                                 title={ts.current}
                                 checked={isCurrentLimit}
                                 onClick={() => {
-                                    this.setState({ amount: null });
-                                    customer.onLimitAndExpiryChange(
-                                        null,
-                                        selectedProduct,
-                                        selectedPeriod,
-                                        selectedDebitType,
-                                        null,
-                                        null,
-                                        'CURRENT',
-                                        paymentMethodType
-                                    );
+                                    if (!isCurrentLimit) {
+                                        this.setState({ amount: null });
+                                        customer.onLimitAndExpiryChange(
+                                            null,
+                                            selectedProduct,
+                                            selectedPeriod,
+                                            selectedDebitType,
+                                            null,
+                                            null,
+                                            'CURRENT',
+                                            paymentMethodType
+                                        );
+                                    }
                                 }}
                                 disabled={readOnly}
                             >
@@ -191,7 +193,7 @@ export default class LimitSection extends Component {
                                             dateFormat={dateFormat}
                                             minDate={new Date(new Date().getTime() + 86400000)} // + 1 day in ms
                                             placeholderText={dateFormat}
-                                            id={'datepicker-' + this.props.customer.storeNumber + this.props.number}
+                                            id={'datepicker-' + customer.storeNumber + customer.number}
                                             disabled={readOnly}
                                         />
                                     </CheckCard>
@@ -245,7 +247,7 @@ export default class LimitSection extends Component {
     }
 
     renderApproval() {
-        const { customer, dateFormat, translations, country } = this.props;
+        const { customer, dateFormat, translations, country, isContractingStepEditable } = this.props;
         const ts = translations;
         const readOnly = _.get(customer, 'limit.readOnly') === true;
 
@@ -290,6 +292,25 @@ export default class LimitSection extends Component {
         const isNewRequest = (!isCurrentLimit || !hasCurrentLimit) && !isWishedRequest && !isAppliedRequest;
         const isWithoutExpiry = _.isNil(newExpiryDate);
 
+        const amountInContracting =
+            limitType === 'APPLIED' ? appliedAmount : limitType === 'WISH' ? wishedAmount : null;
+        const expiryDateInContracting =
+            limitType === 'APPLIED'
+                ? _.get(customer, 'limit.applied.expiry.date')
+                : limitType === 'WISH'
+                ? _.get(customer, 'limit.wish.expiry.date')
+                : null;
+        const expiryAmountInContracting =
+            limitType === 'APPLIED'
+                ? _.get(customer, 'limit.applied.expiry.amount')
+                : limitType === 'WISH'
+                ? _.get(customer, 'limit.wish.expiry.amount')
+                : null;
+        const editableLimitExpiryInContracting =
+            isContractingStepEditable &&
+            amountInContracting != null &&
+            !Number.isNaN(amountInContracting) &&
+            expiryDateInContracting != null;
         return (
             <CreditTableFormSection title={ts.limit} description={ts.limitdescription}>
                 <React.Fragment>
@@ -300,17 +321,19 @@ export default class LimitSection extends Component {
                                 title={ts.current}
                                 checked={isCurrentLimit}
                                 onClick={() => {
-                                    this.setState({ amount: null });
-                                    customer.onLimitAndExpiryChange(
-                                        null,
-                                        selectedProduct,
-                                        selectedPeriod,
-                                        selectedDebitType,
-                                        null,
-                                        null,
-                                        'CURRENT',
-                                        paymentMethodType
-                                    );
+                                    if (isCurrentLimit) {
+                                        this.setState({ amount: null });
+                                        customer.onLimitAndExpiryChange(
+                                            null,
+                                            selectedProduct,
+                                            selectedPeriod,
+                                            selectedDebitType,
+                                            null,
+                                            null,
+                                            'CURRENT',
+                                            paymentMethodType
+                                        );
+                                    }
                                 }}
                                 disabled={readOnly}
                             >
@@ -327,19 +350,21 @@ export default class LimitSection extends Component {
                                 title={ts.customerWish}
                                 checked={isWishedRequest}
                                 onClick={() => {
-                                    this.setState({ amount: null });
-                                    customer.onLimitAndExpiryChange(
-                                        wishedAmount,
-                                        selectedProduct,
-                                        selectedPeriod,
-                                        selectedDebitType,
-                                        wishedExpiryAmount,
-                                        wishedExpiryDate,
-                                        'WISH',
-                                        paymentMethodType
-                                    );
+                                    if (!isWishedRequest) {
+                                        this.setState({ amount: null });
+                                        customer.onLimitAndExpiryChange(
+                                            wishedAmount,
+                                            selectedProduct,
+                                            selectedPeriod,
+                                            selectedDebitType,
+                                            wishedExpiryAmount,
+                                            wishedExpiryDate,
+                                            'WISH',
+                                            paymentMethodType
+                                        );
+                                    }
                                 }}
-                                disabled={readOnly}
+                                disabled={editableLimitExpiryInContracting && isWishedRequest ? false : readOnly}
                             >
                                 <CRLimitSetting
                                     country={country}
@@ -354,19 +379,21 @@ export default class LimitSection extends Component {
                                 title={_.get(customer, 'limit.applied.position')}
                                 checked={isAppliedRequest}
                                 onClick={() => {
-                                    this.setState({ amount: null });
-                                    customer.onLimitAndExpiryChange(
-                                        appliedAmount,
-                                        selectedProduct,
-                                        selectedPeriod,
-                                        selectedDebitType,
-                                        appliedExpiryAmount,
-                                        appliedExpiryDate,
-                                        'APPLIED',
-                                        paymentMethodType
-                                    );
+                                    if (!isAppliedRequest) {
+                                        this.setState({ amount: null });
+                                        customer.onLimitAndExpiryChange(
+                                            appliedAmount,
+                                            selectedProduct,
+                                            selectedPeriod,
+                                            selectedDebitType,
+                                            appliedExpiryAmount,
+                                            appliedExpiryDate,
+                                            'APPLIED',
+                                            paymentMethodType
+                                        );
+                                    }
                                 }}
-                                disabled={readOnly}
+                                disabled={editableLimitExpiryInContracting && isAppliedRequest ? false : readOnly}
                             >
                                 <CRLimitSetting
                                     country={country}
@@ -470,7 +497,7 @@ export default class LimitSection extends Component {
                                             dateFormat={dateFormat}
                                             minDate={new Date(new Date().getTime() + 86400000)} // + 1 day in ms
                                             placeholderText={dateFormat}
-                                            id={'datepicker-' + this.props.customer.storeNumber + this.props.number}
+                                            id={'datepicker-' + customer.storeNumber + customer.number}
                                             disabled={readOnly}
                                         />
                                     </CheckCard>
@@ -508,8 +535,77 @@ export default class LimitSection extends Component {
                             </Card>
                         </React.Fragment>
                     ) : null}
+                    {this.createLimitExpiryUpdateInContracting(
+                        editableLimitExpiryInContracting,
+                        expiryDateInContracting,
+                        expiryAmountInContracting,
+                        customer,
+                        dateFormat,
+                        country,
+                        ts
+                    )}
                 </React.Fragment>
             </CreditTableFormSection>
         );
+    }
+
+    createLimitExpiryUpdateInContracting(
+        editableLimitExpiryInContracting,
+        expiryDateInContracting,
+        expiryAmountInContracting,
+        customer,
+        dateFormat,
+        country,
+        ts
+    ) {
+        return editableLimitExpiryInContracting === true ? (
+            <React.Fragment>
+                <h4 className="mrc-ui-form-label mt-5 mb-2">{ts.updateexpiry}</h4>
+                <Card dropShadow>
+                    <h4 className="mrc-ui-form-label mt-4 mb-1">{ts.chooseexpiry}</h4>
+                    <Grid cols={3}>
+                        <CheckCard
+                            title={ts.expiryDate}
+                            checked={expiryDateInContracting}
+                            disabled={!editableLimitExpiryInContracting}
+                        >
+                            <MrcDatePickerInput
+                                className="m-input-element"
+                                onChange={(date) => {
+                                    if (date !== null && date >= new Date() + 1) {
+                                        customer.onExpiryChange(expiryAmountInContracting, date);
+                                    } else {
+                                        customer.onExpiryChange(expiryAmountInContracting, expiryDateInContracting);
+                                    }
+                                }}
+                                onBlur={(event) => {
+                                    const date = new Date(event.target.value);
+                                    const newDate = date >= new Date() + 1 ? date : expiryDateInContracting;
+                                    customer.onExpiryOnBlur(expiryAmountInContracting, event, newDate);
+                                }}
+                                selected={_.isNil(expiryDateInContracting) ? null : new Date(expiryDateInContracting)}
+                                showYearDropdown={true}
+                                dateFormat={dateFormat}
+                                minDate={new Date(new Date().getTime() + 86400000)} // + 1 day in ms
+                                placeholderText={dateFormat}
+                                id={'datepicker-' + customer.storeNumber + customer.number}
+                                disabled={!editableLimitExpiryInContracting}
+                                required={true}
+                            />
+                        </CheckCard>
+                    </Grid>
+                    {!_.isNil(expiryDateInContracting) ? (
+                        <h4 className="mrc-ui-form-label mt-4 mb-2">{ts.resetLimit}</h4>
+                    ) : null}
+                    {!_.isNil(expiryDateInContracting) ? (
+                        <Grid cols={3}>
+                            <MrcCurrency country={country} type="large-bold">
+                                {expiryAmountInContracting}
+                            </MrcCurrency>
+                        </Grid>
+                    ) : null}
+                </Card>
+            </React.Fragment>
+        ) : null;
     }
 }

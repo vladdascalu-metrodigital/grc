@@ -6,16 +6,17 @@
   text-align: center;
 }
 
-table {
+table:not([class*='mrc-ui-'])
+ {
   table-layout: inherit;
   display: block;
   overflow: auto;
 }
 
-td {
+td:not([class*='mrc-ui-']) {
   min-width: 170px;
 }
 
-th {
+th:not([class*='mrc-ui-']) {
   min-width: 170px;
 }

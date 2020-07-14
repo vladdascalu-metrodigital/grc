@@ -100,10 +100,6 @@ export default class ExpandedRow extends Component {
                                         <hr />
                                         <LimitSection {...this.props} />
                                         <PaymentMethodSection {...this.props} />
-                                        <CustomerAdditionalFieldsSection
-                                            additionalFields={this.props.customer.additionalFields}
-                                            translations={ts}
-                                        />
                                     </React.Fragment>
                                 ) : null}
                                 <CustomerAdditionalFieldsSection
@@ -149,4 +145,5 @@ ExpandedRow.propTypes = {
     dateFormat: PropTypes.string,
     requestsCash: PropTypes.bool,
     translations: PropTypes.object.isRequired,
+    isContractingStepEditable: PropTypes.bool,
 };

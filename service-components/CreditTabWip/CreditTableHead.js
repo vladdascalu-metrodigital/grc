@@ -11,39 +11,93 @@ export default class CreditTableHead extends Component {
         const ts = translations;
         return (
             <React.Fragment>
-                <Table.R sticky="credit-table-head-sticky" type="head-light">
-                    <Table.H>
-                        <CRTableHeaderCellCustomerGroup title={ts.customergroup} />
-                    </Table.H>
-                    <Table.H colSpan="3">
-                        {groupLimit ? (
-                            <CRTableHeaderCellCustomerGroupLimit
-                                limit={parent === 'history' ? groupLimit.old : groupLimit.current}
-                                exhausted={groupLimit.exhausted}
-                                country={country}
-                                subtitle={groupLimit.exhausted ? [ts.exhausted, ts.granted].join('/') : ts.granted}
-                                isBlue
-                            />
-                        ) : null}
-                    </Table.H>
-                    <Table.H colSpan="3">
-                        {groupLimit ? (
-                            <CRTableHeaderCellCustomerGroupLimit
-                                limit={
-                                    parent === 'history'
-                                        ? groupLimit.current
-                                        : parent === 'approval'
-                                        ? groupLimit.new
-                                        : groupLimit.wish
-                                }
-                                country={country}
-                                subtitle={parent === 'history' ? ts.newlyGranted : ts.toBeGranted}
-                                isGreen
-                            />
-                        ) : null}
-                    </Table.H>
-                    <Table.H className="border-fix"></Table.H>
-                </Table.R>
+                {parent === 'creditlimit' ? (
+                    <Table.R sticky="credit-table-head-sticky" type="head-light">
+                        <Table.H>
+                            <CRTableHeaderCellCustomerGroup title={ts.customergroup} />
+                        </Table.H>
+                        <Table.H colSpan="3">
+                            {groupLimit ? (
+                                <CRTableHeaderCellCustomerGroupLimit
+                                    limit={parent === 'history' ? groupLimit.old : groupLimit.current}
+                                    exhausted={groupLimit.exhausted}
+                                    country={country}
+                                    subtitle={groupLimit.exhausted ? [ts.exhausted, ts.granted].join('/') : ts.granted}
+                                    isBlue
+                                />
+                            ) : null}
+                        </Table.H>
+                        <Table.H colSpan="3">
+                            {groupLimit ? (
+                                <CRTableHeaderCellCustomerGroupLimit
+                                    limit={
+                                        parent === 'history'
+                                            ? groupLimit.current
+                                            : parent === 'approval'
+                                            ? groupLimit.new
+                                            : groupLimit.wish
+                                    }
+                                    country={country}
+                                    subtitle={parent === 'history' ? ts.newlyGranted : ts.toBeGranted}
+                                    isGreen
+                                />
+                            ) : null}
+                        </Table.H>
+                        <Table.H className="border-fix"></Table.H>
+                    </Table.R>
+                ) : (
+                    <React.Fragment>
+                        <Table.R sticky="credit-table-head-sticky" type="head-light">
+                            <Table.H rowSpan="2">
+                                <CRTableHeaderCellCustomerGroup title={ts.customergroup} />
+                            </Table.H>
+                            <Table.H colSpan="3" rowSpan="2">
+                                {groupLimit ? (
+                                    <CRTableHeaderCellCustomerGroupLimit
+                                        limit={parent === 'history' ? groupLimit.old : groupLimit.current}
+                                        exhausted={groupLimit.exhausted}
+                                        country={country}
+                                        subtitle={
+                                            groupLimit.exhausted ? [ts.exhausted, ts.granted].join('/') : ts.granted
+                                        }
+                                        isBlue
+                                    />
+                                ) : null}
+                            </Table.H>
+                            <Table.H colSpan="3" rowSpan="1">
+                                {groupLimit ? (
+                                    <CRTableHeaderCellCustomerGroupLimit
+                                        limit={groupLimit.wish}
+                                        country={country}
+                                        subtitle={ts.customerWish}
+                                        inSameRow
+                                    />
+                                ) : null}
+                            </Table.H>
+                            <Table.H className="border-fix"></Table.H>
+                        </Table.R>
+                        <Table.R sticky="credit-table-head-sticky" type="head-light">
+                            <Table.H colSpan="3" rowSpan="1">
+                                {groupLimit ? (
+                                    <CRTableHeaderCellCustomerGroupLimit
+                                        limit={
+                                            parent === 'history'
+                                                ? groupLimit.current
+                                                : parent === 'approval'
+                                                ? groupLimit.new
+                                                : groupLimit.wish
+                                        }
+                                        country={country}
+                                        subtitle={parent === 'history' ? ts.newlyGranted : ts.toBeGranted}
+                                        isGreen
+                                        inSameRow
+                                    />
+                                ) : null}
+                            </Table.H>
+                            <Table.H className="border-fix"></Table.H>
+                        </Table.R>
+                    </React.Fragment>
+                )}
                 <Table.R sticky="credit-table-head-sticky" type="head">
                     <Table.H rowSpan="2">{ts.customer}</Table.H>
                     <Table.H colSpan="3">

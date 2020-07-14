@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ArrowRight from '../icons/arrow-right-12.svg';
 import { lookup } from '../Util/translations';
+
+import ArrowRight from '../icons/arrow-right-12.svg';
+import MrcDate from '../MrcDate';
 
 export default class ApprovalInboxItemPresentation extends Component {
     render() {
@@ -14,7 +16,7 @@ export default class ApprovalInboxItemPresentation extends Component {
             <span>
                 <p>
                     <label>{lookup('inbox.requestDate')}:&nbsp;</label>
-                    <mrc-date>{entry.requestDate ? entry.requestDate : entry.issueDate}</mrc-date>
+                    <MrcDate>{entry.requestDate ? entry.requestDate : entry.issueDate}</MrcDate>
                 </p>
                 {entry.assignedUserName != null ? (
                     <p>
@@ -46,7 +48,7 @@ export default class ApprovalInboxItemPresentation extends Component {
                     </span>
                     <span className="requestDate">
                         <label>{lookup('inbox.requestDate')}:</label>
-                        <mrc-date>{entry.requestDate}</mrc-date>
+                        <MrcDate>{entry.requestDate}</MrcDate>
                     </span>
                     <span className="approvedLimit">
                         <label>{lookup('inbox.approvedLimit')}:</label>

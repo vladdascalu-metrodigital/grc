@@ -4,6 +4,7 @@ import { lookup } from '../Util/translations';
 import React from 'react';
 import Author from '../Author';
 import { CommentPropTypes } from './CommentsPropTypes';
+import MrcDateTime from '../MrcDateTime';
 
 export function CommentsList(props) {
     if (_.isEmpty(props.comments)) {
@@ -28,17 +29,12 @@ export function CommentsList(props) {
                         comment.comment === 'strategy.decision.rejected') &&
                     props.timeoutDate != undefined &&
                     props.timeoutDate != null ? (
-                        <mrc-datetime className="datetime">{props.timeoutDate}</mrc-datetime>
+                        <MrcDateTime className="datetime">{props.timeoutDate}</MrcDateTime>
                     ) : null}
                 </div>
             </div>
             {i !== props.comments.length - 1 && (
-                <hr
-                    key={Math.random()
-                        .toString(36)
-                        .substr(2, 9)}
-                    className="mrc-ui-comment-divider"
-                />
+                <hr key={Math.random().toString(36).substr(2, 9)} className="mrc-ui-comment-divider" />
             )}
         </div>
     ));

@@ -13,8 +13,8 @@ export default class MrcDate extends PureComponent {
     render() {
         let { children: dateString, type } = this.props;
         let localeDateString = new Date(dateString).toLocaleDateString(undefined, {
-            day: '2-digit',
-            month: '2-digit',
+            day: 'numeric',
+            month: 'numeric',
             year: 'numeric',
         });
         let className = classnames('mrc-ui-date', type && 'mrc-ui-date-' + type);

@@ -1,0 +1,31 @@
+@import '../../lib/scss/colors';
+@import '../../lib/scss/typography';
+@import '../../lib/scss/variables';
+
+.mrc-ui-crtable-cell-credit-product {
+    font-size: $font-size-7;
+    text-align: right;
+    color: $color-palette-grey-tint-40;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: $height-4;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+.mrc-ui-crtable-cell-product-name {
+    font-weight: 400;
+    line-height: $line-height-copy-narrow;
+}
+
+.mrc-ui-crtable-cell-product-time-period {
+    font-size: $font-size-8;
+    line-height: $line-height-copy-narrow;
+}
+
+.mrc-ui-crtable-cell-product-payment-method {
+    font-size: $font-size-8;
+    line-height: $line-height-copy-narrow;
+}
