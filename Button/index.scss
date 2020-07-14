@@ -32,6 +32,11 @@
   &:hover {
     background-color: $color-palette-blue-shade-20;
   }
+  &.mrc-ui-btn-outlined {
+    &:hover {
+      background-color: $color-palette-blue-tint-90;
+    }
+  }
 }
 
 ////// DISABLED
@@ -63,7 +68,9 @@
     background-color: $color-palette-green-shade-30;
   }
   &.mrc-ui-btn-outlined {
-    
+    &:hover {
+      background-color: $color-palette-green-tint-90;
+    }
   }
 }
 
@@ -73,6 +80,11 @@
   &:hover {
     background-color: $color-palette-grey-tint-20;
   }
+  &.mrc-ui-btn-outlined {
+    &:hover {
+      background-color: $color-palette-grey-tint-90;
+    }
+  }
 }
 
 .mrc-ui-btn-danger {
@@ -80,6 +92,11 @@
   background-color: $color-danger;
   &:hover {
     background-color: $color-palette-red-shade-10;
+  }
+  &.mrc-ui-btn-outlined {
+    &:hover {
+      background-color: $color-palette-red-tint-90;
+    }
   }
 }
 
@@ -90,4 +107,3 @@
   background: white;
   color: var(--mrc-ui-button-color) !important;
 }
-
