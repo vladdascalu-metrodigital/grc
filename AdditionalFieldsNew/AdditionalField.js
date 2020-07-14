@@ -168,7 +168,9 @@ export default function AdditionalField(props) {
         }
 
         if (type === 'DROPDOWN' || type === 'DROPDOWN_MULTIPLE' || type === 'RADIOBUTTON') {
-            return lookup(fieldLabel + '.' + oldValue);
+            return getOptionValues(oldValue, fieldLabel, true)
+                .map((field) => field && field.length > 0 && field[1])
+                .join(',');
         }
 
         return oldValue;
