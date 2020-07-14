@@ -231,5 +231,5 @@ CreditTab.propTypes = {
     parent: PropTypes.oneOf(['creditlimit', 'history', 'approval']).isRequired,
     dateFormat: PropTypes.string.isRequired,
     isContractingStepEditable: PropTypes.bool,
-    historyRequestType: PropTypes.oneOf(['LIMIT_EXPIRY', 'LIMIT_REQUEST', 'CREDIT_CORRECTION']),
+    historyRequestType: PropTypes.oneOf(['LIMIT_EXPIRY', 'LIMIT_REQUEST', 'CREDIT_CORRECTION', 'CONI_REQUEST']),
 };
