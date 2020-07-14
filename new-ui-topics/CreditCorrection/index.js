@@ -26,7 +26,7 @@ export default class CreditCorrection extends Component {
             <MainContent>
                 <CreditCorrectionGroupActions />
                 <div style={{ position: 'relative' }}>
-                    <Table.Root>
+                    <Table.Root style={{ tableLayout: 'fixed' }}>
                         <Table.Body>
                             <CreditCorrectionTableHead />
 

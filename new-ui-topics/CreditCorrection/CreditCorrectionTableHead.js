@@ -47,16 +47,16 @@ export default class CreditCorrectionTableHead extends Component {
         return (
             <React.Fragment>
                 <Table.R sticky="credit-table-head-sticky" type="head-light">
-                    <Table.H>
+                    <Table.H className="mrc-ui-credit-correction-head-col">
                         <CRTableHeaderCellCustomerGroup title={translations.customerGroup} />
                     </Table.H>
-                    <Table.H colSpan="3" className="mrc-ui-table-head-width">
+                    <Table.H colSpan="3" className="mrc-ui-credit-correction-head-col">
                         {granted}
                     </Table.H>
-                    <Table.H colSpan="2" className="mrc-ui-table-head-width">
+                    <Table.H colSpan="2" className="mrc-ui-credit-correction-head-col">
                         {customerWish}
                     </Table.H>
-                    <Table.H className="border-fix" style={{ width: '20px' }}></Table.H>
+                    <Table.H className="border-fix mrc-ui-credit-correction-toggler-col"></Table.H>
                 </Table.R>
                 <Table.R sticky="credit-table-head-sticky" type="head">
                     <Table.H rowSpan="2">Customer</Table.H>
