@@ -79,6 +79,9 @@ export default class CreditTab extends Component {
             historyRequestType,
             activated,
         } = this.props;
+        if (_.isNil(country) || _.isNil(customers) || customers.length === 0) {
+            return <MainContent>{lookup('mrc.comment.nocreditdetails')}</MainContent>;
+        }
         const translations = this.createTranslations();
         return (
             <MainContent>

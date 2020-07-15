@@ -488,22 +488,10 @@ export const createCreditDataProps = (params) => {
                               current:
                                   _.get(params, 'requestStatus.requestType') === 'LIMIT_EXPIRY'
                                       ? {
-                                            amount:
-                                                _.get(params, 'requestStatus.status') === 'Failed'
-                                                    ? null
-                                                    : _.get(params, 'requestStatus.amount'),
-                                            product:
-                                                _.get(params, 'requestStatus.status') === 'Failed'
-                                                    ? null
-                                                    : _.get(params, 'requestStatus.creditProduct'),
-                                            period:
-                                                _.get(params, 'requestStatus.status') === 'Failed'
-                                                    ? null
-                                                    : _.get(params, 'requestStatus.creditPeriod'),
-                                            debitType:
-                                                _.get(params, 'requestStatus.status') === 'Failed'
-                                                    ? null
-                                                    : _.get(params, 'requestStatus.debitType'),
+                                            amount: _.get(params, 'requestStatus.amount'),
+                                            product: _.get(params, 'requestStatus.creditProduct'),
+                                            period: _.get(params, 'requestStatus.creditPeriod'),
+                                            debitType: _.get(params, 'requestStatus.debitType'),
                                             expiry: {
                                                 date: null,
                                                 amount: null,
