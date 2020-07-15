@@ -32,6 +32,8 @@ export default class ExpandedRow extends Component {
             ) {
                 return true;
             }
+        } else if (parent === 'history') {
+            return false;
         }
 
         return !isCashCustomerRequest;
@@ -57,40 +59,31 @@ export default class ExpandedRow extends Component {
             >
                 <CreditTableRowShadow />
             </Table.R>,
-            parent === 'history' ? (
+            isBlocked ? (
                 <React.Fragment>
-                    <Table.R>
+                    <Table.R key="blocked" type="form">
                         <Table.D colSpan="8">
                             {this.createBlockingSection(blockingReasonText, checkoutCheckCodeText, ts)}
-                        </Table.D>
-                    </Table.R>
-                    <Table.R>
-                        <Table.D colSpan="8">
+                            {parent === 'history' ? null : (
+                                <PaymentSection {...{ ...this.props, isCashCustomerRequest }} />
+                            )}
+                            {isNewCredit ? this.createNewCreditSection() : null}
                             {this.createAdditionalFieldSection(ts, this.props.customer.additionalFields)}
                         </Table.D>
                     </Table.R>
                 </React.Fragment>
             ) : (
-                [
-                    isBlocked ? (
-                        <Table.R key="blocked" type="form">
-                            <Table.D colSpan="8">
-                                {this.createBlockingSection(blockingReasonText, checkoutCheckCodeText, ts)}
+                <React.Fragment>
+                    <Table.R key={'form'} type="form">
+                        <Table.D colSpan="8">
+                            {parent === 'history' ? null : (
                                 <PaymentSection {...{ ...this.props, isCashCustomerRequest }} />
-                                {isNewCredit ? this.createNewCreditSection() : null}
-                                {this.createAdditionalFieldSection(ts, this.props.customer.additionalFields)}
-                            </Table.D>
-                        </Table.R>
-                    ) : (
-                        <Table.R key={'form'} type="form">
-                            <Table.D colSpan="8">
-                                <PaymentSection {...{ ...this.props, isCashCustomerRequest }} />
-                                {isNewCredit ? this.createNewCreditSection() : null}
-                                {this.createAdditionalFieldSection(ts, this.props.customer.additionalFields)}
-                            </Table.D>
-                        </Table.R>
-                    ),
-                ]
+                            )}
+                            {isNewCredit ? this.createNewCreditSection() : null}
+                            {this.createAdditionalFieldSection(ts, this.props.customer.additionalFields)}
+                        </Table.D>
+                    </Table.R>
+                </React.Fragment>
             ),
         ];
     }
