@@ -136,7 +136,7 @@ export default class CreditTableHead extends Component {
     createAppliedGroupLimitAccordingToActivation(parent, groupLimit, country, ts, isSameRow, activated) {
         return (
             <React.Fragment>
-                <Table.H colSpan={parent === 'history' && activated === true ? '2' : '3'} rowSpan="1">
+                <Table.H colSpan="3" rowSpan="1">
                     {groupLimit ? (
                         <CRTableHeaderCellCustomerGroupLimit
                             limit={
@@ -152,9 +152,7 @@ export default class CreditTableHead extends Component {
                             inSameRow={isSameRow}
                         />
                     ) : null}
-                </Table.H>
-                {groupLimit && parent === 'history' && activated === true ? (
-                    <Table.H colSpan={'1'} rowSpan="1">
+                    {groupLimit && parent === 'history' && activated === true ? (
                         <CRTableHeaderCellCustomerGroupLimit
                             limit={groupLimit.activated}
                             country={country}
@@ -162,8 +160,8 @@ export default class CreditTableHead extends Component {
                             isGreen
                             inSameRow
                         />
-                    </Table.H>
-                ) : null}
+                    ) : null}
+                </Table.H>
             </React.Fragment>
         );
     }
