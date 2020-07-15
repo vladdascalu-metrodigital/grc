@@ -2,13 +2,17 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import AdditionalFieldsSection from '../AdditionalFieldsNew/AdditionalFieldsSection';
 
-import { selectionNoPreselection } from './fixtures/credit-limit/additionalfields.request';
+import { selection, selectionNoPreselection } from './fixtures/credit-limit/additionalfields.request';
 
 import '../AdditionalFieldsNew/index.scss';
 
-storiesOf('AdditionalFieldsNew/Single Fields', module).add('selection', () => {
-    return <AdditionalFieldsSection requestFields={[selectionNoPreselection]} editable={true} />;
-});
+storiesOf('AdditionalFieldsNew/Single Fields', module)
+    .add('Selection', () => {
+        return <AdditionalFieldsSection requestFields={[selectionNoPreselection]} editable={true} />;
+    })
+    .add('Selection, Preselected', () => {
+        return <AdditionalFieldsSection requestFields={[selection]} editable={true} />;
+    });
 
 storiesOf('AdditionalFieldsNew', module)
     .add('all types editable AdditionalFields', () => {
