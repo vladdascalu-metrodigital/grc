@@ -59,6 +59,7 @@ export default class CreditTab extends Component {
             newlyGranted: lookup('mrc.credittab.newlyGranted'),
             customergroup: lookup('mrc.credittab.customergroup'),
             toBeGranted: lookup('mrc.credittab.toBeGranted'),
+            newlyActivated: lookup('mrc.credittab.newlyActivated'),
             expiry: lookup('mrc.credittab.expiry'),
             customer: lookup('mrc.customerdata.title'),
             creditproduct: lookup('mrc.creditdetails.creditproduct'),
@@ -69,7 +70,6 @@ export default class CreditTab extends Component {
     }
 
     render() {
-        console.log(this.props);
         const {
             customers,
             parent,
@@ -77,7 +77,7 @@ export default class CreditTab extends Component {
             dateFormat,
             isContractingStepEditable,
             historyRequestType,
-            isCreditDataInRed,
+            activated,
         } = this.props;
         const translations = this.createTranslations();
         return (
@@ -131,7 +131,7 @@ export default class CreditTab extends Component {
                                               translations={translations}
                                               isContractingStepEditable={isContractingStepEditable}
                                               historyRequestType={historyRequestType}
-                                              isCreditDataInRed={isCreditDataInRed}
+                                              activated={activated}
                                           />
                                       ))
                                     : null}
@@ -163,6 +163,7 @@ CreditTab.propTypes = {
                         date: PropTypes.string,
                         amount: PropTypes.number,
                     }),
+                    blockingOption: PropTypes.string,
                 }),
                 current: PropTypes.shape({
                     amount: PropTypes.number,
@@ -173,6 +174,7 @@ CreditTab.propTypes = {
                         date: PropTypes.string,
                         amount: PropTypes.number,
                     }),
+                    blockingOption: PropTypes.string,
                 }),
                 wish: PropTypes.shape({
                     amount: PropTypes.number,
@@ -183,6 +185,7 @@ CreditTab.propTypes = {
                         date: PropTypes.string,
                         amount: PropTypes.number,
                     }),
+                    blockingOption: PropTypes.string,
                 }),
                 applied: PropTypes.shape({
                     amount: PropTypes.number,
@@ -193,6 +196,7 @@ CreditTab.propTypes = {
                         date: PropTypes.string,
                         amount: PropTypes.number,
                     }),
+                    blockingOption: PropTypes.string,
                 }),
                 new: PropTypes.shape({
                     amount: PropTypes.number,
@@ -203,6 +207,7 @@ CreditTab.propTypes = {
                         date: PropTypes.string,
                         amount: PropTypes.number,
                     }),
+                    blockingOption: PropTypes.string,
                 }),
                 limitType: PropTypes.string.isRequired,
                 paymentMethodType: PropTypes.string.isRequired,
@@ -227,6 +232,7 @@ CreditTab.propTypes = {
             }),
             isCashCustomer: PropTypes.bool.isRequired,
             limitExhaustion: PropTypes.number,
+            failedActivation: PropTypes.bool,
         })
     ).isRequired,
     groupLimit: PropTypes.shape({
@@ -242,5 +248,5 @@ CreditTab.propTypes = {
     dateFormat: PropTypes.string.isRequired,
     isContractingStepEditable: PropTypes.bool,
     historyRequestType: PropTypes.oneOf(['LIMIT_EXPIRY', 'LIMIT_REQUEST', 'CREDIT_CORRECTION', 'CONI_REQUEST']),
-    isCreditDataInRed: PropTypes.bool,
+    activated: PropTypes.bool,
 };

@@ -97,5 +97,4 @@ CreditTableRow.propTypes = {
     isContractingStepEditable: PropTypes.bool,
     historyRequestType: PropTypes.oneOf(['LIMIT_EXPIRY', 'LIMIT_REQUEST', 'CREDIT_CORRECTION', 'CONI_REQUEST'])
         .isRequired,
-    isCreditDataInRed: PropTypes.bool,
 };

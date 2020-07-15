@@ -331,6 +331,7 @@ export class HistoryDetailsPresentationNew extends Component {
             countriesWithDifferentBlockingCodes: this.props.countriesWithDifferentBlockingCodes,
             additionalFields: this.props.additionalFields,
             selectedCreditProgram: this.props.selectedCreditProgram,
+            activated: this.props.activated,
         };
 
         return (
@@ -388,13 +389,14 @@ export const createCreditDataProps = (params) => {
         //
         country: params.countryCode,
         parent: 'history',
-        isCreditDataInRed: _.get(params, 'requestStatus.status') === 'Blocked',
         groupLimit: {
             exhausted: _.get(params, 'groupLimit.limitExhaustion'),
             old: _.get(params, 'groupLimit.current'),
             wish: _.get(params, 'groupLimit.requested'),
             current: _.get(params, 'groupLimit.applied'),
+            activated: _.get(params, 'groupLimit.activated'),
         },
+        activated: _.get(params, 'activated'),
         additionalFields: params.additionalFields,
         creditProgram:
             params.selectedCreditProgram !== undefined && !_.isNil(params.selectedCreditProgram)
@@ -461,7 +463,8 @@ export const createCreditDataProps = (params) => {
                                             },
                                         },
                               wish:
-                                  _.get(params, 'requestStatus.requestType') === 'LIMIT_EXPIRY'
+                                  _.get(params, 'requestStatus.requestType') === 'LIMIT_EXPIRY' ||
+                                  _.get(params, 'requestStatus.requestType') === 'CREDIT_CORRECTION'
                                       ? {
                                             amount: null,
                                             product: null,
@@ -521,6 +524,7 @@ export const createCreditDataProps = (params) => {
                                                         ? null
                                                         : _.get(data, 'resetToLimitAmount'),
                                             },
+                                            blockingOption: _.get(data, 'applied.blockingOption'),
                                         },
                               readOnly: true,
                           },
@@ -540,6 +544,7 @@ export const createCreditDataProps = (params) => {
                               editable: false,
                               disabled: true,
                           },
+                          failedActivation: _.get(params, 'failedActivation'),
                       };
                   })
                 : [],
@@ -577,4 +582,5 @@ HistoryDetailsPresentationNew.propTypes = {
     approvalServiceUrl: PropTypes.string,
     countriesWithDifferentBlockingCodes: PropTypes.array,
     selectedCreditProgram: PropTypes.string,
+    activated: PropTypes.bool,
 };

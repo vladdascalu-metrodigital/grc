@@ -15,7 +15,12 @@ export default class CreditTableRowHistory extends Component {
         const { historyRequestType } = this.props;
 
         const isLimitExpiry = historyRequestType === 'LIMIT_EXPIRY';
-        return isLimitExpiry ? this.createLimitExpiryCreditDataRow() : this.createCreditDataRow();
+        const isCreditCorrection = historyRequestType === 'CREDIT_CORRECTION';
+        return isLimitExpiry
+            ? this.createLimitExpiryCreditDataRow()
+            : isCreditCorrection
+            ? this.createCreditCorrectionCreditDataRow()
+            : this.createCreditDataRow();
     }
 
     createCreditDataRow() {
@@ -30,7 +35,6 @@ export default class CreditTableRowHistory extends Component {
             canToggle,
             rowType,
             translations,
-            isCreditDataInRed,
         } = this.props;
 
         const isCashCustomer = customer.isCashCustomer;
@@ -44,6 +48,7 @@ export default class CreditTableRowHistory extends Component {
         const isNoChangeInCurrent =
             _.isNil(_.get(customer, 'limit.current.amount')) && _.isNil(_.get(customer, 'limit.current.product'));
 
+        const isCreditDataInRed = customer.failedActivation === true;
         return (
             <React.Fragment>
                 <Table.R
@@ -220,7 +225,7 @@ export default class CreditTableRowHistory extends Component {
         const isBlocked = _.isNil(blockingInfo) ? false : blockingInfo.isBlocked;
         const isNoChangeInCurrent =
             _.isNil(_.get(customer, 'limit.current.amount')) && _.isNil(_.get(customer, 'limit.current.product'));
-
+        const isCreditDataInRed = customer.failedActivation === true;
         return (
             <React.Fragment>
                 <Table.R
@@ -295,7 +300,8 @@ export default class CreditTableRowHistory extends Component {
                                     country={country}
                                     exhausted={null}
                                     limit={_.get(customer, 'limit.current.amount')}
-                                    isGreen
+                                    isRed={isCreditDataInRed}
+                                    isGreen={!isCreditDataInRed}
                                 />
                             </Table.D>
 
@@ -303,7 +309,8 @@ export default class CreditTableRowHistory extends Component {
                                 <CRTableCellExpiry
                                     expiryLimit={_.get(customer, 'limit.current.expiry.amount')}
                                     expiryDate={_.get(customer, 'limit.current.expiry.date')}
-                                    isGreen
+                                    isRed={isCreditDataInRed}
+                                    isGreen={!isCreditDataInRed}
                                 />
                             </Table.D>
 
@@ -312,7 +319,144 @@ export default class CreditTableRowHistory extends Component {
                                     productName={_.get(customer, 'limit.current.product')}
                                     productTimePeriod={[_.get(customer, 'limit.current.period'), ts.days].join(' ')}
                                     productPaymentMethod={_.get(customer, 'limit.current.debitType')}
-                                    isGreen
+                                    isRed={isCreditDataInRed}
+                                    isGreen={!isCreditDataInRed}
+                                />
+                            </Table.D>
+                        </React.Fragment>
+                    )}
+                    <Table.D>{canToggle ? <ToggleIndicator /> : null}</Table.D>
+                </Table.R>
+                {isExpanded ? <ExpandedRow {...this.props} /> : null}
+            </React.Fragment>
+        );
+    }
+
+    createCreditCorrectionCreditDataRow() {
+        const {
+            customer,
+            country,
+            id,
+            onExpand,
+            onHover,
+            isExpanded,
+            isHovered,
+            canToggle,
+            rowType,
+            translations,
+        } = this.props;
+
+        const isCashCustomer = customer.isCashCustomer;
+        const ts = translations;
+        const blockingInfo = customer.blockingInfo;
+        const isBlocked = _.isNil(blockingInfo) ? false : blockingInfo.isBlocked;
+        const isNoChangeInCurrent =
+            _.isNil(_.get(customer, 'limit.current.amount')) && _.isNil(_.get(customer, 'limit.current.product'));
+        const isCreditDataInRed = customer.failedActivation === true;
+        const blockingOption = _.get(customer, 'limit.current.blockingOption');
+        return (
+            <React.Fragment>
+                <Table.R
+                    isActive={isExpanded}
+                    isHovered={isHovered}
+                    sticky={id}
+                    stickyOffset={'tr[data-sticky="credit-table-head-sticky"]'}
+                    type={rowType}
+                    style={{
+                        cursor: canToggle ? 'pointer' : 'auto',
+                        '--sticky-override': isExpanded ? 'sticky' : 'static',
+                    }}
+                    onClick={canToggle ? () => onExpand() : null}
+                    onMouseEnter={canToggle ? () => onHover(true) : null}
+                    onMouseLeave={canToggle ? () => onHover(false) : null}
+                >
+                    <Table.D>
+                        {customer ? (
+                            <CRTableCellCustomer
+                                name={customer.name}
+                                number={[customer.storeNumber, customer.number].join('/')}
+                                isBlocked={isBlocked}
+                                isHighlighted
+                            />
+                        ) : null}
+                    </Table.D>
+
+                    {isCashCustomer ? (
+                        <Table.D colSpan="3">
+                            <CRTableCellPrepaymentCash name={ts.cash} isBlue />
+                        </Table.D>
+                    ) : (
+                        <React.Fragment>
+                            <Table.D>
+                                <CRTableCellLimit
+                                    country={country}
+                                    exhausted={_.get(customer, 'limitExhaustion')}
+                                    limit={_.get(customer, 'limit.old.amount')}
+                                    isBlue
+                                />
+                            </Table.D>
+
+                            <Table.D>
+                                <CRTableCellExpiry
+                                    expiryLimit={_.get(customer, 'limit.old.expiry.amount')}
+                                    expiryDate={_.get(customer, 'limit.old.expiry.date')}
+                                    isBlue
+                                />
+                            </Table.D>
+
+                            <Table.D borderFix>
+                                <CRTableCellCreditProduct
+                                    productName={lookup(_.get(customer, 'limit.old.product'))}
+                                    productTimePeriod={[
+                                        _.get(customer, 'limit.old.period'),
+                                        _.get(customer, 'limit.old.period') ? ts.days : '-',
+                                    ].join(' ')}
+                                    productPaymentMethod={_.get(customer, 'limit.old.debitType')}
+                                    isBlue
+                                />
+                            </Table.D>
+                        </React.Fragment>
+                    )}
+                    {isNoChangeInCurrent ? (
+                        <Table.D colSpan="3" borderFix>
+                            <CRTableCellPrepaymentCash name={ts.nochange} isGreen />
+                        </Table.D>
+                    ) : !_.isNil(blockingOption) ? (
+                        <Table.D colSpan="3" borderFix>
+                            <CRTableCellPrepaymentCash
+                                name={lookup(('mrc.blocking-option.' + blockingOption).toLowerCase())}
+                                isRed={isCreditDataInRed}
+                                isGreen={!isCreditDataInRed}
+                            />
+                        </Table.D>
+                    ) : (
+                        <React.Fragment>
+                            <Table.D>
+                                <CRTableCellLimit
+                                    country={country}
+                                    exhausted={null}
+                                    limit={_.get(customer, 'limit.current.amount')}
+                                    isRed={isCreditDataInRed}
+                                    isGreen={!isCreditDataInRed}
+                                />
+                            </Table.D>
+
+                            <Table.D>
+                                <CRTableCellExpiry
+                                    expiryLimit={_.get(customer, 'limit.current.expiry.amount')}
+                                    expiryDate={_.get(customer, 'limit.current.expiry.date')}
+                                    isRed={isCreditDataInRed}
+                                    isGreen={!isCreditDataInRed}
+                                />
+                            </Table.D>
+
+                            <Table.D borderFix>
+                                <CRTableCellCreditProduct
+                                    productName={_.get(customer, 'limit.current.product')}
+                                    productTimePeriod={[_.get(customer, 'limit.current.period'), ts.days].join(' ')}
+                                    productPaymentMethod={_.get(customer, 'limit.current.debitType')}
+                                    isRed={isCreditDataInRed}
+                                    isGreen={!isCreditDataInRed}
                                 />
                             </Table.D>
                         </React.Fragment>
