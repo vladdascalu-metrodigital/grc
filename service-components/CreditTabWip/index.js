@@ -69,6 +69,7 @@ export default class CreditTab extends Component {
     }
 
     render() {
+        console.log(this.props);
         const { customers, parent, country, dateFormat, isContractingStepEditable, historyRequestType } = this.props;
         const translations = this.createTranslations();
         return (

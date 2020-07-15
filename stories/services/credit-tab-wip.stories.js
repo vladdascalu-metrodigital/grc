@@ -9816,6 +9816,8 @@ storiesOf('Services/Credit Tab WIP', module)
             applied: _.get(historyResponse, 'historyDetails.appliedGroupLimit'),
         };
         historyResponse.requestData = _.get(historyResponse, 'historyDetails.requestData');
+        historyResponse.requestStatus = _.get(historyResponse, 'historyDetails.requestStatus');
+        historyResponse.selectedCreditProgram = _.get(historyResponse, 'historyDetails.selectedCreditProgram');
 
         return <CreditTabWip {...createCreditDataProps(historyResponse)} />;
     })
@@ -12051,6 +12053,8 @@ storiesOf('Services/Credit Tab WIP', module)
             applied: _.get(historyResponse, 'historyDetails.appliedGroupLimit'),
         };
         historyResponse.requestData = _.get(historyResponse, 'historyDetails.requestData');
+        historyResponse.requestStatus = _.get(historyResponse, 'historyDetails.requestStatus');
+        historyResponse.selectedCreditProgram = _.get(historyResponse, 'historyDetails.selectedCreditProgram');
 
         return <CreditTabWip {...createCreditDataProps(historyResponse)} />;
     });

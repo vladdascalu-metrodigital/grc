@@ -7,7 +7,6 @@ import '../../tabs.scss';
 import HistoryStatusBar from '../Shared/HistoryStatusBar';
 import RequestDetails from '../Shared/RequestDetails';
 import { lookup } from '../../Util/translations';
-import CreditData from './CreditData';
 import { Accordion, Collapsible } from '../../Accordion';
 import Sales from './Sales';
 import Payments from './Payments';
@@ -199,12 +198,7 @@ export class HistoryDetailsPresentationNew extends Component {
                     {params.requestData ? this.customerDetailsPanel(params.requestData) : null}
                 </Collapsible>
                 <Collapsible trigger={lookup('mrc.creditdetails.title')}>
-                    <CreditData
-                        requestData={params.requestData}
-                        requestedStatus={params.requestStatus}
-                        groupLimit={params.groupLimit}
-                        countryCode={params.countryCode}
-                    />
+                    <CreditTabWip {...createCreditDataProps(params)} />
                 </Collapsible>
                 <Collapsible trigger={lookup('mrc.sales.title')}>
                     <Sales salesOverviews={params.salesOverviews} />
@@ -401,7 +395,13 @@ export const createCreditDataProps = (params) => {
             current: _.get(params, 'groupLimit.applied'),
         },
         additionalFields: params.additionalFields,
-        creditProgram: params.selectedCreditProgram,
+        creditProgram:
+            params.selectedCreditProgram !== undefined && !_.isNil(params.selectedCreditProgram)
+                ? {
+                      defaultText: params.selectedCreditProgram,
+                      readOnly: true,
+                  }
+                : null,
         dateFormat: util.dateFormatString(),
         historyRequestType: _.get(params, 'requestStatus.requestType'),
         // All customers
