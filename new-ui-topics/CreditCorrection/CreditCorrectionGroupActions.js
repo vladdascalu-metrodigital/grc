@@ -20,7 +20,7 @@ export default class CreditCorrectionGroupActions extends Component {
                     description="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                 >
                     <h4 className="mrc-ui-form-label mb-2">Choose Action</h4>
-                    <Grid colMin="10rem">
+                    <Grid colMin="10rem" gap="medium">
                         {Object.values(groupActions).map((e, i) => (
                             <CheckCard
                                 key={i}
