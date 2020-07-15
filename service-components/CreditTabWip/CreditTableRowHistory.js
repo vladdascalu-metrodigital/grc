@@ -30,6 +30,7 @@ export default class CreditTableRowHistory extends Component {
             canToggle,
             rowType,
             translations,
+            isCreditDataInRed,
         } = this.props;
 
         const isCashCustomer = customer.isCashCustomer;
@@ -168,7 +169,8 @@ export default class CreditTableRowHistory extends Component {
                                     country={country}
                                     exhausted={null}
                                     limit={_.get(customer, 'limit.current.amount')}
-                                    isGreen
+                                    isRed={isCreditDataInRed}
+                                    isGreen={!isCreditDataInRed}
                                 />
                             </Table.D>
 
@@ -176,7 +178,8 @@ export default class CreditTableRowHistory extends Component {
                                 <CRTableCellExpiry
                                     expiryLimit={_.get(customer, 'limit.current.expiry.amount')}
                                     expiryDate={_.get(customer, 'limit.current.expiry.date')}
-                                    isGreen
+                                    isRed={isCreditDataInRed}
+                                    isGreen={!isCreditDataInRed}
                                 />
                             </Table.D>
 
@@ -185,7 +188,8 @@ export default class CreditTableRowHistory extends Component {
                                     productName={_.get(customer, 'limit.current.product')}
                                     productTimePeriod={[_.get(customer, 'limit.current.period'), ts.days].join(' ')}
                                     productPaymentMethod={_.get(customer, 'limit.current.debitType')}
-                                    isGreen
+                                    isRed={isCreditDataInRed}
+                                    isGreen={!isCreditDataInRed}
                                 />
                             </Table.D>
                         </React.Fragment>

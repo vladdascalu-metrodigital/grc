@@ -388,6 +388,7 @@ export const createCreditDataProps = (params) => {
         //
         country: params.countryCode,
         parent: 'history',
+        isCreditDataInRed: _.get(params, 'requestStatus.status') === 'Blocked',
         groupLimit: {
             exhausted: _.get(params, 'groupLimit.limitExhaustion'),
             old: _.get(params, 'groupLimit.current'),
