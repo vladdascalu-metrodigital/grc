@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Grid from '../../Grid';
 import Table from '../../MrcTable';
-import Card from '../../Card';
-import { FlexRow } from '../../Flex';
-import NumberInput from '../../NumberInput';
 // import MrcCurrency from '../../MrcCurrency';
-import MrcCurrencySymbol from '../../MrcCurrencySymbol';
 import CreditCorrectionTableRowShadow from '../CreditTablesCommons/CreditCorrectionTableRowShadow';
 // import CRLimitSetting from './CRLimitSetting';
 import CRTableCellCustomer from '../CreditTablesCommons/CRTableCellCustomer';
@@ -15,11 +10,12 @@ import CRTableCellLimit from '../CreditTablesCommons/CRTableCellLimit';
 // import CRTableCellExpiry from './CRTableCellExpiry';
 import CRTableCellCreditProduct from '../CreditTablesCommons/CRTableCellCreditProduct';
 import CRTableCellPrepaymentCash from '../CreditTablesCommons/CRTableCellPrepaymentCash';
-import FormSection from '../FormSection';
 import ToggleIndicator from '../../ToggleIndicator';
-import CheckCard from '../../CheckCard';
-import Select from '../../Select';
 // import CRPaymentMethodSetting from './CRPaymentMethodSetting';
+
+import CreditCorrectionTableRowForm from './CreditCorrectionTableRowForm';
+import CreditCorrectionTableRowFormLocked from './CreditCorrectionTableRowFormLocked';
+import { FlexRow } from '../../Flex';
 
 export default class CreditCorrectionTableRow extends Component {
     constructor(props) {
@@ -46,7 +42,7 @@ export default class CreditCorrectionTableRow extends Component {
 
     render() {
         let { isExpanded, isHovered } = this.state;
-        let { id, isZebra } = this.props;
+        let { id, isZebra, quickGroupAction } = this.props;
         let type = isZebra ? 'zebra' : null;
 
         return (
@@ -63,7 +59,10 @@ export default class CreditCorrectionTableRow extends Component {
                     onMouseLeave={() => this.hover(false)}
                 >
                     <Table.D>
-                        <CRTableCellCustomer name="Mepo GmbH" number="12/123432" isBlocked isHighlighted />
+                        <FlexRow alignItems="center">
+                            <CRTableCellCustomer name="Mepo GmbH" number="12/123432" isBlocked isHighlighted />
+                            {quickGroupAction && <span>{quickGroupAction.label}</span>}
+                        </FlexRow>
                     </Table.D>
 
                     <Table.D colSpan="3">
@@ -87,67 +86,24 @@ export default class CreditCorrectionTableRow extends Component {
                     </Table.D>
                 </Table.R>
                 {isExpanded && (
-                    <Table.R
-                        sticky={id}
-                        style={{ '--sticky-override': isExpanded ? 'sticky' : 'static' }}
-                        stickyOffset={'tr[data-sticky="credit-table-head-sticky"]'}
-                    >
-                        <CreditCorrectionTableRowShadow />
-                    </Table.R>
-                )}
-                {isExpanded && (
-                    <Table.R type="form">
-                        <Table.D colSpan="7">
-                            <FormSection
-                                title="Quick Action"
-                                description="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                            >
-                                <h4 className="mrc-ui-form-label mb-2">Choose Action</h4>
-                                <Grid cols={4}>
-                                    <CheckCard title="No Changes" />
-                                    <CheckCard title="Limit" checked />
-                                    <CheckCard title="Blocking" />
-                                    <CheckCard title="Remove Block" />
-                                </Grid>
-                                <h4 className="mrc-ui-form-label mt-5 mb-2">Choose Limit Option</h4>
-                                <Card dropShadow>
-                                    <h4 className="mrc-ui-form-label mt-4 mb-1">Choose Limit</h4>
-                                    <Grid cols={4}>
-                                        <CheckCard title="Amount" checked>
-                                            <FlexRow alignItems="baseline">
-                                                <div className="mr-3">
-                                                    <NumberInput />
-                                                </div>
-                                                <MrcCurrencySymbol type="small" />
-                                            </FlexRow>
-                                        </CheckCard>
-                                        <CheckCard title="Remove Limit" />
-                                    </Grid>
-                                    <h4 className="mrc-ui-form-label mt-4 mb-1">Choose Credit Product</h4>
-                                    <Grid cols={4}>
-                                        <CheckCard title="Metro Top" checked />
-                                        <CheckCard title="Bank Transfer" />
-                                        <CheckCard title="Direct Debit" />
-                                    </Grid>
-
-                                    <Grid cols={4} className="mt-4">
-                                        <Select
-                                            label="Creditperiod"
-                                            options={[
-                                                ['NULL', 'Please Choose'],
-                                                ['1', 'Option 1'],
-                                                ['2', 'Option 2'],
-                                                ['3', 'Option 3'],
-                                                ['4', 'Option 4'],
-                                            ]}
-                                            value={null}
-                                            onChange={null}
-                                        />
-                                    </Grid>
-                                </Card>
-                            </FormSection>
-                        </Table.D>
-                    </Table.R>
+                    <React.Fragment>
+                        <Table.R
+                            sticky={id}
+                            style={{ '--sticky-override': isExpanded ? 'sticky' : 'static' }}
+                            stickyOffset={'tr[data-sticky="credit-table-head-sticky"]'}
+                        >
+                            <CreditCorrectionTableRowShadow />
+                        </Table.R>
+                        <Table.R type="form">
+                            <Table.D colSpan="8">
+                                {quickGroupAction ? (
+                                    <CreditCorrectionTableRowFormLocked quickGroupAction={quickGroupAction} />
+                                ) : (
+                                    <CreditCorrectionTableRowForm />
+                                )}
+                            </Table.D>
+                        </Table.R>
+                    </React.Fragment>
                 )}
             </React.Fragment>
         );
@@ -158,4 +114,9 @@ CreditCorrectionTableRow.propTypes = {
     id: PropTypes.string,
     isZebra: PropTypes.bool,
     stickyOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+
+    quickGroupAction: PropTypes.shape({
+        id: PropTypes.string,
+        label: PropTypes.string,
+    }),
 };

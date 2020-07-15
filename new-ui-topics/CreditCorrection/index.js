@@ -18,17 +18,34 @@ import './index.scss';
 // TODO additional fields
 
 const groupActions = {
-    customerLevel: { label: 'Set on customer Level', value: 'group-customer-level' },
-    blockPurchase: { label: 'Block group for any purchase', value: 'group-block-purchase' },
-    blockCredit: { label: 'Temp block group to buy on any credit', value: 'group-block-credit' },
-    removeLimit: { label: 'Remove limit from group', value: 'group-remove-limit' },
-    removeBlock: { label: 'Remove block from group', value: 'group-remove-block' },
+    customerLevel: {
+        id: 'group-customer-level',
+        label: 'Set on customer Level',
+    },
+    blockPurchase: {
+        id: 'group-block-purchase',
+        label: 'Block group for any purchase',
+    },
+    blockCredit: {
+        id: 'group-block-credit',
+        label: 'Temp block group to buy on any credit',
+    },
+    removeLimit: {
+        id: 'group-remove-limit',
+        label: 'Remove limit from group',
+    },
+    removeBlock: {
+        id: 'group-remove-block',
+        label: 'Remove block from group',
+    },
 };
 
 export default class CreditCorrection extends Component {
     constructor(props) {
         super(props);
-        this.state = { selectedGroupAction: groupActions.customerLevel.value };
+        this.state = {
+            selectedGroupAction: groupActions.customerLevel,
+        };
     }
 
     handleChangeGroupAction(value) {
@@ -36,6 +53,7 @@ export default class CreditCorrection extends Component {
     }
 
     render() {
+        let { selectedGroupAction } = this.state;
         return (
             <MainContent>
                 <SimpleActionDock />
@@ -58,7 +76,14 @@ export default class CreditCorrection extends Component {
                                     />
                                 </React.Fragment>
                             ))} */}
-                            <CreditCorrectionTableRow />
+                            <CreditCorrectionTableRow
+                                quickGroupAction={
+                                    selectedGroupAction.id !== groupActions.customerLevel.id
+                                        ? selectedGroupAction
+                                        : null
+                                }
+                            />
+
                             <CreditCorrectionTableRowA />
                             <CreditCorrectionTableRowB />
                             <CreditCorrectionTableRowC />

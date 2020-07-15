@@ -21,12 +21,12 @@ export default class CreditCorrectionGroupActions extends Component {
                 >
                     <h4 className="mrc-ui-form-label mb-2">Choose Action</h4>
                     <Grid colMin="10rem" gap="medium">
-                        {Object.values(groupActions).map((e, i) => (
+                        {Object.values(groupActions).map((ga, i) => (
                             <CheckCard
                                 key={i}
-                                title={e.label}
-                                checked={selectedGroupAction === e.value}
-                                onClick={() => onChange(e.value)}
+                                title={ga.label}
+                                checked={selectedGroupAction.id === ga.id}
+                                onClick={() => onChange(ga)}
                             />
                         ))}
                     </Grid>
