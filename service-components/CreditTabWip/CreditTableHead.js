@@ -7,7 +7,7 @@ import CRTableHeaderCellLimit from './CRTableHeaderCellLimit';
 
 export default class CreditTableHead extends Component {
     render() {
-        const { groupLimit, parent, country, translations, historyRequestType } = this.props;
+        const { groupLimit, parent, country, translations, historyRequestType, isCreditDataInRed } = this.props;
         const ts = translations;
         return (
             <React.Fragment>
@@ -89,7 +89,8 @@ export default class CreditTableHead extends Component {
                                         }
                                         country={country}
                                         subtitle={parent === 'history' ? ts.newlyGranted : ts.toBeGranted}
-                                        isGreen
+                                        isRed={isCreditDataInRed}
+                                        isGreen={!isCreditDataInRed}
                                         inSameRow
                                     />
                                 ) : null}
