@@ -62,6 +62,37 @@ export const selectionNoPreselection = {
     },
 };
 
+export const multiSelection = {
+    id: 'fb0a75ff-0d99-4571-95db-161e90e0e107',
+    requestId: '1',
+    country: 'DE',
+    storeNumber: '30',
+    customerNumber: '1234567',
+    groupId: null,
+    creationTimestamp: '2020-06-19T14:20:49.710184Z',
+    value: 'Computer_peripheral_equipment|Recreational_Products_Toys',
+    textValue: null,
+    countryField: {
+        id: 'e3992ab5-425c-45ed-99f6-c82f63ea9be0',
+        mandatory: false,
+        validation: null,
+        level: 'CUSTOMER',
+        order: 4,
+        section: 'CREDIT_DATA',
+        reusable: true,
+        endTimestamp: null,
+        country: 'DE',
+        options:
+            'Oil_Gas_Production|Computer_peripheral_equipment|Recreational_Products_Toys|Electric_Utilities_Central|Package_Goods_Cosmetics|EDP_Services|Commercial_Banks|Metal_Fabrications|Industrial_Machinery_Components',
+        field: {
+            id: '2bcc9833-1aa8-40ed-8b31-985a28fa906e',
+            code: 'DMY_CUSTOMER_INDUSTRY',
+            label: 'mrc.customerdetails.industry',
+            type: 'DROPDOWN_MULTIPLE',
+        },
+    },
+};
+
 // {
 //     requestFields: [
 //         {

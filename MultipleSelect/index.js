@@ -117,7 +117,7 @@ MultipleSelect.propTypes = {
         PropTypes.arrayOf(PropTypes.string),
         PropTypes.arrayOf(numberOrStringType),
     ]),
-    value: numberOrStringType,
+    value: PropTypes.array,
     onChange: PropTypes.func,
     onChangeDelayed: PropTypes.func,
     changeDelay: PropTypes.number,

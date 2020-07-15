@@ -45,16 +45,6 @@ export default function AdditionalField(props) {
 
     let fieldStatus = valid ? null : 'invalid';
 
-    // const onBlur = () => {
-    //     const theValue = type === 'TEXTAREA' ? elem.textValue : elem.value;
-
-    //     const isValid =
-    //         additionalFieldMandatoryIsValid(mandatory, theValue) &&
-    //         additionalFieldIsValid(validation, type, theValue, elem.creationTimestamp);
-    //     setValid(isValid);
-    //     props.onBlur(elem, isValid);
-    // };
-
     const generateField = () => {
         switch (type) {
             //NUMBER, TEXT, TEXTAREA, DATE, CHECKBOX, DROPDOWN, DROPDOWN_MULTIPLE, RADIOBUTTON, ATTACHMENT_REF
@@ -131,8 +121,8 @@ export default function AdditionalField(props) {
                         label={label}
                         required={mandatory}
                         options={getOptionValues(props.elem.countryField.options, labelKey)}
-                        value={getOptionValues(oldValue, label)}
-                        onChange={onChange}
+                        value={oldValue.split('|')}
+                        onChange={(v) => onChange(v.join('|'))}
                         disabled={props.disabled}
                     />
                 );
@@ -170,7 +160,12 @@ export default function AdditionalField(props) {
         if (type === 'DROPDOWN' || type === 'DROPDOWN_MULTIPLE' || type === 'RADIOBUTTON') {
             return getOptionValues(oldValue, fieldLabel, true)
                 .map((field) => field && field.length > 0 && field[1])
-                .join(',');
+                .map((value) => (
+                    <React.Fragment>
+                        {value}
+                        <br />
+                    </React.Fragment>
+                ));
         }
 
         return oldValue;

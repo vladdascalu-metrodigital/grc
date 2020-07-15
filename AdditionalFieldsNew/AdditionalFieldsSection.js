@@ -28,15 +28,15 @@ export default class AdditionalFieldsSection extends React.Component {
     }
 
     additionalFieldOnChange = (elem, value, valid) => {
+        let { disabled, onChange } = this.props;
         const oldValue = elem.countryField.field.type === 'TEXTAREA' ? elem.textValue : elem.value;
-        if (!this.props.disabled && value !== oldValue) {
+        if (!disabled && value !== oldValue) {
             if (elem.countryField.field.type === 'TEXTAREA') {
                 elem.textValue = value;
             } else {
                 elem.value = value;
             }
-
-            this.props.onChange(elem, valid);
+            if (onChange) onChange(elem, valid);
         }
     };
 
