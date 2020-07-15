@@ -12,6 +12,7 @@ export default class CreditCorrectionGroupActions extends Component {
     }
 
     render() {
+        let { groupActions, selectedGroupAction, onChange } = this.props;
         return (
             <div className="mrc-ui-credit-correction-group-action mb-6 mt-4 ">
                 <FormSection
@@ -20,16 +21,17 @@ export default class CreditCorrectionGroupActions extends Component {
                 >
                     <h4 className="mrc-ui-form-label mb-2">Choose Action</h4>
                     <Grid colMin="10rem">
-                        <CheckCard title="Set on customer level" checked />
-                        <CheckCard title="Block group for any purchase" />
-                        <CheckCard title="Block group to buy on credit" />
-                        <CheckCard title="Remove limit for group" />
-                        <CheckCard title="Remove block for group" />
+                        {Object.values(groupActions).map((e, i) => (
+                            <CheckCard
+                                key={i}
+                                title={e.label}
+                                checked={selectedGroupAction === e.value}
+                                onClick={() => onChange(e.value)}
+                            />
+                        ))}
                     </Grid>
                 </FormSection>
             </div>
         );
     }
 }
-
-CreditCorrectionGroupActions.propTypes = {};
