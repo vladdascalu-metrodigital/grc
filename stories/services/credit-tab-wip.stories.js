@@ -9941,7 +9941,7 @@ storiesOf('Services/Credit Tab WIP', module)
                     {
                         customerData: {
                             accordionDisplayName: ' 10/23050 Eva Manz Firma 3',
-                            displayName: 'Cash - no wish, with current',
+                            displayName: 'Cash - no wish, with currents',
                             customerNumber: '117',
                             storeNumber: '15',
                             vatSpecNumber: '951951951951951',
@@ -9999,6 +9999,7 @@ storiesOf('Services/Credit Tab WIP', module)
                         currentResetToLimitAmount: null,
                         requestedLimitExpiryDate: null,
                         requestedResetToLimitAmount: null,
+                        failedActivation: true,
                     },
                     {
                         customerData: {

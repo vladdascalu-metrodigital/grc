@@ -544,7 +544,7 @@ export const createCreditDataProps = (params) => {
                               editable: false,
                               disabled: true,
                           },
-                          failedActivation: _.get(params, 'failedActivation'),
+                          failedActivation: _.get(data, 'failedActivation'),
                       };
                   })
                 : [],
