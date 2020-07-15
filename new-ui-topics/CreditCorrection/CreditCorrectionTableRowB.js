@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Table from '../../MrcTable';
-import CRTableCellCustomer from './CRTableCellCustomer';
-import CRTableCellLimit from './CRTableCellLimit';
-import CRTableCellExpiry from './CRTableCellExpiry';
-import CRTableCellCreditProduct from './CRTableCellCreditProduct';
+import CRTableCellCustomer from '../CreditTablesCommons/CRTableCellCustomer';
+import CRTableCellLimit from '../CreditTablesCommons/CRTableCellLimit';
+import CRTableCellExpiry from '../CreditTablesCommons/CRTableCellExpiry';
+import CRTableCellCreditProduct from '../CreditTablesCommons/CRTableCellCreditProduct';
 import ToggleIndicator from '../../ToggleIndicator';
 
 export default class CreditCorrectionTableRowB extends Component {
@@ -31,6 +31,7 @@ export default class CreditCorrectionTableRowB extends Component {
                     <Table.D>
                         <CRTableCellLimit country="EUR" limit="30000" isGreen />
                     </Table.D>
+                    <Table.D>---</Table.D>
                     <Table.D borderFix>
                         <CRTableCellCreditProduct
                             productName="Metro Cash"

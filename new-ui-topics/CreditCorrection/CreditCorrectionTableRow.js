@@ -8,14 +8,14 @@ import { FlexRow } from '../../Flex';
 import NumberInput from '../../NumberInput';
 // import MrcCurrency from '../../MrcCurrency';
 import MrcCurrencySymbol from '../../MrcCurrencySymbol';
-import CreditCorrectionTableRowShadow from './CreditCorrectionTableRowShadow';
+import CreditCorrectionTableRowShadow from '../CreditTablesCommons/CreditCorrectionTableRowShadow';
 // import CRLimitSetting from './CRLimitSetting';
-import CRTableCellCustomer from './CRTableCellCustomer';
-import CRTableCellLimit from './CRTableCellLimit';
+import CRTableCellCustomer from '../CreditTablesCommons/CRTableCellCustomer';
+import CRTableCellLimit from '../CreditTablesCommons/CRTableCellLimit';
 // import CRTableCellExpiry from './CRTableCellExpiry';
-import CRTableCellCreditProduct from './CRTableCellCreditProduct';
-import CRTableCellPrepaymentCash from './CRTableCellPrepaymentCash';
-import FormSection from './FormSection';
+import CRTableCellCreditProduct from '../CreditTablesCommons/CRTableCellCreditProduct';
+import CRTableCellPrepaymentCash from '../CreditTablesCommons/CRTableCellPrepaymentCash';
+import FormSection from '../FormSection';
 import ToggleIndicator from '../../ToggleIndicator';
 import CheckCard from '../../CheckCard';
 import Select from '../../Select';
@@ -73,6 +73,7 @@ export default class CreditCorrectionTableRow extends Component {
                     <Table.D>
                         <CRTableCellLimit country="EUR" limit="30000" isGreen />
                     </Table.D>
+                    <Table.D>---</Table.D>
                     <Table.D borderFix>
                         <CRTableCellCreditProduct
                             productName="Metro Cash"

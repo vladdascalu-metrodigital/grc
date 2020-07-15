@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import classnames from 'classnames';
 import MrcNumber from '../../MrcNumber';
 
-import './CRTableCellTypoHighlight.scss';
+import '../CreditTablesCommons/CRTableCellTypoHighlight.scss';
 import './CRTableHeaderCellCustomerGroupLimit.scss';
 
 export default class CRTableHeaderCellCustomerGroupLimit extends PureComponent {

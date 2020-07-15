@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Table from '../../MrcTable';
-import CRTableCellCustomer from './CRTableCellCustomer';
-import CRTableCellLimit from './CRTableCellLimit';
-import CRTableCellExpiry from './CRTableCellExpiry';
-import CRTableCellCreditProduct from './CRTableCellCreditProduct';
-import CRTableCellPrepaymentCash from './CRTableCellPrepaymentCash';
+import CRTableCellCustomer from '../CreditTablesCommons/CRTableCellCustomer';
+import CRTableCellLimit from '../CreditTablesCommons/CRTableCellLimit';
+import CRTableCellExpiry from '../CreditTablesCommons/CRTableCellExpiry';
+import CRTableCellCreditProduct from '../CreditTablesCommons/CRTableCellCreditProduct';
+import CRTableCellPrepaymentCash from '../CreditTablesCommons/CRTableCellPrepaymentCash';
 import ToggleIndicator from '../../ToggleIndicator';
 
 export default class CreditCorrectionTableRowC extends Component {
@@ -31,7 +31,7 @@ export default class CreditCorrectionTableRowC extends Component {
                         />
                     </Table.D>
 
-                    <Table.D colSpan="2">
+                    <Table.D colSpan="3">
                         <CRTableCellPrepaymentCash name="Remove Block" isGreen />
                     </Table.D>
 

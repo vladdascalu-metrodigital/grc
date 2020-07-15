@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import classnames from 'classnames';
 
 import './CRTableHeaderCellLimitColSpanTitle.scss';
-import './CRTableCellTypoHighlight.scss';
+import '../CreditTablesCommons/CRTableCellTypoHighlight.scss';
 
 export default class CRTableHeaderCellLimitColSpanTitle extends PureComponent {
     render() {

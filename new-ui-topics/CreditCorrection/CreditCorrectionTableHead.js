@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Table from '../../MrcTable';
-import CRTableHeaderCellCustomerGroup from './CRTableHeaderCellCustomerGroup';
-import CRTableHeaderCellCustomerGroupLimit from './CRTableHeaderCellCustomerGroupLimit';
-import CRTableHeaderCellLimitColSpanTitle from './CRTableHeaderCellLimitColSpanTitle';
-import CRTableHeaderCellLimit from './CRTableHeaderCellLimit';
+import CRTableHeaderCellCustomerGroup from '../CreditTablesCommons/CRTableHeaderCellCustomerGroup';
+import CRTableHeaderCellCustomerGroupLimit from '../CreditTablesCommons/CRTableHeaderCellCustomerGroupLimit';
+import CRTableHeaderCellLimitColSpanTitle from '../CreditTablesCommons/CRTableHeaderCellLimitColSpanTitle';
+import CRTableHeaderCellLimit from '../CreditTablesCommons/CRTableHeaderCellLimit';
 import { lookup } from '../../Util/translations';
 
 import './CreditCorrectionTableHead.scss';
@@ -53,7 +53,7 @@ export default class CreditCorrectionTableHead extends Component {
                     <Table.H colSpan="3" className="mrc-ui-credit-correction-head-col">
                         {granted}
                     </Table.H>
-                    <Table.H colSpan="2" className="mrc-ui-credit-correction-head-col">
+                    <Table.H colSpan="3" className="mrc-ui-credit-correction-head-col">
                         {customerWish}
                     </Table.H>
                     <Table.H className="border-fix mrc-ui-credit-correction-toggler-col"></Table.H>
@@ -66,7 +66,7 @@ export default class CreditCorrectionTableHead extends Component {
                             isBlue
                         />
                     </Table.H>
-                    <Table.H colSpan="2">
+                    <Table.H colSpan="3">
                         <CRTableHeaderCellLimitColSpanTitle
                             title={historical ? translations.current : translations.new}
                             isGreen
@@ -81,6 +81,7 @@ export default class CreditCorrectionTableHead extends Component {
                     <Table.H>{translations.expiry}</Table.H>
                     <Table.H>{translations.creditproduct}</Table.H>
                     <Table.H>{translations.limit}</Table.H>
+                    <Table.H>{translations.expiry}</Table.H>
                     <Table.H borderFix>{translations.creditproduct}</Table.H>
                 </Table.R>
             </React.Fragment>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './FormSection.scss';
+import './index.scss';
 
 export default class FormSection extends Component {
     render() {

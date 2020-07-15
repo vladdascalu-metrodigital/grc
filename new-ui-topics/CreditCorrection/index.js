@@ -49,7 +49,7 @@ export default class CreditCorrection extends Component {
                         <Table.Body>
                             <CreditCorrectionTableHead />
 
-                            {[...Array(10).keys()].map((e, i) => (
+                            {/* {[...Array(10).keys()].map((e, i) => (
                                 <React.Fragment>
                                     <CreditCorrectionTableRow
                                         key={i}
@@ -57,7 +57,7 @@ export default class CreditCorrection extends Component {
                                         isZebra={!!(i % 2)}
                                     />
                                 </React.Fragment>
-                            ))}
+                            ))} */}
                             <CreditCorrectionTableRow />
                             <CreditCorrectionTableRowA />
                             <CreditCorrectionTableRowB />
