@@ -17,6 +17,8 @@ import CreditCorrectionTableRowForm from './CreditCorrectionTableRowForm';
 import CreditCorrectionTableRowFormLocked from './CreditCorrectionTableRowFormLocked';
 import { FlexRow } from '../../Flex';
 
+import { correctionActions, creditProducts, creditPeriodOptions } from './creditCorrectionEntities';
+
 export default class CreditCorrectionTableRow extends Component {
     constructor(props) {
         super(props);
@@ -25,6 +27,13 @@ export default class CreditCorrectionTableRow extends Component {
         this.state = {
             isHovered: false,
             isExpanded: false,
+            formData: {
+                selectedAction: correctionActions.limit,
+                limitAmount: 999,
+                removeLimit: false,
+                selectedCreditProduct: creditProducts.metroTop,
+                selectedCreditPeriod: creditPeriodOptions[0][0],
+            },
         };
     }
 
@@ -40,8 +49,17 @@ export default class CreditCorrectionTableRow extends Component {
         });
     }
 
+    handleFormChange(formDataChange) {
+        this.setState({
+            formData: {
+                ...this.state.formData,
+                ...formDataChange,
+            },
+        });
+    }
+
     render() {
-        let { isExpanded, isHovered } = this.state;
+        let { isExpanded, isHovered, formData } = this.state;
         let { id, isZebra, quickGroupAction } = this.props;
         let type = isZebra ? 'zebra' : null;
 
@@ -70,12 +88,16 @@ export default class CreditCorrectionTableRow extends Component {
                     </Table.D>
 
                     <Table.D>
-                        <CRTableCellLimit country="EUR" limit="30000" isGreen />
+                        <CRTableCellLimit
+                            country="EUR"
+                            limit={formData.removeLimit ? 0 : formData.limitAmount}
+                            isGreen
+                        />
                     </Table.D>
                     <Table.D>---</Table.D>
                     <Table.D borderFix>
                         <CRTableCellCreditProduct
-                            productName="Metro Cash"
+                            productName={formData.selectedCreditProduct.label}
                             productTimePeriod="14 Days"
                             productPaymentMethod="Direct Debit 1"
                             isGreen
@@ -99,7 +121,10 @@ export default class CreditCorrectionTableRow extends Component {
                                 {quickGroupAction ? (
                                     <CreditCorrectionTableRowFormLocked quickGroupAction={quickGroupAction} />
                                 ) : (
-                                    <CreditCorrectionTableRowForm />
+                                    <CreditCorrectionTableRowForm
+                                        data={formData}
+                                        onFormChange={this.handleFormChange.bind(this)}
+                                    />
                                 )}
                             </Table.D>
                         </Table.R>

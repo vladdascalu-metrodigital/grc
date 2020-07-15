@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import Grid from '../../Grid';
 import Card from '../../Card';
@@ -11,62 +11,12 @@ import CheckCard from '../../CheckCard';
 import Select from '../../Select';
 import InputLabel from '../../InputLabel';
 
-const correctionActions = {
-    noChanges: {
-        id: 'action-no-changes',
-        label: 'No Changes',
-    },
-    limit: {
-        id: 'action-limit',
-        label: 'Limit',
-    },
-    blocking: {
-        id: 'action-blocking',
-        label: 'Blocking',
-    },
-    removeBlock: {
-        id: 'action-remove-block',
-        label: 'RemoveBlock',
-    },
-};
-
-const creditProducts = {
-    metroTop: {
-        id: 'product-metro-top',
-        label: 'Metro Top',
-    },
-    bankTransfer: {
-        id: 'product-bank-transfer',
-        label: 'Bank Transfer',
-    },
-    directDebit: {
-        id: 'product-direct-debit',
-        label: 'Direct Debit',
-    },
-};
-
-const creditPeriodOptions = [
-    ['NULL', 'Please Choose'],
-    ['1', 'Option 1'],
-    ['2', 'Option 2'],
-    ['3', 'Option 3'],
-    ['4', 'Option 4'],
-];
+import { correctionActions, creditProducts, creditPeriodOptions } from './creditCorrectionEntities';
 
 export default class CreditCorrectionTableRowForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedAction: correctionActions.limit,
-            limitAmount: 999,
-            removeLimit: false,
-            selectedCreditProduct: creditProducts.metroTop,
-            selectedCreditPeriod: creditPeriodOptions[0],
-        };
-    }
-
     render() {
-        let { selectedAction, selectedCreditProduct, removeLimit, limitAmount, selectedCreditPeriod } = this.state;
+        let { onFormChange } = this.props;
+        let { selectedAction, selectedCreditProduct, removeLimit, limitAmount, selectedCreditPeriod } = this.props.data;
         return (
             <FormSection
                 title="Quick Action"
@@ -78,7 +28,7 @@ export default class CreditCorrectionTableRowForm extends Component {
                         <CheckCard
                             key={i}
                             title={action.label}
-                            onClick={() => this.setState({ selectedAction: action })}
+                            onClick={() => onFormChange({ selectedAction: action })}
                             checked={action.id === selectedAction.id}
                         />
                     ))}
@@ -92,13 +42,13 @@ export default class CreditCorrectionTableRowForm extends Component {
                                 <CheckCard
                                     title="Amount"
                                     checked={removeLimit === false}
-                                    onClick={() => this.setState({ removeLimit: false })}
+                                    onClick={() => onFormChange({ removeLimit: false })}
                                 >
                                     <FlexRow alignItems="baseline">
                                         <div className="mr-3">
                                             <NumberInput
                                                 value={limitAmount}
-                                                onChange={(v) => this.setState({ removeLimit: false, limitAmount: v })}
+                                                onChange={(v) => onFormChange({ removeLimit: false, limitAmount: v })}
                                             />
                                         </div>
                                         <MrcCurrencySymbol type="small" />
@@ -107,7 +57,7 @@ export default class CreditCorrectionTableRowForm extends Component {
                                 <CheckCard
                                     title="Remove Limit"
                                     checked={removeLimit === true}
-                                    onClick={() => this.setState({ removeLimit: true })}
+                                    onClick={() => onFormChange({ removeLimit: true })}
                                 />
                             </Grid>
                             <h4 className="mrc-ui-form-label mt-4 mb-1">Choose Credit Product</h4>
@@ -116,7 +66,7 @@ export default class CreditCorrectionTableRowForm extends Component {
                                     <CheckCard
                                         key={i}
                                         title={cp.label}
-                                        onClick={() => this.setState({ selectedCreditProduct: cp })}
+                                        onClick={() => onFormChange({ selectedCreditProduct: cp })}
                                         checked={cp.id === selectedCreditProduct.id}
                                     />
                                 ))}
@@ -127,7 +77,7 @@ export default class CreditCorrectionTableRowForm extends Component {
                                     label="Creditperiod"
                                     options={creditPeriodOptions}
                                     value={selectedCreditPeriod}
-                                    onChange={(v) => this.setState({ selectedCreditPeriod: v })}
+                                    onChange={(v) => onFormChange({ selectedCreditPeriod: v })}
                                 />
                             </Grid>
                         </Card>
@@ -138,4 +88,13 @@ export default class CreditCorrectionTableRowForm extends Component {
     }
 }
 
-CreditCorrectionTableRowForm.propTypes = {};
+CreditCorrectionTableRowForm.propTypes = {
+    onFormChange: PropTypes.func,
+    data: PropTypes.shape({
+        selectedAction: PropTypes.object,
+        limitAmount: PropTypes.number,
+        removeLimit: PropTypes.bool,
+        selectedCreditProduct: PropTypes.object,
+        selectedCreditPeriod: PropTypes.string,
+    }),
+};
