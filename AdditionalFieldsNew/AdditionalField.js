@@ -170,7 +170,12 @@ export default function AdditionalField(props) {
         if (type === 'DROPDOWN' || type === 'DROPDOWN_MULTIPLE' || type === 'RADIOBUTTON') {
             return getOptionValues(oldValue, fieldLabel, true)
                 .map((field) => field && field.length > 0 && field[1])
-                .join(',');
+                .map((value) => (
+                    <React.Fragment>
+                        {value}
+                        <br />
+                    </React.Fragment>
+                ));
         }
 
         return oldValue;
