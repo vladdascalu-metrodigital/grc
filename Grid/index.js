@@ -4,16 +4,18 @@ import classnames from 'classnames';
 
 import './index.scss';
 
-// export const GAP = {
-// 'NONE'
-// 'SMALL'
-// 'LARGE'
-// }
+export const GAP = {
+    DEFAULT: null,
+    NONE: 'none',
+    SMALL: 'small',
+    MEDIUM: 'medium',
+    LARGE: 'large',
+};
 
 export default class Grid extends Component {
     render() {
-        let { cols, colMin, colMax, justifyContent, alignItems, className: outerClassName } = this.props;
-        let className = classnames(outerClassName, 'mrc-ui-grid', {
+        let { cols, colMin, colMax, gap, justifyContent, alignItems, className: outerClassName } = this.props;
+        let className = classnames(outerClassName, 'mrc-ui-grid', gap && 'mrc-ui-grid-gap-' + gap, {
             'mrc-ui-grid-cols': cols && cols > 0,
         });
         let style = {

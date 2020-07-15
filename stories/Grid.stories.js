@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import Grid from '../Grid';
+import Grid, { GAP } from '../Grid';
 import Card, { TYPE } from '../Card';
 
 storiesOf('Layouts/Grid', module)
@@ -24,7 +24,27 @@ storiesOf('Layouts/Grid', module)
             </Grid>
         </Grid>
     ))
-    .add('define columns', () => (
+    .add('Set grid-gap', () => (
+        <Grid cols="1">
+            <h2>Default asymmetric</h2>
+            <Grid>
+                <Card>a</Card>
+                <Card type={TYPE.WARNING}>default</Card>
+                <Card>grip</Card>
+                <Card>gap</Card>
+                <Card>ok</Card>
+            </Grid>
+            <h2>Small gap, symmetric</h2>
+            <Grid gap={GAP.SMALL}>
+                <Card>a</Card>
+                <Card type={TYPE.WARNING}>small</Card>
+                <Card>grid</Card>
+                <Card>gap</Card>
+                <Card>ok</Card>
+            </Grid>
+        </Grid>
+    ))
+    .add('Define Static Columns', () => (
         <Grid cols="4">
             <Card>1</Card>
             <Card>2</Card>

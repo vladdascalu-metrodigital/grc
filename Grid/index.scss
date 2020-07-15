@@ -17,3 +17,19 @@
   justify-self: var(--mrc-ui-grid-justify-self);
   align-self: var(--mrc-ui-grid-align-self);
 }
+
+.mrc-ui-grid-gap-none {
+  grid-gap: 0;
+}
+
+.mrc-ui-grid-gap-small {
+  grid-gap: $spacing-small;
+}
+
+.mrc-ui-grid-gap-medium {
+  grid-gap: $spacing-medium;
+}
+
+.mrc-ui-grid-gap-large {
+  grid-gap: $spacing-large;
+}
