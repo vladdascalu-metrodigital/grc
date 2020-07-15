@@ -26,7 +26,7 @@ export class SimpleActionDock extends Component {
         return (
             <ActionDock>
                 <FlexRow justifyContent="center" gap="medium">
-                    <Button text="Cancel" color="danger" isOutlined onClick={this.props.onCancel} wide="medium" />
+                    <Button text="Cancel" isOutlined onClick={this.props.onCancel} wide="medium" />
                     <Button text="Apply" onClick={this.props.onApply} wide="medium" />
                 </FlexRow>
             </ActionDock>
