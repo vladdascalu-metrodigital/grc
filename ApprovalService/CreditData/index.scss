@@ -30,13 +30,13 @@
         margin-top: 1.5rem;
     }
 
-    .react-datepicker__input-container input {
+    .react-datepicker__input-container input:not(.mrc-ui-datepicker-input) {
         z-index: 10;
         position: relative;
         background-color: transparent;
     }
 
-    .react-datepicker__input-container input:disabled {
+    .react-datepicker__input-container input:disabled:not(.mrc-ui-datepicker-input) {
         z-index: 0 !important;
         color: #99a1ad !important;
         background-color: #f2f3f5 !important;
