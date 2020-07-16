@@ -14,73 +14,6 @@ $table-padding-v: $spacing-extra-small;
 $table-padding-h: $spacing-medium;
 $table-base-line-height: $line-height-copy;
 
-@mixin table-row-default-color () {
-  .mrc-ui-table-h,
-  .mrc-ui-table-d {
-    background-color: $color-contrast-white;
-    border-color: $color-palette-grey-tint-90;
-  }
-}
-
-@mixin table-row-zebra-color () {
-  .mrc-ui-table-h,
-  .mrc-ui-table-d {
-    background-color: $color-palette-grey-tint-95;
-    border-color: $color-contrast-white;
-  }
-}
-
-@mixin table-row-active-color () {
-  .mrc-ui-table-h,
-  .mrc-ui-table-d {
-    background-color: $color-palette-blue-tint-90;
-    border-color: $color-contrast-white;
-  }
-}
-
-@mixin table-row-hover-color () {
-  .mrc-ui-table-h,
-  .mrc-ui-table-d {
-    background-color: $color-palette-blue-tint-90;
-    border-color: $color-contrast-white;
-  }
-}
-
-@mixin table-row-light-grey () {
-  .mrc-ui-table-h,
-  .mrc-ui-table-d {
-    background-color: $color-palette-grey-tint-95;
-    border-color: $color-contrast-white;
-    color: $color-palette-grey-tint-60;
-  }
-}
-
-@mixin table-row-form-grey () {
-  .mrc-ui-table-h,
-  .mrc-ui-table-d {
-    background-color: $color-form-background-grey;
-    border-color: $color-contrast-white;
-    color: $color-palette-grey-tint-60;
-  }
-}
-
-@mixin table-row-dark-grey () {
-  .mrc-ui-table-h,
-  .mrc-ui-table-d {
-    background-color: $color-palette-grey-tint-70;
-    border-color: $color-contrast-white;
-    color: $color-contrast-white;
-  }
-}
-
-@mixin table-row-invalid-color () {
-  .mrc-ui-table-h,
-  .mrc-ui-table-d {
-    background-color: $color-palette-red-tint-95;
-    border-color: $color-contrast-white;
-  }
-}
-
 // set the basics
 
 .mrc-ui-table-h,
@@ -111,31 +44,70 @@ $table-base-line-height: $line-height-copy;
 // set the row themes
 
 .mrc-ui-table-r {
-  @include table-row-default-color();
+  .mrc-ui-table-h,
+  .mrc-ui-table-d {
+    background-color: $color-contrast-white;
+    border-color: $color-palette-grey-tint-90;
+  }
 }
 
 .mrc-ui-table-r-zebra {
-  @include table-row-zebra-color();
+  .mrc-ui-table-h,
+  .mrc-ui-table-d {
+    background-color: $color-palette-grey-tint-95;
+    border-color: $color-contrast-white;
+  }
 }
 
 .mrc-ui-table-r-active {
-  @include table-row-active-color();
+  .mrc-ui-table-h,
+  .mrc-ui-table-d {
+    background-color: $color-palette-blue-tint-90;
+    border-color: $color-contrast-white;
+  }
 }
 
 .mrc-ui-table-r-hover {
-  @include table-row-hover-color();
+  .mrc-ui-table-h,
+  .mrc-ui-table-d {
+    background-color: $color-palette-blue-tint-90;
+    border-color: $color-contrast-white;
+  }
 }
 
 .mrc-ui-table-r-form {
-  @include table-row-form-grey();
+  .mrc-ui-table-h,
+  .mrc-ui-table-d {
+    background-color: $color-form-background-grey;
+    border-color: $color-contrast-white;
+    color: $color-palette-grey-tint-60;
+  }
 }
 
 .mrc-ui-table-r-head {
-  @include table-row-dark-grey();
+  .mrc-ui-table-h,
+  .mrc-ui-table-d {
+    background-color: $color-palette-grey-tint-70;
+    border-color: $color-contrast-white;
+    color: $color-contrast-white;
+  }
 }
 
 .mrc-ui-table-r-head-light {
-  @include table-row-light-grey();
+  .mrc-ui-table-h,
+  .mrc-ui-table-d {
+    background-color: $color-palette-grey-tint-95;
+    border-color: $color-contrast-white;
+    color: $color-palette-grey-tint-60;
+  }
+}
+
+.mrc-ui-table-r-invalid {
+  .mrc-ui-table-h,
+  .mrc-ui-table-d {
+    background-color: $color-palette-red-tint-95;
+    border-color: $color-contrast-white;
+  }
 }
 
 .mrc-ui-table-r-sticky {
@@ -146,12 +118,8 @@ $table-base-line-height: $line-height-copy;
   }
 }
 
-.mrc-ui-table-r-invalid {
-  @include table-row-invalid-color();
-}
 
-
-// temp
+// temp // TODO: remove this??
 
 html, body {
   background:white;
