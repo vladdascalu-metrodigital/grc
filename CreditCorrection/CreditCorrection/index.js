@@ -75,7 +75,7 @@ export default class CreditCorrectionLayout extends Component {
             this.props.request.data.requestedItems[0].customer &&
             this.props.request.data.requestedItems[0].customer.creditLimitStatus === 'blocked'
         ) {
-            this.props.request.data.requestedItems.map(item => {
+            this.props.request.data.requestedItems.map((item) => {
                 item.creditData.id = '';
                 item.creditData.creditProduct = '';
                 item.creditData.creditPeriod = '';
@@ -115,7 +115,7 @@ export default class CreditCorrectionLayout extends Component {
             //
             // mark the requested customer
             //
-            req.requestedItems.forEach(ri => this.markRequestedCustomer(req.requestedCustomerId, ri.customer));
+            req.requestedItems.forEach((ri) => this.markRequestedCustomer(req.requestedCustomerId, ri.customer));
 
             //
             // sort by customerID, taking the requestedCustomer first
@@ -137,7 +137,7 @@ export default class CreditCorrectionLayout extends Component {
             let availableGroupLimit = 0;
             let exhaustionGroupLimit = 0;
             if (nextProps.request != null && nextProps.request.data != null) {
-                nextProps.request.data.requestedItems.map(item => {
+                nextProps.request.data.requestedItems.map((item) => {
                     currentGroupLimit += item.customer.creditLimit;
                     const amount =
                         !_.isNil(item.creditData.amount) && !_.isNaN(item.creditData.amount)
@@ -188,12 +188,12 @@ export default class CreditCorrectionLayout extends Component {
         this.canBlock = creditCorrectionRequest.canBlock;
         this.canCorrect = creditCorrectionRequest.canCorrect;
         if (creditCorrectionRequest != null) {
-            const notNullActivations = creditCorrectionRequest.requestedItems.filter(ri => ri.activationInfo != null);
+            const notNullActivations = creditCorrectionRequest.requestedItems.filter((ri) => ri.activationInfo != null);
             if (notNullActivations.length === 0) {
                 disabled = false;
             } else {
                 const unsuccessfullActivations = notNullActivations.filter(
-                    a => a.activationInfo.resultCode !== '0' && a.activationInfo.resultCode !== '-1'
+                    (a) => a.activationInfo.resultCode !== '0' && a.activationInfo.resultCode !== '-1'
                 );
                 if (unsuccessfullActivations.length !== 0) {
                     disabled = false;
@@ -243,7 +243,7 @@ export default class CreditCorrectionLayout extends Component {
 
     createCustomerDetailsPanel(req) {
         // in case there is some data, retrieve list of customers from list of requestedItems
-        const customers = req.data && req.data.requestedItems.map(ri => ri.customer);
+        const customers = req.data && req.data.requestedItems.map((ri) => ri.customer);
 
         return <CustomerDataGroup customers={customers} />;
     }
@@ -267,7 +267,7 @@ export default class CreditCorrectionLayout extends Component {
     handleRequestedGroupLimitChange() {
         let requestedGroupLimitNew = 0;
         if (this.props.request != null && this.props.request.data != null) {
-            this.props.request.data.requestedItems.map(item => {
+            this.props.request.data.requestedItems.map((item) => {
                 const amount =
                     !_.isNil(item.creditData.amount) && !_.isNaN(item.creditData.amount)
                         ? item.creditData.amount
@@ -412,14 +412,14 @@ export default class CreditCorrectionLayout extends Component {
         const newValidity = this.state.creditDataComponentsValid;
         newValidity[id] = valid;
 
-        const requestor = this.props.request.data.requestedItems.find(request => request.customer.requestedCustomer);
+        const requestor = this.props.request.data.requestedItems.find((request) => request.customer.requestedCustomer);
         const requestorCreditDataIsValid = newValidity[requestor.id];
 
         this.setState({
             ...this.state,
             creditDataComponentsValid: newValidity,
             creditDataValid:
-                Object.values(newValidity).every(v => v === true || v == null) && requestorCreditDataIsValid === true,
+                Object.values(newValidity).every((v) => v === true || v == null) && requestorCreditDataIsValid === true,
         });
     }
 
@@ -465,9 +465,11 @@ export default class CreditCorrectionLayout extends Component {
             <Attachments
                 noDeletedAttachmentsToggle={true}
                 noPlaceholder={true}
-                attachments={(attachments ? attachments : []).map(a => {
+                attachments={(attachments ? attachments : []).map((a) => {
                     return a.deleted
                         ? /* eslint-disable */
+                          // restore is not used for credit correction at the
+                          // moment. Left in for possible future use
                           {
                               ...a,
                               status: 'deleted',
@@ -531,7 +533,7 @@ export default class CreditCorrectionLayout extends Component {
             this.HARD_BLOCKING_OPTIONS.includes(blockingValues[id]) &&
             !this.HARD_BLOCKING_OPTIONS.includes(newBlockingValue)
         ) {
-            this.props.request.data.requestedItems.map(item => {
+            this.props.request.data.requestedItems.map((item) => {
                 if (item.id === id) {
                     blockingValues[item.id] = newBlockingValue;
                     this.state.blockingCallbacks[item.id] && this.state.blockingCallbacks[item.id](newBlockingValue);
@@ -545,7 +547,7 @@ export default class CreditCorrectionLayout extends Component {
 
         //set blocking to all the customers in the group if the new blocking value is HARDBLOCK or GENERALBLOCK, or if the Group Level Dropdown was selected
         if (this.HARD_BLOCKING_OPTIONS.includes(newBlockingValue) || id === 'groupLevel') {
-            this.props.request.data.requestedItems.map(item => {
+            this.props.request.data.requestedItems.map((item) => {
                 this.state.blockingCallbacks[item.id] && this.state.blockingCallbacks[item.id](newBlockingValue);
                 blockingValues[item.id] = newBlockingValue;
             });
@@ -554,7 +556,7 @@ export default class CreditCorrectionLayout extends Component {
             //set blocking only to the customer which selected the blocking dropdown, when not having a group blocking
             blockingValues['groupLevel'] = '';
 
-            this.props.request.data.requestedItems.map(item => {
+            this.props.request.data.requestedItems.map((item) => {
                 if (item.id === id) {
                     this.state.blockingCallbacks[item.id] && this.state.blockingCallbacks[item.id](newBlockingValue);
                     blockingValues[item.id] = newBlockingValue;

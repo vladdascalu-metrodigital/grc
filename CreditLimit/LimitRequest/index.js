@@ -570,6 +570,8 @@ export default class LimitRequestLayout extends Component {
                 disabled={!this.props.request.data || this.props.request.loading}
                 readonly={!this.props.request.data || this.props.request.loading}
                 attachments={(this.COLLATERALS_ATTACHMENTS ? this.COLLATERALS_ATTACHMENTS : []).map((a) => {
+                    // reslore is not used for credit correction at the
+                    // moment. Left in for possible future use
                     return a.deleted
                         ? {
                               ...a,
