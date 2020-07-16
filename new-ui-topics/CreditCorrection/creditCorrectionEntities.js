@@ -31,7 +31,7 @@ export const correctionActions = {
         label: 'Limit',
     },
     blocking: {
-        id: 'action-blocking',
+        id: 'action-blocking', // not "blocking" what is it?
         label: 'Blocking',
     },
     removeBlock: {

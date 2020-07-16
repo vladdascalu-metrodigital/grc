@@ -9,15 +9,14 @@ import CRTableCellCustomer from '../CreditTablesCommons/CRTableCellCustomer';
 import CRTableCellLimit from '../CreditTablesCommons/CRTableCellLimit';
 // import CRTableCellExpiry from './CRTableCellExpiry';
 import CRTableCellCreditProduct from '../CreditTablesCommons/CRTableCellCreditProduct';
-import CRTableCellPrepaymentCash from '../CreditTablesCommons/CRTableCellPrepaymentCash';
+import CTableCellBiggerText from '../CreditTablesCommons/CTableCellBiggerText';
 import ToggleIndicator from '../../ToggleIndicator';
 // import CRPaymentMethodSetting from './CRPaymentMethodSetting';
 
 import CreditCorrectionTableRowForm from './CreditCorrectionTableRowForm';
 import CreditCorrectionTableRowFormLocked from './CreditCorrectionTableRowFormLocked';
-import { FlexRow } from '../../Flex';
 
-import { correctionActions, creditProducts, creditPeriodOptions } from './creditCorrectionEntities';
+import { correctionActions, creditProducts, creditPeriodOptions, quickGroupActions } from './creditCorrectionEntities';
 
 export default class CreditCorrectionTableRow extends Component {
     constructor(props) {
@@ -58,6 +57,15 @@ export default class CreditCorrectionTableRow extends Component {
         });
     }
 
+    // getselectedAction() {
+    //     let { quickGroupAction } = this.props;
+    //     let { selectedAction } = this.state.formData;
+    //     if (quickGroupAction && quickGroupAction.id !== quickGroupActions.customerLevel.id) {
+    //         return quickGroupAction;
+    //     }
+    //     return selectedAction;
+    // }
+
     render() {
         let { isExpanded, isHovered, formData } = this.state;
         let { id, isZebra, quickGroupAction } = this.props;
@@ -77,33 +85,39 @@ export default class CreditCorrectionTableRow extends Component {
                     onMouseLeave={() => this.hover(false)}
                 >
                     <Table.D>
-                        <FlexRow alignItems="center">
-                            <CRTableCellCustomer name="Mepo GmbH" number="12/123432" isBlocked isHighlighted />
-                            {quickGroupAction && <span>{quickGroupAction.label}</span>}
-                        </FlexRow>
+                        <CRTableCellCustomer name="Mepo GmbH" number="12/123432" isBlocked isHighlighted />
                     </Table.D>
 
                     <Table.D colSpan="3">
-                        <CRTableCellPrepaymentCash name="Prepayment" isBlue />
+                        <CTableCellBiggerText text="Prepayment" color="blue" />
                     </Table.D>
 
+                    {quickGroupAction.id === quickGroupActions.customerLevel.id ? (
+                        <React.Fragment>
+                            <Table.D>
+                                <CRTableCellLimit
+                                    country="EUR"
+                                    limit={formData.removeLimit ? 0 : formData.limitAmount}
+                                    isGreen
+                                />
+                            </Table.D>
+                            <Table.D>---</Table.D>
+                            <Table.D>
+                                <CRTableCellCreditProduct
+                                    productName={formData.selectedCreditProduct.label}
+                                    productTimePeriod="14 Days"
+                                    productPaymentMethod="Direct Debit 1"
+                                    isGreen
+                                />
+                            </Table.D>
+                        </React.Fragment>
+                    ) : (
+                        <Table.D colSpan="3">
+                            <CTableCellBiggerText text={quickGroupAction.label} color="green" />
+                        </Table.D>
+                    )}
+
                     <Table.D>
-                        <CRTableCellLimit
-                            country="EUR"
-                            limit={formData.removeLimit ? 0 : formData.limitAmount}
-                            isGreen
-                        />
-                    </Table.D>
-                    <Table.D>---</Table.D>
-                    <Table.D borderFix>
-                        <CRTableCellCreditProduct
-                            productName={formData.selectedCreditProduct.label}
-                            productTimePeriod="14 Days"
-                            productPaymentMethod="Direct Debit 1"
-                            isGreen
-                        />
-                    </Table.D>
-                    <Table.D className="fix-width-cell">
                         <ToggleIndicator tilt={isExpanded} />
                     </Table.D>
                 </Table.R>
@@ -118,13 +132,13 @@ export default class CreditCorrectionTableRow extends Component {
                         </Table.R>
                         <Table.R type="form">
                             <Table.D colSpan="8">
-                                {quickGroupAction ? (
-                                    <CreditCorrectionTableRowFormLocked quickGroupAction={quickGroupAction} />
-                                ) : (
+                                {quickGroupAction.id === quickGroupActions.customerLevel.id ? (
                                     <CreditCorrectionTableRowForm
                                         data={formData}
                                         onFormChange={this.handleFormChange.bind(this)}
                                     />
+                                ) : (
+                                    <CreditCorrectionTableRowFormLocked quickGroupAction={quickGroupAction} />
                                 )}
                             </Table.D>
                         </Table.R>

@@ -50,15 +50,17 @@ export default class CreditCorrection extends Component {
                                         key={i}
                                         id={'credit-table-sticky-row-' + i}
                                         isZebra={!!(i % 2)}
+                                        quickGroupAction={
+                                            selectedGroupAction.id !== groupActions.customerLevel.id
+                                                ? selectedGroupAction
+                                                : null
+                                        }
                                     />
                                 </React.Fragment>
                             ))} */}
                             <CreditCorrectionTableRow
-                                quickGroupAction={
-                                    selectedGroupAction.id !== groupActions.customerLevel.id
-                                        ? selectedGroupAction
-                                        : null
-                                }
+                                id="credit-table-sticky-row-x"
+                                quickGroupAction={selectedGroupAction}
                             />
 
                             <CreditCorrectionTableRowA />

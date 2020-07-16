@@ -3,7 +3,7 @@ import Table from '../../MrcTable';
 import CRTableCellCustomer from '../CreditTablesCommons/CRTableCellCustomer';
 import CRTableCellLimit from '../CreditTablesCommons/CRTableCellLimit';
 import CRTableCellCreditProduct from '../CreditTablesCommons/CRTableCellCreditProduct';
-import CRTableCellPrepaymentCash from '../CreditTablesCommons/CRTableCellPrepaymentCash';
+import CTableCellBiggerText from '../CreditTablesCommons/CTableCellBiggerText';
 import ToggleIndicator from '../../ToggleIndicator';
 
 export default class CreditCorrectionTableRowC extends Component {
@@ -15,7 +15,7 @@ export default class CreditCorrectionTableRowC extends Component {
                         <CRTableCellCustomer name="Mepo GmbH" number="12/123432" isBlocked isHighlighted />
                     </Table.D>
                     <Table.D colSpan="3">
-                        <CRTableCellPrepaymentCash name="Prepayment" isBlue />
+                        <CTableCellBiggerText text="Prepayment" color="blue" />
                     </Table.D>
                     <Table.D>
                         <CRTableCellLimit country="EUR" limit="30000" isGreen />
