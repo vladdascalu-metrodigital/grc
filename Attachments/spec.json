@@ -370,6 +370,13 @@
       "label": "mrc.attachments.types.contract",
       "remark": "Contract",
       "is_collateral": false
+    },
+    {
+      "country": "RU",
+      "type": "contract",
+      "label": "mrc.attachments.types.contract",
+      "remark": "Contract",
+      "is_collateral": false
     }
   ]
 }
