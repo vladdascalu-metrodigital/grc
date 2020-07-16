@@ -29,6 +29,11 @@ $measure-narrow: 20em !default;
 /* Measure width is limited to ~80 characters */
 $measure-wide: 34em !default;
 
+@mixin typo-default-text() {
+  color: $color-palette-grey-default;
+  // font-weight: normal; // TODO: decide on this one at some point.
+}
+
 @mixin typo-anchor() {
   color: $color-interaction;
   text-decoration: none;

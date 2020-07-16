@@ -1,6 +1,8 @@
-@import "./borders";
+@import './borders';
+@import './typography';
 
 @mixin card-default() {
+  @include typo-default-text();
   @include border-radius-all();
   background-color: $color-palette-grey-tint-95;
   border: $border-width-thin solid $color-palette-grey-tint-70;
