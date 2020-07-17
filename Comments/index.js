@@ -1,81 +1,42 @@
 import React, { Component } from 'react';
 import './index.scss';
-import { lookup } from '../Util/translations';
-import PropTypes from 'prop-types';
-import MrcDateTime from '../MrcDateTime';
+import { PropTypes } from 'prop-types';
+import { CommentsList } from './CommentsList';
+import CommentsAdd from './CommentsAdd';
+import { CommentPropTypes } from './CommentsPropTypes';
 
 export default class Comments extends Component {
     constructor(props) {
         super(props);
-        this.handleChange = this.handleChange.bind(this);
-        this.addComment = this.addComment.bind(this);
+        this.state = {};
+        this.onSave = this.onSave.bind(this);
     }
 
-    handleChange(e) {
-        this.props.handleNewCommentChange(e.target.value);
-    }
-
-    addComment() {
-        this.props.addComment();
+    onSave() {
+        const newValue = this.state.newValue;
+        this.setState({ newValue: undefined });
+        this.props.onSave && this.props.onSave(newValue);
     }
 
     render() {
-        const readyToSend = this.props.newComment.trim().length > 0;
-        const comments = this.props.data || [];
-        const addCommentTitle = this.props.addCommentTitle || 'Add Comment';
         return (
-            <div className="mrc-comments">
-                {comments.map(comment => {
-                    return (
-                        <div key={comment.id} className="mrc-comment">
-                            <MrcDateTime>{comment.uploadTimestamp}</MrcDateTime>{' '}
-                            <span className="author">
-                                {comment.uploaderPrincipalName} ({comment.uploaderPosition})
-                            </span>
-                            <div className="content">
-                                {lookup(comment.comment)}&nbsp;
-                                {(comment.comment === 'strategy.decision.blocked' ||
-                                    comment.comment === 'strategy.decision.rejected') &&
-                                this.props.timeoutDate != undefined &&
-                                this.props.timeoutDate != null ? (
-                                    <MrcDateTime>{this.props.timeoutDate}</MrcDateTime>
-                                ) : (
-                                    ''
-                                )}
-                            </div>
-                        </div>
-                    );
-                })}
-                <div className="m-input m-input-name">
-                    <div className="m-input-elementWrapper">
-                        <textarea
-                            value={this.props.newComment}
-                            onChange={this.handleChange}
-                            disabled={this.props.readonly}
-                            className="m-input-element extra-class-on-input-tag"
-                        />
-                    </div>
-                </div>
-                <button
-                    disabled={this.props.readonly || !readyToSend}
-                    onClick={this.addComment}
-                    type="button"
-                    className="mrc-secondary-button"
-                >
-                    {addCommentTitle}
-                </button>
+            <div className="mrc-ui-comment-component">
+                <CommentsAdd
+                    newContent={this.state.newValue}
+                    onContentChange={(newValue) => this.setState({ newValue })}
+                    onSave={this.onSave}
+                    canAddNew={!this.props.disabled}
+                    addNewDisabled={this.props.disabled}
+                />
+                <CommentsList {...this.props} />
             </div>
         );
     }
 }
 
 Comments.propTypes = {
-    addComment: PropTypes.func.isRequired,
-    handleNewCommentChange: PropTypes.func.isRequired,
-    newComment: PropTypes.string.isRequired,
-    data: PropTypes.array,
-    ready: PropTypes.bool,
-    readonly: PropTypes.bool,
-    addCommentTitle: PropTypes.string,
+    onSave: PropTypes.func,
+    comments: PropTypes.arrayOf(CommentPropTypes),
+    disabled: PropTypes.bool,
     timeoutDate: PropTypes.string,
 };
