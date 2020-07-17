@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { lookup } from '../Util/translations';
 
 import { FlexRow } from '../Flex';
-import './index.scss';
-
-import PropTypes from 'prop-types';
-
 import Button from '../Button';
+
+import './index.scss';
 
 export default class ActionDock extends Component {
     constructor(props) {
@@ -17,17 +17,15 @@ export default class ActionDock extends Component {
     }
 }
 
-export class SimpleActionDock extends Component {
-    constructor(props) {
-        super(props);
-    }
-
+export class SimpleActionDock extends PureComponent {
     render() {
+        let cancelText = this.props.cancelText || lookup('mrc.cancel');
+        let applyText = this.props.applyText || lookup('mrc.apply');
         return (
             <ActionDock>
                 <FlexRow justifyContent="center" gap="medium">
-                    <Button text="Cancel" isOutlined onClick={this.props.onCancel} wide="medium" />
-                    <Button text="Apply" onClick={this.props.onApply} wide="medium" />
+                    <Button text={cancelText} isOutlined onClick={this.props.onCancel} wide="medium" />
+                    <Button text={applyText} onClick={this.props.onApply} wide="medium" />
                 </FlexRow>
             </ActionDock>
         );
@@ -36,5 +34,7 @@ export class SimpleActionDock extends Component {
 
 SimpleActionDock.propTypes = {
     onApply: PropTypes.func,
+    applyText: PropTypes.string,
     onCancel: PropTypes.func,
+    cancelText: PropTypes.string,
 };
