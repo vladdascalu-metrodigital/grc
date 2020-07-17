@@ -4,10 +4,6 @@ import Table from '../../MrcTable';
 
 import CreditCorrectionTableHead from './CreditCorrectionTableHead';
 import CreditCorrectionTableRow from './CreditCorrectionTableRow';
-import CreditCorrectionTableRowA from './CreditCorrectionTableRowA';
-import CreditCorrectionTableRowB from './CreditCorrectionTableRowB';
-import CreditCorrectionTableRowC from './CreditCorrectionTableRowC';
-import CreditCorrectionTableRowD from './CreditCorrectionTableRowD';
 import CreditCorrectionGroupActions from './CreditCorrectionGroupActions';
 import { SimpleActionDock } from '../../ActionDock';
 
@@ -44,29 +40,14 @@ export default class CreditCorrection extends Component {
                         <Table.Body>
                             <CreditCorrectionTableHead />
 
-                            {/* {[...Array(10).keys()].map((e, i) => (
-                                <React.Fragment>
-                                    <CreditCorrectionTableRow
-                                        key={i}
-                                        id={'credit-table-sticky-row-' + i}
-                                        isZebra={!!(i % 2)}
-                                        quickGroupAction={
-                                            selectedGroupAction.id !== groupActions.customerLevel.id
-                                                ? selectedGroupAction
-                                                : null
-                                        }
-                                    />
-                                </React.Fragment>
-                            ))} */}
-                            <CreditCorrectionTableRow
-                                id="credit-table-sticky-row-x"
-                                quickGroupAction={selectedGroupAction}
-                            />
-
-                            <CreditCorrectionTableRowA />
-                            <CreditCorrectionTableRowB />
-                            <CreditCorrectionTableRowC />
-                            <CreditCorrectionTableRowD />
+                            {[...Array(10).keys()].map((e, i) => (
+                                <CreditCorrectionTableRow
+                                    key={i}
+                                    id={'credit-table-sticky-row-' + i}
+                                    isZebra={!!(i % 2)}
+                                    quickGroupAction={selectedGroupAction}
+                                />
+                            ))}
                         </Table.Body>
                     </Table.Root>
                 </div>

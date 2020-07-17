@@ -31,8 +31,8 @@ export const correctionActions = {
         label: 'Limit',
     },
     blocking: {
-        id: 'action-blocking', // not "blocking" what is it?
-        label: 'Blocking',
+        id: 'action-temp-blocking',
+        label: 'Temp Block to Buy on Credit',
     },
     removeBlock: {
         id: 'action-remove-block',

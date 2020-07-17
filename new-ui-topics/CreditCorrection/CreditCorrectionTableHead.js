@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { lookup } from '../../Util/translations';
+
 import Table from '../../MrcTable';
 import CRTableHeaderCellCustomerGroup from '../CreditTablesCommons/CRTableHeaderCellCustomerGroup';
 import CRTableHeaderCellCustomerGroupLimit from '../CreditTablesCommons/CRTableHeaderCellCustomerGroupLimit';
-import CRTableHeaderCellLimitColSpanTitle from '../CreditTablesCommons/CRTableHeaderCellLimitColSpanTitle';
-import CRTableHeaderCellLimit from '../CreditTablesCommons/CRTableHeaderCellLimit';
-import { lookup } from '../../Util/translations';
+import CRTableHeaderCellTitle from '../CreditTablesCommons/CRTableHeaderCellTitle';
 
 import './CreditCorrectionTableHead.scss';
 
 export default class CreditCorrectionTableHead extends Component {
     render() {
-        const { groupLimit, historical, countryCode } = this.props;
+        const { groupLimit, countryCode } = this.props;
         const translations = {
             exhausted: lookup('mrc.credittab.exhausted'),
             granted: lookup('mrc.credittab.granted'),
@@ -61,22 +62,16 @@ export default class CreditCorrectionTableHead extends Component {
                 <Table.R sticky="credit-table-head-sticky" type="head">
                     <Table.H rowSpan="2">Customer</Table.H>
                     <Table.H colSpan="3">
-                        <CRTableHeaderCellLimitColSpanTitle
-                            title={historical ? translations.old : translations.current}
-                            isBlue
-                        />
+                        <CRTableHeaderCellTitle title={translations.current} color="blue" />
                     </Table.H>
                     <Table.H colSpan="3">
-                        <CRTableHeaderCellLimitColSpanTitle
-                            title={historical ? translations.current : translations.new}
-                            isGreen
-                        />
+                        <CRTableHeaderCellTitle title={translations.new} color="green" />
                     </Table.H>
                     <Table.H rowSpan="2"></Table.H>
                 </Table.R>
                 <Table.R sticky="credit-table-head-sticky" type="head">
                     <Table.H>
-                        <CRTableHeaderCellLimit prefix={translations.exhausted} title={translations.granted} />
+                        <CRTableHeaderCellTitle prefix={translations.exhausted} title={translations.granted} />
                     </Table.H>
                     <Table.H>{translations.expiry}</Table.H>
                     <Table.H>{translations.creditproduct}</Table.H>
@@ -88,3 +83,12 @@ export default class CreditCorrectionTableHead extends Component {
         );
     }
 }
+
+CreditCorrectionTableHead.propTypes = {
+    countryCode: PropTypes.string,
+    groupLimit: PropTypes.shape({
+        applied: PropTypes.number,
+        exhausted: PropTypes.number,
+        customerWish: PropTypes.number,
+    }),
+};

@@ -9,12 +9,12 @@ import CRTableCellCustomer from '../CreditTablesCommons/CRTableCellCustomer';
 import CRTableCellLimit from '../CreditTablesCommons/CRTableCellLimit';
 // import CRTableCellExpiry from './CRTableCellExpiry';
 import CRTableCellCreditProduct from '../CreditTablesCommons/CRTableCellCreditProduct';
-import CTableCellBiggerText from '../CreditTablesCommons/CTableCellBiggerText';
+import CRTableCellBiggerText from '../CreditTablesCommons/CRTableCellBiggerText';
 import ToggleIndicator from '../../ToggleIndicator';
 // import CRPaymentMethodSetting from './CRPaymentMethodSetting';
 
-import CreditCorrectionTableRowForm from './CreditCorrectionTableRowForm';
-import CreditCorrectionTableRowFormLocked from './CreditCorrectionTableRowFormLocked';
+import QuickActionSection from './QuickActionSection';
+import QuickActionSectionNoAction from './QuickActionSectionNoAction';
 
 import { correctionActions, creditProducts, creditPeriodOptions, quickGroupActions } from './creditCorrectionEntities';
 
@@ -32,6 +32,7 @@ export default class CreditCorrectionTableRow extends Component {
                 removeLimit: false,
                 selectedCreditProduct: creditProducts.metroTop,
                 selectedCreditPeriod: creditPeriodOptions[0][0],
+                // ... what else?
             },
         };
     }
@@ -57,15 +58,6 @@ export default class CreditCorrectionTableRow extends Component {
         });
     }
 
-    // getselectedAction() {
-    //     let { quickGroupAction } = this.props;
-    //     let { selectedAction } = this.state.formData;
-    //     if (quickGroupAction && quickGroupAction.id !== quickGroupActions.customerLevel.id) {
-    //         return quickGroupAction;
-    //     }
-    //     return selectedAction;
-    // }
-
     render() {
         let { isExpanded, isHovered, formData } = this.state;
         let { id, isZebra, quickGroupAction } = this.props;
@@ -89,31 +81,38 @@ export default class CreditCorrectionTableRow extends Component {
                     </Table.D>
 
                     <Table.D colSpan="3">
-                        <CTableCellBiggerText text="Prepayment" color="blue" />
+                        {/* <CRTableCellBiggerText text="Prepayment" color="blue" /> */}
+                        -- PLACEHOLDER CURRENT SETTING --
                     </Table.D>
 
                     {quickGroupAction.id === quickGroupActions.customerLevel.id ? (
-                        <React.Fragment>
-                            <Table.D>
-                                <CRTableCellLimit
-                                    country="EUR"
-                                    limit={formData.removeLimit ? 0 : formData.limitAmount}
-                                    isGreen
-                                />
+                        formData.selectedAction.id === correctionActions.limit.id ? (
+                            <React.Fragment>
+                                <Table.D>
+                                    <CRTableCellLimit
+                                        country="EUR"
+                                        limit={formData.removeLimit ? 0 : formData.limitAmount}
+                                        isGreen
+                                    />
+                                </Table.D>
+                                <Table.D>---</Table.D>
+                                <Table.D>
+                                    <CRTableCellCreditProduct
+                                        productName={formData.selectedCreditProduct.label}
+                                        productTimePeriod="14 Days"
+                                        productPaymentMethod="Direct Debit 1"
+                                        isGreen
+                                    />
+                                </Table.D>
+                            </React.Fragment>
+                        ) : (
+                            <Table.D colSpan="3">
+                                <CRTableCellBiggerText text={formData.selectedAction.label} color="green" />
                             </Table.D>
-                            <Table.D>---</Table.D>
-                            <Table.D>
-                                <CRTableCellCreditProduct
-                                    productName={formData.selectedCreditProduct.label}
-                                    productTimePeriod="14 Days"
-                                    productPaymentMethod="Direct Debit 1"
-                                    isGreen
-                                />
-                            </Table.D>
-                        </React.Fragment>
+                        )
                     ) : (
                         <Table.D colSpan="3">
-                            <CTableCellBiggerText text={quickGroupAction.label} color="green" />
+                            <CRTableCellBiggerText text={quickGroupAction.label} color="green" />
                         </Table.D>
                     )}
 
@@ -133,12 +132,12 @@ export default class CreditCorrectionTableRow extends Component {
                         <Table.R type="form">
                             <Table.D colSpan="8">
                                 {quickGroupAction.id === quickGroupActions.customerLevel.id ? (
-                                    <CreditCorrectionTableRowForm
+                                    <QuickActionSection
                                         data={formData}
                                         onFormChange={this.handleFormChange.bind(this)}
                                     />
                                 ) : (
-                                    <CreditCorrectionTableRowFormLocked quickGroupAction={quickGroupAction} />
+                                    <QuickActionSectionNoAction quickGroupAction={quickGroupAction} />
                                 )}
                             </Table.D>
                         </Table.R>

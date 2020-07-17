@@ -13,7 +13,7 @@ import InputLabel from '../../InputLabel';
 
 import { correctionActions, creditProducts, creditPeriodOptions } from './creditCorrectionEntities';
 
-export default class CreditCorrectionTableRowForm extends Component {
+export default class QuickActionSection extends Component {
     render() {
         let { onFormChange } = this.props;
         let { selectedAction, selectedCreditProduct, removeLimit, limitAmount, selectedCreditPeriod } = this.props.data;
@@ -88,7 +88,7 @@ export default class CreditCorrectionTableRowForm extends Component {
     }
 }
 
-CreditCorrectionTableRowForm.propTypes = {
+QuickActionSection.propTypes = {
     onFormChange: PropTypes.func,
     data: PropTypes.shape({
         selectedAction: PropTypes.object,
