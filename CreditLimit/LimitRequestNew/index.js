@@ -15,11 +15,16 @@ import RequestSubmitted from './RequestSubmitted';
 import { lookup } from '../../Util/translations';
 import './index.scss';
 import { RequestFieldPropTypes } from '../../AdditionalFieldsNew/AdditionalFieldsPropTypes';
-import { filterAdditionalFieldsList } from '../../AdditionalFieldsNew/additionalFielsUtil';
+import {
+    filterAdditionalFieldsList,
+    hasAdditionalFields,
+    atLeastOneFieldIsInvalid,
+} from '../../AdditionalFieldsNew/additionalFielsUtil';
 import {
     additionalFieldMandatoryIsValid,
     additionalFieldIsValid,
 } from '../../AdditionalFieldsNew/additionalFieldsValidation';
+import { createBlockingInfo } from '../../Util/blockingInfoUtils';
 import CreditTabWip from '../../service-components/CreditTabWip';
 
 import * as _ from 'lodash';
@@ -289,27 +294,6 @@ export default class LimitRequestLayout extends Component {
         );
     }
 
-    atLeastOneFieldIsInvalid(additionalFieldsList, additionalFieldsValidations) {
-        if (additionalFieldsList === undefined || additionalFieldsList === null) {
-            return false;
-        }
-        if (additionalFieldsValidations === undefined || additionalFieldsValidations === null) {
-            return false;
-        }
-        let isInvalid = false;
-        additionalFieldsList.forEach((addField) => {
-            if (addField !== undefined && addField !== null && addField.id !== undefined && addField.id !== null) {
-                if (
-                    additionalFieldsValidations[addField.id] !== undefined &&
-                    additionalFieldsValidations[addField.id] === false
-                ) {
-                    isInvalid = true;
-                }
-            }
-        });
-        return isInvalid;
-    }
-
     getDateFormatString() {
         const formatObj = new Intl.DateTimeFormat().formatToParts(new Date());
         return formatObj
@@ -406,21 +390,13 @@ export default class LimitRequestLayout extends Component {
             'REQUEST',
             'CREDIT_DATA'
         );
-        const hasRequestAdditionalFields =
-            requestAdditionalFields !== undefined &&
-            requestAdditionalFields !== null &&
-            requestAdditionalFields.length > 0
-                ? true
-                : false;
+        const hasRequestAdditionalFields = hasAdditionalFields(requestAdditionalFields);
         const groupAdditionalFields = filterAdditionalFieldsList(
             _.get(this.props, 'additionalFields') ? this.props.additionalFields.requestFields : undefined,
             'GROUP',
             'CREDIT_DATA'
         );
-        const hasGroupAdditionalFields =
-            groupAdditionalFields !== undefined && groupAdditionalFields !== null && groupAdditionalFields.length > 0
-                ? true
-                : false;
+        const hasGroupAdditionalFields = hasAdditionalFields(groupAdditionalFields);
         const readOnly =
             !this.props.request.data ||
             this.props.request.loading ||
@@ -451,50 +427,15 @@ export default class LimitRequestLayout extends Component {
                                   _.get(item, 'customer.storeNumber'),
                                   _.get(item, 'customer.customerNumber')
                               );
-                              const hasCustomerAdditionalFields =
-                                  customerAdditionalFieldsList !== undefined &&
-                                  customerAdditionalFieldsList !== null &&
-                                  customerAdditionalFieldsList.length > 0
-                                      ? true
-                                      : false;
+                              const hasCustomerAdditionalFields = hasAdditionalFields(customerAdditionalFieldsList);
                               const isAtLeastOneFieldIsInvalid =
                                   hasCustomerAdditionalFields &&
-                                  this.atLeastOneFieldIsInvalid(
+                                  atLeastOneFieldIsInvalid(
                                       customerAdditionalFieldsList,
                                       this.state.additionalFieldsValidations
                                   );
                               const itemId = _.get(item, 'id');
                               const availablePayments = _.get(item, 'customer.availablePayments');
-                              const isCustomerBlocked =
-                                  !_.isNil(_.get(item, 'customer.blockingReason')) ||
-                                  !_.isNil(_.get(item, 'customer.checkoutCheckCode'));
-                              const countriesWithDifferentBlockingCodes = this.props
-                                  .countriesWithDifferentBlockingCodes;
-                              const msgKeyPartCountry =
-                                  _.get(item, 'customer.country') &&
-                                  countriesWithDifferentBlockingCodes &&
-                                  countriesWithDifferentBlockingCodes.length > 0 &&
-                                  countriesWithDifferentBlockingCodes.includes(_.get(item, 'customer.country'))
-                                      ? _.get(item, 'customer.country') + '.'
-                                      : '';
-                              const blockingReasonText = !_.isNil(_.get(item, 'customer.blockingReason'))
-                                  ? lookup('mrc.blockingReason') +
-                                    ': ' +
-                                    lookup(
-                                        'mrc.blockingReason.message.' +
-                                            msgKeyPartCountry +
-                                            _.get(item, 'customer.blockingReason')
-                                    )
-                                  : null;
-                              const checkoutCheckCodeText = !_.isNil(_.get(item, 'customer.checkoutCheckCode'))
-                                  ? lookup('mrc.checkoutCheckCode') +
-                                    ': ' +
-                                    lookup(
-                                        'mrc.checkoutCheckCode.message.' +
-                                            msgKeyPartCountry +
-                                            _.get(item, 'customer.checkoutCheckCode')
-                                    )
-                                  : null;
                               return {
                                   onLimitChange: (
                                       amount,
@@ -586,11 +527,12 @@ export default class LimitRequestLayout extends Component {
                                   name: displayName(_.get(item, 'customer')),
                                   storeNumber: _.get(item, 'customer.storeNumber'),
                                   number: _.get(item, 'customer.customerNumber'),
-                                  blockingInfo: {
-                                      isBlocked: isCustomerBlocked,
-                                      blockingReasonText: blockingReasonText,
-                                      checkoutCheckCodeText: checkoutCheckCodeText,
-                                  },
+                                  blockingInfo: createBlockingInfo(
+                                      this.props.countriesWithDifferentBlockingCodes,
+                                      _.get(item, 'customer.blockingReason'),
+                                      _.get(item, 'customer.checkoutCheckCode'),
+                                      _.get(item, 'customer.country')
+                                  ),
                                   availablePayments: availablePayments,
                                   limit: {
                                       current: {

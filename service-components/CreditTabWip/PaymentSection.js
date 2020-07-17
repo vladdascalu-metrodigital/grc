@@ -5,6 +5,7 @@ import CreditTableFormSection from './CreditTableFormSection';
 
 import * as _ from 'lodash';
 import { getDefaultPayment } from '../../Util/creditDataUtils';
+import { isApproval } from './CreditTabUtil';
 
 export default class PaymentSection extends Component {
     constructor(props) {
@@ -16,7 +17,7 @@ export default class PaymentSection extends Component {
         const currentAmount = _.get(customer, 'limit.current.amount');
         const hasCurrentPaymentMethod = !_.isNil(currentAmount) && !_.isNil(currentProduct) && !customer.isCashCustomer;
 
-        return hasCurrentPaymentMethod ? 'CURRENT' : parent === 'approval' ? 'NEW' : 'WISH';
+        return hasCurrentPaymentMethod ? 'CURRENT' : isApproval(parent) ? 'NEW' : 'WISH';
     }
 
     render() {

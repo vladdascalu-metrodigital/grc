@@ -31,6 +31,8 @@ import { RequestFieldPropTypes } from '../../AdditionalFields/AdditionalFieldsPr
 import {
     filterAdditionalFieldsList,
     filterAdditionalFieldsByCode,
+    hasAdditionalFields,
+    atLeastOneFieldIsInvalid,
 } from '../../AdditionalFieldsNew/additionalFielsUtil';
 
 import * as util from './util';
@@ -45,6 +47,7 @@ import {
 
 import CreditTabWip from '../../service-components/CreditTabWip';
 import { displayName } from '../../Util';
+import { createBlockingInfo } from '../../Util/blockingInfoUtils';
 
 const SENT_BACK = 'SENT_BACK';
 const INFO_PROVIDED = 'INFO_PROVIDED';
@@ -732,27 +735,6 @@ export class ApprovalProcessPresentation extends Component {
         );
     }
 
-    atLeastOneFieldIsInvalid(additionalFieldsList, additionalFieldsValidations) {
-        if (additionalFieldsList === undefined || additionalFieldsList === null) {
-            return false;
-        }
-        if (additionalFieldsValidations === undefined || additionalFieldsValidations === null) {
-            return false;
-        }
-        let isInvalid = false;
-        additionalFieldsList.forEach((addField) => {
-            if (addField !== undefined && addField !== null && addField.id !== undefined && addField.id !== null) {
-                if (
-                    additionalFieldsValidations[addField.id] !== undefined &&
-                    additionalFieldsValidations[addField.id] === false
-                ) {
-                    isInvalid = true;
-                }
-            }
-        });
-        return isInvalid;
-    }
-
     // CREATE NEW TAB
     createCreditTab(approvalItems, readOnly) {
         const process = this.props.process.data || {};
@@ -768,18 +750,10 @@ export class ApprovalProcessPresentation extends Component {
                 : undefined;
 
         const requestAdditionalFields = filterAdditionalFieldsList(requestFields, 'REQUEST', 'CREDIT_DATA');
-        const hasRequestAdditionalFields =
-            requestAdditionalFields !== undefined &&
-            requestAdditionalFields !== null &&
-            requestAdditionalFields.length > 0
-                ? true
-                : false;
+        const hasRequestAdditionalFields = hasAdditionalFields(requestAdditionalFields);
 
         const groupAdditionalFields = filterAdditionalFieldsList(requestFields, 'GROUP', 'CREDIT_DATA');
-        const hasGroupAdditionalFields =
-            groupAdditionalFields !== undefined && groupAdditionalFields !== null && groupAdditionalFields.length > 0
-                ? true
-                : false;
+        const hasGroupAdditionalFields = hasAdditionalFields(groupAdditionalFields);
 
         const dateFormat = util.dateFormatString();
         const selectedCreditProgram = process.selectedCreditProgram;
@@ -811,49 +785,14 @@ export class ApprovalProcessPresentation extends Component {
                         _.get(item, 'customer.storeNumber'),
                         _.get(item, 'customer.customerNumber')
                     );
-                    const hasCustomerAdditionalFields =
-                        customerAdditionalFieldsList !== undefined &&
-                        customerAdditionalFieldsList !== null &&
-                        customerAdditionalFieldsList.length > 0
-                            ? true
-                            : false;
+                    const hasCustomerAdditionalFields = hasAdditionalFields(customerAdditionalFieldsList);
 
                     const isAtLeastOneFieldIsInvalid =
                         hasCustomerAdditionalFields &&
-                        this.atLeastOneFieldIsInvalid(
-                            customerAdditionalFieldsList,
-                            this.state.additionalFieldsValidations
-                        );
+                        atLeastOneFieldIsInvalid(customerAdditionalFieldsList, this.state.additionalFieldsValidations);
 
                     const itemId = _.get(item, 'id');
                     const availablePayments = _.get(item, 'customer.availablePayments');
-                    const isCustomerBlocked =
-                        !_.isNil(_.get(item, 'customer.blockingReason')) ||
-                        !_.isNil(_.get(item, 'customer.checkoutCheckCode'));
-                    const countriesWithDifferentBlockingCodes = this.props.countriesWithDifferentBlockingCodes;
-                    const msgKeyPartCountry =
-                        _.get(item, 'customer.country') &&
-                        countriesWithDifferentBlockingCodes &&
-                        countriesWithDifferentBlockingCodes.length > 0 &&
-                        countriesWithDifferentBlockingCodes.includes(_.get(item, 'customer.country'))
-                            ? _.get(item, 'customer.country') + '.'
-                            : '';
-                    const blockingReasonText = !_.isNil(_.get(item, 'customer.blockingReason'))
-                        ? lookup('mrc.blockingReason') +
-                          ': ' +
-                          lookup(
-                              'mrc.blockingReason.message.' + msgKeyPartCountry + _.get(item, 'customer.blockingReason')
-                          )
-                        : null;
-                    const checkoutCheckCodeText = !_.isNil(_.get(item, 'customer.checkoutCheckCode'))
-                        ? lookup('mrc.checkoutCheckCode') +
-                          ': ' +
-                          lookup(
-                              'mrc.checkoutCheckCode.message.' +
-                                  msgKeyPartCountry +
-                                  _.get(item, 'customer.checkoutCheckCode')
-                          )
-                        : null;
                     return {
                         onLimitChange: (amount, creditProduct, creditPeriod, debitType, limitType, paymentType) => {
                             this.props.setCreditDataWithType(
@@ -934,11 +873,12 @@ export class ApprovalProcessPresentation extends Component {
                         name: displayName(_.get(item, 'customer')),
                         storeNumber: _.get(item, 'customer.storeNumber'),
                         number: _.get(item, 'customer.customerNumber'),
-                        blockingInfo: {
-                            isBlocked: isCustomerBlocked,
-                            blockingReasonText: blockingReasonText,
-                            checkoutCheckCodeText: checkoutCheckCodeText,
-                        },
+                        blockingInfo: createBlockingInfo(
+                            this.props.countriesWithDifferentBlockingCodes,
+                            _.get(item, 'customer.blockingReason'),
+                            _.get(item, 'customer.checkoutCheckCode'),
+                            _.get(item, 'customer.country')
+                        ),
                         availablePayments: availablePayments,
                         limit: {
                             current: {

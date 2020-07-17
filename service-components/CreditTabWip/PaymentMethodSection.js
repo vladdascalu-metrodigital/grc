@@ -17,6 +17,7 @@ import {
 } from '../../Util/creditDataUtils';
 
 import * as _ from 'lodash';
+import { isApproval } from './CreditTabUtil';
 
 export default class PaymentMethodSection extends Component {
     constructor(props) {
@@ -36,7 +37,7 @@ export default class PaymentMethodSection extends Component {
 
     render() {
         const { parent } = this.props;
-        return parent === 'approval' ? this.renderApproval() : this.renderCredit();
+        return isApproval(parent) ? this.renderApproval() : this.renderCredit();
     }
 
     getPossiblePaymentMethodValues(availablePayments, creditProduct, creditPeriod) {

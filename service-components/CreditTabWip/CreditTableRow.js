@@ -6,6 +6,7 @@ import CreditTableRowCreditLimit from './CreditTableRowCreditLimit';
 import CreditTableRowHistory from './CreditTableRowHistory';
 
 import * as _ from 'lodash';
+import { isApproval, isCreditLimit } from './CreditTabUtil';
 
 export default class CreditTableRow extends Component {
     constructor(props) {
@@ -32,6 +33,7 @@ export default class CreditTableRow extends Component {
 
     isCashCustomerMarked(customer) {
         // TODO: To Cash -- currently credit customer can't apply this, remove the check later
+        // TODO: also for Crc we need to check other options
         if (!customer.isCashCustomer) {
             return false;
         }
@@ -64,17 +66,11 @@ export default class CreditTableRow extends Component {
             rowType: isZebra ? 'zebra' : null,
         };
 
-        // in history, new limit is called current
-        /*
-        const hasNewLimit = !_.isNil(
-            parent === 'history' ? _.get(customer, 'limit.current') : _.get(customer, 'limit.new')
-        ) || parent === 'approval';*/
-
         const requestsCash = this.isCashCustomerMarked(customer);
 
-        if (parent === 'approval') {
+        if (isApproval(parent)) {
             return <CreditTableRowApproval {...{ ...this.props, ...rowProps, requestsCash }} />;
-        } else if (parent === 'creditlimit') {
+        } else if (isCreditLimit(parent)) {
             return <CreditTableRowCreditLimit {...{ ...this.props, ...rowProps, requestsCash }} />;
         } else {
             return <CreditTableRowHistory {...{ ...this.props, ...rowProps, requestsCash }} />;

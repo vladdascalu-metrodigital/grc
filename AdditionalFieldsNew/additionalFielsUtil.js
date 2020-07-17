@@ -177,3 +177,28 @@ export function setDateAtStartOfDay(date) {
     }
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
+
+export function hasAdditionalFields(additionalFields) {
+    return additionalFields !== undefined && additionalFields !== null && additionalFields.length > 0 ? true : false;
+}
+
+export function atLeastOneFieldIsInvalid(additionalFieldsList, additionalFieldsValidations) {
+    if (additionalFieldsList === undefined || additionalFieldsList === null) {
+        return false;
+    }
+    if (additionalFieldsValidations === undefined || additionalFieldsValidations === null) {
+        return false;
+    }
+    let isInvalid = false;
+    additionalFieldsList.forEach((addField) => {
+        if (addField !== undefined && addField !== null && addField.id !== undefined && addField.id !== null) {
+            if (
+                additionalFieldsValidations[addField.id] !== undefined &&
+                additionalFieldsValidations[addField.id] === false
+            ) {
+                isInvalid = true;
+            }
+        }
+    });
+    return isInvalid;
+}

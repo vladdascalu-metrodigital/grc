@@ -11,10 +11,11 @@ import CustomerAdditionalFieldsSection from './CustomerAdditionalFieldsSection';
 import * as _ from 'lodash';
 import CreditTableFormSection from './CreditTableFormSection';
 import Grid from '../../Grid';
+import { isApproval, isHistory } from './CreditTabUtil';
 
 export default class ExpandedRow extends Component {
     isNewCreditMarked(customer, parent, isCashCustomerRequest) {
-        if (parent === 'approval') {
+        if (isApproval(parent)) {
             if (isCashCustomerRequest) {
                 return false;
             }
@@ -32,7 +33,7 @@ export default class ExpandedRow extends Component {
             ) {
                 return true;
             }
-        } else if (parent === 'history') {
+        } else if (isHistory(parent)) {
             return false;
         }
 
@@ -64,7 +65,7 @@ export default class ExpandedRow extends Component {
                     <Table.R key="blocked" type="form">
                         <Table.D colSpan="8">
                             {this.createBlockingSection(blockingReasonText, checkoutCheckCodeText, ts)}
-                            {parent === 'history' ? null : (
+                            {isHistory(parent) ? null : (
                                 <PaymentSection {...{ ...this.props, isCashCustomerRequest }} />
                             )}
                             {isNewCredit ? this.createNewCreditSection() : null}
@@ -76,7 +77,7 @@ export default class ExpandedRow extends Component {
                 <React.Fragment>
                     <Table.R key={'form'} type="form">
                         <Table.D colSpan="8">
-                            {parent === 'history' ? null : (
+                            {isHistory(parent) ? null : (
                                 <PaymentSection {...{ ...this.props, isCashCustomerRequest }} />
                             )}
                             {isNewCredit ? this.createNewCreditSection() : null}

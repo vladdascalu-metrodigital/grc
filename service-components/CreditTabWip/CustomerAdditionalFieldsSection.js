@@ -19,7 +19,6 @@ export default class CustomerAdditionalFieldsSection extends Component {
                 <React.Fragment>
                     <AdditionalFieldsSection
                         onChange={this.props.additionalFields.onChange}
-                        onBlur={this.props.additionalFields.onBlur}
                         requestFields={this.props.additionalFields.customerAdditionalFieldsList}
                         editable={this.props.additionalFields.editable}
                         disabled={this.props.additionalFields.disabled}

@@ -4,6 +4,15 @@ import CRTableHeaderCellCustomerGroup from './CRTableHeaderCellCustomerGroup';
 import CRTableHeaderCellCustomerGroupLimit from './CRTableHeaderCellCustomerGroupLimit';
 import CRTableHeaderCellLimitColSpanTitle from './CRTableHeaderCellLimitColSpanTitle';
 import CRTableHeaderCellLimit from './CRTableHeaderCellLimit';
+import {
+    isApproval,
+    isConiRequestInHistory,
+    isCreditCorrectionInHistory,
+    isCreditLimit,
+    isHistory,
+    isLimitExpiryInHistory,
+    isLimitRequestInHistory,
+} from './CreditTabUtil';
 
 export default class CreditTableHead extends Component {
     render() {
@@ -11,31 +20,31 @@ export default class CreditTableHead extends Component {
         const ts = translations;
         return (
             <React.Fragment>
-                {parent === 'creditlimit'
+                {isCreditLimit(parent)
                     ? this.createGroupHeadWithOnlyTwoStages(parent, groupLimit, country, activated, ts)
-                    : parent === 'history' && historyRequestType === 'LIMIT_EXPIRY'
+                    : isLimitExpiryInHistory(parent, historyRequestType)
                     ? null
-                    : parent === 'history' && historyRequestType === 'CREDIT_CORRECTION'
+                    : isCreditCorrectionInHistory(parent, historyRequestType)
                     ? this.createGroupHeadWithOnlyTwoStages(parent, groupLimit, country, activated, ts)
                     : this.createGroupHeadWithThreeStages(parent, groupLimit, country, activated, ts)}
                 <Table.R sticky="credit-table-head-sticky" type="head">
                     <Table.H rowSpan="2">{ts.customer}</Table.H>
                     <Table.H colSpan="3">
-                        <CRTableHeaderCellLimitColSpanTitle title={parent === 'history' ? ts.old : ts.current} isBlue />
+                        <CRTableHeaderCellLimitColSpanTitle title={isHistory(parent) ? ts.old : ts.current} isBlue />
                     </Table.H>
                     <Table.H colSpan="3">
-                        {parent === 'creditlimit' ? (
+                        {isCreditLimit(parent) ? (
                             <CRTableHeaderCellLimitColSpanTitle title={ts.customerWish} prefix={''} isGreen />
                         ) : null}
-                        {parent === 'approval' ? (
+                        {isApproval(parent) ? (
                             <CRTableHeaderCellLimitColSpanTitle title={ts.new} prefix={ts.customerWish} isGreen />
                         ) : null}
-                        {parent === 'history' ? (
+                        {isHistory(parent) ? (
                             <CRTableHeaderCellLimitColSpanTitle
-                                title={parent === 'history' ? ts.current : groupLimit.new ? ts.new : ts.customerWish}
+                                title={isHistory(parent) ? ts.current : groupLimit.new ? ts.new : ts.customerWish}
                                 prefix={
-                                    parent === 'history' &&
-                                    (historyRequestType === 'LIMIT_REQUEST' || historyRequestType === 'CONI_REQUEST')
+                                    isLimitRequestInHistory(parent, historyRequestType) ||
+                                    isConiRequestInHistory(parent, historyRequestType)
                                         ? ts.customerWish
                                         : groupLimit.new
                                         ? ts.customerWish
@@ -50,7 +59,7 @@ export default class CreditTableHead extends Component {
                 <Table.R sticky="credit-table-head-sticky" type="head">
                     <Table.H>
                         <CRTableHeaderCellLimit
-                            prefix={parent === 'history' && historyRequestType === 'LIMIT_EXPIRY' ? null : ts.exhausted}
+                            prefix={isLimitExpiryInHistory(parent, historyRequestType) ? null : ts.exhausted}
                             title={ts.granted}
                         />
                     </Table.H>
@@ -74,7 +83,7 @@ export default class CreditTableHead extends Component {
                 <Table.H colSpan="3">
                     {groupLimit ? (
                         <CRTableHeaderCellCustomerGroupLimit
-                            limit={parent === 'history' ? groupLimit.old : groupLimit.current}
+                            limit={isHistory(parent) ? groupLimit.old : groupLimit.current}
                             showExhausted={true}
                             exhausted={groupLimit.exhausted}
                             country={country}
@@ -89,6 +98,7 @@ export default class CreditTableHead extends Component {
         );
     }
 
+    // create head with 3 different status e.g. current and wish and new
     createGroupHeadWithThreeStages(parent, groupLimit, country, activated, ts) {
         return (
             <React.Fragment>
@@ -99,7 +109,7 @@ export default class CreditTableHead extends Component {
                     <Table.H colSpan="3" rowSpan="2">
                         {groupLimit ? (
                             <CRTableHeaderCellCustomerGroupLimit
-                                limit={parent === 'history' ? groupLimit.old : groupLimit.current}
+                                limit={isHistory(parent) ? groupLimit.old : groupLimit.current}
                                 showExhausted={true}
                                 exhausted={groupLimit.exhausted}
                                 country={country}
@@ -136,6 +146,7 @@ export default class CreditTableHead extends Component {
         );
     }
 
+    // if the customer is activated once, we need to show the status if it is successful
     createAppliedGroupLimitAccordingToActivation(parent, groupLimit, country, ts, isSameRow, activated) {
         return (
             <React.Fragment>
@@ -143,20 +154,20 @@ export default class CreditTableHead extends Component {
                     {groupLimit ? (
                         <CRTableHeaderCellCustomerGroupLimit
                             limit={
-                                parent === 'history'
+                                isHistory(parent)
                                     ? groupLimit.current
-                                    : parent === 'approval'
+                                    : isApproval(parent)
                                     ? groupLimit.new
                                     : groupLimit.wish
                             }
                             showExhausted={false}
                             country={country}
-                            subtitle={parent === 'history' ? ts.newlyGranted : ts.toBeGranted}
+                            subtitle={isHistory(parent) ? ts.newlyGranted : ts.toBeGranted}
                             isGreen
                             inSameRow={isSameRow}
                         />
                     ) : null}
-                    {groupLimit && parent === 'history' && activated === true ? (
+                    {groupLimit && isHistory(parent) && activated === true ? (
                         <CRTableHeaderCellCustomerGroupLimit
                             limit={groupLimit.activated}
                             showExhausted={false}

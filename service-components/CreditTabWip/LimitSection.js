@@ -12,6 +12,7 @@ import CheckCard from '../../CheckCard';
 import { translatePaymentIfNeeded, getPaymentDataByType } from '../../Util/creditDataUtils';
 
 import * as _ from 'lodash';
+import { isApproval } from './CreditTabUtil';
 
 export default class LimitSection extends Component {
     constructor(props) {
@@ -22,14 +23,14 @@ export default class LimitSection extends Component {
     stateFromProps(props) {
         const { customer, parent } = props;
         return {
-            amount: parent === 'approval' ? _.get(customer, 'limit.new.amount') : _.get(customer, 'limit.wish.amount'),
-            newExpiryAmount: parent === 'approval' ? _.get(customer, 'limit.new.expiry.amount') : null,
+            amount: isApproval(parent) ? _.get(customer, 'limit.new.amount') : _.get(customer, 'limit.wish.amount'),
+            newExpiryAmount: isApproval(parent) ? _.get(customer, 'limit.new.expiry.amount') : null,
         };
     }
 
     render() {
         const { parent } = this.props;
-        return parent === 'approval' ? this.renderApproval() : this.renderCredit();
+        return isApproval(parent) ? this.renderApproval() : this.renderCredit();
     }
 
     renderCredit() {

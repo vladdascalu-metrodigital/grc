@@ -78,6 +78,8 @@ export default class CreditTab extends Component {
             isContractingStepEditable,
             historyRequestType,
             activated,
+            additionalFields,
+            creditProgram,
         } = this.props;
         if (_.isNil(country) || _.isNil(customers) || customers.length === 0) {
             return <MainContent>{lookup('mrc.comment.nocreditdetails')}</MainContent>;
@@ -86,37 +88,9 @@ export default class CreditTab extends Component {
         return (
             <MainContent>
                 <Grid>
-                    {this.props.additionalFields && this.props.additionalFields.hasGroup ? (
-                        <AdditionalFieldsSectionWithDialog
-                            onChange={this.props.additionalFields.group.onChange}
-                            onBlur={this.props.additionalFields.group.onBlur}
-                            title={lookup('mrc.credittab.groupdetails')}
-                            editable={this.props.additionalFields.group.editable}
-                            requestFields={this.props.additionalFields.group.requestFields}
-                            disabled={this.props.additionalFields.group.disabled}
-                        />
-                    ) : null}
-                    {this.props.additionalFields && this.props.additionalFields.hasRequest ? (
-                        <AdditionalFieldsSectionWithDialog
-                            onChange={this.props.additionalFields.request.onChange}
-                            onBlur={this.props.additionalFields.request.onBlur}
-                            title={lookup('mrc.credittab.requestdetails')}
-                            editable={this.props.additionalFields.request.editable}
-                            requestFields={this.props.additionalFields.request.requestFields}
-                            disabled={this.props.additionalFields.request.disabled}
-                        />
-                    ) : null}
-                    {this.props.creditProgram ? (
-                        <CreditProgram
-                            limitRequestId={this.props.creditProgram.limitRequestId}
-                            getCreditPrograms={this.props.creditProgram.getCreditPrograms}
-                            setCreditPrograms={this.props.creditProgram.setCreditPrograms}
-                            setValidity={this.props.creditProgram.setValidity}
-                            readOnly={this.props.creditProgram.readOnly}
-                            defaultText={this.props.creditProgram.defaultText}
-                        />
-                    ) : null}
-
+                    {this.renderGroupAdditionalFields(additionalFields)}
+                    {this.renderRequestAdditionalFields(additionalFields)}
+                    {this.renderCreditProgram(creditProgram)}
                     <GridItem colSpan="all">
                         <Table.Root>
                             <Table.Body>
@@ -144,6 +118,43 @@ export default class CreditTab extends Component {
                 </Grid>
             </MainContent>
         );
+    }
+
+    renderGroupAdditionalFields(additionalFields) {
+        return additionalFields && additionalFields.hasGroup ? (
+            <AdditionalFieldsSectionWithDialog
+                onChange={additionalFields.group.onChange}
+                title={lookup('mrc.credittab.groupdetails')}
+                editable={additionalFields.group.editable}
+                requestFields={additionalFields.group.requestFields}
+                disabled={additionalFields.group.disabled}
+            />
+        ) : null;
+    }
+
+    renderRequestAdditionalFields(additionalFields) {
+        return additionalFields && additionalFields.hasRequest ? (
+            <AdditionalFieldsSectionWithDialog
+                onChange={additionalFields.request.onChange}
+                title={lookup('mrc.credittab.requestdetails')}
+                editable={additionalFields.request.editable}
+                requestFields={this.props.additionalFields.request.requestFields}
+                disabled={additionalFields.request.disabled}
+            />
+        ) : null;
+    }
+
+    renderCreditProgram(creditProgram) {
+        return creditProgram ? (
+            <CreditProgram
+                limitRequestId={creditProgram.limitRequestId}
+                getCreditPrograms={creditProgram.getCreditPrograms}
+                setCreditPrograms={creditProgram.setCreditPrograms}
+                setValidity={creditProgram.setValidity}
+                readOnly={creditProgram.readOnly}
+                defaultText={creditProgram.defaultText}
+            />
+        ) : null;
     }
 }
 
