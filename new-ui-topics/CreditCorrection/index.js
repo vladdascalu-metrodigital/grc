@@ -35,22 +35,19 @@ export default class CreditCorrection extends Component {
                     selectedGroupAction={this.state.selectedGroupAction}
                     onChange={this.handleChangeGroupAction.bind(this)}
                 />
-                <div style={{ position: 'relative' }}>
-                    <Table.Root style={{ tableLayout: 'fixed' }}>
-                        <Table.Body>
-                            <CreditCorrectionTableHead />
-
-                            {[...Array(10).keys()].map((e, i) => (
-                                <CreditCorrectionTableRow
-                                    key={i}
-                                    id={'credit-table-sticky-row-' + i}
-                                    isZebra={!!(i % 2)}
-                                    quickGroupAction={selectedGroupAction}
-                                />
-                            ))}
-                        </Table.Body>
-                    </Table.Root>
-                </div>
+                <Table.Root fixedLayout>
+                    <Table.Body>
+                        <CreditCorrectionTableHead />
+                        {[...Array(10).keys()].map((e, i) => (
+                            <CreditCorrectionTableRow
+                                key={i}
+                                id={'credit-table-sticky-row-' + i}
+                                isZebra={!!(i % 2)}
+                                quickGroupAction={selectedGroupAction}
+                            />
+                        ))}
+                    </Table.Body>
+                </Table.Root>
             </MainContent>
         );
     }
