@@ -8,6 +8,10 @@
     border-spacing: 0px;
 }
 
+.mrc-ui-table-fixed-layout {
+  table-layout: fixed;
+}
+
 // settings for table
 
 $table-padding-v: $spacing-extra-small;

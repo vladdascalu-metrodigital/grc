@@ -6,36 +6,57 @@ import './index.scss';
 
 class Root extends Component {
     render() {
-        let { children, ...otherProps } = this.props;
+        let { children, className, fixedLayout, ...otherProps } = this.props;
+        className = classnames(className, 'mrc-ui-table', {
+            'mrc-ui-table-fixed-layout': fixedLayout,
+        });
         return (
-            <table {...otherProps} className="mrc-ui-table">
+            <table {...otherProps} className={className}>
                 {children}
             </table>
         );
     }
 }
 
+Root.propTypes = {
+    children: PropTypes.node,
+    className: PropTypes.string,
+    fixedLayout: PropTypes.bool,
+};
+
 class Head extends Component {
     render() {
-        let { children, ...otherProps } = this.props;
+        let { children, className, ...otherProps } = this.props;
+        className = classnames(className, 'mrc-ui-table-head');
         return (
-            <thead {...otherProps} className="mrc-ui-table-head">
+            <thead {...otherProps} className={className}>
                 {children}
             </thead>
         );
     }
 }
 
+Head.propTypes = {
+    children: PropTypes.node,
+    className: PropTypes.string,
+};
+
 class Body extends Component {
     render() {
-        let { children, ...otherProps } = this.props;
+        let { children, className, ...otherProps } = this.props;
+        className = classnames(className, 'mrc-ui-table-body');
         return (
-            <tbody {...otherProps} className="mrc-ui-table-body">
+            <tbody {...otherProps} className={className}>
                 {children}
             </tbody>
         );
     }
 }
+
+Body.propTypes = {
+    children: PropTypes.node,
+    className: PropTypes.string,
+};
 
 class R extends Component {
     constructor(props) {
@@ -75,7 +96,7 @@ class R extends Component {
     render() {
         let { className, children, sticky, isHovered, isActive, type, ...otherProps } = this.props;
         delete otherProps.stickyOffset;
-        className = classnames('mrc-ui-table-r', {
+        className = classnames(className, 'mrc-ui-table-r', {
             'mrc-ui-table-r-sticky': sticky,
             'mrc-ui-table-r-active': isActive,
             'mrc-ui-table-r-hover': isHovered,
@@ -85,7 +106,6 @@ class R extends Component {
             'mrc-ui-table-r-form': type === 'form',
             'mrc-ui-table-r-zebra': type === 'zebra',
             'mrc-ui-table-r-invalid': type === 'invalid',
-            className,
         });
         return (
             <tr {...otherProps} className={className} data-sticky={sticky} ref={this.selfRef}>
@@ -108,7 +128,7 @@ R.propTypes = {
 class H extends Component {
     render() {
         let { borderFix, className, children, flush, ...otherProps } = this.props;
-        className = classnames('mrc-ui-table-h', className, {
+        className = classnames(className, 'mrc-ui-table-h', {
             'mrc-ui-table-border-fix': borderFix,
             'mrc-ui-table-d-flush': flush,
         });
@@ -123,7 +143,7 @@ class H extends Component {
 class D extends Component {
     render() {
         let { borderFix, className, children, flush, ...otherProps } = this.props;
-        className = classnames('mrc-ui-table-d', className, {
+        className = classnames(className, 'mrc-ui-table-d', {
             'mrc-ui-table-border-fix': borderFix,
             'mrc-ui-table-d-flush': flush,
         });
@@ -134,6 +154,17 @@ class D extends Component {
         );
     }
 }
+
+H.propTypes = {
+    borderFix: PropTypes.bool,
+    className: PropTypes.string,
+    children: PropTypes.node,
+    flush: PropTypes.bool,
+};
+
+D.propTypes = {
+    ...H.prototypes,
+};
 
 export default {
     Root,
