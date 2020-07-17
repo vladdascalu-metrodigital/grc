@@ -29,7 +29,7 @@ export default class CreditTableHead extends Component {
                 country={countryCode}
                 subtitle={
                     groupLimit.exhausted
-                        ? [translations.exhausted, translations.granted].join('/')
+                        ? [translations.exhausted, translations.granted].join(' / ')
                         : translations.granted
                 }
                 isBlue

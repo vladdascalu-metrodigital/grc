@@ -13014,7 +13014,7 @@ storiesOf('Services/Credit Tab WIP', module)
                             companyOwnerLastName: 'Manz',
                             companyOwnerFirstName: 'Eva',
                             birthDay: '1973-05-02T00:00:00.000+00:00',
-                            limitExhaustion: 12343,
+                            limitExhaustion: 0,
                             paymentAllowanceCd: '3',
                         },
                         current: {
@@ -13076,7 +13076,7 @@ storiesOf('Services/Credit Tab WIP', module)
                             companyOwnerLastName: 'Manz',
                             companyOwnerFirstName: 'Eva',
                             birthDay: '1973-05-02T00:00:00.000+00:00',
-                            limitExhaustion: 12344,
+                            limitExhaustion: null,
                             paymentAllowanceCd: '3',
                         },
                         current: {
@@ -15357,7 +15357,7 @@ storiesOf('Services/Credit Tab WIP', module)
                     strategyDecision: null,
                 },
                 currentGroupLimit: 18001,
-                limitExhaustionGroupLimit: 12345,
+                limitExhaustionGroupLimit: null,
                 requestedGroupLimit: 19000,
                 appliedGroupLimit: 19000,
                 selectedCreditProgram: null,

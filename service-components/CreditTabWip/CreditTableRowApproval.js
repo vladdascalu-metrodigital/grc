@@ -150,6 +150,7 @@ export default class CreditTableRowApproval extends Component {
                             <Table.D rowSpan="2">
                                 <CRTableCellLimit
                                     country={country}
+                                    showExhausted={true}
                                     exhausted={_.get(customer, 'limitExhaustion')}
                                     limit={_current(customer, 'amount')}
                                     isBlue
@@ -192,6 +193,7 @@ export default class CreditTableRowApproval extends Component {
                             <Table.D>
                                 <CRTableCellLimit
                                     country={country}
+                                    showExhausted={false}
                                     exhausted={null}
                                     limit={_.get(customer, 'limit.wish.amount')}
                                 />
@@ -249,6 +251,7 @@ export default class CreditTableRowApproval extends Component {
                             <Table.D>
                                 <CRTableCellLimit
                                     country={country}
+                                    showExhausted={false}
                                     exhausted={null}
                                     limit={newCreditData.amount}
                                     isGreen

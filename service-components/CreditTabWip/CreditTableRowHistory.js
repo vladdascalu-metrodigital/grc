@@ -85,6 +85,7 @@ export default class CreditTableRowHistory extends Component {
                             <Table.D rowSpan="2">
                                 <CRTableCellLimit
                                     country={country}
+                                    showExhausted={true}
                                     exhausted={_.get(customer, 'limitExhaustion')}
                                     limit={_.get(customer, 'limit.old.amount')}
                                     isBlue
@@ -122,6 +123,7 @@ export default class CreditTableRowHistory extends Component {
                             <Table.D>
                                 <CRTableCellLimit
                                     country={country}
+                                    showExhausted={false}
                                     exhausted={null}
                                     limit={_.get(customer, 'limit.wish.amount')}
                                 />
@@ -172,6 +174,7 @@ export default class CreditTableRowHistory extends Component {
                             <Table.D>
                                 <CRTableCellLimit
                                     country={country}
+                                    showExhausted={false}
                                     exhausted={null}
                                     limit={_.get(customer, 'limit.current.amount')}
                                     isRed={isCreditDataInRed}
@@ -262,7 +265,8 @@ export default class CreditTableRowHistory extends Component {
                             <Table.D>
                                 <CRTableCellLimit
                                     country={country}
-                                    exhausted={_.get(customer, 'limitExhaustion')}
+                                    showExhausted={false}
+                                    exhausted={null}
                                     limit={_.get(customer, 'limit.old.amount')}
                                     isBlue
                                 />
@@ -298,6 +302,7 @@ export default class CreditTableRowHistory extends Component {
                             <Table.D>
                                 <CRTableCellLimit
                                     country={country}
+                                    showExhausted={false}
                                     exhausted={null}
                                     limit={_.get(customer, 'limit.current.amount')}
                                     isRed={isCreditDataInRed}
@@ -390,6 +395,7 @@ export default class CreditTableRowHistory extends Component {
                             <Table.D>
                                 <CRTableCellLimit
                                     country={country}
+                                    showExhausted={true}
                                     exhausted={_.get(customer, 'limitExhaustion')}
                                     limit={_.get(customer, 'limit.old.amount')}
                                     isBlue
@@ -434,6 +440,7 @@ export default class CreditTableRowHistory extends Component {
                             <Table.D>
                                 <CRTableCellLimit
                                     country={country}
+                                    showExhausted={false}
                                     exhausted={null}
                                     limit={_.get(customer, 'limit.current.amount')}
                                     isRed={isCreditDataInRed}

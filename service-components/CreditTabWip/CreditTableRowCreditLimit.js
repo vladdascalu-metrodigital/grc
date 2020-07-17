@@ -103,6 +103,7 @@ export default class CreditTableRowCreditLimit extends Component {
                             <Table.D>
                                 <CRTableCellLimit
                                     country={country}
+                                    showExhausted={true}
                                     exhausted={_.get(customer, 'limitExhaustion')}
                                     limit={_current(customer, 'amount')}
                                     isBlue
@@ -140,7 +141,12 @@ export default class CreditTableRowCreditLimit extends Component {
                     ) : (
                         <React.Fragment>
                             <Table.D>
-                                <CRTableCellLimit country={country} exhausted={null} limit={wishedAmount} />
+                                <CRTableCellLimit
+                                    country={country}
+                                    showExhausted={false}
+                                    exhausted={null}
+                                    limit={wishedAmount}
+                                />
                             </Table.D>
                             <Table.D>
                                 <CRTableCellExpiry

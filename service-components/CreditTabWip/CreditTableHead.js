@@ -75,9 +75,10 @@ export default class CreditTableHead extends Component {
                     {groupLimit ? (
                         <CRTableHeaderCellCustomerGroupLimit
                             limit={parent === 'history' ? groupLimit.old : groupLimit.current}
+                            showExhausted={true}
                             exhausted={groupLimit.exhausted}
                             country={country}
-                            subtitle={groupLimit.exhausted ? [ts.exhausted, ts.granted].join('/') : ts.granted}
+                            subtitle={[ts.exhausted, ts.granted].join(' / ')}
                             isBlue
                         />
                     ) : null}
@@ -99,9 +100,10 @@ export default class CreditTableHead extends Component {
                         {groupLimit ? (
                             <CRTableHeaderCellCustomerGroupLimit
                                 limit={parent === 'history' ? groupLimit.old : groupLimit.current}
+                                showExhausted={true}
                                 exhausted={groupLimit.exhausted}
                                 country={country}
-                                subtitle={groupLimit.exhausted ? [ts.exhausted, ts.granted].join('/') : ts.granted}
+                                subtitle={[ts.exhausted, ts.granted].join(' / ')}
                                 isBlue
                             />
                         ) : null}
@@ -110,6 +112,7 @@ export default class CreditTableHead extends Component {
                         {groupLimit ? (
                             <CRTableHeaderCellCustomerGroupLimit
                                 limit={groupLimit.wish}
+                                showExhausted={false}
                                 country={country}
                                 subtitle={ts.customerWish}
                                 inSameRow
@@ -146,6 +149,7 @@ export default class CreditTableHead extends Component {
                                     ? groupLimit.new
                                     : groupLimit.wish
                             }
+                            showExhausted={false}
                             country={country}
                             subtitle={parent === 'history' ? ts.newlyGranted : ts.toBeGranted}
                             isGreen
@@ -155,6 +159,7 @@ export default class CreditTableHead extends Component {
                     {groupLimit && parent === 'history' && activated === true ? (
                         <CRTableHeaderCellCustomerGroupLimit
                             limit={groupLimit.activated}
+                            showExhausted={false}
                             country={country}
                             subtitle={ts.newlyActivated}
                             isGreen
