@@ -12,7 +12,7 @@ import Sales from '../../Sales';
 import '../../tabs.scss';
 import PropTypes from 'prop-types';
 import Button from '../../Button/index';
-import Comments from '../../NewComments';
+import Comments from '../../Comments';
 import Payments from '../Payments';
 import Scoring from '../Scoring';
 import Strategy from '../Strategy';

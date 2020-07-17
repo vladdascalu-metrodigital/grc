@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import Comments from '../NewComments';
+import Comments from '../Comments';
 
 storiesOf('Comments', module)
     .add('Standard', () => (

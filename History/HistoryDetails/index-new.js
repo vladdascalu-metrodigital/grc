@@ -12,7 +12,7 @@ import Sales from './Sales';
 import Payments from './Payments';
 import Scoring from './Scoring';
 import Strategy from './Strategy';
-import Comments from '../../NewComments';
+import Comments from '../../Comments';
 import Attachments from '../../Attachments';
 import Button from '../../Button';
 import AuditTrail from './AuditTrail';
@@ -21,7 +21,7 @@ import ErrorHandler from '../../ErrorHandler';
 import Management from './Management';
 import { RequestFieldPropTypes } from '../../AdditionalFields/AdditionalFieldsPropTypes';
 import { filterAdditionalFieldsByCode, filterAdditionalFieldsList } from '../../AdditionalFields/additionalFielsUtil';
-import { CommentPropTypes } from '../../NewComments/CommentsPropTypes';
+import { CommentPropTypes } from '../../Comments/CommentsPropTypes';
 import CustomerDataGroup from '../../CustomerDataGroup';
 import * as util from '../../ApprovalService/ApprovalProcessNew/util';
 

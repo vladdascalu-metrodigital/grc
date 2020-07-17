@@ -19,7 +19,7 @@ export default class CommentsAdd extends Component {
     }
 
     toggleModal() {
-        this.setState(prevState => ({ isModalVisible: !prevState.isModalVisible }));
+        this.setState((prevState) => ({ isModalVisible: !prevState.isModalVisible }));
     }
 
     modalDialogContent() {
@@ -31,7 +31,7 @@ export default class CommentsAdd extends Component {
                         ref={this.commentsInput}
                         className="mrc-ui-textarea"
                         value={this.props.newContent}
-                        onChange={e => this.props.onContentChange && this.props.onContentChange(e.target.value)}
+                        onChange={(e) => this.props.onContentChange && this.props.onContentChange(e.target.value)}
                     ></textarea>
                 </div>
 

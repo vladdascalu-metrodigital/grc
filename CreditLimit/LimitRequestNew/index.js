@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from '../../Button';
 import CoinReceive from '../../icons/coin-receive.svg';
 import ProgressBar from '../../ProgressBar';
-import Comments from '../../NewComments';
+import Comments from '../../Comments';
 import Attachments from '../../Attachments';
 import Sales from '../../Sales';
 import { Route, Switch } from 'react-router-dom';

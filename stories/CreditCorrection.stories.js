@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
 import CreditCorrectionCustomerStatus from '../CreditCorrection/CustomerStatus';
 import CreditCorrectionCreditData from '../CreditCorrection/CreditData';
@@ -111,19 +112,19 @@ storiesOf('CreditCorrection/CustomerStatus', module)
                 },
                 loading: false,
             }}
-            loadPendingRequest={data => {
+            loadPendingRequest={(data) => {
                 return fetch(`/creditlimit/test`)
-                    .then(resp => resp.json())
-                    .catch(e => {
+                    .then((resp) => resp.json())
+                    .catch((e) => {
                         console.log('constststst1');
                         return {};
                     });
             }}
             countriesWithDifferentBlockingCodes={['DE']}
-            loadCustomerData={value => console.log(value)}
-            loadRecentRequests={value => console.log(value)}
-            updateUiPageTitle={value => console.log(value)}
-            showAuxControl={value => console.log(value)}
+            loadCustomerData={(value) => console.log(value)}
+            loadRecentRequests={(value) => console.log(value)}
+            updateUiPageTitle={(value) => console.log(value)}
+            showAuxControl={(value) => console.log(value)}
             match={{
                 isExact: true,
                 params: {
@@ -188,10 +189,10 @@ storiesOf('CreditCorrection/CustomerStatus', module)
                 },
             }}
             request={{ data: null, loading: false }}
-            requestQuick={customer => {
+            requestQuick={(customer) => {
                 return fetch(`/creditlimit/test`)
-                    .then(resp => resp.json())
-                    .catch(e => {
+                    .then((resp) => resp.json())
+                    .catch((e) => {
                         console.log('to success page');
                         return e;
                     });
@@ -258,19 +259,19 @@ storiesOf('CreditCorrection/CustomerStatus', module)
                 },
                 loading: false,
             }}
-            loadPendingRequest={data => {
+            loadPendingRequest={(data) => {
                 return fetch(`/creditlimit/test`)
-                    .then(resp => resp.json())
-                    .catch(e => {
+                    .then((resp) => resp.json())
+                    .catch((e) => {
                         console.log('constststst1');
                         return {};
                     });
             }}
             countriesWithDifferentBlockingCodes={['DE']}
-            loadCustomerData={value => console.log(value)}
-            loadRecentRequests={value => console.log(value)}
-            updateUiPageTitle={value => console.log(value)}
-            showAuxControl={value => console.log(value)}
+            loadCustomerData={(value) => console.log(value)}
+            loadRecentRequests={(value) => console.log(value)}
+            updateUiPageTitle={(value) => console.log(value)}
+            showAuxControl={(value) => console.log(value)}
             match={{
                 isExact: true,
                 params: {
@@ -570,10 +571,10 @@ storiesOf('CreditCorrection/CustomerStatus', module)
                 },
             }}
             request={{ data: null, loading: false }}
-            requestQuick={customer => {
+            requestQuick={(customer) => {
                 return fetch(`/creditlimit/test`)
-                    .then(resp => resp.json())
-                    .catch(e => {
+                    .then((resp) => resp.json())
+                    .catch((e) => {
                         console.log('to success page');
                         return e;
                     });
@@ -672,27 +673,27 @@ storiesOf('CreditCorrection/CreditData', module).add('standard status', () => (
             },
             valid: false,
         }}
-        setCreditData={value => console.log(value)}
-        setValidity={value => console.log(value)}
-        handleRequestedGroupLimitChange={value => console.log(value)}
+        setCreditData={(value) => console.log(value)}
+        setValidity={(value) => console.log(value)}
+        handleRequestedGroupLimitChange={(value) => console.log(value)}
         canCorrect={true}
         isNewCorrection={true}
-        onBlockingChange={value => console.log(value)}
+        onBlockingChange={(value) => console.log(value)}
         blockingValue={'30'}
         blockingOptions={['HARDBLOCK', 'SOFTBLOCK']}
         blockingLabel={'mrc.blocking.customer-dropdown'}
         blockingItemId={'3636646d-0b3c-4d2e-bb3b-5098b721b4e6'}
-        registerCallbackBlocking={value => console.log(value)}
+        registerCallbackBlocking={(value) => console.log(value)}
     />
 ));
 
 storiesOf('CreditCorrection/CreditCorrection', module)
     .add('standard request', () => (
         <CreditCorrectionRequest
-            cleanup={value => console.log(value)}
-            updateUiPageTitle={value => console.log(value)}
-            showAuxControl={value => console.log(value)}
-            loadRequest={value => console.log(value)}
+            cleanup={(value) => console.log(value)}
+            updateUiPageTitle={(value) => console.log(value)}
+            showAuxControl={(value) => console.log(value)}
+            loadRequest={(value) => console.log(value)}
             match={{
                 isExact: true,
                 params: {
@@ -1011,14 +1012,14 @@ storiesOf('CreditCorrection/CreditCorrection', module)
                     ],
                 },
             }}
-            addComment={value => console.log(value)}
-            addAttachment={value => console.log(value)}
-            restoreAttachment={value => console.log(value)}
-            deleteAttachment={value => console.log(value)}
-            setCreditData={value => console.log(value)}
-            setLimitExpiry={value => console.log(value)}
-            submitRequest={value => console.log(value)}
-            cancel={value => console.log(value)}
+            addComment={(id, comment) => action('add comment')({ id, comment })}
+            addAttachment={(value) => console.log(value)}
+            restoreAttachment={(value) => console.log(value)}
+            deleteAttachment={(value) => console.log(value)}
+            setCreditData={(value) => console.log(value)}
+            setLimitExpiry={(value) => console.log(value)}
+            submitRequest={(value) => console.log(value)}
+            cancel={(value) => console.log(value)}
             history={{
                 location: {
                     pathname: 'request',
