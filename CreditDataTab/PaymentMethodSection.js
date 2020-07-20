@@ -4,9 +4,9 @@ import Card from '../Card';
 import Grid from '../Grid';
 import { lookup } from '../Util/translations';
 // import NumberInput from '../../NumberInput';
-import CreditTableFormSection from './CreditTableFormSection';
+import CreditTableFormSection from './CreditTable/CreditTableFormSection';
 import CheckCard from '../CheckCard';
-import CRPaymentMethodSetting from './CRPaymentMethodSetting';
+import CRPaymentMethodSetting from './CreditTable/CRPaymentMethodSetting';
 import {
     translatePaymentIfNeeded,
     getPaymentDataByType,
@@ -17,7 +17,7 @@ import {
 } from '../Util/creditDataUtils';
 
 import * as _ from 'lodash';
-import { isApproval } from './CreditTabUtil';
+import { isApproval } from './creditDataTabUtil';
 
 export default class PaymentMethodSection extends Component {
     constructor(props) {

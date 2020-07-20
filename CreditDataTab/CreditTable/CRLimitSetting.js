@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import MrcDate from '../MrcDate';
-import MrcCurrency from '../MrcCurrency';
+import MrcDate from '../../MrcDate';
+import MrcCurrency from '../../MrcCurrency';
 import * as _ from 'lodash';
 
 import './CRLimitSetting.scss';

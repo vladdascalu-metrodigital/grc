@@ -6,7 +6,7 @@ import CreditTableRowCreditLimit from './CreditTableRowCreditLimit';
 import CreditTableRowHistory from './CreditTableRowHistory';
 
 import * as _ from 'lodash';
-import { isApproval, isCreditLimit } from './CreditTabUtil';
+import { isApproval, isCreditLimit } from './creditDataTabUtil';
 
 export default class CreditTableRow extends Component {
     constructor(props) {

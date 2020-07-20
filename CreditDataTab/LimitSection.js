@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import CreditTableFormSection from './CreditTableFormSection';
+import CreditTableFormSection from './CreditTable/CreditTableFormSection';
 import Grid from '../Grid';
 import Card from '../Card';
-import CRLimitSetting from './CRLimitSetting';
+import CRLimitSetting from './CreditTable/CRLimitSetting';
 import { FlexRow } from '../Flex';
 import MrcCurrencySymbol from '../MrcCurrencySymbol';
 import MrcDatePickerInput from '../DatePicker';
@@ -12,7 +12,7 @@ import CheckCard from '../CheckCard';
 import { translatePaymentIfNeeded, getPaymentDataByType } from '../Util/creditDataUtils';
 
 import * as _ from 'lodash';
-import { isApproval } from './CreditTabUtil';
+import { isApproval } from './creditDataTabUtil';
 
 export default class LimitSection extends Component {
     constructor(props) {

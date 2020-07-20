@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import * as _ from 'lodash';
 import Table from '../MrcTable';
 import ExpandedRow from './ExpandedRow';
-import CRTableCellCustomer from './CRTableCellCustomer';
-import CRTableCellLimit from './CRTableCellLimit';
-import CRTableCellExpiry from './CRTableCellExpiry';
-import CRTableCellCreditProduct from './CRTableCellCreditProduct';
-import CRTableCellPrepaymentCash from './CRTableCellPrepaymentCash';
+import CRTableCellCustomer from './CreditTable/CRTableCellCustomer';
+import CRTableCellLimit from './CreditTable/CRTableCellLimit';
+import CRTableCellExpiry from './CreditTable/CRTableCellExpiry';
+import CRTableCellCreditProduct from './CreditTable/CRTableCellCreditProduct';
+import CRTableCellBiggerText from './CreditTable/CRTableCellBiggerText';
 import ToggleIndicator from '../ToggleIndicator';
 import { lookup } from '../Util/translations';
 
@@ -96,7 +96,7 @@ export default class CreditTableRowCreditLimit extends Component {
                     </Table.D>
                     {isCashCustomer ? (
                         <Table.D colSpan="3">
-                            <CRTableCellPrepaymentCash name={ts.cash} isBlue />
+                            <CRTableCellBiggerText text={ts.cash} color={'blue'} />
                         </Table.D>
                     ) : (
                         <React.Fragment>
@@ -106,7 +106,7 @@ export default class CreditTableRowCreditLimit extends Component {
                                     showExhausted={true}
                                     exhausted={_.get(customer, 'limitExhaustion')}
                                     limit={_current(customer, 'amount')}
-                                    isBlue
+                                    color={'blue'}
                                 />
                             </Table.D>
                             <Table.D>
@@ -114,7 +114,7 @@ export default class CreditTableRowCreditLimit extends Component {
                                     country={country}
                                     expiryLimit={_current(customer, 'expiry.amount')}
                                     expiryDate={_current(customer, 'expiry.date')}
-                                    isBlue
+                                    color={'blue'}
                                 />
                             </Table.D>
                             <Table.D>
@@ -125,18 +125,18 @@ export default class CreditTableRowCreditLimit extends Component {
                                         _current(customer, 'period') ? ts.days : '-',
                                     ].join(' ')}
                                     productPaymentMethod={lookup(_current(customer, 'debitType'))}
-                                    isBlue
+                                    color={'blue'}
                                 />
                             </Table.D>
                         </React.Fragment>
                     )}
                     {requestsCash && !isCashCustomer ? (
                         <Table.D colSpan="3">
-                            <CRTableCellPrepaymentCash name={ts.cash} isBlue />
+                            <CRTableCellBiggerText text={ts.cash} color={'blue'} />
                         </Table.D>
                     ) : (requestsCash && isCashCustomer) || (!isCashCustomer && isNoChange) ? (
                         <Table.D colSpan="3">
-                            <CRTableCellPrepaymentCash name={ts.nochange} isBlue />
+                            <CRTableCellBiggerText text={ts.nochange} color={'blue'} />
                         </Table.D>
                     ) : (
                         <React.Fragment>

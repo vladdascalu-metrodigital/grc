@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import classnames from 'classnames';
-import CheckmarkFilledIcon from '../icons/CheckmarkFilledIcon';
-import WarningSmallFilledIcon from '../icons/WarningSmallFilledIcon';
-import { COLOR as ICOLOR, SIZE as ISIZE } from '../icons';
+import CheckmarkFilledIcon from '../../icons/CheckmarkFilledIcon';
+import WarningSmallFilledIcon from '../../icons/WarningSmallFilledIcon';
+import { COLOR as ICOLOR, SIZE as ISIZE } from '../../icons';
 import './CRTableCellCustomer.scss';
-import { lookup } from '../Util/translations';
+import { lookup } from '../../Util/translations';
 
 export default class CRTableCellCustomer extends PureComponent {
     render() {

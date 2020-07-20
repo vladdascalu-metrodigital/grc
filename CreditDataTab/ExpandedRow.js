@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Table from '../MrcTable';
-import CreditTableRowShadow from './CreditTableRowShadow';
+import CreditTableRowShadow from './CreditTable/CreditTableRowShadow';
 import ClientBlocked from '../ClientBlocked';
 import PaymentSection from './PaymentSection';
 import LimitSection from './LimitSection';
@@ -9,9 +9,9 @@ import PaymentMethodSection from './PaymentMethodSection';
 import CustomerAdditionalFieldsSection from './CustomerAdditionalFieldsSection';
 
 import * as _ from 'lodash';
-import CreditTableFormSection from './CreditTableFormSection';
+import CreditTableFormSection from './CreditTable/CreditTableFormSection';
 import Grid from '../Grid';
-import { isApproval, isHistory } from './CreditTabUtil';
+import { isApproval, isHistory } from './creditDataTabUtil';
 
 export default class ExpandedRow extends Component {
     isNewCreditMarked(customer, parent, isCashCustomerRequest) {

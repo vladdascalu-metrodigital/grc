@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Table from '../MrcTable';
-import CRTableHeaderCellCustomerGroup from './CRTableHeaderCellCustomerGroup';
-import CRTableHeaderCellCustomerGroupLimit from './CRTableHeaderCellCustomerGroupLimit';
-import CRTableHeaderCellLimitColSpanTitle from './CRTableHeaderCellLimitColSpanTitle';
-import CRTableHeaderCellLimit from './CRTableHeaderCellLimit';
+import CRTableHeaderCellCustomerGroup from './CreditTable/CRTableHeaderCellCustomerGroup';
+import CRTableHeaderCellCustomerGroupLimit from './CreditTable/CRTableHeaderCellCustomerGroupLimit';
+import CRTableHeaderCellTitle from './CreditTable/CRTableHeaderCellTitle';
+import CRTableHeaderCellLimit from './CreditTable/CRTableHeaderCellLimit';
 import {
     isApproval,
     isConiRequestInHistory,
@@ -12,7 +12,7 @@ import {
     isHistory,
     isLimitExpiryInHistory,
     isLimitRequestInHistory,
-} from './CreditTabUtil';
+} from './creditDataTabUtil';
 
 export default class CreditTableHead extends Component {
     render() {
@@ -30,17 +30,17 @@ export default class CreditTableHead extends Component {
                 <Table.R sticky="credit-table-head-sticky" type="head">
                     <Table.H rowSpan="2">{ts.customer}</Table.H>
                     <Table.H colSpan="3">
-                        <CRTableHeaderCellLimitColSpanTitle title={isHistory(parent) ? ts.old : ts.current} isBlue />
+                        <CRTableHeaderCellTitle title={isHistory(parent) ? ts.old : ts.current} color={'blue'} />
                     </Table.H>
                     <Table.H colSpan="3">
                         {isCreditLimit(parent) ? (
-                            <CRTableHeaderCellLimitColSpanTitle title={ts.customerWish} prefix={''} isGreen />
+                            <CRTableHeaderCellTitle title={ts.customerWish} prefix={''} color={'green'} />
                         ) : null}
                         {isApproval(parent) ? (
-                            <CRTableHeaderCellLimitColSpanTitle title={ts.new} prefix={ts.customerWish} isGreen />
+                            <CRTableHeaderCellTitle title={ts.new} prefix={ts.customerWish} color={'green'} />
                         ) : null}
                         {isHistory(parent) ? (
-                            <CRTableHeaderCellLimitColSpanTitle
+                            <CRTableHeaderCellTitle
                                 title={isHistory(parent) ? ts.current : groupLimit.new ? ts.new : ts.customerWish}
                                 prefix={
                                     isLimitRequestInHistory(parent, historyRequestType) ||
@@ -50,7 +50,7 @@ export default class CreditTableHead extends Component {
                                         ? ts.customerWish
                                         : ''
                                 }
-                                isGreen
+                                color={'green'}
                             />
                         ) : null}
                     </Table.H>
@@ -88,7 +88,7 @@ export default class CreditTableHead extends Component {
                             exhausted={groupLimit.exhausted}
                             country={country}
                             subtitle={[ts.exhausted, ts.granted].join(' / ')}
-                            isBlue
+                            color={'blue'}
                         />
                     ) : null}
                 </Table.H>
@@ -114,7 +114,7 @@ export default class CreditTableHead extends Component {
                                 exhausted={groupLimit.exhausted}
                                 country={country}
                                 subtitle={[ts.exhausted, ts.granted].join(' / ')}
-                                isBlue
+                                color={'blue'}
                             />
                         ) : null}
                     </Table.H>
@@ -125,7 +125,7 @@ export default class CreditTableHead extends Component {
                                 showExhausted={false}
                                 country={country}
                                 subtitle={ts.customerWish}
-                                inSameRow
+                                inSameRow={true}
                             />
                         ) : null}
                     </Table.H>
@@ -163,7 +163,7 @@ export default class CreditTableHead extends Component {
                             showExhausted={false}
                             country={country}
                             subtitle={isHistory(parent) ? ts.newlyGranted : ts.toBeGranted}
-                            isGreen
+                            color={'green'}
                             inSameRow={isSameRow}
                         />
                     ) : null}
@@ -173,7 +173,7 @@ export default class CreditTableHead extends Component {
                             showExhausted={false}
                             country={country}
                             subtitle={ts.newlyActivated}
-                            isGreen
+                            color={'green'}
                             inSameRow
                         />
                     ) : null}

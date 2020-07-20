@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Grid from '../Grid';
 import CheckCard from '../CheckCard';
-import CreditTableFormSection from './CreditTableFormSection';
+import CreditTableFormSection from './CreditTable/CreditTableFormSection';
 
 import * as _ from 'lodash';
 import { getDefaultPayment } from '../Util/creditDataUtils';
-import { isApproval } from './CreditTabUtil';
+import { isApproval } from './creditDataTabUtil';
 
 export default class PaymentSection extends Component {
     constructor(props) {

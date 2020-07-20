@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CreditTableFormSection from './CreditTableFormSection';
+import CreditTableFormSection from './CreditTable/CreditTableFormSection';
 import PropTypes from 'prop-types';
 import AdditionalFieldsSection from '../AdditionalFieldsNew/AdditionalFieldsSection';
 
