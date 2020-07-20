@@ -59,7 +59,6 @@ export default class CreditCorrectionLayout extends Component {
             canceled: false,
             enableSpinner: false,
             blockingValues: {},
-            isBlockingUpdated: false,
             blockingCallbacks: {},
         };
         this.onBlockingDropdownChange = this.onBlockingDropdownChange.bind(this);
@@ -324,6 +323,7 @@ export default class CreditCorrectionLayout extends Component {
             workaroundCustomer.lastName = item.customer.customerLastName + ' ' + activationSuffix + ' '; //just for showing the message of activation
             workaroundCustomer.customerLastName = item.customer.customerLastName + ' ' + activationSuffix + ' '; //just for showing the message of activation
             const key = workaroundCustomer.storeNumber + '/' + workaroundCustomer.customerNumber;
+            // this was never used because this.state.creditDataById is not set
             if (this.state.creditDataById && this.state.creditDataById[item.id]) {
                 item.creditData = this.state.creditDataById[item.id];
             }
@@ -365,7 +365,6 @@ export default class CreditCorrectionLayout extends Component {
                         setValidity={this.setComponentValidity.bind(this, item.id)}
                         handleRequestedGroupLimitChange={this.handleRequestedGroupLimitChange.bind(this)}
                         canCorrect={this.props.request.data.canCorrect}
-                        isNewCorrection={this.props.isNewCorrection}
                         onBlockingChange={this.onBlockingDropdownChange}
                         blockingItemId={item.id}
                         blockingOptions={this.createBlockingOptions(item.customer.country)}
@@ -375,7 +374,6 @@ export default class CreditCorrectionLayout extends Component {
                                 ? this.state.blockingValues[item.id]
                                 : ''
                         }
-                        updateBlocking={this.state.isBlockingUpdated}
                         registerCallbackBlocking={this.blockingCallback}
                     />
                 </Collapsible>
@@ -631,5 +629,4 @@ CreditCorrectionLayout.propTypes = {
     submitRequest: PropTypes.func.isRequired,
     cancel: PropTypes.func.isRequired,
     history: PropTypes.object,
-    isNewCorrection: PropTypes.bool,
 };

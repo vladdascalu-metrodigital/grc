@@ -15,7 +15,7 @@ export default class BlockingDropdown extends Component {
         }
     }
 
-    onChangeDropdown = e => {
+    onChangeDropdown = (e) => {
         var options = e.target.options !== undefined ? e.target.options : [];
         var values = [];
         for (var i = 0, l = options.length; i < l; i++) {
@@ -45,7 +45,7 @@ export default class BlockingDropdown extends Component {
                     className="m-input-element"
                     onChange={this.onChangeDropdown}
                 >
-                    {options.map(option => {
+                    {options.map((option) => {
                         return (
                             <option key={option} value={option}>
                                 {lookup(option)}

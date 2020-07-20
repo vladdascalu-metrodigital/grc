@@ -1,0 +1,46 @@
+@import '../../settings';
+
+.mrc-request-submitted {
+    h1,
+    h2 {
+        line-height: 2em;
+    }
+
+    dt:before {
+        content: '';
+        display: block;
+    }
+
+    dt {
+        width: 45%;
+    }
+
+    dd {
+        margin-left: auto;
+        width: 55%;
+        padding: 0 0 0.5rem 0.5rem;
+    }
+
+    dt:after {
+        content: ': ';
+    }
+
+    dl {
+        margin-bottom: 2em;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+}
+
+.m-radioButton-inputIcon {
+    border-radius: 0%;
+}
+
+.m-radioButton-input {
+    position: fixed;
+}
+
+.input {
+    min-width: 0px;
+}

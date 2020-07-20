@@ -503,7 +503,6 @@ storiesOf('CreditCorrection/CustomerStatus', module)
                     fileTypes: ['general'],
                     collaterals: null,
                     requestDisabled: false,
-                    containsContracting: true,
                     collateralAttachments: [],
                     editable: true,
                     customerIds: [
@@ -677,7 +676,6 @@ storiesOf('CreditCorrection/CreditData', module).add('standard status', () => (
         setValidity={(value) => console.log(value)}
         handleRequestedGroupLimitChange={(value) => console.log(value)}
         canCorrect={true}
-        isNewCorrection={true}
         onBlockingChange={(value) => console.log(value)}
         blockingValue={'30'}
         blockingOptions={['HARDBLOCK', 'SOFTBLOCK']}
@@ -930,7 +928,6 @@ storiesOf('CreditCorrection/CreditCorrection', module)
                     fileTypes: ['general'],
                     collaterals: null,
                     requestDisabled: false,
-                    containsContracting: true,
                     collateralAttachments: [
                         {
                             id: '43e6b4cf-2d21-4549-a087-658fc2d8a9d5',
@@ -1025,7 +1022,6 @@ storiesOf('CreditCorrection/CreditCorrection', module)
                     pathname: 'request',
                 },
             }}
-            isNewCorrection={true}
         />
     ))
     .add('standard submitted', () => (
@@ -1255,7 +1251,6 @@ storiesOf('CreditCorrection/CreditCorrection', module)
                 fileTypes: ['general'],
                 collaterals: null,
                 requestDisabled: false,
-                containsContracting: true,
                 collateralAttachments: [
                     {
                         id: '43e6b4cf-2d21-4549-a087-658fc2d8a9d5',

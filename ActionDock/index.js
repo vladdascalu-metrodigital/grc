@@ -24,8 +24,19 @@ export class SimpleActionDock extends PureComponent {
         return (
             <ActionDock>
                 <FlexRow justifyContent="center" gap="medium">
-                    <Button text={cancelText} isOutlined onClick={this.props.onCancel} wide="medium" />
-                    <Button text={applyText} onClick={this.props.onApply} wide="medium" />
+                    <Button
+                        text={cancelText}
+                        isOutlined
+                        onClick={this.props.onCancel}
+                        wide="medium"
+                        disabled={this.props.cancelDisabled}
+                    />
+                    <Button
+                        text={applyText}
+                        onClick={this.props.onApply}
+                        wide="medium"
+                        disabled={this.props.applyDisabled}
+                    />
                 </FlexRow>
             </ActionDock>
         );
@@ -34,7 +45,9 @@ export class SimpleActionDock extends PureComponent {
 
 SimpleActionDock.propTypes = {
     onApply: PropTypes.func,
+    applyDisabled: PropTypes.bool,
     applyText: PropTypes.string,
     onCancel: PropTypes.func,
+    cancelDisabled: PropTypes.bool,
     cancelText: PropTypes.string,
 };

@@ -24,9 +24,9 @@ export default class CreditCorrectionTableHead extends Component {
             limit: lookup('mrc.credittab.limit'),
             creditproduct: lookup('mrc.creditdetails.creditproduct'),
         };
-        const granted = groupLimit ? (
+        const current = groupLimit ? (
             <CRTableHeaderCellCustomerGroupLimit
-                limit={groupLimit.applied}
+                limit={groupLimit.current}
                 exhausted={groupLimit.exhausted}
                 country={countryCode}
                 subtitle={
@@ -37,9 +37,9 @@ export default class CreditCorrectionTableHead extends Component {
                 isBlue
             />
         ) : null;
-        const customerWish = groupLimit ? (
+        const wish = groupLimit ? (
             <CRTableHeaderCellCustomerGroupLimit
-                limit={groupLimit.customerWish}
+                limit={groupLimit.wish}
                 country={countryCode}
                 subtitle={translations.toBeGranted}
                 isGreen
@@ -52,10 +52,10 @@ export default class CreditCorrectionTableHead extends Component {
                         <CRTableHeaderCellCustomerGroup title={translations.customerGroup} />
                     </Table.H>
                     <Table.H colSpan="3" className="mrc-ui-credit-correction-head-col">
-                        {granted}
+                        {current}
                     </Table.H>
                     <Table.H colSpan="3" className="mrc-ui-credit-correction-head-col">
-                        {customerWish}
+                        {wish}
                     </Table.H>
                     <Table.H className="border-fix mrc-ui-credit-correction-toggler-col"></Table.H>
                 </Table.R>
@@ -87,8 +87,8 @@ export default class CreditCorrectionTableHead extends Component {
 CreditCorrectionTableHead.propTypes = {
     countryCode: PropTypes.string,
     groupLimit: PropTypes.shape({
-        applied: PropTypes.number,
+        current: PropTypes.number,
         exhausted: PropTypes.number,
-        customerWish: PropTypes.number,
+        wish: PropTypes.number,
     }),
 };
