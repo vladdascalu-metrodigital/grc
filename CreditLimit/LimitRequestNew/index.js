@@ -25,7 +25,7 @@ import {
     additionalFieldIsValid,
 } from '../../AdditionalFieldsNew/additionalFieldsValidation';
 import { createBlockingInfo } from '../../Util/blockingInfoUtils';
-import CreditTabWip from '../../service-components/CreditTabWip';
+import CreditDataTab from '../../CreditDataTab';
 
 import * as _ from 'lodash';
 import CustomerDataGroup from '../../CustomerDataGroup';
@@ -404,7 +404,7 @@ export default class LimitRequestLayout extends Component {
             this.props.request.data.requestDisabled;
         const dateFormat = this.getDateFormatString();
         return (
-            <CreditTabWip
+            <CreditDataTab
                 country={_.get(request, 'requestedCustomerId.country')}
                 parent={'creditlimit'}
                 groupLimit={{

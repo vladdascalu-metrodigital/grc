@@ -1,0 +1,14 @@
+@import 'lib/scss/colors';
+
+.mrc-ui-credit-table-row-shadow {
+  height: 0px !important;
+
+  div {
+    position: absolute;
+    background: 
+      // #{$color-form-background-grey} 
+      linear-gradient(#{transparentize($color-palette-grey-shade-90, 0.9)}, transparent);
+    height: 10px;
+    width: 100%;
+  }
+}

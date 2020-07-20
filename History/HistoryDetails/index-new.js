@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Tab, TabList, Tabs } from 'react-tabs';
 import ErrorHandledTabPanel from '../../ErrorHandledTabPanel';
-import CreditTabWip from '../../service-components/CreditTabWip';
+import CreditDataTab from '../../CreditDataTab';
 import PropTypes from 'prop-types';
 import '../../tabs.scss';
 import HistoryStatusBar from '../Shared/HistoryStatusBar';
@@ -121,7 +121,7 @@ export class HistoryDetailsPresentationNew extends Component {
                 </ErrorHandledTabPanel>
                 <ErrorHandledTabPanel>
                     <Accordion>
-                        <CreditTabWip {...createCreditDataProps(params)} />
+                        <CreditDataTab {...createCreditDataProps(params)} />
                     </Accordion>
                 </ErrorHandledTabPanel>
                 <ErrorHandledTabPanel>
@@ -199,7 +199,7 @@ export class HistoryDetailsPresentationNew extends Component {
                     {params.requestData ? this.customerDetailsPanel(params.requestData) : null}
                 </Collapsible>
                 <Collapsible trigger={lookup('mrc.creditdetails.title')}>
-                    <CreditTabWip {...createCreditDataProps(params)} />
+                    <CreditDataTab {...createCreditDataProps(params)} />
                 </Collapsible>
                 <Collapsible trigger={lookup('mrc.sales.title')}>
                     <Sales salesOverviews={params.salesOverviews} />

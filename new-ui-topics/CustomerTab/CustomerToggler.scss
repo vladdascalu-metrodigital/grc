@@ -1,0 +1,14 @@
+@import 'lib/scss/colors';
+@import 'lib/scss/variables';
+@import 'lib/scss/typography';
+
+.mrc-ui-customer-toggler {
+  display: flex;
+  align-items: center;
+  font-weight: normal;
+  line-height: $line-height-copy-narrow;
+}
+
+.mrc-ui-customer-toggler-blocked-label {
+  margin-left: $spacing-large;
+}

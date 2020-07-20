@@ -45,7 +45,7 @@ import {
     additionalFieldMandatoryIsValid,
 } from '../../AdditionalFieldsNew/additionalFieldsValidation';
 
-import CreditTabWip from '../../service-components/CreditTabWip';
+import CreditDataTab from '../../CreditDataTab';
 import { displayName } from '../../Util';
 import { createBlockingInfo } from '../../Util/blockingInfoUtils';
 
@@ -767,7 +767,7 @@ export class ApprovalProcessPresentation extends Component {
             !process.editableByCurrentUser;
 
         return (
-            <CreditTabWip
+            <CreditDataTab
                 country={process.request.country}
                 parent={'approval'}
                 groupLimit={{

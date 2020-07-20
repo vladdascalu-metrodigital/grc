@@ -1,7 +1,0 @@
-@import '../../lib/scss/typography';
-@import '../../lib/scss/variables';
-
-.mrc-ui-customer-tab-title {
-  @include typo-header-small-muted-caps();
-  padding-left: $spacing-medium;
-}
