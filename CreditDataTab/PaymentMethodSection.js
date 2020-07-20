@@ -4,7 +4,7 @@ import Card from '../Card';
 import Grid from '../Grid';
 import { lookup } from '../Util/translations';
 // import NumberInput from '../../NumberInput';
-import CreditTableFormSection from './CreditTable/CreditTableFormSection';
+import FormSection from '../FormSection';
 import CheckCard from '../CheckCard';
 import CRPaymentMethodSetting from './CreditTable/CRPaymentMethodSetting';
 import {
@@ -110,7 +110,7 @@ export default class PaymentMethodSection extends Component {
                 : productOptionsContent.concat(periodOptions.map((x) => [translatePaymentIfNeeded(x), lookup(x)]));
 
         return (
-            <CreditTableFormSection title={ts.paymentmethod} description={ts.paymentmethoddescription}>
+            <FormSection title={ts.paymentmethod} description={ts.paymentmethoddescription}>
                 <React.Fragment>
                     <h4 className="mrc-ui-form-label mb-2">{ts.choosepaymentmethod}</h4>
                     <Grid cols={4}>
@@ -306,7 +306,7 @@ export default class PaymentMethodSection extends Component {
                         </React.Fragment>
                     ) : null}
                 </React.Fragment>
-            </CreditTableFormSection>
+            </FormSection>
         );
     }
 
@@ -370,7 +370,7 @@ export default class PaymentMethodSection extends Component {
                 : productOptionsContent.concat(periodOptions.map((x) => [x, lookup(x)]));
 
         return (
-            <CreditTableFormSection title={ts.paymentmethod} description={ts.paymentmethoddescription}>
+            <FormSection title={ts.paymentmethod} description={ts.paymentmethoddescription}>
                 <React.Fragment>
                     <h4 className="mrc-ui-form-label mb-2">{ts.choosepaymentmethod}</h4>
                     <Grid cols={4}>
@@ -604,7 +604,7 @@ export default class PaymentMethodSection extends Component {
                         </React.Fragment>
                     ) : null}
                 </React.Fragment>
-            </CreditTableFormSection>
+            </FormSection>
         );
     }
 }

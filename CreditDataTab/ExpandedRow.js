@@ -9,7 +9,7 @@ import PaymentMethodSection from './PaymentMethodSection';
 import CustomerAdditionalFieldsSection from './CustomerAdditionalFieldsSection';
 
 import * as _ from 'lodash';
-import CreditTableFormSection from './CreditTable/CreditTableFormSection';
+import FormSection from '../FormSection';
 import Grid from '../Grid';
 import { isApproval, isHistory } from './creditDataTabUtil';
 
@@ -101,7 +101,7 @@ export default class ExpandedRow extends Component {
 
     createBlockingSection(blockingReasonText, checkoutCheckCodeText, ts) {
         return (
-            <CreditTableFormSection title={ts.block} description={ts.blockdescription}>
+            <FormSection title={ts.block} description={ts.blockdescription}>
                 <React.Fragment>
                     <Grid cols={1}>
                         {!_.isEmpty(blockingReasonText) ? <ClientBlocked text={blockingReasonText} /> : null}
@@ -110,7 +110,7 @@ export default class ExpandedRow extends Component {
                         {!_.isEmpty(checkoutCheckCodeText) ? <ClientBlocked text={checkoutCheckCodeText} /> : null}
                     </Grid>
                 </React.Fragment>
-            </CreditTableFormSection>
+            </FormSection>
         );
     }
 

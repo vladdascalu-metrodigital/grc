@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Grid from '../Grid';
 import CheckCard from '../CheckCard';
-import CreditTableFormSection from './CreditTable/CreditTableFormSection';
+import FormSection from '../FormSection';
 
 import * as _ from 'lodash';
 import { getDefaultPayment } from '../Util/creditDataUtils';
@@ -36,7 +36,7 @@ export default class PaymentSection extends Component {
         const defaultPeriod = applyType === 'CURRENT' ? null : defaultPayment.defaultPeriod;
         const defaultDebitType = applyType === 'CURRENT' ? null : defaultPayment.defaultDebitType;
         return (
-            <CreditTableFormSection title={ts.payment} description={ts.paymentdescription}>
+            <FormSection title={ts.payment} description={ts.paymentdescription}>
                 <h4 className="mrc-ui-form-label mb-2">{ts.choosepayment}</h4>
                 <Grid cols={4}>
                     <CheckCard
@@ -68,7 +68,7 @@ export default class PaymentSection extends Component {
                         disabled={readOnly}
                     />
                 </Grid>
-            </CreditTableFormSection>
+            </FormSection>
         );
     }
 }

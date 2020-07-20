@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CreditTableFormSection from './CreditTable/CreditTableFormSection';
+import FormSection from '../FormSection';
 import Grid from '../Grid';
 import Card from '../Card';
 import CRLimitSetting from './CreditTable/CRLimitSetting';
@@ -69,7 +69,7 @@ export default class LimitSection extends Component {
                 : currentExpiryAmountOption
             : wishedExpiryAmount;
         return (
-            <CreditTableFormSection title={ts.limit} description={ts.limitdescription}>
+            <FormSection title={ts.limit} description={ts.limitdescription}>
                 <React.Fragment>
                     <h4 className="mrc-ui-form-label mb-2">{ts.chooseamount}</h4>
                     <Grid cols={4}>
@@ -232,7 +232,7 @@ export default class LimitSection extends Component {
                         </React.Fragment>
                     ) : null}
                 </React.Fragment>
-            </CreditTableFormSection>
+            </FormSection>
         );
     }
 
@@ -302,7 +302,7 @@ export default class LimitSection extends Component {
             !Number.isNaN(amountInContracting) &&
             expiryDateInContracting != null;
         return (
-            <CreditTableFormSection title={ts.limit} description={ts.limitdescription}>
+            <FormSection title={ts.limit} description={ts.limitdescription}>
                 <React.Fragment>
                     <h4 className="mrc-ui-form-label mb-2">{ts.chooseamount}</h4>
                     <Grid cols={4}>
@@ -526,7 +526,7 @@ export default class LimitSection extends Component {
                         ts
                     )}
                 </React.Fragment>
-            </CreditTableFormSection>
+            </FormSection>
         );
     }
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CreditTableFormSection from './CreditTable/CreditTableFormSection';
+import FormSection from '../FormSection';
 import PropTypes from 'prop-types';
 import AdditionalFieldsSection from '../AdditionalFieldsNew/AdditionalFieldsSection';
 
@@ -12,10 +12,7 @@ export default class CustomerAdditionalFieldsSection extends Component {
         const ts = translations;
 
         return this.props.additionalFields && this.props.additionalFields.hasCustomerAdditionalFields ? (
-            <CreditTableFormSection
-                title={ts.customerAdditionalFields}
-                description={ts.customerAdditionalFieldsDescription}
-            >
+            <FormSection title={ts.customerAdditionalFields} description={ts.customerAdditionalFieldsDescription}>
                 <React.Fragment>
                     <AdditionalFieldsSection
                         onChange={this.props.additionalFields.onChange}
@@ -24,7 +21,7 @@ export default class CustomerAdditionalFieldsSection extends Component {
                         disabled={this.props.additionalFields.disabled}
                     />
                 </React.Fragment>
-            </CreditTableFormSection>
+            </FormSection>
         ) : null;
     }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Grid from '../../Grid';
-import FormSection from '../FormSection';
+import FormSection from '../../FormSection';
 import CheckCard from '../../CheckCard';
 
 import './CreditCorrectionGroupActions.scss';

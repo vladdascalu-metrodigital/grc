@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import FormSection from '../FormSection';
+import FormSection from '../../FormSection';
 import Card, { TYPE as CT } from '../../Card';
 
 export default class QuickActionSectionNoAction extends Component {

@@ -6,7 +6,7 @@ import Card from '../../Card';
 import { FlexRow } from '../../Flex';
 import NumberInput from '../../NumberInputNew';
 import MrcCurrencySymbol from '../../MrcCurrencySymbol';
-import FormSection from '../FormSection';
+import FormSection from '../../FormSection';
 import CheckCard from '../../CheckCard';
 import Select from '../../Select';
 import InputLabel from '../../InputLabel';
