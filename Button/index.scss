@@ -3,6 +3,7 @@
 @import '../lib/scss/colors';
 
 .mrc-ui-btn {
+  box-sizing: border-box;
   --mrc-ui-button-color: #{$color-interaction};
   display: block;
   color: $color-contrast-white;

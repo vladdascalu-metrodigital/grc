@@ -6,13 +6,13 @@ export function isContractingStep(stepType) {
 }
 
 export function isStandardStep(stepType) {
-    return ['APPROVE', 'CONTRACTING_LIGHT', 'CONTRACTING', 'PROVIDE_INFO'].includes(stepType);
+    return ['CHECK', 'APPROVE', 'CONTRACTING_LIGHT', 'CONTRACTING', 'PROVIDE_INFO'].includes(stepType);
 }
 
 export function dateFormatString() {
     const formatObj = new Intl.DateTimeFormat().formatToParts(new Date());
     return formatObj
-        .map(obj => {
+        .map((obj) => {
             switch (obj.type) {
                 case 'day':
                     return 'dd';
@@ -31,9 +31,9 @@ export function placeholdersUploaded(approval) {
     return (
         _.isNil(approval.placeholders) ||
         List(approval.placeholders)
-            .filter(ph =>
+            .filter((ph) =>
                 List(approval.attachments)
-                    .filter(a => !a.deleted && a.fileType == ph.fileType)
+                    .filter((a) => !a.deleted && a.fileType == ph.fileType)
                     .isEmpty()
             )
             .isEmpty()

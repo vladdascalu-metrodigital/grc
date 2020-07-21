@@ -150,6 +150,8 @@ export default class RequestDetails extends Component {
                 return <span className="span-success uppercase">{lookup('mrc.status.activated')}</span>;
             case 'Approved':
                 return <span className="span-success uppercase">{lookup('mrc.status.approved')}</span>;
+            case 'Forwarded':
+                return <span className="span-success uppercase">{lookup('mrc.status.forwarded')}</span>;
             case 'Contract_signed':
                 return <span className="span-blue uppercase">{lookup('mrc.status.contractSigned')}</span>;
             case 'Contract_validated':
