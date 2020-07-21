@@ -12,13 +12,14 @@ export const SPACING = {
 
 export class FlexRow extends Component {
     render() {
-        let { inline, justifyContent, alignItems, children, gap } = this.props;
+        let { inline, justifyContent, alignItems, children, gap, flexWrap } = this.props;
         let className = classnames('mrc-ui-flex-row', gap && 'mrc-ui-flex-row-gap-' + gap, {
             'mrc-ui-flex-row-inline': inline,
         });
         let style = {
             '--justify-content': justifyContent,
             '--align-items': alignItems,
+            '--flex-wrap': flexWrap,
         };
         return (
             <div className={className} style={style}>
@@ -65,6 +66,7 @@ FlexRow.propTypes = {
     alignItems: PropTypes.oneOf(['normal', 'stretch', 'center', 'start', 'end', 'flex-start', 'flex-end', 'baseline']),
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     gap: PropTypes.oneOf(['small', 'medium', 'large']),
+    flexWrap: PropTypes.oneOf(['nowrap', 'wrap', 'wrap-reverse', 'inherit', 'initial', 'unset']),
 };
 
 FlexColumn.propTypes = FlexRow.propTypes;

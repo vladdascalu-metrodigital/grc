@@ -5,6 +5,7 @@
   display: flex;
   justify-content: var(--justify-content);
   align-items: var(--align-items);
+  flex-wrap: var(--flex-wrap);
 }
 
 .mrc-ui-flex-row-inline,

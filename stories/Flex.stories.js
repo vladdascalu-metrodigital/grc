@@ -1,9 +1,11 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+
 import { FlexRow, FlexColumn } from '../Flex';
+import Card from '../Card';
 
 storiesOf('Layouts/Flex', module)
-    .add('rows', () => (
+    .add('Rows', () => (
         <FlexRow alignItems="center" gap="medium">
             <div>
                 A simple
@@ -13,7 +15,7 @@ storiesOf('Layouts/Flex', module)
             <div>for flexing around</div>
         </FlexRow>
     ))
-    .add('columns', () => (
+    .add('Columns', () => (
         <FlexColumn alignItems="center" gap="medium">
             <div>
                 A simple
@@ -22,4 +24,16 @@ storiesOf('Layouts/Flex', module)
             </div>
             <div>for flexing about</div>
         </FlexColumn>
+    ))
+    .add('Wrapping', () => (
+        <FlexRow alignItems="center" gap="medium" flexWrap="wrap">
+            <Card>These</Card>
+            <Card>Items</Card>
+            <Card>Wrap</Card>
+            <Card>When</Card>
+            <Card>There</Card>
+            <Card>Is</Card>
+            <Card>No</Card>
+            <Card>Space</Card>
+        </FlexRow>
     ));
