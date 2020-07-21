@@ -174,7 +174,7 @@ export default class CreditTableHead extends Component {
                             country={country}
                             subtitle={ts.newlyActivated}
                             color={'green'}
-                            inSameRow
+                            inSameRow={true}
                         />
                     ) : null}
                 </Table.H>
