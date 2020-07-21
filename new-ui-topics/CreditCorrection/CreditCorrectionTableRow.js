@@ -60,8 +60,10 @@ export default class CreditCorrectionTableRow extends Component {
 
     render() {
         let { isExpanded, isHovered, formData } = this.state;
-        let { id, isZebra, quickGroupAction } = this.props;
+        let { id, isZebra, quickGroupAction, errorMessage } = this.props;
         let type = isZebra ? 'zebra' : null;
+
+        let newColor = errorMessage ? 'red' : 'green';
 
         return (
             <React.Fragment>
@@ -92,7 +94,7 @@ export default class CreditCorrectionTableRow extends Component {
                                     <CRTableCellLimit
                                         country="EUR"
                                         limit={formData.removeLimit ? 0 : formData.limitAmount}
-                                        isGreen
+                                        color={newColor}
                                     />
                                 </Table.D>
                                 <Table.D>---</Table.D>
@@ -101,7 +103,7 @@ export default class CreditCorrectionTableRow extends Component {
                                         productName={formData.selectedCreditProduct.label}
                                         productTimePeriod="14 Days"
                                         productPaymentMethod="Direct Debit 1"
-                                        isGreen
+                                        color={newColor}
                                     />
                                 </Table.D>
                             </React.Fragment>
@@ -131,13 +133,17 @@ export default class CreditCorrectionTableRow extends Component {
                         </Table.R>
                         <Table.R type="form">
                             <Table.D colSpan="8">
+                                {errorMessage ? (
+                                    <QuickActionSectionNoAction quickGroupAction={quickGroupAction} type="error" />
+                                ) : null}
+
                                 {quickGroupAction.id === quickGroupActions.customerLevel.id ? (
                                     <QuickActionSection
                                         data={formData}
                                         onFormChange={this.handleFormChange.bind(this)}
                                     />
                                 ) : (
-                                    <QuickActionSectionNoAction quickGroupAction={quickGroupAction} />
+                                    <QuickActionSectionNoAction quickGroupAction={quickGroupAction} type="error" />
                                 )}
                             </Table.D>
                         </Table.R>
@@ -152,6 +158,7 @@ CreditCorrectionTableRow.propTypes = {
     id: PropTypes.string,
     isZebra: PropTypes.bool,
     stickyOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    errorMessage: PropTypes.string,
 
     quickGroupAction: PropTypes.shape({
         id: PropTypes.string,

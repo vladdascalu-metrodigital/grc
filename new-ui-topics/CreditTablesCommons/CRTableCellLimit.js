@@ -4,32 +4,46 @@ import MrcNumber from '../../MrcNumber';
 
 import './CRTableCellLimit.scss';
 import './CRTableCellTypoHighlight.scss';
+import PropTypes from 'prop-types';
 
 export default class CRTableCellLimit extends PureComponent {
     render() {
-        let { limit, exhausted, country, isGreen, isBlue } = this.props;
+        let { limit, exhausted, showExhausted, country, color } = this.props;
         let className = classnames('mrc-ui-crtable-cell-customer-limit-granted', {
-            'mrc-ui-crtable-cell-highlight-color-green': isGreen,
-            'mrc-ui-crtable-cell-highlight-color-blue': isBlue,
+            'mrc-ui-crtable-cell-highlight-color-green': color === 'green',
+            'mrc-ui-crtable-cell-highlight-color-blue': color === 'blue',
+            'mrc-ui-crtable-cell-highlight-color-red': color === 'red',
         });
         return (
             <div className="mrc-ui-crtable-cell-limit">
-                {exhausted && (
+                {showExhausted && (exhausted || exhausted === 0) ? (
                     <span className="mrc-ui-crtable-cell-customer-limit-exhausted">
                         <MrcNumber isCurrency country={country}>
                             {exhausted}
                         </MrcNumber>
                     </span>
-                )}
-                {exhausted && limit && ' / '}
-                {limit ? (
+                ) : showExhausted === true ? (
+                    '-'
+                ) : null}
+                {showExhausted === true ? ' / ' : null}
+                {limit || limit === 0 ? (
                     <span className={className}>
                         <MrcNumber isCurrency country={country}>
                             {limit}
                         </MrcNumber>
                     </span>
-                ) : null}
+                ) : (
+                    '-'
+                )}
             </div>
         );
     }
 }
+
+CRTableCellLimit.propTypes = {
+    limit: PropTypes.number,
+    exhausted: PropTypes.number,
+    showExhausted: PropTypes.bool,
+    country: PropTypes.string,
+    color: PropTypes.oneOf(['green', 'blue', 'red']),
+};

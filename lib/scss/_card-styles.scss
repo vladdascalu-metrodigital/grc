@@ -32,6 +32,15 @@
   border: $border-width-thin dashed $color-palette-red-shade-40;
 }
 
+@mixin card-error() {
+  @include border-radius-all();
+  background-color: $color-palette-red-tint-90;
+  border: $border-width-thin solid $color-palette-red-tint-20;
+  color: $color-palette-red-tint-20;
+  font-weight: bold;
+  
+}
+
 @mixin card-succcess() {
   @include border-radius-all();
   background-color: $color-palette-green-tint-90;

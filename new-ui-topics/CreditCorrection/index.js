@@ -38,6 +38,12 @@ export default class CreditCorrection extends Component {
                 <Table.Root fixedLayout>
                     <Table.Body>
                         <CreditCorrectionTableHead />
+
+                        <CreditCorrectionTableRow
+                            isZebra
+                            quickGroupAction={selectedGroupAction}
+                            errorMessage="Transfering the credit limit to the master dat system has finally failed, because it is not possible to assing credit to a non-credit customer. The customer’s limit could not be updated, the system gave up after {0} retries. Please verify the customer in the master dat system and then click on „Retry” in the activation section of the Audit Trail."
+                        />
                         {[...Array(10).keys()].map((e, i) => (
                             <CreditCorrectionTableRow
                                 key={i}
