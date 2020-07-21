@@ -31,6 +31,9 @@ export default class CreditTableHead extends Component {
                         {isCreditLimit(parent) ? (
                             <CRTableHeaderCellTitle title={ts.customerWish} prefix={''} color={'green'} />
                         ) : null}
+                        {isCreditCorrection(parent) ? (
+                            <CRTableHeaderCellTitle title={ts.new} prefix={''} color={'green'} />
+                        ) : null}
                         {isApproval(parent) ? (
                             <CRTableHeaderCellTitle title={ts.new} prefix={ts.customerWish} color={'green'} />
                         ) : null}

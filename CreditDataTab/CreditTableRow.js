@@ -97,4 +97,5 @@ CreditTableRow.propTypes = {
     historyRequestType: PropTypes.oneOf(['LIMIT_EXPIRY', 'LIMIT_REQUEST', 'CREDIT_CORRECTION', 'CONI_REQUEST'])
         .isRequired,
     selectedGroupAction: PropTypes.string,
+    activated: PropTypes.bool,
 };

@@ -6,6 +6,7 @@ import CreditCorrectionCustomerStatus from '../CreditCorrection/CustomerStatus';
 import CreditCorrectionCreditData from '../CreditCorrection/CreditData';
 import CreditCorrectionRequest from '../CreditCorrection/CreditCorrection';
 import CreditCorrectionRequestSubmitted from '../CreditCorrection/CreditCorrection/RequestSubmitted';
+import CreditLimitCustomerStatus from '../CreditCorrection/CustomerStatus';
 
 storiesOf('CreditCorrection/CustomerStatus', module)
     .add('standard', () => (

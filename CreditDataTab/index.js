@@ -73,6 +73,14 @@ export default class CreditDataTab extends Component {
             groupActionsDescription: lookup('mrc.credittab.groupActionsDescription'), // desc
             chooseGroupAction: lookup('mrc.credittab.chooseGroupAction'), // Choose Action
             setOnCustomerLevel: lookup('mrc.credittab.setOnCustomerLevel'), // Choose Action
+            activationResult: lookup('mrc.credittab.activationResult'),
+            activationResultDescription: lookup('mrc.credittab.activationResultDescription'),
+            noChangeAction: lookup('mrc.credittab.noChangeAction'),
+            newCreditAction: lookup('mrc.credittab.newCreditAction'),
+            noActionPossible: lookup('mrc.credittab.noActionPossible'),
+            noActionPossibleDescription: lookup('mrc.credittab.noActionPossibleDescription'),
+            noActionPossibleReason: lookup('mrc.credittab.noActionPossibleReason'),
+            activationNoChange: lookup('mrc.credittab.activationNoChange'),
         };
     }
 
@@ -168,7 +176,15 @@ export default class CreditDataTab extends Component {
     }
 
     renderCreditCorrectionGroupActions(translations) {
-        const { customers, parent, country, selectedGroupAction, handleChangeGroupAction } = this.props;
+        const {
+            customers,
+            parent,
+            country,
+            activated,
+            selectedGroupAction,
+            handleChangeGroupAction,
+            disabled,
+        } = this.props;
         if (!isCreditCorrection(parent)) {
             return null;
         }
@@ -180,6 +196,8 @@ export default class CreditDataTab extends Component {
                 onChange={handleChangeGroupAction}
                 translations={translations}
                 customers={customers}
+                activated={activated}
+                disabled={disabled}
             />
         );
     }
@@ -241,6 +259,7 @@ CreditDataTab.propTypes = {
                 }),
                 new: PropTypes.shape({
                     amount: PropTypes.number,
+                    initialAmount: PropTypes.number,
                     debitType: PropTypes.string,
                     product: PropTypes.string,
                     period: PropTypes.string,
@@ -274,6 +293,7 @@ CreditDataTab.propTypes = {
             isCashCustomer: PropTypes.bool.isRequired,
             limitExhaustion: PropTypes.number,
             failedActivation: PropTypes.bool,
+            activationResult: PropTypes.string,
         })
     ).isRequired,
     groupLimit: PropTypes.shape({
@@ -290,6 +310,7 @@ CreditDataTab.propTypes = {
     isContractingStepEditable: PropTypes.bool,
     historyRequestType: PropTypes.oneOf(['LIMIT_EXPIRY', 'LIMIT_REQUEST', 'CREDIT_CORRECTION', 'CONI_REQUEST']),
     activated: PropTypes.bool,
+    disabled: PropTypes.bool,
     selectedGroupAction: PropTypes.string,
     handleChangeGroupAction: PropTypes.func,
 };

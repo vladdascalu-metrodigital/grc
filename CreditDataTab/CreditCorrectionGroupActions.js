@@ -13,7 +13,7 @@ export default class CreditCorrectionGroupActions extends Component {
     }
 
     render() {
-        let { groupActions, selectedGroupAction, onChange, customers, translations } = this.props;
+        let { groupActions, activated, selectedGroupAction, onChange, customers, disabled, translations } = this.props;
         const ts = translations;
         const isAllCashCustomerGroup = Object.values(customers).every((item) => item.isCashCustomer === true);
         return (
@@ -25,7 +25,12 @@ export default class CreditCorrectionGroupActions extends Component {
                             key={0}
                             title={ts.setOnCustomerLevel}
                             checked={selectedGroupAction === 'NONE'}
-                            onClick={() => onChange('NONE')}
+                            onClick={() => {
+                                if (selectedGroupAction !== 'NONE') {
+                                    onChange('NONE');
+                                }
+                            }}
+                            disabled={disabled || (activated === true && selectedGroupAction !== 'NONE')}
                         />
                         {isAllCashCustomerGroup
                             ? null
@@ -34,7 +39,12 @@ export default class CreditCorrectionGroupActions extends Component {
                                       key={i + 1}
                                       title={lookup(ga.translationKey)}
                                       checked={selectedGroupAction === ga.id}
-                                      onClick={() => onChange(ga.id)}
+                                      onClick={() => {
+                                          if (selectedGroupAction !== ga.id) {
+                                              onChange(ga.id);
+                                          }
+                                      }}
+                                      disabled={disabled || (activated === true && selectedGroupAction !== ga.id)}
                                   />
                               ))}
                     </Grid>

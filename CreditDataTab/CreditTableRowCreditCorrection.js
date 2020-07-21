@@ -40,14 +40,8 @@ export default class CreditTableRowCreditCorrection extends Component {
         const newDebitType = _.get(customer, 'limit.new.debitType');
 
         const isNoChange = this.isCreditCorrectionNoChanged(isCashCustomer, customerCreditOption, groupCreditOption);
-        console.log(customer.number);
-        console.log(customerCreditOption + ', ' + groupCreditOption + ', ' + isNoChange);
         const isValid = _.get(customer, 'limit.valid');
-        const hasBlockingOption =
-            customerCreditOption !== undefined &&
-            !_.isNil(customerCreditOption) &&
-            customerCreditOption !== 'NONE' &&
-            customerCreditOption !== 'NEWCREDIT';
+        const hasBlockingOption = !_.isNil(_.get(customer, 'limit.new.blockingOption'));
         const isCreditDataInRed = customer.failedActivation === true;
         return (
             <React.Fragment>
@@ -118,7 +112,9 @@ export default class CreditTableRowCreditCorrection extends Component {
                     ) : hasBlockingOption ? (
                         <Table.D colSpan="3">
                             <CRTableCellBiggerText
-                                text={lookup('mrc.blocking-option.' + customerCreditOption.toLowerCase())}
+                                text={lookup(
+                                    'mrc.blocking-option.' + _.get(customer, 'limit.new.blockingOption').toLowerCase()
+                                )}
                                 color={isCreditDataInRed ? 'red' : 'green'}
                             />
                         </Table.D>

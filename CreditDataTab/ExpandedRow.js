@@ -11,7 +11,11 @@ import CustomerAdditionalFieldsSection from './CustomerAdditionalFieldsSection';
 import * as _ from 'lodash';
 import FormSection from '../FormSection';
 import Grid from '../Grid';
-import { isApproval, isHistory } from './creditDataTabUtil';
+import { isApproval, isCreditCorrection, isHistory } from './creditDataTabUtil';
+import CreditCorrectionMessageSection from './CreditCorrectionMessageSection';
+import { TYPE } from '../Card';
+import CreditCorrectionCustomerActionsSection from './CreditCorrectionCustomerActionsSection';
+import { lookup } from '../Util/translations';
 
 export default class ExpandedRow extends Component {
     isNewCreditMarked(customer, parent, isCashCustomerRequest) {
@@ -22,7 +26,7 @@ export default class ExpandedRow extends Component {
             if (_.get(customer, 'limit.limitType') === 'NEW' || _.get(customer, 'limit.paymentMethodType') === 'NEW') {
                 return true;
             }
-            // TODO: adapt to existing approval item, need to be tested
+            // adapt to old existing approval item
             if (
                 _.get(customer, 'limit.limitType') === 'CURRENT' &&
                 _.get(customer, 'limit.paymentMethodType') === 'CURRENT' &&
@@ -41,7 +45,7 @@ export default class ExpandedRow extends Component {
     }
 
     render() {
-        const { customer, isExpanded, id, parent, translations } = this.props;
+        const { customer, isExpanded, id, parent, translations, activated } = this.props;
         const ts = translations;
 
         const isCashCustomerRequest = this.props.requestsCash;
@@ -64,11 +68,12 @@ export default class ExpandedRow extends Component {
                 <React.Fragment>
                     <Table.R key="blocked" type="form">
                         <Table.D colSpan="8">
+                            {this.createActivationResultSection(parent, activated, customer, ts)}
                             {this.createBlockingSection(blockingReasonText, checkoutCheckCodeText, ts)}
-                            {isHistory(parent) ? null : (
+                            {isHistory(parent) || isCreditCorrection(parent) ? null : (
                                 <PaymentSection {...{ ...this.props, isCashCustomerRequest }} />
                             )}
-                            {isNewCredit ? this.createNewCreditSection() : null}
+                            {isNewCredit || isCreditCorrection(parent) ? this.createNewCreditSection() : null}
                             {this.createAdditionalFieldSection(ts, this.props.customer.additionalFields)}
                         </Table.D>
                     </Table.R>
@@ -77,10 +82,11 @@ export default class ExpandedRow extends Component {
                 <React.Fragment>
                     <Table.R key={'form'} type="form">
                         <Table.D colSpan="8">
-                            {isHistory(parent) ? null : (
+                            {this.createActivationResultSection(parent, activated, customer, ts)}
+                            {isHistory(parent) || isCreditCorrection(parent) ? null : (
                                 <PaymentSection {...{ ...this.props, isCashCustomerRequest }} />
                             )}
-                            {isNewCredit ? this.createNewCreditSection() : null}
+                            {isNewCredit || isCreditCorrection(parent) ? this.createNewCreditSection() : null}
                             {this.createAdditionalFieldSection(ts, this.props.customer.additionalFields)}
                         </Table.D>
                     </Table.R>
@@ -90,6 +96,29 @@ export default class ExpandedRow extends Component {
     }
 
     createNewCreditSection() {
+        const { customer, parent, activated, selectedGroupAction, translations } = this.props;
+        const ts = translations;
+        if (isCreditCorrection(parent)) {
+            return (!activated || this.isActivationFailedForCustomer(activated, customer)) &&
+                this.isNotGroupActionForCustomer(selectedGroupAction) ? (
+                <React.Fragment>
+                    <hr />
+                    <CreditCorrectionCustomerActionsSection {...this.props} />
+                </React.Fragment>
+            ) : this.isNotGroupActionForCustomer(selectedGroupAction) ? null : (
+                <CreditCorrectionMessageSection
+                    title={ts.noActionPossible}
+                    description={ts.noActionPossibleDescription}
+                    type={TYPE.ERROR}
+                    result={
+                        ts.noActionPossibleReason +
+                        ': ' +
+                        lookup('mrc.blocking-option.' + selectedGroupAction.toLowerCase())
+                    }
+                />
+            );
+        }
+
         return (
             <React.Fragment>
                 <hr />
@@ -117,6 +146,44 @@ export default class ExpandedRow extends Component {
     createAdditionalFieldSection(ts, additionalFields) {
         return <CustomerAdditionalFieldsSection additionalFields={additionalFields} translations={ts} />;
     }
+
+    createActivationResultSection(parent, activated, customer, ts) {
+        if (!isCreditCorrection(parent)) {
+            return null;
+        }
+        if (activated === true) {
+            const isNoChange =
+                _.get(customer, 'limit.creditOption') === 'NONE' &&
+                _.isNil(_.get(customer, 'limit.new.blockingOption'));
+            return (
+                <CreditCorrectionMessageSection
+                    title={ts.activationResult}
+                    description={ts.activationResultDescription}
+                    type={
+                        isNoChange
+                            ? TYPE.PRIMARY_BLUE
+                            : _.get(customer, 'failedActivation') === true
+                            ? TYPE.ERROR
+                            : TYPE.PRIMARY_GREEN
+                    }
+                    result={isNoChange ? ts.activationNoChange : _.get(customer, 'activationResult')}
+                />
+            );
+        }
+        return null;
+    }
+
+    isActivationFailedForCustomer(activated, customer) {
+        return (
+            activated === true &&
+            _.get(customer, 'limit.creditOption') !== 'NONE' &&
+            _.get(customer, 'failedActivation') === true
+        );
+    }
+
+    isNotGroupActionForCustomer(selectedGroupAction) {
+        return selectedGroupAction === 'NONE';
+    }
 }
 
 ExpandedRow.propTypes = {
@@ -133,4 +200,6 @@ ExpandedRow.propTypes = {
     requestsCash: PropTypes.bool,
     translations: PropTypes.object.isRequired,
     isContractingStepEditable: PropTypes.bool,
+    selectedGroupAction: PropTypes.string,
+    activated: PropTypes.bool,
 };

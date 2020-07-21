@@ -29,6 +29,14 @@
   @include card-primary-white();
 }
 
+.mrc-ui-card-primary-blue {
+  @include card-primary-blue();
+}
+
+.mrc-ui-card-primary-green {
+  @include card-primary-green();
+}
+
 .mrc-ui-card-warning {
   @include card-warning();
 }

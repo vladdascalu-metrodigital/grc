@@ -8,6 +8,8 @@ export const TYPE = {
     // 'DEFAULT': 'default',
     PRIMARY: 'primary',
     PRIMARY_WHITE: 'primary-white',
+    PRIMARY_BLUE: 'primary-blue',
+    PRIMARY_GREEN: 'primary-green',
     MUTED: 'muted',
     WARNING: 'warning',
     ERROR: 'error',
@@ -24,6 +26,8 @@ export default class Card extends Component {
             'mrc-ui-card-primary-white': type === TYPE.PRIMARY_WHITE,
             'mrc-ui-card-warning': type === TYPE.WARNING,
             'mrc-ui-card-error': type === TYPE.ERROR,
+            'mrc-ui-card-primary-blue': type === TYPE.PRIMARY_BLUE,
+            'mrc-ui-card-primary-green': type === TYPE.PRIMARY_GREEN,
         });
         return <div className={className}>{children}</div>;
     }

@@ -11,9 +11,11 @@ import {
     translatePaymentIfNeeded,
     getPaymentDataByType,
     getDefaultPayment,
-    extractCreditProducts,
     extractCreditPeriods,
     extractDebitTypes,
+    createCreditPeriodOptions,
+    createCreditProductOptions,
+    createDebitTypeOptions,
 } from '../Util/creditDataUtils';
 
 import * as _ from 'lodash';
@@ -38,36 +40,6 @@ export default class PaymentMethodSection extends Component {
     render() {
         const { parent } = this.props;
         return isApproval(parent) ? this.renderApproval() : this.renderCredit();
-    }
-
-    getPossiblePaymentMethodValues(availablePayments, creditProduct, creditPeriod) {
-        if (!availablePayments) return null;
-        const creditProductValues = extractCreditProducts(this.state.defaultProduct, availablePayments);
-        if (creditProduct === null) {
-            return creditProductValues;
-        } else {
-            const creditPeriodValues = extractCreditPeriods(availablePayments, creditProduct);
-            if (creditPeriod === null) {
-                return creditPeriodValues;
-            } else {
-                return extractDebitTypes(availablePayments, creditProduct, creditPeriod);
-            }
-        }
-    }
-
-    createCreditProductOptions(availablePayments) {
-        return this.getPossiblePaymentMethodValues(availablePayments, null, null);
-    }
-
-    createCreditPeriodOptions(availablePayments, creditProduct) {
-        return _.isNil(creditProduct)
-            ? null
-            : this.getPossiblePaymentMethodValues(availablePayments, creditProduct, null);
-    }
-    createDebitTypeOptions(availablePayments, creditProduct, creditPeriod) {
-        return _.isNil(creditProduct) || _.isNil(creditPeriod)
-            ? null
-            : this.getPossiblePaymentMethodValues(availablePayments, creditProduct, creditPeriod);
     }
 
     renderCredit() {
@@ -99,9 +71,18 @@ export default class PaymentMethodSection extends Component {
             hasCurrentPaymentMethod;
         const isNewRequest = !isCurrentPaymentMethod || !hasCurrentPaymentMethod;
 
-        const productOptions = this.createCreditProductOptions(customer.availablePayments);
-        const periodOptions = this.createCreditPeriodOptions(customer.availablePayments, wishedProduct);
-        const debitTypeOptions = this.createDebitTypeOptions(customer.availablePayments, wishedProduct, wishedPeriod);
+        const productOptions = createCreditProductOptions(customer.availablePayments, this.state.defaultProduct);
+        const periodOptions = createCreditPeriodOptions(
+            customer.availablePayments,
+            wishedProduct,
+            this.state.defaultProduct
+        );
+        const debitTypeOptions = createDebitTypeOptions(
+            customer.availablePayments,
+            wishedProduct,
+            wishedPeriod,
+            this.state.defaultProduct
+        );
 
         let productOptionsContent = _.isNil(wishedPeriod) ? [['', '']] : [];
         productOptionsContent =
@@ -359,9 +340,18 @@ export default class PaymentMethodSection extends Component {
         const isNewRequest =
             (!isCurrentPaymentMethod || !hasCurrentPaymentMethod) && !isWishedPaymentMethod && !isAppliedPaymentMethod;
 
-        const productOptions = this.createCreditProductOptions(customer.availablePayments);
-        const periodOptions = this.createCreditPeriodOptions(customer.availablePayments, newProduct);
-        const debitTypeOptions = this.createDebitTypeOptions(customer.availablePayments, newProduct, newPeriod);
+        const productOptions = createCreditProductOptions(customer.availablePayments, this.state.defaultProduct);
+        const periodOptions = createCreditPeriodOptions(
+            customer.availablePayments,
+            newProduct,
+            this.state.defaultProduct
+        );
+        const debitTypeOptions = createDebitTypeOptions(
+            customer.availablePayments,
+            newProduct,
+            newPeriod,
+            this.state.defaultProduct
+        );
 
         let productOptionsContent = _.isNil(newPeriod) ? [['', '']] : [];
         productOptionsContent =

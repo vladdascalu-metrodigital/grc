@@ -96,6 +96,37 @@ export const extractDebitTypes = (availablePayments, creditProduct, creditPeriod
     return Array.from(new Set(debitTypes)).sort();
 };
 
+export const createCreditProductOptions = (availablePayments, defaultProduct) => {
+    return getPossiblePaymentMethodValues(availablePayments, null, null, defaultProduct);
+};
+
+export const createCreditPeriodOptions = (availablePayments, creditProduct, defaultProduct) => {
+    return _.isNil(creditProduct)
+        ? null
+        : getPossiblePaymentMethodValues(availablePayments, creditProduct, null, defaultProduct);
+};
+
+export const createDebitTypeOptions = (availablePayments, creditProduct, creditPeriod, defaultProduct) => {
+    return _.isNil(creditProduct) || _.isNil(creditPeriod)
+        ? null
+        : getPossiblePaymentMethodValues(availablePayments, creditProduct, creditPeriod, defaultProduct);
+};
+
+export const getPossiblePaymentMethodValues = (availablePayments, creditProduct, creditPeriod, defaultProduct) => {
+    if (!availablePayments) return null;
+    const creditProductValues = extractCreditProducts(defaultProduct, availablePayments);
+    if (creditProduct === null) {
+        return creditProductValues;
+    } else {
+        const creditPeriodValues = extractCreditPeriods(availablePayments, creditProduct);
+        if (creditPeriod === null) {
+            return creditPeriodValues;
+        } else {
+            return extractDebitTypes(availablePayments, creditProduct, creditPeriod);
+        }
+    }
+};
+
 function isValidPaymentMethod(defaultPayment, availablePayments) {
     const product =
         defaultPayment.product == null || defaultPayment.product.includes('mrc.payment.')

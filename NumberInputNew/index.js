@@ -49,10 +49,10 @@ export default class NumberInputNew extends Component {
     }
 
     validate(v) {
-        let { integer, min, max, required, onValidChange } = this.props;
+        let { integer, min, max, required, onValidChange, greaterThanMin } = this.props;
         let isValid = true;
         let nextValidationMessages = [];
-        if (v) {
+        if (v || v === 0) {
             v = v.toString();
             if (integer && v.match(int) === null) {
                 isValid = false;
@@ -62,7 +62,10 @@ export default class NumberInputNew extends Component {
                 nextValidationMessages.push(lookup('mrc.forms.no_number'));
             } else {
                 v = parseFloat(v);
-                if ((min || min === 0) && v < min) {
+                if ((min || min === 0) && greaterThanMin === true && v <= min) {
+                    isValid = false;
+                    nextValidationMessages.push(lookup('mrc.forms.number_too_low'));
+                } else if ((min || min === 0) && v < min) {
                     isValid = false;
                     nextValidationMessages.push(lookup('mrc.forms.number_too_low'));
                 } else if (max && v > max) {
@@ -127,5 +130,6 @@ NumberInputNew.propTypes = {
     integer: PropTypes.bool,
     min: PropTypes.number,
     max: PropTypes.number,
+    greaterThanMin: PropTypes.bool,
     label: PropTypes.string,
 };

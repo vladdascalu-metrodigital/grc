@@ -9,89 +9,21 @@ import Table from '../../MrcTable';
 import CreditCorrectionTableHead from '../../new-ui-topics/CreditCorrection/CreditCorrectionTableHead';
 import CreditCorrectionTableRow from '../../new-ui-topics/CreditCorrection/CreditCorrectionTableRow';
 import MainContent from '../../MainContent';
-import { countryBlockingOptions, setOnCustomerBlockingOptions } from './blockingOptions';
-import { lookup } from '../../Util/translations';
 
 export default class CreditDataTabNew extends Component {
     constructor(props) {
         super(props);
         this.state = {
             creditDataValid: false,
-            creditDataComponentsValid: {},
             currentGroupLimit: 0,
             availableGroupLimit: 0,
             exhaustionGroupLimit: 0,
             requestedGroupLimit: 0,
-            blockingValues: {},
-            blockingCallbacks: {},
-            selectedGroupAction: groupActions.customerLevel,
         };
-
-        //when we block a customer, the payment doesn't change in MCFM and we need to invalidate it manually
-        if (
-            this.props.request.data &&
-            this.props.request.data.requestedItems &&
-            this.props.request.data.requestedItems[0].customer &&
-            this.props.request.data.requestedItems[0].customer.creditLimitStatus === 'blocked'
-        ) {
-            this.props.request.data.requestedItems.map((item) => {
-                item.creditData.id = '';
-                item.creditData.creditProduct = '';
-                item.creditData.creditPeriod = '';
-                item.creditData.debitType = '';
-            });
-        }
     }
 
     handleChangeGroupAction(value) {
         this.setState({ selectedGroupAction: value });
-    }
-
-    markRequestedCustomer(reqCust, cust) {
-        if (
-            reqCust.country === cust.country &&
-            reqCust.storeNumber === cust.storeNumber &&
-            reqCust.customerNumber === cust.customerNumber
-        ) {
-            cust.requestedCustomer = true;
-        }
-    }
-
-    createBlockingOptions(country) {
-        if (countryBlockingOptions[country]) {
-            return [setOnCustomerBlockingOptions, ...countryBlockingOptions[country]].map((item) => {
-                item.label = lookup(item.translationKey);
-                return item;
-            });
-        }
-
-        return [setOnCustomerBlockingOptions].map((item) => {
-            item.label = lookup(item.translationKey);
-            return item;
-        });
-    }
-
-    prepareRequestedItems(req) {
-        //
-        // mark the requested customer
-        //
-        req.requestedItems.forEach((ri) => this.markRequestedCustomer(req.requestedCustomerId, ri.customer));
-
-        //
-        // sort by customerID, taking the requestedCustomer first
-        //
-        req.requestedItems.sort((a, b) => {
-            const custa = a.customer;
-            const custb = b.customer;
-            if (custa.requestedCustomer) return -1;
-            if (custb.requestedCustomer) return 1;
-
-            if (custa.storeNumber !== custb.storeNumber) {
-                return Number.parseInt(custa.storeNumber) - Number.parseInt(custb.storeNumber);
-            }
-
-            return Number.parseInt(custa.customerNumber) - Number.parseInt(custb.customerNumber);
-        });
     }
 
     createHeaderProps(req) {
@@ -208,5 +140,4 @@ CreditDataTabNew.propTypes = {
         }),
     }),
     onCreditDataValidChange: PropTypes.func,
-    setCreditData: PropTypes.func,
 };

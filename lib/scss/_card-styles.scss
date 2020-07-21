@@ -20,6 +20,22 @@
   border: $border-width-thin solid $color-brand-primary-tint-70;
 }
 
+@mixin card-primary-blue() {
+  @include border-radius-all();
+  background-color: $color-palette-blue-tint-90;
+  border: $border-width-thin solid $color-brand-primary-default;
+  color: $color-palette-blue-tint-20;
+  font-weight: bold;
+}
+
+@mixin card-primary-green() {
+  @include border-radius-all();
+  background-color: $color-palette-green-tint-90;
+  border: $border-width-thin solid $color-palette-green-shade-20;
+  color: $color-palette-green-tint-20;
+  font-weight: bold;
+}
+
 @mixin card-muted() {
   @include border-radius-all();
   background-color: $color-contrast-white;
