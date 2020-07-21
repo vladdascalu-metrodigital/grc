@@ -13,9 +13,15 @@ export default class ActionDock extends Component {
     }
 
     render() {
-        return <div className="mrc-ui-action-dock">{this.props.children}</div>;
+        let className = this.props.className ? 'mrc-ui-action-dock ' + this.props.className : 'mrc-ui-action-dock';
+        return <div className={className}>{this.props.children}</div>;
     }
 }
+
+ActionDock.propTypes = {
+    className: PropTypes.string,
+    children: PropTypes.node,
+};
 
 export class SimpleActionDock extends PureComponent {
     render() {
