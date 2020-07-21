@@ -278,7 +278,7 @@ export class ApprovalProcessPresentation extends Component {
         return (
             <Comments
                 comments={approval.comments}
-                disabled={!approval.editableByCurrentUser}
+                disabled={!approval.editableByCurrentUser && !approval.forwardableByCurrentUser}
                 onSave={(newValue) => this.props.addComment(approval.id, newValue, approval.version)}
                 timeoutDate={approval.automaticDecisionAt}
             />
@@ -379,9 +379,9 @@ export class ApprovalProcessPresentation extends Component {
             <Attachments
                 noPlaceholder={isContractingStep || !hasContracting}
                 contractUrl={this.contractUrl(country)}
-                disabled={!approval.editableByCurrentUser}
+                disabled={!approval.editableByCurrentUser && !approval.forwardableByCurrentUser}
                 attachments={attachmentsAndPlaceholders}
-                readonly={!approval.editableByCurrentUser}
+                readonly={!approval.editableByCurrentUser && !approval.forwardableByCurrentUser}
                 addAttachment={addAttachment}
                 fileTypes={fileTypes}
                 country={country}
@@ -1304,6 +1304,17 @@ export class ApprovalProcessPresentation extends Component {
                         }}
                     />
                 ) : null}
+                {process.supportsForwarding ? (
+                    <Button
+                        text={lookup('approval.action.forward')}
+                        id="mrc-approve-button"
+                        status={process.isForwardableByCurrentUser ? 'primary' : 'secondary'}
+                        disabled={!process.forwardableByCurrentUser}
+                        onClick={() => {
+                            this.props.forward(process.id, process.version);
+                        }}
+                    />
+                ) : null}
                 {!inTopManagmentTab && process.supportsConfirm && !process.waitingForReview && !process.reviewed ? (
                     <Button
                         text={lookup('approval.action.approve')}
@@ -1324,7 +1335,7 @@ export class ApprovalProcessPresentation extends Component {
                         text={lookup('approval.action.provideInfo')}
                         id="mrc-prove-info-button"
                         status={process.editableByCurrentUser ? 'success' : 'secondary'}
-                        disabled={!process.editableByCurrentUser}
+                        disabled={!process.editableByCurrentUser && !process.forwardableByCurrentUser}
                         onClick={() => {
                             this.props.provideInfo(process.id, process.version);
                         }}
@@ -1506,6 +1517,7 @@ ApprovalProcessPresentation.propTypes = {
     block: PropTypes.func.isRequired,
     cancel: PropTypes.func.isRequired,
     reject: PropTypes.func.isRequired,
+    forward: PropTypes.func.isRequired,
     signContract: PropTypes.func,
     validateContract: PropTypes.func,
     addAttachment: PropTypes.func,
