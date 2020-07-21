@@ -1107,7 +1107,7 @@ export class ApprovalProcessPresentation extends Component {
                 id="mrc-approve-button"
                 status="primary"
                 disabled={!process.editableByCurrentUser || !util.placeholdersUploaded(process)}
-                onClick={() => this.props.signContract(process.id, process.version)}
+                onClick={() => this.props.signContract(process.id, process.version, this.state.creditData)}
             />
         ) : (
             <Button
@@ -1115,7 +1115,7 @@ export class ApprovalProcessPresentation extends Component {
                 id="mrc-approve-button"
                 status="primary"
                 disabled={!process.editableByCurrentUser || !util.placeholdersUploaded(process)}
-                onClick={() => this.props.validateContract(process.id, process.version)}
+                onClick={() => this.props.validateContract(process.id, process.version, this.state.creditData)}
             />
         );
     }
@@ -1127,7 +1127,7 @@ export class ApprovalProcessPresentation extends Component {
                 id="mrc-approve-button"
                 status="secondary"
                 disabled={!process.editableByCurrentUser}
-                onClick={() => this.props.requestNewContract(process.id, process.version)}
+                onClick={() => this.props.requestNewContract(process.id, process.version, this.state.creditData)}
             />
         );
     }
