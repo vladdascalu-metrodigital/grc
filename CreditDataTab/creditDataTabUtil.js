@@ -10,6 +10,10 @@ export function isApproval(parent) {
     return parent === 'approval';
 }
 
+export function isCreditCorrection(parent) {
+    return parent === 'creditcorrection';
+}
+
 export function isLimitExpiryInHistory(parent, historyRequestType) {
     return isHistory(parent) && historyRequestType === 'LIMIT_EXPIRY';
 }

@@ -13,6 +13,9 @@ import './index.scss';
 import * as _ from 'lodash';
 import AdditionalFieldsSectionWithDialog from '../AdditionalFieldsNew/AdditionalFieldsSectionWithDialog';
 import CreditProgram from '../CreditProgramNew';
+import CreditCorrectionGroupActions from './CreditCorrectionGroupActions';
+import { countryBlockingOptions } from '../CreditCorrection/CreditCorrectionNew/blockingOptions';
+import { isCreditCorrection } from './creditDataTabUtil';
 
 export default class CreditDataTab extends Component {
     constructor(props) {
@@ -66,6 +69,10 @@ export default class CreditDataTab extends Component {
             customerAdditionalFields: lookup('mrc.creditdetails.customerAdditionalFields'),
             customerAdditionalFieldsDescription: lookup('mrc.creditdetails.customerAdditionalFieldsDescription'),
             nochange: lookup('mrc.credittab.nochange'),
+            groupActions: lookup('mrc.credittab.groupActions'), // Quick Group Actions
+            groupActionsDescription: lookup('mrc.credittab.groupActionsDescription'), // desc
+            chooseGroupAction: lookup('mrc.credittab.chooseGroupAction'), // Choose Action
+            setOnCustomerLevel: lookup('mrc.credittab.setOnCustomerLevel'), // Choose Action
         };
     }
 
@@ -80,6 +87,7 @@ export default class CreditDataTab extends Component {
             activated,
             additionalFields,
             creditProgram,
+            selectedGroupAction,
         } = this.props;
         if (_.isNil(country) || _.isNil(customers) || customers.length === 0) {
             return <MainContent>{lookup('mrc.comment.nocreditdetails')}</MainContent>;
@@ -87,6 +95,7 @@ export default class CreditDataTab extends Component {
         const translations = this.createTranslations();
         return (
             <MainContent>
+                {this.renderCreditCorrectionGroupActions(translations)}
                 <Grid>
                     {this.renderGroupAdditionalFields(additionalFields)}
                     {this.renderRequestAdditionalFields(additionalFields)}
@@ -109,6 +118,7 @@ export default class CreditDataTab extends Component {
                                               isContractingStepEditable={isContractingStepEditable}
                                               historyRequestType={historyRequestType}
                                               activated={activated}
+                                              selectedGroupAction={selectedGroupAction}
                                           />
                                       ))
                                     : null}
@@ -155,6 +165,23 @@ export default class CreditDataTab extends Component {
                 defaultText={creditProgram.defaultText}
             />
         ) : null;
+    }
+
+    renderCreditCorrectionGroupActions(translations) {
+        const { customers, parent, country, selectedGroupAction, handleChangeGroupAction } = this.props;
+        if (!isCreditCorrection(parent)) {
+            return null;
+        }
+        const groupBlockingOptions = _.get(countryBlockingOptions, country.toUpperCase());
+        return (
+            <CreditCorrectionGroupActions
+                groupActions={groupBlockingOptions}
+                selectedGroupAction={selectedGroupAction}
+                onChange={handleChangeGroupAction}
+                translations={translations}
+                customers={customers}
+            />
+        );
     }
 }
 
@@ -258,9 +285,11 @@ CreditDataTab.propTypes = {
     }).isRequired,
     additionalFields: PropTypes.object,
     creditProgram: PropTypes.object,
-    parent: PropTypes.oneOf(['creditlimit', 'history', 'approval']).isRequired,
+    parent: PropTypes.oneOf(['creditlimit', 'history', 'approval', 'creditcorrection']).isRequired,
     dateFormat: PropTypes.string.isRequired,
     isContractingStepEditable: PropTypes.bool,
     historyRequestType: PropTypes.oneOf(['LIMIT_EXPIRY', 'LIMIT_REQUEST', 'CREDIT_CORRECTION', 'CONI_REQUEST']),
     activated: PropTypes.bool,
+    selectedGroupAction: PropTypes.string,
+    handleChangeGroupAction: PropTypes.func,
 };

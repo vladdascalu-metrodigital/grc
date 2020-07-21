@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import CreditTableRowApproval from './CreditTableRowApproval';
 import CreditTableRowCreditLimit from './CreditTableRowCreditLimit';
 import CreditTableRowHistory from './CreditTableRowHistory';
+import CreditTableRowCreditCorrection from './CreditTableRowCreditCorrection';
 
 import * as _ from 'lodash';
-import { isApproval, isCreditLimit } from './creditDataTabUtil';
+import { isApproval, isCreditCorrection, isCreditLimit, isHistory } from './creditDataTabUtil';
 
 export default class CreditTableRow extends Component {
     constructor(props) {
@@ -33,7 +34,6 @@ export default class CreditTableRow extends Component {
 
     isCashCustomerMarked(customer) {
         // TODO: To Cash -- currently credit customer can't apply this, remove the check later
-        // TODO: also for Crc we need to check other options
         if (!customer.isCashCustomer) {
             return false;
         }
@@ -66,15 +66,18 @@ export default class CreditTableRow extends Component {
             rowType: isZebra ? 'zebra' : null,
         };
 
-        const requestsCash = this.isCashCustomerMarked(customer);
-
         if (isApproval(parent)) {
+            const requestsCash = this.isCashCustomerMarked(customer);
             return <CreditTableRowApproval {...{ ...this.props, ...rowProps, requestsCash }} />;
         } else if (isCreditLimit(parent)) {
+            const requestsCash = this.isCashCustomerMarked(customer);
             return <CreditTableRowCreditLimit {...{ ...this.props, ...rowProps, requestsCash }} />;
-        } else {
-            return <CreditTableRowHistory {...{ ...this.props, ...rowProps, requestsCash }} />;
+        } else if (isHistory(parent)) {
+            return <CreditTableRowHistory {...{ ...this.props, ...rowProps }} />;
+        } else if (isCreditCorrection(parent)) {
+            return <CreditTableRowCreditCorrection {...{ ...this.props, ...rowProps }} />;
         }
+        return null;
     }
 }
 
@@ -93,4 +96,5 @@ CreditTableRow.propTypes = {
     isContractingStepEditable: PropTypes.bool,
     historyRequestType: PropTypes.oneOf(['LIMIT_EXPIRY', 'LIMIT_REQUEST', 'CREDIT_CORRECTION', 'CONI_REQUEST'])
         .isRequired,
+    selectedGroupAction: PropTypes.string,
 };

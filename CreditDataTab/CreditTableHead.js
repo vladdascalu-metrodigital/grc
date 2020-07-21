@@ -7,6 +7,7 @@ import CRTableHeaderCellLimit from './CreditTable/CRTableHeaderCellLimit';
 import {
     isApproval,
     isConiRequestInHistory,
+    isCreditCorrection,
     isCreditCorrectionInHistory,
     isCreditLimit,
     isHistory,
@@ -16,17 +17,11 @@ import {
 
 export default class CreditTableHead extends Component {
     render() {
-        const { groupLimit, parent, country, translations, historyRequestType, activated } = this.props;
+        const { groupLimit, parent, translations, historyRequestType } = this.props;
         const ts = translations;
         return (
             <React.Fragment>
-                {isCreditLimit(parent)
-                    ? this.createGroupHeadWithOnlyTwoStages(parent, groupLimit, country, activated, ts)
-                    : isLimitExpiryInHistory(parent, historyRequestType)
-                    ? null
-                    : isCreditCorrectionInHistory(parent, historyRequestType)
-                    ? this.createGroupHeadWithOnlyTwoStages(parent, groupLimit, country, activated, ts)
-                    : this.createGroupHeadWithThreeStages(parent, groupLimit, country, activated, ts)}
+                {this.renderGroupLimit()}
                 <Table.R sticky="credit-table-head-sticky" type="head">
                     <Table.H rowSpan="2">{ts.customer}</Table.H>
                     <Table.H colSpan="3">
@@ -73,7 +68,26 @@ export default class CreditTableHead extends Component {
         );
     }
 
-    // create head with only old and current in history, or current and wish in credit limit
+    renderGroupLimit() {
+        const { groupLimit, parent, country, translations, historyRequestType, activated } = this.props;
+        const ts = translations;
+
+        if (
+            isCreditLimit(parent) ||
+            isCreditCorrection(parent) ||
+            isCreditCorrectionInHistory(parent, historyRequestType)
+        ) {
+            return this.createGroupHeadWithOnlyTwoStages(parent, groupLimit, country, activated, ts);
+        }
+
+        if (isLimitExpiryInHistory(parent, historyRequestType)) {
+            return null;
+        }
+
+        return this.createGroupHeadWithThreeStages(parent, groupLimit, country, activated, ts);
+    }
+
+    // create head with only old and current in history, or current and wish in credit limit, or current and new in crc
     createGroupHeadWithOnlyTwoStages(parent, groupLimit, country, activated, ts) {
         return (
             <Table.R sticky="credit-table-head-sticky" type="head-light">
@@ -92,7 +106,14 @@ export default class CreditTableHead extends Component {
                         />
                     ) : null}
                 </Table.H>
-                {this.createAppliedGroupLimitAccordingToActivation(parent, groupLimit, country, ts, false, activated)}
+                {this.createAppliedGroupLimitAccordingToActivation(
+                    parent,
+                    groupLimit,
+                    country,
+                    ts,
+                    isCreditCorrection(parent) && activated === true,
+                    activated
+                )}
                 <Table.H className="border-fix"></Table.H>
             </Table.R>
         );
@@ -156,7 +177,7 @@ export default class CreditTableHead extends Component {
                             limit={
                                 isHistory(parent)
                                     ? groupLimit.current
-                                    : isApproval(parent)
+                                    : isApproval(parent) || isCreditCorrection(parent)
                                     ? groupLimit.new
                                     : groupLimit.wish
                             }
@@ -167,7 +188,7 @@ export default class CreditTableHead extends Component {
                             inSameRow={isSameRow}
                         />
                     ) : null}
-                    {groupLimit && isHistory(parent) && activated === true ? (
+                    {groupLimit && (isHistory(parent) || isCreditCorrection(parent)) && activated === true ? (
                         <CRTableHeaderCellCustomerGroupLimit
                             limit={groupLimit.activated}
                             showExhausted={false}
