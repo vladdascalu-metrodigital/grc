@@ -60,6 +60,14 @@ const AGENCY_LIST_RS = [
     },
 ];
 
+const AGENCY_LIST_RU = [
+    {
+        key: 'GLOBUS',
+        value: 'GLOBUS',
+        label: 'GLOBUS',
+    },
+];
+
 export function getAgencyList(country) {
     switch (country.toLowerCase()) {
         case 'de':
@@ -70,6 +78,8 @@ export function getAgencyList(country) {
             return AGENCY_LIST_HR;
         case 'rs':
             return AGENCY_LIST_RS;
+        case 'ru':
+            return AGENCY_LIST_RU;
         default:
             return [];
     }
