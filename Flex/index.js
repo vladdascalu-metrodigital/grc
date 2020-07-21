@@ -12,8 +12,8 @@ export const SPACING = {
 
 export class FlexRow extends Component {
     render() {
-        let { inline, justifyContent, alignItems, children, gap, flexWrap } = this.props;
-        let className = classnames('mrc-ui-flex-row', gap && 'mrc-ui-flex-row-gap-' + gap, {
+        let { className, inline, justifyContent, alignItems, children, gap, flexWrap } = this.props;
+        className = classnames(className, 'mrc-ui-flex-row', gap && 'mrc-ui-flex-row-gap-' + gap, {
             'mrc-ui-flex-row-inline': inline,
         });
         let style = {
@@ -31,8 +31,8 @@ export class FlexRow extends Component {
 
 export class FlexColumn extends Component {
     render() {
-        let { inline, justifyContent, alignItems, children, gap } = this.props;
-        let className = classnames('mrc-ui-flex-column', gap && 'mrc-ui-flex-column-gap-' + gap, {
+        let { className, inline, justifyContent, alignItems, children, gap } = this.props;
+        className = classnames(className, 'mrc-ui-flex-column', gap && 'mrc-ui-flex-column-gap-' + gap, {
             'mrc-ui-flex-column-inline': inline,
         });
         let style = {
@@ -48,6 +48,7 @@ export class FlexColumn extends Component {
 }
 
 FlexRow.propTypes = {
+    className: PropTypes.string,
     inline: PropTypes.bool,
     justifyContent: PropTypes.oneOf([
         'center',
