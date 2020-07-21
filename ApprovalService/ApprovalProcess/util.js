@@ -6,7 +6,7 @@ export function isContractingStep(stepType) {
 }
 
 export function isStandardStep(stepType) {
-    return ['CHECK', 'APPROVE', 'CONTRACTING_LIGHT', 'CONTRACTING', 'PROVIDE_INFO'].includes(stepType);
+    return ['FORWARD', 'APPROVE', 'CONTRACTING_LIGHT', 'CONTRACTING', 'PROVIDE_INFO'].includes(stepType);
 }
 
 export function dateFormatString() {
