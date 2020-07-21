@@ -12,10 +12,16 @@ export const SPACING = {
 
 export class FlexRow extends Component {
     render() {
-        let { className, inline, justifyContent, alignItems, children, gap, flexWrap } = this.props;
-        className = classnames(className, 'mrc-ui-flex-row', gap && 'mrc-ui-flex-row-gap-' + gap, {
-            'mrc-ui-flex-row-inline': inline,
-        });
+        let { className, inline, justifyContent, alignItems, children, gap, leading, flexWrap } = this.props;
+        className = classnames(
+            className,
+            'mrc-ui-flex-row',
+            gap && 'mrc-ui-flex-row-gap-' + gap,
+            leading && 'mrc-ui-flex-row-leading-' + leading,
+            {
+                'mrc-ui-flex-row-inline': inline,
+            }
+        );
         let style = {
             '--justify-content': justifyContent,
             '--align-items': alignItems,
@@ -66,7 +72,8 @@ FlexRow.propTypes = {
     ]),
     alignItems: PropTypes.oneOf(['normal', 'stretch', 'center', 'start', 'end', 'flex-start', 'flex-end', 'baseline']),
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-    gap: PropTypes.oneOf(['small', 'medium', 'large']),
+    gap: PropTypes.oneOf(['default', 'small', 'medium', 'large']),
+    leading: PropTypes.oneOf(['default', 'small', 'medium', 'large']),
     flexWrap: PropTypes.oneOf(['nowrap', 'wrap', 'wrap-reverse', 'inherit', 'initial', 'unset']),
 };
 
