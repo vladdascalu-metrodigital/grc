@@ -2,6 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import { FlexRow, FlexColumn } from '../Flex';
+import Button from '../Button';
 import Card from '../Card';
 
 storiesOf('Layouts/Flex', module)
@@ -42,5 +43,12 @@ storiesOf('Layouts/Flex', module)
                 <a href="https://en.wikipedia.org/wiki/Leading">Leading</a>
             </Card>
             <p>* Leading only works on Flex rows</p>
+        </FlexRow>
+    ))
+    .add('Buttons Example', () => (
+        <FlexRow justifyContent="space-around" alignItems="center" gap="medium">
+            <Button text="justifyContent: space-around" size="large" />
+            <Button text="alignItens: center" />
+            <Button text="ok" size="small" />
         </FlexRow>
     ));
