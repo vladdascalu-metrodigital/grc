@@ -25,8 +25,8 @@ storiesOf('Layouts/Flex', module)
             <div>for flexing about</div>
         </FlexColumn>
     ))
-    .add('Wrapping', () => (
-        <FlexRow alignItems="center" gap="medium" flexWrap="wrap">
+    .add('Wrapping & Leading', () => (
+        <FlexRow alignItems="center" gap="medium" leading="small" flexWrap="wrap">
             <Card>These</Card>
             <Card>Items</Card>
             <Card>Wrap</Card>
@@ -35,5 +35,12 @@ storiesOf('Layouts/Flex', module)
             <Card>Is</Card>
             <Card>No</Card>
             <Card>Space</Card>
+            <Card>And</Card>
+            <Card>Heave</Card>
+            <Card>A</Card>
+            <Card>
+                <a href="https://en.wikipedia.org/wiki/Leading">Leading</a>
+            </Card>
+            <p>* Leading only works on Flex rows</p>
         </FlexRow>
     ));

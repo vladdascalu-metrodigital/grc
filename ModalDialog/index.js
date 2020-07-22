@@ -23,7 +23,7 @@ export default class ModalDialog extends Component {
                         <img src={closeModalImageFile} alt="Close" />
                     </button>
                     <h3 className="mrc-ui-modal-title">{this.props.title}</h3>
-                    <div className="mrc-ui-modal-content">{this.props.content}</div>
+                    <div className="mrc-ui-modal-content">{this.props.content || this.props.children}</div>
                 </div>
             </div>
         );
@@ -33,5 +33,6 @@ export default class ModalDialog extends Component {
 ModalDialog.propTypes = {
     toggle: PropTypes.func,
     content: PropTypes.node,
+    children: PropTypes.node,
     title: PropTypes.string.isRequired,
 };

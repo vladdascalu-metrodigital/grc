@@ -47,7 +47,8 @@ export default class Button extends Component {
                 { 'mrc-ui-btn-neutral': color === COLOR.NEUTRAL },
                 { 'mrc-ui-btn-danger': color === COLOR.DANGER },
                 { 'mrc-ui-btn-outlined': isOutlined },
-                { 'mrc-ui-btn-wide-medium': wide === 'medium' }
+                { 'mrc-ui-btn-wide-medium': wide === 'medium' },
+                { 'mrc-ui-btn-wide-small': wide === 'small' }
             );
             iconClasses = classNames('mrc-ui-btn-icon');
         }

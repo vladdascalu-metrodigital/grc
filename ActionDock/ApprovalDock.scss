@@ -1,0 +1,41 @@
+@import '../lib/scss/variables';
+
+.mrc-ui-approval-dock {
+  display: grid;
+  grid-gap: $spacing-medium;
+  grid-template: 
+      'request . reject_ block_ cancel_ approve_' 
+      / max-content 1fr max-content max-content max-content max-content;
+
+  > :nth-child(2) {
+    grid-area: reject_; 
+  }
+
+  > :nth-child(3) {
+    grid-area: block_;
+  }
+
+  > :nth-child(4) {
+    grid-area: cancel_;
+    margin-left: $spacing-medium;
+  }
+
+  > :nth-child(5) {
+    grid-area: approve_;
+  }
+}
+
+@media screen and (max-width: 62rem) {
+  .mrc-ui-approval-dock {
+    grid-template: 
+      'request . block_  approve_' 
+      'request . reject_ cancel_' 
+      / max-content 1fr max-content max-content;
+
+    grid-gap: $spacing-small $spacing-medium;
+
+    > :nth-child(4) {
+      margin-left: 0;
+    }
+  }
+}

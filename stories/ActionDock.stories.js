@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import ActionDock, { SimpleActionDock } from '../ActionDock';
+import ApprovalDock from '../ActionDock/ApprovalDock';
 import { action } from '@storybook/addon-actions';
 
 storiesOf('Fundamentals/ActionDock', module)
@@ -13,5 +14,14 @@ storiesOf('Fundamentals/ActionDock', module)
             cancelText="NO"
             onApply={() => action('actionDockApply')()}
             applyText="YES"
+        />
+    ))
+    .add('ApprovalDock', () => (
+        <ApprovalDock
+            onReject={() => action('onReject')()}
+            onBlock={() => action('onBlock')()}
+            onCancel={() => action('onCancel')()}
+            onApprove={() => action('onApprove')()}
+            onSendInfoRequest={(data) => action('onSendInfoRequest')(data)}
         />
     ));
