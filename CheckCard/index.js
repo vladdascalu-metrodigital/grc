@@ -7,6 +7,10 @@ import { SIZE as ISIZE, COLOR as ICOLOR } from '../icons/index';
 
 import './index.scss';
 
+export const SIZE = {
+    SMALL: 'small',
+};
+
 export default class CheckCard extends Component {
     constructor(props) {
         super(props);
@@ -20,12 +24,13 @@ export default class CheckCard extends Component {
     }
 
     render() {
-        let { children, checked, disabled, title } = this.props;
+        let { children, checked, disabled, title, size } = this.props;
         children = typeof children === 'string' ? children.trim() : children;
         let className = classnames('mrc-ui-check-card', {
             'mrc-ui-check-card-no-content': !children,
             'mrc-ui-check-card-checked': checked && !disabled,
             'mrc-ui-check-card-disabled': disabled,
+            'mrc-ui-check-card-small': size === SIZE.SMALL,
         });
         return (
             <div className={className} onClick={this.handleClick}>
@@ -47,4 +52,5 @@ CheckCard.propTypes = {
     disabled: PropTypes.bool,
     onClick: PropTypes.func,
     title: PropTypes.string,
+    size: PropTypes.oneOf(['small']),
 };

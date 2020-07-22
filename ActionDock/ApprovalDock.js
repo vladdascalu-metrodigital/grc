@@ -69,6 +69,7 @@ export default class ApprovalDock extends PureComponent {
                                         <CheckCard
                                             key={k}
                                             title={v}
+                                            size="small"
                                             checked={infoRequestFormData.recipient == k}
                                             onClick={() => this.setInfoRequestFormData('recipient', k)}
                                         />

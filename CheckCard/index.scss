@@ -27,6 +27,10 @@
   cursor: not-allowed;
 }
 
+.mrc-ui-check-card-small {
+  min-height: 0;
+}
+
 .mrc-ui-check-card-head-row {
   display: grid;
   justify-content: space-between;
