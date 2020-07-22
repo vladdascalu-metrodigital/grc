@@ -378,6 +378,7 @@ export class ApprovalProcessPresentation extends Component {
         return (
             <Attachments
                 noPlaceholder={isContractingStep || !hasContracting}
+                noDeletedAttachmentsToggle={!approval.editableByCurrentUser}
                 contractUrl={this.contractUrl(country)}
                 disabled={!approval.editableByCurrentUser && !approval.forwardableByCurrentUser}
                 attachments={attachmentsAndPlaceholders}
