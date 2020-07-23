@@ -167,7 +167,7 @@ export default class CreditTableRowHistory extends Component {
                 >
                     {isNoChangeInCurrent ? (
                         <Table.D colSpan="3" borderFix>
-                            <CRTableCellBiggerText text={ts.nochange} color={'green'} />
+                            <CRTableCellBiggerText text={ts.nochange} color={'blue'} />
                         </Table.D>
                     ) : (
                         <React.Fragment>
@@ -419,7 +419,7 @@ export default class CreditTableRowHistory extends Component {
                     )}
                     {isNoChangeInCurrent ? (
                         <Table.D colSpan="3" borderFix>
-                            <CRTableCellBiggerText text={ts.nochange} color={'green'} />
+                            <CRTableCellBiggerText text={ts.nochange} color={'blue'} />
                         </Table.D>
                     ) : !_.isNil(blockingOption) ? (
                         <Table.D colSpan="3" borderFix>
