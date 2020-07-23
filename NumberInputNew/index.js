@@ -113,7 +113,7 @@ export default class NumberInputNew extends Component {
                 {label ? <InputLabel>{label}</InputLabel> : null}
                 <input
                     className={inputClassName}
-                    type="number"
+                    type="text"
                     value={value}
                     onChange={this.handleChange.bind(this)}
                     onBlur={onBlur}
