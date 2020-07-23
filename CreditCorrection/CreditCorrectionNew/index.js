@@ -250,6 +250,7 @@ export default class CreditCorrectionLayout extends Component {
                                       : null;
                               const failedActivation = this.isFailedActivation(item);
                               const editable = !activated || failedActivation;
+                              const isCashCustomer = _.get(item, 'cashCustomer') === true;
                               return {
                                   onLimitChange: (amount, initialAmount, creditProduct, creditPeriod, debitType) => {
                                       this.props.setCreditData(request.id, {
@@ -290,13 +291,23 @@ export default class CreditCorrectionLayout extends Component {
                                   availablePayments: availablePayments,
                                   limit: {
                                       current: {
-                                          amount: _.get(item, 'customer.creditLimit'),
-                                          product: _.get(item, 'customer.currentPayment.creditProduct'),
-                                          period: _.get(item, 'customer.currentPayment.creditPeriod'),
-                                          debitType: _.get(item, 'customer.currentPayment.debitType'),
+                                          amount: isCashCustomer ? null : _.get(item, 'customer.creditLimit'),
+                                          product: isCashCustomer
+                                              ? null
+                                              : _.get(item, 'customer.currentPayment.creditProduct'),
+                                          period: isCashCustomer
+                                              ? null
+                                              : _.get(item, 'customer.currentPayment.creditPeriod'),
+                                          debitType: isCashCustomer
+                                              ? null
+                                              : _.get(item, 'customer.currentPayment.debitType'),
                                           expiry: {
-                                              date: _.get(item, 'currentLimitExpiry.limitExpiryDate'),
-                                              amount: _.get(item, 'currentLimitExpiry.resetToLimitAmount'),
+                                              date: isCashCustomer
+                                                  ? null
+                                                  : _.get(item, 'currentLimitExpiry.limitExpiryDate'),
+                                              amount: isCashCustomer
+                                                  ? null
+                                                  : _.get(item, 'currentLimitExpiry.resetToLimitAmount'),
                                           },
                                       },
                                       new: {
@@ -311,7 +322,7 @@ export default class CreditCorrectionLayout extends Component {
                                       valid: _.get(item, 'valid'),
                                       readOnly: !editable || disabled,
                                   },
-                                  isCashCustomer: _.get(item, 'cashCustomer'),
+                                  isCashCustomer: isCashCustomer,
                                   limitExhaustion: _.get(item, 'customer.limitExhaustion'),
                                   failedActivation: failedActivation,
                                   activationResult: activationResult,
