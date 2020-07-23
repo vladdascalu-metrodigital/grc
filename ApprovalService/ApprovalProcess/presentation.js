@@ -1342,7 +1342,6 @@ export class ApprovalProcessPresentation extends Component {
         }
 
         const process = this.props.process.data;
-        console.log(process);
 
         if (process === null) {
             return null;

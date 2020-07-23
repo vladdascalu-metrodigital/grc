@@ -62,9 +62,9 @@ const AGENCY_LIST_RS = [
 
 const AGENCY_LIST_RU = [
     {
-        key: 'GLOBUS',
-        value: 'GLOBUS',
-        label: 'GLOBUS',
+        key: 'GLOBAS',
+        value: 'GLOBAS',
+        label: 'GLOBAS',
     },
 ];
 
