@@ -260,6 +260,9 @@ export default class LimitRequestLayout extends Component {
         fields.forEach((field) => {
             newAdditionalFieldsValidations[field.id] = true;
         });
+        this.setState({
+            additionalFieldsValidations: newAdditionalFieldsValidations,
+        });
         this.props.updateAdditionalFields(fields);
     };
 

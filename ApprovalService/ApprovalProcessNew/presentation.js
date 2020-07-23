@@ -1163,6 +1163,9 @@ export class ApprovalProcessPresentation extends Component {
         fields.forEach((field) => {
             newAdditionalFieldsValidations[field.id] = true;
         });
+        this.setState({
+            additionalFieldsValidations: newAdditionalFieldsValidations,
+        });
         this.props.updateAdditionalFields(fields);
     };
 
