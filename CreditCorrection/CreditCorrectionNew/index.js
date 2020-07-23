@@ -377,7 +377,7 @@ export default class CreditCorrectionLayout extends Component {
 
     anyCreditDataChanged(items) {
         const changedItem = items.find((item) => {
-            return _.get(item, 'creditOption') !== 'NONE' && _.isNil(_.get(item, 'creditData.blockingOption'));
+            return !(_.get(item, 'creditOption') === 'NONE' && _.isNil(_.get(item, 'creditData.blockingOption')));
         });
         return !_.isNil(changedItem);
     }
