@@ -10,8 +10,25 @@ import InputValidationMessages from '../InputValidationMessages';
 
 import './index.scss';
 
-let intOrFloat = /^(?:(?:-?\d+)|(?:-?\.\d+)|(?:-?\d+\.\d+))$/gm;
-let int = /^-?\d+$/gm;
+export function isIntOrFloat(numberString) {
+    if (isNaN(numberString)) {
+        return false;
+    }
+    if (!Number.isNaN(parseFloat(numberString))) {
+        return true;
+    }
+    return false;
+}
+
+export function isInt(numberString) {
+    if (isNaN(numberString)) {
+        return false;
+    }
+    if (Number.isInteger(parseFloat(numberString))) {
+        return true;
+    }
+    return false;
+}
 
 export default class NumberInputNew extends Component {
     constructor(props) {
@@ -54,10 +71,10 @@ export default class NumberInputNew extends Component {
         let nextValidationMessages = [];
         if (v || v === 0) {
             v = v.toString();
-            if (integer && v.match(int) === null) {
+            if (integer && !isInt(v)) {
                 isValid = false;
                 nextValidationMessages.push(lookup('mrc.forms.no_integer_number'));
-            } else if (v.match(intOrFloat) === null) {
+            } else if (!isIntOrFloat(v)) {
                 isValid = false;
                 nextValidationMessages.push(lookup('mrc.forms.no_number'));
             } else {
