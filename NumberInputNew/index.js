@@ -49,7 +49,7 @@ export default class NumberInputNew extends Component {
     }
 
     validate(v) {
-        let { integer, min, max, required, onValidChange, greaterThanMin } = this.props;
+        let { integer, min, max, required, onValidChange, greaterThanMin, lessThanMax } = this.props;
         let isValid = true;
         let nextValidationMessages = [];
         if (v || v === 0) {
@@ -62,20 +62,29 @@ export default class NumberInputNew extends Component {
                 nextValidationMessages.push(lookup('mrc.forms.no_number'));
             } else {
                 v = parseFloat(v);
-                if ((min || min === 0) && greaterThanMin === true && v <= min) {
-                    isValid = false;
-                    nextValidationMessages.push(lookup('mrc.forms.number_too_low'));
-                } else if ((min || min === 0) && v < min) {
-                    isValid = false;
-                    nextValidationMessages.push(lookup('mrc.forms.number_too_low'));
-                } else if (max && v > max) {
-                    isValid = false;
-                    nextValidationMessages.push(lookup('mrc.forms.number_too_high'));
+                if (min || min === 0) {
+                    if (greaterThanMin === true) {
+                        isValid = v > min;
+                    } else {
+                        isValid = v >= min;
+                    }
+                    if (!isValid) {
+                        nextValidationMessages.push(lookup('mrc.forms.number_too_low'));
+                    }
+                } else if (max || max === 0) {
+                    if (lessThanMax === true) {
+                        isValid = v < max;
+                    } else {
+                        isValid = v <= max;
+                    }
+                    if (!isValid) {
+                        nextValidationMessages.push(lookup('mrc.forms.number_too_high'));
+                    }
                 }
             }
         } else if (!v && v !== 0 && required) {
             isValid = false;
-            nextValidationMessages.push(lookup('mrc.forms.required'));
+            nextValidationMessages.push(lookup('mrc.forms.requiredNumber'));
         }
 
         if (
@@ -104,7 +113,7 @@ export default class NumberInputNew extends Component {
                 {label ? <InputLabel>{label}</InputLabel> : null}
                 <input
                     className={inputClassName}
-                    type="text"
+                    type="number"
                     value={value}
                     onChange={this.handleChange.bind(this)}
                     onBlur={onBlur}
@@ -131,5 +140,6 @@ NumberInputNew.propTypes = {
     min: PropTypes.number,
     max: PropTypes.number,
     greaterThanMin: PropTypes.bool,
+    lessThanMax: PropTypes.bool,
     label: PropTypes.string,
 };

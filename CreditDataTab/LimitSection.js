@@ -135,9 +135,10 @@ export default class LimitSection extends Component {
                                                 required={true}
                                                 value={_.isNil(this.state.amount) ? '' : this.state.amount}
                                                 onChange={(amount) => {
-                                                    const val = parseFloat(amount);
-                                                    const validAmount = !Number.isNaN(val) ? val : null;
-                                                    this.setState({ amount: validAmount });
+                                                    const validAmount = Number.isNaN(amount)
+                                                        ? null
+                                                        : parseFloat(amount);
+                                                    this.setState({ amount: amount });
                                                     customer.onLimitChange(
                                                         validAmount,
                                                         selectedProduct,
@@ -426,9 +427,10 @@ export default class LimitSection extends Component {
                                                 required={true}
                                                 value={_.isNil(this.state.amount) ? '' : this.state.amount}
                                                 onChange={(amount) => {
-                                                    const val = parseFloat(amount);
-                                                    const validAmount = !Number.isNaN(val) ? val : null;
-                                                    this.setState({ amount: validAmount });
+                                                    const validAmount = Number.isNaN(amount)
+                                                        ? null
+                                                        : parseFloat(amount);
+                                                    this.setState({ amount: amount });
                                                     customer.onLimitChange(
                                                         validAmount,
                                                         selectedProduct,
@@ -501,9 +503,10 @@ export default class LimitSection extends Component {
                                                             : this.state.newExpiryAmount
                                                     }
                                                     onChange={(amount) => {
-                                                        const val = parseFloat(amount);
-                                                        const validAmount = !Number.isNaN(val) ? val : null;
-                                                        this.setState({ newExpiryAmount: validAmount });
+                                                        const validAmount = Number.isNaN(amount)
+                                                            ? null
+                                                            : parseFloat(amount);
+                                                        this.setState({ newExpiryAmount: amount });
                                                         customer.onExpiryChange(validAmount, newExpiryDate);
                                                     }}
                                                     disabled={readOnly}

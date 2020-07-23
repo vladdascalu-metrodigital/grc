@@ -173,9 +173,10 @@ export default class CreditCorrectionCustomerActionsSection extends Component {
                                                 required={true}
                                                 value={_.isNil(this.state.amount) ? '' : this.state.amount}
                                                 onChange={(amount) => {
-                                                    const val = parseFloat(amount);
-                                                    const validAmount = !Number.isNaN(val) ? val : null;
-                                                    this.setState({ amount: validAmount });
+                                                    const validAmount = Number.isNaN(amount)
+                                                        ? null
+                                                        : parseFloat(amount);
+                                                    this.setState({ amount: amount });
                                                     customer.onLimitChange(
                                                         validAmount,
                                                         validAmount,
