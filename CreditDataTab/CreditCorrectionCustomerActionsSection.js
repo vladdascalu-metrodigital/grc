@@ -96,11 +96,8 @@ export default class CreditCorrectionCustomerActionsSection extends Component {
 
         const readOnly = _.get(customer, 'limit.readOnly');
         return (
-            <FormSection
-                title="Quick Action"
-                description="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-            >
-                <h4 className="mrc-ui-form-label mb-2">Choose Action</h4>
+            <FormSection title={ts.customerAction} description={ts.customerActionDescription}>
+                <h4 className="mrc-ui-form-label mb-2">{ts.chooseCustomerAction}</h4>
                 <Grid cols={4}>
                     <CheckCard
                         key={0}
@@ -162,9 +159,9 @@ export default class CreditCorrectionCustomerActionsSection extends Component {
                 </Grid>
                 {customerCreditOption === 'NEWCREDIT' ? (
                     <div className="mt-5">
-                        <InputLabel>Choose Limit Option</InputLabel>
+                        <InputLabel>{ts.addcreditdata}</InputLabel>
                         <Card dropShadow>
-                            <h4 className="mrc-ui-form-label mt-4 mb-1">Choose Limit</h4>
+                            <h4 className="mrc-ui-form-label mt-4 mb-1">{ts.addamount}</h4>
                             <Grid cols={4}>
                                 <CheckCard title="Amount" checked={true}>
                                     <FlexRow alignItems="baseline">
@@ -192,7 +189,7 @@ export default class CreditCorrectionCustomerActionsSection extends Component {
                                     </FlexRow>
                                 </CheckCard>
                             </Grid>
-                            <h4 className="mrc-ui-form-label mt-4 mb-1">Choose Credit Product</h4>
+                            <h4 className="mrc-ui-form-label mt-4 mb-1">{ts.chooseproduct}</h4>
                             <Grid cols={4}>
                                 {productOptions.map((x) => (
                                     <CheckCard

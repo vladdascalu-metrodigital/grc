@@ -71,16 +71,21 @@ export default class CreditDataTab extends Component {
             nochange: lookup('mrc.credittab.nochange'),
             groupActions: lookup('mrc.credittab.groupActions'), // Quick Group Actions
             groupActionsDescription: lookup('mrc.credittab.groupActionsDescription'), // desc
-            chooseGroupAction: lookup('mrc.credittab.chooseGroupAction'), // Choose Action
+            chooseGroupAction: lookup('mrc.credittab.chooseGroupAction'), // Choose Group Action
+            chooseCustomerAction: lookup('mrc.credittab.chooseCustomerAction'), // Choose Customer Action
             setOnCustomerLevel: lookup('mrc.credittab.setOnCustomerLevel'), // Choose Action
             activationResult: lookup('mrc.credittab.activationResult'),
             activationResultDescription: lookup('mrc.credittab.activationResultDescription'),
+            customerAction: lookup('mrc.credittab.customerAction'),
+            customerActionDescription: lookup('mrc.credittab.customerActionDescription'),
             noChangeAction: lookup('mrc.credittab.noChangeAction'),
             newCreditAction: lookup('mrc.credittab.newCreditAction'),
             noActionPossible: lookup('mrc.credittab.noActionPossible'),
             noActionPossibleDescription: lookup('mrc.credittab.noActionPossibleDescription'),
             noActionPossibleReason: lookup('mrc.credittab.noActionPossibleReason'),
             activationNoChange: lookup('mrc.credittab.activationNoChange'),
+            addcreditdata: lookup('mrc.credittab.addcreditdata'),
+            addamount: lookup('mrc.credittab.addamount'),
         };
     }
 
@@ -292,8 +297,8 @@ CreditDataTab.propTypes = {
             }),
             isCashCustomer: PropTypes.bool.isRequired,
             limitExhaustion: PropTypes.number,
-            failedActivation: PropTypes.bool,
-            activationResult: PropTypes.string,
+            failedActivation: PropTypes.bool, // creditcorrection, history
+            activationResult: PropTypes.string, // creditcorrection
         })
     ).isRequired,
     groupLimit: PropTypes.shape({
@@ -307,10 +312,10 @@ CreditDataTab.propTypes = {
     creditProgram: PropTypes.object,
     parent: PropTypes.oneOf(['creditlimit', 'history', 'approval', 'creditcorrection']).isRequired,
     dateFormat: PropTypes.string.isRequired,
-    isContractingStepEditable: PropTypes.bool,
-    historyRequestType: PropTypes.oneOf(['LIMIT_EXPIRY', 'LIMIT_REQUEST', 'CREDIT_CORRECTION', 'CONI_REQUEST']),
-    activated: PropTypes.bool,
-    disabled: PropTypes.bool,
-    selectedGroupAction: PropTypes.string,
-    handleChangeGroupAction: PropTypes.func,
+    isContractingStepEditable: PropTypes.bool, // approval
+    historyRequestType: PropTypes.oneOf(['LIMIT_EXPIRY', 'LIMIT_REQUEST', 'CREDIT_CORRECTION', 'CONI_REQUEST']), // history
+    activated: PropTypes.bool, // creditcorrection, history
+    disabled: PropTypes.bool, // creditcorrection
+    selectedGroupAction: PropTypes.string, // creditcorrection
+    handleChangeGroupAction: PropTypes.func, // creditcorrection
 };
