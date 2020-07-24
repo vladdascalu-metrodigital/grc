@@ -1,8 +1,10 @@
+import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import * as _ from 'lodash';
 import { lookup } from '../Util/translations';
-import React, { Component } from 'react';
+
 import ModalDialog from '../ModalDialog';
+import Button from '../Button';
 
 export default class CommentsAdd extends Component {
     constructor(props) {
@@ -60,18 +62,16 @@ export default class CommentsAdd extends Component {
     }
 
     render() {
+        let { canAddNew, addNewDisabled } = this.props;
+        if ((canAddNew && !addNewDisabled) === false) return null;
         return (
-            <div>
-                {this.props.canAddNew && !this.props.addNewDisabled ? (
-                    <button
-                        type="button"
-                        className="mrc-primary-large-add-button"
-                        onClick={this.toggleModal}
-                        disabled={this.props.addNewDisabled}
-                    >
-                        {lookup('mrc.comments.addcomment')}
-                    </button>
-                ) : null}
+            <div className="mt-5">
+                <Button
+                    text={lookup('mrc.comments.addcomment')}
+                    size="large"
+                    onClick={this.toggleModal}
+                    disabled={addNewDisabled}
+                />
                 {this.state.isModalVisible ? (
                     <ModalDialog
                         toggle={this.toggleModal}

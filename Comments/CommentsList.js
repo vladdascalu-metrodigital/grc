@@ -1,12 +1,15 @@
+import React from 'react';
 import { PropTypes } from 'prop-types';
 import * as _ from 'lodash';
 import { lookup } from '../Util/translations';
-import React from 'react';
+import { CommentPropTypes, PreviousRequestCommentsMetaPropTypes } from './CommentsPropTypes';
+
 import Author from '../Author';
-import { CommentPropTypes } from './CommentsPropTypes';
 import MrcDateTime from '../MrcDateTime';
+import CommentsRequestMeta from './CommentsRequestMeta';
 
 export function CommentsList(props) {
+    let { title, previousRequestMeta } = props;
     if (_.isEmpty(props.comments)) {
         return (
             <div className="mrc-ui-comments">
@@ -40,13 +43,18 @@ export function CommentsList(props) {
     ));
     return (
         <div className="mrc-ui-comments">
-            <h3 className="mrc-ui-comments-headline">{lookup('mrc.comments.title')}</h3>
+            {title ? <h3 className="mrc-ui-comments-headline">{title}</h3> : null}
+            {previousRequestMeta ? <CommentsRequestMeta {...previousRequestMeta} /> : null}
             <div className="mrc-ui-comments-list">{comments}</div>
         </div>
     );
 }
 
 CommentsList.propTypes = {
+    title: PropTypes.string,
+    previousRequestMeta: PropTypes.shape({
+        ...PreviousRequestCommentsMetaPropTypes,
+    }),
     comments: PropTypes.arrayOf(CommentPropTypes),
     timeoutDate: PropTypes.string,
 };

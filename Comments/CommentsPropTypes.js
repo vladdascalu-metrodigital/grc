@@ -7,3 +7,11 @@ export const CommentPropTypes = PropTypes.shape({
     uploaderPosition: PropTypes.string,
     uploaderPrincipalName: PropTypes.string.isRequired,
 });
+
+export const PreviousRequestCommentsMetaPropTypes = {
+    country: PropTypes.string,
+    startDate: PropTypes.string,
+    finalState: PropTypes.string,
+    groupLimit: PropTypes.number,
+    appliedLimit: PropTypes.number,
+};
