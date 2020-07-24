@@ -5,15 +5,22 @@
 .mrc-ui-action-dock {
     background-color: transparentize($color-brand-primary-tint-95, 0.1);
     border-top: $border-width-thin solid $color-palette-grey-tint-80;
-    border-left: $border-width-thin solid $color-palette-grey-tint-80;
-    border-right: $border-width-thin solid $color-palette-grey-tint-80;
     padding: $spacing-medium;
-    border-top-left-radius: $border-radius-small;
-    border-top-right-radius: $border-radius-small;
     box-shadow: transparentize($color-palette-grey-shade-90, 0.8) 0px -2px 30px 0px;
     position: fixed;
     bottom: 0;
+    width: 100%;
+    z-index: 30000;
+}
+
+@media #{$breakpoint-not-small} {
+  .mrc-ui-action-dock {
+    border-left: $border-width-thin solid $color-palette-grey-tint-80;
+    border-right: $border-width-thin solid $color-palette-grey-tint-80;
+    border-top-left-radius: $border-radius-small;
+    border-top-right-radius: $border-radius-small;
+
     width: calc(100% - #{$spacing-large} * 2);
     left: $spacing-large;
-    z-index: 30000;
+  }
 }

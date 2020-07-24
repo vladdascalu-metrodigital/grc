@@ -29,10 +29,27 @@
   .mrc-ui-approval-dock {
     grid-template: 
       'request . block_  approve_' 
-      'request . reject_ cancel_' 
+      'request . reject_ cancel_ ' 
       / max-content 1fr max-content max-content;
 
     grid-gap: $spacing-small $spacing-medium;
+
+    > :nth-child(4) {
+      margin-left: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 38rem) {
+  .mrc-ui-approval-dock {
+    grid-template: 
+      'block_  approve_' 
+      'reject_ cancel_ ' 
+      'request request ' 
+      / 1fr 1fr;
+
+    grid-gap: $spacing-small $spacing-medium;
+    justify-items: center;
 
     > :nth-child(4) {
       margin-left: 0;
