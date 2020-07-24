@@ -1,0 +1,33 @@
+@import '../lib/scss/colors';
+@import '../lib/scss/variables';
+@import '../lib/scss/typography';
+
+.mrc-ui-comments-request-meta {
+  display: flex;
+  border: $border-width-thin solid $color-palette-grey-tint-80;
+  border-bottom: 0;
+}
+
+.mrc-ui-comments-request-meta-block {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: $spacing-extra-large;
+  
+  color: $color-palette-grey-tint-20;
+  line-height: 1;
+  font-weight: bold;
+
+}
+.mrc-ui-comments-request-meta-block + .mrc-ui-comments-request-meta-block {
+  border-left: $border-width-thin solid $color-palette-grey-tint-80;
+}
+
+.mrc-ui-comments-request-meta-label {
+  font-weight: bold;
+  line-height: 1;
+  color: $color-palette-grey-tint-50;
+  font-size: $font-size-8;
+}

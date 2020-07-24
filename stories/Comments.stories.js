@@ -4,18 +4,23 @@ import { action } from '@storybook/addon-actions';
 
 import Comments from '../Comments';
 
+import { comment, blocked, comments, previousRequestsComments } from './fixtures/comments';
+
 storiesOf('Comments', module)
     .add('Standard', () => (
         <Comments
             timeoutdate={'2020-04-21T12:10:46Z'}
-            comments={[
-                {
-                    comment: 'foo',
-                    uploaderPrincipalName: 'John Doe',
-                    uploaderPosition: 'HOT',
-                    uploadTimestamp: '2019-02-02',
-                },
-            ]}
+            comments={[comment]}
+            onSave={(newValue) => {
+                action('comment save')(newValue);
+            }}
+        />
+    ))
+    .add('Disabled', () => (
+        <Comments
+            timeoutdate={'2020-04-21T12:10:46Z'}
+            comments={[comment]}
+            disabled
             onSave={(newValue) => {
                 action('comment save')(newValue);
             }}
@@ -24,14 +29,7 @@ storiesOf('Comments', module)
     .add('Blocked/Rejected', () => (
         <Comments
             timeoutDate={'2020-04-21T12:10:46Z'}
-            comments={[
-                {
-                    comment: 'strategy.decision.blocked',
-                    uploaderPrincipalName: 'John Doe',
-                    uploaderPosition: 'HOT',
-                    uploadTimestamp: '2019-02-02',
-                },
-            ]}
+            comments={[blocked]}
             onSave={(newValue) => {
                 action('comment save')(newValue);
             }}
@@ -39,38 +37,7 @@ storiesOf('Comments', module)
     ))
     .add('Multiple Comments', () => (
         <Comments
-            comments={[
-                {
-                    comment: 'foo',
-                    uploaderPrincipalName: 'John Doe',
-                    uploaderPosition: 'HOT',
-                    uploadTimestamp: '2019-02-02',
-                },
-                {
-                    comment: 'bar',
-                    uploaderPrincipalName: 'John Doe',
-                    uploaderPosition: 'HOT',
-                    uploadTimestamp: '2019-02-02',
-                },
-                {
-                    comment: 'bar',
-                    uploaderPrincipalName: 'John Doe',
-                    uploaderPosition: 'HOT',
-                    uploadTimestamp: '2019-02-02',
-                },
-                {
-                    comment: 'bar',
-                    uploaderPrincipalName: 'John Doe',
-                    uploaderPosition: 'HOT',
-                    uploadTimestamp: '2019-02-02',
-                },
-                {
-                    comment: 'bar',
-                    uploaderPrincipalName: 'John Doe',
-                    uploaderPosition: 'HOT',
-                    uploadTimestamp: '2019-02-02',
-                },
-            ]}
+            comments={comments}
             onSave={(newValue) => {
                 action('comment save')(newValue);
             }}
@@ -81,5 +48,24 @@ storiesOf('Comments', module)
             onSave={(newValue) => {
                 action('comment save')(newValue);
             }}
+        />
+    ))
+    .add('Previous Comments Loadable', () => (
+        <Comments
+            comments={[comment]}
+            onSave={(newValue) => {
+                action('comment save')(newValue);
+            }}
+            onClickShowPrevious={() => action('load previous')()}
+        />
+    ))
+    .add('Previous Comments Loaded', () => (
+        <Comments
+            comments={[comment]}
+            onSave={(newValue) => {
+                action('comment save')(newValue);
+            }}
+            onClickShowPrevious={() => action('load previous')()}
+            previousRequestsComments={previousRequestsComments}
         />
     ));

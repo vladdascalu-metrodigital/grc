@@ -1,17 +1,23 @@
-@import '../lib/scss/main.scss';
+// @import '../lib/scss/main.scss';
+@import '../lib/scss/variables';
+@import '../lib/scss/colors';
+@import '../lib/scss/typography';
 
 .mrc-ui-comment-component {
-    padding: $spacing-large 0;
-    background-color: $color-contrast-white;
+  display: grid;
+  justify-items: center;
+  grid-gap: $spacing-row-gap;
+  
+  padding: $spacing-large 0;
+  background-color: $color-contrast-white;
 }
 
-.mrc-ui-add-comment-button {
-    width: auto !important;
-    padding: $spacing-none $spacing-extra-large !important;
-    margin: $spacing-large auto $spacing-large auto !important;
+.mrc-ui-comment-component-previous {
+  margin-top: $spacing-large;
 }
 
 .mrc-ui-comments-headline {
+    margin-top: $spacing-large;
     margin-bottom: $spacing-extra-small;
     padding: $spacing-extra-small $spacing-medium;
     color: $color-brand-primary-default;
@@ -55,6 +61,10 @@
         border: $border-width-thin solid $color-palette-grey-tint-80;
         padding: 2rem 0rem !important;
     }
+}
+
+.mrc-ui-comments {
+  width: 100%;
 }
 
 @media #{$breakpoint-medium} {

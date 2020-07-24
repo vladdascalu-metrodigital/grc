@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
-import './index.scss';
 import { PropTypes } from 'prop-types';
+import { lookup } from '../Util/translations';
+
 import { CommentsList } from './CommentsList';
 import CommentsAdd from './CommentsAdd';
-import { CommentPropTypes } from './CommentsPropTypes';
+import { CommentPropTypes, PreviousRequestCommentsMetaPropTypes } from './CommentsPropTypes';
+import Button from '../Button';
+
+import './index.scss';
+
+let previousRequestsTitles = [
+    'mrc.comments.last_request',
+    'mrc.comments.secont_last_request',
+    'mrc.comments.third_last_request',
+];
 
 export default class Comments extends Component {
     constructor(props) {
@@ -19,6 +29,7 @@ export default class Comments extends Component {
     }
 
     render() {
+        let { onClickShowPrevious, previousRequestsComments } = this.props;
         return (
             <div className="mrc-ui-comment-component">
                 <CommentsAdd
@@ -28,7 +39,25 @@ export default class Comments extends Component {
                     canAddNew={!this.props.disabled}
                     addNewDisabled={this.props.disabled}
                 />
-                <CommentsList {...this.props} />
+                <CommentsList title={lookup('mrc.comments.title')} {...this.props} />
+                {onClickShowPrevious && !previousRequestsComments ? (
+                    <Button
+                        onClick={onClickShowPrevious}
+                        text={lookup('mrc.comments.show_previous_comments')}
+                        isOutlined
+                    />
+                ) : null}
+                {previousRequestsComments ? (
+                    <div className="mrc-ui-comment-component-previous">
+                        {previousRequestsComments.slice(0, 3).map((item, i) => (
+                            <CommentsList
+                                previousRequestMeta={item}
+                                title={previousRequestsTitles[i]}
+                                comments={item.comments}
+                            />
+                        ))}
+                    </div>
+                ) : null}
             </div>
         );
     }
@@ -39,4 +68,11 @@ Comments.propTypes = {
     comments: PropTypes.arrayOf(CommentPropTypes),
     disabled: PropTypes.bool,
     timeoutDate: PropTypes.string,
+    onClickShowPrevious: PropTypes.func,
+    previousRequestsComments: PropTypes.arrayOf(
+        PropTypes.shape({
+            ...PreviousRequestCommentsMetaPropTypes,
+            comments: PropTypes.arrayOf(CommentPropTypes),
+        })
+    ),
 };
