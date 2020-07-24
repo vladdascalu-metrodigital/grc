@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import ActionDock from './index';
-import ModalDialog from '../ModalDialog';
-import { FlexRow, FlexColumn } from '../Flex';
-import Button from '../Button';
-import TextArea from '../TextArea';
-import CheckCard from '../CheckCard';
-import InputLabel from '../InputLabel';
+import ActionDock from '../../ActionDock';
+import ModalDialog from '../../ModalDialog';
+import { FlexRow, FlexColumn } from '../../Flex';
+import Button from '../../Button';
+import TextArea from '../../TextArea';
+import CheckCard from '../../CheckCard';
+import InputLabel from '../../InputLabel';
 
 import './ApprovalDock.scss';
 
