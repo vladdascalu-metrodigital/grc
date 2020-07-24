@@ -53,21 +53,21 @@ export const comments = [
 export const previousRequestsComments = [
     {
         startDate: '2020-04-01',
-        finalState: 'FINAL STATE',
+        finalState: 'STATE.BLOCKED',
         groupLimit: 20400,
         appliedLimit: 14500,
         comments: [comments[2]],
     },
     {
         startDate: '2020-03-21',
-        finalState: 'FINAL STATE',
+        finalState: 'STATE.APPROVED',
         groupLimit: 19400,
         appliedLimit: null,
         comments: [comments[3], comments[0]],
     },
     {
         startDate: '2020-01-06',
-        finalState: 'FINAL STATE',
+        finalState: 'STATE.ABORTED',
         groupLimit: 5000,
         appliedLimit: 4500,
         comments: [comments[1], comments[2], comments[4]],
