@@ -226,7 +226,8 @@ export default class CreditCorrectionLayout extends Component {
         }
 
         const request = _.get(this.props, 'request.data');
-        const activated = request.activated !== undefined ? request.activated : false;
+        const activationSubmitted = request.activationSubmitted !== undefined ? request.activationSubmitted : false;
+        const sucActivated = request.activated !== undefined ? request.activated : false;
         const disabled = this.state.canceled || !request.canCorrect;
 
         const groupLimit = this.createGroupLimit(request);
@@ -249,7 +250,7 @@ export default class CreditCorrectionLayout extends Component {
                                       ? lookup('history.' + item.activationInfo.resultStatus)
                                       : null;
                               const failedActivation = this.isFailedActivation(item);
-                              const editable = !activated || failedActivation;
+                              const editable = (!activationSubmitted || failedActivation) && !sucActivated;
                               const isCashCustomer = _.get(item, 'cashCustomer') === true;
                               return {
                                   onLimitChange: (amount, initialAmount, creditProduct, creditPeriod, debitType) => {
@@ -330,7 +331,7 @@ export default class CreditCorrectionLayout extends Component {
                           })
                         : []
                 }
-                activated={activated}
+                activated={activationSubmitted}
                 disabled={disabled}
                 selectedGroupAction={_.get(request, 'selectedGroupAction')}
                 handleChangeGroupAction={(selectedGroupAction) => {
