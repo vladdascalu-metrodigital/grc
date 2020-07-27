@@ -39,9 +39,12 @@ export default class CreditTableRowCreditCorrection extends Component {
         const newPeriod = _.get(customer, 'limit.new.period');
         const newDebitType = _.get(customer, 'limit.new.debitType');
 
+        // in case in de we will fill the customer with remove block option after submit, then we should show the correct status
+        const hasRemoveBlockOptionForDE =
+            _.get(customer, 'limit.new.blockingOption') === 'REMOVEBLOCK' && country.toLowerCase() === 'de';
+        const hasBlockingOption = !_.isNil(_.get(customer, 'limit.new.blockingOption'));
         const isNoChange = this.isCreditCorrectionNoChanged(isCashCustomer, customerCreditOption, groupCreditOption);
         const isValid = _.get(customer, 'limit.valid');
-        const hasBlockingOption = !_.isNil(_.get(customer, 'limit.new.blockingOption'));
         const isCreditDataInRed = customer.failedActivation === true;
         return (
             <React.Fragment>
@@ -105,7 +108,16 @@ export default class CreditTableRowCreditCorrection extends Component {
                             </Table.D>
                         </React.Fragment>
                     )}
-                    {isNoChange ? (
+                    {hasRemoveBlockOptionForDE ? (
+                        <Table.D colSpan="3">
+                            <CRTableCellBiggerText
+                                text={lookup(
+                                    'mrc.blocking-option.' + _.get(customer, 'limit.new.blockingOption').toLowerCase()
+                                )}
+                                color={isCreditDataInRed ? 'red' : 'green'}
+                            />
+                        </Table.D>
+                    ) : isNoChange ? (
                         <Table.D colSpan="3">
                             <CRTableCellBiggerText text={ts.nochange} color={'blue'} />
                         </Table.D>
