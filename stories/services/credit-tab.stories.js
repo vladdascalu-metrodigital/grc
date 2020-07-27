@@ -2,10 +2,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import CreditTab from '../../new-ui-topics/CreditTab';
 
-storiesOf('S Credit Limit/Credit Tab', module).add('Credit Tab', () => <CreditTab />);
-
-storiesOf('Services/Credit Tab', module)
-    .add('Standard', () => (
+storiesOf('New UI Topics/Archive/Credit Tab', module)
+    .add('CreditTab', () => <CreditTab />)
+    .add('CreditLimit', () => (
         <CreditTab
             parent={'creditlimit'}
             country={'DE'}
