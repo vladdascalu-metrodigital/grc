@@ -245,11 +245,13 @@ export default class CreditCorrectionLayout extends Component {
                     _.get(request, 'requestedItems')
                         ? request.requestedItems.map((item) => {
                               const availablePayments = _.get(item, 'customer.availablePayments');
+                              const failedActivation = this.isFailedActivation(item);
                               const activationResult =
                                   item.activationInfo != null && item.activationInfo.resultStatus != null
                                       ? lookup('history.' + item.activationInfo.resultStatus)
+                                      : failedActivation
+                                      ? lookup('history.requestActivationFailedUnknown')
                                       : null;
-                              const failedActivation = this.isFailedActivation(item);
                               const editable = (!activationSubmitted || failedActivation) && !sucActivated;
                               const isCashCustomer = _.get(item, 'cashCustomer') === true;
                               return {
