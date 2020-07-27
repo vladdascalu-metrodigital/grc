@@ -362,12 +362,12 @@ export default class CreditCorrectionLayout extends Component {
         req.requestedItems.map((item) => {
             const currentLimit = item.customer.creditLimit !== undefined ? item.customer.creditLimit : 0;
             currentGroupLimit += currentLimit;
-            const amount =
-                !_.isNil(item.creditData.amount) && !_.isNaN(item.creditData.amount)
-                    ? item.creditData.amount
-                    : !_.isNil(item.customer.creditLimit)
-                    ? item.customer.creditLimit
-                    : 0;
+            const isRemoveBlock = _.get(item, 'creditData.blockingOption') === 'REMOVEBLOCK';
+            const amount = isRemoveBlock
+                ? currentLimit
+                : !_.isNil(item.creditData.amount) && !_.isNaN(item.creditData.amount)
+                ? item.creditData.amount
+                : currentLimit;
             requestedGroupLimit += amount;
             exhaustionGroupLimit += item.customer.limitExhaustion !== undefined ? item.customer.limitExhaustion : 0;
             const failedActivation = this.isFailedActivation(item);
