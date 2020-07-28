@@ -342,8 +342,10 @@ export default class CreditCorrectionLayout extends Component {
         req.requestedItems.map((item) => {
             const currentLimit = item.customer.creditLimit !== undefined ? item.customer.creditLimit : 0;
             currentGroupLimit += currentLimit;
-            const isRemoveBlock = _.get(item, 'creditData.blockingOption') === 'REMOVEBLOCK';
-            const amount = isRemoveBlock
+            const isRemoveBlockOrSoftBlock =
+                _.get(item, 'creditData.blockingOption') === 'REMOVEBLOCK' ||
+                _.get(item, 'creditData.blockingOption') === 'SOFTBLOCK';
+            const amount = isRemoveBlockOrSoftBlock
                 ? currentLimit
                 : !_.isNil(item.creditData.amount) && !_.isNaN(item.creditData.amount)
                 ? item.creditData.amount

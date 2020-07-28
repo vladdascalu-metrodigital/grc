@@ -136,7 +136,7 @@ export default class CreditCorrectionCustomerActionsSection extends Component {
                                   return (
                                       <CheckCard
                                           key={i + 2}
-                                          title={action.translationKey}
+                                          title={lookup(action.translationKey)}
                                           checked={action.id === customerCreditOption}
                                           disabled={readOnly}
                                           onClick={() => {
