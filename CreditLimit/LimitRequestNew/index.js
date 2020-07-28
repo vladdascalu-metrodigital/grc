@@ -337,14 +337,23 @@ export default class LimitRequestLayout extends Component {
         if (!this.props.request.data) return null;
 
         const limitRequest = this.props.request.data || {};
+        const nonePlaceholderDefined =
+            limitRequest.placeholderTypes !== undefined &&
+            limitRequest.placeholderTypes !== null &&
+            limitRequest.placeholderTypes.length == 1 &&
+            limitRequest.placeholderTypes[0] === 'none';
         if (limitRequest.fileTypes) this.FILE_TYPES = limitRequest.fileTypes;
-        if (limitRequest.collateralAttachments) this.COLLATERALS_ATTACHMENTS = limitRequest.collateralAttachments;
+        if (limitRequest.collateralAttachments !== undefined && limitRequest.collateralAttachments !== null) {
+            this.COLLATERALS_ATTACHMENTS = limitRequest.collateralAttachments;
+        } else {
+            this.COLLATERALS_ATTACHMENTS = [];
+        }
         if (limitRequest.placeholderTypes)
             this.PLACEHOLDER_TYPES = limitRequest.placeholderTypes
                 ? limitRequest.placeholderTypes
                 : limitRequest.fileTypes;
 
-        const _attachments = List(limitRequest.attachments).concat(this.COLLATERALS_ATTACHMENTS);
+        const _attachments = List(this.COLLATERALS_ATTACHMENTS);
         const _placeholders = List(
             _.uniqBy(limitRequest.placeholders, 'fileType')
                 .map((ph) => {
@@ -353,7 +362,7 @@ export default class LimitRequestLayout extends Component {
                 .filter((ph) => _attachments.filter((a) => !a.deleted && a.fileType === ph.fileType).isEmpty())
         );
 
-        const withDeleteRestore = _attachments.map(a => {
+        const withDeleteRestore = _attachments.map((a) => {
             return a.deleted
                 ? {
                       ...a,
@@ -406,7 +415,7 @@ export default class LimitRequestLayout extends Component {
 
         return (
             <Attachments
-                noPlaceholder={false}
+                noPlaceholder={nonePlaceholderDefined}
                 contractUrl={null}
                 noDeletedAttachmentsToggle={true}
                 disabled={!this.props.request.data || this.props.request.loading}
