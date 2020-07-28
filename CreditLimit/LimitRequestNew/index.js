@@ -28,12 +28,14 @@ import { createBlockingInfo } from '../../Util/blockingInfoUtils';
 import CreditDataTab from '../../CreditDataTab';
 
 import * as _ from 'lodash';
+import { List } from 'immutable';
 import CustomerDataGroup from '../../CustomerDataGroup';
 import { displayName } from '../../Util';
 
 export default class LimitRequestLayout extends Component {
     FILE_TYPES = [''];
     COLLATERALS = [''];
+    PLACEHOLDER_TYPES = [''];
 
     constructor(props) {
         super(props);
@@ -337,32 +339,99 @@ export default class LimitRequestLayout extends Component {
         const limitRequest = this.props.request.data || {};
         if (limitRequest.fileTypes) this.FILE_TYPES = limitRequest.fileTypes;
         if (limitRequest.collateralAttachments) this.COLLATERALS_ATTACHMENTS = limitRequest.collateralAttachments;
+        if (limitRequest.placeholderTypes)
+            this.PLACEHOLDER_TYPES = limitRequest.placeholderTypes
+                ? limitRequest.placeholderTypes
+                : limitRequest.fileTypes;
+
+        const _attachments = List(limitRequest.attachments).concat(this.COLLATERALS_ATTACHMENTS);
+        const _placeholders = List(
+            _.uniqBy(limitRequest.placeholders, 'fileType')
+                .map((ph) => {
+                    return { ...ph, status: 'missing', secondaryInteraction: 'add' };
+                })
+                .filter((ph) => _attachments.filter((a) => !a.deleted && a.fileType === ph.fileType).isEmpty())
+        );
+
+        const withDeleteRestore = _attachments.map(a => {
+            return a.deleted
+                ? {
+                      ...a,
+                      status: 'deleted',
+                      secondaryInteraction: a.isCollateral ? null : 'restore',
+                      handleSecondaryAction: () =>
+                          this.props.restoreAttachment(limitRequest.id, limitRequest.version, a.id),
+                  }
+                : {
+                      ...a,
+                      status: 'normal',
+                      secondaryInteraction: a.isCollateral ? null : 'delete',
+                      handleSecondaryAction: () =>
+                          this.props.deleteAttachment(limitRequest.id, limitRequest.version, a.id),
+                  };
+        });
+
+        const addAttachment = (fileType, file, title, expiryDate, amount, metadata) => {
+            this.props.addAttachment(
+                fileType,
+                limitRequest.id,
+                file,
+                title,
+                limitRequest.version,
+                expiryDate,
+                amount,
+                metadata
+            );
+        };
+
+        const country = limitRequest.requestedCustomerId ? limitRequest.requestedCustomerId.country : null;
+
+        const attachmentsAndPlaceholders = withDeleteRestore
+            .concat(
+                _placeholders.map((a) => {
+                    return {
+                        ...a,
+                        disabled: false,
+                        secondaryInteraction: 'delete',
+                        handlePrimaryAction: () => null,
+                        handleSecondaryAction: () =>
+                            this.props.deletePlaceholder(limitRequest.id, limitRequest.version, a.id),
+                    };
+                })
+            )
+            .toArray();
+
+        const fileTypes = List(this.FILE_TYPES).toArray();
+        const placeholderTypes = List(this.PLACEHOLDER_TYPES).toArray();
+
         return (
             <Attachments
-                noPlaceholder={true}
+                noPlaceholder={false}
+                contractUrl={null}
                 noDeletedAttachmentsToggle={true}
                 disabled={!this.props.request.data || this.props.request.loading}
                 readonly={!this.props.request.data || this.props.request.loading}
-                attachments={(this.COLLATERALS_ATTACHMENTS ? this.COLLATERALS_ATTACHMENTS : []).map((a) => {
-                    return a.deleted
-                        ? {
-                              ...a,
-                              status: 'deleted',
-                              secondaryInteraction: a.isCollateral ? null : 'restore',
-                              handleSecondaryAction: () => this.props.restoreAttachment(limitRequest.id, a.id),
-                          }
-                        : {
-                              ...a,
-                              status: 'normal',
-                              secondaryInteraction: a.isCollateral ? null : 'delete',
-                              handleSecondaryAction: () => this.props.deleteAttachment(limitRequest.id, a.id),
-                          };
-                })}
-                addAttachment={(fileType, file, title, expiryDate, amount, metadataJson) =>
-                    this.props.addAttachment(fileType, limitRequest.id, file, title, expiryDate, amount, metadataJson)
-                }
-                fileTypes={this.FILE_TYPES}
-                country={limitRequest.requestedCustomerId.country}
+                attachments={attachmentsAndPlaceholders}
+                addAttachment={addAttachment}
+                fileTypes={fileTypes}
+                placeholderTypes={placeholderTypes}
+                country={country}
+                currentApprover={''}
+                savePlaceholder={(fileType) => {
+                    const matchingFileType = (x) => x.filter((a) => a.fileType === fileType);
+
+                    if (!matchingFileType(_placeholders).isEmpty()) {
+                        _.flowRight(this.props.showError, lookup)('limitRequest.errors.duplicatePlaceholder');
+                    } else if (
+                        !matchingFileType(_attachments)
+                            .filter((a) => !a.deleted)
+                            .isEmpty()
+                    ) {
+                        _.flowRight(this.props.showError, lookup)('limitRequest.errors.attachmentAlreadyUploaded');
+                    } else {
+                        this.props.addPlaceholder(limitRequest.id, limitRequest.version, fileType);
+                    }
+                }}
             />
         );
     }
@@ -684,6 +753,7 @@ export default class LimitRequestLayout extends Component {
 }
 
 LimitRequestLayout.propTypes = {
+    showError: PropTypes.func,
     cleanup: PropTypes.func.isRequired,
     updateUiPageTitle: PropTypes.func.isRequired,
     showAuxControl: PropTypes.func.isRequired,
@@ -697,6 +767,8 @@ LimitRequestLayout.propTypes = {
     addAttachment: PropTypes.func.isRequired,
     restoreAttachment: PropTypes.func.isRequired,
     deleteAttachment: PropTypes.func.isRequired,
+    addPlaceholder: PropTypes.func,
+    deletePlaceholder: PropTypes.func,
     setCreditData: PropTypes.func.isRequired,
     setCreditDataWithType: PropTypes.func.isRequired,
     setCreditDataWithCreditOption: PropTypes.func.isRequired,

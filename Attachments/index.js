@@ -11,8 +11,8 @@ import Toggle from '../Toggle';
 import * as _ from 'lodash';
 
 export default class Attachments extends Component {
-    toggleModal = (fileType) => {
-        this.setState((prevState) => ({
+    toggleModal = fileType => {
+        this.setState(prevState => ({
             isModalVisible: !prevState.isModalVisible,
             fileType: fileType ? fileType : null,
             segment: 'Document',
@@ -32,11 +32,12 @@ export default class Attachments extends Component {
     modalDialogContent() {
         const isPlaceholder = this.state.segment === 'Placeholder';
         const fileTypes = _.isEmpty(this.props.fileTypes) ? ['general'] : this.props.fileTypes;
+        const placeholderTypes = _.isEmpty(this.props.placeholderTypes) ? fileTypes : this.props.placeholderTypes;
         return (
             <div>
                 {this.props.noPlaceholder || this.state.fileType ? null : (
                     <SegmentedControl
-                        callback={(newSegment) => this.setState({ segment: newSegment })}
+                        callback={newSegment => this.setState({ segment: newSegment })}
                         selectedSegment={'Document'}
                         labels={['Document', 'Placeholder']}
                     />
@@ -45,10 +46,11 @@ export default class Attachments extends Component {
                     onlyPlaceholder={isPlaceholder}
                     country={this.props.country}
                     readonly={this.props.readonly}
-                    fileTypes={this.state.fileType ? [this.state.fileType] : fileTypes}
+                    fileTypes={this.state.fileTypes ? [this.state.fileTypes] : fileTypes}
+                    placeholderTypes={this.state.placeholderTypes ? [this.state.placeholderTypes] : placeholderTypes}
                     callback={
                         isPlaceholder
-                            ? (fileType) => {
+                            ? fileType => {
                                   this.props.savePlaceholder(fileType);
                                   this.toggleModal();
                               }
@@ -77,7 +79,7 @@ export default class Attachments extends Component {
 
     contractLink() {
         const hasContractPlaceholder = !_.isEmpty(
-            this.props.attachments.filter((a) => a.fileType == 'contract' && a.status == 'missing')
+            this.props.attachments.filter(a => a.fileType == 'contract' && a.status == 'missing')
         );
         return hasContractPlaceholder && this.props.contractUrl && !this.props.readonly ? (
             <a target="_blank" rel="noopener noreferrer" href={this.props.contractUrl}>
@@ -92,7 +94,7 @@ export default class Attachments extends Component {
         }
         const _attachments = this.state.showDeletedAttachments
             ? this.props.attachments
-            : this.props.attachments.filter((a) => a.status !== 'deleted');
+            : this.props.attachments.filter(a => a.status !== 'deleted');
         const attachments = _attachments.map((attachment, index) => {
             const isMissing = attachment.status === 'missing';
             const status = attachment.status ? attachment.status : 'normal';
@@ -177,6 +179,7 @@ Attachments.propTypes = {
     addAttachment: PropTypes.func,
     savePlaceholder: PropTypes.func,
     fileTypes: PropTypes.array,
+    placeholderTypes: PropTypes.array,
     fileTypesForCC: PropTypes.array,
     country: PropTypes.string,
     readonly: PropTypes.bool,
