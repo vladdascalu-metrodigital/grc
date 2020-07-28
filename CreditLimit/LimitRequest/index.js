@@ -574,7 +574,7 @@ export default class LimitRequestLayout extends Component {
                 ? limitRequest.placeholderTypes
                 : limitRequest.fileTypes;
 
-        const _attachments = List(limitRequest.attachments).concat(List(this.COLLATERALS_ATTACHMENTS));
+        const _attachments = List(this.COLLATERALS_ATTACHMENTS);
         const _placeholders = List(
             _.uniqBy(limitRequest.placeholders, 'fileType')
                 .map(ph => {
