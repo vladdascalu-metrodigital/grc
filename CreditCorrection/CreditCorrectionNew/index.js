@@ -30,8 +30,6 @@ export default class CreditCorrectionLayout extends Component {
             enableSpinner: false,
             newComment: '',
         };
-        this.addNewComment = this.addNewComment.bind(this);
-        this.handleNewCommentChange = this.handleNewCommentChange.bind(this);
     }
 
     UNSAFE_componentWillMount() {
@@ -142,32 +140,14 @@ export default class CreditCorrectionLayout extends Component {
         );
     }
 
-    handleNewCommentChange(text) {
-        this.setState({ newComment: text === undefined || text === null ? '' : text });
-    }
-
-    addNewComment = () => {
-        if (!this.props.request.data) return;
-
-        const creditCorrectionRequest = this.props.request.data;
-        const comment = this.state.newComment;
-        this.setState({ newComment: '' });
-        if (comment.trim().length > 0) {
-            this.props.addComment(creditCorrectionRequest.id, comment);
-        }
-    };
-
     createCommentsPanel() {
         if (!this.props.request.data) return null;
         const creditCorrectionRequest = this.props.request.data;
         return (
             <Comments
-                ready={this.props.request.data && !this.props.request.loading}
-                newComment={this.state.newComment}
-                data={creditCorrectionRequest.comments}
-                addComment={this.addNewComment}
-                handleNewCommentChange={this.handleNewCommentChange}
-                addCommentTitle={lookup('mrc.comments.addcomment')}
+                comments={creditCorrectionRequest.comments}
+                disabled={!creditCorrectionRequest || creditCorrectionRequest.loading}
+                onSave={(newComment) => this.props.addComment(creditCorrectionRequest.id, newComment)}
             />
         );
     }
