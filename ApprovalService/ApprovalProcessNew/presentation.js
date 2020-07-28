@@ -370,10 +370,8 @@ export class ApprovalProcessPresentation extends Component {
 
         const hasContracting = !List(approval.pendingContractingPositions).isEmpty();
         const currentApprover = _.get(approval, 'currentStep.requiredPosition');
-        const _fileTypes =
+        const fileTypes =
             !isContractingStep && currentApprover === 'CC' ? List(this.FILE_TYPES_FOR_CC) : List(this.FILE_TYPES);
-
-        const fileTypes = hasContracting ? _fileTypes.push('contracting').toArray() : _fileTypes.toArray();
 
         return (
             <Attachments
