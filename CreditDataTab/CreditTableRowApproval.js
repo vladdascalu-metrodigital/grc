@@ -9,6 +9,7 @@ import CRTableCellCreditProduct from './CreditTable/CRTableCellCreditProduct';
 import CRTableCellBiggerText from './CreditTable/CRTableCellBiggerText';
 import ToggleIndicator from '../ToggleIndicator';
 import { lookup } from '../Util/translations';
+import { createProductTimePeriod } from './creditDataTabUtil';
 
 export default class CreditTableRowApproval extends Component {
     retrieveNewCreditData(customer, isNoChangeInNew, limitType, paymentMethodType) {
@@ -169,10 +170,11 @@ export default class CreditTableRowApproval extends Component {
                             <Table.D rowSpan="2" borderFix>
                                 <CRTableCellCreditProduct
                                     productName={lookup(_current(customer, 'product'))}
-                                    productTimePeriod={[
-                                        lookup(_current(customer, 'period')),
-                                        _current(customer, 'period') ? ts.days : '-',
-                                    ].join(' ')}
+                                    productTimePeriod={createProductTimePeriod(
+                                        _current(customer, 'period'),
+                                        _current(customer, 'period') ? lookup(_current(customer, 'period')) : null,
+                                        ts.days
+                                    )}
                                     productPaymentMethod={lookup(_current(customer, 'debitType'))}
                                     color={'blue'}
                                 />
@@ -209,12 +211,15 @@ export default class CreditTableRowApproval extends Component {
 
                             <Table.D borderFix>
                                 <CRTableCellCreditProduct
-                                    productName={_.get(customer, 'limit.wish.product')}
-                                    productTimePeriod={[
-                                        lookup(_.get(customer, 'limit.wish.period')),
-                                        _.get(customer, 'limit.wish.period') ? ts.days : '-',
-                                    ].join(' ')}
-                                    productPaymentMethod={_.get(customer, 'limit.wish.debitType')}
+                                    productName={lookup(_.get(customer, 'limit.wish.product'))}
+                                    productTimePeriod={createProductTimePeriod(
+                                        _.get(customer, 'limit.wish.period'),
+                                        _.get(customer, 'limit.wish.period')
+                                            ? lookup(_.get(customer, 'limit.wish.period'))
+                                            : null,
+                                        ts.days
+                                    )}
+                                    productPaymentMethod={lookup(_.get(customer, 'limit.wish.debitType'))}
                                 />
                             </Table.D>
                         </React.Fragment>
@@ -269,11 +274,13 @@ export default class CreditTableRowApproval extends Component {
 
                             <Table.D borderFix>
                                 <CRTableCellCreditProduct
-                                    productName={newCreditData.product}
-                                    productTimePeriod={
-                                        newCreditData.period ? [lookup(newCreditData.period), ts.days].join(' ') : '-'
-                                    }
-                                    productPaymentMethod={newCreditData.debitType}
+                                    productName={lookup(newCreditData.product)}
+                                    productTimePeriod={createProductTimePeriod(
+                                        newCreditData.period,
+                                        newCreditData.period ? lookup(newCreditData.period) : null,
+                                        ts.days
+                                    )}
+                                    productPaymentMethod={lookup(newCreditData.debitType)}
                                     color={'green'}
                                 />
                             </Table.D>

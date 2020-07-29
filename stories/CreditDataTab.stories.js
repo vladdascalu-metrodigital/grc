@@ -20,7 +20,7 @@ storiesOf('CreditDataTab', module)
                         current: {
                             amount: 12000,
                             product: 'METRO Cash',
-                            period: '12',
+                            period: 'middle of month',
                             debitType: 'Basislastschriftmandat',
                             expiry: { amount: 1000, date: '4/2/2020' },
                         },

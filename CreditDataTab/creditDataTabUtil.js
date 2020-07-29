@@ -29,3 +29,10 @@ export function isLimitRequestInHistory(parent, historyRequestType) {
 export function isConiRequestInHistory(parent, historyRequestType) {
     return isHistory(parent) && historyRequestType === 'CONI_REQUEST';
 }
+
+export function createProductTimePeriod(period, translatedPeriod, translationOfDays) {
+    if (period) {
+        return isNaN(translatedPeriod) ? translatedPeriod : [translatedPeriod, translationOfDays].join(' ');
+    }
+    return '-';
+}

@@ -9,6 +9,7 @@ import CRTableCellCreditProduct from './CreditTable/CRTableCellCreditProduct';
 import CRTableCellBiggerText from './CreditTable/CRTableCellBiggerText';
 import ToggleIndicator from '../ToggleIndicator';
 import { lookup } from '../Util/translations';
+import { createProductTimePeriod } from './creditDataTabUtil';
 
 export default class CreditTableRowHistory extends Component {
     render() {
@@ -103,10 +104,13 @@ export default class CreditTableRowHistory extends Component {
                             <Table.D rowSpan="2" borderFix>
                                 <CRTableCellCreditProduct
                                     productName={lookup(_.get(customer, 'limit.old.product'))}
-                                    productTimePeriod={[
+                                    productTimePeriod={createProductTimePeriod(
                                         _.get(customer, 'limit.old.period'),
-                                        _.get(customer, 'limit.old.period') ? ts.days : '-',
-                                    ].join(' ')}
+                                        _.get(customer, 'limit.old.period')
+                                            ? lookup(_.get(customer, 'limit.old.period'))
+                                            : null,
+                                        ts.days
+                                    )}
                                     productPaymentMethod={_.get(customer, 'limit.old.debitType')}
                                     color={'blue'}
                                 />
@@ -139,10 +143,13 @@ export default class CreditTableRowHistory extends Component {
                             <Table.D borderFix>
                                 <CRTableCellCreditProduct
                                     productName={_.get(customer, 'limit.wish.product')}
-                                    productTimePeriod={[
-                                        lookup(_.get(customer, 'limit.wish.period')),
-                                        _.get(customer, 'limit.wish.period') ? ts.days : '-',
-                                    ].join(' ')}
+                                    productTimePeriod={createProductTimePeriod(
+                                        _.get(customer, 'limit.wish.period'),
+                                        _.get(customer, 'limit.wish.period')
+                                            ? lookup(_.get(customer, 'limit.wish.period'))
+                                            : null,
+                                        ts.days
+                                    )}
                                     productPaymentMethod={_.get(customer, 'limit.wish.debitType')}
                                 />
                             </Table.D>
@@ -192,7 +199,13 @@ export default class CreditTableRowHistory extends Component {
                             <Table.D borderFix>
                                 <CRTableCellCreditProduct
                                     productName={_.get(customer, 'limit.current.product')}
-                                    productTimePeriod={[_.get(customer, 'limit.current.period'), ts.days].join(' ')}
+                                    productTimePeriod={createProductTimePeriod(
+                                        _.get(customer, 'limit.current.period'),
+                                        _.get(customer, 'limit.current.period')
+                                            ? lookup(_.get(customer, 'limit.current.period'))
+                                            : null,
+                                        ts.days
+                                    )}
                                     productPaymentMethod={_.get(customer, 'limit.current.debitType')}
                                     color={isCreditDataInRed ? 'red' : 'green'}
                                 />
@@ -280,10 +293,13 @@ export default class CreditTableRowHistory extends Component {
                             <Table.D borderFix>
                                 <CRTableCellCreditProduct
                                     productName={lookup(_.get(customer, 'limit.old.product'))}
-                                    productTimePeriod={[
+                                    productTimePeriod={createProductTimePeriod(
                                         _.get(customer, 'limit.old.period'),
-                                        _.get(customer, 'limit.old.period') ? ts.days : '-',
-                                    ].join(' ')}
+                                        _.get(customer, 'limit.old.period')
+                                            ? lookup(_.get(customer, 'limit.old.period'))
+                                            : null,
+                                        ts.days
+                                    )}
                                     productPaymentMethod={_.get(customer, 'limit.old.debitType')}
                                     color={'blue'}
                                 />
@@ -317,7 +333,13 @@ export default class CreditTableRowHistory extends Component {
                             <Table.D borderFix>
                                 <CRTableCellCreditProduct
                                     productName={_.get(customer, 'limit.current.product')}
-                                    productTimePeriod={[_.get(customer, 'limit.current.period'), ts.days].join(' ')}
+                                    productTimePeriod={createProductTimePeriod(
+                                        _.get(customer, 'limit.current.period'),
+                                        _.get(customer, 'limit.current.period')
+                                            ? lookup(_.get(customer, 'limit.current.period'))
+                                            : null,
+                                        ts.days
+                                    )}
                                     productPaymentMethod={_.get(customer, 'limit.current.debitType')}
                                     color={isCreditDataInRed ? 'red' : 'green'}
                                 />
@@ -407,11 +429,14 @@ export default class CreditTableRowHistory extends Component {
                             <Table.D borderFix>
                                 <CRTableCellCreditProduct
                                     productName={lookup(_.get(customer, 'limit.old.product'))}
-                                    productTimePeriod={[
+                                    productTimePeriod={createProductTimePeriod(
                                         _.get(customer, 'limit.old.period'),
-                                        _.get(customer, 'limit.old.period') ? ts.days : '-',
-                                    ].join(' ')}
-                                    productPaymentMethod={_.get(customer, 'limit.old.debitType')}
+                                        _.get(customer, 'limit.old.period')
+                                            ? lookup(_.get(customer, 'limit.old.period'))
+                                            : null,
+                                        ts.days
+                                    )}
+                                    productPaymentMethod={lookup(_.get(customer, 'limit.old.debitType'))}
                                     color={'blue'}
                                 />
                             </Table.D>
@@ -450,9 +475,15 @@ export default class CreditTableRowHistory extends Component {
 
                             <Table.D borderFix>
                                 <CRTableCellCreditProduct
-                                    productName={_.get(customer, 'limit.current.product')}
-                                    productTimePeriod={[_.get(customer, 'limit.current.period'), ts.days].join(' ')}
-                                    productPaymentMethod={_.get(customer, 'limit.current.debitType')}
+                                    productName={lookup(_.get(customer, 'limit.current.product'))}
+                                    productTimePeriod={createProductTimePeriod(
+                                        _.get(customer, 'limit.current.period'),
+                                        _.get(customer, 'limit.current.period')
+                                            ? lookup(_.get(customer, 'limit.current.period'))
+                                            : null,
+                                        ts.days
+                                    )}
+                                    productPaymentMethod={lookup(_.get(customer, 'limit.current.debitType'))}
                                     color={isCreditDataInRed ? 'red' : 'green'}
                                 />
                             </Table.D>

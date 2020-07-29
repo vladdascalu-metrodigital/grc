@@ -9,6 +9,7 @@ import CRTableCellCreditProduct from './CreditTable/CRTableCellCreditProduct';
 import CRTableCellBiggerText from './CreditTable/CRTableCellBiggerText';
 import ToggleIndicator from '../ToggleIndicator';
 import { lookup } from '../Util/translations';
+import { createProductTimePeriod } from './creditDataTabUtil';
 
 export default class CreditTableRowCreditLimit extends Component {
     render() {
@@ -120,10 +121,11 @@ export default class CreditTableRowCreditLimit extends Component {
                             <Table.D>
                                 <CRTableCellCreditProduct
                                     productName={lookup(_current(customer, 'product'))}
-                                    productTimePeriod={[
-                                        lookup(_current(customer, 'period')),
-                                        _current(customer, 'period') ? ts.days : '-',
-                                    ].join(' ')}
+                                    productTimePeriod={createProductTimePeriod(
+                                        _current(customer, 'period'),
+                                        _current(customer, 'period') ? lookup(_current(customer, 'period')) : null,
+                                        ts.days
+                                    )}
                                     productPaymentMethod={lookup(_current(customer, 'debitType'))}
                                     color={'blue'}
                                 />
@@ -158,7 +160,11 @@ export default class CreditTableRowCreditLimit extends Component {
                             <Table.D>
                                 <CRTableCellCreditProduct
                                     productName={lookup(wishedProduct)}
-                                    productTimePeriod={wishedPeriod ? [lookup(wishedPeriod), ts.days].join(' ') : '-'}
+                                    productTimePeriod={createProductTimePeriod(
+                                        wishedPeriod,
+                                        wishedPeriod ? lookup(wishedPeriod) : null,
+                                        ts.days
+                                    )}
                                     productPaymentMethod={lookup(wishedDebitType)}
                                 />
                             </Table.D>

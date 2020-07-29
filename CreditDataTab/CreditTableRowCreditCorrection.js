@@ -9,6 +9,7 @@ import CRTableCellCreditProduct from './CreditTable/CRTableCellCreditProduct';
 import CRTableCellBiggerText from './CreditTable/CRTableCellBiggerText';
 import ToggleIndicator from '../ToggleIndicator';
 import { lookup } from '../Util/translations';
+import { createProductTimePeriod } from './creditDataTabUtil';
 
 export default class CreditTableRowCreditCorrection extends Component {
     render() {
@@ -98,10 +99,11 @@ export default class CreditTableRowCreditCorrection extends Component {
                             <Table.D>
                                 <CRTableCellCreditProduct
                                     productName={lookup(_current(customer, 'product'))}
-                                    productTimePeriod={[
-                                        lookup(_current(customer, 'period')),
-                                        _current(customer, 'period') ? ts.days : '-',
-                                    ].join(' ')}
+                                    productTimePeriod={createProductTimePeriod(
+                                        _current(customer, 'period'),
+                                        _current(customer, 'period') ? lookup(_current(customer, 'period')) : null,
+                                        ts.days
+                                    )}
                                     productPaymentMethod={lookup(_current(customer, 'debitType'))}
                                     color={'blue'}
                                 />
@@ -152,7 +154,11 @@ export default class CreditTableRowCreditCorrection extends Component {
                             <Table.D>
                                 <CRTableCellCreditProduct
                                     productName={lookup(newProduct)}
-                                    productTimePeriod={newPeriod ? [lookup(newPeriod), ts.days].join(' ') : '-'}
+                                    productTimePeriod={createProductTimePeriod(
+                                        newPeriod,
+                                        newPeriod ? lookup(newPeriod) : null,
+                                        ts.days
+                                    )}
                                     productPaymentMethod={lookup(newDebitType)}
                                     color={isCreditDataInRed ? 'red' : 'green'}
                                 />
