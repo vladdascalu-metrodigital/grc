@@ -6,6 +6,7 @@ import CheckCard from '../CheckCard';
 
 import './CreditCorrectionGroupActions.scss';
 import { lookup } from '../Util/translations';
+import * as _ from 'lodash';
 
 export default class CreditCorrectionGroupActions extends Component {
     constructor(props) {
@@ -32,7 +33,7 @@ export default class CreditCorrectionGroupActions extends Component {
                             }}
                             disabled={disabled || (activated === true && selectedGroupAction !== 'NONE')}
                         />
-                        {isAllCashCustomerGroup
+                        {isAllCashCustomerGroup || _.isNil(groupActions)
                             ? null
                             : Object.values(groupActions).map((ga, i) => (
                                   <CheckCard

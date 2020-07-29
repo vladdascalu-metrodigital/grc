@@ -129,7 +129,7 @@ export default class CreditCorrectionCustomerActionsSection extends Component {
                             }
                         }}
                     />
-                    {customer.isCashCustomer
+                    {customer.isCashCustomer || _.isNil(blockingOptions)
                         ? null
                         : Object.values(blockingOptions).map((action, i) => {
                               if (action.customerLevel === true) {

@@ -102,7 +102,7 @@ export default class CreditDataTab extends Component {
             creditProgram,
             selectedGroupAction,
         } = this.props;
-        if (_.isNil(country) || _.isNil(customers) || customers.length === 0) {
+        if (_.isNil(country) || _.isNil(customers) || customers.length === 0 || historyRequestType === 'QUICK_CHECK') {
             return <MainContent>{lookup('mrc.comment.nocreditdetails')}</MainContent>;
         }
         const translations = this.createTranslations();
@@ -313,7 +313,13 @@ CreditDataTab.propTypes = {
     parent: PropTypes.oneOf(['creditlimit', 'history', 'approval', 'creditcorrection']).isRequired,
     dateFormat: PropTypes.string.isRequired,
     isContractingStepEditable: PropTypes.bool, // approval
-    historyRequestType: PropTypes.oneOf(['LIMIT_EXPIRY', 'LIMIT_REQUEST', 'CREDIT_CORRECTION', 'CONI_REQUEST']), // history
+    historyRequestType: PropTypes.oneOf([
+        'LIMIT_EXPIRY',
+        'LIMIT_REQUEST',
+        'CREDIT_CORRECTION',
+        'CONI_REQUEST',
+        'QUICK_CHECK',
+    ]), // history
     activated: PropTypes.bool, // creditcorrection, history
     disabled: PropTypes.bool, // creditcorrection
     selectedGroupAction: PropTypes.string, // creditcorrection
