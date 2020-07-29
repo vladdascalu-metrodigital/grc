@@ -2,40 +2,11 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
+import { COUNTRY, CURRENCY, countryToCurrency } from '../Util/currencyCommons';
+
 import './index.scss';
 
-export const COUNTRY = {
-    DE: 'DE',
-    ES: 'ES',
-    PT: 'PT',
-    AT: 'AT',
-    PK: 'PK',
-    PL: 'PL',
-    RS: 'RS',
-    HR: 'HR',
-    RU: 'RU',
-};
-
-export const CURRENCY = {
-    EUR: 'EUR',
-    PKR: 'PKR',
-    PLN: 'PLN',
-    RSD: 'RSD',
-    HRK: 'HRK',
-    RUB: 'RUB',
-};
-
-export const countryToCurrency = {
-    DE: CURRENCY.EUR,
-    ES: CURRENCY.EUR,
-    PT: CURRENCY.EUR,
-    AT: CURRENCY.EUR,
-    PK: CURRENCY.PKR,
-    PL: CURRENCY.PLN,
-    RS: CURRENCY.RSD,
-    HR: CURRENCY.HRK,
-    RU: CURRENCY.RUB,
-};
+export { COUNTRY, CURRENCY, countryToCurrency };
 
 export const TYPE = {
     LARGE: 'large',
@@ -44,18 +15,7 @@ export const TYPE = {
     SMALLER: 'smaller',
 };
 
-// export const COLOR = {
-//     CONTRAST_WHITE: 'white',
-//     CONTRAST_BLACK: 'black',
-//     INTERACTION: 'interaction',
-//     SUCCESS: 'success',
-//     NEUTRAL: 'neutral',
-//     DANGER: 'danger',
-//     ATTENTION: 'attention',
-//     LIGHT_RED: 'light-red',
-// };
-
-export default class MrcNumber extends PureComponent {
+export default class MrcCurrency extends PureComponent {
     render() {
         let { country, children: number, type } = this.props;
 
@@ -86,11 +46,11 @@ export default class MrcNumber extends PureComponent {
     }
 }
 
-MrcNumber.defaultProps = {
+MrcCurrency.defaultProps = {
     country: COUNTRY.DE,
 };
 
-MrcNumber.propTypes = {
+MrcCurrency.propTypes = {
     children: PropTypes.string,
     country: PropTypes.string,
     type: PropTypes.string,
