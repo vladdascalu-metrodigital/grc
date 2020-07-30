@@ -47,7 +47,7 @@ export default class Attachments extends Component {
                     country={this.props.country}
                     readonly={this.props.readonly}
                     fileTypes={this.state.fileType ? [this.state.fileType] : fileTypes}
-                    placeholderTypes={this.state.placeholderTypes ? [this.state.placeholderTypes] : placeholderTypes}
+                    placeholderTypes={this.state.fileType ? [this.state.fileType] : placeholderTypes}
                     callback={
                         isPlaceholder
                             ? (fileType) => {
