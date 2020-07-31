@@ -42,6 +42,7 @@ export default class CreditCorrectionLayout extends Component {
         'mrc.blocking-option.credittocash',
         'mrc.blocking-option.removeblock',
     ];
+    RU_BLOCKING_OPTIONS = [null, 'mrc.blocking-option.hardblock'];
     AT_BLOCKING_OPTIONS = [null, 'mrc.blocking-option.softblock'];
     DEFAULT_BLOCKING_OPTIONS = [null, 'mrc.blocking-option.hardblock'];
 
@@ -489,6 +490,9 @@ export default class CreditCorrectionLayout extends Component {
                 break;
             case 'PL':
                 returnValue = this.PL_BLOCKING_OPTIONS;
+                break;
+            case 'RU':
+                returnValue = this.RU_BLOCKING_OPTIONS;
                 break;
             default:
                 returnValue = this.PL_BLOCKING_OPTIONS;

@@ -82,6 +82,13 @@ export const countryBlockingOptions = {
             customerLevel: true,
         },
     ],
+    RU: [
+        {
+            id: 'HARDBLOCK',
+            translationKey: 'mrc.blocking-option.generalblock',
+            label: 'mrc.blocking-option.generalblock',
+        },
+    ],
     AT: [
         {
             id: 'SOFTBLOCK',
