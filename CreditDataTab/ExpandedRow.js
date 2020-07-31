@@ -64,34 +64,19 @@ export default class ExpandedRow extends Component {
             >
                 <CreditTableRowShadow />
             </Table.R>,
-            isBlocked ? (
-                <React.Fragment>
-                    <Table.R key="blocked" type="form">
-                        <Table.D colSpan="8">
-                            {this.createActivationResultSection(parent, activated, customer, ts)}
-                            {this.createBlockingSection(blockingReasonText, checkoutCheckCodeText, ts)}
-                            {isHistory(parent) || isCreditCorrection(parent) ? null : (
-                                <PaymentSection {...{ ...this.props, isCashCustomerRequest }} />
-                            )}
-                            {isNewCredit || isCreditCorrection(parent) ? this.createNewCreditSection() : null}
-                            {this.createAdditionalFieldSection(ts, this.props.customer.additionalFields)}
-                        </Table.D>
-                    </Table.R>
-                </React.Fragment>
-            ) : (
-                <React.Fragment>
-                    <Table.R key={'form'} type="form">
-                        <Table.D colSpan="8">
-                            {this.createActivationResultSection(parent, activated, customer, ts)}
-                            {isHistory(parent) || isCreditCorrection(parent) ? null : (
-                                <PaymentSection {...{ ...this.props, isCashCustomerRequest }} />
-                            )}
-                            {isNewCredit || isCreditCorrection(parent) ? this.createNewCreditSection() : null}
-                            {this.createAdditionalFieldSection(ts, this.props.customer.additionalFields)}
-                        </Table.D>
-                    </Table.R>
-                </React.Fragment>
-            ),
+            <React.Fragment>
+                <Table.R key={'form'} type="form">
+                    <Table.D colSpan="8">
+                        {this.createActivationResultSection(parent, activated, customer, ts)}
+                        {isBlocked ? this.createBlockingSection(blockingReasonText, checkoutCheckCodeText, ts) : null}
+                        {isHistory(parent) || isCreditCorrection(parent) ? null : (
+                            <PaymentSection {...{ ...this.props, isCashCustomerRequest }} />
+                        )}
+                        {isNewCredit || isCreditCorrection(parent) ? this.createNewCreditSection() : null}
+                        {this.createAdditionalFieldSection(ts, this.props.customer.additionalFields)}
+                    </Table.D>
+                </Table.R>
+            </React.Fragment>,
         ];
     }
 

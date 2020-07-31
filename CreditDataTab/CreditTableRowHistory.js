@@ -50,6 +50,7 @@ export default class CreditTableRowHistory extends Component {
             _.isNil(_.get(customer, 'limit.current.amount')) && _.isNil(_.get(customer, 'limit.current.product'));
 
         const isCreditDataInRed = customer.failedActivation === true;
+        const blockingOption = _.get(customer, 'limit.current.blockingOption');
         return (
             <React.Fragment>
                 <Table.R
@@ -122,6 +123,13 @@ export default class CreditTableRowHistory extends Component {
                         <Table.D colSpan="3">
                             <CRTableCellBiggerText text={ts.nochange} color={'blue'} />
                         </Table.D>
+                    ) : !_.isNil(blockingOption) ? (
+                        <Table.D colSpan="3" borderFix>
+                            <CRTableCellBiggerText
+                                text={lookup(('mrc.blocking-option.' + blockingOption).toLowerCase())}
+                                color={isCreditDataInRed ? 'red' : 'green'}
+                            />
+                        </Table.D>
                     ) : (
                         <React.Fragment>
                             <Table.D>
@@ -175,6 +183,13 @@ export default class CreditTableRowHistory extends Component {
                     {isNoChangeInCurrent ? (
                         <Table.D colSpan="3" borderFix>
                             <CRTableCellBiggerText text={ts.nochange} color={'blue'} />
+                        </Table.D>
+                    ) : !_.isNil(blockingOption) ? (
+                        <Table.D colSpan="3" borderFix>
+                            <CRTableCellBiggerText
+                                text={lookup(('mrc.blocking-option.' + blockingOption).toLowerCase())}
+                                color={isCreditDataInRed ? 'red' : 'green'}
+                            />
                         </Table.D>
                     ) : (
                         <React.Fragment>

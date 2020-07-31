@@ -450,6 +450,7 @@ export const createCreditDataProps = (params) => {
                                                 date: _.get(data, 'requestedLimitExpiryDate'),
                                                 amount: _.get(data, 'requestedResetToLimitAmount'),
                                             },
+                                            blockingOption: _.get(data, 'requested.blockingOption'),
                                         },
                               current:
                                   _.get(params, 'requestStatus.requestType') === 'LIMIT_EXPIRY'
