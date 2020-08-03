@@ -1,5 +1,5 @@
-@import '../lib/scss/main.scss';
-@import './attachment.scss';
+@import '../lib/scss/variables';
+@import '../lib/scss/colors';
 
 .mrc-ui-attachments-component {
   background-color: $color-contrast-white;

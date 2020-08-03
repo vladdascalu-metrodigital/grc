@@ -1,10 +1,5 @@
-@import "mrc-normalize";
-
-@import "variables";
-@import "colors";
-@import "typography";
-@import "util";
-@import "forms";
-
-// fonts currently not working
-//@import "fonts";
+// imported by /Util/imports.js
+// don't put variables/functions/mixins only files here
+@import 'mrc-normalize';
+@import 'util';
+@import 'forms';

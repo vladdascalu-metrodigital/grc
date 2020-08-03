@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import Attachment from './Attachment';
 import ModalDialog from '../ModalDialog';
 import { lookup } from '../Util/translations';
-import './index.scss';
 import { PropTypes } from 'prop-types';
 import UploaderForm from './UploaderForm';
 import SegmentedControl from '../SegmentedControl';
 import Toggle from '../Toggle';
 
 import * as _ from 'lodash';
+
+import './index.scss';
 
 export default class Attachments extends Component {
     toggleModal = (fileType) => {

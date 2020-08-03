@@ -1,4 +1,6 @@
-@import '../lib/scss/main.scss';
+@import '../lib/scss/variables';
+@import '../lib/scss/colors';
+@import '../lib/scss/typography';
 
 .mrc-ui-attachment {
   background-color: $color-brand-primary-tint-95;

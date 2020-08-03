@@ -1,4 +1,6 @@
-@import "../lib/scss/main.scss";
+@import '../lib/scss/colors.scss';
+@import '../lib/scss/variables';
+
 $max-segments: 10;
 
 @mixin segmented-controls($amount: 2, $width: $width-4, $margin: $spacing-none, $active: inherit) {

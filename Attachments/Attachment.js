@@ -9,6 +9,8 @@ import { List } from 'immutable';
 
 import * as _ from 'lodash';
 
+import './attachment.scss';
+
 export default class Attachment extends Component {
     constructor(props) {
         super(props);
@@ -57,7 +59,7 @@ export default class Attachment extends Component {
                           ]).concat(
                               _.isArray(metadata)
                                   ? List(
-                                        metadata.map(e => (
+                                        metadata.map((e) => (
                                             <div key="expiry" className="mrc-ui-attachment-info-group">
                                                 <div className="mrc-ui-attachment-info-label">{lookup(e.label)}</div>
                                                 <div className="mrc-ui-attachment-info-value">
@@ -80,7 +82,7 @@ export default class Attachment extends Component {
         if (_.isNil(this.props.handleSecondaryAction)) {
             return null;
         }
-        const ifNotDisabled = a => (!this.props.disabled ? a : null);
+        const ifNotDisabled = (a) => (!this.props.disabled ? a : null);
         switch (this.props.secondaryInteraction) {
             case 'delete':
                 return ifNotDisabled(

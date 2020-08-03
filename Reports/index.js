@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { lookup } from '../Util/translations';
-import './index.scss';
-import ReportingIcon from '../icons/reporting-blue.svg';
 
+import ReportingIcon from '../icons/reporting-blue.svg';
 import BoxWithTitle, { TYPE } from '../BoxWithTitle';
 import MainContent from '../MainContent';
+
+import './index.scss';
 
 export default class Reports extends Component {
     constructor(props) {
@@ -13,7 +14,7 @@ export default class Reports extends Component {
     }
 
     render() {
-        const reports = this.props.data.map(report => (
+        const reports = this.props.data.map((report) => (
             <div key={report.id} className="mrc-ui-report">
                 <a href={'#/reports/' + report.id}>
                     <div className="mrc-ui-report-icon-background">
