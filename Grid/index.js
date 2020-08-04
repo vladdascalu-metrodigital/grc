@@ -46,7 +46,8 @@ Grid.propTypes = {
 
 export class GridItem extends Component {
     render() {
-        let { rowSpan, colSpan, children, justifySelf, alignSelf } = this.props;
+        let { rowSpan, colSpan, children, justifySelf, alignSelf, className: outerClassName } = this.props;
+        let className = classnames(outerClassName, 'mrc-ui-grid-item');
         let style = {
             '--justify-self': justifySelf,
             '--align-self': alignSelf,
@@ -62,7 +63,7 @@ export class GridItem extends Component {
             style.gridRowEnd = 'span ' + rowSpan;
         }
         return (
-            <div className="mrc-ui-grid-item" style={style}>
+            <div className={className} style={style}>
                 {children}
             </div>
         );
@@ -75,4 +76,5 @@ GridItem.propTypes = {
     justifySelf: PropTypes.string,
     alignSelf: PropTypes.string,
     children: PropTypes.node,
+    className: PropTypes.string,
 };

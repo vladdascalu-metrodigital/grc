@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import Grid, { GAP } from '../Grid';
+import Grid, { GAP, GridItem } from '../Grid';
 import Card, { TYPE } from '../Card';
 
 storiesOf('Layouts/Grid', module)
@@ -54,5 +54,23 @@ storiesOf('Layouts/Grid', module)
             <Card>2</Card>
             <Card>3</Card>
             <Card>4</Card>
+        </Grid>
+    ))
+    .add('Grid Item: colSpan', () => (
+        <Grid cols={4}>
+            <Card>X</Card>
+            <Card>X</Card>
+            <Card>X</Card>
+            <Card>X</Card>
+            <GridItem colSpan="all">
+                <Card isBlock>colSpan = all</Card>
+            </GridItem>
+            <Card>X</Card>
+            <GridItem colSpan={2}>
+                <Card isBlock>colSpan = 2</Card>
+            </GridItem>
+            <Card>X</Card>
+            <Card>X</Card>
+            <Card>X</Card>
         </Grid>
     ));
