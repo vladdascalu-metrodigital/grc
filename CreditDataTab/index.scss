@@ -16,3 +16,7 @@
   color: $color-palette-green-default;
   margin-right: $spacing-extra-small;
 }
+
+.mrc-ui-credit-tab-table-container {
+  overflow-x: scroll;
+}
