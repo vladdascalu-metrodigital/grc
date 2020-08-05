@@ -23,8 +23,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        updateActiveItem: value => dispatch(navigationItemActivated(value)),
-        updateUiPageTitle: value => dispatch(currentUiPageTitleEvent(value)),
-        showAuxControl: value => dispatch(auxControlEvent(value)),
+        updateActiveItem: (value) => dispatch(navigationItemActivated(value)),
+        updateUiPageTitle: (value) => dispatch(currentUiPageTitleEvent(value)),
+        showAuxControl: (value) => dispatch(auxControlEvent(value)),
     };
 }

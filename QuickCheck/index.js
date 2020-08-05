@@ -44,7 +44,7 @@ export default class QuickStatusLayout extends Component {
             //
             // mark the requested customer
             //
-            cust.forEach(c => this.markRequestedCustomer(reqCust, c));
+            cust.forEach((c) => this.markRequestedCustomer(reqCust, c));
 
             //
             // sort by customerID, taking the requestedCustomer first
@@ -93,7 +93,7 @@ export default class QuickStatusLayout extends Component {
             return null;
         }
         return this.props.customers.data.customers.filter(
-            customer =>
+            (customer) =>
                 customer.customerNumber == this.props.match.params.customerNumber &&
                 customer.storeNumber == this.props.match.params.storeNumber
         )[0];
@@ -113,7 +113,7 @@ export default class QuickStatusLayout extends Component {
             ? this.props.customers.data.requestsDisabled
             : false;
         let btnDisabled = false;
-        const precheckErrors = this.props.customers.data.precheckErrors.filter(function(element) {
+        const precheckErrors = this.props.customers.data.precheckErrors.filter(function (element) {
             return element.reason !== 'strategy.init.failed.runningRequest';
         });
         if (precheckErrors) {

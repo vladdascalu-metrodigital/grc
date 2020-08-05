@@ -42,7 +42,7 @@ export default class LimitRequestLayout extends Component {
         // this.handleRequestedLimitChange = this.handleRequestedLimitChange.bind(this);
         this.state = {
             creditDataValid: false,
-            creditProgramValid: false,
+            creditProgramValid: props.parent === 'prepayment',
             applyCurrent: false,
             applyCurrentLimitAndExpiry: false,
             applyCurrentPayments: false,
@@ -58,7 +58,7 @@ export default class LimitRequestLayout extends Component {
 
         this.props.showAuxControl({ back: true });
         this.props.loadRequest(this.props.match.params.id);
-        this.props.loadAdditionalFields(this.props.match.params.id);
+        props.parent !== 'prepayment' && this.props.loadAdditionalFields(this.props.match.params.id);
         this.props.updateUiPageTitle(lookup('creditlimit.limitrequest.title'));
         this.handleAdditionalFieldsOnChange = this.handleAdditionalFieldsOnChange.bind(this);
         this.handleAdditionalFieldsOnSave = this.handleAdditionalFieldsOnSave.bind(this);
@@ -183,6 +183,10 @@ export default class LimitRequestLayout extends Component {
                 return true;
             }
 
+            if (_.get(item, 'creditOption') === 'PREPAYMENT') {
+                return true;
+            }
+
             const _isCashCustomer =
                 _.isNil(_.get(item, 'customer.paymentAllowanceCd')) ||
                 _.get(item, 'customer.paymentAllowanceCd') !== '3';
@@ -225,6 +229,7 @@ export default class LimitRequestLayout extends Component {
 
     createCancelButton() {
         const props = this.props;
+        const isPrepayment = props.parent === 'prepayment';
         const req = props.request;
         return req.error ? null : (
             <Button
@@ -234,16 +239,20 @@ export default class LimitRequestLayout extends Component {
                 disabled={this.state.canceled}
                 onClick={() => {
                     this.setState({ ...this.state, canceled: true, enableSpinner: true });
-                    this.props.cancelRequest(req.data.id, this.cancelCallback);
+                    this.props.cancelRequest(req.data.id, () => this.cancelCallback(isPrepayment));
                 }}
             />
         );
     }
 
-    cancelCallback = function () {
+    cancelCallback = function (isPrepayment) {
         const req = this.props ? this.props.request : undefined;
         if (req && req.data && req.data.requestedCustomerId) {
-            const target = `/customerstatus/${req.data.requestedCustomerId.country}/${req.data.requestedCustomerId.storeNumber}/${req.data.requestedCustomerId.customerNumber}`;
+            let prefix = 'customerstatus';
+            if (isPrepayment) {
+                prefix = 'prepayment';
+            }
+            const target = `/${prefix}/${req.data.requestedCustomerId.country}/${req.data.requestedCustomerId.storeNumber}/${req.data.requestedCustomerId.customerNumber}`;
             this.props.history.replace(target);
         }
     }.bind(this);
@@ -465,6 +474,7 @@ export default class LimitRequestLayout extends Component {
         if (this.props.request.loading || !this.props.request.data || !this.props.request.data.requestedItems) {
             return null;
         }
+        const { parent } = this.props;
         const request = _.get(this.props, 'request.data');
         const requestAdditionalFields = filterAdditionalFieldsList(
             _.get(this.props, 'additionalFields') ? this.props.additionalFields.requestFields : undefined,
@@ -487,7 +497,7 @@ export default class LimitRequestLayout extends Component {
         return (
             <CreditDataTab
                 country={_.get(request, 'requestedCustomerId.country')}
-                parent={'creditlimit'}
+                parent={parent !== undefined ? parent : 'creditlimit'}
                 groupLimit={{
                     exhausted: _.get(request, 'requestedItems')
                         ? _.sum(request.requestedItems.map((x) => _.get(x, 'customer.limitExhaustion')))
@@ -657,13 +667,17 @@ export default class LimitRequestLayout extends Component {
                           })
                         : []
                 }
-                creditProgram={{
-                    limitRequestId: _.get(request, 'id'),
-                    setCreditPrograms: this.props.setCreditPrograms.bind(this),
-                    getCreditPrograms: this.props.getCreditPrograms.bind(this),
-                    setValidity: this.setCreditProgramValidity.bind(this),
-                    readOnly: readOnly,
-                }}
+                creditProgram={
+                    parent !== 'prepayment'
+                        ? {
+                              limitRequestId: _.get(request, 'id'),
+                              setCreditPrograms: this.props.setCreditPrograms.bind(this),
+                              getCreditPrograms: this.props.getCreditPrograms.bind(this),
+                              setValidity: this.setCreditProgramValidity.bind(this),
+                              readOnly: readOnly,
+                          }
+                        : undefined
+                }
                 additionalFields={{
                     request: {
                         requestFields: requestAdditionalFields,
@@ -701,6 +715,8 @@ export default class LimitRequestLayout extends Component {
 
     render() {
         const req = this.props.request;
+        const { parent } = this.props;
+        const isPrepayment = parent === 'prepayment';
         return (
             <Switch>
                 <Route
@@ -720,13 +736,15 @@ export default class LimitRequestLayout extends Component {
                                     <TabList>
                                         <Tab>{lookup('mrc.customerdetails.title')}</Tab>
                                         <Tab>{lookup('mrc.creditdetails.title')}</Tab>
-                                        <Tab>{lookup('mrc.sales.title')}</Tab>
+                                        {!isPrepayment ? <Tab>{lookup('mrc.sales.title')}</Tab> : null}
                                         <Tab>{lookup('mrc.comments.title')}</Tab>
                                         <Tab>{lookup('mrc.attachments.title')}</Tab>
                                     </TabList>
                                     <ErrorHandledTabPanel>{this.createCustomerDetailsPanel(req)}</ErrorHandledTabPanel>
                                     <ErrorHandledTabPanel>{this.createCreditTab()}</ErrorHandledTabPanel>
-                                    <ErrorHandledTabPanel>{this.createSalesPanel()}</ErrorHandledTabPanel>
+                                    {!isPrepayment ? (
+                                        <ErrorHandledTabPanel>{this.createSalesPanel()}</ErrorHandledTabPanel>
+                                    ) : null}
                                     <ErrorHandledTabPanel>{this.createCommentsPanel()}</ErrorHandledTabPanel>
                                     <ErrorHandledTabPanel>{this.createAttachmentsPanel()}</ErrorHandledTabPanel>
                                 </Tabs>
@@ -738,9 +756,11 @@ export default class LimitRequestLayout extends Component {
                                     <Collapsible trigger={lookup('mrc.creditdetails.title')}>
                                         {this.createCreditTab()}
                                     </Collapsible>
-                                    <Collapsible trigger={lookup('mrc.sales.title')}>
-                                        {this.createSalesPanel()}
-                                    </Collapsible>
+                                    {!isPrepayment ? (
+                                        <Collapsible trigger={lookup('mrc.sales.title')}>
+                                            {this.createSalesPanel()}
+                                        </Collapsible>
+                                    ) : null}
                                     <Collapsible trigger={lookup('mrc.comments.title')}>
                                         {this.createCommentsPanel()}
                                     </Collapsible>
@@ -792,4 +812,5 @@ LimitRequestLayout.propTypes = {
     updateAdditionalField: PropTypes.func.isRequired,
     updateAdditionalFields: PropTypes.func.isRequired,
     countriesWithDifferentBlockingCodes: PropTypes.array,
+    parent: PropTypes.string,
 };

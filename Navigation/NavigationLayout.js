@@ -9,7 +9,7 @@ import './bottommenu.scss';
 import classNames from 'classnames';
 
 export default class NavigationLayout extends Component {
-    toggleBurgerMenu = event => {
+    toggleBurgerMenu = (event) => {
         event.preventDefault();
         this.props.updateBurgerMenuExpended(!this.props.displayMenu);
     };

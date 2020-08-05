@@ -49,7 +49,7 @@ function mapDispatchToProps(dispatch, props) {
                 dispatch(isLoading(true));
                 let searchUri = `/creditlimit/api/customers?search=${text}&roleKey=${props.match.params.roleKey}`;
                 return fetch(encodeURI(searchUri), { credentials: 'include', redirect: 'manual' })
-                    .then(resp => {
+                    .then((resp) => {
                         if (resp.redirected || resp.type === 'opaqueredirect') {
                             throw new Error(`${lookup('creditlimit.errors.relogin')} (${resp.status})`);
                         }
@@ -57,19 +57,19 @@ function mapDispatchToProps(dispatch, props) {
                         dispatch(isLoading(false));
                         return resp;
                     })
-                    .then(resp => resp.json())
-                    .then(results => {
+                    .then((resp) => resp.json())
+                    .then((results) => {
                         dispatch(resultsReceived(results.entries));
                     })
-                    .catch(err => {
+                    .catch((err) => {
                         dispatch(isLoading(false));
                         dispatch(showError(err.message || lookup('creditlimit.errors.searchresults')));
                     });
             }, delay);
         },
-        updateSearchTerm: value => dispatch(updateSearchTerm(value)),
-        updateUiPageTitle: value => dispatch(currentUiPageTitleEvent(value)),
-        showAuxControl: value => dispatch(auxControlEvent(value)),
+        updateSearchTerm: (value) => dispatch(updateSearchTerm(value)),
+        updateUiPageTitle: (value) => dispatch(currentUiPageTitleEvent(value)),
+        showAuxControl: (value) => dispatch(auxControlEvent(value)),
         cleanSearchResult: () => dispatch(resultsReceived(null)),
         hideNotification: () => dispatch(hideNotification()),
     };

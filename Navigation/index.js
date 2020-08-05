@@ -24,12 +24,12 @@ function navigationReducerFn(state = false, action) {
 }
 
 // FIXME Typo: expended -> expanded
-export const burgerMenuExpendedEvent = value => ({
+export const burgerMenuExpendedEvent = (value) => ({
     type: 'BURGER_MENU_EXPENDED', // FIXME Typo: expended -> expanded
     value,
 });
 
-export const navigationItemActivated = item => ({
+export const navigationItemActivated = (item) => ({
     type: 'NAVIGATION_ITEM_ACTIVATED',
     item,
 });
@@ -52,7 +52,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        updateBurgerMenuExpended: value => dispatch(burgerMenuExpendedEvent(value)),
-        updateActiveItem: item => dispatch(navigationItemActivated(item)),
+        updateBurgerMenuExpended: (value) => dispatch(burgerMenuExpendedEvent(value)),
+        updateActiveItem: (item) => dispatch(navigationItemActivated(item)),
     };
 }

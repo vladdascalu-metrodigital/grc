@@ -14,6 +14,10 @@ export function isCreditCorrection(parent) {
     return parent === 'creditcorrection';
 }
 
+export function isPrepayment(parent) {
+    return parent === 'prepayment';
+}
+
 export function isLimitExpiryInHistory(parent, historyRequestType) {
     return isHistory(parent) && historyRequestType === 'LIMIT_EXPIRY';
 }

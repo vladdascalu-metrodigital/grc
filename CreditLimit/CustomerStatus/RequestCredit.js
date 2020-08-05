@@ -14,8 +14,8 @@ export default class RequestCredit extends Component {
         this.editRequest = this.editRequest.bind(this);
     }
 
-    requestCredit = () => {
-        this.props.requestCredit(this.props.selectedCustomerInfo);
+    requestCredit = (isPrepayment) => {
+        this.props.requestCredit(this.props.selectedCustomerInfo, isPrepayment);
     };
 
     editRequest = () => {
@@ -23,9 +23,19 @@ export default class RequestCredit extends Component {
     };
 
     render() {
+        const { parent } = this.props;
+        const isPrepayment = parent === 'prepayment';
+
         if (this.props.request.data) {
             // Redirect to details of the pending limitrequest
-            return <Redirect push to={createUriPath('limitrequests', this.props.request.data.id)} />;
+            return (
+                <Redirect
+                    push
+                    to={
+                        (isPrepayment ? '/prepayment' : '') + createUriPath('limitrequests', this.props.request.data.id)
+                    }
+                />
+            );
         } else if (this.props.customers.error) {
             return null;
         } else if (!this.props.pendingRequest.data) {
@@ -36,8 +46,8 @@ export default class RequestCredit extends Component {
                     disabled={this.props.disabledRequests || this.props.disabledPrechecks}
                     icon={CoinReceive}
                     showSpinner={showSpinner}
-                    text={lookup('creditlimit.requestcredit')}
-                    onClick={this.requestCredit}
+                    text={isPrepayment ? lookup('creditlimit.requestprepayment') : lookup('creditlimit.requestcredit')}
+                    onClick={() => this.requestCredit(isPrepayment)}
                 />
             );
         } else if (this.props.pendingRequest.data && !this.props.pendingRequest.data.submitInfo) {
@@ -49,14 +59,17 @@ export default class RequestCredit extends Component {
                         disabled={this.props.disabledRequests}
                         icon={IconEdit}
                         showSpinner={showSpinner}
-                        text={lookup('creditlimit.editrequest')}
+                        text={isPrepayment ? lookup('creditlimit.editprepayment') : lookup('creditlimit.editrequest')}
                         onClick={this.editRequest}
                     />
                     <Link
-                        ref={link => {
+                        ref={(link) => {
                             this.editLink = link;
                         }}
-                        to={createUriPath('limitrequests', this.props.pendingRequest.data.id)}
+                        to={
+                            (isPrepayment ? '/prepayment' : '') +
+                            createUriPath('limitrequests', this.props.pendingRequest.data.id)
+                        }
                         className="no-underline"
                     ></Link>
                 </div>
@@ -75,4 +88,5 @@ RequestCredit.propTypes = {
     pendingRequest: PropTypes.object,
     disabledRequests: PropTypes.bool,
     disabledPrechecks: PropTypes.bool,
+    parent: PropTypes.string,
 };

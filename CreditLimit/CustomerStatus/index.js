@@ -46,7 +46,7 @@ export default class CustomerStatusLayout extends Component {
             //
             // mark the requested customer
             //
-            cust.forEach(c => this.markRequestedCustomer(reqCust, c));
+            cust.forEach((c) => this.markRequestedCustomer(reqCust, c));
 
             //
             // sort by customerID, taking the requestedCustomer first
@@ -92,7 +92,7 @@ export default class CustomerStatusLayout extends Component {
             return null;
         }
         return this.props.customers.data.customers.filter(
-            customer =>
+            (customer) =>
                 customer.customerNumber == this.props.match.params.customerNumber &&
                 customer.storeNumber == this.props.match.params.storeNumber
         )[0];
@@ -106,6 +106,9 @@ export default class CustomerStatusLayout extends Component {
     }
 
     render() {
+        const { parent } = this.props;
+        const isPrepayment = parent === 'prepayment';
+
         if (!this.props.customers || !this.props.customers.data) return null;
         const cid = this.buildCustomerInfoData();
         let btnDisabledRequests = this.props.customers.data.requestsDisabled
@@ -137,7 +140,7 @@ export default class CustomerStatusLayout extends Component {
                             <LimitStatus requestedCustomer={this.getCustomer()} customers={this.props.customers} />
                             <CustomerInfo data={cid} showLink={!!this.props.customers.data} match={this.props.match} />
                             <PendingRequestInfo pendingRequest={this.props.pendingRequest} />
-                            <Precheck customers={this.props.customers} />
+                            {!isPrepayment ? <Precheck customers={this.props.customers} /> : null}
                             <RequestCredit
                                 selectedCustomerInfo={cid}
                                 disabledRequests={btnDisabledRequests}
@@ -172,4 +175,5 @@ CustomerStatusLayout.propTypes = {
     request: PropTypes.object.isRequired,
     isTablet: PropTypes.bool,
     countriesWithDifferentBlockingCodes: PropTypes.array,
+    parent: PropTypes.string,
 };

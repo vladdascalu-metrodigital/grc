@@ -310,7 +310,7 @@ CreditDataTab.propTypes = {
     }).isRequired,
     additionalFields: PropTypes.object,
     creditProgram: PropTypes.object,
-    parent: PropTypes.oneOf(['creditlimit', 'history', 'approval', 'creditcorrection']).isRequired,
+    parent: PropTypes.oneOf(['creditlimit', 'history', 'approval', 'creditcorrection', 'prepayment']).isRequired,
     dateFormat: PropTypes.string.isRequired,
     isContractingStepEditable: PropTypes.bool, // approval
     historyRequestType: PropTypes.oneOf([

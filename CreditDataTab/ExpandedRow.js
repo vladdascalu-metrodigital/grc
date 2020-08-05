@@ -11,11 +11,12 @@ import CustomerAdditionalFieldsSection from './CustomerAdditionalFieldsSection';
 import * as _ from 'lodash';
 import FormSection from '../FormSection';
 import Grid from '../Grid';
-import { isApproval, isCreditCorrection, isHistory } from './creditDataTabUtil';
+import { isApproval, isCreditCorrection, isHistory, isPrepayment } from './creditDataTabUtil';
 import CreditCorrectionMessageSection from './CreditCorrectionMessageSection';
 import { TYPE } from '../Card';
 import CreditCorrectionCustomerActionsSection from './CreditCorrectionCustomerActionsSection';
 import { lookup } from '../Util/translations';
+import CheckCard from 'global-react-components/CheckCard';
 
 export default class ExpandedRow extends Component {
     isNewCreditMarked(customer, parent, isCashCustomerRequest) {
@@ -38,6 +39,8 @@ export default class ExpandedRow extends Component {
                 return true;
             }
         } else if (isHistory(parent)) {
+            return false;
+        } else if (isPrepayment(parent)) {
             return false;
         }
 
@@ -69,15 +72,57 @@ export default class ExpandedRow extends Component {
                     <Table.D colSpan="8">
                         {this.createActivationResultSection(parent, activated, customer, ts)}
                         {isBlocked ? this.createBlockingSection(blockingReasonText, checkoutCheckCodeText, ts) : null}
-                        {isHistory(parent) || isCreditCorrection(parent) ? null : (
+                        {isHistory(parent) || isCreditCorrection(parent) || isPrepayment(parent) ? null : (
                             <PaymentSection {...{ ...this.props, isCashCustomerRequest }} />
                         )}
                         {isNewCredit || isCreditCorrection(parent) ? this.createNewCreditSection() : null}
+                        {isPrepayment(parent) ? this.createPrepaymentSection() : null}
                         {this.createAdditionalFieldSection(ts, this.props.customer.additionalFields)}
                     </Table.D>
                 </Table.R>
             </React.Fragment>,
         ];
+    }
+
+    createPrepaymentSection() {
+        const { customer, translations } = this.props;
+        const ts = translations;
+        const creditOption = _.get(customer, 'limit.creditOption');
+        const currentAmount = _.get(customer, 'limit.current.amount');
+
+        return (
+            <FormSection title={ts.customerAction} description={ts.customerActionDescription}>
+                <h4 className="mrc-ui-form-label mb-2">{ts.chooseCustomerAction}</h4>
+                <Grid cols={4}>
+                    <CheckCard
+                        key={0}
+                        title={ts.noChangeAction}
+                        checked={creditOption === 'NONE'}
+                        onClick={() => {
+                            if (creditOption !== 'NONE') {
+                                customer.onChangeCreditOption(currentAmount, null, null, null, 'NONE');
+                            }
+                        }}
+                    />
+                    <CheckCard
+                        key={0}
+                        title={ts.prepayment}
+                        checked={creditOption === 'PREPAYMENT'}
+                        onClick={() => {
+                            if (creditOption !== 'PREPAYMENT') {
+                                customer.onChangeCreditOption(
+                                    0,
+                                    'mrc.payment.Bank_Transfer',
+                                    'mrc.payment.0',
+                                    null,
+                                    'PREPAYMENT'
+                                );
+                            }
+                        }}
+                    />
+                </Grid>
+            </FormSection>
+        );
     }
 
     createNewCreditSection() {

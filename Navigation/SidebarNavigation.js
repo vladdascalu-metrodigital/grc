@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { createNav, extractNavsFromQuickNav } from '../Util/nav';
 
 export default class SidebarNavigation extends Component {
-    createNavWithWrapper = btnConf => {
+    createNavWithWrapper = (btnConf) => {
         const service = btnConf.roleKey;
         return (
             <li className={this.props.highlight === service ? 'mrc-highlighted-li' : null} key={service}>

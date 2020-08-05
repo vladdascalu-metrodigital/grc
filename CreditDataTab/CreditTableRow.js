@@ -5,9 +5,10 @@ import CreditTableRowApproval from './CreditTableRowApproval';
 import CreditTableRowCreditLimit from './CreditTableRowCreditLimit';
 import CreditTableRowHistory from './CreditTableRowHistory';
 import CreditTableRowCreditCorrection from './CreditTableRowCreditCorrection';
+import CreditTableRowPrepayment from './CreditTableRowPrepayment';
 
 import * as _ from 'lodash';
-import { isApproval, isCreditCorrection, isCreditLimit, isHistory } from './creditDataTabUtil';
+import { isApproval, isCreditCorrection, isCreditLimit, isHistory, isPrepayment } from './creditDataTabUtil';
 
 export default class CreditTableRow extends Component {
     constructor(props) {
@@ -76,6 +77,8 @@ export default class CreditTableRow extends Component {
             return <CreditTableRowHistory {...{ ...this.props, ...rowProps }} />;
         } else if (isCreditCorrection(parent)) {
             return <CreditTableRowCreditCorrection {...{ ...this.props, ...rowProps }} />;
+        } else if (isPrepayment(parent)) {
+            return <CreditTableRowPrepayment {...{ ...this.props, ...rowProps }} />;
         }
         return null;
     }

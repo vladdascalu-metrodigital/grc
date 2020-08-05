@@ -18,6 +18,7 @@ const iconMap = {
     creditcorrection: CreditcorrectionIcon,
     batchupdate: BatchUpdateIcon,
     reports: ReportingIcon,
+    prepayment: LimitcheckIcon,
 };
 const sortMap = [
     'launchpad',
@@ -28,6 +29,7 @@ const sortMap = [
     'history',
     'batchupdate',
     'reports',
+    'prepayment',
 ];
 
 function sortNavs(navs, sortMap) {

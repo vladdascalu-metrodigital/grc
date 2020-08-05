@@ -28,6 +28,7 @@ const iconMap = {
     creditcorrection: CreditcorrectionIcon,
     batchupdate: BatchUpdateIcon,
     reports: ReportingIcon,
+    prepayment: LimitcheckIcon,
 };
 
 export default class LaunchPadLayout extends Component {

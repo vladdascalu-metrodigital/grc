@@ -13,6 +13,7 @@ import {
     isHistory,
     isLimitExpiryInHistory,
     isLimitRequestInHistory,
+    isPrepayment,
 } from './creditDataTabUtil';
 
 export default class CreditTableHead extends Component {
@@ -31,7 +32,7 @@ export default class CreditTableHead extends Component {
                         {isCreditLimit(parent) ? (
                             <CRTableHeaderCellTitle title={ts.customerWish} prefix={''} color={'green'} />
                         ) : null}
-                        {isCreditCorrection(parent) ? (
+                        {isCreditCorrection(parent) || isPrepayment(parent) ? (
                             <CRTableHeaderCellTitle title={ts.new} prefix={''} color={'green'} />
                         ) : null}
                         {isApproval(parent) ? (
@@ -83,7 +84,7 @@ export default class CreditTableHead extends Component {
             return this.createGroupHeadWithOnlyTwoStages(parent, groupLimit, country, activated, ts);
         }
 
-        if (isLimitExpiryInHistory(parent, historyRequestType)) {
+        if (isLimitExpiryInHistory(parent, historyRequestType) || isPrepayment(parent)) {
             return null;
         }
 

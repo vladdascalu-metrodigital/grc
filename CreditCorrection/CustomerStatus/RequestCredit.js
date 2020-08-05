@@ -51,7 +51,7 @@ export default class RequestCredit extends Component {
                         onClick={this.editRequest}
                     />
                     <Link
-                        ref={link => {
+                        ref={(link) => {
                             this.editLink = link;
                         }}
                         to={createUriPath('creditcorrection', 'requests', this.props.pendingRequest.data.id)}
