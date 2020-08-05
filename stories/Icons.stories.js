@@ -17,6 +17,7 @@ import SearchIcon from '../icons/SearchIcon';
 import SearchCircledIcon from '../icons/SearchCircledIcon';
 import SelectIcon from '../icons/SelectIcon';
 import CalendarIcon from '../icons/CalendarIcon';
+import PrepaymentIcon from '../icons/PrepaymentIcon';
 
 storiesOf('Fundamentals/Icons', module)
     .add('all icons', () => {
@@ -27,7 +28,7 @@ storiesOf('Fundamentals/Icons', module)
                     <GridItem colSpan="all">
                         Color:
                         <br />
-                        <Select options={['default', ...Object.values(COLOR)]} onChange={c => setColor(c)} />
+                        <Select options={['default', ...Object.values(COLOR)]} onChange={(c) => setColor(c)} />
                     </GridItem>
 
                     <ArrowLeftIcon color={color} />
@@ -42,6 +43,7 @@ storiesOf('Fundamentals/Icons', module)
                     <SelectIcon color={color} />
                     <WarningSmallFilledIcon color={color} />
                     <CalendarIcon color={color} />
+                    <PrepaymentIcon color={color} />
                 </Grid>
             </MainContent>
         );
