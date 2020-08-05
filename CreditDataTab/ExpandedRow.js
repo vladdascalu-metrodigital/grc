@@ -16,7 +16,7 @@ import CreditCorrectionMessageSection from './CreditCorrectionMessageSection';
 import { TYPE } from '../Card';
 import CreditCorrectionCustomerActionsSection from './CreditCorrectionCustomerActionsSection';
 import { lookup } from '../Util/translations';
-import CheckCard from 'global-react-components/CheckCard';
+import CheckCard from '../CheckCard';
 
 export default class ExpandedRow extends Component {
     isNewCreditMarked(customer, parent, isCashCustomerRequest) {
