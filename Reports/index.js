@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { lookup } from '../Util/translations';
 
 import ReportingIcon from '../icons/reporting-blue.svg';
@@ -35,3 +36,12 @@ export default class Reports extends Component {
         );
     }
 }
+
+Reports.propTypes = {
+    data: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string,
+            name: PropTypes.string,
+        })
+    ),
+};
