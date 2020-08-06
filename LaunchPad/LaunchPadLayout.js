@@ -12,6 +12,7 @@ import QuickcheckIcon from '../icons/quick-check-blue.svg';
 import CreditcorrectionIcon from '../icons/credit-correction-blue.svg';
 import BatchUpdateIcon from '../icons/batch-update-blue.svg';
 import ReportingIcon from '../icons/reporting-blue.svg';
+import PrepaymentIcon from '../icons/prepayment-blue.svg';
 
 const trainingMovieStyle = {
     margin: '1rem',
@@ -28,7 +29,7 @@ const iconMap = {
     creditcorrection: CreditcorrectionIcon,
     batchupdate: BatchUpdateIcon,
     reports: ReportingIcon,
-    prepayment: LimitcheckIcon,
+    prepayment: PrepaymentIcon,
 };
 
 export default class LaunchPadLayout extends Component {

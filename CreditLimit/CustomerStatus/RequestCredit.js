@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { createUriPath } from '../../Util/util.js';
 import CoinReceive from '../../icons/coin-receive.svg';
+import PrepaymentIcon from '../../icons/prepayment-white.svg';
 import { lookup } from '../../Util/translations';
 import IconEdit from '../../icons/icon-edit-white.svg';
 import './index.scss';
@@ -44,7 +45,7 @@ export default class RequestCredit extends Component {
             return (
                 <PrimaryButton
                     disabled={this.props.disabledRequests || this.props.disabledPrechecks}
-                    icon={CoinReceive}
+                    icon={isPrepayment ? PrepaymentIcon : CoinReceive}
                     showSpinner={showSpinner}
                     text={isPrepayment ? lookup('creditlimit.requestprepayment') : lookup('creditlimit.requestcredit')}
                     onClick={() => this.requestCredit(isPrepayment)}

@@ -8,6 +8,7 @@ import QuickcheckIcon from '../icons/quick-check.svg';
 import CreditcorrectionIcon from '../icons/credit-correction-white.svg';
 import BatchUpdateIcon from '../icons/batch-update-white.svg';
 import ReportingIcon from '../icons/reporting-white.svg';
+import PrepaymentIcon from '../icons/prepayment-white.svg';
 
 const iconMap = {
     launchpad: LaunchpadIcon, // Will not be part of the config, just for here
@@ -18,7 +19,7 @@ const iconMap = {
     creditcorrection: CreditcorrectionIcon,
     batchupdate: BatchUpdateIcon,
     reports: ReportingIcon,
-    prepayment: LimitcheckIcon,
+    prepayment: PrepaymentIcon,
 };
 const sortMap = [
     'launchpad',
