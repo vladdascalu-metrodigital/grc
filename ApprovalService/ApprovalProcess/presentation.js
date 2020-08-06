@@ -1167,7 +1167,7 @@ export class ApprovalProcessPresentation extends Component {
                 {!isContracting &&
                 !inTopManagmentTab &&
                 !process.supportsProvideInfo &&
-                process.editableByCurrentUser &&
+                (process.editableByCurrentUser || process.forwardableByCurrentUser) &&
                 !process.supportsConfirm &&
                 !process.waitingForReview ? (
                     <RequestInfoAction
@@ -1189,6 +1189,7 @@ export class ApprovalProcessPresentation extends Component {
                             (isContracting && !process.editableByCurrentUser) ||
                             !(
                                 process.editableByCurrentUser ||
+                                process.forwardableByCurrentUser ||
                                 (this.state.isCurrentUserAbleToCancel &&
                                     process.state !== 'CANCELLED' &&
                                     process.state !== 'COMPLETED' &&
