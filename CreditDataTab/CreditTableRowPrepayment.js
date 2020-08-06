@@ -34,6 +34,7 @@ export default class CreditTableRowPrepayment extends Component {
         const isPrepaymentCustomer = customer.isPrepaymentCustomer;
         const blockingInfo = customer.blockingInfo;
         const isBlocked = _.isNil(blockingInfo) ? false : blockingInfo.isBlocked;
+        const refinedCanToggle = canToggle && !isPrepaymentCustomer;
 
         const isNoChange = creditOption === 'NONE';
 
@@ -46,12 +47,12 @@ export default class CreditTableRowPrepayment extends Component {
                     stickyOffset={'tr[data-sticky="credit-table-head-sticky"]'}
                     type={rowType}
                     style={{
-                        cursor: canToggle ? 'pointer' : 'auto',
+                        cursor: refinedCanToggle ? 'pointer' : 'auto',
                         '--sticky-override': isExpanded ? 'sticky' : 'static',
                     }}
-                    onClick={canToggle ? () => onExpand() : null}
-                    onMouseEnter={canToggle ? () => onHover(true) : null}
-                    onMouseLeave={canToggle ? () => onHover(false) : null}
+                    onClick={refinedCanToggle ? () => onExpand() : null}
+                    onMouseEnter={refinedCanToggle ? () => onHover(true) : null}
+                    onMouseLeave={refinedCanToggle ? () => onHover(false) : null}
                 >
                     <Table.D>
                         {customer ? (
@@ -113,9 +114,7 @@ export default class CreditTableRowPrepayment extends Component {
                             <CRTableCellBiggerText text={ts.prepayment} color={'green'} />
                         </Table.D>
                     )}
-                    <Table.D>
-                        <ToggleIndicator />
-                    </Table.D>
+                    <Table.D>{refinedCanToggle ? <ToggleIndicator /> : null}</Table.D>
                 </Table.R>
                 {isExpanded ? <ExpandedRow {...this.props} /> : null}
             </React.Fragment>

@@ -39,15 +39,18 @@ export default class CreditTableRowHistory extends Component {
         } = this.props;
 
         const isCashCustomer = customer.isCashCustomer;
+        const isPrepaymentCustomer = customer.isPrepaymentCustomer;
         const ts = translations;
         const blockingInfo = customer.blockingInfo;
         const isBlocked = _.isNil(blockingInfo) ? false : blockingInfo.isBlocked;
 
         const isNoChangeInWish =
             _.isNil(_.get(customer, 'limit.wish.amount')) && _.isNil(_.get(customer, 'limit.wish.product'));
+        const isPrepaymentInWish = _.get(customer, 'limit.wish.creditOption') === 'PREPAYMENT';
 
         const isNoChangeInCurrent =
             _.isNil(_.get(customer, 'limit.current.amount')) && _.isNil(_.get(customer, 'limit.current.product'));
+        const isPrepaymentInCurrent = _.get(customer, 'limit.current.creditOption') === 'PREPAYMENT';
 
         const isCreditDataInRed = customer.failedActivation === true;
         const blockingOption = _.get(customer, 'limit.current.blockingOption');
@@ -81,6 +84,10 @@ export default class CreditTableRowHistory extends Component {
                     {isCashCustomer ? (
                         <Table.D colSpan="3" rowSpan="2">
                             <CRTableCellBiggerText text={ts.cash} color={'blue'} />
+                        </Table.D>
+                    ) : isPrepaymentCustomer ? (
+                        <Table.D colSpan="3" rowSpan="2">
+                            <CRTableCellBiggerText text={ts.prepayment} color={'blue'} />
                         </Table.D>
                     ) : (
                         <React.Fragment>
@@ -129,6 +136,10 @@ export default class CreditTableRowHistory extends Component {
                                 text={lookup(('mrc.blocking-option.' + blockingOption).toLowerCase())}
                                 color={isCreditDataInRed ? 'red' : 'green'}
                             />
+                        </Table.D>
+                    ) : isPrepaymentInWish ? (
+                        <Table.D colSpan="3">
+                            <CRTableCellBiggerText text={ts.prepayment} color={'blue'} />
                         </Table.D>
                     ) : (
                         <React.Fragment>
@@ -190,6 +201,10 @@ export default class CreditTableRowHistory extends Component {
                                 text={lookup(('mrc.blocking-option.' + blockingOption).toLowerCase())}
                                 color={isCreditDataInRed ? 'red' : 'green'}
                             />
+                        </Table.D>
+                    ) : isPrepaymentInCurrent ? (
+                        <Table.D colSpan="3" borderFix>
+                            <CRTableCellBiggerText text={ts.prepayment} color={'green'} />
                         </Table.D>
                     ) : (
                         <React.Fragment>

@@ -239,6 +239,7 @@ CreditDataTab.propTypes = {
                         amount: PropTypes.number,
                     }),
                     blockingOption: PropTypes.string,
+                    creditOption: PropTypes.string,
                 }),
                 wish: PropTypes.shape({
                     amount: PropTypes.number,
@@ -250,6 +251,7 @@ CreditDataTab.propTypes = {
                         amount: PropTypes.number,
                     }),
                     blockingOption: PropTypes.string,
+                    creditOption: PropTypes.string,
                 }),
                 applied: PropTypes.shape({
                     amount: PropTypes.number,
@@ -273,6 +275,7 @@ CreditDataTab.propTypes = {
                         amount: PropTypes.number,
                     }),
                     blockingOption: PropTypes.string,
+                    creditOption: PropTypes.string,
                 }),
                 limitType: PropTypes.string.isRequired,
                 paymentMethodType: PropTypes.string.isRequired,
@@ -296,6 +299,7 @@ CreditDataTab.propTypes = {
                 disabled: PropTypes.bool,
             }),
             isCashCustomer: PropTypes.bool.isRequired,
+            isPrepaymentCustomer: PropTypes.bool,
             limitExhaustion: PropTypes.number,
             failedActivation: PropTypes.bool, // creditcorrection, history
             activationResult: PropTypes.string, // creditcorrection

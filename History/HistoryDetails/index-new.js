@@ -25,6 +25,7 @@ import { CommentPropTypes } from '../../Comments/CommentsPropTypes';
 import CustomerDataGroup from '../../CustomerDataGroup';
 import * as util from '../../ApprovalService/ApprovalProcessNew/util';
 import { createBlockingInfo } from '../../Util/blockingInfoUtils';
+import { dataForPrepayment, dataForPrepaymentWithPrefix } from '../../CreditDataTab/creditDataTabUtil';
 
 const TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES = ['DE'];
 
@@ -349,6 +350,8 @@ export class HistoryDetailsPresentationNew extends Component {
 }
 
 export const createCreditDataProps = (params) => {
+    const isPrepayment = _.get(params, 'requestStatus.isPrepayment');
+    console;
     return {
         //
         // Shape data a littly bit for consistency with business terminology
@@ -451,6 +454,17 @@ export const createCreditDataProps = (params) => {
                                                 amount: _.get(data, 'requestedResetToLimitAmount'),
                                             },
                                             blockingOption: _.get(data, 'requested.blockingOption'),
+                                            creditOption:
+                                                isPrepayment &&
+                                                dataForPrepaymentWithPrefix(
+                                                    _.get(data, 'requested.creditLimit'),
+                                                    '3',
+                                                    _.get(data, 'requested.creditProduct'),
+                                                    _.get(data, 'requested.creditPeriod'),
+                                                    _.get(data, 'requested.debitType')
+                                                )
+                                                    ? 'PREPAYMENT'
+                                                    : undefined,
                                         },
                               current:
                                   _.get(params, 'requestStatus.requestType') === 'LIMIT_EXPIRY'
@@ -480,6 +494,17 @@ export const createCreditDataProps = (params) => {
                                                         : _.get(data, 'resetToLimitAmount'),
                                             },
                                             blockingOption: _.get(data, 'applied.blockingOption'),
+                                            creditOption:
+                                                isPrepayment &&
+                                                dataForPrepaymentWithPrefix(
+                                                    _.get(data, 'applied.creditLimit'),
+                                                    '3',
+                                                    _.get(data, 'applied.creditProduct'),
+                                                    _.get(data, 'applied.creditPeriod'),
+                                                    _.get(data, 'applied.debitType')
+                                                )
+                                                    ? 'PREPAYMENT'
+                                                    : undefined,
                                         },
                               readOnly: true,
                           },
@@ -491,6 +516,13 @@ export const createCreditDataProps = (params) => {
                           isCashCustomer:
                               _.isNil(_.get(data, 'customerData.paymentAllowanceCd')) ||
                               _.get(data, 'customerData.paymentAllowanceCd') !== '3',
+                          isPrepaymentCustomer: dataForPrepayment(
+                              _.get(data, 'customerData.creditLimit'),
+                              _.get(data, 'customerData.paymentAllowanceCd'),
+                              _.get(data, 'customerData.creditSettleTypeCd'),
+                              _.get(data, 'customerData.creditSettlePeriodCd'),
+                              _.get(data, 'customerData.creditSettleFrequencyCd')
+                          ),
                           limitExhaustion: _.get(data, 'customerData.limitExhaustion'),
                           additionalFields: {
                               hasCustomerAdditionalFields: !_.isEmpty(customerAdditionalFields),

@@ -31,6 +31,7 @@ import * as _ from 'lodash';
 import { List } from 'immutable';
 import CustomerDataGroup from '../../CustomerDataGroup';
 import { displayName } from '../../Util';
+import { dataForPrepayment } from '../../CreditDataTab/creditDataTabUtil';
 
 export default class LimitRequestLayout extends Component {
     FILE_TYPES = [''];
@@ -662,6 +663,13 @@ export default class LimitRequestLayout extends Component {
                                   isCashCustomer:
                                       _.isNil(_.get(item, 'customer.paymentAllowanceCd')) ||
                                       _.get(item, 'customer.paymentAllowanceCd') !== '3',
+                                  isPrepaymentCustomer: dataForPrepayment(
+                                      _.get(item, 'customer.creditLimit'),
+                                      _.get(item, 'customer.paymentAllowanceCd'),
+                                      _.get(item, 'customer.creditSettleTypeCd'),
+                                      _.get(item, 'customer.creditSettlePeriodCd'),
+                                      _.get(item, 'customer.creditSettleFrequencyCd')
+                                  ),
                                   limitExhaustion: _.get(item, 'customer.limitExhaustion'),
                               };
                           })

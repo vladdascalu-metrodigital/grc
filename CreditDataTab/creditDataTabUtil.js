@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 export function isHistory(parent) {
     return parent === 'history';
 }
@@ -39,4 +41,30 @@ export function createProductTimePeriod(period, translatedPeriod, translationOfD
         return isNaN(translatedPeriod) ? translatedPeriod : [translatedPeriod, translationOfDays].join(' ');
     }
     return '-';
+}
+
+export function dataForPrepayment(
+    limit,
+    paymentAllowanceCd,
+    creditSettleTypeCd,
+    creditSettlePeriodCd,
+    creditSettleFrequencyCd
+) {
+    return (
+        limit == '0' &&
+        paymentAllowanceCd === '3' &&
+        creditSettleTypeCd === '2' &&
+        creditSettlePeriodCd === '0' &&
+        (!creditSettleFrequencyCd || _.isNil(creditSettleFrequencyCd) || creditSettleFrequencyCd == '')
+    );
+}
+
+export function dataForPrepaymentWithPrefix(limit, paymentAllowanceCd, creditProduct, creditPeriod, debitType) {
+    return (
+        limit == '0' &&
+        paymentAllowanceCd === '3' &&
+        creditProduct === 'mrc.payment.Bank_Transfer' &&
+        creditPeriod === 'mrc.payment.0' &&
+        (!debitType || _.isNil(debitType) || debitType == '')
+    );
 }
