@@ -94,6 +94,12 @@ export default class Strategy extends Component {
         };
 
         const makeValue = (value, indicator) => {
+            // descriptors with values 0 <= x <= 1 describing a percentage
+            // value
+            const percentageDescriptors = [
+                'strategy.keyindicators.disposalrate',
+                'strategy.keyindicators.utilizationrate',
+            ];
             const limitDescriptors = [
                 'strategy.keyindicators.internalRecommendedLimit',
                 'strategy.keyindicators.requestedGroupLimit',
@@ -107,6 +113,12 @@ export default class Strategy extends Component {
             ];
             if (isNaN(value)) {
                 return lookup(value);
+            } else if (percentageDescriptors.includes(indicator.original.indicatorName)) {
+                return _.isNaN(parseFloat(value)) ? (
+                    lookup(value)
+                ) : (
+                    <MrcNumber isPercentage>{100 * parseFloat(value)}</MrcNumber>
+                );
             } else if (limitDescriptors.includes(indicator.original.indicatorName)) {
                 return (
                     <MrcNumber isCurrency country={country}>

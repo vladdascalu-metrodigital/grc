@@ -12,5 +12,7 @@ storiesOf('Fundamentals/MrcNumber', module).add('numbers and currencies', () => 
         <MrcNumber isCurrency country={COUNTRY.PL}>
             100.123
         </MrcNumber>
+        <MrcNumber isPercentage>23</MrcNumber>
+        <MrcNumber>{null}</MrcNumber>
     </Grid>
 ));

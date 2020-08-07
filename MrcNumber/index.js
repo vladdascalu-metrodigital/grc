@@ -15,8 +15,9 @@ export const TYPE = {
 
 export default class MrcNumber extends PureComponent {
     render() {
-        let { isCurrency, country, locale, children: number, type } = this.props;
+        let { isCurrency, isPercentage, country, locale, children: number, type } = this.props;
         number = typeof number === 'string' || typeof number === 'number' ? number.toString().trim() : '';
+        const suffix = isPercentage ? '%' : '';
         if (isCurrency) {
             let options = {
                 style: 'currency',
@@ -30,7 +31,12 @@ export default class MrcNumber extends PureComponent {
         }
         let className = classnames('mrc-ui-number', type && 'mrc-ui-number-' + type);
 
-        return <span className={className}>{number}</span>;
+        return (
+            <span className={className}>
+                {number}
+                {suffix}
+            </span>
+        );
     }
 }
 
@@ -43,5 +49,6 @@ MrcNumber.propTypes = {
     country: PropTypes.string,
     locale: PropTypes.string,
     isCurrency: PropTypes.bool,
+    isPercentage: PropTypes.bool,
     type: PropTypes.oneOf(['small', 'smaller']),
 };
