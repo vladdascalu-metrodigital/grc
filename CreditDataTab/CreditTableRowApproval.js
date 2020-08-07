@@ -108,14 +108,21 @@ export default class CreditTableRowApproval extends Component {
                 _.isNil(_.get(customer, 'limit.wish.product')) &&
                 !isCashCustomer);
         const isNoChangeInWish =
-            _.isNil(_.get(customer, 'limit.wish.amount')) && _.isNil(_.get(customer, 'limit.wish.product'));
+            (_.isNil(_.get(customer, 'limit.wish.amount')) && _.isNil(_.get(customer, 'limit.wish.product'))) ||
+            isPrepaymentCustomer;
         const isPrepaymentInWish = _.get(customer, 'limit.wish.creditOption') === 'PREPAYMENT';
 
         // new data flag
         const isNoChangeInNew =
-            limitType === 'CURRENT' && paymentMethodType === 'CURRENT' && _.isNil(_.get(customer, 'limit.new.amount'));
+            (limitType === 'CURRENT' &&
+                paymentMethodType === 'CURRENT' &&
+                _.isNil(_.get(customer, 'limit.new.amount'))) ||
+            isPrepaymentCustomer;
         const isPrepaymentInNew = _.get(customer, 'limit.creditOption') === 'PREPAYMENT';
         const newCreditData = this.retrieveNewCreditData(customer, isNoChangeInNew, limitType, paymentMethodType);
+
+        const isOrRequestsPrepayment = isPrepaymentCustomer || isPrepaymentInWish || isPrepaymentInNew;
+        const refinedCanToggle = isOrRequestsPrepayment ? isBlocked : canToggle;
 
         const isValid = _.get(customer, 'limit.valid');
         return (
@@ -127,12 +134,12 @@ export default class CreditTableRowApproval extends Component {
                     stickyOffset={'tr[data-sticky="credit-table-head-sticky"]'}
                     type={isValid ? rowType : 'invalid'}
                     style={{
-                        cursor: canToggle ? 'pointer' : 'auto',
+                        cursor: refinedCanToggle ? 'pointer' : 'auto',
                         '--sticky-override': isExpanded ? 'sticky' : 'static',
                     }}
-                    onClick={canToggle ? () => onExpand() : null}
-                    onMouseEnter={canToggle ? () => onHover(true) : null}
-                    onMouseLeave={canToggle ? () => onHover(false) : null}
+                    onClick={refinedCanToggle ? () => onExpand() : null}
+                    onMouseEnter={refinedCanToggle ? () => onHover(true) : null}
+                    onMouseLeave={refinedCanToggle ? () => onHover(false) : null}
                 >
                     <Table.D rowSpan="2">
                         {customer ? (
@@ -236,9 +243,7 @@ export default class CreditTableRowApproval extends Component {
                         </React.Fragment>
                     )}
 
-                    <Table.D rowSpan="2">
-                        <ToggleIndicator />
-                    </Table.D>
+                    <Table.D rowSpan="2">{refinedCanToggle ? <ToggleIndicator /> : null}</Table.D>
                 </Table.R>
                 <Table.R
                     isActive={isExpanded}
@@ -247,12 +252,12 @@ export default class CreditTableRowApproval extends Component {
                     stickyOffset={'tr[data-sticky="credit-table-head-sticky"]'}
                     type={isValid ? rowType : 'invalid'}
                     style={{
-                        cursor: canToggle ? 'pointer' : 'auto',
+                        cursor: refinedCanToggle ? 'pointer' : 'auto',
                         '--sticky-override': isExpanded ? 'sticky' : 'static',
                     }}
-                    onClick={canToggle ? () => onExpand() : null}
-                    onMouseEnter={canToggle ? () => onHover(true) : null}
-                    onMouseLeave={canToggle ? () => onHover(false) : null}
+                    onClick={refinedCanToggle ? () => onExpand() : null}
+                    onMouseEnter={refinedCanToggle ? () => onHover(true) : null}
+                    onMouseLeave={refinedCanToggle ? () => onHover(false) : null}
                 >
                     {requestsCash && !isCashCustomer ? (
                         <Table.D colSpan="3">
@@ -302,7 +307,9 @@ export default class CreditTableRowApproval extends Component {
                         </React.Fragment>
                     )}
                 </Table.R>
-                {isExpanded ? <ExpandedRow {...this.props} /> : null}
+                {isExpanded ? (
+                    <ExpandedRow {...{ ...this.props, isOrRequestsPrepayment: isOrRequestsPrepayment }} />
+                ) : null}
             </React.Fragment>
         );
     }
