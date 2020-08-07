@@ -48,6 +48,7 @@ import {
 import CreditDataTab from '../../CreditDataTab';
 import { displayName } from '../../Util';
 import { createBlockingInfo } from '../../Util/blockingInfoUtils';
+import { dataForPrepaymentWithPrefix } from '../../CreditDataTab/creditDataTabUtil';
 
 const SENT_BACK = 'SENT_BACK';
 const INFO_PROVIDED = 'INFO_PROVIDED';
@@ -767,6 +768,8 @@ export class ApprovalProcessPresentation extends Component {
             process.reviewed ||
             !process.editableByCurrentUser;
 
+        const isPrepayment = process.request.isPrepayment;
+
         return (
             <CreditDataTab
                 country={process.request.country}
@@ -907,6 +910,17 @@ export class ApprovalProcessPresentation extends Component {
                                         ? 0
                                         : _.get(item, 'wishLimitExpiry.resetToLimitAmount'),
                                 },
+                                creditOption:
+                                    isPrepayment &&
+                                    dataForPrepaymentWithPrefix(
+                                        _.get(item, 'requestedCreditData.amount'),
+                                        '3',
+                                        _.get(item, 'requestedCreditData.creditProduct'),
+                                        _.get(item, 'requestedCreditData.creditPeriod'),
+                                        _.get(item, 'requestedCreditData.debitType')
+                                    )
+                                        ? 'PREPAYMENT'
+                                        : undefined,
                             },
                             applied:
                                 _.get(item, 'lastAppliedType') === 'NEW'
@@ -920,6 +934,17 @@ export class ApprovalProcessPresentation extends Component {
                                               amount: _.get(item, 'appliedLimitExpiry.resetToLimitAmount'),
                                           },
                                           position: process.lastApproverPosition,
+                                          creditOption:
+                                              isPrepayment &&
+                                              dataForPrepaymentWithPrefix(
+                                                  _.get(item, 'approvedCreditData.amount'),
+                                                  '3',
+                                                  _.get(item, 'approvedCreditData.creditProduct'),
+                                                  _.get(item, 'approvedCreditData.creditPeriod'),
+                                                  _.get(item, 'approvedCreditData.debitType')
+                                              )
+                                                  ? 'PREPAYMENT'
+                                                  : undefined,
                                       }
                                     : {
                                           amount: null,
@@ -976,6 +1001,14 @@ export class ApprovalProcessPresentation extends Component {
                         isCashCustomer:
                             _.isNil(_.get(item, 'customer.paymentAllowanceCd')) ||
                             _.get(item, 'customer.paymentAllowanceCd') !== '3',
+                        isPrepaymentCustomer:
+                            _.get(item, 'customer.creditLimit') == '0' &&
+                            _.get(item, 'customer.paymentAllowanceCd') === '3' &&
+                            _.get(item, 'customer.creditSettleTypeCd') === '2' &&
+                            _.get(item, 'customer.creditSettlePeriodCd') === '0' &&
+                            (_.isNil(item, 'customer.creditSettleFrequencyCd') ||
+                                !_.get(item, 'customer.creditSettleFrequencyCd') ||
+                                _.get(item, 'customer.creditSettleFrequencyCd') == ''),
                         limitExhaustion: _.get(item, 'customer.limitExhaustion'),
                     };
                 })}
