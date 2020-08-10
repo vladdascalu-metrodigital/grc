@@ -15,6 +15,7 @@ import MrcNumber from '../MrcNumber';
 import MrcDate from '../MrcDate';
 
 import './index.scss';
+import PrepaymentIcon from '../icons/prepayment-blue.svg';
 
 export default class RecentRequestsInfo extends Component {
     render() {
@@ -188,6 +189,9 @@ export default class RecentRequestsInfo extends Component {
     createTrafficLight(requestStatus) {
         if (requestStatus.requestType === 'CREDIT_CORRECTION') {
             return <img src={CreditCorrectionIcon} alt="Credit Correction Light"></img>;
+        }
+        if (requestStatus.requestType === 'LIMIT_REQUEST' && requestStatus.isPrepayment) {
+            return <img src={PrepaymentIcon} alt="Prepayment"></img>;
         }
         if (requestStatus.trafficLight == 'red') {
             return <img src={BlockedIcon} alt="RED Traffic Light"></img>;
