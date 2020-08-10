@@ -99,6 +99,7 @@ export default class Strategy extends Component {
             const percentageDescriptors = [
                 'strategy.keyindicators.disposalrate',
                 'strategy.keyindicators.utilizationrate',
+                'strategy.keyindicators.totalIncome',
             ];
             const limitDescriptors = [
                 'strategy.keyindicators.internalRecommendedLimit',
