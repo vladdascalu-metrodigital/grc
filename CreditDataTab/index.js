@@ -12,9 +12,9 @@ import './index.scss';
 
 import * as _ from 'lodash';
 import AdditionalFieldsSectionWithDialog from '../AdditionalFieldsNew/AdditionalFieldsSectionWithDialog';
-import CreditProgram from '../CreditProgramNew';
+import CreditProgram from '../CreditProgram';
 import CreditCorrectionGroupActions from './CreditCorrectionGroupActions';
-import { countryBlockingOptions } from '../CreditCorrection/CreditCorrectionNew/blockingOptions';
+import { countryBlockingOptions } from '../CreditCorrection/CreditCorrection/blockingOptions';
 import { isCreditCorrection } from './creditDataTabUtil';
 
 export default class CreditDataTab extends Component {
@@ -52,7 +52,7 @@ export default class CreditDataTab extends Component {
             limitdescription: lookup('mrc.credittab.limitdescription'),
             block: lookup('mrc.credittab.block'),
             blockdescription: lookup('mrc.credittab.blockdescription'),
-            amount: lookup('mrc.attachments.amount'),
+            amount: lookup('mrc.credittab.amount'),
             resetLimit: lookup('mrc.credittab.resetLimit'),
             setExpiryDateForAll: lookup('mrc.credittab.setExpiryDateForAll'),
             withoutExpiry: lookup('mrc.credittab.withoutExpiry'),

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import '../Util/imports';
-import { ApprovalProcessPresentation } from '../ApprovalService/ApprovalProcessNew/presentation';
+import { ApprovalProcessPresentation } from '../ApprovalService/ApprovalProcess/presentation';
 
 import recentRequestsData from './fixtures/approval-service/customers.recentRequests';
-import CreditLimitRequest from '../CreditLimit/LimitRequestNew';
 
 storiesOf('ApprovalService', module)
     .add('manual approval flow', () => {

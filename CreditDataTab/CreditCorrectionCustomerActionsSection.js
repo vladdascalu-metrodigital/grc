@@ -9,7 +9,7 @@ import FormSection from '../FormSection';
 import CheckCard from '../CheckCard';
 import Select from '../Select';
 import InputLabel from '../InputLabel';
-import { countryBlockingOptions } from '../CreditCorrection/CreditCorrectionNew/blockingOptions';
+import { countryBlockingOptions } from '../CreditCorrection/CreditCorrection/blockingOptions';
 import * as _ from 'lodash';
 import {
     extractCreditPeriods,
@@ -163,7 +163,7 @@ export default class CreditCorrectionCustomerActionsSection extends Component {
                         <Card dropShadow>
                             <h4 className="mrc-ui-form-label mt-4 mb-1">{ts.addamount}</h4>
                             <Grid cols={4}>
-                                <CheckCard title="Amount" checked={true}>
+                                <CheckCard title={ts.amount} checked={true}>
                                     <FlexRow alignItems="baseline">
                                         <div className="mr-3">
                                             <NumberInput

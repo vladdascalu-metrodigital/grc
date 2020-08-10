@@ -27,7 +27,7 @@ export default class RequestSubmitted extends Component {
         );
     }
 
-    lookupPayment = payment => {
+    lookupPayment = (payment) => {
         if (payment) {
             let tLookup = payment;
             if (!payment.includes('mrc.payment.')) tLookup = 'mrc.payment.' + payment.split(' ').join('_');

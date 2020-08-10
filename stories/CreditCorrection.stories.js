@@ -3,7 +3,6 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import CreditCorrectionCustomerStatus from '../CreditCorrection/CustomerStatus';
-import CreditCorrectionCreditData from '../CreditCorrection/CreditData';
 import CreditCorrectionRequest from '../CreditCorrection/CreditCorrection';
 import CreditCorrectionRequestSubmitted from '../CreditCorrection/CreditCorrection/RequestSubmitted';
 import CreditLimitCustomerStatus from '../CreditCorrection/CustomerStatus';
@@ -582,109 +581,6 @@ storiesOf('CreditCorrection/CustomerStatus', module)
             isTablet={true}
         />
     ));
-
-storiesOf('CreditCorrection/CreditData', module).add('standard status', () => (
-    <CreditCorrectionCreditData
-        key={'1'}
-        headerTitle={'CREDIT REQUEST for Test User'}
-        paymentReadyToBeSelected={true}
-        requestedItem={{
-            id: '3636646d-0b3c-4d2e-bb3b-5098b721b4e6',
-            creditData: {
-                id: '982dcee2-a81a-4712-b374-046a675503b3',
-                amount: null,
-                creditProduct: null,
-                creditPeriod: null,
-                debitType: null,
-            },
-            customer: {
-                country: 'DE',
-                lastName: 'Anylastname',
-                storeNumber: '10',
-                customerNumber: '115',
-                currentPayment: {
-                    creditProduct: 'mrc.payment.METRO_Cash',
-                    creditPeriod: 'mrc.payment.3',
-                    debitType: 'mrc.payment.Firmenlastschriftmandat',
-                    backend: {
-                        paymentAllowanceCd: 3,
-                        creditSettleTypeCd: 1,
-                        creditSettlePeriodCd: 3,
-                        creditSettleFrequencyCd: null,
-                        stringRepresentation: '3_1_3_null',
-                    },
-                },
-                availablePayments: [
-                    {
-                        creditProduct: 'mrc.payment.METRO_Cash',
-                        creditPeriod: 'mrc.payment.9',
-                        debitType: 'mrc.payment.Firmenlastschriftmandat',
-                        backend: {
-                            paymentAllowanceCd: 3,
-                            creditSettleTypeCd: 1,
-                            creditSettlePeriodCd: 9,
-                            creditSettleFrequencyCd: null,
-                            stringRepresentation: '3_1_9_null',
-                        },
-                    },
-                    {
-                        creditProduct: 'mrc.payment.METRO_Cash',
-                        creditPeriod: 'mrc.payment.29',
-                        debitType: 'mrc.payment.Firmenlastschriftmandat',
-                        backend: {
-                            paymentAllowanceCd: 3,
-                            creditSettleTypeCd: 1,
-                            creditSettlePeriodCd: 29,
-                            creditSettleFrequencyCd: null,
-                            stringRepresentation: '3_1_29_null',
-                        },
-                    },
-                    {
-                        creditProduct: 'mrc.payment.METRO_Cash',
-                        creditPeriod: 'mrc.payment.41',
-                        debitType: 'mrc.payment.Einzugsermaechtigung',
-                        backend: {
-                            paymentAllowanceCd: 3,
-                            creditSettleTypeCd: 3,
-                            creditSettlePeriodCd: 41,
-                            creditSettleFrequencyCd: null,
-                            stringRepresentation: '3_3_41_null',
-                        },
-                    },
-                ],
-            },
-            customerId: {
-                salesLine: null,
-                country: 'PK',
-                storeNumber: '10',
-                customerNumber: '555',
-                storeAndCustomerNumber: null,
-            },
-            currentLimitExpiry: {
-                limitExpiryDate: '2020-05-04T07:47:46Z',
-                limitExpiryReminderDays: 14,
-                resetToLimitAmount: 0,
-            },
-            customerSapId: {
-                country: 'PK',
-                storeNumber: '10',
-                customerNumber: '555',
-                typeCd: 'NORM',
-            },
-            valid: false,
-        }}
-        setCreditData={(value) => console.log(value)}
-        setValidity={(value) => console.log(value)}
-        handleRequestedGroupLimitChange={(value) => console.log(value)}
-        canCorrect={true}
-        onBlockingChange={(value) => console.log(value)}
-        blockingValue={'30'}
-        blockingOptions={['HARDBLOCK', 'SOFTBLOCK']}
-        blockingLabel={'mrc.blocking.customer-dropdown'}
-        blockingItemId={'3636646d-0b3c-4d2e-bb3b-5098b721b4e6'}
-        registerCallbackBlocking={(value) => console.log(value)}
-    />
-));
 
 storiesOf('CreditCorrection/CreditCorrection', module)
     .add('standard request', () => (

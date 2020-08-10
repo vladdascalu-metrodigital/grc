@@ -26,7 +26,7 @@ export default class AutoDecisionReviewReason extends Component {
                         ref={this.reviewReasonInput}
                         className="mrc-ui-textarea"
                         value={this.props.newContent}
-                        onChange={e => this.props.onContentChange && this.props.onContentChange(e.target.value)}
+                        onChange={(e) => this.props.onContentChange && this.props.onContentChange(e.target.value)}
                     ></textarea>
                 </div>
 

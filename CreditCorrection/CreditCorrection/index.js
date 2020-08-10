@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from '../../Button/index';
 import ProgressBar from '../../ProgressBar';
-import CreditData from '../CreditData';
 import Comments from '../../Comments';
 import Attachments from '../../Attachments';
 import { Route, Switch } from 'react-router-dom';
@@ -11,79 +10,32 @@ import ErrorHandledTabPanel from '../../ErrorHandledTabPanel';
 import '../../tabs.scss';
 import { Accordion, Collapsible } from '../../Accordion';
 import RequestSubmitted from './RequestSubmitted';
-import { displayName } from '../../Util';
-import CustomerTrigger from '../../CustomerTrigger/presentation';
 import { lookup } from '../../Util/translations';
 import './index.scss';
 import MrcSpinner from '../../Util/MrcSpinner';
-import CustomerGroupLimits from '../../CustomerGroupLimits';
-import BlockingDropdown from '../BlockingDropdown';
 
-import * as _ from 'lodash';
 import CustomerDataGroup from '../../CustomerDataGroup';
+import * as _ from 'lodash';
+import CreditDataTab from '../../CreditDataTab';
+import { displayName } from '../../Util';
+import { createBlockingInfo } from '../../Util/blockingInfoUtils';
 
 export default class CreditCorrectionLayout extends Component {
     FILE_TYPES = [''];
-    canBlock = false;
-    canCorrect = false;
-    ALL_BLOCKING_OPTIONS = [
-        'mrc.blocking-option.hardblock',
-        'mrc.blocking-option.generalblock',
-        'mrc.blocking-option.softblock',
-        'mrc.blocking-option.credittocash',
-        'mrc.blocking-option.removeblock',
-    ];
-    HARD_BLOCKING_OPTIONS = ['mrc.blocking-option.hardblock', 'mrc.blocking-option.generalblock'];
-    DE_BLOCKING_OPTIONS = [null, 'mrc.blocking-option.hardblock', 'mrc.blocking-option.credittocash'];
-    PL_BLOCKING_OPTIONS = [
-        null,
-        'mrc.blocking-option.generalblock',
-        'mrc.blocking-option.softblock',
-        'mrc.blocking-option.credittocash',
-        'mrc.blocking-option.removeblock',
-    ];
-    RU_BLOCKING_OPTIONS = [null, 'mrc.blocking-option.hardblock'];
-    AT_BLOCKING_OPTIONS = [null, 'mrc.blocking-option.softblock'];
-    DEFAULT_BLOCKING_OPTIONS = [null, 'mrc.blocking-option.hardblock'];
 
     constructor(props) {
         super(props);
-        // this.handleRequestedLimitChange = this.handleRequestedLimitChange.bind(this);
         this.state = {
-            creditDataValid: false,
-            creditDataComponentsValid: {},
-            currentGroupLimit: 0,
-            availableGroupLimit: 0,
-            exhaustionGroupLimit: 0,
-            requestedGroupLimit: 0,
-            approvedGroupLimit: 0,
             canceled: false,
             enableSpinner: false,
-            blockingValues: {},
-            blockingCallbacks: {},
+            newComment: '',
         };
-        this.onBlockingDropdownChange = this.onBlockingDropdownChange.bind(this);
-        this.blockingCallback = this.blockingCallback.bind(this);
-
-        //when we block a customer, the payment doesn't change in MCFM and we need to invalidate it manually
-        if (
-            this.props.request.data &&
-            this.props.request.data.requestedItems &&
-            this.props.request.data.requestedItems[0].customer &&
-            this.props.request.data.requestedItems[0].customer.creditLimitStatus === 'blocked'
-        ) {
-            this.props.request.data.requestedItems.map((item) => {
-                item.creditData.id = '';
-                item.creditData.creditProduct = '';
-                item.creditData.creditPeriod = '';
-                item.creditData.debitType = '';
-            });
-        }
     }
 
     UNSAFE_componentWillMount() {
         this.props.showAuxControl({ back: true });
         this.props.loadRequest(this.props.match.params.id);
+        this.props.updateUiPageTitle(lookup('creditcorrection.limitrequest.title'));
     }
 
     componentWillUnmount() {
@@ -96,94 +48,18 @@ export default class CreditCorrectionLayout extends Component {
         }
     }
 
-    /**
-     * @overload livecycle callback to check for valid data actually loaded
-     *
-     * @param nextProps
-     */
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        this.props.updateUiPageTitle(lookup('creditcorrection.limitrequest.title'));
-        //
-        // in case we got data, prepare it
-        //
-        if (nextProps.request && nextProps.request.data) {
-            const req = nextProps.request.data;
-
-            //
-            // mark the requested customer
-            //
-            req.requestedItems.forEach((ri) => this.markRequestedCustomer(req.requestedCustomerId, ri.customer));
-
-            //
-            // sort by customerID, taking the requestedCustomer first
-            //
-            req.requestedItems.sort((a, b) => {
-                const custa = a.customer;
-                const custb = b.customer;
-                if (custa.requestedCustomer) return -1;
-                if (custb.requestedCustomer) return 1;
-
-                if (custa.storeNumber !== custb.storeNumber) {
-                    return Number.parseInt(custa.storeNumber) - Number.parseInt(custb.storeNumber);
-                }
-
-                return Number.parseInt(custa.customerNumber) - Number.parseInt(custb.customerNumber);
-            });
-            let currentGroupLimit = 0;
-            let requestedGroupLimit = 0;
-            let availableGroupLimit = 0;
-            let exhaustionGroupLimit = 0;
-            if (nextProps.request != null && nextProps.request.data != null) {
-                nextProps.request.data.requestedItems.map((item) => {
-                    currentGroupLimit += item.customer.creditLimit;
-                    const amount =
-                        !_.isNil(item.creditData.amount) && !_.isNaN(item.creditData.amount)
-                            ? item.creditData.amount
-                            : !_.isNil(item.customer.creditLimit)
-                            ? item.customer.creditLimit
-                            : 0;
-                    requestedGroupLimit += amount;
-                    exhaustionGroupLimit += item.customer.limitExhaustion;
-                });
-                availableGroupLimit = currentGroupLimit - exhaustionGroupLimit;
-                this.setState({
-                    currentGroupLimit: currentGroupLimit,
-                    requestedGroupLimit: requestedGroupLimit,
-                    availableGroupLimit: availableGroupLimit,
-                    exhaustionGroupLimit: exhaustionGroupLimit,
-                });
-            }
-        }
-    }
-
-    /*
-    private helper
-     */
-    markRequestedCustomer(reqCust, cust) {
-        if (
-            reqCust.country === cust.country &&
-            reqCust.storeNumber === cust.storeNumber &&
-            reqCust.customerNumber === cust.customerNumber
-        ) {
-            cust.requestedCustomer = true;
-        }
-    }
-
     createProgressBar() {
         const request = this.props.request.data;
         if (request) {
-            const totalSteps = request.containsContracting ? 4 : 3;
-            return <ProgressBar name={lookup('mrc.phase.initialization')} step={1} totalSteps={totalSteps} />;
+            return <ProgressBar name={lookup('mrc.phase.initialization')} step={1} totalSteps={3} />;
         } else {
             return null;
         }
     }
 
-    createButtons() {
+    createButtons(valid) {
         const creditCorrectionRequest = this.props.request.data;
-        var disabled = true;
-        this.canBlock = creditCorrectionRequest.canBlock;
-        this.canCorrect = creditCorrectionRequest.canCorrect;
+        let disabled = true;
         if (creditCorrectionRequest != null) {
             const notNullActivations = creditCorrectionRequest.requestedItems.filter((ri) => ri.activationInfo != null);
             if (notNullActivations.length === 0) {
@@ -198,6 +74,24 @@ export default class CreditCorrectionLayout extends Component {
             }
         }
         return (
+            /*
+            <SimpleActionDock
+                onCancel={() => {
+                    this.setState({ ...this.state, canceled: true, enableSpinner: true });
+                    this.props.cancel(creditCorrectionRequest.id);
+                }}
+                onApply={() => {
+                    this.setState({ enableSpinner: true });
+                    this.props.submitRequest(creditCorrectionRequest.id, 'APPROVED');
+                }}
+                applyDisabled={
+                    !(valid && !this.state.canceled) ||
+                    disabled ||
+                    this.props.request.data.requestsDisabled
+                }
+                cancelDisabled={disabled || this.state.canceled}
+            />
+            */
             <div className="mrc-btn-group">
                 {
                     <Button
@@ -214,12 +108,8 @@ export default class CreditCorrectionLayout extends Component {
                 <Button
                     text={lookup('creditcorrection.applychanges')}
                     id="mrc-applychanges-button"
-                    status={!(this.state.creditDataValid && !this.state.canceled) || disabled ? 'secondary' : 'success'}
-                    disabled={
-                        !(this.state.creditDataValid && !this.state.canceled) ||
-                        disabled ||
-                        this.props.request.data.requestsDisabled
-                    }
+                    status={!(valid && !this.state.canceled) || disabled ? 'secondary' : 'success'}
+                    disabled={!(valid && !this.state.canceled) || disabled || this.props.request.data.requestsDisabled}
                     onClick={() => {
                         this.setState({ enableSpinner: true });
                         this.props.submitRequest(creditCorrectionRequest.id, 'APPROVED');
@@ -229,9 +119,9 @@ export default class CreditCorrectionLayout extends Component {
         );
     }
 
-    handleFormSubmit(e) {
+    handleFormSubmit(e, valid) {
         e.preventDefault();
-        if (!(this.state && this.state.creditDataValid)) {
+        if (!valid) {
             console.warn('Form is not valid, abort submit.');
             return;
         }
@@ -242,181 +132,12 @@ export default class CreditCorrectionLayout extends Component {
         // in case there is some data, retrieve list of customers from list of requestedItems
         const customers = req.data && req.data.requestedItems.map((ri) => ri.customer);
 
-        return <CustomerDataGroup customers={customers} />;
-    }
-
-    createToggles() {
-        return <div className="credit-options">{}</div>;
-    }
-
-    createGroupLimitInfos() {
         return (
-            <CustomerGroupLimits
-                country={this.props.request.data.requestedItems[0].customer.country}
-                exhaustionGroupLimit={this.state.exhaustionGroupLimit}
-                requestedGroupLimit={this.state.requestedGroupLimit}
-                currentGroupLimit={this.state.currentGroupLimit}
-                availableGroupLimit={this.state.availableGroupLimit}
+            <CustomerDataGroup
+                customers={customers}
+                countriesWithDifferentBlockingCodes={this.props.countriesWithDifferentBlockingCodes}
             />
         );
-    }
-
-    handleRequestedGroupLimitChange() {
-        let requestedGroupLimitNew = 0;
-        if (this.props.request != null && this.props.request.data != null) {
-            this.props.request.data.requestedItems.map((item) => {
-                const amount =
-                    !_.isNil(item.creditData.amount) && !_.isNaN(item.creditData.amount)
-                        ? item.creditData.amount
-                        : !_.isNil(item.customer.creditLimit)
-                        ? item.customer.creditLimit
-                        : 0;
-                requestedGroupLimitNew += amount;
-            });
-            this.setState({
-                requestedGroupLimit: requestedGroupLimitNew,
-            });
-        }
-    }
-
-    createRequestPanel() {
-        let paymentReadyToBeSelected = false;
-        if (this.props.request.loading || !this.props.request.data || !this.props.request.data.requestedItems) {
-            return null;
-        } else {
-            paymentReadyToBeSelected = true;
-        }
-        const activated = this.props.request.data.activated !== undefined ? this.props.request.data.activated : false;
-        const groupPanels = this.props.request.data.requestedItems.map((item, i) => {
-            const creditCorrectionRequest = this.props.request.data;
-            let editable = true;
-            const workaroundCustomer = {
-                storeNumber: item.customer.storeNumber,
-                customerNumber: item.customer.customerNumber,
-                firstName: item.customer.customerFirstName,
-                lastName: item.customer.customerLastName,
-                customerFirstName: item.customer.customerFirstName,
-                customerLastName: item.customer.customerLastName,
-                requestedCustomer: item.customer.requestedCustomer,
-                country: item.customer.country,
-                activationResult: '',
-                activationStatus: '',
-                limitExhaustion: item.customer.limitExhaustion,
-            };
-            const activationSuffix =
-                item.activationInfo != null && item.activationInfo.resultCode != null ? ' -> ' : '';
-            if (item.activationInfo != null && item.activationInfo.resultStatus != null) {
-                workaroundCustomer.activationStatus = lookup('history.' + item.activationInfo.resultStatus);
-                workaroundCustomer.activationResult =
-                    item.activationInfo.resultCode != null &&
-                    (item.activationInfo.resultCode === '0' || item.activationInfo.resultCode === '-1')
-                        ? 'ok'
-                        : 'failed';
-            }
-            if (
-                activated ||
-                (item.activationInfo != null &&
-                    item.activationInfo.resultCode != null &&
-                    (item.activationInfo.resultCode === '0' || item.activationInfo.resultCode === '-1'))
-            ) {
-                editable = false;
-            }
-            workaroundCustomer.lastName = item.customer.customerLastName + ' ' + activationSuffix + ' '; //just for showing the message of activation
-            workaroundCustomer.customerLastName = item.customer.customerLastName + ' ' + activationSuffix + ' '; //just for showing the message of activation
-            const key = workaroundCustomer.storeNumber + '/' + workaroundCustomer.customerNumber;
-            // this was never used because this.state.creditDataById is not set
-            if (this.state.creditDataById && this.state.creditDataById[item.id]) {
-                item.creditData = this.state.creditDataById[item.id];
-            }
-            const trigger = (
-                <CustomerTrigger
-                    customer={workaroundCustomer}
-                    current={item.customer.creditLimit}
-                    requested={item.creditData.amount ? item.creditData.amount : null}
-                />
-            );
-
-            if (item.creditData.blockingOption && !item.creditData.blockingOption.includes('mrc.blocking-option.')) {
-                item.creditData.blockingOption = 'mrc.blocking-option.'.concat(
-                    item.creditData.blockingOption.toLowerCase()
-                );
-            }
-
-            return (
-                <Collapsible open={i === 0} key={key} trigger={trigger}>
-                    <CreditData
-                        key={item.creditData.id}
-                        headerTitle={
-                            lookup('creditcorrection.limitrequest.headers.creditrequest') +
-                            ' ' +
-                            displayName(item.customer)
-                        }
-                        paymentReadyToBeSelected={
-                            paymentReadyToBeSelected &&
-                            editable &&
-                            !this.state.canceled &&
-                            this.props.request.data.canCorrect
-                        }
-                        requestedItem={item}
-                        setCreditData={
-                            paymentReadyToBeSelected && editable && !this.state.canceled
-                                ? this.props.setCreditData.bind(this, creditCorrectionRequest)
-                                : null
-                        }
-                        setValidity={this.setComponentValidity.bind(this, item.id)}
-                        handleRequestedGroupLimitChange={this.handleRequestedGroupLimitChange.bind(this)}
-                        canCorrect={this.props.request.data.canCorrect}
-                        onBlockingChange={this.onBlockingDropdownChange}
-                        blockingItemId={item.id}
-                        blockingOptions={this.createBlockingOptions(item.customer.country)}
-                        blockingLabel={lookup('mrc.blocking.customer-dropdown')}
-                        blockingValue={
-                            this.state.blockingValues && this.state.blockingValues[item.id]
-                                ? this.state.blockingValues[item.id]
-                                : ''
-                        }
-                        registerCallbackBlocking={this.blockingCallback}
-                    />
-                </Collapsible>
-            );
-        });
-        if (this.props.request.data.requestedItems.length > 1) {
-            return (
-                <Accordion>
-                    {this.createToggles()}
-                    {this.createGroupLimitInfos()}
-                    <BlockingDropdown
-                        id="groupLevel"
-                        updateDropdownValue={this.onBlockingDropdownChange}
-                        value={this.state.blockingValues ? this.state.blockingValues['groupLevel'] : ''}
-                        options={this.createBlockingOptions(this.props.request.data.requestedItems[0].customer.country)}
-                        label={lookup('mrc.blocking.group-dropdown')}
-                    />
-                    {groupPanels}{' '}
-                </Accordion>
-            );
-        } else {
-            return (
-                <Accordion>
-                    {this.createToggles()} {groupPanels}{' '}
-                </Accordion>
-            );
-        }
-    }
-
-    setComponentValidity(id, valid) {
-        const newValidity = this.state.creditDataComponentsValid;
-        newValidity[id] = valid;
-
-        const requestor = this.props.request.data.requestedItems.find((request) => request.customer.requestedCustomer);
-        const requestorCreditDataIsValid = newValidity[requestor.id];
-
-        this.setState({
-            ...this.state,
-            creditDataComponentsValid: newValidity,
-            creditDataValid:
-                Object.values(newValidity).every((v) => v === true || v == null) && requestorCreditDataIsValid === true,
-        });
     }
 
     createCommentsPanel() {
@@ -479,76 +200,185 @@ export default class CreditCorrectionLayout extends Component {
         );
     }
 
-    createBlockingOptions(country) {
-        let returnValue = null;
-        switch (country) {
-            case 'DE':
-                returnValue = this.DE_BLOCKING_OPTIONS;
-                break;
-            case 'AT':
-                returnValue = this.AT_BLOCKING_OPTIONS;
-                break;
-            case 'PL':
-                returnValue = this.PL_BLOCKING_OPTIONS;
-                break;
-            case 'RU':
-                returnValue = this.RU_BLOCKING_OPTIONS;
-                break;
-            default:
-                returnValue = this.PL_BLOCKING_OPTIONS;
+    createCreditTab() {
+        if (this.props.request.loading || !this.props.request.data || !this.props.request.data.requestedItems) {
+            return null;
         }
-        return returnValue;
+
+        const request = _.get(this.props, 'request.data');
+        const activationSubmitted = request.activationSubmitted !== undefined ? request.activationSubmitted : false;
+        const sucActivated = request.activated !== undefined ? request.activated : false;
+        const disabled = this.state.canceled || !request.canCorrect;
+
+        const groupLimit = this.createGroupLimit(request);
+        return (
+            <CreditDataTab
+                country={_.get(request, 'requestedCustomerId.country')}
+                parent={'creditcorrection'}
+                groupLimit={{
+                    exhausted: _.get(groupLimit, 'exhausted'),
+                    current: _.get(groupLimit, 'current'),
+                    new: _.get(groupLimit, 'new'),
+                    activated: _.get(groupLimit, 'activated'),
+                }}
+                customers={
+                    _.get(request, 'requestedItems')
+                        ? request.requestedItems.map((item) => {
+                              const availablePayments = _.get(item, 'customer.availablePayments');
+                              const failedActivation = this.isFailedActivation(item);
+                              const activationResult =
+                                  item.activationInfo != null && item.activationInfo.resultStatus != null
+                                      ? lookup('history.' + item.activationInfo.resultStatus)
+                                      : failedActivation
+                                      ? lookup('history.requestActivationFailedUnknown')
+                                      : null;
+                              const editable = (!activationSubmitted || failedActivation) && !sucActivated;
+                              const isCashCustomer = _.get(item, 'cashCustomer') === true;
+                              return {
+                                  onLimitChange: (amount, initialAmount, creditProduct, creditPeriod, debitType) => {
+                                      this.props.setCreditData(request.id, {
+                                          id: _.get(item, 'creditData.id'),
+                                          amount,
+                                          initialAmount,
+                                          creditProduct,
+                                          creditPeriod,
+                                          debitType,
+                                      });
+                                  },
+                                  onChangeCreditOption: (
+                                      amount,
+                                      initialAmount,
+                                      creditProduct,
+                                      creditPeriod,
+                                      debitType,
+                                      creditOption
+                                  ) => {
+                                      this.props.setCreditDataWithCreditOption(request.id, creditOption, {
+                                          id: _.get(item, 'creditData.id'),
+                                          amount,
+                                          initialAmount,
+                                          creditProduct,
+                                          creditPeriod,
+                                          debitType,
+                                      });
+                                  },
+                                  name: displayName(_.get(item, 'customer')),
+                                  storeNumber: _.get(item, 'customer.storeNumber'),
+                                  number: _.get(item, 'customer.customerNumber'),
+                                  blockingInfo: createBlockingInfo(
+                                      this.props.countriesWithDifferentBlockingCodes,
+                                      _.get(item, 'customer.blockingReason'),
+                                      _.get(item, 'customer.checkoutCheckCode'),
+                                      _.get(item, 'customer.country')
+                                  ),
+                                  availablePayments: availablePayments,
+                                  limit: {
+                                      current: {
+                                          amount: isCashCustomer ? null : _.get(item, 'customer.creditLimit'),
+                                          product: isCashCustomer
+                                              ? null
+                                              : _.get(item, 'customer.currentPayment.creditProduct'),
+                                          period: isCashCustomer
+                                              ? null
+                                              : _.get(item, 'customer.currentPayment.creditPeriod'),
+                                          debitType: isCashCustomer
+                                              ? null
+                                              : _.get(item, 'customer.currentPayment.debitType'),
+                                          expiry: {
+                                              date: isCashCustomer
+                                                  ? null
+                                                  : _.get(item, 'currentLimitExpiry.limitExpiryDate'),
+                                              amount: isCashCustomer
+                                                  ? null
+                                                  : _.get(item, 'currentLimitExpiry.resetToLimitAmount'),
+                                          },
+                                      },
+                                      new: {
+                                          amount: _.get(item, 'creditData.amount'),
+                                          product: _.get(item, 'creditData.creditProduct'),
+                                          period: _.get(item, 'creditData.creditPeriod'),
+                                          debitType: _.get(item, 'creditData.debitType'),
+                                          initialAmount: _.get(item, 'creditData.initialAmount'),
+                                          blockingOption: _.get(item, 'creditData.blockingOption'),
+                                      },
+                                      creditOption: _.get(item, 'creditOption'),
+                                      valid: _.get(item, 'valid'),
+                                      readOnly: !editable || disabled,
+                                  },
+                                  isCashCustomer: isCashCustomer,
+                                  limitExhaustion: _.get(item, 'customer.limitExhaustion'),
+                                  failedActivation: failedActivation,
+                                  activationResult: activationResult,
+                              };
+                          })
+                        : []
+                }
+                activated={activationSubmitted}
+                disabled={disabled}
+                selectedGroupAction={_.get(request, 'selectedGroupAction')}
+                handleChangeGroupAction={(selectedGroupAction) => {
+                    this.props.changeSelectedGroupAction(request.id, selectedGroupAction);
+                }}
+            />
+        );
     }
 
-    blockingCallback = (id, callback) => {
-        const blockingCallbacks = this.state.blockingCallbacks;
-        blockingCallbacks[id] = callback;
-        this.setState({ blockingCallbacks: blockingCallbacks });
-    };
+    isFailedActivation(item) {
+        return (
+            item.activationInfo != null &&
+            item.activationInfo.resultStatus != null &&
+            !(
+                item.activationInfo.resultCode != null &&
+                (item.activationInfo.resultCode === '0' || item.activationInfo.resultCode === '-1')
+            )
+        );
+    }
 
-    onBlockingDropdownChange(id, newBlockingValue) {
-        const blockingValues = { ...this.state.blockingValues };
+    createGroupLimit(req) {
+        let currentGroupLimit = 0;
+        let requestedGroupLimit = 0;
+        let exhaustionGroupLimit = 0;
+        let activatedGroupLimit = 0;
+        req.requestedItems.map((item) => {
+            const currentLimit = item.customer.creditLimit !== undefined ? item.customer.creditLimit : 0;
+            currentGroupLimit += currentLimit;
+            const isRemoveBlockOrSoftBlock =
+                _.get(item, 'creditData.blockingOption') === 'REMOVEBLOCK' ||
+                _.get(item, 'creditData.blockingOption') === 'SOFTBLOCK';
+            const amount = isRemoveBlockOrSoftBlock
+                ? currentLimit
+                : !_.isNil(item.creditData.amount) && !_.isNaN(item.creditData.amount)
+                ? item.creditData.amount
+                : currentLimit;
+            requestedGroupLimit += amount;
+            exhaustionGroupLimit += item.customer.limitExhaustion !== undefined ? item.customer.limitExhaustion : 0;
+            const failedActivation = this.isFailedActivation(item);
+            const isNoChange =
+                _.get(item, 'creditOption') === 'NONE' && _.isNil(_.get(item, 'creditData.blockingOption'));
+            const activatedAmount = isNoChange || failedActivation ? currentLimit : amount;
+            activatedGroupLimit += activatedAmount;
+        });
+        return {
+            current: currentGroupLimit,
+            new: requestedGroupLimit,
+            exhausted: exhaustionGroupLimit,
+            activated: activatedGroupLimit,
+        };
+    }
 
-        // remove blocks for all the customers in the group if one of them goes from hard block to any other option
-        if (
-            this.HARD_BLOCKING_OPTIONS.includes(blockingValues[id]) &&
-            !this.HARD_BLOCKING_OPTIONS.includes(newBlockingValue)
-        ) {
-            this.props.request.data.requestedItems.map((item) => {
-                if (item.id === id) {
-                    blockingValues[item.id] = newBlockingValue;
-                    this.state.blockingCallbacks[item.id] && this.state.blockingCallbacks[item.id](newBlockingValue);
-                } else if (this.HARD_BLOCKING_OPTIONS.includes(blockingValues[item.id])) {
-                    blockingValues[item.id] = '';
-                    this.state.blockingCallbacks[item.id] && this.state.blockingCallbacks[item.id]('');
-                }
-            });
-            blockingValues['groupLevel'] = '';
-        }
+    creditDataValid(item) {
+        const valid = _.get(item, 'valid');
+        return !_.isNil(valid) && valid === true;
+    }
 
-        //set blocking to all the customers in the group if the new blocking value is HARDBLOCK or GENERALBLOCK, or if the Group Level Dropdown was selected
-        if (this.HARD_BLOCKING_OPTIONS.includes(newBlockingValue) || id === 'groupLevel') {
-            this.props.request.data.requestedItems.map((item) => {
-                this.state.blockingCallbacks[item.id] && this.state.blockingCallbacks[item.id](newBlockingValue);
-                blockingValues[item.id] = newBlockingValue;
-            });
-            blockingValues['groupLevel'] = newBlockingValue;
-        } else {
-            //set blocking only to the customer which selected the blocking dropdown, when not having a group blocking
-            blockingValues['groupLevel'] = '';
-
-            this.props.request.data.requestedItems.map((item) => {
-                if (item.id === id) {
-                    this.state.blockingCallbacks[item.id] && this.state.blockingCallbacks[item.id](newBlockingValue);
-                    blockingValues[item.id] = newBlockingValue;
-                }
-            });
-        }
-        this.setState({ blockingValues: blockingValues });
+    anyCreditDataChanged(items) {
+        const changedItem = items.find((item) => {
+            return !(_.get(item, 'creditOption') === 'NONE' && _.isNil(_.get(item, 'creditData.blockingOption')));
+        });
+        return !_.isNil(changedItem);
     }
 
     render() {
-        const req = this.props.request;
         if (
             this.state.enableSpinner &&
             (this.props.request.loading || !this.props.request.data || !this.props.request.data.requestedItems)
@@ -565,6 +395,11 @@ export default class CreditCorrectionLayout extends Component {
         if (!this.state.enableSpinner && (!this.props.request.data || !this.props.request.data.requestedItems)) {
             return <MrcSpinner></MrcSpinner>;
         }
+
+        const req = this.props.request.data;
+        const allValid = _.get(req, 'requestedItems') && req.requestedItems.every((item) => this.creditDataValid(item));
+        const anyChanged = _.get(req, 'requestedItems') && this.anyCreditDataChanged(req.requestedItems);
+        const valid = allValid && anyChanged;
         return (
             <Switch>
                 <Route
@@ -577,7 +412,11 @@ export default class CreditCorrectionLayout extends Component {
                 <Route
                     path="*"
                     render={() => (
-                        <form method="POST" className="mrc-limit-request" onSubmit={this.handleFormSubmit.bind(this)}>
+                        <form
+                            method="POST"
+                            className="mrc-limit-request"
+                            onSubmit={this.handleFormSubmit.bind(this, valid)}
+                        >
                             {this.createProgressBar()}
                             {this.props.isTablet ? (
                                 <Tabs forceRenderTabPanel={true}>
@@ -587,7 +426,7 @@ export default class CreditCorrectionLayout extends Component {
                                         <Tab>{lookup('mrc.comments.title')}</Tab>
                                         <Tab>{lookup('mrc.attachments.title')}</Tab>
                                     </TabList>
-                                    <ErrorHandledTabPanel>{this.createRequestPanel()}</ErrorHandledTabPanel>
+                                    <ErrorHandledTabPanel>{this.createCreditTab()}</ErrorHandledTabPanel>
                                     <ErrorHandledTabPanel>{this.createCustomerDetailsPanel(req)}</ErrorHandledTabPanel>
                                     <ErrorHandledTabPanel>{this.createCommentsPanel()}</ErrorHandledTabPanel>
                                     <ErrorHandledTabPanel>{this.createAttachmentsPanel()}</ErrorHandledTabPanel>
@@ -595,7 +434,7 @@ export default class CreditCorrectionLayout extends Component {
                             ) : (
                                 <Accordion>
                                     <Collapsible trigger={lookup('mrc.creditdetails.title')}>
-                                        {this.createRequestPanel()}
+                                        {this.createCreditTab()}
                                     </Collapsible>
                                     <Collapsible trigger={lookup('mrc.customerdetails.title')}>
                                         {this.createCustomerDetailsPanel(req)}
@@ -608,7 +447,7 @@ export default class CreditCorrectionLayout extends Component {
                                     </Collapsible>
                                 </Accordion>
                             )}
-                            {this.createButtons()}
+                            {this.createButtons(valid)}
                         </form>
                     )}
                 />
@@ -633,4 +472,7 @@ CreditCorrectionLayout.propTypes = {
     submitRequest: PropTypes.func.isRequired,
     cancel: PropTypes.func.isRequired,
     history: PropTypes.object,
+    countriesWithDifferentBlockingCodes: PropTypes.array,
+    changeSelectedGroupAction: PropTypes.func,
+    setCreditDataWithCreditOption: PropTypes.func,
 };

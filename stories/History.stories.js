@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import '../Util/imports';
 
-import HistoryDetails from '../History/HistoryDetails';
+import HistoryDetailsPresentation from '../History/HistoryDetails';
 import CustomerSummary from '../History/CustomerSummary';
 import HistoryStatusBar from '../History/Shared/HistoryStatusBar';
 import RequestDetails from '../History/Shared/RequestDetails';
@@ -1362,7 +1362,7 @@ storiesOf('History/CustomerSummary', module)
     .add('no history', () => <CustomerSummary {...historyCustomerData} noHistory={true} />);
 
 storiesOf('History/HistoryDetails', module).add('history details', () => (
-    <HistoryDetails
+    <HistoryDetailsPresentation
         error={false}
         isTablet={true}
         buttonsDisabled={false}
@@ -1389,6 +1389,7 @@ storiesOf('History/HistoryDetails', module).add('history details', () => (
         additionalFields={additionalFields}
         countriesWithDifferentBlockingCodes={historyData.countriesWithDifferentBlockingCodes}
         approvalServiceUrl="no-url"
+        customerData={historyData.historyDetails.customerData}
         // history: PropTypes.object // not used!?
     />
 ));

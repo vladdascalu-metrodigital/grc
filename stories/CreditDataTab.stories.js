@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import CreditDataTab from '../CreditDataTab';
-import { createCreditDataProps } from '../History/HistoryDetails/index-new';
+import { createCreditDataProps } from '../History/HistoryDetails/index';
 import { createBlockingInfo } from '../Util/blockingInfoUtils';
 import * as _ from 'lodash';
 

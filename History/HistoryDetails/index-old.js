@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Tab, TabList, Tabs } from 'react-tabs';
 import ErrorHandledTabPanel from '../../ErrorHandledTabPanel';
-import CreditDataTab from '../../CreditDataTab';
 import PropTypes from 'prop-types';
 import '../../tabs.scss';
 import HistoryStatusBar from '../Shared/HistoryStatusBar';
 import RequestDetails from '../Shared/RequestDetails';
 import { lookup } from '../../Util/translations';
+import CreditData from './CreditData';
 import { Accordion, Collapsible } from '../../Accordion';
 import Sales from './Sales';
 import Payments from './Payments';
@@ -20,16 +20,13 @@ import * as _ from 'lodash';
 import ErrorHandler from '../../ErrorHandler';
 import Management from './Management';
 import { RequestFieldPropTypes } from '../../AdditionalFields/AdditionalFieldsPropTypes';
-import { filterAdditionalFieldsByCode, filterAdditionalFieldsList } from '../../AdditionalFields/additionalFielsUtil';
+import { filterAdditionalFieldsByCode } from '../../AdditionalFields/additionalFielsUtil';
 import { CommentPropTypes } from '../../Comments/CommentsPropTypes';
 import CustomerDataGroup from '../../CustomerDataGroup';
-import * as util from '../../ApprovalService/ApprovalProcessNew/util';
-import { createBlockingInfo } from '../../Util/blockingInfoUtils';
-import { dataForPrepayment, dataForPrepaymentWithPrefix } from '../../CreditDataTab/creditDataTabUtil';
 
 const TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES = ['DE'];
 
-export class HistoryDetailsPresentationNew extends Component {
+export default class HistoryDetailsPresentationOld extends Component {
     FILE_TYPES = [''];
     constructor(props) {
         super(props);
@@ -122,7 +119,13 @@ export class HistoryDetailsPresentationNew extends Component {
                 </ErrorHandledTabPanel>
                 <ErrorHandledTabPanel>
                     <Accordion>
-                        <CreditDataTab {...createCreditDataProps(params)} />
+                        <CreditData
+                            requestData={params.requestData}
+                            requestedStatus={params.requestStatus}
+                            groupLimit={params.groupLimit}
+                            countryCode={params.countryCode}
+                            additionalFields={this.props.additionalFields}
+                        />
                     </Accordion>
                 </ErrorHandledTabPanel>
                 <ErrorHandledTabPanel>
@@ -200,7 +203,12 @@ export class HistoryDetailsPresentationNew extends Component {
                     {params.requestData ? this.customerDetailsPanel(params.requestData) : null}
                 </Collapsible>
                 <Collapsible trigger={lookup('mrc.creditdetails.title')}>
-                    <CreditDataTab {...createCreditDataProps(params)} />
+                    <CreditData
+                        requestData={params.requestData}
+                        requestedStatus={params.requestStatus}
+                        groupLimit={params.groupLimit}
+                        countryCode={params.countryCode}
+                    />
                 </Collapsible>
                 <Collapsible trigger={lookup('mrc.sales.title')}>
                     <Sales salesOverviews={params.salesOverviews} />
@@ -330,10 +338,6 @@ export class HistoryDetailsPresentationNew extends Component {
             totalTurnover: totalTurnover,
             recommendations: this.props.recommendations,
             groupProfitability: groupProfitability,
-            countriesWithDifferentBlockingCodes: this.props.countriesWithDifferentBlockingCodes,
-            additionalFields: this.props.additionalFields,
-            selectedCreditProgram: this.props.selectedCreditProgram,
-            activated: this.props.activated,
         };
 
         return (
@@ -349,197 +353,7 @@ export class HistoryDetailsPresentationNew extends Component {
     }
 }
 
-export const createCreditDataProps = (params) => {
-    const isPrepayment = _.get(params, 'requestStatus.isPrepayment');
-    console;
-    return {
-        //
-        // Shape data a littly bit for consistency with business terminology
-        //
-        country: params.countryCode,
-        parent: 'history',
-        groupLimit: {
-            exhausted: _.get(params, 'groupLimit.limitExhaustion'),
-            old: _.get(params, 'groupLimit.current'),
-            wish: _.get(params, 'groupLimit.requested'),
-            current: _.get(params, 'groupLimit.applied'),
-            activated: _.get(params, 'groupLimit.activated'),
-        },
-        activated: _.get(params, 'activated'),
-        additionalFields: params.additionalFields,
-        creditProgram:
-            params.selectedCreditProgram !== undefined && !_.isNil(params.selectedCreditProgram)
-                ? {
-                      defaultText: params.selectedCreditProgram,
-                      readOnly: true,
-                  }
-                : null,
-        dateFormat: util.dateFormatString(),
-        historyRequestType: _.get(params, 'requestStatus.requestType'),
-        // All customers
-        customers:
-            /* eslint-disable */
-            _.get(params, 'requestData')
-                ? _.get(params, 'requestData').map((data) => {
-                      const country = _.get(data, 'customerData.country');
-                      const storeNumber = _.get(data, 'customerData.storeNumber');
-                      const customerNumber = _.get(data, 'customerData.customerNumber');
-                      const customerAdditionalFields = filterAdditionalFieldsList(
-                          params.additionalFields !== undefined &&
-                              params.additionalFields !== null &&
-                              params.additionalFields.requestFields !== undefined &&
-                              params.additionalFields.requestFields !== null
-                              ? params.additionalFields.requestFields
-                              : null,
-                          'CUSTOMER',
-                          'CREDIT_DATA',
-                          country,
-                          storeNumber,
-                          customerNumber
-                      );
-
-                      return {
-                          name: _.get(data, 'customerData.displayName'),
-                          storeNumber,
-                          number: customerNumber,
-                          blockingInfo: createBlockingInfo(
-                              params.countriesWithDifferentBlockingCodes,
-                              _.get(data, 'customerData.blockingReason'),
-                              _.get(data, 'customerData.checkoutCheckCode'),
-                              _.get(data, 'customerData.country')
-                          ),
-                          limit: {
-                              old:
-                                  _.get(params, 'requestStatus.requestType') === 'LIMIT_EXPIRY'
-                                      ? {
-                                            amount: _.get(params, 'requestStatus.amountBeforeExpiry'),
-                                            product: _.get(params, 'requestStatus.creditProduct'),
-                                            period: _.get(params, 'requestStatus.creditPeriod'),
-                                            debitType: _.get(params, 'requestStatus.debitType'),
-                                            expiry: {
-                                                date: _.get(params, 'requestStatus.creationDate'),
-                                                amount: _.get(params, 'requestStatus.amount'),
-                                            },
-                                        }
-                                      : {
-                                            amount: _.get(data, 'current.creditLimit'),
-                                            product: _.get(data, 'current.creditProduct'),
-                                            period: _.get(data, 'current.creditPeriod'),
-                                            debitType: _.get(data, 'current.debitType'),
-                                            expiry: {
-                                                date: _.get(data, 'currentLimitExpiryDate'),
-                                                amount: _.get(data, 'currentResetToLimitAmount'),
-                                            },
-                                        },
-                              wish:
-                                  _.get(params, 'requestStatus.requestType') === 'LIMIT_EXPIRY' ||
-                                  _.get(params, 'requestStatus.requestType') === 'CREDIT_CORRECTION'
-                                      ? {
-                                            amount: null,
-                                            product: null,
-                                            period: null,
-                                            debitType: null,
-                                            expiry: {
-                                                date: null,
-                                                amount: null,
-                                            },
-                                        }
-                                      : {
-                                            amount: _.get(data, 'requested.creditLimit'),
-                                            product: _.get(data, 'requested.creditProduct'),
-                                            period: _.get(data, 'requested.creditPeriod'),
-                                            debitType: _.get(data, 'requested.debitType'),
-                                            expiry: {
-                                                date: _.get(data, 'requestedLimitExpiryDate'),
-                                                amount: _.get(data, 'requestedResetToLimitAmount'),
-                                            },
-                                            blockingOption: _.get(data, 'requested.blockingOption'),
-                                            creditOption:
-                                                isPrepayment &&
-                                                dataForPrepaymentWithPrefix(
-                                                    _.get(data, 'requested.creditLimit'),
-                                                    '3',
-                                                    _.get(data, 'requested.creditProduct'),
-                                                    _.get(data, 'requested.creditPeriod'),
-                                                    _.get(data, 'requested.debitType')
-                                                )
-                                                    ? 'PREPAYMENT'
-                                                    : undefined,
-                                        },
-                              current:
-                                  _.get(params, 'requestStatus.requestType') === 'LIMIT_EXPIRY'
-                                      ? {
-                                            amount: _.get(params, 'requestStatus.amount'),
-                                            product: _.get(params, 'requestStatus.creditProduct'),
-                                            period: _.get(params, 'requestStatus.creditPeriod'),
-                                            debitType: _.get(params, 'requestStatus.debitType'),
-                                            expiry: {
-                                                date: null,
-                                                amount: null,
-                                            },
-                                        }
-                                      : {
-                                            amount: _.get(data, 'applied.creditLimit'),
-                                            product: _.get(data, 'applied.creditProduct'),
-                                            period: _.get(data, 'applied.creditPeriod'),
-                                            debitType: _.get(data, 'applied.debitType'),
-                                            expiry: {
-                                                date:
-                                                    _.get(params, 'requestStatus.status') === 'Blocked'
-                                                        ? null
-                                                        : _.get(data, 'limitExpiryDate'),
-                                                amount:
-                                                    _.get(params, 'requestStatus.status') === 'Blocked'
-                                                        ? null
-                                                        : _.get(data, 'resetToLimitAmount'),
-                                            },
-                                            blockingOption: _.get(data, 'applied.blockingOption'),
-                                            creditOption:
-                                                isPrepayment &&
-                                                dataForPrepaymentWithPrefix(
-                                                    _.get(data, 'applied.creditLimit'),
-                                                    '3',
-                                                    _.get(data, 'applied.creditProduct'),
-                                                    _.get(data, 'applied.creditPeriod'),
-                                                    _.get(data, 'applied.debitType')
-                                                )
-                                                    ? 'PREPAYMENT'
-                                                    : undefined,
-                                        },
-                              readOnly: true,
-                          },
-                          availablePayments: [], //TBD: here we should add maybe all the values already selected for customers ?!?!??!
-                          onExpiryChange: () => null,
-                          onLimitChange: () => null,
-                          onLimitAndExpiryChange: () => null,
-                          onChangeCreditOption: () => null,
-                          isCashCustomer:
-                              _.isNil(_.get(data, 'customerData.paymentAllowanceCd')) ||
-                              _.get(data, 'customerData.paymentAllowanceCd') !== '3',
-                          isPrepaymentCustomer: dataForPrepayment(
-                              _.get(data, 'customerData.creditLimit'),
-                              _.get(data, 'customerData.paymentAllowanceCd'),
-                              _.get(data, 'customerData.creditSettleTypeCd'),
-                              _.get(data, 'customerData.creditSettlePeriodCd'),
-                              _.get(data, 'customerData.creditSettleFrequencyCd')
-                          ),
-                          limitExhaustion: _.get(data, 'customerData.limitExhaustion'),
-                          additionalFields: {
-                              hasCustomerAdditionalFields: !_.isEmpty(customerAdditionalFields),
-                              customerAdditionalFieldsList: customerAdditionalFields,
-                              onChange: () => null,
-                              editable: false,
-                              disabled: true,
-                          },
-                          failedActivation: _.get(data, 'failedActivation'),
-                      };
-                  })
-                : [],
-        /* eslint-enable */
-    };
-};
-
-HistoryDetailsPresentationNew.propTypes = {
+HistoryDetailsPresentationOld.propTypes = {
     error: PropTypes.bool,
     isTablet: PropTypes.bool,
     buttonsDisabled: PropTypes.bool,
@@ -568,6 +382,4 @@ HistoryDetailsPresentationNew.propTypes = {
     additionalFields: PropTypes.shape({ requestFields: PropTypes.arrayOf(RequestFieldPropTypes) }),
     approvalServiceUrl: PropTypes.string,
     countriesWithDifferentBlockingCodes: PropTypes.array,
-    selectedCreditProgram: PropTypes.string,
-    activated: PropTypes.bool,
 };
