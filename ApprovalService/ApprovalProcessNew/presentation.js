@@ -768,7 +768,7 @@ export class ApprovalProcessPresentation extends Component {
             process.reviewed ||
             !process.editableByCurrentUser;
 
-        const isPrepayment = process.request.isPrepayment;
+        const isPrepayment = _.get(process, 'request.isPrepayment');
 
         return (
             <CreditDataTab
@@ -1040,6 +1040,7 @@ export class ApprovalProcessPresentation extends Component {
                 isContractingStepEditable={
                     util.isContractingStep(this.state.currentStepType) && process.editableByCurrentUser
                 }
+                isPrepaymentRequest={isPrepayment}
             />
         );
     }

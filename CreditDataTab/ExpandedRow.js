@@ -19,9 +19,9 @@ import { lookup } from '../Util/translations';
 import CheckCard from '../CheckCard';
 
 export default class ExpandedRow extends Component {
-    isNewCreditMarked(customer, parent, isCashCustomerRequest, isOrRequestsPrepayment) {
+    isNewCreditMarked(customer, parent, isCashCustomerRequest, isPrepaymentRequest) {
         if (isApproval(parent)) {
-            if (isOrRequestsPrepayment) {
+            if (isPrepaymentRequest) {
                 return false;
             }
 
@@ -52,11 +52,11 @@ export default class ExpandedRow extends Component {
     }
 
     render() {
-        const { customer, isExpanded, id, parent, translations, activated, isOrRequestsPrepayment } = this.props;
+        const { customer, isExpanded, id, parent, translations, activated, isPrepaymentRequest } = this.props;
         const ts = translations;
 
         const isCashCustomerRequest = this.props.requestsCash;
-        const isNewCredit = this.isNewCreditMarked(customer, parent, isCashCustomerRequest, isOrRequestsPrepayment);
+        const isNewCredit = this.isNewCreditMarked(customer, parent, isCashCustomerRequest, isPrepaymentRequest);
 
         const isBlocked = _.get(customer, 'blockingInfo.isBlocked');
         const blockingReasonText = isBlocked ? _.get(customer, 'blockingInfo.blockingReasonText') : null;
@@ -79,7 +79,7 @@ export default class ExpandedRow extends Component {
                         {isHistory(parent) ||
                         isCreditCorrection(parent) ||
                         isPrepayment(parent) ||
-                        (isApproval(parent) && isOrRequestsPrepayment) ? null : (
+                        (isApproval(parent) && isPrepaymentRequest) ? null : (
                             <PaymentSection {...{ ...this.props, isCashCustomerRequest }} />
                         )}
                         {isNewCredit || isCreditCorrection(parent) ? this.createNewCreditSection() : null}
@@ -239,5 +239,5 @@ ExpandedRow.propTypes = {
     isContractingStepEditable: PropTypes.bool,
     selectedGroupAction: PropTypes.string,
     activated: PropTypes.bool,
-    isOrRequestsPrepayment: PropTypes.bool,
+    isPrepaymentRequest: PropTypes.bool,
 };

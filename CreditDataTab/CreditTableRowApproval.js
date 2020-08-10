@@ -85,6 +85,7 @@ export default class CreditTableRowApproval extends Component {
             canToggle,
             rowType,
             translations,
+            isPrepaymentRequest,
         } = this.props;
         const ts = translations;
 
@@ -121,8 +122,7 @@ export default class CreditTableRowApproval extends Component {
         const isPrepaymentInNew = _.get(customer, 'limit.creditOption') === 'PREPAYMENT';
         const newCreditData = this.retrieveNewCreditData(customer, isNoChangeInNew, limitType, paymentMethodType);
 
-        const isOrRequestsPrepayment = isPrepaymentCustomer || isPrepaymentInWish || isPrepaymentInNew;
-        const refinedCanToggle = isOrRequestsPrepayment ? isBlocked : canToggle;
+        const refinedCanToggle = isPrepaymentRequest ? isBlocked : canToggle;
 
         const isValid = _.get(customer, 'limit.valid');
         return (
@@ -307,9 +307,7 @@ export default class CreditTableRowApproval extends Component {
                         </React.Fragment>
                     )}
                 </Table.R>
-                {isExpanded ? (
-                    <ExpandedRow {...{ ...this.props, isOrRequestsPrepayment: isOrRequestsPrepayment }} />
-                ) : null}
+                {isExpanded ? <ExpandedRow {...this.props} /> : null}
             </React.Fragment>
         );
     }

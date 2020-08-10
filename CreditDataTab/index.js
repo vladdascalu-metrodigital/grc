@@ -101,6 +101,7 @@ export default class CreditDataTab extends Component {
             additionalFields,
             creditProgram,
             selectedGroupAction,
+            isPrepaymentRequest,
         } = this.props;
         if (_.isNil(country) || _.isNil(customers) || customers.length === 0 || historyRequestType === 'QUICK_CHECK') {
             return <MainContent>{lookup('mrc.comment.nocreditdetails')}</MainContent>;
@@ -132,6 +133,7 @@ export default class CreditDataTab extends Component {
                                               historyRequestType={historyRequestType}
                                               activated={activated}
                                               selectedGroupAction={selectedGroupAction}
+                                              isPrepaymentRequest={isPrepaymentRequest}
                                           />
                                       ))
                                     : null}
@@ -317,6 +319,7 @@ CreditDataTab.propTypes = {
     parent: PropTypes.oneOf(['creditlimit', 'history', 'approval', 'creditcorrection', 'prepayment']).isRequired,
     dateFormat: PropTypes.string.isRequired,
     isContractingStepEditable: PropTypes.bool, // approval
+    isPrepaymentRequest: PropTypes.bool, //only for full prepayment requests
     historyRequestType: PropTypes.oneOf([
         'LIMIT_EXPIRY',
         'LIMIT_REQUEST',

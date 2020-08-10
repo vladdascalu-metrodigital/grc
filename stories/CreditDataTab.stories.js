@@ -2,6 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import CreditDataTab from '../CreditDataTab';
 import { createCreditDataProps } from '../History/HistoryDetails/index-new';
+import { createBlockingInfo } from '../Util/blockingInfoUtils';
+import * as _ from 'lodash';
 
 storiesOf('CreditDataTab', module)
     .add('Credit Limit', () => (
@@ -6691,6 +6693,353 @@ storiesOf('CreditDataTab', module)
                         },
                     ],
                 },
+            ]}
+            additionalFields={{
+                hasGroup: true,
+                group: {
+                    requestFields: [
+                        {
+                            id: '05c4e967-e4db-4f36-91e5-69f1f970e8e3',
+                            requestId: 'a9a6f85e-6180-42d1-ad5e-cc26b8f78d0c',
+                            country: 'DE',
+                            storeNumber: '10',
+                            customerNumber: '99',
+                            groupId: '951951951951951',
+                            creationTimestamp: '2020-06-19T13:59:02.313021Z',
+                            value: '9',
+                            textValue: null,
+                            countryField: {
+                                id: 'cc8cc3b2-da48-4962-adda-d208ab063856',
+                                mandatory: false,
+                                validation: 'isPercentage2',
+                                level: 'GROUP',
+                                order: 0,
+                                section: 'CREDIT_DATA',
+                                reusable: true,
+                                endTimestamp: null,
+                                country: 'DE',
+                                options: null,
+                                field: {
+                                    id: 'f7722295-085b-41ff-bd5a-981a07220b9e',
+                                    code: 'percprofitability',
+                                    label: 'percentage.profitability',
+                                    type: 'NUMBER',
+                                },
+                            },
+                        },
+                        {
+                            id: 'd1b6368c-d8ad-4182-a9ab-e1a8352c7ecc',
+                            requestId: '1',
+                            country: 'DE',
+                            storeNumber: '30',
+                            customerNumber: '1234567',
+                            groupId: null,
+                            creationTimestamp: '2020-06-19T14:20:49.709544Z',
+                            value: '123',
+                            textValue: null,
+                            countryField: {
+                                id: '0660f875-b508-4f66-9cc7-141f1e1a962b',
+                                mandatory: false,
+                                validation: 'isNumber',
+                                level: 'GROUP',
+                                order: 1,
+                                section: 'CREDIT_DATA',
+                                reusable: true,
+                                endTimestamp: null,
+                                country: 'DE',
+                                options: null,
+                                field: {
+                                    id: 'c2a83b05-e05e-40e7-bfa9-8fd5835e4b94',
+                                    code: 'DMY_GROUP_TOTAL_TURNOVER',
+                                    label: 'mrc.mdw.totalturnover',
+                                    type: 'NUMBER',
+                                },
+                            },
+                        },
+                        {
+                            id: 'a0b9c878-bb8e-435f-8385-a5c5695f25fc',
+                            requestId: '1',
+                            country: 'DE',
+                            storeNumber: '30',
+                            customerNumber: '1234567',
+                            groupId: null,
+                            creationTimestamp: '2020-06-19T14:20:49.710014Z',
+                            value: 'example of string value',
+                            textValue: null,
+                            countryField: {
+                                id: '5f36fbc7-c1c7-44df-a8df-fc0ea90c42b7',
+                                mandatory: false,
+                                validation: 'maxLength255',
+                                level: 'CUSTOMER',
+                                order: 1,
+                                section: 'CREDIT_DATA',
+                                reusable: true,
+                                endTimestamp: null,
+                                country: 'DE',
+                                options: null,
+                                field: {
+                                    id: 'eef491e5-466d-4f97-bf17-ea68208d1a73',
+                                    code: 'DMY_CUSTOMER_COMPANY_NAME',
+                                    label: 'mrc.customerdetails.fields.companyname',
+                                    type: 'TEXT',
+                                },
+                            },
+                        },
+                        {
+                            id: '99efe89f-f397-4050-8205-26f8d080b2ef',
+                            requestId: '1',
+                            country: 'DE',
+                            storeNumber: '30',
+                            customerNumber: '1234567',
+                            groupId: null,
+                            creationTimestamp: '2020-06-19T14:20:49.709854Z',
+                            value: '20',
+                            textValue: null,
+                            countryField: {
+                                id: '2e6cb78c-e5a9-49cc-93db-6a3e4db10990',
+                                mandatory: false,
+                                validation: 'isNumber',
+                                level: 'GROUP',
+                                order: 3,
+                                section: 'CREDIT_DATA',
+                                reusable: false,
+                                endTimestamp: null,
+                                country: 'DE',
+                                options: null,
+                                field: {
+                                    id: 'bbc8c7e4-b9d6-46b4-844b-9eca65829773',
+                                    code: 'DMY_GROUP_LIMIT_AVERAGE',
+                                    label: 'mrc.limit.average',
+                                    type: 'NUMBER',
+                                },
+                            },
+                        },
+                        {
+                            id: 'b67a7132-4b25-4fd1-8408-88558a164711',
+                            requestId: '1',
+                            country: 'DE',
+                            storeNumber: '30',
+                            customerNumber: '1234567',
+                            groupId: null,
+                            creationTimestamp: '2020-06-19T14:20:49.709889Z',
+                            value: '2',
+                            textValue: null,
+                            countryField: {
+                                id: 'ede80e37-7718-46b0-8566-eddcef681161',
+                                mandatory: false,
+                                validation: null,
+                                level: 'GROUP',
+                                order: 4,
+                                section: 'CREDIT_DATA',
+                                reusable: true,
+                                endTimestamp: null,
+                                country: 'DE',
+                                options: '1|2|3|4|5',
+                                field: {
+                                    id: 'a0ca6a5a-2783-448f-a9c7-aefcd5b23f75',
+                                    code: 'DMY_GROUP_GENERAL_RATING',
+                                    label: 'mrc.recommendations.rating',
+                                    type: 'RADIOBUTTON',
+                                },
+                            },
+                        },
+                    ],
+                    onChange: () => null,
+                    onBlur: () => null,
+                    editable: true,
+                    disabled: false,
+                    onEditButtonClick: () => alert('edit'),
+                },
+                hasRequest: true,
+                request: {
+                    requestFields: [
+                        {
+                            id: '1dee6fe1-8168-4397-84e8-c02e609e0f97',
+                            requestId: '1',
+                            country: 'DE',
+                            storeNumber: null,
+                            customerNumber: null,
+                            groupId: null,
+                            creationTimestamp: '2020-06-19T17:54:47.886469Z',
+                            value: null,
+                            textValue: null,
+                            countryField: {
+                                id: '5bc3b8e6-d29d-475d-bf89-01efcbcfec18',
+                                mandatory: true,
+                                validation: null,
+                                level: 'REQUEST',
+                                order: 2,
+                                section: 'CREDIT_DATA',
+                                reusable: true,
+                                endTimestamp: null,
+                                country: 'DE',
+                                options: null,
+                                field: {
+                                    id: '3eb15d56-51eb-4fc0-bd80-ee52cb930e58',
+                                    code: 'FIELD_DATE_1',
+                                    label: 'field.date.one',
+                                    type: 'DATE',
+                                },
+                            },
+                        },
+                        {
+                            id: '1644e283-036c-49d9-86a9-9eebc8695333',
+                            requestId: '1',
+                            country: 'DE',
+                            storeNumber: '30',
+                            customerNumber: '1234567',
+                            groupId: null,
+                            creationTimestamp: '2020-06-19T14:20:49.709973Z',
+                            value: null,
+                            textValue:
+                                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                            countryField: {
+                                id: 'c4ff9118-2886-4461-9037-59a530794a56',
+                                mandatory: false,
+                                validation: 'maxLength255',
+                                level: 'REQUEST',
+                                order: 2,
+                                section: 'CREDIT_DATA',
+                                reusable: false,
+                                endTimestamp: null,
+                                country: 'DE',
+                                options: null,
+                                field: {
+                                    id: '3e112e86-4c0b-4c0f-b014-4a586b067dd7',
+                                    code: 'DMY_REQUEST_COMMENT',
+                                    label: 'mrc.request.comment',
+                                    type: 'TEXTAREA',
+                                },
+                            },
+                        },
+                        {
+                            id: '65145d2f-0fdc-4a4f-9827-bbd6d2a45f78',
+                            requestId: '1',
+                            country: 'DE',
+                            storeNumber: '30',
+                            customerNumber: '1234567',
+                            groupId: null,
+                            creationTimestamp: '2020-06-19T14:20:49.709931Z',
+                            value: 'VERY_IMPORTANT',
+                            textValue: null,
+                            countryField: {
+                                id: '4cc61cef-80eb-44ab-850b-a7899e566629',
+                                mandatory: false,
+                                validation: null,
+                                level: 'REQUEST',
+                                order: 1,
+                                section: 'CREDIT_DATA',
+                                reusable: false,
+                                endTimestamp: null,
+                                country: 'DE',
+                                options: 'NOT_IMPORTANT|IMPORTANT|VERY_IMPORTANT',
+                                field: {
+                                    id: 'a09bd711-d0f1-4900-8672-37acf6b983e8',
+                                    code: 'DMY_REQUEST_IMPORTANCE',
+                                    label: 'mrc.request.importance',
+                                    type: 'DROPDOWN',
+                                },
+                            },
+                        },
+                    ],
+                    onChange: () => null,
+                    onBlur: () => null,
+                    editable: true,
+                    disabled: false,
+                    onEditButtonClick: () => alert('edit'),
+                },
+                editable: true,
+            }}
+            creditProgram={{
+                limitRequestId: '1',
+                setCreditPrograms: () => null,
+                getCreditPrograms: () => {
+                    return fetch(`/creditlimit/creditprogramm`)
+                        .then((resp) => resp.json())
+                        .catch((e) => {
+                            return {
+                                selectedCreditProgram: '',
+                                availableCreditPrograms: ['strategy.program.DE_1', 'strategy.program.DE_2'],
+                            };
+                        });
+                },
+                setValidity: () => null,
+                readOnly: false,
+            }}
+            dateFormat={'MM/dd/yyyy'}
+        />
+    ))
+    .add('Approval Service/Prepayment', () => (
+        <CreditDataTab
+            parent={'approval'}
+            country={'DE'}
+            groupLimit={{ exhausted: 35000, current: 36000, wish: 90000, new: 100000 }}
+            isContractingStepEditable={true}
+            customers={[
+                {
+                    onAmountChange: () => null,
+                    name: 'Approval 1: Credit customer, working on applied/current',
+                    storeNumber: 10,
+                    number: 9905,
+                    isCashCustomer: false,
+                    limit: {
+                        current: {
+                            amount: 12000,
+                            product: 'METRO Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                            expiry: { amount: 1000, date: '4/2/2020' },
+                        },
+                        wish: {
+                            amount: null,
+                            product: null,
+                            period: null,
+                            debitType: null,
+                            expiry: null,
+                        },
+                        applied: {
+                            amount: null,
+                            product: null,
+                            period: null,
+                            debitType: null,
+                            expiry: null,
+                        },
+                        new: {
+                            amount: null,
+                            product: null,
+                            period: null,
+                            debitType: null,
+                            expiry: null,
+                        },
+                        limitType: 'CURRENT',
+                        paymentMethodType: 'CURRENT',
+                        valid: true,
+                        readOnly: false,
+                        creditOption: 'NONE',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
                 {
                     onAmountChange: () => null,
                     name: 'Approval 1: Prepayment customer, no wish, no applied/wish',
@@ -6755,6 +7104,7 @@ storiesOf('CreditDataTab', module)
                             debitType: 'mrc.payment.Firmenlastschriftmandat',
                         },
                     ],
+                    blockingInfo: createBlockingInfo(['ES'], null, 30, 'DE'),
                 },
                 {
                     onAmountChange: () => null,
@@ -6861,8 +7211,75 @@ storiesOf('CreditDataTab', module)
                             debitType: null,
                             expiry: null,
                         },
-                        limitType: 'CURRENT',
-                        paymentMethodType: 'CURRENT',
+                        limitType: 'WISH',
+                        paymentMethodType: 'WISH',
+                        valid: true,
+                        readOnly: false,
+                        creditOption: 'PREPAYMENT',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'Approval 1: Credit customer, with wish, applied/wish',
+                    storeNumber: 10,
+                    number: 9906,
+                    isCashCustomer: false,
+                    isPrepaymentCustomer: false,
+                    limit: {
+                        current: {
+                            amount: 0,
+                            product: 'mrc.payment.Bank_Transfer',
+                            period: '21',
+                            debitType: null,
+                            expiry: null,
+                        },
+                        wish: {
+                            amount: 0,
+                            product: 'mrc.payment.Bank_Transfer',
+                            period: '0',
+                            debitType: null,
+                            expiry: null,
+                            creditOption: 'PREPAYMENT',
+                        },
+                        applied: {
+                            amount: 0,
+                            product: 'mrc.payment.Bank_Transfer',
+                            period: '0',
+                            debitType: null,
+                            expiry: null,
+                            creditOption: 'PREPAYMENT',
+                        },
+                        new: {
+                            amount: null,
+                            product: null,
+                            period: null,
+                            debitType: null,
+                            expiry: null,
+                        },
+                        limitType: 'WISH',
+                        paymentMethodType: 'WISH',
                         valid: true,
                         readOnly: false,
                         creditOption: 'PREPAYMENT',
@@ -7147,23 +7564,9 @@ storiesOf('CreditDataTab', module)
                 },
                 editable: true,
             }}
-            creditProgram={{
-                limitRequestId: '1',
-                setCreditPrograms: () => null,
-                getCreditPrograms: () => {
-                    return fetch(`/creditlimit/creditprogramm`)
-                        .then((resp) => resp.json())
-                        .catch((e) => {
-                            return {
-                                selectedCreditProgram: '',
-                                availableCreditPrograms: ['strategy.program.DE_1', 'strategy.program.DE_2'],
-                            };
-                        });
-                },
-                setValidity: () => null,
-                readOnly: false,
-            }}
+            creditProgram={null}
             dateFormat={'MM/dd/yyyy'}
+            isPrepaymentRequest={true}
         />
     ))
     .add('History/Standard', () => {
