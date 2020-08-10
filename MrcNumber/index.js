@@ -26,6 +26,10 @@ export default class MrcNumber extends PureComponent {
                 maximumFractionDigits: 2,
             };
             number = new Intl.NumberFormat(locale, options).format(number);
+        } else if (isPercentage) {
+            number = new Intl.NumberFormat(locale, { minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(
+                number
+            );
         } else {
             number = new Intl.NumberFormat(locale, {}).format(number);
         }
