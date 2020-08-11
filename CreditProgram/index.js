@@ -3,7 +3,7 @@ import './index.scss';
 import PropTypes from 'prop-types';
 import { lookup } from '../Util/translations';
 import BoxWithTitle from '../BoxWithTitle';
-import KeyValueGroup, { Key, Value } from '../KeyValueGroup';
+import KeyValueGroup, { Key, KeyInRed, Value, ValueInRed } from '../KeyValueGroup';
 import ModalDialog from '../ModalDialog';
 import * as _ from 'lodash';
 
@@ -180,12 +180,25 @@ export default class CreditProgram extends Component {
                 title={lookup('mrc.credittab.creditprogram')}
                 action={{ title: lookup('mrc.credittab.creditprogramEdit'), fn: this.toggleModal }}
             >
-                <KeyValueGroup>
-                    <Key>{lookup('mrc.credittab.selectedcreditprogram') + ' *'}</Key>
-                    <Value>
-                        {_.isEmpty(this.state.selectedCreditProgram) ? '-' : lookup(this.state.selectedCreditProgram)}
-                    </Value>
-                </KeyValueGroup>
+                {_.isEmpty(this.state.selectedCreditProgram) ? (
+                    <KeyValueGroup>
+                        <KeyInRed>{lookup('mrc.credittab.selectedcreditprogram') + ' *'}</KeyInRed>
+                        <ValueInRed>
+                            {_.isEmpty(this.state.selectedCreditProgram)
+                                ? '-'
+                                : lookup(this.state.selectedCreditProgram)}
+                        </ValueInRed>
+                    </KeyValueGroup>
+                ) : (
+                    <KeyValueGroup>
+                        <Key>{lookup('mrc.credittab.selectedcreditprogram') + ' *'}</Key>
+                        <Value>
+                            {_.isEmpty(this.state.selectedCreditProgram)
+                                ? '-'
+                                : lookup(this.state.selectedCreditProgram)}
+                        </Value>
+                    </KeyValueGroup>
+                )}
                 {this.state.isModalVisible ? (
                     <ModalDialog
                         toggle={() => {

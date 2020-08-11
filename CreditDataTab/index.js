@@ -113,9 +113,9 @@ export default class CreditDataTab extends Component {
             <MainContent>
                 {this.renderCreditCorrectionGroupActions(translations)}
                 <Grid>
+                    {this.renderCreditProgram(creditProgram)}
                     {this.renderGroupAdditionalFields(additionalFields)}
                     {this.renderRequestAdditionalFields(additionalFields)}
-                    {this.renderCreditProgram(creditProgram)}
                     <GridItem colSpan="all" className="mrc-ui-credit-tab-table-container">
                         <Table.Root>
                             <Table.Body>
