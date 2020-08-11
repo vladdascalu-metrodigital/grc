@@ -87,6 +87,10 @@ export default class HistoryDetailsPresentation extends Component {
 
     desktopView(params) {
         const startTabIndex = TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES.includes(params.countryCode) ? 2 : 1;
+        const isNotCreditCorrectionRequest =
+            params === undefined ||
+            params.requestStatus === undefined ||
+            params.requestStatus.requestType !== 'CREDIT_CORRECTION';
         return (
             <Tabs forceRenderTabPanel={true} defaultIndex={startTabIndex}>
                 <TabList>
@@ -95,10 +99,14 @@ export default class HistoryDetailsPresentation extends Component {
                     ) : null}
                     <Tab>{lookup('mrc.customerdetails.title')}</Tab>
                     <Tab>{lookup('mrc.creditdetails.title')}</Tab>
-                    <Tab>{lookup('mrc.sales.title')}</Tab>
-                    <Tab>{lookup('mrc.payments.title')}</Tab>
-                    <Tab>{lookup('mrc.scores.title')}</Tab>
-                    <Tab>{lookup('mrc.strategy.title')}</Tab>
+                    {isNotCreditCorrectionRequest ? (
+                        <React.Fragment>
+                            <Tab>{lookup('mrc.sales.title')}</Tab>
+                            <Tab>{lookup('mrc.payments.title')}</Tab>
+                            <Tab>{lookup('mrc.scores.title')}</Tab>
+                            <Tab>{lookup('mrc.strategy.title')}</Tab>
+                        </React.Fragment>
+                    ) : null}
                     <Tab>{lookup('mrc.comments.title')}</Tab>
                     <Tab>{lookup('mrc.attachments.title')}</Tab>
                     <Tab>{lookup('mrc.audittrail.title')}</Tab>
@@ -125,27 +133,31 @@ export default class HistoryDetailsPresentation extends Component {
                         <CreditDataTab {...createCreditDataProps(params)} />
                     </Accordion>
                 </ErrorHandledTabPanel>
-                <ErrorHandledTabPanel>
-                    <Sales salesOverviews={params.salesOverviews} />
-                </ErrorHandledTabPanel>
-                <ErrorHandledTabPanel>
-                    <Payments paymentsOverviews={params.paymentsOverviews} />
-                </ErrorHandledTabPanel>
-                <ErrorHandledTabPanel>
-                    <Scoring
-                        scores={params.scores}
-                        historicExtScores={params.historicExtScores}
-                        country={params.countryCode}
-                        host={window.location.origin}
-                    />
-                </ErrorHandledTabPanel>
-                <ErrorHandledTabPanel>
-                    <Strategy
-                        strategyKeyIndicatorsData={params.strategyKeyIndicatorsData}
-                        approvalProcess={params.approvalProcess}
-                        countryCode={params.countryCode}
-                    />
-                </ErrorHandledTabPanel>
+                {isNotCreditCorrectionRequest ? (
+                    <React.Fragment>
+                        <ErrorHandledTabPanel>
+                            <Sales salesOverviews={params.salesOverviews} />
+                        </ErrorHandledTabPanel>
+                        <ErrorHandledTabPanel>
+                            <Payments paymentsOverviews={params.paymentsOverviews} />
+                        </ErrorHandledTabPanel>
+                        <ErrorHandledTabPanel>
+                            <Scoring
+                                scores={params.scores}
+                                historicExtScores={params.historicExtScores}
+                                country={params.countryCode}
+                                host={window.location.origin}
+                            />
+                        </ErrorHandledTabPanel>
+                        <ErrorHandledTabPanel>
+                            <Strategy
+                                strategyKeyIndicatorsData={params.strategyKeyIndicatorsData}
+                                approvalProcess={params.approvalProcess}
+                                countryCode={params.countryCode}
+                            />
+                        </ErrorHandledTabPanel>
+                    </React.Fragment>
+                ) : null}
                 <ErrorHandledTabPanel>
                     <Comments
                         comments={params.comments}
@@ -181,6 +193,10 @@ export default class HistoryDetailsPresentation extends Component {
     }
 
     mobileView(params) {
+        const isNotCreditCorrectionRequest =
+            params === undefined ||
+            params.requestStatus === undefined ||
+            params.requestStatus.requestType !== 'CREDIT_CORRECTION';
         return (
             <Accordion>
                 {TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES.includes(params.countryCode) ? (
@@ -202,27 +218,31 @@ export default class HistoryDetailsPresentation extends Component {
                 <Collapsible trigger={lookup('mrc.creditdetails.title')}>
                     <CreditDataTab {...createCreditDataProps(params)} />
                 </Collapsible>
-                <Collapsible trigger={lookup('mrc.sales.title')}>
-                    <Sales salesOverviews={params.salesOverviews} />
-                </Collapsible>
-                <Collapsible trigger={lookup('mrc.payments.title')}>
-                    <Payments paymentsOverviews={params.paymentsOverviews} />
-                </Collapsible>
-                <Collapsible trigger={lookup('mrc.scores.title')}>
-                    <Scoring
-                        scores={params.scores}
-                        historicExtScores={params.historicExtScores}
-                        country={params.countryCode}
-                        host={window.location.origin}
-                    />
-                </Collapsible>
-                <Collapsible trigger={lookup('mrc.strategy.title')}>
-                    <Strategy
-                        strategyKeyIndicatorsData={params.strategyKeyIndicatorsData}
-                        approvalProcess={params.approvalProcess}
-                        countryCode={params.countryCode}
-                    />
-                </Collapsible>
+                {isNotCreditCorrectionRequest ? (
+                    <React.Fragment>
+                        <Collapsible trigger={lookup('mrc.sales.title')}>
+                            <Sales salesOverviews={params.salesOverviews} />
+                        </Collapsible>
+                        <Collapsible trigger={lookup('mrc.payments.title')}>
+                            <Payments paymentsOverviews={params.paymentsOverviews} />
+                        </Collapsible>
+                        <Collapsible trigger={lookup('mrc.scores.title')}>
+                            <Scoring
+                                scores={params.scores}
+                                historicExtScores={params.historicExtScores}
+                                country={params.countryCode}
+                                host={window.location.origin}
+                            />
+                        </Collapsible>
+                        <Collapsible trigger={lookup('mrc.strategy.title')}>
+                            <Strategy
+                                strategyKeyIndicatorsData={params.strategyKeyIndicatorsData}
+                                approvalProcess={params.approvalProcess}
+                                countryCode={params.countryCode}
+                            />
+                        </Collapsible>
+                    </React.Fragment>
+                ) : null}
                 <Collapsible trigger={lookup('mrc.comments.title')}>
                     <ErrorHandler>
                         <Comments
