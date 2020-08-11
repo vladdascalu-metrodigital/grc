@@ -73,7 +73,15 @@ export default class CreditTableHead extends Component {
     }
 
     renderGroupLimit() {
-        const { groupLimit, parent, country, translations, historyRequestType, activated } = this.props;
+        const {
+            groupLimit,
+            parent,
+            country,
+            translations,
+            historyRequestType,
+            activated,
+            isPrepaymentRequest,
+        } = this.props;
         const ts = translations;
 
         if (
@@ -84,7 +92,7 @@ export default class CreditTableHead extends Component {
             return this.createGroupHeadWithOnlyTwoStages(parent, groupLimit, country, activated, ts);
         }
 
-        if (isLimitExpiryInHistory(parent, historyRequestType) || isPrepayment(parent)) {
+        if (isLimitExpiryInHistory(parent, historyRequestType) || isPrepayment(parent) || isPrepaymentRequest) {
             return null;
         }
 
