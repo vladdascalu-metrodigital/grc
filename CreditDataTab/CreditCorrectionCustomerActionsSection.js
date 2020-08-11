@@ -40,7 +40,7 @@ export default class CreditCorrectionCustomerActionsSection extends Component {
     }
 
     render() {
-        const { country, translations, customer } = this.props;
+        const { country, translations, customer, canBlock, canCorrect } = this.props;
         const ts = translations;
         const blockingOptions = _.get(countryBlockingOptions, country.toUpperCase());
         const customerCreditOption = _.get(customer, 'limit.creditOption');
@@ -108,13 +108,13 @@ export default class CreditCorrectionCustomerActionsSection extends Component {
                                 customer.onChangeCreditOption(null, currentAmount, null, null, null, 'NONE');
                             }
                         }}
-                        disabled={readOnly}
+                        disabled={readOnly || (!canBlock && !canCorrect) || (customer.isCashCustomer && !canCorrect)}
                     />
                     <CheckCard
                         key={1}
                         title={ts.newCreditAction}
                         checked={customerCreditOption === 'NEWCREDIT'}
-                        disabled={readOnly}
+                        disabled={readOnly || !canCorrect}
                         onClick={() => {
                             if (customerCreditOption !== 'NEWCREDIT') {
                                 this.setState({ amount: initialAmount });
@@ -138,7 +138,7 @@ export default class CreditCorrectionCustomerActionsSection extends Component {
                                           key={i + 2}
                                           title={lookup(action.translationKey)}
                                           checked={action.id === customerCreditOption}
-                                          disabled={readOnly}
+                                          disabled={readOnly || !canBlock}
                                           onClick={() => {
                                               if (action.id !== customerCreditOption) {
                                                   customer.onChangeCreditOption(
@@ -157,7 +157,7 @@ export default class CreditCorrectionCustomerActionsSection extends Component {
                               return null;
                           })}
                 </Grid>
-                {customerCreditOption === 'NEWCREDIT' ? (
+                {customerCreditOption === 'NEWCREDIT' && canCorrect ? (
                     <div className="mt-5">
                         <InputLabel>{ts.addcreditdata}</InputLabel>
                         <Card dropShadow>

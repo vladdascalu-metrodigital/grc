@@ -130,7 +130,7 @@ export default class CreditCorrectionLayout extends Component {
 
     createCustomerDetailsPanel(req) {
         // in case there is some data, retrieve list of customers from list of requestedItems
-        const customers = req.data && req.data.requestedItems.map((ri) => ri.customer);
+        const customers = req && req.requestedItems.map((ri) => ri.customer);
 
         return (
             <CustomerDataGroup
@@ -208,7 +208,7 @@ export default class CreditCorrectionLayout extends Component {
         const request = _.get(this.props, 'request.data');
         const activationSubmitted = request.activationSubmitted !== undefined ? request.activationSubmitted : false;
         const sucActivated = request.activated !== undefined ? request.activated : false;
-        const disabled = this.state.canceled || !request.canCorrect;
+        const disabled = this.state.canceled;
 
         const groupLimit = this.createGroupLimit(request);
         return (
@@ -315,6 +315,8 @@ export default class CreditCorrectionLayout extends Component {
                 }
                 activated={activationSubmitted}
                 disabled={disabled}
+                canCorrect={request.canCorrect}
+                canBlock={request.canBlock}
                 selectedGroupAction={_.get(request, 'selectedGroupAction')}
                 handleChangeGroupAction={(selectedGroupAction) => {
                     this.props.changeSelectedGroupAction(request.id, selectedGroupAction);

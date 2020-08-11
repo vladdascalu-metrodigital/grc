@@ -102,6 +102,8 @@ export default class CreditDataTab extends Component {
             creditProgram,
             selectedGroupAction,
             isPrepaymentRequest,
+            canBlock,
+            canCorrect,
         } = this.props;
         if (_.isNil(country) || _.isNil(customers) || customers.length === 0 || historyRequestType === 'QUICK_CHECK') {
             return <MainContent>{lookup('mrc.comment.nocreditdetails')}</MainContent>;
@@ -134,6 +136,8 @@ export default class CreditDataTab extends Component {
                                               activated={activated}
                                               selectedGroupAction={selectedGroupAction}
                                               isPrepaymentRequest={isPrepaymentRequest}
+                                              canBlock={canBlock}
+                                              canCorrect={canCorrect}
                                           />
                                       ))
                                     : null}
@@ -191,6 +195,8 @@ export default class CreditDataTab extends Component {
             selectedGroupAction,
             handleChangeGroupAction,
             disabled,
+            canBlock,
+            canCorrect,
         } = this.props;
         if (!isCreditCorrection(parent)) {
             return null;
@@ -205,6 +211,8 @@ export default class CreditDataTab extends Component {
                 customers={customers}
                 activated={activated}
                 disabled={disabled}
+                canBlock={canBlock}
+                canCorrect={canCorrect}
             />
         );
     }
@@ -329,6 +337,8 @@ CreditDataTab.propTypes = {
     ]), // history
     activated: PropTypes.bool, // creditcorrection, history
     disabled: PropTypes.bool, // creditcorrection
+    canCorrect: PropTypes.bool, // creditcorrection
+    canBlock: PropTypes.bool, // creditcorrection
     selectedGroupAction: PropTypes.string, // creditcorrection
     handleChangeGroupAction: PropTypes.func, // creditcorrection
 };
