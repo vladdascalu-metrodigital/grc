@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import { COUNTRY, CURRENCY, countryToCurrency } from '../Util/currencyCommons';
 
 import './index.scss';
+import * as _ from 'lodash';
 
 export { COUNTRY, CURRENCY, countryToCurrency };
 
@@ -19,9 +20,10 @@ export default class MrcNumber extends PureComponent {
         number = typeof number === 'string' || typeof number === 'number' ? number.toString().trim() : '';
         const suffix = isPercentage ? '%' : '';
         if (isCurrency) {
+            const currency = _.isNil(country) ? CURRENCY.EUR : countryToCurrency[country.toUpperCase()] || CURRENCY.EUR;
             let options = {
                 style: 'currency',
-                currency: countryToCurrency[country.toUpperCase()] || CURRENCY.EUR,
+                currency: currency,
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 2,
             };
