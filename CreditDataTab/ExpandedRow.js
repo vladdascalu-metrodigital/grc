@@ -93,6 +93,7 @@ export default class ExpandedRow extends Component {
 
     createPrepaymentSection() {
         const { customer, translations } = this.props;
+        const isCashCustomer = customer.isCashCustomer;
         const ts = translations;
         const creditOption = _.get(customer, 'limit.creditOption');
         const currentAmount = _.get(customer, 'limit.current.amount');
@@ -111,22 +112,24 @@ export default class ExpandedRow extends Component {
                             }
                         }}
                     />
-                    <CheckCard
-                        key={0}
-                        title={ts.prepayment}
-                        checked={creditOption === 'PREPAYMENT'}
-                        onClick={() => {
-                            if (creditOption !== 'PREPAYMENT') {
-                                customer.onChangeCreditOption(
-                                    0,
-                                    'mrc.payment.Bank_Transfer',
-                                    'mrc.payment.0',
-                                    null,
-                                    'PREPAYMENT'
-                                );
-                            }
-                        }}
-                    />
+                    {isCashCustomer || currentAmount == '0' || !currentAmount ? (
+                        <CheckCard
+                            key={0}
+                            title={ts.prepayment}
+                            checked={creditOption === 'PREPAYMENT'}
+                            onClick={() => {
+                                if (creditOption !== 'PREPAYMENT') {
+                                    customer.onChangeCreditOption(
+                                        0,
+                                        'mrc.payment.Bank_Transfer',
+                                        'mrc.payment.0',
+                                        null,
+                                        'PREPAYMENT'
+                                    );
+                                }
+                            }}
+                        />
+                    ) : null}
                 </Grid>
             </FormSection>
         );

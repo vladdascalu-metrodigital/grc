@@ -5,6 +5,7 @@ import BlockedIcon from '../../../../icons/signal-blocked.svg';
 import PendingIcon from '../../../../icons/signal-pending.svg';
 import QuickCheckIcon from '../../../../icons/quick-check-blue.svg';
 import OpenIcon from '../../../../icons/signal-open.svg';
+import PrepaymentIcon from '../../../../icons/prepayment-blue.svg';
 
 export default class TrafficLight extends Component {
     constructor(props) {
@@ -16,6 +17,9 @@ export default class TrafficLight extends Component {
         const requestStatus = this.props.requestStatus;
         if (requestStatus.requestType === 'CREDIT_CORRECTION') {
             return <img src={CreditCorrectionIcon} alt="Credit Correction Light"></img>;
+        }
+        if (requestStatus.requestType === 'LIMIT_REQUEST' && requestStatus.isPrepayment) {
+            return <img src={PrepaymentIcon} alt="Prepayment"></img>;
         }
         if (requestStatus.trafficLight == 'red') {
             return <img src={BlockedIcon} alt="RED Traffic Light"></img>;

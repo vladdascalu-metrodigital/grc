@@ -4,6 +4,7 @@ import PendingIcon from '../../icons/signal-pending-new.svg';
 import ApprovedIcon from '../../icons/signal-approved-new.svg';
 import QuickCheckIcon from '../../icons/quick-check-blue.svg';
 import CreditCorrectionIcon from '../../icons/credit-correction-blue.svg';
+import PrepaymentIcon from '../../icons/prepayment-blue.svg';
 import OpenIcon from '../../icons/signal-open-new.svg';
 import ArrowRightIcon from '../../icons/arrow-right.svg';
 import { lookup } from '../../Util/translations';
@@ -167,6 +168,9 @@ export default class RecentRequestsInfo extends Component {
     createTrafficLight(requestStatus) {
         if (requestStatus.requestType === 'CREDIT_CORRECTION') {
             return <img src={CreditCorrectionIcon} alt="Credit Correction Light"></img>;
+        }
+        if (requestStatus.requestType === 'LIMIT_REQUEST' && requestStatus.isPrepayment) {
+            return <img src={PrepaymentIcon} alt="Prepayment"></img>;
         }
         if (requestStatus.trafficLight == 'red') {
             return <img src={BlockedIcon} alt="RED Traffic Light"></img>;
