@@ -348,10 +348,12 @@ export default class LimitRequestLayout extends Component {
 
         const limitRequest = this.props.request.data || {};
         const nonePlaceholderDefined =
-            limitRequest.placeholderTypes !== undefined &&
-            limitRequest.placeholderTypes !== null &&
-            limitRequest.placeholderTypes.length == 1 &&
-            limitRequest.placeholderTypes[0] === 'none';
+            limitRequest.placeholderTypes === undefined ||
+            limitRequest.placeholderTypes === null ||
+            (limitRequest.placeholderTypes !== undefined &&
+                limitRequest.placeholderTypes !== null &&
+                limitRequest.placeholderTypes.length == 1 &&
+                limitRequest.placeholderTypes[0] === 'none');
         if (limitRequest.fileTypes) this.FILE_TYPES = limitRequest.fileTypes;
         if (limitRequest.collateralAttachments !== undefined && limitRequest.collateralAttachments !== null) {
             this.COLLATERALS_ATTACHMENTS = limitRequest.collateralAttachments;
