@@ -19111,6 +19111,1229 @@ storiesOf('CreditDataTab', module)
             ]}
             dateFormat={'dd.MM.yyyy'}
             selectedGroupAction={'NONE'}
+            canBlock={true}
+            canCorrect={true}
+            handleChangeGroupAction={() => null}
+        />
+    ))
+    .add('Credit Correction/Can only block', () => (
+        <CreditDataTab
+            parent={'creditcorrection'}
+            country={'DE'}
+            groupLimit={{ exhausted: 35000, current: 36000, new: 90000 }}
+            customers={[
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: has credit, request new data',
+                    storeNumber: 10,
+                    number: 99,
+                    isCashCustomer: false,
+                    limit: {
+                        current: {
+                            amount: 12000,
+                            product: 'METRO Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                            expiry: { amount: 1000, date: '4/2/2020' },
+                        },
+                        new: {
+                            amount: 30000,
+                            product: 'METRO Cash',
+                            period: '32',
+                            debitType: 'Firmenlastschriftmandat',
+                            expiry: { amount: 1000, date: '2020-05-04T07:47:46.000' },
+                        },
+                        limitType: 'WISH',
+                        paymentMethodType: 'WISH',
+                        valid: true,
+                        readOnly: false,
+                        creditOption: 'NEWCREDIT',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                    limitExhaustion: 100,
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: has credit, no requested',
+                    storeNumber: 10,
+                    number: 990,
+                    isCashCustomer: false,
+                    limit: {
+                        current: {
+                            amount: 12000,
+                            product: 'Metro Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                            expiry: { amount: 1000, date: '4/2/2020' },
+                        },
+                        new: null,
+                        limitType: 'CURRENT',
+                        paymentMethodType: 'CURRENT',
+                        valid: true,
+                        creditOption: 'NONE',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: has current credit 0, no requested',
+                    storeNumber: 10,
+                    number: 991,
+                    isCashCustomer: false,
+                    limit: {
+                        current: {
+                            amount: 0,
+                            product: 'METRO Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                        },
+                        wish: {},
+                        new: null,
+                        valid: true,
+                        creditOption: 'NONE',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: no current credit, no requested',
+                    storeNumber: 10,
+                    number: 992,
+                    isCashCustomer: true,
+                    limit: {
+                        current: {},
+                        wish: {},
+                        limitType: 'CURRENT',
+                        paymentMethodType: 'CURRENT',
+                        valid: true,
+                        creditOption: 'NONE',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: no current credit, 1 requested',
+                    storeNumber: 10,
+                    number: 993,
+                    isCashCustomer: true,
+                    limit: {
+                        current: {},
+                        new: {
+                            amount: 30000,
+                            product: 'METRO Cash',
+                            period: '32',
+                            debitType: 'Firmenlastschriftmandat',
+                            expiry: { amount: 1000, date: '2020-05-04T07:47:46.000' },
+                        },
+                        valid: true,
+                        creditOption: 'NEWCREDIT',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: cash but 0 current credit, none requested',
+                    storeNumber: 10,
+                    number: 994,
+                    isCashCustomer: true,
+                    limit: {
+                        current: {
+                            amount: 0,
+                        },
+                        wish: {},
+                        limitType: 'CURRENT',
+                        paymentMethodType: 'CURRENT',
+                        valid: true,
+                        creditOption: 'NONE',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: has credit, request only new limit',
+                    storeNumber: 10,
+                    number: 995,
+                    isCashCustomer: false,
+                    limit: {
+                        current: {
+                            amount: 12000,
+                            product: 'METRO Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                            expiry: { amount: 1000, date: '4/2/2020' },
+                        },
+                        new: {
+                            amount: null,
+                            product: 'METRO Cash',
+                            period: '15',
+                            debitType: 'Basislastschriftmandat',
+                        },
+                        creditOption: 'NEWCREDIT',
+                        valid: false,
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: credit customer, request blocking option',
+                    storeNumber: 10,
+                    number: 996,
+                    isCashCustomer: false,
+                    limit: {
+                        current: {
+                            amount: 12000,
+                            product: 'METRO Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                            expiry: { amount: 1000, date: '4/2/2020' },
+                        },
+                        wish: {
+                            amount: 0,
+                        },
+                        valid: true,
+                        creditOption: 'CREDITTOCASH',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    blockingInfo: {
+                        isBlocked: true,
+                        blockingReasonText: 'mrc.blockingReason: closed business',
+                        checkoutCheckCodeText: 'mrc.checkoutCheckCode: 30',
+                    },
+                    name: 'has credit, request credit, approved credit (blocked)',
+                    storeNumber: 10,
+                    number: 98,
+                    isCashCustomer: false,
+                    limit: {
+                        current: {
+                            amount: 12000,
+                            product: 'METRO Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                            expiry: { amount: 1000, date: '4/2/2020' },
+                        },
+                        new: {
+                            amount: 30000,
+                            product: 'METRO Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                            expiry: { amount: 1000, date: '4/2/2020' },
+                        },
+                        valid: true,
+                        creditOption: 'NEWCREDIT',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+            ]}
+            dateFormat={'dd.MM.yyyy'}
+            selectedGroupAction={'NONE'}
+            canBlock={true}
+            canCorrect={false}
+            handleChangeGroupAction={() => null}
+        />
+    ))
+    .add('Credit Correction/Can only correct', () => (
+        <CreditDataTab
+            parent={'creditcorrection'}
+            country={'DE'}
+            groupLimit={{ exhausted: 35000, current: 36000, new: 90000 }}
+            customers={[
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: has credit, request new data',
+                    storeNumber: 10,
+                    number: 99,
+                    isCashCustomer: false,
+                    limit: {
+                        current: {
+                            amount: 12000,
+                            product: 'METRO Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                            expiry: { amount: 1000, date: '4/2/2020' },
+                        },
+                        new: {
+                            amount: 30000,
+                            product: 'METRO Cash',
+                            period: '32',
+                            debitType: 'Firmenlastschriftmandat',
+                            expiry: { amount: 1000, date: '2020-05-04T07:47:46.000' },
+                        },
+                        limitType: 'WISH',
+                        paymentMethodType: 'WISH',
+                        valid: true,
+                        readOnly: false,
+                        creditOption: 'NEWCREDIT',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                    limitExhaustion: 100,
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: has credit, no requested',
+                    storeNumber: 10,
+                    number: 990,
+                    isCashCustomer: false,
+                    limit: {
+                        current: {
+                            amount: 12000,
+                            product: 'Metro Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                            expiry: { amount: 1000, date: '4/2/2020' },
+                        },
+                        new: null,
+                        limitType: 'CURRENT',
+                        paymentMethodType: 'CURRENT',
+                        valid: true,
+                        creditOption: 'NONE',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: has current credit 0, no requested',
+                    storeNumber: 10,
+                    number: 991,
+                    isCashCustomer: false,
+                    limit: {
+                        current: {
+                            amount: 0,
+                            product: 'METRO Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                        },
+                        wish: {},
+                        new: null,
+                        valid: true,
+                        creditOption: 'NONE',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: no current credit, no requested',
+                    storeNumber: 10,
+                    number: 992,
+                    isCashCustomer: true,
+                    limit: {
+                        current: {},
+                        wish: {},
+                        limitType: 'CURRENT',
+                        paymentMethodType: 'CURRENT',
+                        valid: true,
+                        creditOption: 'NONE',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: no current credit, 1 requested',
+                    storeNumber: 10,
+                    number: 993,
+                    isCashCustomer: true,
+                    limit: {
+                        current: {},
+                        new: {
+                            amount: 30000,
+                            product: 'METRO Cash',
+                            period: '32',
+                            debitType: 'Firmenlastschriftmandat',
+                            expiry: { amount: 1000, date: '2020-05-04T07:47:46.000' },
+                        },
+                        valid: true,
+                        creditOption: 'NEWCREDIT',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: cash but 0 current credit, none requested',
+                    storeNumber: 10,
+                    number: 994,
+                    isCashCustomer: true,
+                    limit: {
+                        current: {
+                            amount: 0,
+                        },
+                        wish: {},
+                        limitType: 'CURRENT',
+                        paymentMethodType: 'CURRENT',
+                        valid: true,
+                        creditOption: 'NONE',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: has credit, request only new limit',
+                    storeNumber: 10,
+                    number: 995,
+                    isCashCustomer: false,
+                    limit: {
+                        current: {
+                            amount: 12000,
+                            product: 'METRO Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                            expiry: { amount: 1000, date: '4/2/2020' },
+                        },
+                        new: {
+                            amount: null,
+                            product: 'METRO Cash',
+                            period: '15',
+                            debitType: 'Basislastschriftmandat',
+                        },
+                        creditOption: 'NEWCREDIT',
+                        valid: false,
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: credit customer, request blocking option',
+                    storeNumber: 10,
+                    number: 996,
+                    isCashCustomer: false,
+                    limit: {
+                        current: {
+                            amount: 12000,
+                            product: 'METRO Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                            expiry: { amount: 1000, date: '4/2/2020' },
+                        },
+                        wish: {
+                            amount: 0,
+                        },
+                        valid: true,
+                        creditOption: 'CREDITTOCASH',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    blockingInfo: {
+                        isBlocked: true,
+                        blockingReasonText: 'mrc.blockingReason: closed business',
+                        checkoutCheckCodeText: 'mrc.checkoutCheckCode: 30',
+                    },
+                    name: 'has credit, request credit, approved credit (blocked)',
+                    storeNumber: 10,
+                    number: 98,
+                    isCashCustomer: false,
+                    limit: {
+                        current: {
+                            amount: 12000,
+                            product: 'METRO Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                            expiry: { amount: 1000, date: '4/2/2020' },
+                        },
+                        new: {
+                            amount: 30000,
+                            product: 'METRO Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                            expiry: { amount: 1000, date: '4/2/2020' },
+                        },
+                        valid: true,
+                        creditOption: 'NEWCREDIT',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+            ]}
+            dateFormat={'dd.MM.yyyy'}
+            selectedGroupAction={'NONE'}
+            canBlock={false}
+            canCorrect={true}
+            handleChangeGroupAction={() => null}
+        />
+    ))
+    .add('Credit Correction/Can neither block nor correct', () => (
+        <CreditDataTab
+            parent={'creditcorrection'}
+            country={'DE'}
+            groupLimit={{ exhausted: 35000, current: 36000, new: 90000 }}
+            customers={[
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: has credit, request new data',
+                    storeNumber: 10,
+                    number: 99,
+                    isCashCustomer: false,
+                    limit: {
+                        current: {
+                            amount: 12000,
+                            product: 'METRO Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                            expiry: { amount: 1000, date: '4/2/2020' },
+                        },
+                        new: {
+                            amount: 30000,
+                            product: 'METRO Cash',
+                            period: '32',
+                            debitType: 'Firmenlastschriftmandat',
+                            expiry: { amount: 1000, date: '2020-05-04T07:47:46.000' },
+                        },
+                        limitType: 'WISH',
+                        paymentMethodType: 'WISH',
+                        valid: true,
+                        readOnly: false,
+                        creditOption: 'NEWCREDIT',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                    limitExhaustion: 100,
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: has credit, no requested',
+                    storeNumber: 10,
+                    number: 990,
+                    isCashCustomer: false,
+                    limit: {
+                        current: {
+                            amount: 12000,
+                            product: 'Metro Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                            expiry: { amount: 1000, date: '4/2/2020' },
+                        },
+                        new: null,
+                        limitType: 'CURRENT',
+                        paymentMethodType: 'CURRENT',
+                        valid: true,
+                        creditOption: 'NONE',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: has current credit 0, no requested',
+                    storeNumber: 10,
+                    number: 991,
+                    isCashCustomer: false,
+                    limit: {
+                        current: {
+                            amount: 0,
+                            product: 'METRO Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                        },
+                        wish: {},
+                        new: null,
+                        valid: true,
+                        creditOption: 'NONE',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: no current credit, no requested',
+                    storeNumber: 10,
+                    number: 992,
+                    isCashCustomer: true,
+                    limit: {
+                        current: {},
+                        wish: {},
+                        limitType: 'CURRENT',
+                        paymentMethodType: 'CURRENT',
+                        valid: true,
+                        creditOption: 'NONE',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: no current credit, 1 requested',
+                    storeNumber: 10,
+                    number: 993,
+                    isCashCustomer: true,
+                    limit: {
+                        current: {},
+                        new: {
+                            amount: 30000,
+                            product: 'METRO Cash',
+                            period: '32',
+                            debitType: 'Firmenlastschriftmandat',
+                            expiry: { amount: 1000, date: '2020-05-04T07:47:46.000' },
+                        },
+                        valid: true,
+                        creditOption: 'NEWCREDIT',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: cash but 0 current credit, none requested',
+                    storeNumber: 10,
+                    number: 994,
+                    isCashCustomer: true,
+                    limit: {
+                        current: {
+                            amount: 0,
+                        },
+                        wish: {},
+                        limitType: 'CURRENT',
+                        paymentMethodType: 'CURRENT',
+                        valid: true,
+                        creditOption: 'NONE',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: has credit, request only new limit',
+                    storeNumber: 10,
+                    number: 995,
+                    isCashCustomer: false,
+                    limit: {
+                        current: {
+                            amount: 12000,
+                            product: 'METRO Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                            expiry: { amount: 1000, date: '4/2/2020' },
+                        },
+                        new: {
+                            amount: null,
+                            product: 'METRO Cash',
+                            period: '15',
+                            debitType: 'Basislastschriftmandat',
+                        },
+                        creditOption: 'NEWCREDIT',
+                        valid: false,
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    name: 'CreditLimit: credit customer, request blocking option',
+                    storeNumber: 10,
+                    number: 996,
+                    isCashCustomer: false,
+                    limit: {
+                        current: {
+                            amount: 12000,
+                            product: 'METRO Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                            expiry: { amount: 1000, date: '4/2/2020' },
+                        },
+                        wish: {
+                            amount: 0,
+                        },
+                        valid: true,
+                        creditOption: 'CREDITTOCASH',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+                {
+                    onAmountChange: () => null,
+                    blockingInfo: {
+                        isBlocked: true,
+                        blockingReasonText: 'mrc.blockingReason: closed business',
+                        checkoutCheckCodeText: 'mrc.checkoutCheckCode: 30',
+                    },
+                    name: 'has credit, request credit, approved credit (blocked)',
+                    storeNumber: 10,
+                    number: 98,
+                    isCashCustomer: false,
+                    limit: {
+                        current: {
+                            amount: 12000,
+                            product: 'METRO Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                            expiry: { amount: 1000, date: '4/2/2020' },
+                        },
+                        new: {
+                            amount: 30000,
+                            product: 'METRO Cash',
+                            period: '12',
+                            debitType: 'Basislastschriftmandat',
+                            expiry: { amount: 1000, date: '4/2/2020' },
+                        },
+                        valid: true,
+                        creditOption: 'NEWCREDIT',
+                    },
+                    availablePayments: [
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.12',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Basislastschriftmandat',
+                        },
+                        {
+                            creditProduct: 'mrc.payment.METRO_Cash',
+                            creditPeriod: 'mrc.payment.32',
+                            debitType: 'mrc.payment.Firmenlastschriftmandat',
+                        },
+                    ],
+                },
+            ]}
+            dateFormat={'dd.MM.yyyy'}
+            selectedGroupAction={'NONE'}
+            canBlock={false}
+            canCorrect={false}
             handleChangeGroupAction={() => null}
         />
     ))
@@ -19261,6 +20484,8 @@ storiesOf('CreditDataTab', module)
             ]}
             dateFormat={'dd.MM.yyyy'}
             selectedGroupAction={'HARDBLOCK'}
+            canBlock={true}
+            canCorrect={true}
             handleChangeGroupAction={() => null}
         />
     ))
@@ -19826,6 +21051,8 @@ storiesOf('CreditDataTab', module)
             dateFormat={'dd.MM.yyyy'}
             selectedGroupAction={'NONE'}
             handleChangeGroupAction={() => null}
+            canBlock={true}
+            canCorrect={true}
             activated={true}
         />
     ));

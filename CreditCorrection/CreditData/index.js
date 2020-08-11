@@ -17,7 +17,7 @@ export default class CreditData extends Component {
         this.props.registerCallbackBlocking(this.props.requestedItem.id, this.handleSiblingsBlocking.bind(this));
     }
 
-    /**
+    /**x
      * produce state from props
      * @param {*} props
      */

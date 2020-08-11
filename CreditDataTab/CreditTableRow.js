@@ -101,5 +101,7 @@ CreditTableRow.propTypes = {
         .isRequired,
     selectedGroupAction: PropTypes.string,
     activated: PropTypes.bool,
+    canCorrect: PropTypes.bool, // creditcorrection
+    canBlock: PropTypes.bool, // creditcorrection
     isPrepaymentRequest: PropTypes.bool,
 };

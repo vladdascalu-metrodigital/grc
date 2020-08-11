@@ -14,7 +14,17 @@ export default class CreditCorrectionGroupActions extends Component {
     }
 
     render() {
-        let { groupActions, activated, selectedGroupAction, onChange, customers, disabled, translations } = this.props;
+        let {
+            groupActions,
+            activated,
+            selectedGroupAction,
+            onChange,
+            customers,
+            disabled,
+            canCorrect,
+            canBlock,
+            translations,
+        } = this.props;
         const ts = translations;
         const isAllCashCustomerGroup = Object.values(customers).every((item) => item.isCashCustomer === true);
         return (
@@ -31,7 +41,11 @@ export default class CreditCorrectionGroupActions extends Component {
                                     onChange('NONE');
                                 }
                             }}
-                            disabled={disabled || (activated === true && selectedGroupAction !== 'NONE')}
+                            disabled={
+                                disabled ||
+                                (activated === true && selectedGroupAction !== 'NONE') ||
+                                (!canBlock && !canCorrect)
+                            }
                         />
                         {isAllCashCustomerGroup || _.isNil(groupActions)
                             ? null
@@ -45,7 +59,9 @@ export default class CreditCorrectionGroupActions extends Component {
                                               onChange(ga.id);
                                           }
                                       }}
-                                      disabled={disabled || (activated === true && selectedGroupAction !== ga.id)}
+                                      disabled={
+                                          disabled || (activated === true && selectedGroupAction !== ga.id) || !canBlock
+                                      }
                                   />
                               ))}
                     </Grid>
