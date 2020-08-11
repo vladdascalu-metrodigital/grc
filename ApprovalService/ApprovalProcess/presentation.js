@@ -53,7 +53,6 @@ import { dataForPrepaymentWithPrefix } from '../../CreditDataTab/creditDataTabUt
 const SENT_BACK = 'SENT_BACK';
 const INFO_PROVIDED = 'INFO_PROVIDED';
 const MRC_SYSTEM = 'MRC';
-const TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES = ['DE'];
 
 export class ApprovalProcessPresentation extends Component {
     FILE_TYPES = [''];
@@ -1058,9 +1057,7 @@ export class ApprovalProcessPresentation extends Component {
         } else {
             return (
                 <TabList>
-                    {TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES.includes(process.country) ? (
-                        <Tab>{lookup('mrc.topmanagement.title')}</Tab>
-                    ) : null}
+                    {process.topManagementTabEnabled ? <Tab>{lookup('mrc.topmanagement.title')}</Tab> : null}
                     <Tab key="1">{lookup('mrc.customerdata.title')}</Tab>
                     <Tab key="2">{lookup('mrc.creditdata.title')}</Tab>
                     <Tab key="3">{lookup('mrc.sales.title')}</Tab>
@@ -1085,7 +1082,7 @@ export class ApprovalProcessPresentation extends Component {
             ];
         } else {
             return [
-                TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES.includes(process.country) ? (
+                process.topManagementTabEnabled ? (
                     <ErrorHandledTabPanel key="5">
                         {this.management(process, currency, l12mTurnover)}
                     </ErrorHandledTabPanel>
@@ -1251,9 +1248,7 @@ export class ApprovalProcessPresentation extends Component {
         const process = this.props.process.data || {};
         const isContracting = util.isContractingStep(this.state.currentStepType);
         const inTopManagmentTab =
-            this.state.selectedTabIndex === 0 &&
-            TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES.includes(process.country) &&
-            !isContracting;
+            this.state.selectedTabIndex === 0 && process.topManagementTabEnabled && !isContracting;
 
         const allCreditDataValid =
             _.get(process, 'approvalItems') && process.approvalItems.every((item) => this.creditDataValid(item));
@@ -1457,7 +1452,7 @@ export class ApprovalProcessPresentation extends Component {
         if (util.isContractingStep(this.state.currentStepType)) {
             defaultTabIndex = 3;
         } else if (process.strategyDefaultTabIndex && !isTopManager) {
-            if (TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES.includes(process.country)) {
+            if (process.topManagementTabEnabled) {
                 defaultTabIndex = 6;
             } else {
                 defaultTabIndex = 5;
@@ -1494,7 +1489,7 @@ export class ApprovalProcessPresentation extends Component {
                     </Tabs>
                 ) : (
                     <Accordion>
-                        {TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES.includes(process.country) ? (
+                        {process.topManagementTabEnabled ? (
                             <Collapsible trigger={lookup('mrc.topmanagement.title')}>
                                 {this.management(process, currency, l12mTurnover)}
                             </Collapsible>

@@ -27,8 +27,6 @@ import * as util from '../../ApprovalService/ApprovalProcess/util';
 import { createBlockingInfo } from '../../Util/blockingInfoUtils';
 import { dataForPrepayment, dataForPrepaymentWithPrefix } from '../../CreditDataTab/creditDataTabUtil';
 
-const TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES = ['DE'];
-
 export default class HistoryDetailsPresentation extends Component {
     FILE_TYPES = [''];
     constructor(props) {
@@ -86,7 +84,7 @@ export default class HistoryDetailsPresentation extends Component {
     }
 
     desktopView(params) {
-        const startTabIndex = TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES.includes(params.countryCode) ? 2 : 1;
+        const startTabIndex = params.topManagementTabEnabled ? 2 : 1;
         const isNotCreditCorrectionRequest =
             params === undefined ||
             params.requestStatus === undefined ||
@@ -95,9 +93,7 @@ export default class HistoryDetailsPresentation extends Component {
         return (
             <Tabs forceRenderTabPanel={true} defaultIndex={startTabIndex}>
                 <TabList>
-                    {TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES.includes(params.countryCode) ? (
-                        <Tab>{lookup('mrc.topmanagement.title')}</Tab>
-                    ) : null}
+                    {params.topManagementTabEnabled ? <Tab>{lookup('mrc.topmanagement.title')}</Tab> : null}
                     <Tab>{lookup('mrc.customerdetails.title')}</Tab>
                     <Tab>{lookup('mrc.creditdetails.title')}</Tab>
                     {isNotCreditCorrectionRequest && !isPrepayment ? (
@@ -112,7 +108,7 @@ export default class HistoryDetailsPresentation extends Component {
                     <Tab>{lookup('mrc.attachments.title')}</Tab>
                     <Tab>{lookup('mrc.audittrail.title')}</Tab>
                 </TabList>
-                {TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES.includes(params.countryCode) ? (
+                {params.topManagementTabEnabled ? (
                     <ErrorHandledTabPanel>
                         <Management
                             requestData={params.requestData}
@@ -201,7 +197,7 @@ export default class HistoryDetailsPresentation extends Component {
         const isPrepayment = _.get(params, 'requestStatus.isPrepayment');
         return (
             <Accordion>
-                {TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES.includes(params.countryCode) ? (
+                {params.topManagementTabEnabled ? (
                     <Collapsible trigger={lookup('mrc.topmanagement.title')}>
                         <Management
                             requestData={params.requestData}
@@ -356,6 +352,7 @@ export default class HistoryDetailsPresentation extends Component {
             additionalFields: this.props.additionalFields,
             selectedCreditProgram: this.props.selectedCreditProgram,
             activated: this.props.activated,
+            topManagementTabEnabled: this.props.topManagementTabEnabled,
         };
 
         return (
@@ -592,4 +589,5 @@ HistoryDetailsPresentation.propTypes = {
     countriesWithDifferentBlockingCodes: PropTypes.array,
     selectedCreditProgram: PropTypes.string,
     activated: PropTypes.bool,
+    topManagementTabEnabled: PropTypes.bool,
 };
