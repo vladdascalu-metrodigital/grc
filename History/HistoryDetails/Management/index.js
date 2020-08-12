@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import moment from 'moment';
 import * as _ from 'lodash';
-import { lookup } from '../../../Util/translations';
+import { lookup, numberDependentLookup } from '../../../Util/translations';
 
 import ColoredBox from '../../../Layout/ColoredBox';
 // import Recommendation from '../../../Recommendation';
@@ -228,13 +228,13 @@ export default class Management extends Component {
                     <Layout type={LAYOUT_TYPES.COL_2}>
                         <TextBox
                             header={lookup('mrc.topmanagement.registeredsince')}
-                            suffix={lookup('mrc.customerdetails.label.years')}
+                            suffix={numberDependentLookup('mrc.customerdetails.label.year')}
                         >
                             <Text size={'10'}>{yearDiffFromNow(customerData.registrationDate)}</Text>
                         </TextBox>
                         <TextBox
                             header={lookup('mrc.customerdetails.fields.founded')}
-                            suffix={lookup('mrc.customerdetails.label.years')}
+                            suffix={numberDependentLookup('mrc.customerdetails.label.year')}
                         >
                             <Text size={'10'}>{yearDiffFromNow(customerData.companyFoundationDate)}</Text>
                         </TextBox>

@@ -38,7 +38,12 @@ export default class Precheck extends Component {
                 <div className="mrc-icon checkmark">
                     <img width="24" height="24" src={CheckmarkIcon} />
                 </div>
-                <p>{lookup('strategy.init.checks.successfulChecks').replace('%s', successfulPrecheckedCustomers)}</p>
+                <p>
+                    {numberDependentLookup('strategy.init.checks.successfulCheck').replace(
+                        '%s',
+                        successfulPrecheckedCustomers
+                    )}
+                </p>
             </div>
         );
     }
@@ -52,7 +57,7 @@ export default class Precheck extends Component {
                     <img width="24" height="24" src={ErrorIcon} />
                 </div>
                 <p>
-                    {numberDependentLookup(data.precheckErrors.length, 'strategy.init.checks.errorChecks').replace(
+                    {numberDependentLookup(data.precheckErrors.length, 'strategy.init.checks.errorCheck').replace(
                         '%s',
                         data.precheckErrors.length
                     )}

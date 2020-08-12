@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { lookup } from '../../Util/translations';
+import { lookup, numberDependentLookup } from '../../Util/translations';
 import Recommendations from '../../Recommendations';
 import ColoredBox from '../../Layout/ColoredBox';
 import Layout, { LAYOUT_TYPES } from '../../Layout';
@@ -191,13 +191,13 @@ export default class Management extends Component {
                     <Layout type={LAYOUT_TYPES.COL_2}>
                         <TextBox
                             header={lookup('mrc.customerdetails.fields.registration')}
-                            suffix={lookup('mrc.customerdetails.label.years')}
+                            suffix={numberDependentLookup('mrc.customerdetails.label.year')}
                         >
                             <Text size={'10'}>{yearDiffFromNow(customerData.registrationDate)}</Text>
                         </TextBox>
                         <TextBox
                             header={lookup('mrc.customerdetails.fields.founded')}
-                            suffix={lookup('mrc.customerdetails.label.years')}
+                            suffix={numberDependentLookup('mrc.customerdetails.label.year')}
                         >
                             <Text size={'10'}>{yearDiffFromNow(customerData.companyFoundationDate)}</Text>
                         </TextBox>
