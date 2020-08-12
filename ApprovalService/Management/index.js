@@ -175,6 +175,8 @@ export default class Management extends Component {
                 </div>
             );
         }
+        let yearsSinceRegistrationDate = yearDiffFromNow(customerData.registrationDate);
+        let yearsSinceFoundationDate = yearDiffFromNow(customerData.companyFoundationDate);
         return (
             <div className="mrc-management-page">
                 <Layout type={LAYOUT_TYPES.COL_2_TABLET}>
@@ -191,15 +193,15 @@ export default class Management extends Component {
                     <Layout type={LAYOUT_TYPES.COL_2}>
                         <TextBox
                             header={lookup('mrc.customerdetails.fields.registration')}
-                            suffix={numberDependentLookup('mrc.customerdetails.label.year')}
+                            suffix={numberDependentLookup(yearsSinceRegistrationDate, 'mrc.customerdetails.label.year')}
                         >
-                            <Text size={'10'}>{yearDiffFromNow(customerData.registrationDate)}</Text>
+                            <Text size={'10'}>{yearsSinceRegistrationDate}</Text>
                         </TextBox>
                         <TextBox
                             header={lookup('mrc.customerdetails.fields.founded')}
-                            suffix={numberDependentLookup('mrc.customerdetails.label.year')}
+                            suffix={numberDependentLookup(yearsSinceFoundationDate, 'mrc.customerdetails.label.year')}
                         >
-                            <Text size={'10'}>{yearDiffFromNow(customerData.companyFoundationDate)}</Text>
+                            <Text size={'10'}>{yearsSinceFoundationDate}</Text>
                         </TextBox>
                     </Layout>
                 </Layout>
