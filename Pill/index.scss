@@ -1,0 +1,23 @@
+@import '../lib/scss/colors';
+@import '../lib/scss/variables';
+
+.mrc-ui-pill {
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 1em;
+  font-size: .75em;
+  font-weight: bold;
+  padding: .125em .75em;
+}
+
+.mrc-ui-pill-danger {
+  background-color: $color-palette-red-tint-90;
+  border-color: $color-palette-red-tint-20;
+  color: $color-palette-red-tint-20;
+}
+
+.mrc-ui-pill-success {
+  background-color: $color-palette-green-tint-90;
+  border-color: $color-palette-green-shade-20;
+  color: $color-palette-green-shade-20;
+}
