@@ -7,17 +7,18 @@ import Select from '../Select';
 
 import ArrowLeftIcon from '../icons/ArrowLeftIcon';
 import BusinessIcon from '../icons/BusinessIcon';
+import CalendarIcon from '../icons/CalendarIcon';
 import CheckmarkFilledIcon from '../icons/CheckmarkFilledIcon';
 import CheckSmallFilledIcon from '../icons/CheckSmallFilledIcon';
 import ChevronRightIcon from '../icons/ChevronRightIcon';
 import ChevronRightSmallIcon from '../icons/ChevronRightSmallIcon';
+import MoreIcon from '../icons/MoreIcon';
+import PrepaymentIcon from '../icons/PrepaymentIcon';
 import ProfileIcon from '../icons/ProfileIcon';
-import WarningSmallFilledIcon from '../icons/WarningSmallFilledIcon';
 import SearchIcon from '../icons/SearchIcon';
 import SearchCircledIcon from '../icons/SearchCircledIcon';
 import SelectIcon from '../icons/SelectIcon';
-import CalendarIcon from '../icons/CalendarIcon';
-import PrepaymentIcon from '../icons/PrepaymentIcon';
+import WarningSmallFilledIcon from '../icons/WarningSmallFilledIcon';
 
 storiesOf('Fundamentals/Icons', module)
     .add('all icons', () => {
@@ -33,17 +34,18 @@ storiesOf('Fundamentals/Icons', module)
 
                     <ArrowLeftIcon color={color} />
                     <BusinessIcon color={color} />
+                    <CalendarIcon color={color} />
                     <CheckmarkFilledIcon color={color} />
                     <CheckSmallFilledIcon color={color} />
                     <ChevronRightIcon color={color} />
                     <ChevronRightSmallIcon color={color} />
+                    <MoreIcon color={color} />
+                    <PrepaymentIcon color={color} />
                     <ProfileIcon color={color} />
                     <SearchCircledIcon color={color} />
                     <SearchIcon color={color} />
                     <SelectIcon color={color} />
                     <WarningSmallFilledIcon color={color} />
-                    <CalendarIcon color={color} />
-                    <PrepaymentIcon color={color} />
                 </Grid>
             </MainContent>
         );
