@@ -73,7 +73,7 @@ export default class SearchResult extends Component {
     }
 
     buildDisplayVatSpecNumber(item) {
-        return this.buildDisplayVatNumber(item, 'vatSpecNumber', 'VAT');
+        return this.buildDisplayVatNumber(item, 'vatSpecNumber', lookup('vat'));
     }
 
     buildDisplayVatEuNumber(item) {
