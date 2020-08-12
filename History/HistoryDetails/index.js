@@ -91,6 +91,7 @@ export default class HistoryDetailsPresentation extends Component {
             params === undefined ||
             params.requestStatus === undefined ||
             params.requestStatus.requestType !== 'CREDIT_CORRECTION';
+        const isPrepayment = _.get(params, 'requestStatus.isPrepayment');
         return (
             <Tabs forceRenderTabPanel={true} defaultIndex={startTabIndex}>
                 <TabList>
@@ -99,7 +100,7 @@ export default class HistoryDetailsPresentation extends Component {
                     ) : null}
                     <Tab>{lookup('mrc.customerdetails.title')}</Tab>
                     <Tab>{lookup('mrc.creditdetails.title')}</Tab>
-                    {isNotCreditCorrectionRequest ? (
+                    {isNotCreditCorrectionRequest && !isPrepayment ? (
                         <React.Fragment>
                             <Tab>{lookup('mrc.sales.title')}</Tab>
                             <Tab>{lookup('mrc.payments.title')}</Tab>
@@ -133,7 +134,7 @@ export default class HistoryDetailsPresentation extends Component {
                         <CreditDataTab {...createCreditDataProps(params)} />
                     </Accordion>
                 </ErrorHandledTabPanel>
-                {isNotCreditCorrectionRequest ? (
+                {isNotCreditCorrectionRequest && !isPrepayment ? (
                     <React.Fragment>
                         <ErrorHandledTabPanel>
                             <Sales salesOverviews={params.salesOverviews} />
@@ -197,6 +198,7 @@ export default class HistoryDetailsPresentation extends Component {
             params === undefined ||
             params.requestStatus === undefined ||
             params.requestStatus.requestType !== 'CREDIT_CORRECTION';
+        const isPrepayment = _.get(params, 'requestStatus.isPrepayment');
         return (
             <Accordion>
                 {TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES.includes(params.countryCode) ? (
@@ -218,7 +220,7 @@ export default class HistoryDetailsPresentation extends Component {
                 <Collapsible trigger={lookup('mrc.creditdetails.title')}>
                     <CreditDataTab {...createCreditDataProps(params)} />
                 </Collapsible>
-                {isNotCreditCorrectionRequest ? (
+                {isNotCreditCorrectionRequest && !isPrepayment ? (
                     <React.Fragment>
                         <Collapsible trigger={lookup('mrc.sales.title')}>
                             <Sales salesOverviews={params.salesOverviews} />
