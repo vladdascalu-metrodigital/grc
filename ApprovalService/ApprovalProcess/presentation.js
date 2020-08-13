@@ -111,9 +111,6 @@ export class ApprovalProcessPresentation extends Component {
 
     isTopManagementEnabled() {
         const { topManagementTabEnabledCountries, process } = this.props;
-        if (_.isNil(topManagementTabEnabledCountries)) {
-            return false;
-        }
         return topManagementTabEnabledCountries.includes(_.get(process, 'data.country'));
     }
 
@@ -1085,35 +1082,35 @@ export class ApprovalProcessPresentation extends Component {
     tabContents(process, currency, l12mTurnover, customerData, creditData) {
         if (util.isContractingStep(this.state.currentStepType)) {
             return [
-                <ErrorHandledTabPanel key="1">{customerData}</ErrorHandledTabPanel>,
-                <ErrorHandledTabPanel key="2">{creditData}</ErrorHandledTabPanel>,
-                <ErrorHandledTabPanel key="3">{this.commentsPanel()}</ErrorHandledTabPanel>,
-                <ErrorHandledTabPanel key="4">{this.attachmentsPanel()}</ErrorHandledTabPanel>,
+                <ErrorHandledTabPanel key="customer">{customerData}</ErrorHandledTabPanel>,
+                <ErrorHandledTabPanel key="credit">{creditData}</ErrorHandledTabPanel>,
+                <ErrorHandledTabPanel key="comment">{this.commentsPanel()}</ErrorHandledTabPanel>,
+                <ErrorHandledTabPanel key="attachment">{this.attachmentsPanel()}</ErrorHandledTabPanel>,
             ];
         } else {
             return [
                 this.isTopManagementEnabled() ? (
-                    <ErrorHandledTabPanel key="5">
+                    <ErrorHandledTabPanel key="management">
                         {this.management(process, currency, l12mTurnover)}
                     </ErrorHandledTabPanel>
                 ) : null,
-                <ErrorHandledTabPanel key="6">{customerData}</ErrorHandledTabPanel>,
-                <ErrorHandledTabPanel key="7">{creditData}</ErrorHandledTabPanel>,
-                <ErrorHandledTabPanel key="8">
+                <ErrorHandledTabPanel key="customer">{customerData}</ErrorHandledTabPanel>,
+                <ErrorHandledTabPanel key="credit">{creditData}</ErrorHandledTabPanel>,
+                <ErrorHandledTabPanel key="sales">
                     <Sales mdwData={this.state.mdwData} />
                 </ErrorHandledTabPanel>,
-                <ErrorHandledTabPanel key="9">{this.scoringPanel()}</ErrorHandledTabPanel>,
-                <ErrorHandledTabPanel key="10">{this.paymentsPanel()}</ErrorHandledTabPanel>,
+                <ErrorHandledTabPanel key="scoring">{this.scoringPanel()}</ErrorHandledTabPanel>,
+                <ErrorHandledTabPanel key="payments">{this.paymentsPanel()}</ErrorHandledTabPanel>,
                 process.reviewStrategy ? (
-                    <ErrorHandledTabPanel key="foo">{this.strategyPanel()}</ErrorHandledTabPanel>
+                    <ErrorHandledTabPanel key="strat">{this.strategyPanel()}</ErrorHandledTabPanel>
                 ) : null,
-                <ErrorHandledTabPanel key="11">{this.commentsPanel()}</ErrorHandledTabPanel>,
-                <ErrorHandledTabPanel key="12">
+                <ErrorHandledTabPanel key="comment">{this.commentsPanel()}</ErrorHandledTabPanel>,
+                <ErrorHandledTabPanel key="attachment">
                     {this.createCollateralsRetryBlock()}
                     {this.attachmentsPanel()}
                     {this.historicCollateralBlock()}
                 </ErrorHandledTabPanel>,
-                <ErrorHandledTabPanel key="13">
+                <ErrorHandledTabPanel key="audittrail">
                     <AuditTrailPresentation
                         auditTrail={process.auditTrail}
                         pendingApprovalPositions={process.pendingApprovalPositions}
@@ -1440,7 +1437,7 @@ export class ApprovalProcessPresentation extends Component {
 
         const process = this.props.process.data;
 
-        if (process === null) {
+        if (process === null || !_.isArray(this.props.topManagementTabEnabledCountries)) {
             return null;
         }
 
