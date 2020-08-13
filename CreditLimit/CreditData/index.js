@@ -10,6 +10,7 @@ import CalendarIcon from '../../icons/calendar.svg';
 import EditIcon from '../../icons/edit.svg';
 import ChevronDownIcon from '../../icons/chevron-down.svg';
 import MrcNumber from '../../MrcNumber';
+import Moment from 'react-moment';
 
 export default class CreditData extends Component {
     NULL_OPTION = [<option key="null" />];
@@ -247,6 +248,7 @@ export default class CreditData extends Component {
                                     dateFormat={this.props.dateFormat}
                                     placeholderText={this.props.dateFormat}
                                     id={'datepicker-' + this.props.requestedItem.id}
+                                    locale={Moment.globalLocale}
                                 />
                                 <img
                                     htmlFor={'datepicker-' + this.props.requestedItem.id}

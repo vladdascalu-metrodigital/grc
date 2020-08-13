@@ -13,6 +13,7 @@ import { translatePaymentIfNeeded, getPaymentDataByType } from '../Util/creditDa
 
 import * as _ from 'lodash';
 import { isApproval } from './creditDataTabUtil';
+import Moment from 'react-moment';
 
 export default class LimitSection extends Component {
     constructor(props) {
@@ -184,6 +185,7 @@ export default class LimitSection extends Component {
                                             placeholderText={dateFormat}
                                             id={'datepicker-' + customer.storeNumber + customer.number}
                                             disabled={readOnly}
+                                            locale={Moment.globalLocale}
                                         />
                                     </CheckCard>
                                     {/* TODO: tbd in future
@@ -476,6 +478,7 @@ export default class LimitSection extends Component {
                                             placeholderText={dateFormat}
                                             id={'datepicker-' + customer.storeNumber + customer.number}
                                             disabled={readOnly}
+                                            locale={Moment.globalLocale}
                                         />
                                     </CheckCard>
                                     {/* TODO: tbd in future
@@ -567,6 +570,7 @@ export default class LimitSection extends Component {
                                 id={'datepicker-' + customer.storeNumber + customer.number}
                                 disabled={!editableLimitExpiryInContracting}
                                 required={true}
+                                locale={Moment.globalLocale}
                             />
                         </CheckCard>
                     </Grid>
