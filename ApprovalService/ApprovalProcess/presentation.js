@@ -109,6 +109,14 @@ export class ApprovalProcessPresentation extends Component {
         this.onReviewReasonSave = this.onReviewReasonSave.bind(this);
     }
 
+    isTopManagementEnabled() {
+        const { topManagementTabEnabledCountries, process } = this.props;
+        if (_.isNil(topManagementTabEnabledCountries)) {
+            return false;
+        }
+        return topManagementTabEnabledCountries.includes(_.get(process, 'data.country'));
+    }
+
     onReviewReasonSave() {
         const process = this.props.process.data || null;
         const newReviewReason = this.state.newReviewReason;
@@ -1057,7 +1065,7 @@ export class ApprovalProcessPresentation extends Component {
         } else {
             return (
                 <TabList>
-                    {this.props.topManagementTabEnabled ? <Tab>{lookup('mrc.topmanagement.title')}</Tab> : null}
+                    {this.isTopManagementEnabled() ? <Tab>{lookup('mrc.topmanagement.title')}</Tab> : null}
                     <Tab key="1">{lookup('mrc.customerdata.title')}</Tab>
                     <Tab key="2">{lookup('mrc.creditdata.title')}</Tab>
                     <Tab key="3">{lookup('mrc.sales.title')}</Tab>
@@ -1082,7 +1090,7 @@ export class ApprovalProcessPresentation extends Component {
             ];
         } else {
             return [
-                this.props.topManagementTabEnabled ? (
+                this.isTopManagementEnabled() ? (
                     <ErrorHandledTabPanel key="5">
                         {this.management(process, currency, l12mTurnover)}
                     </ErrorHandledTabPanel>
@@ -1247,8 +1255,7 @@ export class ApprovalProcessPresentation extends Component {
     buttons(groupLimit, currency) {
         const process = this.props.process.data || {};
         const isContracting = util.isContractingStep(this.state.currentStepType);
-        const inTopManagmentTab =
-            this.state.selectedTabIndex === 0 && this.props.topManagementTabEnabled && !isContracting;
+        const inTopManagmentTab = this.state.selectedTabIndex === 0 && this.isTopManagementEnabled() && !isContracting;
 
         const allCreditDataValid =
             _.get(process, 'approvalItems') && process.approvalItems.every((item) => this.creditDataValid(item));
@@ -1435,6 +1442,8 @@ export class ApprovalProcessPresentation extends Component {
             return null;
         }
 
+        console.log(this.props);
+
         const approveButtonGroupLimit = this.newGroupLimit(process.approvalItems);
 
         const creditData = this.createCreditTab(
@@ -1452,7 +1461,7 @@ export class ApprovalProcessPresentation extends Component {
         if (util.isContractingStep(this.state.currentStepType)) {
             defaultTabIndex = 3;
         } else if (process.strategyDefaultTabIndex && !isTopManager) {
-            if (this.props.topManagementTabEnabled) {
+            if (this.isTopManagementEnabled()) {
                 defaultTabIndex = 6;
             } else {
                 defaultTabIndex = 5;
@@ -1489,7 +1498,7 @@ export class ApprovalProcessPresentation extends Component {
                     </Tabs>
                 ) : (
                     <Accordion>
-                        {this.props.topManagementTabEnabled ? (
+                        {this.isTopManagementEnabled() ? (
                             <Collapsible trigger={lookup('mrc.topmanagement.title')}>
                                 {this.management(process, currency, l12mTurnover)}
                             </Collapsible>
@@ -1582,7 +1591,7 @@ ApprovalProcessPresentation.propTypes = {
     setLastCreditData: PropTypes.func,
     getValidMccScore: PropTypes.func,
     countriesWithDifferentBlockingCodes: PropTypes.array,
-    topManagementTabEnabled: PropTypes.bool,
+    topManagementTabEnabledCountries: PropTypes.array,
     setCreditDataWithType: PropTypes.func,
     setCreditDataAndExpiry: PropTypes.func,
     setCreditDataWithCreditOption: PropTypes.func,
