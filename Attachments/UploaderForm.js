@@ -12,6 +12,7 @@ import AttachmentSpec from './spec.json';
 import * as _ from 'lodash';
 
 import { List, Map } from 'immutable';
+import Moment from 'react-moment';
 
 const MAX_FILE_LENGTH = 50;
 
@@ -189,6 +190,7 @@ export default class UploaderForm extends Component {
                     dateFormat={'dd.MM.yyyy'}
                     placeholderText={'dd.MM.yyyy'}
                     id={id}
+                    locale={Moment.globalLocale}
                 />
             </div>
         );
