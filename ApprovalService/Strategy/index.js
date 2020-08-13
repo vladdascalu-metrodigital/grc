@@ -94,13 +94,15 @@ export default class Strategy extends Component {
         };
 
         const makeValue = (value, indicator) => {
-            // descriptors with values 0 <= x <= 1 describing a percentage
-            // value
-            const percentageDescriptors = [
+            // descriptors usualy within 0 <= x <= 1 are fractions describing a
+            // percentage value
+            const percentageFractionDescriptors = [
                 'strategy.keyindicators.disposalrate',
                 'strategy.keyindicators.utilizationrate',
-                'strategy.keyindicators.totalIncome',
             ];
+            // descriptors usually within 0 <= x <= 100 describing a percentage
+            // value
+            const percentageDescriptors = ['strategy.keyindicators.totalIncome'];
             const limitDescriptors = [
                 'strategy.keyindicators.internalRecommendedLimit',
                 'strategy.keyindicators.requestedGroupLimit',
@@ -112,13 +114,15 @@ export default class Strategy extends Component {
                 'strategy.keyindicators.externalScore.schufa_b2b.recommendedLimit',
                 'strategy.keyindicators.externalScore.schufa_b2c.recommendedLimit',
             ];
+            const isFraction = percentageFractionDescriptors.includes(indicator.original.indicatorName);
+            const isPercentage = percentageDescriptors.includes(indicator.original.indicatorName);
             if (isNaN(value)) {
                 return lookup(value);
-            } else if (percentageDescriptors.includes(indicator.original.indicatorName)) {
+            } else if (isPercentage || isFraction) {
                 return _.isNaN(parseFloat(value)) ? (
                     lookup(value)
                 ) : (
-                    <MrcNumber isPercentage>{100 * parseFloat(value)}</MrcNumber>
+                    <MrcNumber isPercentage>{(isFraction ? 100 : 1) * parseFloat(value)}</MrcNumber>
                 );
             } else if (limitDescriptors.includes(indicator.original.indicatorName)) {
                 return (

@@ -71,7 +71,7 @@ export default class ExpandedRow extends Component {
             >
                 <CreditTableRowShadow />
             </Table.R>,
-            <React.Fragment>
+            <React.Fragment key="main">
                 <Table.R key={'form'} type="form">
                     <Table.D colSpan="8">
                         {this.createActivationResultSection(parent, activated, customer, ts)}

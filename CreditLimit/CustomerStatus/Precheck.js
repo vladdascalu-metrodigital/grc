@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { lookup } from '../../Util/translations';
+import { lookup, numberDependentLookup } from '../../Util/translations';
 import CheckmarkIcon from '../../icons/checkmark.svg';
 import ErrorIcon from '../../icons/close-dark.svg';
 import './index.scss';
@@ -20,7 +20,12 @@ export default class Precheck extends Component {
                 <div className="mrc-icon checkmark">
                     <img width="24" height="24" src={CheckmarkIcon} />
                 </div>
-                <p>{lookup('strategy.init.checks.successfulChecks').replace('%s', successfulPrecheckedCustomers)}</p>
+                <p>
+                    {numberDependentLookup(
+                        successfulPrecheckedCustomers,
+                        'strategy.init.checks.successfulCheck'
+                    ).replace('%s', successfulPrecheckedCustomers)}
+                </p>
             </div>
         );
     }
@@ -32,7 +37,12 @@ export default class Precheck extends Component {
                 <div className="mrc-icon error">
                     <img width="24" height="24" src={ErrorIcon} />
                 </div>
-                <p>{lookup('strategy.init.checks.errorChecks').replace('%s', data.precheckErrors.length)}</p>
+                <p>
+                    {numberDependentLookup(data.precheckErrors.length, 'strategy.init.checks.errorCheck').replace(
+                        '%s',
+                        data.precheckErrors.length
+                    )}
+                </p>
             </div>
         );
     }
@@ -43,7 +53,7 @@ export default class Precheck extends Component {
             let fieldTranslation = error.field ? lookup(error.field) : '';
             let customers = [];
             if (error.reason !== undefined && error.reason === 'strategy.init.failed.uniformtype') {
-                error.customers.forEach(customer => {
+                error.customers.forEach((customer) => {
                     if (customer.split(':').length > 1) {
                         const errorKey = customer.split(':')[1].trim();
                         const message = lookup(errorKey);

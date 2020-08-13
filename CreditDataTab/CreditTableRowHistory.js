@@ -76,6 +76,7 @@ export default class CreditTableRowHistory extends Component {
                                 name={customer.name}
                                 number={[customer.storeNumber, customer.number].join('/')}
                                 isBlocked={isBlocked}
+                                blockingText={ts.blocked}
                                 isHighlighted
                             />
                         ) : null}
@@ -291,6 +292,7 @@ export default class CreditTableRowHistory extends Component {
                                 name={customer.name}
                                 number={[customer.storeNumber, customer.number].join('/')}
                                 isBlocked={isBlocked}
+                                blockingText={ts.blocked}
                                 isHighlighted
                             />
                         ) : null}
@@ -427,6 +429,7 @@ export default class CreditTableRowHistory extends Component {
                                 name={customer.name}
                                 number={[customer.storeNumber, customer.number].join('/')}
                                 isBlocked={isBlocked}
+                                blockingText={ts.blocked}
                                 isHighlighted
                             />
                         ) : null}

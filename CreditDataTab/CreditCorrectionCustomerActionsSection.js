@@ -185,7 +185,7 @@ export default class CreditCorrectionCustomerActionsSection extends Component {
                                                 disabled={readOnly}
                                             />
                                         </div>
-                                        <MrcCurrencySymbol type="small" />
+                                        <MrcCurrencySymbol country={country} type="small" />
                                     </FlexRow>
                                 </CheckCard>
                             </Grid>

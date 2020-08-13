@@ -27,8 +27,6 @@ import * as util from '../../ApprovalService/ApprovalProcess/util';
 import { createBlockingInfo } from '../../Util/blockingInfoUtils';
 import { dataForPrepayment, dataForPrepaymentWithPrefix } from '../../CreditDataTab/creditDataTabUtil';
 
-const TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES = ['DE'];
-
 export default class HistoryDetailsPresentation extends Component {
     FILE_TYPES = [''];
     constructor(props) {
@@ -86,20 +84,19 @@ export default class HistoryDetailsPresentation extends Component {
     }
 
     desktopView(params) {
-        const startTabIndex = TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES.includes(params.countryCode) ? 2 : 1;
+        const startTabIndex = params.topManagementTabEnabled ? 2 : 1;
         const isNotCreditCorrectionRequest =
             params === undefined ||
             params.requestStatus === undefined ||
             params.requestStatus.requestType !== 'CREDIT_CORRECTION';
+        const isPrepayment = _.get(params, 'requestStatus.isPrepayment');
         return (
             <Tabs forceRenderTabPanel={true} defaultIndex={startTabIndex}>
                 <TabList>
-                    {TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES.includes(params.countryCode) ? (
-                        <Tab>{lookup('mrc.topmanagement.title')}</Tab>
-                    ) : null}
+                    {params.topManagementTabEnabled ? <Tab>{lookup('mrc.topmanagement.title')}</Tab> : null}
                     <Tab>{lookup('mrc.customerdetails.title')}</Tab>
                     <Tab>{lookup('mrc.creditdetails.title')}</Tab>
-                    {isNotCreditCorrectionRequest ? (
+                    {isNotCreditCorrectionRequest && !isPrepayment ? (
                         <React.Fragment>
                             <Tab>{lookup('mrc.sales.title')}</Tab>
                             <Tab>{lookup('mrc.payments.title')}</Tab>
@@ -111,7 +108,7 @@ export default class HistoryDetailsPresentation extends Component {
                     <Tab>{lookup('mrc.attachments.title')}</Tab>
                     <Tab>{lookup('mrc.audittrail.title')}</Tab>
                 </TabList>
-                {TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES.includes(params.countryCode) ? (
+                {params.topManagementTabEnabled ? (
                     <ErrorHandledTabPanel>
                         <Management
                             requestData={params.requestData}
@@ -133,7 +130,7 @@ export default class HistoryDetailsPresentation extends Component {
                         <CreditDataTab {...createCreditDataProps(params)} />
                     </Accordion>
                 </ErrorHandledTabPanel>
-                {isNotCreditCorrectionRequest ? (
+                {isNotCreditCorrectionRequest && !isPrepayment ? (
                     <React.Fragment>
                         <ErrorHandledTabPanel>
                             <Sales salesOverviews={params.salesOverviews} />
@@ -197,9 +194,10 @@ export default class HistoryDetailsPresentation extends Component {
             params === undefined ||
             params.requestStatus === undefined ||
             params.requestStatus.requestType !== 'CREDIT_CORRECTION';
+        const isPrepayment = _.get(params, 'requestStatus.isPrepayment');
         return (
             <Accordion>
-                {TOP_MANAGEMENT_TAB_ENABLED_COUNTRIES.includes(params.countryCode) ? (
+                {params.topManagementTabEnabled ? (
                     <Collapsible trigger={lookup('mrc.topmanagement.title')}>
                         <Management
                             requestData={params.requestData}
@@ -218,7 +216,7 @@ export default class HistoryDetailsPresentation extends Component {
                 <Collapsible trigger={lookup('mrc.creditdetails.title')}>
                     <CreditDataTab {...createCreditDataProps(params)} />
                 </Collapsible>
-                {isNotCreditCorrectionRequest ? (
+                {isNotCreditCorrectionRequest && !isPrepayment ? (
                     <React.Fragment>
                         <Collapsible trigger={lookup('mrc.sales.title')}>
                             <Sales salesOverviews={params.salesOverviews} />
@@ -354,6 +352,7 @@ export default class HistoryDetailsPresentation extends Component {
             additionalFields: this.props.additionalFields,
             selectedCreditProgram: this.props.selectedCreditProgram,
             activated: this.props.activated,
+            topManagementTabEnabled: this.props.topManagementTabEnabled,
         };
 
         return (
@@ -377,6 +376,7 @@ export const createCreditDataProps = (params) => {
         //
         country: params.countryCode,
         parent: 'history',
+        isPrepaymentRequest: isPrepayment,
         groupLimit: {
             exhausted: _.get(params, 'groupLimit.limitExhaustion'),
             old: _.get(params, 'groupLimit.current'),
@@ -589,4 +589,5 @@ HistoryDetailsPresentation.propTypes = {
     countriesWithDifferentBlockingCodes: PropTypes.array,
     selectedCreditProgram: PropTypes.string,
     activated: PropTypes.bool,
+    topManagementTabEnabled: PropTypes.bool,
 };

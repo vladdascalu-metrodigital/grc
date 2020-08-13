@@ -12,6 +12,7 @@ import MrcNumber from '../../MrcNumber';
 import * as util from '../ApprovalProcess/util';
 
 import * as _ from 'lodash';
+import Moment from 'react-moment';
 
 export default class CreditData extends Component {
     NULL_OPTION = [<option key="null" />];
@@ -210,6 +211,7 @@ export default class CreditData extends Component {
                                     dateFormat={this.props.dateFormat}
                                     placeholderText={this.props.dateFormat}
                                     id={'datepicker-' + this.props.approvalItem.id}
+                                    locale={Moment.globalLocale}
                                 />
                                 <img
                                     htmlFor={'datepicker-' + this.props.approvalItem.id}

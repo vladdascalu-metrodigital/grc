@@ -91,6 +91,7 @@ export default class CreditTableRowCreditLimit extends Component {
                                 name={customer.name}
                                 number={[customer.storeNumber, customer.number].join('/')}
                                 isBlocked={isBlocked}
+                                blockingText={ts.blocked}
                                 isHighlighted
                             />
                         ) : null}

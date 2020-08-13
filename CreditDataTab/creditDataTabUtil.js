@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import { translatePaymentIfNeeded } from '../Util/creditDataUtils';
 
 export function isHistory(parent) {
     return parent === 'history';
@@ -60,11 +61,13 @@ export function dataForPrepayment(
 }
 
 export function dataForPrepaymentWithPrefix(limit, paymentAllowanceCd, creditProduct, creditPeriod, debitType) {
+    //TODO: the creditProduct with the prefix can be different from one country to another. Ex. for DE, Bank Transfer
+    // product is UEBERWEISER
     return (
         limit == '0' &&
         paymentAllowanceCd === '3' &&
-        creditProduct === 'mrc.payment.Bank_Transfer' &&
-        creditPeriod === 'mrc.payment.0' &&
+        translatePaymentIfNeeded(creditProduct) === 'mrc.payment.Bank_Transfer' &&
+        translatePaymentIfNeeded(creditPeriod) === 'mrc.payment.0' &&
         (!debitType || _.isNil(debitType) || debitType == '')
     );
 }
