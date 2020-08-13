@@ -1,0 +1,55 @@
+@import '../../lib/scss/colors';
+@import '../../lib/scss/variables';
+@import '../../lib/scss/typography';
+
+.mrc-ui-pageheader {
+  display: grid;
+  grid-template-areas: 
+    "page-title info-area"
+    "tabs       tabs";
+  grid-template-columns: auto max-content;
+  width: 100%;
+  padding: $spacing-small;
+}
+
+.mrc-ui-pageheader-title {
+  grid-area: page-title;
+  align-self: center;
+}
+
+.mrc-ui-pageheader-info {
+  grid-area: info-area;
+  align-self: center;
+
+  > :first-child {
+    display: none; // hidden on small screens // TODO: unhide for table/desktop
+  }
+
+  // > button {
+  //   // TODO: do it
+  // }
+}
+
+.mrc-ui-pageheader-tabs {
+  grid-area: tabs;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mrc-ui-pageheader-more-button {
+  .mrc-ui-icon-svg {
+    font-size: 2rem;
+  }
+  
+  &:hover .mrc-ui-icon-stroke {
+    stroke: $color-interaction;
+  }
+}
+
+@media #{$breakpoint-large} {
+  .mrc-ui-pageheader {
+    grid-template-areas: 
+      "page-title info-area"
+      "tabs       info-area";
+  }
+}

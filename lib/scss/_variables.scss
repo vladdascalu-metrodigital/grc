@@ -1,3 +1,5 @@
+@import './colors';
+
 $spacing-none: 0;
 $spacing-extra-extra-small: .125rem;  //  2px
 $spacing-extra-small: .25rem;         //  4px
@@ -66,6 +68,8 @@ $border-width-none: 0 !default;
 $border-width-thin: 1px !default;
 $border-width-medium: 2px !default;
 $border-width-thick: 4px !default;
+
+$border-style-default: $border-width-thin solid $color-palette-grey-tint-80;
 
 $breakpoint-not-small: 'screen and (min-width: 48em)' !default;
 $breakpoint-medium: 'screen and (min-width: 48em) and (max-width: 60em)' !default;

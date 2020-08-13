@@ -1,0 +1,38 @@
+@import '../../lib/scss/variables';
+@import '../../lib/scss/typography';
+@import '../../lib/scss/colors';
+
+.mrc-ui-hi-request-start {
+  display: grid;
+  grid-template: 
+    'icon label'
+    'icon date';
+  grid-gap: $spacing-small;
+  border-bottom: $border-style-default;
+  padding: $spacing-small $spacing-medium;
+
+  &:first-child {
+    padding-top: 0;
+  }
+}
+
+.mrc-ui-hi-request-start-colstyle {
+  grid-template: 
+    'label  icon        date'
+    /auto   max-content max-content;
+}
+
+.mrc-ui-hi-request-start-label {
+  grid-area: label;
+}
+
+.mrc-ui-hi-request-start-icon {
+  grid-area: icon;
+  align-self: center;
+  position: relative;
+  top: -0.04em;
+}
+
+.mrc-ui-hi-request-start-date {
+  grid-area: date;
+}

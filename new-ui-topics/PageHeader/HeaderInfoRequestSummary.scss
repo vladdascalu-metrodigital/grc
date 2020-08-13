@@ -1,0 +1,46 @@
+@import '../../lib/scss/variables';
+@import '../../lib/scss/typography';
+@import '../../lib/scss/colors';
+
+.mrc-ui-hi-rsummary {
+  display: grid;
+  grid-template: 
+    'phase-label  phase'
+    'staus-label  status'
+    /auto         max-content;
+  grid-gap: $spacing-small;
+  border-bottom: $border-style-default;
+  padding: $spacing-small $spacing-medium;
+
+  &:first-child {
+    padding-top: 0;
+  }
+}
+
+// .mrc-ui-hi-rsummary-colstyle {
+
+// }
+
+// .mrc-ui-hi-rsummary-phase-label {
+
+// }
+
+// .mrc-ui-hi-rsummary-phase {
+
+// }
+
+// .mrc-ui-hi-rsummary-status-label {
+
+// }
+
+// .mrc-ui-hi-rsummary-status {
+
+// }
+
+// .mrc-ui-hi-rsummary-status-value {
+
+// }
+
+// .mrc-ui-hi-rsummary-status-role {
+
+// }

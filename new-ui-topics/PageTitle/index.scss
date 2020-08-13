@@ -1,0 +1,36 @@
+@import '../../lib/scss/colors';
+@import '../../lib/scss/variables';
+@import '../../lib/scss/typography';
+
+.mrc-ui-page-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.mrc-ui-page-title-title {
+  font-size: $font-size-8;
+  color: $color-brand-primary-default;
+  line-height: $line-height-copy;
+}
+
+.mrc-ui-page-title-subtitle {
+
+}
+
+.mrc-ui-page-title-subtitle-customer {
+  font-weight: bold;
+  font-size: $font-size-10;
+  line-height: $line-height-copy;
+}
+
+.mrc-ui-page-title-subtitle-customer-name {
+  color: $color-palette-grey-tint-40;
+  margin-right: $spacing-small;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mrc-ui-page-title-subtitle-customer-id {
+  color: $color-palette-grey-tint-60;
+  margin-right: $spacing-small;
+}
