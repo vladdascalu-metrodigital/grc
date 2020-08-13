@@ -1,0 +1,56 @@
+@import '../lib/scss/colors';
+@import '../lib/scss/typography';
+@import '../lib/scss/variables';
+@import '../lib/scss/shadows';
+
+.mrc-ui-sidescreen {
+  box-shadow: $shadow-modal;
+  display: none;
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  width: 100%;
+  
+  // TODO: maybe another breakpoint
+
+  @media #{$breakpoint-not-small} {
+    min-width: 300px;
+    width: max-content;
+  }
+}
+
+.mrc-ui-sidescreen-left {
+  right: auto;
+  left: 0;
+}
+
+.mrc-ui-sidescreen-shown {
+  display: block;
+}
+
+.mrc-ui-sidescreen-slider {
+
+}
+
+.mrc-ui-sidescreen-header {
+  align-items: center;
+  background-color: $color-contrast-white;
+  border-bottom: 1px solid $color-palette-grey-tint-80;
+  display: flex;
+}
+
+.mrc-ui-sidescreen-title {
+  flex-grow: 1;
+  text-align: center;
+  color: $color-brand-primary-default;
+}
+
+.mrc-ui-sidescreen-close-button {
+
+}
+
+.mrc-ui-sidescreen-content {
+  background-color: $color-contrast-white;
+  padding: $spacing-medium;
+}
