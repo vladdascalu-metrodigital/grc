@@ -1442,8 +1442,6 @@ export class ApprovalProcessPresentation extends Component {
             return null;
         }
 
-        console.log(this.props);
-
         const approveButtonGroupLimit = this.newGroupLimit(process.approvalItems);
 
         const creditData = this.createCreditTab(
