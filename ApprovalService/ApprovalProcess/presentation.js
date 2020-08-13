@@ -1056,25 +1056,27 @@ export class ApprovalProcessPresentation extends Component {
         if (util.isContractingStep(this.state.currentStepType)) {
             return (
                 <TabList>
-                    <Tab key="1">{lookup('mrc.customerdata.title')}</Tab>
-                    <Tab key="2">{lookup('mrc.creditdata.title')}</Tab>
-                    <Tab key="3">{lookup('mrc.comments.title')}</Tab>
-                    <Tab key="4">{lookup('mrc.attachments.title')}</Tab>
+                    <Tab key="customer">{lookup('mrc.customerdata.title')}</Tab>
+                    <Tab key="credit">{lookup('mrc.creditdata.title')}</Tab>
+                    <Tab key="comment">{lookup('mrc.comments.title')}</Tab>
+                    <Tab key="attachment">{lookup('mrc.attachments.title')}</Tab>
                 </TabList>
             );
         } else {
             return (
                 <TabList>
-                    {this.isTopManagementEnabled() ? <Tab>{lookup('mrc.topmanagement.title')}</Tab> : null}
-                    <Tab key="1">{lookup('mrc.customerdata.title')}</Tab>
-                    <Tab key="2">{lookup('mrc.creditdata.title')}</Tab>
-                    <Tab key="3">{lookup('mrc.sales.title')}</Tab>
-                    <Tab key="4">{lookup('mrc.scoring.title')}</Tab>
-                    <Tab key="5">{lookup('mrc.payments.title')}</Tab>
-                    {process.reviewStrategy ? <Tab key="6">{lookup('mrc.strategy.title')}</Tab> : null}
-                    <Tab key="7">{lookup('mrc.comments.title')}</Tab>
-                    <Tab key="8">{lookup('mrc.attachments.title')}</Tab>
-                    <Tab key="9">{lookup('mrc.audittrail.title')}</Tab>
+                    {this.isTopManagementEnabled() ? (
+                        <Tab key="management">{lookup('mrc.topmanagement.title')}</Tab>
+                    ) : null}
+                    <Tab key="customer">{lookup('mrc.customerdata.title')}</Tab>
+                    <Tab key="credit">{lookup('mrc.creditdata.title')}</Tab>
+                    <Tab key="sales">{lookup('mrc.sales.title')}</Tab>
+                    <Tab key="scoring">{lookup('mrc.scoring.title')}</Tab>
+                    <Tab key="payments">{lookup('mrc.payments.title')}</Tab>
+                    {process.reviewStrategy ? <Tab key="strat">{lookup('mrc.strategy.title')}</Tab> : null}
+                    <Tab key="comment">{lookup('mrc.comments.title')}</Tab>
+                    <Tab key="attachment">{lookup('mrc.attachments.title')}</Tab>
+                    <Tab key="audittrail">{lookup('mrc.audittrail.title')}</Tab>
                 </TabList>
             );
         }
