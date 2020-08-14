@@ -4,12 +4,18 @@
 
 .mrc-ui-hi-payment-term {
   display: flex;
-  border-bottom: $border-style-default;
+  
   padding: $spacing-small $spacing-medium;  
 }
 
 .mrc-ui-hi-payment-term-colstyle {
   flex-direction: column;
+  border-bottom: $border-style-default;
+  padding: $spacing-small $spacing-medium;  
+
+  &:first-child {
+    padding-top: 0;
+  }
 }
 
 .mrc-ui-hi-payment-term-title {

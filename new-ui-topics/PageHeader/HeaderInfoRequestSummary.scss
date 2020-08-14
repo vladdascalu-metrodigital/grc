@@ -4,13 +4,13 @@
 
 .mrc-ui-hi-rsummary {
 
-  &:first-child .mrc-ui-hi-rsummary-row:first-child {
-    padding-top: 0;
-  }
 }
 
 .mrc-ui-hi-rsummary-colstyle {
-
+  
+  &:first-child .mrc-ui-hi-rsummary-row:first-child {
+    padding-top: 0;
+  }
 }
 
 .mrc-ui-hi-rsummary-row {

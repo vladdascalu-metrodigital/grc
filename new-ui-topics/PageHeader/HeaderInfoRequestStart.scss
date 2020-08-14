@@ -6,20 +6,21 @@
   display: grid;
   grid-template: 
     'icon label'
-    'icon date';
+    'icon date';  
   grid-gap: $spacing-small;
-  border-bottom: $border-style-default;
-  padding: $spacing-small $spacing-medium;
-
-  &:first-child {
-    padding-top: 0;
-  }
 }
 
 .mrc-ui-hi-request-start-colstyle {
   grid-template: 
     'label  icon        date'
     /auto   max-content max-content;
+  padding: $spacing-small $spacing-medium;
+  grid-gap: $spacing-small;
+  border-bottom: $border-style-default;
+
+  &:first-child {
+    padding-top: 0;
+  }
 }
 
 .mrc-ui-hi-request-start-label {

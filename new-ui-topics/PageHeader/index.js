@@ -30,6 +30,7 @@ export default class PageHeader extends Component {
         let { showAsideInfo } = this.state;
         let headerInfoData = {
             requestStartDate: '2020-04-12',
+            // TODO: put all data here
         };
         return (
             <header className={'mrc-ui-pageheader'}>
@@ -75,4 +76,5 @@ PageHeader.propTypes = {
     customerName: PropTypes.string,
     customerId: PropTypes.string,
     customerStatus: PropTypes.string,
+    // TODO: add all headerInfoData proptypes
 };

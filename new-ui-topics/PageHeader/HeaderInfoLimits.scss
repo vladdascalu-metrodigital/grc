@@ -4,12 +4,17 @@
 
 .mrc-ui-hi-limits {
   display: flex;
-  border-bottom: $border-style-default;
   padding: $spacing-small $spacing-medium;
 }
 
 .mrc-ui-hi-limits-colstyle {
   flex-direction: column;
+  border-bottom: $border-style-default;
+  padding: $spacing-small $spacing-medium;
+
+  &:first-child {
+    padding-top: 0;
+  }
 }
 
 .mrc-ui-hi-limits-type {
