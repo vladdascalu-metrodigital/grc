@@ -92,7 +92,7 @@ export default class ExpandedRow extends Component {
     }
 
     createPrepaymentSection() {
-        const { customer, translations } = this.props;
+        const { customer, country, translations } = this.props;
         const isCashCustomer = customer.isCashCustomer;
         const ts = translations;
         const creditOption = _.get(customer, 'limit.creditOption');
@@ -112,7 +112,7 @@ export default class ExpandedRow extends Component {
                             }
                         }}
                     />
-                    {isCashCustomer || currentAmount == '0' || !currentAmount ? (
+                    {country === 'RU' || isCashCustomer || currentAmount == '0' || !currentAmount ? (
                         <CheckCard
                             key={0}
                             title={ts.prepayment}
