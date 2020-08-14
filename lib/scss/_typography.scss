@@ -74,3 +74,8 @@ $measure-wide: 34em !default;
   line-height: $line-height-title;
 }
 
+@mixin typo-small-caps() {
+  font-weight: bold;
+  font-size: .8125em;
+  text-transform: uppercase;
+}

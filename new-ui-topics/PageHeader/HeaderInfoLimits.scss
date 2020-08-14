@@ -1,0 +1,41 @@
+@import '../../lib/scss/variables';
+@import '../../lib/scss/typography';
+@import '../../lib/scss/colors';
+
+.mrc-ui-hi-limits {
+  display: flex;
+  border-bottom: $border-style-default;
+  padding: $spacing-small $spacing-medium;
+}
+
+.mrc-ui-hi-limits-colstyle {
+  flex-direction: column;
+}
+
+.mrc-ui-hi-limits-type {
+  @include typo-small-caps;
+  color: $color-success;
+}
+
+.mrc-ui-hi-limits-group,
+.mrc-ui-hi-limits-customer {
+  margin-top: $spacing-extra-small;
+  display: grid;
+  grid-template: 
+    'label  icon        number'
+    /auto   max-content max-content;
+  grid-gap: $spacing-small;
+
+  > .mrc-ui-number {
+    grid-area: number;
+  }
+  
+  > span:first-child {
+    grid-area: label;
+  }
+  
+  > svg {
+    grid-area: icon;
+  }
+}
+

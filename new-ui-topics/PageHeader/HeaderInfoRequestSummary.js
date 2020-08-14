@@ -2,10 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-// import MrcDate from '../../MrcDate';
-// import { COLOR as IC, SIZE as IS} from '../../icons/index';
-// import RocketIcon from '../../icons/RocketIcon';
-
 import './HeaderInfoRequestSummary.scss';
 
 export const STATUS = {

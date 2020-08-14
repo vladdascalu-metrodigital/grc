@@ -1,0 +1,36 @@
+@import '../../lib/scss/variables';
+@import '../../lib/scss/typography';
+@import '../../lib/scss/colors';
+
+.mrc-ui-hi-payment-term {
+  display: flex;
+  border-bottom: $border-style-default;
+  padding: $spacing-small $spacing-medium;  
+}
+
+.mrc-ui-hi-payment-term-colstyle {
+  flex-direction: column;
+}
+
+.mrc-ui-hi-payment-term-title {
+  @include typo-small-caps;
+}
+
+.mrc-ui-hi-payment-term-product, 
+.mrc-ui-hi-payment-term-period,
+.mrc-ui-hi-payment-term-mandate {
+  margin-top: $spacing-extra-small;
+  display: grid;
+  grid-template: 
+    'label  value'
+    /auto   max-content;
+  grid-gap: $spacing-small;
+
+  > :first-child {
+    grid-area: label;
+  }
+  
+  > :nth-child(2) {
+    grid-area: value;
+  }
+}

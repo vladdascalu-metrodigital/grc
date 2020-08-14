@@ -3,12 +3,6 @@
 @import '../../lib/scss/colors';
 
 .mrc-ui-hi-rsummary {
-  // display: grid;
-  // grid-template: 
-  //   'phase-label  phase'
-  //   'staus-label  status'
-  //   /auto         max-content;
-  // grid-gap: $spacing-small;
 
   &:first-child .mrc-ui-hi-rsummary-row:first-child {
     padding-top: 0;
@@ -41,9 +35,7 @@
 }
 
 .mrc-ui-hi-rsummary-status-value {
-  font-weight: bold;
-  font-size: $font-size-9;
-  text-transform: capitalize;
+  @include typo-small-caps;
 }
 
 .mrc-ui-hi-rsummary-status-value-green {
@@ -51,8 +43,6 @@
 }
 
 .mrc-ui-hi-rsummary-status-role {
+  @include typo-small-caps;
   color: $color-brand-primary-default;
-  font-weight: bold;
-  font-size: $font-size-9;
-  text-transform: capitalize;
 }
