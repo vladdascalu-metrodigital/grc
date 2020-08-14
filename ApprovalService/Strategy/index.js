@@ -175,10 +175,14 @@ export default class Strategy extends Component {
             />
         );
 
+        const decisionKey = _.isNil(this.state.data.strategyDecision)
+            ? 'strategy.data.decision.missing'
+            : 'strategy.data.decision.' + this.state.data.strategyDecision;
+
         return (
             <div className="mrc-details">
                 <h3>{lookup('strategy.data.decision')}</h3>
-                <p>{lookup('strategy.data.decision.' + this.state.data.strategyDecision)}</p>
+                <p>{lookup(decisionKey)}</p>
                 {automaticDecision}
                 <Table
                     className="mrc-data-table"
