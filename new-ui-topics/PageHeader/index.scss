@@ -9,17 +9,18 @@
     "tabs       tabs";
   grid-template-columns: 1fr max-content;
   width: 100%;
-  padding: $spacing-small;
 }
 
 .mrc-ui-pageheader-title {
   grid-area: page-title;
   align-self: center;
+  padding: $spacing-small;
 }
 
 .mrc-ui-pageheader-info {
   grid-area: info-area;
   align-self: center;
+  padding: $spacing-small;
 
   > :first-child {
     display: none; // hidden on small screens // TODO: unhide for table/desktop
@@ -30,11 +31,43 @@
   // }
 }
 
+$mrc-ui-page-header-tab-height: 2rem;
+
 .mrc-ui-pageheader-tabs {
+  border-top: 1px solid $color-brand-primary-tint-90;
   grid-area: tabs;
   display: flex;
   flex-wrap: wrap;
+  background: 
+  repeating-linear-gradient(
+    transparent, 
+    transparent calc(#{$mrc-ui-page-header-tab-height} - 1px), 
+    $color-brand-primary-tint-90 calc(#{$mrc-ui-page-header-tab-height} - 1px), 
+    $color-brand-primary-tint-90 $mrc-ui-page-header-tab-height
+  );
 }
+
+.mrc-ui-pageheader-tabitem {
+
+  box-sizing: border-box;
+  height: $mrc-ui-page-header-tab-height;
+  
+  display: inline-block;
+  margin: 0 .5rem;
+  
+
+
+  margin-right: $spacing-small;
+  padding: $spacing-extra-extra-small $spacing-none;
+  
+  font-size: $font-size-10;
+}
+
+.mrc-ui-pageheader-tabitem-selected {
+  // border-bottom: 2px solid $color-palette-blue-default;
+  border-bottom: 3px solid $color-interaction;
+}
+
 
 .mrc-ui-pageheader-more-button {
   .mrc-ui-icon-svg {

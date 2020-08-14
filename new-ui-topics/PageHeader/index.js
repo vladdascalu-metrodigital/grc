@@ -52,16 +52,15 @@ export default class PageHeader extends Component {
                     </button>
                 </div>
                 <div className="mrc-ui-pageheader-tabs">
-                    <div className="mrc-ui-pageheader-tabitem">tab item</div>
-                    <div className="mrc-ui-pageheader-tabitem">tab item</div>
-                    <div className="mrc-ui-pageheader-tabitem">tab iteeeeeeeeem</div>
-                    <div className="mrc-ui-pageheader-tabitem">tab item</div>
-                    <div className="mrc-ui-pageheader-tabitem">tab iteeeeeeeeeeeeeeeeeeem</div>
-                    <div className="mrc-ui-pageheader-tabitem">tab iteeeeeeeeeeeem</div>
-                    <div className="mrc-ui-pageheader-tabitem">tab iteeeeeem</div>
-                    <div className="mrc-ui-pageheader-tabitem">tab item</div>
-                    <div className="mrc-ui-pageheader-tabitem">tab iteeeeeeeeeeeem</div>
-                    <div className="mrc-ui-pageheader-tabitem">tab item</div>
+                    <div className="mrc-ui-pageheader-tabitem mrc-ui-pageheader-tabitem-selected">Customer Data</div>
+                    <div className="mrc-ui-pageheader-tabitem">Credit Details</div>
+                    <div className="mrc-ui-pageheader-tabitem">Sales</div>
+                    <div className="mrc-ui-pageheader-tabitem">Scroring</div>
+                    <div className="mrc-ui-pageheader-tabitem">SAP Data</div>
+                    <div className="mrc-ui-pageheader-tabitem">Strategy</div>
+                    <div className="mrc-ui-pageheader-tabitem">Comments</div>
+                    <div className="mrc-ui-pageheader-tabitem">Attachments</div>
+                    <div className="mrc-ui-pageheader-tabitem">Audit Trail</div>
                 </div>
                 <SideScreen
                     isShown={showAsideInfo}
