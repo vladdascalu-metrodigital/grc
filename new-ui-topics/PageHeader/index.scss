@@ -7,7 +7,7 @@
   grid-template-areas: 
     "page-title info-area"
     "tabs       tabs";
-  grid-template-columns: auto max-content;
+  grid-template-columns: 1fr max-content;
   width: 100%;
   padding: $spacing-small;
 }

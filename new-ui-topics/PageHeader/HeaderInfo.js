@@ -42,7 +42,7 @@ export default class HeaderInfos extends PureComponent {
                 <HeaderInfoPaymentTerm
                     isColStyle={isColStyle}
                     creditPeriod={14}
-                    creditProduct="METRO Top"
+                    creditProduct="METRO Top blaaa bluppp mega lang usw..."
                     mandate="mandate xyz"
                 />
             </div>

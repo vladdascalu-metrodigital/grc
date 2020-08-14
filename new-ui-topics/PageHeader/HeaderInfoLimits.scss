@@ -20,6 +20,7 @@
 .mrc-ui-hi-limits-type {
   @include typo-small-caps;
   color: $color-success;
+  padding: $spacing-small $spacing-none;
 }
 
 .mrc-ui-hi-limits-group,
@@ -30,9 +31,11 @@
     'label  icon        number'
     /auto   max-content max-content;
   grid-gap: $spacing-small;
+  padding-bottom: $spacing-small;
 
   > .mrc-ui-number {
     grid-area: number;
+    color: $color-palette-grey-default;
   }
   
   > span:first-child {

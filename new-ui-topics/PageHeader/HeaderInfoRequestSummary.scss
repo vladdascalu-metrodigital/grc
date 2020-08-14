@@ -16,7 +16,7 @@
 .mrc-ui-hi-rsummary-row {
   display: flex;
   border-bottom: $border-style-default;
-  padding: $spacing-small $spacing-medium;
+  padding: 2*$spacing-small $spacing-medium;
 }
 
 .mrc-ui-hi-rsummary-phase-label,
@@ -25,13 +25,15 @@
 }
 
 .mrc-ui-hi-rsummary-phase {
-  
+  color: $color-palette-grey-default;  
 }
 
 .mrc-ui-hi-rsummary-status {
   display: grid;
   grid-template-columns: repeat(3, auto);
   grid-gap: $spacing-extra-small;
+  color: $color-palette-grey-default;
+  align-items: baseline;
 }
 
 .mrc-ui-hi-rsummary-status-value {

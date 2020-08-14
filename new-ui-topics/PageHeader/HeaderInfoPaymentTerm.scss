@@ -20,6 +20,7 @@
 
 .mrc-ui-hi-payment-term-title {
   @include typo-small-caps;
+  padding: $spacing-small $spacing-none;
 }
 
 .mrc-ui-hi-payment-term-product, 
@@ -29,14 +30,19 @@
   display: grid;
   grid-template: 
     'label  value'
-    /auto   max-content;
+    /auto   auto;
   grid-gap: $spacing-small;
+  padding-bottom: $spacing-small;
+  line-height: $line-height-title;
 
   > :first-child {
     grid-area: label;
+    padding-right: $spacing-medium;
   }
   
   > :nth-child(2) {
     grid-area: value;
+    text-align: right;
+    color: $color-palette-grey-default;
   }
 }

@@ -17,6 +17,7 @@
   @media #{$breakpoint-not-small} {
     min-width: 300px;
     width: max-content;
+    max-width: 33%;
   }
 }
 
@@ -40,7 +41,8 @@
 
 .mrc-ui-sidescreen-title {
   flex-grow: 1;
-  text-align: center;
+  padding: $spacing-medium $spacing-none;
+  padding-left: $spacing-large;
   color: $color-brand-primary-default;
 }
 

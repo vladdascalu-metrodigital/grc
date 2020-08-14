@@ -14,7 +14,7 @@ export default class HeaderInfoPaymentTerm extends PureComponent {
             <div className={className}>
                 <div className="mrc-ui-hi-payment-term-title">Payment Method</div>
                 <div className="mrc-ui-hi-payment-term-product">
-                    <span>Credit Product</span>
+                    <span>Credit Product fafadsf label long</span>
                     <span>{creditProduct}</span>
                 </div>
                 <div className="mrc-ui-hi-payment-term-period">
@@ -22,7 +22,7 @@ export default class HeaderInfoPaymentTerm extends PureComponent {
                     <span>{creditPeriod}</span>
                 </div>
                 <div className="mrc-ui-hi-payment-term-mandate">
-                    <span>Credit Period</span>
+                    <span>Credit Lastschriftverfahren</span>
                     <span>{mandate}</span>
                 </div>
             </div>

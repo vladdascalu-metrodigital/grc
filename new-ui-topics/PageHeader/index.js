@@ -52,18 +52,22 @@ export default class PageHeader extends Component {
                     </button>
                 </div>
                 <div className="mrc-ui-pageheader-tabs">
-                    {/* <div className='mrc-ui-pageheader-tabitem'>tab item</div>
-                    <div className='mrc-ui-pageheader-tabitem'>tab item</div>
-                    <div className='mrc-ui-pageheader-tabitem'>tab iteeeeeeeeem</div>
-                    <div className='mrc-ui-pageheader-tabitem'>tab item</div>
-                    <div className='mrc-ui-pageheader-tabitem'>tab iteeeeeeeeeeeeeeeeeeem</div>
-                    <div className='mrc-ui-pageheader-tabitem'>tab iteeeeeeeeeeeem</div>
-                    <div className='mrc-ui-pageheader-tabitem'>tab iteeeeeem</div>
-                    <div className='mrc-ui-pageheader-tabitem'>tab item</div>
-                    <div className='mrc-ui-pageheader-tabitem'>tab iteeeeeeeeeeeem</div>
-                    <div className='mrc-ui-pageheader-tabitem'>tab item</div> */}
+                    <div className="mrc-ui-pageheader-tabitem">tab item</div>
+                    <div className="mrc-ui-pageheader-tabitem">tab item</div>
+                    <div className="mrc-ui-pageheader-tabitem">tab iteeeeeeeeem</div>
+                    <div className="mrc-ui-pageheader-tabitem">tab item</div>
+                    <div className="mrc-ui-pageheader-tabitem">tab iteeeeeeeeeeeeeeeeeeem</div>
+                    <div className="mrc-ui-pageheader-tabitem">tab iteeeeeeeeeeeem</div>
+                    <div className="mrc-ui-pageheader-tabitem">tab iteeeeeem</div>
+                    <div className="mrc-ui-pageheader-tabitem">tab item</div>
+                    <div className="mrc-ui-pageheader-tabitem">tab iteeeeeeeeeeeem</div>
+                    <div className="mrc-ui-pageheader-tabitem">tab item</div>
                 </div>
-                <SideScreen isShown={showAsideInfo} toggle={this.toggleAsideInfo}>
+                <SideScreen
+                    isShown={showAsideInfo}
+                    toggle={this.toggleAsideInfo}
+                    title="More Request Info with very large text bla bla bla"
+                >
                     <HeaderInfo {...headerInfoData} isColStyle />
                 </SideScreen>
             </header>
