@@ -3,22 +3,16 @@
 @import '../../lib/scss/colors';
 
 .mrc-ui-hi-limits {
-  display: flex;
-  padding: $spacing-small $spacing-medium;
-}
-
-.mrc-ui-hi-limits-colstyle {
-  flex-direction: column;
-  border-bottom: $border-style-default;
-  padding: $spacing-small $spacing-medium;
-
-  &:first-child {
-    padding-top: 0;
-  }
+  display: grid;
+  grid-template-columns: min-content max-content max-content;
+  grid-gap: $spacing-small;
+  padding: 0 $spacing-medium;
 }
 
 .mrc-ui-hi-limits-type {
   @include typo-small-caps;
+  display: flex;
+  align-items: center;
   color: $color-success;
   padding: $spacing-small $spacing-none;
 }
@@ -28,10 +22,11 @@
   margin-top: $spacing-extra-small;
   display: grid;
   grid-template: 
-    'label  icon        number'
-    /auto   max-content max-content;
-  grid-gap: $spacing-small;
+    'icon  label'
+    'icon  number'
+    /auto   max-content;
   padding-bottom: $spacing-small;
+  align-items: center;
 
   > .mrc-ui-number {
     grid-area: number;
@@ -39,11 +34,43 @@
   }
   
   > span:first-child {
+    @include typo-small-caps;
+    color: $color-palette-grey-tint-60;
     grid-area: label;
   }
   
   > svg {
+    margin-right: $spacing-small;
     grid-area: icon;
   }
 }
 
+//
+
+.mrc-ui-hi-limits-colstyle {
+  border-bottom: $border-style-default;
+  grid-template-columns: none;
+  grid-gap: 0;
+  padding: $spacing-small $spacing-medium;
+
+  .mrc-ui-hi-limits-group,
+  .mrc-ui-hi-limits-customer {
+    grid-template: 
+      'label  icon        number'
+      /auto   max-content max-content;
+    grid-gap: $spacing-small;
+
+    > span:first-child {
+      @include typo-default-text();
+      color: $color-palette-grey-tint-40;
+    }
+
+    > svg {
+      margin-right: 0;
+    }
+  }
+
+  &:first-child {
+    padding-top: 0;
+  }
+}

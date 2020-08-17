@@ -7,7 +7,7 @@ storiesOf('New UI Topics/Header', module).add('PageHeader', () => {
     return (
         <PageHeader
             title="Credit Correction"
-            customerName="Betterlife GmbH"
+            customerName="Betterlife GmbH Super Long Name"
             customerId="15/116102"
             customerStatus="Kassensperre"
         />

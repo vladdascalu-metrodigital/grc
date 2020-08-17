@@ -2,35 +2,23 @@
 @import '../../lib/scss/typography';
 @import '../../lib/scss/colors';
 
-.mrc-ui-hi-rsummary {
+// .mrc-ui-hi-rsummary {}
 
-}
-
-.mrc-ui-hi-rsummary-colstyle {
-  
-  &:first-child .mrc-ui-hi-rsummary-row:first-child {
-    padding-top: 0;
-  }
-}
-
-.mrc-ui-hi-rsummary-row {
-  display: flex;
-  border-bottom: $border-style-default;
-  padding: 2*$spacing-small $spacing-medium;
-}
+// .mrc-ui-hi-rsummary-row {}
 
 .mrc-ui-hi-rsummary-phase-label,
 .mrc-ui-hi-rsummary-status-label {
-  flex-grow: 1;
+  display: none;
 }
 
 .mrc-ui-hi-rsummary-phase {
-  color: $color-palette-grey-default;  
+  @include typo-small-caps;
+  color: $color-palette-grey-tint-60;
 }
 
 .mrc-ui-hi-rsummary-status {
   display: grid;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: repeat(3, min-content);
   grid-gap: $spacing-extra-small;
   color: $color-palette-grey-default;
   align-items: baseline;
@@ -47,4 +35,29 @@
 .mrc-ui-hi-rsummary-status-role {
   @include typo-small-caps;
   color: $color-brand-primary-default;
+}
+
+//
+
+.mrc-ui-hi-rsummary-colstyle {
+  
+  .mrc-ui-hi-rsummary-row {
+    display: flex;
+    border-bottom: $border-style-default;
+    padding: 2*$spacing-small $spacing-medium;
+  }
+
+  &:first-child .mrc-ui-hi-rsummary-row:first-child {
+    padding-top: 0;
+  }
+
+  .mrc-ui-hi-rsummary-phase-label,
+  .mrc-ui-hi-rsummary-status-label {
+    display: inline-block;
+    flex-grow: 1;
+  }
+
+  .mrc-ui-hi-rsummary-phase {
+    @include typo-default-text();
+  }
 }

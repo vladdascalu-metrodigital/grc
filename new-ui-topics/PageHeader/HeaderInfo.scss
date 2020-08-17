@@ -7,3 +7,27 @@
   color: $color-palette-grey-tint-40;
   line-height: $line-height-title;
 }
+
+.mrc-ui-header-info-row-style {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  > * {
+    padding-right: $spacing-medium;
+  }
+
+  > * + * {
+    border-left: 1px solid $color-palette-grey-tint-70;
+    padding-left: $spacing-medium;
+  }
+
+  > *:first-child {
+    padding-left: 0;
+  }
+}
+
+.mrc-ui-header-info-col-style {
+  display: flex;
+  flex-direction: column;
+}

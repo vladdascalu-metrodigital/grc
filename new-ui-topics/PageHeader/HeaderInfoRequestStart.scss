@@ -7,8 +7,29 @@
   grid-template: 
     'icon label'
     'icon date';  
-  grid-gap: $spacing-small;
+  grid-gap: $spacing-extra-extra-small;
 }
+
+.mrc-ui-hi-request-start-label {
+  @include typo-small-caps;
+  grid-area: label;
+  color: $color-palette-grey-tint-60;
+}
+
+.mrc-ui-hi-request-start-icon {
+  grid-area: icon;
+  align-self: center;
+  position: relative;
+  top: -0.1em;
+  margin-right: $spacing-small;
+}
+
+.mrc-ui-hi-request-start-date {
+  grid-area: date;
+  color: $color-palette-grey-default;
+}
+
+//
 
 .mrc-ui-hi-request-start-colstyle {
   grid-template: 
@@ -21,20 +42,15 @@
   &:first-child {
     padding-top: 0;
   }
-}
 
-.mrc-ui-hi-request-start-label {
-  grid-area: label;
-}
+  .mrc-ui-hi-request-start-label {
+    font-weight: normal;
+    font-size: $font-size-7;
+    text-transform: none;
+    letter-spacing: normal;
+  }
 
-.mrc-ui-hi-request-start-icon {
-  grid-area: icon;
-  align-self: center;
-  position: relative;
-  top: -0.04em;
-}
-
-.mrc-ui-hi-request-start-date {
-  grid-area: date;
-  color: $color-palette-grey-default;
+  .mrc-ui-hi-request-start-icon {
+    margin-right: 0;
+  }
 }

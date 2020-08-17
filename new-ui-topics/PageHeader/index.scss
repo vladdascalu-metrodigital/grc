@@ -18,12 +18,17 @@
 }
 
 .mrc-ui-pageheader-info {
+  display: flex;
   grid-area: info-area;
   align-self: center;
   padding: $spacing-small;
 
   > :first-child {
-    display: none; // hidden on small screens // TODO: unhide for table/desktop
+    display: none; // hidden on small screens
+
+    @media #{$breakpoint-large} {
+      display: flex;
+    }
   }
 
   // > button {
@@ -53,11 +58,17 @@
       );
     grid-template-areas: 
       "page-title info-area"
-      "tabs       info-area";
+      "tabs       tabs";
   }
 }
 
-
+@media screen and (min-width: 1350px) {
+  .mrc-ui-pageheader {
+    grid-template-areas: 
+      "page-title info-area"
+      "tabs       info-area";
+  }
+}
 
 // tabs
 

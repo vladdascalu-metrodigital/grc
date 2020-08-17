@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-// import classnames from 'classnames';
+import classnames from 'classnames';
 
 // import MrcDate from '../../MrcDate';
 // import { COLOR as IC} from '../../icons/index';
@@ -19,8 +19,12 @@ import './HeaderInfo.scss';
 export default class HeaderInfos extends PureComponent {
     render() {
         let { requestStartDate, isColStyle } = this.props;
+        let className = classnames('mrc-ui-header-info', {
+            'mrc-ui-header-info-row-style': !isColStyle,
+            'mrc-ui-header-info-col-style': isColStyle,
+        });
         return (
-            <div className={'mrc-ui-header-info'}>
+            <div className={className}>
                 <HeaderInfoRequestStart isColStyle={isColStyle} requestStartDate={requestStartDate} />
                 <HeaderInfoRequestSummary
                     isColStyle={isColStyle}
@@ -39,12 +43,14 @@ export default class HeaderInfos extends PureComponent {
                     customerLimitDirection={LIMIT_DIR.EQUAL}
                     country={'DE'}
                 />
-                <HeaderInfoPaymentTerm
-                    isColStyle={isColStyle}
-                    creditPeriod={14}
-                    creditProduct="METRO Top blaaa bluppp mega lang usw..."
-                    mandate="mandate xyz"
-                />
+                {isColStyle && (
+                    <HeaderInfoPaymentTerm
+                        isColStyle={isColStyle}
+                        creditPeriod={14}
+                        creditProduct="METRO Top blaaa bluppp mega lang usw..."
+                        mandate="mandate xyz"
+                    />
+                )}
             </div>
         );
     }
