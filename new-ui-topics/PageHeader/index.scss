@@ -31,6 +31,36 @@
   // }
 }
 
+.mrc-ui-pageheader-more-button {
+  .mrc-ui-icon-svg {
+    font-size: 2rem;
+  }
+  
+  &:hover .mrc-ui-icon-stroke {
+    stroke: $color-interaction;
+  }
+}
+
+@media #{$breakpoint-large} {
+  .mrc-ui-pageheader {
+    // use 1px background line as "border" bottom
+    background: 
+      linear-gradient(
+        transparent, 
+        transparent calc(100% - 1px), 
+        $color-brand-primary-tint-90 calc(100% - 1px), 
+        $color-brand-primary-tint-90 100%
+      );
+    grid-template-areas: 
+      "page-title info-area"
+      "tabs       info-area";
+  }
+}
+
+
+
+// tabs
+
 $mrc-ui-page-header-tab-height: 2rem;
 
 .mrc-ui-pageheader-tabs {
@@ -47,15 +77,20 @@ $mrc-ui-page-header-tab-height: 2rem;
   );
 }
 
-.mrc-ui-pageheader-tabitem {
+@media #{$breakpoint-large} {
+  .mrc-ui-pageheader-tabs {
+    border-top: 1px solid transparent;
+    background: none;
+  }
+}
 
+.mrc-ui-pageheader-tabitem {
+  cursor: pointer;
   box-sizing: border-box;
   height: $mrc-ui-page-header-tab-height;
   
   display: inline-block;
   margin: 0 .5rem;
-  
-
 
   margin-right: $spacing-small;
   padding: $spacing-extra-extra-small $spacing-none;
@@ -63,26 +98,8 @@ $mrc-ui-page-header-tab-height: 2rem;
   font-size: $font-size-10;
 }
 
+.mrc-ui-pageheader-tabitem:hover,
 .mrc-ui-pageheader-tabitem-selected {
   // border-bottom: 2px solid $color-palette-blue-default;
   border-bottom: 3px solid $color-interaction;
-}
-
-
-.mrc-ui-pageheader-more-button {
-  .mrc-ui-icon-svg {
-    font-size: 2rem;
-  }
-  
-  &:hover .mrc-ui-icon-stroke {
-    stroke: $color-interaction;
-  }
-}
-
-@media #{$breakpoint-large} {
-  .mrc-ui-pageheader {
-    grid-template-areas: 
-      "page-title info-area"
-      "tabs       info-area";
-  }
 }
