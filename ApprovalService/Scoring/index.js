@@ -328,7 +328,7 @@ export default class Scoring extends Component {
 
             return (+requestedAtDate1 < +requestedAtDate2) - (+requestedAtDate1 > +requestedAtDate2);
         } catch (e) {
-            console.error('error parsing the dates');
+            console.error('Error parsing the dates');
         }
 
         return 0;

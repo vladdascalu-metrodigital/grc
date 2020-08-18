@@ -54,7 +54,12 @@ export default class Strategy extends Component {
         };
 
         const makeValue = (value, indicator) => {
-            const limitDescriptors = [
+            const isPercentage = [
+                'strategy.keyindicators.totalIncome',
+                'strategy.keyindicators.disposalrate',
+                'strategy.keyindicators.utilizationrate',
+            ].includes(indicator.original.indicatorName);
+            const isLimitDescriptor = [
                 'strategy.keyindicators.internalRecommendedLimit',
                 'strategy.keyindicators.requestedGroupLimit',
                 'strategy.keyindicators.externalScore.boniversum.recommendedLimit',
@@ -64,10 +69,12 @@ export default class Strategy extends Component {
                 'strategy.keyindicators.externalScore.schufa.recommendedLimit',
                 'strategy.keyindicators.externalScore.schufa_b2b.recommendedLimit',
                 'strategy.keyindicators.externalScore.schufa_b2c.recommendedLimit',
-            ];
+            ].includes(indicator.original.indicatorName);
             if (isNaN(value)) {
                 return lookup(value);
-            } else if (limitDescriptors.includes(indicator.original.indicatorName)) {
+            } else if (isPercentage) {
+                <MrcNumber isPercentage>{value}</MrcNumber>;
+            } else if (isLimitDescriptor) {
                 return (
                     <MrcNumber isCurrency country={countryCode}>
                         {value}

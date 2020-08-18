@@ -94,16 +94,12 @@ export default class Strategy extends Component {
         };
 
         const makeValue = (value, indicator) => {
-            // descriptors usualy within 0 <= x <= 1 are fractions describing a
-            // percentage value
-            const percentageFractionDescriptors = [
+            const isPercentage = [
+                'strategy.keyindicators.totalIncome',
                 'strategy.keyindicators.disposalrate',
                 'strategy.keyindicators.utilizationrate',
-            ];
-            // descriptors usually within 0 <= x <= 100 describing a percentage
-            // value
-            const percentageDescriptors = ['strategy.keyindicators.totalIncome'];
-            const limitDescriptors = [
+            ].includes(indicator.original.indicatorName);
+            const isLimitDescriptor = [
                 'strategy.keyindicators.internalRecommendedLimit',
                 'strategy.keyindicators.requestedGroupLimit',
                 'strategy.keyindicators.externalScore.boniversum.recommendedLimit',
@@ -113,18 +109,12 @@ export default class Strategy extends Component {
                 'strategy.keyindicators.externalScore.schufa.recommendedLimit',
                 'strategy.keyindicators.externalScore.schufa_b2b.recommendedLimit',
                 'strategy.keyindicators.externalScore.schufa_b2c.recommendedLimit',
-            ];
-            const isFraction = percentageFractionDescriptors.includes(indicator.original.indicatorName);
-            const isPercentage = percentageDescriptors.includes(indicator.original.indicatorName);
+            ].includes(indicator.original.indicatorName);
             if (isNaN(value)) {
                 return lookup(value);
-            } else if (isPercentage || isFraction) {
-                return _.isNaN(parseFloat(value)) ? (
-                    lookup(value)
-                ) : (
-                    <MrcNumber isPercentage>{(isFraction ? 100 : 1) * parseFloat(value)}</MrcNumber>
-                );
-            } else if (limitDescriptors.includes(indicator.original.indicatorName)) {
+            } else if (isPercentage) {
+                <MrcNumber isPercentage>{value}</MrcNumber>;
+            } else if (isLimitDescriptor) {
                 return (
                     <MrcNumber isCurrency country={country}>
                         {value}
