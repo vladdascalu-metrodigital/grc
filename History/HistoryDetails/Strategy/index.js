@@ -73,12 +73,7 @@ export default class Strategy extends Component {
             if (isNaN(value)) {
                 return lookup(value);
             } else if (isPercentage) {
-                const _value = parseFloat(value);
-                if (isNaN(_value)) {
-                    return lookup(value);
-                } else {
-                    <MrcNumber isPercentage>{_value}</MrcNumber>;
-                }
+                return <MrcNumber isPercentage>{value}</MrcNumber>;
             } else if (isLimitDescriptor) {
                 return (
                     <MrcNumber isCurrency country={countryCode}>
