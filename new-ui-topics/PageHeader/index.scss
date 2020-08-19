@@ -126,7 +126,6 @@ $mrc-ui-page-header-tab-height: 2rem;
   width: $width-2;
   height: $height-2;
   font-size: $font-size-10;
-  text-transform: uppercase;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -142,4 +141,16 @@ $mrc-ui-page-header-tab-height: 2rem;
     color: $color-interaction;
     border: 1px solid $color-interaction;
   }
+}
+.mrc-ui-main-wapper {
+  display:grid;
+  grid-template: 
+  "sidebar header" max-content
+  "sidebar content"
+  / 96px auto;
+  min-height: 100vh;
+}
+.mrc-ui-sidebar {
+  grid-area: sidebar;
+  background: $color-brand-primary-default;
 }

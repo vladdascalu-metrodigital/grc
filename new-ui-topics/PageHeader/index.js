@@ -43,55 +43,64 @@ export default class PageHeader extends Component {
             // TODO: put all data here
         };
         return (
-            <header className={'mrc-ui-pageheader'}>
-                {/* <nav>
+            <div className="mrc-ui-main-wapper">
+                <div className="mrc-ui-sidebar">foobar</div>
+                <header className={'mrc-ui-pageheader'}>
+                    {/* <nav>
                     sidebar ??
                 </nav> */}
-                <div className="mrc-ui-pageheader-title">
-                    <PageTitle
-                        title={title}
-                        customerName={customerName}
-                        customerId={customerId}
-                        customerStatus={customerStatus}
-                    />
-                </div>
-                <div className="mrc-ui-pageheader-info">
-                    <HeaderInfo {...headerInfoData} />
-                    <button onClick={this.toggleAsideInfo} className="mrc-ui-pageheader-more-button">
-                        <MoreIcon color={ICOLOR.MUTED} />
-                    </button>
-                    <button onClick={this.toggleLanguageSwitch} className="mrc-ui-pageheader-language-button">
-                        <div className="mrc-ui-pageheader-language-icon">de</div>
-                    </button>
-                </div>
-                <div className="mrc-ui-pageheader-tabs">
-                    <div className="mrc-ui-pageheader-tabitem mrc-ui-pageheader-tabitem-selected">Customer Data</div>
-                    <div className="mrc-ui-pageheader-tabitem">Credit Details</div>
-                    <div className="mrc-ui-pageheader-tabitem">Sales</div>
-                    <div className="mrc-ui-pageheader-tabitem">Scroring</div>
-                    <div className="mrc-ui-pageheader-tabitem">SAP Data</div>
-                    <div className="mrc-ui-pageheader-tabitem">Strategy</div>
-                    <div className="mrc-ui-pageheader-tabitem">Comments</div>
-                    <div className="mrc-ui-pageheader-tabitem">Attachments</div>
-                    <div className="mrc-ui-pageheader-tabitem">Audit Trail</div>
-                </div>
-                {this.state.showAsideInfo ? (
-                    <SideScreen
-                        isShown={showAsideInfo}
-                        toggle={this.toggleAsideInfo}
-                        title="More Request Info with very large text bla bla bla"
-                    >
-                        <HeaderInfo {...headerInfoData} isColStyle />
-                    </SideScreen>
-                ) : null}
-                {this.state.showLanguageSwitch ? (
-                    <SideScreen isShown={showLanguageSwitch} toggle={this.toggleLanguageSwitch} title="Switch Language">
-                        <SideScreenLanguageEntry language="Deutsch" languageISO="de" />
-                        <SideScreenLanguageEntry language="English" languageISO="en" />
-                        <SideScreenLanguageEntry language="Russian" languageISO="ru" />
-                    </SideScreen>
-                ) : null}
-            </header>
+                    <div className="mrc-ui-pageheader-title">
+                        <PageTitle
+                            title={title}
+                            customerName={customerName}
+                            customerId={customerId}
+                            customerStatus={customerStatus}
+                        />
+                    </div>
+                    <div className="mrc-ui-pageheader-info">
+                        <HeaderInfo {...headerInfoData} />
+                        <button onClick={this.toggleAsideInfo} className="mrc-ui-pageheader-more-button">
+                            <MoreIcon color={ICOLOR.MUTED} />
+                        </button>
+                        <button onClick={this.toggleLanguageSwitch} className="mrc-ui-pageheader-language-button">
+                            <div className="mrc-ui-pageheader-language-icon">de</div>
+                        </button>
+                    </div>
+                    <div className="mrc-ui-pageheader-tabs">
+                        <div className="mrc-ui-pageheader-tabitem mrc-ui-pageheader-tabitem-selected">
+                            Customer Data
+                        </div>
+                        <div className="mrc-ui-pageheader-tabitem">Credit Details</div>
+                        <div className="mrc-ui-pageheader-tabitem">Sales</div>
+                        <div className="mrc-ui-pageheader-tabitem">Scroring</div>
+                        <div className="mrc-ui-pageheader-tabitem">SAP Data</div>
+                        <div className="mrc-ui-pageheader-tabitem">Strategy</div>
+                        <div className="mrc-ui-pageheader-tabitem">Comments</div>
+                        <div className="mrc-ui-pageheader-tabitem">Attachments</div>
+                        <div className="mrc-ui-pageheader-tabitem">Audit Trail</div>
+                    </div>
+                    {this.state.showAsideInfo ? (
+                        <SideScreen
+                            isShown={showAsideInfo}
+                            toggle={this.toggleAsideInfo}
+                            title="More Request Info with very large text bla bla bla"
+                        >
+                            <HeaderInfo {...headerInfoData} isColStyle />
+                        </SideScreen>
+                    ) : null}
+                    {this.state.showLanguageSwitch ? (
+                        <SideScreen
+                            isShown={showLanguageSwitch}
+                            toggle={this.toggleLanguageSwitch}
+                            title="Switch Language"
+                        >
+                            <SideScreenLanguageEntry language="Deutsch" languageISO="de" />
+                            <SideScreenLanguageEntry language="English" languageISO="en" />
+                            <SideScreenLanguageEntry language="Russian" languageISO="ru" />
+                        </SideScreen>
+                    ) : null}
+                </header>
+            </div>
         );
     }
 }
