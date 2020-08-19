@@ -1139,8 +1139,8 @@ export class ApprovalProcessPresentation extends Component {
         return (
             <div>
                 <SlidingPane
-                    className="some-custom-class"
-                    overlayClassName="some-custom-overlay-class"
+                    className="mrc-modal-class"
+                    overlayClassName="mrc-modal-overlay-class"
                     isOpen={this.state.isPaneOpen}
                     title={lookup('history.recentrequests.heading')}
                     width={width}
