@@ -1,0 +1,62 @@
+@import '../../lib/scss/variables';
+@import '../../lib/scss/typography';
+@import '../../lib/scss/colors';
+
+
+
+
+
+//
+
+.mrc-ui-side-screen-language-entry {
+  display: grid;
+  grid-template: 
+    'label  icon'
+    /auto   max-content;
+  align-items: center;
+  padding: $spacing-small $spacing-medium;
+  grid-gap: $spacing-small;
+  border-bottom: $border-style-default;
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:hover * {
+    color: $color-interaction;
+    border-color: $color-interaction;
+  }
+}
+
+.mrc-ui-side-screen-language-label {
+    @include typo-small-caps;
+    grid-area: label;
+    color: $color-palette-grey-tint-40;
+    font-weight: normal;
+    font-size: $font-size-7;
+    text-transform: none;
+    letter-spacing: normal;    
+  }
+
+
+
+.mrc-ui-side-screen-language-icon {
+    grid-area: icon;
+    border: $border-width-thin solid $color-palette-grey-tint-40;
+    color: $color-palette-grey-default;
+    border-radius: $border-radius-circle;
+    width: $width-2;
+    height: $height-2;
+    font-size: $font-size-10;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}

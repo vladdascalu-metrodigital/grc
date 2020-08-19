@@ -5,11 +5,22 @@ import classnames from 'classnames';
 import closeModalImageFile from '../icons/modal-close.svg';
 import './index.scss';
 
+const SIDESCREEN_OPEN_CLASS = 'body--sidescreen-open';
+
 export default class SideScreen extends Component {
+    componentDidMount() {
+        document.body.classList.add(SIDESCREEN_OPEN_CLASS);
+        document.documentElement.classList.add(SIDESCREEN_OPEN_CLASS);
+    }
+
+    componentWillUnmount() {
+        document.body.classList.remove(SIDESCREEN_OPEN_CLASS);
+        document.documentElement.classList.remove(SIDESCREEN_OPEN_CLASS);
+    }
+
     render() {
-        let { children, title, isShown, toggle, side } = this.props;
+        let { children, title, toggle, side } = this.props;
         let className = classnames('mrc-ui-sidescreen', {
-            'mrc-ui-sidescreen-shown': isShown === true,
             'mrc-ui-sidescreen-left': side === 'left',
         });
         return (
@@ -31,7 +42,6 @@ export default class SideScreen extends Component {
 SideScreen.propTypes = {
     children: PropTypes.node.isRequired,
     title: PropTypes.string,
-    isShown: PropTypes.bool,
     toggle: PropTypes.func.isRequired,
     side: PropTypes.oneOf(['left', 'right']),
 };

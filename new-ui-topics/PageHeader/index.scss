@@ -40,6 +40,7 @@
   .mrc-ui-icon-svg {
     font-size: 2rem;
   }
+  padding: $spacing-medium $spacing-small;
   
   &:hover .mrc-ui-icon-stroke {
     stroke: $color-interaction;
@@ -107,10 +108,38 @@ $mrc-ui-page-header-tab-height: 2rem;
   padding: $spacing-extra-extra-small $spacing-none;
   
   font-size: $font-size-10;
+
+  @media #{$breakpoint-not-small} {
+    font-size: $font-size-8;
+  }
 }
 
 .mrc-ui-pageheader-tabitem:hover,
 .mrc-ui-pageheader-tabitem-selected {
   // border-bottom: 2px solid $color-palette-blue-default;
   border-bottom: 3px solid $color-interaction;
+}
+
+.mrc-ui-pageheader-language-icon {
+  border: $border-width-thin solid $color-palette-grey-tint-40;
+  border-radius: $border-radius-circle;
+  width: $width-2;
+  height: $height-2;
+  font-size: $font-size-10;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.mrc-ui-pageheader-language-button {
+  padding: $spacing-medium $spacing-small;  
+  
+  &:hover * {
+    color: $color-interaction;
+    border: 1px solid $color-interaction;
+  }
 }

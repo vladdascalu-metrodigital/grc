@@ -7,6 +7,7 @@ import MoreIcon from '../../icons/MoreIcon';
 import SideScreen from '../../SideScreen';
 import HeaderInfo from './HeaderInfo';
 import { COLOR as ICOLOR } from '../../icons/index';
+import SideScreenLanguageEntry from './SideScreenLanguageEntry';
 
 import './index.scss';
 
@@ -14,8 +15,10 @@ export default class PageHeader extends Component {
     constructor() {
         super();
         this.toggleAsideInfo = this.toggleAsideInfo.bind(this);
+        this.toggleLanguageSwitch = this.toggleLanguageSwitch.bind(this);
         this.state = {
             showAsideInfo: false,
+            showLanguageSwitch: false,
         };
     }
 
@@ -25,9 +28,16 @@ export default class PageHeader extends Component {
         });
     }
 
+    toggleLanguageSwitch() {
+        this.setState({
+            showLanguageSwitch: !this.state.showLanguageSwitch,
+        });
+    }
+
     render() {
         let { title, customerName, customerId, customerStatus } = this.props;
         let { showAsideInfo } = this.state;
+        let { showLanguageSwitch } = this.state;
         let headerInfoData = {
             requestStartDate: '2020-04-12',
             // TODO: put all data here
@@ -50,6 +60,9 @@ export default class PageHeader extends Component {
                     <button onClick={this.toggleAsideInfo} className="mrc-ui-pageheader-more-button">
                         <MoreIcon color={ICOLOR.MUTED} />
                     </button>
+                    <button onClick={this.toggleLanguageSwitch} className="mrc-ui-pageheader-language-button">
+                        <div className="mrc-ui-pageheader-language-icon">de</div>
+                    </button>
                 </div>
                 <div className="mrc-ui-pageheader-tabs">
                     <div className="mrc-ui-pageheader-tabitem mrc-ui-pageheader-tabitem-selected">Customer Data</div>
@@ -62,13 +75,22 @@ export default class PageHeader extends Component {
                     <div className="mrc-ui-pageheader-tabitem">Attachments</div>
                     <div className="mrc-ui-pageheader-tabitem">Audit Trail</div>
                 </div>
-                <SideScreen
-                    isShown={showAsideInfo}
-                    toggle={this.toggleAsideInfo}
-                    title="More Request Info with very large text bla bla bla"
-                >
-                    <HeaderInfo {...headerInfoData} isColStyle />
-                </SideScreen>
+                {this.state.showAsideInfo ? (
+                    <SideScreen
+                        isShown={showAsideInfo}
+                        toggle={this.toggleAsideInfo}
+                        title="More Request Info with very large text bla bla bla"
+                    >
+                        <HeaderInfo {...headerInfoData} isColStyle />
+                    </SideScreen>
+                ) : null}
+                {this.state.showLanguageSwitch ? (
+                    <SideScreen isShown={showLanguageSwitch} toggle={this.toggleLanguageSwitch} title="Switch Language">
+                        <SideScreenLanguageEntry language="Deutsch" languageISO="de" />
+                        <SideScreenLanguageEntry language="English" languageISO="en" />
+                        <SideScreenLanguageEntry language="Russian" languageISO="ru" />
+                    </SideScreen>
+                ) : null}
             </header>
         );
     }

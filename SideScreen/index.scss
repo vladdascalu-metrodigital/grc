@@ -3,31 +3,34 @@
 @import '../lib/scss/variables';
 @import '../lib/scss/shadows';
 
+.body--sidescreen-open {
+  height: 100%;
+  margin: 0px;
+  overflow: hidden;
+}
+
 .mrc-ui-sidescreen {
   box-shadow: $shadow-modal;
-  display: none;
   position: fixed;
   height: 100vh;
   top: 0;
   right: 0;
   width: 100%;
+  max-width: $max-width-6;
+  overflow-y: scroll;
   
   // TODO: maybe another breakpoint
 
   @media #{$breakpoint-not-small} {
     min-width: 300px;
     width: max-content;
-    max-width: 33%;
+    max-width: $max-width-6;
   }
 }
 
 .mrc-ui-sidescreen-left {
   right: auto;
   left: 0;
-}
-
-.mrc-ui-sidescreen-shown {
-  display: block;
 }
 
 // .mrc-ui-sidescreen-slider {}
