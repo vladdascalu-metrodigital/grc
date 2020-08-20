@@ -3,7 +3,7 @@
 
 // wrapper (currently by default a circle around an icon, if needed)
 
-.mrc-ui-icon-circle {
+.mrc-ui-icon {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,7 +11,9 @@
   width: 1em;
   height: 1em;
   flex-shrink: 0;
+}
 
+.mrc-ui-icon-circle {
   border-radius: 50%;
   border: $border-width-thin solid $color-brand-primary-default;
 }
@@ -25,7 +27,6 @@
   width: 1em;
   height: 1em;
   flex-shrink: 0;
-
 }
 
 .mrc-ui-icon-circle .mrc-ui-icon-svg {
@@ -36,6 +37,8 @@
 // colors
 
 $icons-color-mapping: (
+  "current-color": currentcolor,
+
   "white": $color-contrast-white,
   "black": $color-contrast-black,
   "interaction": $color-interaction,
@@ -72,12 +75,18 @@ $icons-color-mapping: (
 
 // sizes
 
-.mrc-ui-icon-circle-size-small,
-.mrc-ui-icon-svg-size-small {
+.mrc-ui-icon-size-small {
   font-size: 2rem; // determines width/height!
 }
 
-.mrc-ui-icon-circle-size-xsmall,
-.mrc-ui-icon-svg-size-xsmall {
+.mrc-ui-icon-size-xsmall {
   font-size: 1.3125rem;
+}
+
+.mrc-ui-icon-size-inline {
+  display: inline-flex;
+  position: relative;
+  font-size: 1em;
+  top: -.1em;
+  vertical-align: middle;
 }
