@@ -17,6 +17,7 @@ import CheckSmallFilledIcon from '../icons/CheckSmallFilledIcon';
 import ChevronRightIcon from '../icons/ChevronRightIcon';
 import ChevronRightSmallIcon from '../icons/ChevronRightSmallIcon';
 import MoreIcon from '../icons/MoreIcon';
+import PlusIcon from '../icons/PlusIcon';
 import PrepaymentIcon from '../icons/PrepaymentIcon';
 import ProfileIcon from '../icons/ProfileIcon';
 import RocketIcon from '../icons/RocketIcon';
@@ -55,6 +56,7 @@ storiesOf('Fundamentals/Icons', module)
                     <ChevronRightIcon color={color} size={size} />
                     <ChevronRightSmallIcon color={color} size={size} />
                     <MoreIcon color={color} size={size} />
+                    <PlusIcon color={color} size={size} />
                     <PrepaymentIcon color={color} size={size} />
                     <ProfileIcon color={color} size={size} />
                     <RocketIcon color={color} size={size} />
