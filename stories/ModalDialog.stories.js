@@ -1,7 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
+
 import MainContent from '../MainContent';
-import ModalDialog from '../ModalDialog';
+import ModalDialog, { ModalDialogSimple } from '../ModalDialog';
 import DatePicker from '../DatePicker';
 import TextInput from '../TextInput';
 
@@ -18,6 +20,26 @@ storiesOf('Fundamentals/ModalDialog', module)
         return (
             <MainContent>
                 <ModalDialog toggle={() => {}} content={modalContent} title="A Modal Story" />
+            </MainContent>
+        );
+    })
+    .add('Simple ModalDialog', () => {
+        return (
+            <MainContent>
+                <ModalDialogSimple
+                    onCancel={() => action('onCancel')('onCancel')}
+                    title="A Modal Story"
+                    onOk={() => action('onOk')('onOk')}
+                    cancelText="Cancel"
+                    okText="Approve"
+                >
+                    <p>
+                        Voluptate eiusmod est dolore veniam est in ea velit consequat quis. Laboris qui ullamco amet id
+                        amet reprehenderit aute Lorem officia ex veniam commodo. Deserunt id eiusmod laboris eiusmod
+                        exercitation non commodo aute elit. Sit deserunt magna consectetur elit anim quis tempor laborum
+                        qui adipisicing. Eiusmod occaecat consequat sit commodo amet culpa culpa est.
+                    </p>
+                </ModalDialogSimple>
             </MainContent>
         );
     })

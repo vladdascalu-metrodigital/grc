@@ -79,3 +79,13 @@
   position: relative !important;
   transform: none !important;
 }
+
+.mrc-ui-modal-simple-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: $spacing-medium;
+  
+  > :first-child {
+    margin-right: $spacing-small;
+  }
+}
