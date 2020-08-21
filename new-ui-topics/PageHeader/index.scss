@@ -153,4 +153,26 @@ $mrc-ui-page-header-tab-height: 2rem;
 .mrc-ui-sidebar {
   grid-area: sidebar;
   background: $color-brand-primary-default;
+  text-align: center;
+  color: $color-contrast-white;
+  padding: 0 6px;
+}
+
+.mrc-ui-sidebar-icon {
+  margin: 0.5rem auto;
+  padding: $spacing-small 0 $spacing-extra-small 0;
+  cursor: pointer;
+  &:hover{
+    background-color: $color-palette-blue-tint-10;
+  }
+}
+
+.mrc-ui-sidebar-icon-title {
+  font-size: $font-size-10;
+  color: $color-contrast-white;
+  font-weight: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 $spacing-small;
 }

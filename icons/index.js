@@ -17,6 +17,7 @@ export const COLOR = {
 export const SIZE = {
     XSMALL: 'xsmall',
     SMALL: 'small',
+    SIDEBAR: 'sidebar',
 };
 
 export const STROKE_WIDTH = {

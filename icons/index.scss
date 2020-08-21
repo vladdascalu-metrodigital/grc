@@ -81,3 +81,8 @@ $icons-color-mapping: (
 .mrc-ui-icon-svg-size-xsmall {
   font-size: 1.3125rem;
 }
+
+.mrc-ui-icon-circle-size-sidebar,
+.mrc-ui-icon-svg-size-sidebar {
+  font-size: 4rem; // determines width/height!
+}
