@@ -1,12 +1,25 @@
 @import '../lib/scss/colors';
 @import '../lib/scss/variables';
+@import '../lib/scss/typography';
 
 .mrc-ui-pill {
   border-width: 1px;
   border-style: solid;
   border-radius: 1em;
-  font-size: .75em;
+  font-size: .875em;
   font-weight: bold;
+  line-height: 1;
+  padding: .3em .75em .25em;
+  position: relative;
+  top: -.075em;
+}
+
+.mrc-ui-pill + .mrc-ui-pill {
+  margin-left: .875ch;
+}
+
+.mrc-ui-pill-small {
+  font-size: .75em;
   padding: .125em .75em;
 }
 
@@ -20,4 +33,18 @@
   background-color: $color-palette-green-tint-90;
   border-color: $color-palette-green-shade-20;
   color: $color-palette-green-shade-20;
+}
+
+.mrc-ui-pill-title {
+  @include typo-small-caps;
+  font-weight: normal;
+  margin-right: $spacing-small;
+}
+
+.mrc-ui-pill-remove {
+  margin-left: $spacing-small;
+}
+
+.mrc-ui-pill-remove:hover .mrc-ui-icon-fill {
+  fill: $color-success;
 }

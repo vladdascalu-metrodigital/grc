@@ -11,6 +11,7 @@ import ArrowRightOutlinedIcon from '../icons/ArrowUpOutlinedIcon';
 import ArrowUpOutlinedIcon from '../icons/ArrowRightOutlinedIcon';
 import BusinessIcon from '../icons/BusinessIcon';
 import CalendarIcon from '../icons/CalendarIcon';
+import CancelIcon from '../icons/CancelIcon';
 import CheckmarkFilledIcon from '../icons/CheckmarkFilledIcon';
 import CheckSmallFilledIcon from '../icons/CheckSmallFilledIcon';
 import ChevronRightIcon from '../icons/ChevronRightIcon';
@@ -48,6 +49,7 @@ storiesOf('Fundamentals/Icons', module)
                     <ArrowUpOutlinedIcon color={color} size={size} />
                     <BusinessIcon color={color} size={size} />
                     <CalendarIcon color={color} size={size} />
+                    <CancelIcon color={color} size={size} />
                     <CheckmarkFilledIcon color={color} size={size} />
                     <CheckSmallFilledIcon color={color} size={size} />
                     <ChevronRightIcon color={color} size={size} />
@@ -64,11 +66,24 @@ storiesOf('Fundamentals/Icons', module)
             </MainContent>
         );
     })
-    .add('sizes', () => (
+    .add('Sizes', () => (
         <React.Fragment>
             <p>Change the size via the size property:</p>
             <BusinessIcon size={SIZE.XSMALL} />
             <BusinessIcon size={SIZE.SMALL} />
             <BusinessIcon />
+        </React.Fragment>
+    ))
+    .add('Inline Size', () => (
+        <React.Fragment>
+            <h1>
+                This is an inline <CancelIcon size="inline" /> Icon
+            </h1>
+            <h2>
+                This is an inline <CancelIcon size="inline" /> Icon
+            </h2>
+            <p>
+                This is an inline <CancelIcon size="inline" /> Icon
+            </p>
         </React.Fragment>
     ));
