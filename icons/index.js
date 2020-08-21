@@ -24,6 +24,7 @@ export const SIZE = {
 };
 
 export const STROKE_WIDTH = {
+    MIDI: 'midi',
     MEDIUM: 'medium',
 };
 
@@ -35,11 +36,15 @@ export function iconClassNames(props) {
         'mrc-ui-icon mrc-ui-icon-circle',
         size && 'mrc-ui-icon-size-' + size,
         color && 'mrc-ui-icon-circle-color-' + color,
+        strokeWidth && 'mrc-ui-icon-circle-color-' + strokeWidth,
         {
             'mrc-ui-icon mrc-ui-icon-circle-width-medium': strokeWidth === STROKE_WIDTH.MEDIUM,
+            'mrc-ui-icon mrc-ui-icon-circle-width-midi': strokeWidth === STROKE_WIDTH.MIDI,
         }
     );
+
     let svgClassName = classnames('mrc-ui-icon-svg', size && 'mrc-ui-icon-size-' + size);
+    let widthToStrokeClassName = classnames(strokeWidth && 'mrc-ui-icon-stroke-width-' + strokeWidth);
     let colorToStrokeClassName = classnames(
         'mrc-ui-icon-stroke',
         stroke && 'mrc-ui-icon-stroke-' + stroke,
@@ -56,6 +61,7 @@ export function iconClassNames(props) {
         svgClassName,
         colorToStrokeClassName,
         colorToFillClassName,
+        widthToStrokeClassName,
     };
 }
 
@@ -72,6 +78,6 @@ export const iconPropTypes = {
         'disabled',
         'light-red',
     ]),
-    strokeWidth: PropTypes.oneOf(['thin', 'medium']),
+    strokeWidth: PropTypes.oneOf(['thin', 'medium', 'midi']),
     size: PropTypes.oneOf(['small', 'xsmall']),
 };

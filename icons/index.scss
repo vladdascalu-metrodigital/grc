@@ -22,6 +22,10 @@
   border-width: $border-width-medium;
 }
 
+.mrc-ui-icon-circle-width-midi {
+  border-width: 1.5px;
+}
+
 .mrc-ui-icon-svg {
   font-size: 2.875rem;
   width: 1em;
@@ -92,4 +96,14 @@ $icons-color-mapping: (
   font-size: 1em;
   top: -.1em;
   vertical-align: middle;
+}
+
+// stroke widths
+
+.mrc-ui-icon-stroke-width-midi {
+  stroke-width: 1.5px;
+}
+
+.mrc-ui-icon-stroke-width-medium {
+  stroke-width: $border-width-medium;
 }

@@ -18,6 +18,7 @@ import ChevronRightIcon from '../icons/ChevronRightIcon';
 import ChevronRightSmallIcon from '../icons/ChevronRightSmallIcon';
 import MoreIcon from '../icons/MoreIcon';
 import PlusIcon from '../icons/PlusIcon';
+import PlusIconStroke from '../icons/PlusIconStroke';
 import PrepaymentIcon from '../icons/PrepaymentIcon';
 import ProfileIcon from '../icons/ProfileIcon';
 import RocketIcon from '../icons/RocketIcon';
@@ -57,6 +58,7 @@ storiesOf('Fundamentals/Icons', module)
                     <ChevronRightSmallIcon color={color} size={size} />
                     <MoreIcon color={color} size={size} />
                     <PlusIcon color={color} size={size} />
+                    <PlusIconStroke color={color} size={size} />
                     <PrepaymentIcon color={color} size={size} />
                     <ProfileIcon color={color} size={size} />
                     <RocketIcon color={color} size={size} />
