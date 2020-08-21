@@ -55,6 +55,12 @@
   min-height: $height-2;
 }
 
+.mrc-ui-btn-small-round {
+  padding: $spacing-none $spacing-medium;
+  min-height: $height-2;
+  border-radius: $border-radius-large;
+}
+
 .mrc-ui-btn-large {
   padding: $spacing-none $spacing-extra-large;
   min-height: $height-3;

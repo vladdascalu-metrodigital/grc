@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import './index.scss';
@@ -14,6 +15,7 @@ const COLOR = {
 
 const SIZE = {
     SMALL: 'small',
+    SMALL_ROUNDER: 'small-round',
     MEDIUM: 'medium',
     LARGE: 'large',
 };
@@ -24,7 +26,7 @@ export default class Button extends Component {
     }
 
     render() {
-        const { status, icon, id, text, type, disabled, onClick, size, color, isOutlined, wide } = this.props;
+        const { status, icon, id, text, children, type, disabled, onClick, size, color, isOutlined, wide } = this.props;
         let buttonClasses;
         let iconClasses;
         // if statement for old implementation
@@ -41,6 +43,7 @@ export default class Button extends Component {
             buttonClasses = classNames(
                 'mrc-ui-btn',
                 { 'mrc-ui-btn-small': size === SIZE.SMALL },
+                { 'mrc-ui-btn-small-round': size === SIZE.SMALL_ROUNDER },
                 { 'mrc-ui-btn-large': size === SIZE.LARGE },
                 { 'mrc-ui-btn-interaction': !color || color === COLOR.INTERACTION },
                 { 'mrc-ui-btn-success': color === COLOR.SUCCESS },
@@ -55,9 +58,25 @@ export default class Button extends Component {
 
         return (
             <button id={id} className={buttonClasses} type={type || 'button'} onClick={onClick} disabled={disabled}>
-                {icon ? <img className={iconClasses} src={icon} /> : null}
-                {text}
+                {children ? children : null}
+                {icon && !children ? <img className={iconClasses} src={icon} /> : null}
+                {text && !children ? text : null}
             </button>
         );
     }
 }
+
+Button.propTypes = {
+    status: PropTypes.string,
+    icon: PropTypes.string,
+    id: PropTypes.string,
+    text: PropTypes.string,
+    children: PropTypes.node,
+    type: PropTypes.oneOf(['submit', 'button']),
+    disabled: PropTypes.bool,
+    onClick: PropTypes.func,
+    size: PropTypes.oneOf(['small', 'small-round', 'medium', 'large']),
+    color: PropTypes.oneOf(['interaction', 'success', 'neutral', 'danger']),
+    isOutlined: PropTypes.bool,
+    wide: PropTypes.bool,
+};
