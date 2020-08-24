@@ -109,18 +109,18 @@ export default class CreditTableRowApproval extends Component {
                 _.get(customer, 'limit.wish.amount') === 0 &&
                 _.isNil(_.get(customer, 'limit.wish.product')) &&
                 !isCashCustomer);
+        const isPrepaymentInWish = _.get(customer, 'limit.wish.creditOption') === 'PREPAYMENT';
         const isNoChangeInWish =
             (_.isNil(_.get(customer, 'limit.wish.amount')) && _.isNil(_.get(customer, 'limit.wish.product'))) ||
-            isPrepaymentCustomer;
-        const isPrepaymentInWish = _.get(customer, 'limit.wish.creditOption') === 'PREPAYMENT';
+            (isPrepaymentCustomer && (isPrepaymentInWish || isPrepaymentRequest));
 
         // new data flag
+        const isPrepaymentInNew = requestsPrePayment;
         const isNoChangeInNew =
             (limitType === 'CURRENT' &&
                 paymentMethodType === 'CURRENT' &&
                 _.isNil(_.get(customer, 'limit.new.amount'))) ||
-            isPrepaymentCustomer;
-        const isPrepaymentInNew = requestsPrePayment;
+            (isPrepaymentCustomer && (requestsPrePayment || isPrepaymentRequest));
         const newCreditData = this.retrieveNewCreditData(customer, isNoChangeInNew, limitType, paymentMethodType);
 
         const refinedCanToggle = isPrepaymentRequest ? isBlocked : canToggle;

@@ -104,6 +104,7 @@ export default class CreditTableRowHistory extends Component {
 
                             <Table.D rowSpan="2">
                                 <CRTableCellExpiry
+                                    country={country}
                                     expiryLimit={_.get(customer, 'limit.old.expiry.amount')}
                                     expiryDate={_.get(customer, 'limit.old.expiry.date')}
                                     color={'blue'}
@@ -155,6 +156,7 @@ export default class CreditTableRowHistory extends Component {
 
                             <Table.D>
                                 <CRTableCellExpiry
+                                    country={country}
                                     expiryLimit={_.get(customer, 'limit.wish.expiry.amount')}
                                     expiryDate={_.get(customer, 'limit.wish.expiry.date')}
                                 />
@@ -221,6 +223,7 @@ export default class CreditTableRowHistory extends Component {
 
                             <Table.D>
                                 <CRTableCellExpiry
+                                    country={country}
                                     expiryLimit={_.get(customer, 'limit.current.expiry.amount')}
                                     expiryDate={_.get(customer, 'limit.current.expiry.date')}
                                     color={isCreditDataInRed ? 'red' : 'green'}
@@ -316,6 +319,7 @@ export default class CreditTableRowHistory extends Component {
 
                             <Table.D>
                                 <CRTableCellExpiry
+                                    country={country}
                                     expiryLimit={_.get(customer, 'limit.old.expiry.amount')}
                                     expiryDate={_.get(customer, 'limit.old.expiry.date')}
                                     color={'blue'}
@@ -356,6 +360,7 @@ export default class CreditTableRowHistory extends Component {
 
                             <Table.D>
                                 <CRTableCellExpiry
+                                    country={country}
                                     expiryLimit={_.get(customer, 'limit.current.expiry.amount')}
                                     expiryDate={_.get(customer, 'limit.current.expiry.date')}
                                     color={isCreditDataInRed ? 'red' : 'green'}
@@ -453,6 +458,7 @@ export default class CreditTableRowHistory extends Component {
 
                             <Table.D>
                                 <CRTableCellExpiry
+                                    country={country}
                                     expiryLimit={_.get(customer, 'limit.old.expiry.amount')}
                                     expiryDate={_.get(customer, 'limit.old.expiry.date')}
                                     color={'blue'}
@@ -500,6 +506,7 @@ export default class CreditTableRowHistory extends Component {
 
                             <Table.D>
                                 <CRTableCellExpiry
+                                    country={country}
                                     expiryLimit={_.get(customer, 'limit.current.expiry.amount')}
                                     expiryDate={_.get(customer, 'limit.current.expiry.date')}
                                     color={isCreditDataInRed ? 'red' : 'green'}
