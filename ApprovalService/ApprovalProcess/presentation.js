@@ -774,6 +774,8 @@ export class ApprovalProcessPresentation extends Component {
 
         const isPrepayment = _.get(process, 'request.isPrepayment');
         const isPrepaymentEnabled =
+            this.props.countriesWithPrepayment !== undefined &&
+            this.props.countriesWithPrepayment !== null &&
             this.props.countriesWithPrepayment.length > 0 &&
             this.props.countriesWithPrepayment.includes(process.request.country);
         return (

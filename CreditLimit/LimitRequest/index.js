@@ -505,6 +505,8 @@ export default class LimitRequestLayout extends Component {
             this.props.request.data.requestDisabled;
         const dateFormat = this.getDateFormatString();
         const isPrepaymentEnabled =
+            this.props.countriesWithPrepayment !== undefined &&
+            this.props.countriesWithPrepayment !== null &&
             this.props.countriesWithPrepayment.length > 0 &&
             this.props.countriesWithPrepayment.includes(_.get(request, 'requestedCustomerId.country'));
         return (
