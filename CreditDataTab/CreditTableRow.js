@@ -52,6 +52,10 @@ export default class CreditTableRow extends Component {
         );
     }
 
+    isPrepaymentMarked(customer) {
+        return _.get(customer, 'limit.creditOption') === 'PREPAYMENT';
+    }
+
     render() {
         const { parent, customer, isZebra } = this.props;
         const blockingInfo = _.get(customer, 'blockingInfo');
@@ -69,10 +73,12 @@ export default class CreditTableRow extends Component {
 
         if (isApproval(parent)) {
             const requestsCash = this.isCashCustomerMarked(customer);
-            return <CreditTableRowApproval {...{ ...this.props, ...rowProps, requestsCash }} />;
+            const requestsPrePayment = this.isPrepaymentMarked(customer);
+            return <CreditTableRowApproval {...{ ...this.props, ...rowProps, requestsCash, requestsPrePayment }} />;
         } else if (isCreditLimit(parent)) {
             const requestsCash = this.isCashCustomerMarked(customer);
-            return <CreditTableRowCreditLimit {...{ ...this.props, ...rowProps, requestsCash }} />;
+            const requestsPrePayment = this.isPrepaymentMarked(customer);
+            return <CreditTableRowCreditLimit {...{ ...this.props, ...rowProps, requestsCash, requestsPrePayment }} />;
         } else if (isHistory(parent)) {
             return <CreditTableRowHistory {...{ ...this.props, ...rowProps }} />;
         } else if (isCreditCorrection(parent)) {
@@ -104,4 +110,5 @@ CreditTableRow.propTypes = {
     canCorrect: PropTypes.bool, // creditcorrection
     canBlock: PropTypes.bool, // creditcorrection
     isPrepaymentRequest: PropTypes.bool,
+    isPrepaymentEnabled: PropTypes.bool, // creditlimit, approval
 };

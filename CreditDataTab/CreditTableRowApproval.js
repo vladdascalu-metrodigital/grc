@@ -75,6 +75,7 @@ export default class CreditTableRowApproval extends Component {
 
         const {
             requestsCash,
+            requestsPrePayment,
             customer,
             country,
             id,
@@ -119,7 +120,7 @@ export default class CreditTableRowApproval extends Component {
                 paymentMethodType === 'CURRENT' &&
                 _.isNil(_.get(customer, 'limit.new.amount'))) ||
             isPrepaymentCustomer;
-        const isPrepaymentInNew = _.get(customer, 'limit.creditOption') === 'PREPAYMENT';
+        const isPrepaymentInNew = requestsPrePayment;
         const newCreditData = this.retrieveNewCreditData(customer, isNoChangeInNew, limitType, paymentMethodType);
 
         const refinedCanToggle = isPrepaymentRequest ? isBlocked : canToggle;
@@ -197,17 +198,17 @@ export default class CreditTableRowApproval extends Component {
                         </React.Fragment>
                     )}
 
-                    {wishedToCash && !isCashCustomer ? (
+                    {isPrepaymentInWish && !isPrepaymentCustomer ? (
                         <Table.D colSpan="3">
-                            <CRTableCellBiggerText text={ts.cash} color={'blue'} />
+                            <CRTableCellBiggerText text={ts.prepayment} color={'grey'} />
+                        </Table.D>
+                    ) : wishedToCash && !isCashCustomer ? (
+                        <Table.D colSpan="3">
+                            <CRTableCellBiggerText text={ts.cash} color={'grey'} />
                         </Table.D>
                     ) : (wishedToCash && isCashCustomer) || (!isCashCustomer && isNoChangeInWish) ? (
                         <Table.D colSpan="3">
-                            <CRTableCellBiggerText text={ts.nochange} color={'blue'} />
-                        </Table.D>
-                    ) : isPrepaymentInWish ? (
-                        <Table.D colSpan="3">
-                            <CRTableCellBiggerText text={ts.prepayment} color={'blue'} />
+                            <CRTableCellBiggerText text={ts.nochange} color={'grey'} />
                         </Table.D>
                     ) : (
                         <React.Fragment>
@@ -260,17 +261,19 @@ export default class CreditTableRowApproval extends Component {
                     onMouseEnter={refinedCanToggle ? () => onHover(true) : null}
                     onMouseLeave={refinedCanToggle ? () => onHover(false) : null}
                 >
-                    {requestsCash && !isCashCustomer ? (
+                    {isPrepaymentInNew && !isPrepaymentCustomer ? (
+                        <Table.D colSpan="3" borderFix>
+                            <CRTableCellBiggerText text={ts.prepayment} color={'green'} />
+                        </Table.D>
+                    ) : requestsCash && !isCashCustomer ? (
                         <Table.D colSpan="3">
                             <CRTableCellBiggerText text={ts.cash} color={'green'} />
                         </Table.D>
-                    ) : (requestsCash && isCashCustomer) || (!isCashCustomer && isNoChangeInNew) ? (
+                    ) : (requestsCash && isCashCustomer) ||
+                      (requestsPrePayment && isPrepaymentCustomer) ||
+                      (!isCashCustomer && isNoChangeInNew) ? (
                         <Table.D colSpan="3" borderFix>
                             <CRTableCellBiggerText text={ts.nochange} color={'green'} />
-                        </Table.D>
-                    ) : isPrepaymentInNew ? (
-                        <Table.D colSpan="3" borderFix>
-                            <CRTableCellBiggerText text={ts.prepayment} color={'green'} />
                         </Table.D>
                     ) : (
                         <React.Fragment>

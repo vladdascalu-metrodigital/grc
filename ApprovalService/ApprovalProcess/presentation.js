@@ -48,7 +48,7 @@ import {
 import CreditDataTab from '../../CreditDataTab';
 import { displayName } from '../../Util';
 import { createBlockingInfo } from '../../Util/blockingInfoUtils';
-import { dataForPrepaymentWithPrefix } from '../../CreditDataTab/creditDataTabUtil';
+import { dataForPrepayment, dataForPrepaymentWithPrefix } from '../../Util/creditDataUtils';
 
 const SENT_BACK = 'SENT_BACK';
 const INFO_PROVIDED = 'INFO_PROVIDED';
@@ -773,7 +773,9 @@ export class ApprovalProcessPresentation extends Component {
             !process.editableByCurrentUser;
 
         const isPrepayment = _.get(process, 'request.isPrepayment');
-
+        const isPrepaymentEnabled =
+            this.props.countriesWithPrepayment.length > 0 &&
+            this.props.countriesWithPrepayment.includes(process.request.country);
         return (
             <CreditDataTab
                 country={process.request.country}
@@ -803,6 +805,23 @@ export class ApprovalProcessPresentation extends Component {
 
                     const itemId = _.get(item, 'id');
                     const availablePayments = _.get(item, 'customer.availablePayments');
+                    const isPrepaymentCustomer = dataForPrepayment(
+                        _.get(item, 'customer.creditLimit'),
+                        _.get(item, 'customer.paymentAllowanceCd'),
+                        _.get(item, 'customer.creditSettleTypeCd'),
+                        _.get(item, 'customer.creditSettlePeriodCd'),
+                        _.get(item, 'customer.creditSettleFrequencyCd')
+                    );
+                    const customerWishCreditOption = dataForPrepaymentWithPrefix(
+                        process.request.country,
+                        _.get(item, 'requestedCreditData.amount'),
+                        '3',
+                        _.get(item, 'requestedCreditData.creditProduct'),
+                        _.get(item, 'requestedCreditData.creditPeriod'),
+                        _.get(item, 'requestedCreditData.debitType')
+                    )
+                        ? 'PREPAYMENT'
+                        : undefined;
                     return {
                         onLimitChange: (amount, creditProduct, creditPeriod, debitType, limitType, paymentType) => {
                             this.props.setCreditDataWithType(
@@ -891,41 +910,55 @@ export class ApprovalProcessPresentation extends Component {
                         ),
                         availablePayments: availablePayments,
                         limit: {
-                            current: {
-                                amount: _.get(item, 'currentCreditData.amount'),
-                                product: _.get(item, 'currentCreditData.creditProduct'),
-                                period: _.get(item, 'currentCreditData.creditPeriod'),
-                                debitType: _.get(item, 'currentCreditData.debitType'),
-                                expiry: {
-                                    date: _.get(item, 'currentLimitExpiry.limitExpiryDate'),
-                                    amount: _.get(item, 'currentLimitExpiry.resetToLimitAmount'),
-                                },
-                            },
-                            wish: {
-                                amount: _.get(item, 'requestedCreditData.amount'),
-                                product: _.get(item, 'requestedCreditData.creditProduct'),
-                                period: _.get(item, 'requestedCreditData.creditPeriod'),
-                                debitType: _.get(item, 'requestedCreditData.debitType'),
-                                expiry: {
-                                    date: _.isNil(_.get(item, 'requestedCreditData.amount'))
-                                        ? null
-                                        : _.get(item, 'wishLimitExpiry.limitExpiryDate'),
-                                    amount: _.isNil(_.get(item, 'requestedCreditData.amount'))
-                                        ? 0
-                                        : _.get(item, 'wishLimitExpiry.resetToLimitAmount'),
-                                },
-                                creditOption:
-                                    isPrepayment &&
-                                    dataForPrepaymentWithPrefix(
-                                        _.get(item, 'requestedCreditData.amount'),
-                                        '3',
-                                        _.get(item, 'requestedCreditData.creditProduct'),
-                                        _.get(item, 'requestedCreditData.creditPeriod'),
-                                        _.get(item, 'requestedCreditData.debitType')
-                                    )
-                                        ? 'PREPAYMENT'
-                                        : undefined,
-                            },
+                            current: isPrepaymentCustomer
+                                ? {
+                                      amount: null,
+                                      product: null,
+                                      period: null,
+                                      debitType: null,
+                                      expiry: {
+                                          date: null,
+                                          amount: null,
+                                      },
+                                  }
+                                : {
+                                      amount: _.get(item, 'currentCreditData.amount'),
+                                      product: _.get(item, 'currentCreditData.creditProduct'),
+                                      period: _.get(item, 'currentCreditData.creditPeriod'),
+                                      debitType: _.get(item, 'currentCreditData.debitType'),
+                                      expiry: {
+                                          date: _.get(item, 'currentLimitExpiry.limitExpiryDate'),
+                                          amount: _.get(item, 'currentLimitExpiry.resetToLimitAmount'),
+                                      },
+                                  },
+                            wish:
+                                customerWishCreditOption === 'PREPAYMENT'
+                                    ? {
+                                          amount: null,
+                                          product: null,
+                                          period: null,
+                                          debitType: null,
+                                          expiry: {
+                                              date: null,
+                                              amount: null,
+                                          },
+                                          creditOption: customerWishCreditOption,
+                                      }
+                                    : {
+                                          amount: _.get(item, 'requestedCreditData.amount'),
+                                          product: _.get(item, 'requestedCreditData.creditProduct'),
+                                          period: _.get(item, 'requestedCreditData.creditPeriod'),
+                                          debitType: _.get(item, 'requestedCreditData.debitType'),
+                                          expiry: {
+                                              date: _.isNil(_.get(item, 'requestedCreditData.amount'))
+                                                  ? null
+                                                  : _.get(item, 'wishLimitExpiry.limitExpiryDate'),
+                                              amount: _.isNil(_.get(item, 'requestedCreditData.amount'))
+                                                  ? 0
+                                                  : _.get(item, 'wishLimitExpiry.resetToLimitAmount'),
+                                          },
+                                          creditOption: customerWishCreditOption,
+                                      },
                             applied:
                                 _.get(item, 'lastAppliedType') === 'NEW'
                                     ? {
@@ -938,17 +971,16 @@ export class ApprovalProcessPresentation extends Component {
                                               amount: _.get(item, 'appliedLimitExpiry.resetToLimitAmount'),
                                           },
                                           position: process.lastApproverPosition,
-                                          creditOption:
-                                              isPrepayment &&
-                                              dataForPrepaymentWithPrefix(
-                                                  _.get(item, 'approvedCreditData.amount'),
-                                                  '3',
-                                                  _.get(item, 'approvedCreditData.creditProduct'),
-                                                  _.get(item, 'approvedCreditData.creditPeriod'),
-                                                  _.get(item, 'approvedCreditData.debitType')
-                                              )
-                                                  ? 'PREPAYMENT'
-                                                  : undefined,
+                                          creditOption: dataForPrepaymentWithPrefix(
+                                              process.request.country,
+                                              _.get(item, 'approvedCreditData.amount'),
+                                              '3',
+                                              _.get(item, 'approvedCreditData.creditProduct'),
+                                              _.get(item, 'approvedCreditData.creditPeriod'),
+                                              _.get(item, 'approvedCreditData.debitType')
+                                          )
+                                              ? 'PREPAYMENT'
+                                              : undefined,
                                       }
                                     : {
                                           amount: null,
@@ -1005,14 +1037,7 @@ export class ApprovalProcessPresentation extends Component {
                         isCashCustomer:
                             _.isNil(_.get(item, 'customer.paymentAllowanceCd')) ||
                             _.get(item, 'customer.paymentAllowanceCd') !== '3',
-                        isPrepaymentCustomer:
-                            _.get(item, 'customer.creditLimit') == '0' &&
-                            _.get(item, 'customer.paymentAllowanceCd') === '3' &&
-                            _.get(item, 'customer.creditSettleTypeCd') === '2' &&
-                            _.get(item, 'customer.creditSettlePeriodCd') === '0' &&
-                            (_.isNil(item, 'customer.creditSettleFrequencyCd') ||
-                                !_.get(item, 'customer.creditSettleFrequencyCd') ||
-                                _.get(item, 'customer.creditSettleFrequencyCd') == ''),
+                        isPrepaymentCustomer: isPrepaymentCustomer,
                         limitExhaustion: _.get(item, 'customer.limitExhaustion'),
                     };
                 })}
@@ -1045,6 +1070,7 @@ export class ApprovalProcessPresentation extends Component {
                     util.isContractingStep(this.state.currentStepType) && process.editableByCurrentUser
                 }
                 isPrepaymentRequest={isPrepayment}
+                isPrepaymentEnabled={isPrepaymentEnabled}
             />
         );
     }
@@ -1235,6 +1261,17 @@ export class ApprovalProcessPresentation extends Component {
             const _limitType = _.get(item, 'limitType');
             const _paymentMethodType = _.get(item, 'paymentMethodType');
             if (_limitType !== 'CURRENT' || _paymentMethodType !== 'CURRENT') {
+                return true;
+            }
+
+            const _isPrepaymentCustomer = dataForPrepayment(
+                _.get(item, 'customer.creditLimit'),
+                _.get(item, 'customer.paymentAllowanceCd'),
+                _.get(item, 'customer.creditSettleTypeCd'),
+                _.get(item, 'customer.creditSettlePeriodCd'),
+                _.get(item, 'customer.creditSettleFrequencyCd')
+            );
+            if (_.get(item, 'creditOption') === 'PREPAYMENT' && !_isPrepaymentCustomer) {
                 return true;
             }
 
@@ -1588,6 +1625,7 @@ ApprovalProcessPresentation.propTypes = {
     setLastCreditData: PropTypes.func,
     getValidMccScore: PropTypes.func,
     countriesWithDifferentBlockingCodes: PropTypes.array,
+    countriesWithPrepayment: PropTypes.array,
     topManagementTabEnabledCountries: PropTypes.array,
     setCreditDataWithType: PropTypes.func,
     setCreditDataAndExpiry: PropTypes.func,

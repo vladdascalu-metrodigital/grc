@@ -4,8 +4,8 @@ import CheckCard from '../CheckCard';
 import FormSection from '../FormSection';
 
 import * as _ from 'lodash';
-import { getDefaultPayment } from '../Util/creditDataUtils';
-import { isApproval } from './creditDataTabUtil';
+import { getDefaultPayment, getPrepaymentConfig } from '../Util/creditDataUtils';
+import { isApproval, isPrepaymentAllowedForCountry } from './creditDataTabUtil';
 
 export default class PaymentSection extends Component {
     constructor(props) {
@@ -15,22 +15,36 @@ export default class PaymentSection extends Component {
     getTypeToInitializeCredit(customer, parent) {
         const currentProduct = _.get(customer, 'limit.current.product');
         const currentAmount = _.get(customer, 'limit.current.amount');
-        const hasCurrentPaymentMethod = !_.isNil(currentAmount) && !_.isNil(currentProduct) && !customer.isCashCustomer;
+        const hasCurrentPaymentMethod =
+            !_.isNil(currentAmount) &&
+            !_.isNil(currentProduct) &&
+            !customer.isCashCustomer &&
+            !customer.isPrepaymentCustomer;
 
         return hasCurrentPaymentMethod ? 'CURRENT' : isApproval(parent) ? 'NEW' : 'WISH';
     }
 
     render() {
-        const { customer, isCashCustomerRequest, country, translations } = this.props;
+        const {
+            customer,
+            isCashCustomerRequest,
+            isPrePaymentCustomerRequest,
+            isPrepaymentEnabled,
+            country,
+            translations,
+        } = this.props;
         const ts = translations;
-        const isNewCredit = !isCashCustomerRequest;
+        const isNewCredit = !isCashCustomerRequest && !isPrePaymentCustomerRequest;
         const readOnly = _.get(customer, 'limit.readOnly') === true;
 
         const applyType = this.getTypeToInitializeCredit(customer);
         // TODO: To Cash -- should be checked which data is correct if in future this function is implemented
         const cashAmount = customer.isCashCustomer ? null : 0;
-        const creditOption = 'CREDITTOCASH';
+        const currentAmount = _.get(customer, 'limit.current.amount');
+        const isPrepaymentAllowed = isPrepaymentAllowedForCountry(country, customer.isCashCustomer, currentAmount);
+        const prepaymentConfig = getPrepaymentConfig(country);
 
+        // cash and prepayment customer will use defaultPayment
         const defaultPayment = getDefaultPayment(country, customer.availablePayments);
         const defaultProduct = applyType === 'CURRENT' ? null : defaultPayment.defaultProduct;
         const defaultPeriod = applyType === 'CURRENT' ? null : defaultPayment.defaultPeriod;
@@ -44,10 +58,30 @@ export default class PaymentSection extends Component {
                         checked={isCashCustomerRequest}
                         onClick={() => {
                             // TODO: To Cash -- currently only adapted for real cash customer, how this works must be discussed in future
-                            customer.onChangeCreditOption(cashAmount, null, null, null, creditOption);
+                            if (!isCashCustomerRequest) {
+                                customer.onChangeCreditOption(cashAmount, null, null, null, 'CREDITTOCASH');
+                            }
                         }}
                         disabled={!customer.isCashCustomer || readOnly}
                     />
+                    {isPrepaymentEnabled ? (
+                        <CheckCard
+                            title={ts.prepayment}
+                            checked={isPrePaymentCustomerRequest}
+                            onClick={() => {
+                                if (!isPrePaymentCustomerRequest) {
+                                    customer.onChangeCreditOption(
+                                        customer.isPrepaymentCustomer ? null : 0,
+                                        customer.isPrepaymentCustomer ? null : prepaymentConfig.product,
+                                        customer.isPrepaymentCustomer ? null : prepaymentConfig.period,
+                                        null,
+                                        'PREPAYMENT'
+                                    );
+                                }
+                            }}
+                            disabled={!isPrepaymentAllowed || readOnly}
+                        />
+                    ) : null}
                     <CheckCard
                         title={ts.credit}
                         checked={isNewCredit}

@@ -129,7 +129,7 @@ export default class CreditTableRowHistory extends Component {
 
                     {isNoChangeInWish ? (
                         <Table.D colSpan="3">
-                            <CRTableCellBiggerText text={ts.nochange} color={'blue'} />
+                            <CRTableCellBiggerText text={ts.nochange} color={'grey'} />
                         </Table.D>
                     ) : !_.isNil(blockingOption) ? (
                         <Table.D colSpan="3" borderFix>
@@ -140,7 +140,7 @@ export default class CreditTableRowHistory extends Component {
                         </Table.D>
                     ) : isPrepaymentInWish ? (
                         <Table.D colSpan="3">
-                            <CRTableCellBiggerText text={ts.prepayment} color={'blue'} />
+                            <CRTableCellBiggerText text={ts.prepayment} color={'grey'} />
                         </Table.D>
                     ) : (
                         <React.Fragment>
@@ -194,7 +194,7 @@ export default class CreditTableRowHistory extends Component {
                 >
                     {isNoChangeInCurrent ? (
                         <Table.D colSpan="3" borderFix>
-                            <CRTableCellBiggerText text={ts.nochange} color={'blue'} />
+                            <CRTableCellBiggerText text={ts.nochange} color={'green'} />
                         </Table.D>
                     ) : !_.isNil(blockingOption) ? (
                         <Table.D colSpan="3" borderFix>
@@ -477,7 +477,7 @@ export default class CreditTableRowHistory extends Component {
                     )}
                     {isNoChangeInCurrent ? (
                         <Table.D colSpan="3" borderFix>
-                            <CRTableCellBiggerText text={ts.nochange} color={'blue'} />
+                            <CRTableCellBiggerText text={ts.nochange} color={'green'} />
                         </Table.D>
                     ) : !_.isNil(blockingOption) ? (
                         <Table.D colSpan="3" borderFix>

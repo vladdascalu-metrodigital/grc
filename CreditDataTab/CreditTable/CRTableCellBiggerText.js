@@ -11,6 +11,7 @@ export default class CRTableCellBiggerText extends PureComponent {
             'mrc-ui-crtable-cell-highlight-color-green': color === 'green',
             'mrc-ui-crtable-cell-highlight-color-blue': color === 'blue',
             'mrc-ui-crtable-cell-highlight-color-red': color === 'red',
+            'mrc-ui-crtable-cell-highlight-color-grey': color === 'grey',
         });
         return <div className={className}>{text}</div>;
     }

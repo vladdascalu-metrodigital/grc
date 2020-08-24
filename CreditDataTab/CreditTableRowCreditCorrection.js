@@ -122,7 +122,7 @@ export default class CreditTableRowCreditCorrection extends Component {
                         </Table.D>
                     ) : isNoChange ? (
                         <Table.D colSpan="3">
-                            <CRTableCellBiggerText text={ts.nochange} color={'blue'} />
+                            <CRTableCellBiggerText text={ts.nochange} color={'green'} />
                         </Table.D>
                     ) : hasBlockingOption ? (
                         <Table.D colSpan="3">

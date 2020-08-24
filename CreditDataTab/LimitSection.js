@@ -59,7 +59,7 @@ export default class LimitSection extends Component {
             getPaymentDataByType(customer, paymentMethodType, 'debitType')
         );
 
-        const hasCurrentLimit = !_.isNil(currentAmount) && !customer.isCashCustomer;
+        const hasCurrentLimit = !_.isNil(currentAmount) && !customer.isCashCustomer && !customer.isPrepaymentCustomer;
         const isCurrentLimit = _.isNil(wishedAmount) && limitType === 'CURRENT' && hasCurrentLimit;
         const isNewRequest = !isCurrentLimit || !hasCurrentLimit;
         const isWithoutExpiry = _.isNil(wishedExpiryDate);
@@ -273,7 +273,7 @@ export default class LimitSection extends Component {
         // const newExpiryAmount = _.get(customer, 'limit.new.expiry.amount');
         const newAmount = _.get(customer, 'limit.new.amount');
 
-        const hasCurrentLimit = !_.isNil(currentAmount) && !customer.isCashCustomer;
+        const hasCurrentLimit = !_.isNil(currentAmount) && !customer.isCashCustomer && !customer.isPrepaymentCustomer;
         const isCurrentLimit = _.isNil(newAmount) && limitType === 'CURRENT' && hasCurrentLimit;
         const hasWishedRequest = !_.isNil(wishedAmount);
         const isWishedRequest = (!isCurrentLimit || !hasCurrentLimit) && limitType === 'WISH' && !_.isNil(wishedAmount);

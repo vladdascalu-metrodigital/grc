@@ -16,6 +16,7 @@ export default class CreditTableRowCreditLimit extends Component {
         const _current = (customer, path) => _.get(customer, 'limit.current.' + path);
         const {
             requestsCash,
+            requestsPrePayment,
             customer,
             country,
             id,
@@ -34,6 +35,7 @@ export default class CreditTableRowCreditLimit extends Component {
         const creditOption = _.get(customer, 'limit.creditOption');
 
         const isCashCustomer = customer.isCashCustomer;
+        const isPrepaymentCustomer = customer.isPrepaymentCustomer;
         const blockingInfo = customer.blockingInfo;
         const isBlocked = _.isNil(blockingInfo) ? false : blockingInfo.isBlocked;
 
@@ -100,6 +102,10 @@ export default class CreditTableRowCreditLimit extends Component {
                         <Table.D colSpan="3">
                             <CRTableCellBiggerText text={ts.cash} color={'blue'} />
                         </Table.D>
+                    ) : isPrepaymentCustomer ? (
+                        <Table.D colSpan="3">
+                            <CRTableCellBiggerText text={ts.prepayment} color={'blue'} />
+                        </Table.D>
                     ) : (
                         <React.Fragment>
                             <Table.D>
@@ -133,13 +139,19 @@ export default class CreditTableRowCreditLimit extends Component {
                             </Table.D>
                         </React.Fragment>
                     )}
-                    {requestsCash && !isCashCustomer ? (
+                    {requestsPrePayment && !isPrepaymentCustomer ? (
                         <Table.D colSpan="3">
-                            <CRTableCellBiggerText text={ts.cash} color={'blue'} />
+                            <CRTableCellBiggerText text={ts.prepayment} color={'green'} />
                         </Table.D>
-                    ) : (requestsCash && isCashCustomer) || (!isCashCustomer && isNoChange) ? (
+                    ) : requestsCash && !isCashCustomer ? (
                         <Table.D colSpan="3">
-                            <CRTableCellBiggerText text={ts.nochange} color={'blue'} />
+                            <CRTableCellBiggerText text={ts.cash} color={'green'} />
+                        </Table.D>
+                    ) : (requestsCash && isCashCustomer) ||
+                      (requestsPrePayment && isPrepaymentCustomer) ||
+                      (!isCashCustomer && isNoChange) ? (
+                        <Table.D colSpan="3">
+                            <CRTableCellBiggerText text={ts.nochange} color={'green'} />
                         </Table.D>
                     ) : (
                         <React.Fragment>
@@ -149,6 +161,7 @@ export default class CreditTableRowCreditLimit extends Component {
                                     showExhausted={false}
                                     exhausted={null}
                                     limit={wishedAmount}
+                                    color={'green'}
                                 />
                             </Table.D>
                             <Table.D>
@@ -156,6 +169,7 @@ export default class CreditTableRowCreditLimit extends Component {
                                     country={country}
                                     expiryLimit={wishedExpiryAmount}
                                     expiryDate={wishedExpiryDate}
+                                    color={'green'}
                                 />
                             </Table.D>
                             <Table.D>
@@ -167,6 +181,7 @@ export default class CreditTableRowCreditLimit extends Component {
                                         ts.days
                                     )}
                                     productPaymentMethod={lookup(wishedDebitType)}
+                                    color={'green'}
                                 />
                             </Table.D>
                         </React.Fragment>
