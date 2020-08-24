@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="34px" height="34px" viewBox="0 0 34 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group</title>
+    <defs>
+        <polygon id="path-1" points="19.8050736 26.7878788 25.5000001 9.9619596 25.5000001 26.7878788 34 26.7878788 34 1.18962079e-14 22.5253675 1.18962079e-14 17.0000001 13.3939394 11.4751225 1.18962079e-14 0 1.18962079e-14 0 26.7878788 8.50049007 26.7878788 8.50049007 9.9619596 14.2375613 26.7878788"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <rect id="Rectangle" x="0" y="0" width="34" height="34"></rect>
+            <g transform="translate(0.000000, 4.000000)" id="metro-small">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="shape" fill="#FFED00" xlink:href="#path-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>

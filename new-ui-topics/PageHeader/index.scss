@@ -5,10 +5,48 @@
 .mrc-ui-pageheader {
   display: grid;
   grid-template-areas: 
-    "page-title info-area"
-    "tabs       tabs";
-  grid-template-columns: 1fr max-content;
+    "page-menu page-title info-area"
+    "tabs tabs       tabs";
+  grid-template-columns: max-content 1fr max-content;
   width: 100%;
+}
+
+@media #{$breakpoint-large} {
+  .mrc-ui-pageheader {
+    display: grid;
+    grid-template-areas: 
+      "page-title info-area"
+      "tabs       tabs";
+    grid-template-columns: 1fr max-content;
+    width: 100%;
+  }
+}
+
+.mrc-ui-pageheader-menu {
+  grid-area: page-menu;
+  padding: $spacing-medium $spacing-small;
+  cursor: pointer;
+  text-align: center;
+}
+
+.mrc-ui-pageheader-menu-burger-icon {
+  grid-area: burger;
+}
+
+.mrc-ui-pageheader-menu-metro-icon {
+  background-color: $color-brand-primary-default;
+  border-radius: $border-radius-medium;
+  margin: 0 auto;
+  padding: $spacing-small;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+}
+
+@media #{$breakpoint-large} {
+  .mrc-ui-pageheader-menu, .mrc-ui-pageheader-menu > * {
+    display: none;
+  }
 }
 
 .mrc-ui-pageheader-title {
@@ -142,21 +180,50 @@ $mrc-ui-page-header-tab-height: 2rem;
     border: 1px solid $color-interaction;
   }
 }
+
+// sidebar
+
+
+
+
 .mrc-ui-main-wapper {
-  display:grid;
-  grid-template: 
-  "sidebar header" max-content
-  "sidebar content"
-  / 96px auto;
-  min-height: 100vh;
+  display: block;
+  // grid-template: 
+  // "sidebar header" max-content
+  // "sidebar content"
+  // / 96px auto;
+  // min-height: 100vh;
 }
+
 .mrc-ui-sidebar {
   grid-area: sidebar;
   background: $color-brand-primary-default;
   text-align: center;
   color: $color-contrast-white;
   padding: 0 6px;
+  display:none;
 }
+
+.mrc-ui-sidebar-metro-icon {
+  padding: $spacing-medium;
+
+}
+
+@media #{$breakpoint-large} {
+  .mrc-ui-sidebar {
+    display: block;
+  }
+
+  .mrc-ui-main-wapper {
+    display: grid;
+    grid-template: 
+    "sidebar header" max-content
+    "sidebar content"
+    / 96px auto;
+    min-height: 100vh;
+  }
+}
+
 
 .mrc-ui-sidebar-icon {
   margin: 0.5rem auto;

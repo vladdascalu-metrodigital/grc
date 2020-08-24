@@ -15,6 +15,8 @@ import LaunchPadIcon from '../../icons/LaunchPadIcon';
 import QuickCheckIcon from '../../icons/QuickCheckIcon';
 import LimitCheckIcon from '../../icons/LimitCheckIcon';
 import CreditCorrectionIcon from '../../icons/CreditCorrectionIcon';
+import MenuIcon from '../../icons/MenuIcon';
+import SideScreenMenuEntry from '../PageHeader/SideScreenMenuEntry';
 
 import { COLOR as IC, SIZE as IS } from '../../icons/index';
 
@@ -25,9 +27,12 @@ export default class PageHeader extends Component {
         super();
         this.toggleAsideInfo = this.toggleAsideInfo.bind(this);
         this.toggleLanguageSwitch = this.toggleLanguageSwitch.bind(this);
+        this.toggleMenuSwitch = this.toggleMenuSwitch.bind(this);
+
         this.state = {
             showAsideInfo: false,
             showLanguageSwitch: false,
+            showAppSwitch: false,
         };
     }
 
@@ -43,10 +48,17 @@ export default class PageHeader extends Component {
         });
     }
 
+    toggleMenuSwitch() {
+        this.setState({
+            showAppSwitch: !this.state.showAppSwitch,
+        });
+    }
+
     render() {
         let { title, customerName, customerId, customerStatus } = this.props;
         let { showAsideInfo } = this.state;
         let { showLanguageSwitch } = this.state;
+        let { showAppSwitch } = this.state;
         let headerInfoData = {
             requestStartDate: '2020-04-12',
             // TODO: put all data here
@@ -54,7 +66,9 @@ export default class PageHeader extends Component {
         return (
             <div className="mrc-ui-main-wapper">
                 <div className="mrc-ui-sidebar">
-                    <MetroIcon size={IS.SIDEBAR} />
+                    <div className="mrc-ui-sidebar-metro-icon">
+                        <MetroIcon size={IS.SMALL} />
+                    </div>
                     <div className="mrc-ui-sidebar-icon">
                         <LaunchPadIcon color={IC.CONTRAST_WHITE} size={IS.XSMALL} />
                         <h2 className="mrc-ui-sidebar-icon-title">Launchpad</h2>
@@ -81,6 +95,14 @@ export default class PageHeader extends Component {
                     </div>
                 </div>
                 <header className={'mrc-ui-pageheader'}>
+                    <div className="mrc-ui-pageheader-menu" onClick={this.toggleMenuSwitch}>
+                        <div className="mrc-ui-pageheader-menu-metro-icon">
+                            <MetroIcon size={IS.XSMALL} />
+                        </div>
+                        <div className="mrc-ui-pageheader-menu-burger-icon">
+                            <MenuIcon size={IS.XSMALL} />
+                        </div>
+                    </div>
                     <div className="mrc-ui-pageheader-title">
                         <PageTitle
                             title={title}
@@ -129,6 +151,17 @@ export default class PageHeader extends Component {
                             <SideScreenLanguageEntry language="Deutsch" languageISO="de" />
                             <SideScreenLanguageEntry language="English" languageISO="en" />
                             <SideScreenLanguageEntry language="Russian" languageISO="ru" />
+                        </SideScreen>
+                    ) : null}
+
+                    {this.state.showAppSwitch ? (
+                        <SideScreen isShown={showAppSwitch} toggle={this.toggleMenuSwitch} title="Menu" side="left">
+                            <SideScreenMenuEntry menuTitle="LaunchPad" />
+                            <SideScreenMenuEntry menuTitle="Inbox" />
+                            <SideScreenMenuEntry menuTitle="Limit Check" />
+                            <SideScreenMenuEntry menuTitle="Quick Check" />
+                            <SideScreenMenuEntry menuTitle="Credit Correction" />
+                            <SideScreenMenuEntry menuTitle="History" />
                         </SideScreen>
                     ) : null}
                 </header>

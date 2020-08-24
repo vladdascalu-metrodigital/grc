@@ -1,0 +1,41 @@
+@import '../../lib/scss/variables';
+@import '../../lib/scss/typography';
+@import '../../lib/scss/colors';
+
+.mrc-ui-side-screen-menu-entry {
+  display: grid;
+  grid-template: 
+    'label  icon'
+    /auto   max-content;
+  align-items: center;
+  padding: $spacing-small $spacing-medium;
+  grid-gap: $spacing-small;
+  border-bottom: $border-style-default;
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:hover * {
+    color: $color-interaction;
+    border-color: $color-interaction;
+  }
+}
+
+.mrc-ui-side-screen-menu-label {
+    @include typo-small-caps;
+    grid-area: label;
+    color: $color-palette-grey-tint-40;
+    font-weight: normal;
+    font-size: $font-size-7;
+    text-transform: none;
+    letter-spacing: normal;    
+  }
+
+.mrc-ui-side-screen-menu-icon {
+    grid-area: icon;
+}
