@@ -12,8 +12,8 @@ import InputLabel from '../../InputLabel';
 import './ApprovalDock.scss';
 
 const recipients = new Map([
-    ['CC', 'CC'],
-    ['CM', 'CM'],
+    ['CC', 'Customer Consultant'],
+    ['CM', 'Credit Manager'],
 ]);
 
 export default class ApprovalDock extends PureComponent {
