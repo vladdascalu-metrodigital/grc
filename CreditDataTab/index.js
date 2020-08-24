@@ -104,6 +104,7 @@ export default class CreditDataTab extends Component {
             isPrepaymentRequest,
             canBlock,
             canCorrect,
+            isPrepaymentEnabled,
         } = this.props;
         if (_.isNil(country) || _.isNil(customers) || customers.length === 0 || historyRequestType === 'QUICK_CHECK') {
             return <MainContent>{lookup('mrc.comment.nocreditdetails')}</MainContent>;
@@ -138,6 +139,7 @@ export default class CreditDataTab extends Component {
                                               isPrepaymentRequest={isPrepaymentRequest}
                                               canBlock={canBlock}
                                               canCorrect={canCorrect}
+                                              isPrepaymentEnabled={isPrepaymentEnabled}
                                           />
                                       ))
                                     : null}
@@ -341,4 +343,5 @@ CreditDataTab.propTypes = {
     canBlock: PropTypes.bool, // creditcorrection
     selectedGroupAction: PropTypes.string, // creditcorrection
     handleChangeGroupAction: PropTypes.func, // creditcorrection
+    isPrepaymentEnabled: PropTypes.bool, // creditlimit, approval
 };

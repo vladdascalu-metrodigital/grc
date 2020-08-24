@@ -62,7 +62,8 @@ export default class PaymentMethodSection extends Component {
         const wishedDebitType =
             paymentMethodType === 'CURRENT' ? null : translatePaymentIfNeeded(_.get(customer, 'limit.wish.debitType'));
 
-        const hasCurrentPaymentMethod = !_.isNil(currentProduct) && !customer.isCashCustomer;
+        const hasCurrentPaymentMethod =
+            !_.isNil(currentProduct) && !customer.isCashCustomer && !customer.isPrepaymentCustomer;
         const isCurrentPaymentMethod =
             _.isNil(wishedProduct) &&
             _.isNil(wishedPeriod) &&
@@ -320,7 +321,8 @@ export default class PaymentMethodSection extends Component {
         const newPeriod = translatePaymentIfNeeded(_.get(customer, 'limit.new.period'));
         const newDebitType = translatePaymentIfNeeded(_.get(customer, 'limit.new.debitType'));
 
-        const hasCurrentPaymentMethod = !_.isNil(currentProduct) && !customer.isCashCustomer;
+        const hasCurrentPaymentMethod =
+            !_.isNil(currentProduct) && !customer.isCashCustomer && !customer.isPrepaymentCustomer;
         const isCurrentPaymentMethod =
             _.isNil(newProduct) &&
             _.isNil(newPeriod) &&

@@ -31,7 +31,7 @@ import * as _ from 'lodash';
 import { List } from 'immutable';
 import CustomerDataGroup from '../../CustomerDataGroup';
 import { displayName } from '../../Util';
-import { dataForPrepayment } from '../../CreditDataTab/creditDataTabUtil';
+import { dataForPrepayment } from '../../Util/creditDataUtils';
 
 export default class LimitRequestLayout extends Component {
     FILE_TYPES = [''];
@@ -184,7 +184,14 @@ export default class LimitRequestLayout extends Component {
                 return true;
             }
 
-            if (_.get(item, 'creditOption') === 'PREPAYMENT') {
+            const _isPrepaymentCustomer = dataForPrepayment(
+                _.get(item, 'customer.creditLimit'),
+                _.get(item, 'customer.paymentAllowanceCd'),
+                _.get(item, 'customer.creditSettleTypeCd'),
+                _.get(item, 'customer.creditSettlePeriodCd'),
+                _.get(item, 'customer.creditSettleFrequencyCd')
+            );
+            if (_.get(item, 'creditOption') === 'PREPAYMENT' && !_isPrepaymentCustomer) {
                 return true;
             }
 
@@ -497,6 +504,11 @@ export default class LimitRequestLayout extends Component {
             this.state.canceled ||
             this.props.request.data.requestDisabled;
         const dateFormat = this.getDateFormatString();
+        const isPrepaymentEnabled =
+            this.props.countriesWithPrepayment !== undefined &&
+            this.props.countriesWithPrepayment !== null &&
+            this.props.countriesWithPrepayment.length > 0 &&
+            this.props.countriesWithPrepayment.includes(_.get(request, 'requestedCustomerId.country'));
         return (
             <CreditDataTab
                 country={_.get(request, 'requestedCustomerId.country')}
@@ -530,6 +542,13 @@ export default class LimitRequestLayout extends Component {
                                   );
                               const itemId = _.get(item, 'id');
                               const availablePayments = _.get(item, 'customer.availablePayments');
+                              const isPrepaymentCustomer = dataForPrepayment(
+                                  _.get(item, 'customer.creditLimit'),
+                                  _.get(item, 'customer.paymentAllowanceCd'),
+                                  _.get(item, 'customer.creditSettleTypeCd'),
+                                  _.get(item, 'customer.creditSettlePeriodCd'),
+                                  _.get(item, 'customer.creditSettleFrequencyCd')
+                              );
                               return {
                                   onLimitChange: (
                                       amount,
@@ -629,16 +648,27 @@ export default class LimitRequestLayout extends Component {
                                   ),
                                   availablePayments: availablePayments,
                                   limit: {
-                                      current: {
-                                          amount: _.get(item, 'customer.creditLimit'),
-                                          product: _.get(item, 'customer.currentPayment.creditProduct'),
-                                          period: _.get(item, 'customer.currentPayment.creditPeriod'),
-                                          debitType: _.get(item, 'customer.currentPayment.debitType'),
-                                          expiry: {
-                                              date: _.get(item, 'currentLimitExpiry.limitExpiryDate'),
-                                              amount: _.get(item, 'currentLimitExpiry.resetToLimitAmount'),
-                                          },
-                                      },
+                                      current: isPrepaymentCustomer
+                                          ? {
+                                                amount: null,
+                                                product: null,
+                                                period: null,
+                                                debitType: null,
+                                                expiry: {
+                                                    date: null,
+                                                    amount: null,
+                                                },
+                                            }
+                                          : {
+                                                amount: _.get(item, 'customer.creditLimit'),
+                                                product: _.get(item, 'customer.currentPayment.creditProduct'),
+                                                period: _.get(item, 'customer.currentPayment.creditPeriod'),
+                                                debitType: _.get(item, 'customer.currentPayment.debitType'),
+                                                expiry: {
+                                                    date: _.get(item, 'currentLimitExpiry.limitExpiryDate'),
+                                                    amount: _.get(item, 'currentLimitExpiry.resetToLimitAmount'),
+                                                },
+                                            },
                                       wish: {
                                           amount: _.get(item, 'creditData.amount'),
                                           product: _.get(item, 'creditData.creditProduct'),
@@ -665,13 +695,7 @@ export default class LimitRequestLayout extends Component {
                                   isCashCustomer:
                                       _.isNil(_.get(item, 'customer.paymentAllowanceCd')) ||
                                       _.get(item, 'customer.paymentAllowanceCd') !== '3',
-                                  isPrepaymentCustomer: dataForPrepayment(
-                                      _.get(item, 'customer.creditLimit'),
-                                      _.get(item, 'customer.paymentAllowanceCd'),
-                                      _.get(item, 'customer.creditSettleTypeCd'),
-                                      _.get(item, 'customer.creditSettlePeriodCd'),
-                                      _.get(item, 'customer.creditSettleFrequencyCd')
-                                  ),
+                                  isPrepaymentCustomer: isPrepaymentCustomer,
                                   limitExhaustion: _.get(item, 'customer.limitExhaustion'),
                               };
                           })
@@ -705,6 +729,7 @@ export default class LimitRequestLayout extends Component {
                     hasGroup: hasGroupAdditionalFields,
                 }}
                 dateFormat={dateFormat}
+                isPrepaymentEnabled={isPrepaymentEnabled}
             />
         );
     }
@@ -822,5 +847,6 @@ LimitRequestLayout.propTypes = {
     updateAdditionalField: PropTypes.func.isRequired,
     updateAdditionalFields: PropTypes.func.isRequired,
     countriesWithDifferentBlockingCodes: PropTypes.array,
+    countriesWithPrepayment: PropTypes.array,
     parent: PropTypes.string,
 };

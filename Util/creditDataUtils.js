@@ -1,5 +1,13 @@
 import * as _ from 'lodash';
 
+const prepayments = {
+    DEFAULT: {
+        product: 'mrc.payment.Bank_Transfer',
+        period: 'mrc.payment.0',
+    },
+    // TODO: Other countries with different setup can have different data
+};
+
 const defaultPayments = {
     DE: {
         product: 'mrc.payment.METRO_Top',
@@ -7,6 +15,54 @@ const defaultPayments = {
         debitType: 'mrc.payment.Basislastschriftmandat',
     },
 };
+
+export function getPrepaymentConfig(country) {
+    let prepayment = _.get(prepayments, country.toUpperCase());
+    if (_.isNil(prepayment)) {
+        prepayment = _.get(prepayments, 'DEFAULT');
+    }
+    return prepayment;
+}
+
+export function dataForPrepayment(
+    limit,
+    paymentAllowanceCd,
+    creditSettleTypeCd,
+    creditSettlePeriodCd,
+    creditSettleFrequencyCd
+) {
+    return (
+        limit == '0' &&
+        paymentAllowanceCd === '3' &&
+        creditSettleTypeCd === '2' &&
+        creditSettlePeriodCd === '0' &&
+        (!creditSettleFrequencyCd || _.isNil(creditSettleFrequencyCd) || creditSettleFrequencyCd == '')
+    );
+}
+
+export function dataForPrepaymentWithPrefix(
+    country,
+    limit,
+    paymentAllowanceCd,
+    creditProduct,
+    creditPeriod,
+    debitType
+) {
+    // the creditProduct with the prefix can be different from one country to another. Ex. for DE, Bank Transfer
+    // product is UEBERWEISER
+    let prepayment = _.get(prepayments, country.toUpperCase());
+    if (_.isNil(prepayment)) {
+        prepayment = _.get(prepayments, 'DEFAULT');
+    }
+
+    return (
+        limit == '0' &&
+        paymentAllowanceCd === '3' &&
+        translatePaymentIfNeeded(creditProduct) === prepayment.product &&
+        translatePaymentIfNeeded(creditPeriod) === prepayment.period &&
+        (!debitType || _.isNil(debitType) || debitType == '')
+    );
+}
 
 export const getDefaultPayment = (country, availablePayments) => {
     const defaultPayment = _.get(defaultPayments, country);

@@ -71,9 +71,12 @@ export default class Sales extends Component {
 
                 if (salesOverview.customer.country) {
                     country = salesOverview.customer.country;
+                    // Please make sure the index same as the list below!!!
                     acc[0].country = country;
                     acc[1].country = country;
                     acc[2].country = country;
+                    acc[3].country = country;
+                    acc[4].country = country;
                 }
 
                 return acc;

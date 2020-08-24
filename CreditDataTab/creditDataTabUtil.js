@@ -1,5 +1,8 @@
-import * as _ from 'lodash';
-import { translatePaymentIfNeeded } from '../Util/creditDataUtils';
+// in PL we must check if the customer limit is set to 0, if there is other countries,
+// which has no such check then add the country here like RU
+export function isPrepaymentAllowedForCountry(country, isCashCustomer, currentAmount) {
+    return country === 'RU' || isCashCustomer || currentAmount == '0' || !currentAmount;
+}
 
 export function isHistory(parent) {
     return parent === 'history';
@@ -42,32 +45,4 @@ export function createProductTimePeriod(period, translatedPeriod, translationOfD
         return isNaN(translatedPeriod) ? translatedPeriod : [translatedPeriod, translationOfDays].join(' ');
     }
     return '-';
-}
-
-export function dataForPrepayment(
-    limit,
-    paymentAllowanceCd,
-    creditSettleTypeCd,
-    creditSettlePeriodCd,
-    creditSettleFrequencyCd
-) {
-    return (
-        limit == '0' &&
-        paymentAllowanceCd === '3' &&
-        creditSettleTypeCd === '2' &&
-        creditSettlePeriodCd === '0' &&
-        (!creditSettleFrequencyCd || _.isNil(creditSettleFrequencyCd) || creditSettleFrequencyCd == '')
-    );
-}
-
-export function dataForPrepaymentWithPrefix(limit, paymentAllowanceCd, creditProduct, creditPeriod, debitType) {
-    //TODO: the creditProduct with the prefix can be different from one country to another. Ex. for DE, Bank Transfer
-    // product is UEBERWEISER
-    return (
-        limit == '0' &&
-        paymentAllowanceCd === '3' &&
-        translatePaymentIfNeeded(creditProduct) === 'mrc.payment.Bank_Transfer' &&
-        translatePaymentIfNeeded(creditPeriod) === 'mrc.payment.0' &&
-        (!debitType || _.isNil(debitType) || debitType == '')
-    );
 }

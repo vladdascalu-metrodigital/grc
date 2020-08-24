@@ -25,7 +25,7 @@ import { CommentPropTypes } from '../../Comments/CommentsPropTypes';
 import CustomerDataGroup from '../../CustomerDataGroup';
 import * as util from '../../ApprovalService/ApprovalProcess/util';
 import { createBlockingInfo } from '../../Util/blockingInfoUtils';
-import { dataForPrepayment, dataForPrepaymentWithPrefix } from '../../CreditDataTab/creditDataTabUtil';
+import { dataForPrepayment, dataForPrepaymentWithPrefix } from '../../Util/creditDataUtils';
 
 export default class HistoryDetailsPresentation extends Component {
     FILE_TYPES = [''];
@@ -473,17 +473,16 @@ export const createCreditDataProps = (params) => {
                                                 amount: _.get(data, 'requestedResetToLimitAmount'),
                                             },
                                             blockingOption: _.get(data, 'requested.blockingOption'),
-                                            creditOption:
-                                                isPrepayment &&
-                                                dataForPrepaymentWithPrefix(
-                                                    _.get(data, 'requested.creditLimit'),
-                                                    '3',
-                                                    _.get(data, 'requested.creditProduct'),
-                                                    _.get(data, 'requested.creditPeriod'),
-                                                    _.get(data, 'requested.debitType')
-                                                )
-                                                    ? 'PREPAYMENT'
-                                                    : undefined,
+                                            creditOption: dataForPrepaymentWithPrefix(
+                                                params.countryCode,
+                                                _.get(data, 'requested.creditLimit'),
+                                                '3',
+                                                _.get(data, 'requested.creditProduct'),
+                                                _.get(data, 'requested.creditPeriod'),
+                                                _.get(data, 'requested.debitType')
+                                            )
+                                                ? 'PREPAYMENT'
+                                                : undefined,
                                         },
                               current:
                                   _.get(params, 'requestStatus.requestType') === 'LIMIT_EXPIRY'
@@ -513,17 +512,16 @@ export const createCreditDataProps = (params) => {
                                                         : _.get(data, 'resetToLimitAmount'),
                                             },
                                             blockingOption: _.get(data, 'applied.blockingOption'),
-                                            creditOption:
-                                                isPrepayment &&
-                                                dataForPrepaymentWithPrefix(
-                                                    _.get(data, 'applied.creditLimit'),
-                                                    '3',
-                                                    _.get(data, 'applied.creditProduct'),
-                                                    _.get(data, 'applied.creditPeriod'),
-                                                    _.get(data, 'applied.debitType')
-                                                )
-                                                    ? 'PREPAYMENT'
-                                                    : undefined,
+                                            creditOption: dataForPrepaymentWithPrefix(
+                                                params.countryCode,
+                                                _.get(data, 'applied.creditLimit'),
+                                                '3',
+                                                _.get(data, 'applied.creditProduct'),
+                                                _.get(data, 'applied.creditPeriod'),
+                                                _.get(data, 'applied.debitType')
+                                            )
+                                                ? 'PREPAYMENT'
+                                                : undefined,
                                         },
                               readOnly: true,
                           },

@@ -108,7 +108,7 @@ export default class CreditTableRowPrepayment extends Component {
                     )}
                     {isNoChange ? (
                         <Table.D colSpan="3">
-                            <CRTableCellBiggerText text={ts.nochange} color={'blue'} />
+                            <CRTableCellBiggerText text={ts.nochange} color={'green'} />
                         </Table.D>
                     ) : (
                         <Table.D colSpan="3">

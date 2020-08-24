@@ -11,12 +11,19 @@ import CustomerAdditionalFieldsSection from './CustomerAdditionalFieldsSection';
 import * as _ from 'lodash';
 import FormSection from '../FormSection';
 import Grid from '../Grid';
-import { isApproval, isCreditCorrection, isHistory, isPrepayment } from './creditDataTabUtil';
+import {
+    isApproval,
+    isCreditCorrection,
+    isHistory,
+    isPrepayment,
+    isPrepaymentAllowedForCountry,
+} from './creditDataTabUtil';
 import CreditCorrectionMessageSection from './CreditCorrectionMessageSection';
 import { TYPE } from '../Card';
 import CreditCorrectionCustomerActionsSection from './CreditCorrectionCustomerActionsSection';
 import { lookup } from '../Util/translations';
 import CheckCard from '../CheckCard';
+import { getPrepaymentConfig } from '../Util/creditDataUtils';
 
 export default class ExpandedRow extends Component {
     isNewCreditMarked(customer, parent, isCashCustomerRequest, isPrepaymentRequest) {
@@ -48,7 +55,7 @@ export default class ExpandedRow extends Component {
             return false;
         }
 
-        return !isCashCustomerRequest;
+        return !isCashCustomerRequest && !isPrepaymentRequest;
     }
 
     render() {
@@ -56,7 +63,13 @@ export default class ExpandedRow extends Component {
         const ts = translations;
 
         const isCashCustomerRequest = this.props.requestsCash;
-        const isNewCredit = this.isNewCreditMarked(customer, parent, isCashCustomerRequest, isPrepaymentRequest);
+        const isPrePaymentCustomerRequest = this.props.requestsPrePayment;
+        const isNewCredit = this.isNewCreditMarked(
+            customer,
+            parent,
+            isCashCustomerRequest,
+            isPrepaymentRequest || isPrePaymentCustomerRequest
+        );
 
         const isBlocked = _.get(customer, 'blockingInfo.isBlocked');
         const blockingReasonText = isBlocked ? _.get(customer, 'blockingInfo.blockingReasonText') : null;
@@ -80,7 +93,9 @@ export default class ExpandedRow extends Component {
                         isCreditCorrection(parent) ||
                         isPrepayment(parent) ||
                         (isApproval(parent) && isPrepaymentRequest) ? null : (
-                            <PaymentSection {...{ ...this.props, isCashCustomerRequest }} />
+                            <PaymentSection
+                                {...{ ...this.props, isCashCustomerRequest, isPrePaymentCustomerRequest }}
+                            />
                         )}
                         {isNewCredit || isCreditCorrection(parent) ? this.createNewCreditSection() : null}
                         {isPrepayment(parent) ? this.createPrepaymentSection() : null}
@@ -97,7 +112,7 @@ export default class ExpandedRow extends Component {
         const ts = translations;
         const creditOption = _.get(customer, 'limit.creditOption');
         const currentAmount = _.get(customer, 'limit.current.amount');
-
+        const prepaymentConfig = getPrepaymentConfig(country);
         return (
             <FormSection title={ts.customerAction} description={ts.customerActionDescription}>
                 <h4 className="mrc-ui-form-label mb-2">{ts.chooseCustomerAction}</h4>
@@ -108,11 +123,11 @@ export default class ExpandedRow extends Component {
                         checked={creditOption === 'NONE'}
                         onClick={() => {
                             if (creditOption !== 'NONE') {
-                                customer.onChangeCreditOption(currentAmount, null, null, null, 'NONE');
+                                customer.onChangeCreditOption(null, null, null, null, 'NONE');
                             }
                         }}
                     />
-                    {country === 'RU' || isCashCustomer || currentAmount == '0' || !currentAmount ? (
+                    {isPrepaymentAllowedForCountry(country, isCashCustomer, currentAmount) ? (
                         <CheckCard
                             key={0}
                             title={ts.prepayment}
@@ -121,8 +136,8 @@ export default class ExpandedRow extends Component {
                                 if (creditOption !== 'PREPAYMENT') {
                                     customer.onChangeCreditOption(
                                         0,
-                                        'mrc.payment.Bank_Transfer',
-                                        'mrc.payment.0',
+                                        prepaymentConfig.product,
+                                        prepaymentConfig.period,
                                         null,
                                         'PREPAYMENT'
                                     );
@@ -238,6 +253,7 @@ ExpandedRow.propTypes = {
     stickyOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     dateFormat: PropTypes.string,
     requestsCash: PropTypes.bool,
+    requestsPrePayment: PropTypes.bool,
     translations: PropTypes.object.isRequired,
     isContractingStepEditable: PropTypes.bool,
     selectedGroupAction: PropTypes.string,
@@ -245,4 +261,5 @@ ExpandedRow.propTypes = {
     canCorrect: PropTypes.bool, // creditcorrection
     canBlock: PropTypes.bool, // creditcorrection
     isPrepaymentRequest: PropTypes.bool,
+    isPrepaymentEnabled: PropTypes.bool, // creditlimit, approval
 };
