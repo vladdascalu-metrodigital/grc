@@ -31,13 +31,14 @@ export default class PaymentSection extends Component {
             isPrePaymentCustomerRequest,
             isPrepaymentEnabled,
             country,
+            parent,
             translations,
         } = this.props;
         const ts = translations;
         const isNewCredit = !isCashCustomerRequest && !isPrePaymentCustomerRequest;
         const readOnly = _.get(customer, 'limit.readOnly') === true;
 
-        const applyType = this.getTypeToInitializeCredit(customer);
+        const applyType = this.getTypeToInitializeCredit(customer, parent);
         // TODO: To Cash -- should be checked which data is correct if in future this function is implemented
         const cashAmount = customer.isCashCustomer ? null : 0;
         const currentAmount = _.get(customer, 'limit.current.amount');
