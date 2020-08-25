@@ -26,6 +26,7 @@ import CustomerDataGroup from '../../CustomerDataGroup';
 import * as util from '../../ApprovalService/ApprovalProcess/util';
 import { createBlockingInfo } from '../../Util/blockingInfoUtils';
 import { dataForPrepayment, dataForPrepaymentWithPrefix } from '../../Util/creditDataUtils';
+import { hasAdditionalFields } from '../../AdditionalFieldsNew/additionalFielsUtil';
 
 export default class HistoryDetailsPresentation extends Component {
     FILE_TYPES = [''];
@@ -370,6 +371,16 @@ export default class HistoryDetailsPresentation extends Component {
 
 export const createCreditDataProps = (params) => {
     const isPrepayment = _.get(params, 'requestStatus.isPrepayment');
+    const requestFields =
+        params.additionalFields !== undefined && params.additionalFields.requestFields !== undefined
+            ? params.additionalFields.requestFields
+            : undefined;
+
+    const requestAdditionalFields = filterAdditionalFieldsList(requestFields, 'REQUEST', 'CREDIT_DATA');
+    const hasRequestAdditionalFields = hasAdditionalFields(requestAdditionalFields);
+
+    const groupAdditionalFields = filterAdditionalFieldsList(requestFields, 'GROUP', 'CREDIT_DATA');
+    const hasGroupAdditionalFields = hasAdditionalFields(groupAdditionalFields);
     return {
         //
         // Shape data a littly bit for consistency with business terminology
@@ -385,7 +396,22 @@ export const createCreditDataProps = (params) => {
             activated: _.get(params, 'groupLimit.activated'),
         },
         activated: _.get(params, 'activated'),
-        additionalFields: params.additionalFields,
+        additionalFields: {
+            request: {
+                requestFields: requestAdditionalFields,
+                onChange: () => null,
+                editable: false,
+                disabled: true,
+            },
+            hasRequest: hasRequestAdditionalFields,
+            group: {
+                requestFields: groupAdditionalFields,
+                onChange: () => null,
+                editable: false,
+                disabled: true,
+            },
+            hasGroup: hasGroupAdditionalFields,
+        },
         creditProgram:
             params.selectedCreditProgram !== undefined && !_.isNil(params.selectedCreditProgram)
                 ? {
