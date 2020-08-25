@@ -36,6 +36,7 @@ export default class CreditTableRowHistory extends Component {
             canToggle,
             rowType,
             translations,
+            isPrepaymentRequest,
         } = this.props;
 
         const isCashCustomer = customer.isCashCustomer;
@@ -44,13 +45,15 @@ export default class CreditTableRowHistory extends Component {
         const blockingInfo = customer.blockingInfo;
         const isBlocked = _.isNil(blockingInfo) ? false : blockingInfo.isBlocked;
 
-        const isNoChangeInWish =
-            _.isNil(_.get(customer, 'limit.wish.amount')) && _.isNil(_.get(customer, 'limit.wish.product'));
         const isPrepaymentInWish = _.get(customer, 'limit.wish.creditOption') === 'PREPAYMENT';
+        const isNoChangeInWish =
+            (_.isNil(_.get(customer, 'limit.wish.amount')) && _.isNil(_.get(customer, 'limit.wish.product'))) ||
+            (isPrepaymentCustomer && (isPrepaymentInWish || isPrepaymentRequest));
 
-        const isNoChangeInCurrent =
-            _.isNil(_.get(customer, 'limit.current.amount')) && _.isNil(_.get(customer, 'limit.current.product'));
         const isPrepaymentInCurrent = _.get(customer, 'limit.current.creditOption') === 'PREPAYMENT';
+        const isNoChangeInCurrent =
+            (_.isNil(_.get(customer, 'limit.current.amount')) && _.isNil(_.get(customer, 'limit.current.product'))) ||
+            (isPrepaymentCustomer && (isPrepaymentInCurrent || isPrepaymentRequest));
 
         const isCreditDataInRed = customer.failedActivation === true;
         const blockingOption = _.get(customer, 'limit.current.blockingOption');
