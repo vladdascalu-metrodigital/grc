@@ -79,5 +79,5 @@ export const iconPropTypes = {
         'light-red',
     ]),
     strokeWidth: PropTypes.oneOf(['thin', 'medium', 'midi']),
-    size: PropTypes.oneOf(['small', 'xsmall']),
+    size: PropTypes.oneOf(['small', 'xsmall', 'inline']),
 };

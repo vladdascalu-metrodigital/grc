@@ -14,6 +14,7 @@ import CalendarIcon from '../icons/CalendarIcon';
 import CancelIcon from '../icons/CancelIcon';
 import CheckmarkFilledIcon from '../icons/CheckmarkFilledIcon';
 import CheckSmallFilledIcon from '../icons/CheckSmallFilledIcon';
+import CheckIcon from '../icons/CheckIcon';
 import ChevronRightIcon from '../icons/ChevronRightIcon';
 import ChevronRightSmallIcon from '../icons/ChevronRightSmallIcon';
 import MoreIcon from '../icons/MoreIcon';
@@ -54,6 +55,7 @@ storiesOf('Fundamentals/Icons', module)
                     <CancelIcon color={color} size={size} />
                     <CheckmarkFilledIcon color={color} size={size} />
                     <CheckSmallFilledIcon color={color} size={size} />
+                    <CheckIcon color={color} size={size} />
                     <ChevronRightIcon color={color} size={size} />
                     <ChevronRightSmallIcon color={color} size={size} />
                     <MoreIcon color={color} size={size} />

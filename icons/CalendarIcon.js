@@ -15,7 +15,7 @@ export default class CalendarIcon extends PureComponent {
                 x="0px"
                 y="0px"
                 viewBox="0 0 24 24"
-                style={{ 'enable-background': 'new 0 0 24 24' }}
+                style={{ enableBackground: 'new 0 0 24 24' }}
             >
                 <style type="text/css">
                     {'.st0{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}'}
