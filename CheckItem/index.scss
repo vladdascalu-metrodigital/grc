@@ -1,0 +1,20 @@
+@import '../lib/scss/form-styles';
+@import '../lib/scss/variables';
+
+.mrc-ui-checkitem {
+  display: flex;
+  justify-content: space-between;
+  width: auto;
+  align-items: center;
+  font-weight: normal;
+  min-height: $spacing-large;
+  cursor: pointer;
+}
+
+.mrc-ui-checkitem-box {
+  margin-right: $spacing-small;
+}
+
+.mrc-ui-checkitem-disabled .mrc-ui-input-label {
+  color: $color-disabled;
+}
