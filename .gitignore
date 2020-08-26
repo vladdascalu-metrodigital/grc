@@ -4,3 +4,4 @@ node_modules
 *.tgz
 .eslintcache
 storybook-static
+coverage
