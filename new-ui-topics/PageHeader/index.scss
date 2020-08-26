@@ -6,15 +6,15 @@
   display: grid;
   grid-template-areas: 
     "page-menu page-title info-area"
-    "tabs tabs       tabs";
+    "tabs      tabs       tabs";
   grid-template-columns: max-content 1fr max-content;
   width: 100%;
 }
 
-@media #{$breakpoint-large} {
+@media screen and (min-width: 1350px) {
   .mrc-ui-pageheader {
     display: grid;
-    grid-template-areas: 
+    grid-template-areas:
       "page-title info-area"
       "tabs       tabs";
     grid-template-columns: 1fr max-content;
@@ -43,7 +43,7 @@
   align-content: center;
 }
 
-@media #{$breakpoint-large} {
+@media screen and (min-width: 1350px) {
   .mrc-ui-pageheader-menu, .mrc-ui-pageheader-menu > * {
     display: none;
   }
@@ -85,7 +85,7 @@
   }
 }
 
-@media #{$breakpoint-large} {
+@media screen and (min-width: 1350px) {
   .mrc-ui-pageheader {
     // use 1px background line as "border" bottom
     background: 
@@ -101,7 +101,7 @@
   }
 }
 
-@media screen and (min-width: 1350px) {
+@media screen and ($breakpoint-large) {
   .mrc-ui-pageheader {
     grid-template-areas: 
       "page-title info-area"
@@ -127,7 +127,7 @@ $mrc-ui-page-header-tab-height: 2rem;
   );
 }
 
-@media #{$breakpoint-large} {
+@media screen and (min-width: 1350px) {
   .mrc-ui-pageheader-tabs {
     border-top: 1px solid transparent;
     background: none;
@@ -154,7 +154,6 @@ $mrc-ui-page-header-tab-height: 2rem;
 
 .mrc-ui-pageheader-tabitem:hover,
 .mrc-ui-pageheader-tabitem-selected {
-  // border-bottom: 2px solid $color-palette-blue-default;
   border-bottom: 3px solid $color-interaction;
 }
 
@@ -183,33 +182,20 @@ $mrc-ui-page-header-tab-height: 2rem;
 
 // sidebar
 
-
-
-
-.mrc-ui-main-wapper {
-  display: block;
-  // grid-template: 
-  // "sidebar header" max-content
-  // "sidebar content"
-  // / 96px auto;
-  // min-height: 100vh;
-}
-
 .mrc-ui-sidebar {
   grid-area: sidebar;
   background: $color-brand-primary-default;
   text-align: center;
   color: $color-contrast-white;
   padding: 0 6px;
-  display:none;
+  display: none;
 }
 
 .mrc-ui-sidebar-metro-icon {
   padding: $spacing-medium;
-
 }
 
-@media #{$breakpoint-large} {
+@media screen and (min-width: 1350px) {
   .mrc-ui-sidebar {
     display: block;
   }
@@ -222,24 +208,4 @@ $mrc-ui-page-header-tab-height: 2rem;
     / 96px auto;
     min-height: 100vh;
   }
-}
-
-
-.mrc-ui-sidebar-icon {
-  margin: 0.5rem auto;
-  padding: $spacing-small 0 $spacing-extra-small 0;
-  cursor: pointer;
-  &:hover{
-    background-color: $color-palette-blue-tint-10;
-  }
-}
-
-.mrc-ui-sidebar-icon-title {
-  font-size: $font-size-10;
-  color: $color-contrast-white;
-  font-weight: normal;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding: 0 $spacing-small;
 }

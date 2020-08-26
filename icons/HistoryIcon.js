@@ -16,11 +16,9 @@ export default class HistoryIcon extends PureComponent {
                 xmlns="http://www.w3.org/2000/svg"
             >
                 <g
-                    classNAme={colorToStrokeClassName}
-                    id="history"
+                    className={colorToStrokeClassName}
                     transform="translate(9.000000, 1.000000)"
                     fill="none"
-                    stroke="#FFFFFF"
                     strokeWidth="2"
                 >
                     <rect x="0" y="0" width="16" height="32"></rect>

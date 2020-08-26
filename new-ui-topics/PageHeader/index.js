@@ -9,16 +9,12 @@ import HeaderInfo from './HeaderInfo';
 import { COLOR as ICOLOR } from '../../icons/index';
 import SideScreenLanguageEntry from './SideScreenLanguageEntry';
 import MetroIcon from '../../icons/MetroIcon';
-import HistoryIcon from '../../icons/HistoryIcon';
-import InboxIcon from '../../icons/InboxIcon';
-import LaunchPadIcon from '../../icons/LaunchPadIcon';
-import QuickCheckIcon from '../../icons/QuickCheckIcon';
-import LimitCheckIcon from '../../icons/LimitCheckIcon';
-import CreditCorrectionIcon from '../../icons/CreditCorrectionIcon';
-import MenuIcon from '../../icons/MenuIcon';
-import SideScreenMenuEntry from '../PageHeader/SideScreenMenuEntry';
 
-import { COLOR as IC, SIZE as IS } from '../../icons/index';
+import MenuIcon from '../../icons/MenuIcon';
+
+import MainMenu, { MENU_CONTEXT } from './MainMenu';
+
+import { SIZE as IS } from '../../icons/index';
 
 import './index.scss';
 
@@ -69,30 +65,8 @@ export default class PageHeader extends Component {
                     <div className="mrc-ui-sidebar-metro-icon">
                         <MetroIcon size={IS.SMALL} />
                     </div>
-                    <div className="mrc-ui-sidebar-icon">
-                        <LaunchPadIcon color={IC.CONTRAST_WHITE} size={IS.XSMALL} />
-                        <h2 className="mrc-ui-sidebar-icon-title">Launchpad</h2>
-                    </div>
-                    <div className="mrc-ui-sidebar-icon">
-                        <InboxIcon color={IC.CONTRAST_WHITE} size={IS.XSMALL} />
-                        <h2 className="mrc-ui-sidebar-icon-title">Inbox</h2>
-                    </div>
-                    <div className="mrc-ui-sidebar-icon">
-                        <LimitCheckIcon color={IC.CONTRAST_WHITE} size={IS.XSMALL} />
-                        <h2 className="mrc-ui-sidebar-icon-title">Limit Check</h2>
-                    </div>
-                    <div className="mrc-ui-sidebar-icon">
-                        <QuickCheckIcon color={IC.CONTRAST_WHITE} size={IS.XSMALL} />
-                        <h2 className="mrc-ui-sidebar-icon-title">Quick Check</h2>
-                    </div>
-                    <div className="mrc-ui-sidebar-icon">
-                        <CreditCorrectionIcon color={IC.CONTRAST_WHITE} size={IS.XSMALL} />
-                        <h2 className="mrc-ui-sidebar-icon-title">Credit Correction</h2>
-                    </div>
-                    <div className="mrc-ui-sidebar-icon">
-                        <HistoryIcon color={IC.CONTRAST_WHITE} size={IS.XSMALL} />
-                        <h2 className="mrc-ui-sidebar-icon-title">History</h2>
-                    </div>
+
+                    <MainMenu context={MENU_CONTEXT.SIDEBAR} />
                 </div>
                 <header className={'mrc-ui-pageheader'}>
                     <div className="mrc-ui-pageheader-menu" onClick={this.toggleMenuSwitch}>
@@ -156,12 +130,7 @@ export default class PageHeader extends Component {
 
                     {this.state.showAppSwitch ? (
                         <SideScreen isShown={showAppSwitch} toggle={this.toggleMenuSwitch} title="Menu" side="left">
-                            <SideScreenMenuEntry menuTitle="LaunchPad" />
-                            <SideScreenMenuEntry menuTitle="Inbox" />
-                            <SideScreenMenuEntry menuTitle="Limit Check" />
-                            <SideScreenMenuEntry menuTitle="Quick Check" />
-                            <SideScreenMenuEntry menuTitle="Credit Correction" />
-                            <SideScreenMenuEntry menuTitle="History" />
+                            <MainMenu context={MENU_CONTEXT.SIDESCREEN} />
                         </SideScreen>
                     ) : null}
                 </header>

@@ -1,0 +1,58 @@
+@import '../../lib/scss/colors';
+@import '../../lib/scss/variables';
+@import '../../lib/scss/typography';
+
+
+    
+.mrc-ui-main-menu-sidebar {          
+    .mrc-ui-main-menu-item {
+        margin: 0.5rem auto;
+        padding: $spacing-small 0 $spacing-extra-small 0;
+        color: $color-contrast-white;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $color-palette-blue-tint-10;
+        }
+
+        h2 {
+            font-size: $font-size-10;
+            font-weight: normal;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding: 0 $spacing-small;
+        }
+    }
+}
+
+.mrc-ui-main-menu-sidescreen {          
+    .mrc-ui-main-menu-item {
+        display: grid;
+        grid-template: 
+          'icon label'
+          /max-content   auto;
+        align-items: center;
+        padding: $spacing-small $spacing-medium;
+        grid-gap: $spacing-small;
+        border-bottom: $border-style-default;
+        color: $color-palette-grey-tint-40;
+      
+        &:first-child {
+           padding-top: $spacing-none;
+        }
+      
+        &:hover {
+          cursor: pointer;
+        }
+      
+        &:hover * {
+          color: $color-interaction;
+        }
+    }
+    .mrc-ui-main-menu-item h2 {
+        grid-area: label;
+        font-weight: normal;
+        font-size: $font-size-7;
+    }
+}

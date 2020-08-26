@@ -18,7 +18,7 @@ export default class PrepaymentIcon extends PureComponent {
                 <g
                     className={colorToStrokeClassName}
                     stroke="none"
-                    strokeWidth="1"
+                    strokeWidth="2"
                     fill="none"
                     fillRule="evenodd"
                     strokeLinejoin="round"
