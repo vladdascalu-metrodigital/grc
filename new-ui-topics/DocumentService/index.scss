@@ -1,0 +1,24 @@
+@import '../../lib/scss/typography';
+@import '../../lib/scss/variables';
+
+.mrc-ui-documentservice-group {
+  display: flex;
+  flex-wrap: wrap;
+  
+  @media screen and (max-width: 620px) {
+    justify-content: center;
+  }
+}
+
+.mrc-ui-documentservice-group-heading {
+  @include typo-section-heading;
+  margin-top: $spacing-medium;
+
+  @media screen and (max-width: 620px) {
+    text-align: center;
+  }
+}
+
+* + .mrc-ui-documentservice-group-heading {
+  margin-top: $spacing-large;
+}

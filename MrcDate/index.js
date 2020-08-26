@@ -9,14 +9,18 @@ export const TYPE = {
     SMALLER: 'smaller',
 };
 
+export function formatDate(dateString) {
+    return new Date(dateString).toLocaleDateString(undefined, {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',
+    });
+}
+
 export default class MrcDate extends PureComponent {
     render() {
         let { children: dateString, type } = this.props;
-        let localeDateString = new Date(dateString).toLocaleDateString(undefined, {
-            day: 'numeric',
-            month: 'numeric',
-            year: 'numeric',
-        });
+        let localeDateString = formatDate(dateString);
         let className = classnames('mrc-ui-date', type && 'mrc-ui-date-' + type);
         return (
             <time dateTime={dateString} className={className}>

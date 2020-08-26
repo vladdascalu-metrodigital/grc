@@ -1,0 +1,21 @@
+@import '../../lib/scss/colors';
+@import '../../lib/scss/variables';
+@import '../../lib/scss/typography';
+
+.mrc-ui-documentfilter {
+  margin-bottom: $spacing-extra-large;
+}
+
+.mrc-ui-documentfilter > h2 {
+  @include typo-section-heading;
+}
+
+.mrc-ui-documentfilter-filterarea {
+  background: $color-form-background-grey;
+  padding: $spacing-medium;
+}
+
+.mrc-ui-documentfilter-clear {
+  cursor: pointer;
+  margin-left: auto;
+}

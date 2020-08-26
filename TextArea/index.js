@@ -86,7 +86,7 @@ export default class TextArea extends Component {
 }
 
 TextArea.propTypes = {
-    disabled: PropTypes.disabled,
+    disabled: PropTypes.bool,
     rows: PropTypes.number,
     value: PropTypes.string,
     onChange: PropTypes.func,

@@ -1,0 +1,20 @@
+@import '../../lib/scss/colors';
+@import '../../lib/scss/variables';
+
+.mrc-ui-documentfilter-selection-items {
+  display: flex;
+  flex-direction: column;
+  background: $color-contrast-white;
+  padding: $spacing-small $spacing-medium;
+  border-radius: $border-radius-large;
+  
+  > * {
+    box-sizing: content-box;
+    min-height: 2rem;
+    padding: $spacing-small $spacing-small;
+  }
+
+  > * + * {
+    border-top: $border-style-default;
+  }
+}

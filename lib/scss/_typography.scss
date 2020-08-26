@@ -77,6 +77,13 @@ $measure-wide: 34em !default;
   line-height: $line-height-title;
 }
 
+@mixin typo-section-heading() {
+  color: $color-brand-primary-default;
+  font-size: $font-size-7;
+  font-weight: bold;
+  line-height: $line-height-title;
+}
+
 @mixin typo-small-caps() {
   font-weight: bold;
   font-size: .8125em;

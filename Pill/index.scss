@@ -3,6 +3,7 @@
 @import '../lib/scss/typography';
 
 .mrc-ui-pill {
+  display: inline-block;
   border-width: 1px;
   border-style: solid;
   border-radius: 1em;
@@ -12,10 +13,7 @@
   padding: .3em .75em .25em;
   position: relative;
   top: -.075em;
-}
-
-.mrc-ui-pill + .mrc-ui-pill {
-  margin-left: .875ch;
+  white-space: nowrap;
 }
 
 .mrc-ui-pill-small {
