@@ -3,6 +3,7 @@
 .mrc-ui-datepicker {
   position: relative;
   width: 140px;
+  flex-grow: 1;
 
   .react-datepicker-wrapper {
     width:100%;
