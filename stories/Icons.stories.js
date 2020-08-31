@@ -5,6 +5,7 @@ import MainContent from '../MainContent';
 import Grid, { GridItem } from '../Grid';
 import Select from '../Select';
 
+import AlertWarningSmall from '../icons/AlertWarningSmall';
 import ArrowLeftIcon from '../icons/ArrowLeftIcon';
 import ArrowDownOutlinedIcon from '../icons/ArrowDownOutlinedIcon';
 import ArrowRightOutlinedIcon from '../icons/ArrowUpOutlinedIcon';
@@ -46,6 +47,7 @@ storiesOf('Fundamentals/Icons', module)
                         <Select options={['default', ...Object.values(SIZE)]} onChange={(s) => setSize(s)} />
                     </GridItem>
 
+                    <AlertWarningSmall color={color} size={size} />
                     <ArrowLeftIcon color={color} size={size} />
                     <ArrowDownOutlinedIcon color={color} size={size} />
                     <ArrowRightOutlinedIcon color={color} size={size} />
