@@ -2,6 +2,12 @@ import * as _ from 'lodash';
 
 const prepayments = {
     DEFAULT: {
+        amount: 0,
+        product: 'mrc.payment.Bank_Transfer',
+        period: 'mrc.payment.0',
+    },
+    RU: {
+        amount: 1,
         product: 'mrc.payment.Bank_Transfer',
         period: 'mrc.payment.0',
     },
@@ -31,8 +37,13 @@ export function dataForPrepayment(
     creditSettlePeriodCd,
     creditSettleFrequencyCd
 ) {
+    const validAmount = isNaN(limit) ? null : parseFloat(limit);
+    if (validAmount === null || isNaN(validAmount)) {
+        return false;
+    }
     return (
-        limit == '0' &&
+        limit < 5 &&
+        limit >= 0 &&
         paymentAllowanceCd === '3' &&
         creditSettleTypeCd === '2' &&
         creditSettlePeriodCd === '0' &&
@@ -54,9 +65,14 @@ export function dataForPrepaymentWithPrefix(
     if (_.isNil(prepayment)) {
         prepayment = _.get(prepayments, 'DEFAULT');
     }
+    const validAmount = isNaN(limit) ? null : parseFloat(limit);
+    if (validAmount === null || isNaN(validAmount)) {
+        return false;
+    }
 
     return (
-        limit == '0' &&
+        limit < 5 &&
+        limit >= 0 &&
         paymentAllowanceCd === '3' &&
         translatePaymentIfNeeded(creditProduct) === prepayment.product &&
         translatePaymentIfNeeded(creditPeriod) === prepayment.period &&

@@ -72,7 +72,7 @@ export default class PaymentSection extends Component {
                             onClick={() => {
                                 if (!isPrePaymentCustomerRequest) {
                                     customer.onChangeCreditOption(
-                                        customer.isPrepaymentCustomer ? null : 0,
+                                        customer.isPrepaymentCustomer ? null : prepaymentConfig.amount,
                                         customer.isPrepaymentCustomer ? null : prepaymentConfig.product,
                                         customer.isPrepaymentCustomer ? null : prepaymentConfig.period,
                                         null,

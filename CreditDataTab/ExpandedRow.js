@@ -135,7 +135,7 @@ export default class ExpandedRow extends Component {
                             onClick={() => {
                                 if (creditOption !== 'PREPAYMENT') {
                                     customer.onChangeCreditOption(
-                                        0,
+                                        prepaymentConfig.amount,
                                         prepaymentConfig.product,
                                         prepaymentConfig.period,
                                         null,
