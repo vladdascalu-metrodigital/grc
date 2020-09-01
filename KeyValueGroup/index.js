@@ -31,18 +31,6 @@ export class Value extends Component {
     }
 }
 
-export class KeyInRed extends Component {
-    render() {
-        return <div className="mrc-ui-key mrc-ui-key-value-red">{this.props.children}</div>;
-    }
-}
-
-export class ValueInRed extends Component {
-    render() {
-        return <div className="mrc-ui-value mrc-ui-key-value-red">{this.props.children}</div>;
-    }
-}
-
 KeyValueGroup.propTypes = {
     children: PropTypes.node,
 };

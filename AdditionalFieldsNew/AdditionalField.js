@@ -15,6 +15,7 @@ import * as _ from 'lodash';
 
 import { Key, KeyValueRow, Value } from '../KeyValueGroup';
 import { getOptionValues, parseDateForAdditionalField, formatDateForAdditionalField } from './additionalFielsUtil';
+import MissingValueValidationMessage from '../MissingValueValidationMessage';
 
 export default function AdditionalField(props) {
     const elem = props.elem;
@@ -146,6 +147,9 @@ export default function AdditionalField(props) {
 
     const generateValue = (oldValue, type, fieldLabel) => {
         if (_.isNil(oldValue) || _.isEmpty(oldValue)) {
+            if (mandatory && props.showMissingValueValidationMessage) {
+                return <MissingValueValidationMessage message={lookup('mrc.credittab.missingvalue')} />;
+            }
             return '-';
         }
 
@@ -176,7 +180,8 @@ export default function AdditionalField(props) {
     ) : (
         <KeyValueRow>
             <Key>
-                {lookup(props.elem.countryField.field.label)} {mandatory ? '*' : ''}
+                {lookup(props.elem.countryField.field.label)}{' '}
+                {mandatory && !props.showMissingValueValidationMessage ? '*' : ''}
             </Key>
             <Value>
                 {generateValue(oldValue, type, props.elem.countryField.field.label)}
@@ -191,4 +196,5 @@ AdditionalField.propTypes = {
     onChange: PropTypes.func,
     disabled: PropTypes.bool,
     editable: PropTypes.bool,
+    showMissingValueValidationMessage: PropTypes.bool, // only true for group or request additional fields
 };

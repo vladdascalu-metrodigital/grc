@@ -85,6 +85,8 @@ let translations = {
     'mrc.credittab.resetLimit': 'Set limit after expiry to',
     'mrc.credittab.additionalFieldsEdit': 'Edit',
     'mrc.credittab.creditprogramEdit': 'Edit',
+    'mrc.credittab.missingvalue': 'Value is missing',
+    'mrc.credittab.selectedcreditprogram': 'Selected credit program',
 };
 
 export const addTranslations = (update) => {

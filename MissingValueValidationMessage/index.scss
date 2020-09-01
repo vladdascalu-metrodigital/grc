@@ -1,0 +1,13 @@
+@import "settings";
+@import '../lib/scss/colors';
+@import '../lib/scss/variables';
+
+.mrc-ui-missing-value-validation-messages {
+  color: $color-palette-red-tint-20;
+  font-weight: bold;
+  background-color: $color-palette-red-tint-90;
+  padding: $spacing-extra-extra-small $spacing-small;
+  display: flex;
+  align-items: center;
+  :first-child { margin-right: $spacing-small; }
+}

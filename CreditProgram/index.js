@@ -3,9 +3,10 @@ import './index.scss';
 import PropTypes from 'prop-types';
 import { lookup } from '../Util/translations';
 import BoxWithTitle from '../BoxWithTitle';
-import KeyValueGroup, { Key, KeyInRed, Value, ValueInRed } from '../KeyValueGroup';
+import KeyValueGroup, { Key, Value } from '../KeyValueGroup';
 import ModalDialog from '../ModalDialog';
 import * as _ from 'lodash';
+import MissingValueValidationMessage from '../MissingValueValidationMessage';
 
 export default class CreditProgram extends Component {
     constructor(props) {
@@ -165,11 +166,13 @@ export default class CreditProgram extends Component {
             return (
                 <BoxWithTitle title={lookup('mrc.credittab.creditprogram')}>
                     <KeyValueGroup>
-                        <Key>{lookup('mrc.credittab.creditprogramselection') + ' *'}</Key>
+                        <Key>{lookup('mrc.credittab.creditprogramselection')}</Key>
                         <Value>
-                            {_.isEmpty(this.state.selectedCreditProgram)
-                                ? '-'
-                                : lookup(this.state.selectedCreditProgram)}
+                            {_.isEmpty(this.state.selectedCreditProgram) ? (
+                                <MissingValueValidationMessage message={lookup('mrc.credittab.missingcreditprogram')} />
+                            ) : (
+                                lookup(this.state.selectedCreditProgram)
+                            )}
                         </Value>
                     </KeyValueGroup>
                 </BoxWithTitle>
@@ -180,25 +183,16 @@ export default class CreditProgram extends Component {
                 title={lookup('mrc.credittab.creditprogram')}
                 action={{ title: lookup('mrc.credittab.creditprogramEdit'), fn: this.toggleModal }}
             >
-                {_.isEmpty(this.state.selectedCreditProgram) ? (
-                    <KeyValueGroup>
-                        <KeyInRed>{lookup('mrc.credittab.selectedcreditprogram') + ' *'}</KeyInRed>
-                        <ValueInRed>
-                            {_.isEmpty(this.state.selectedCreditProgram)
-                                ? '-'
-                                : lookup(this.state.selectedCreditProgram)}
-                        </ValueInRed>
-                    </KeyValueGroup>
-                ) : (
-                    <KeyValueGroup>
-                        <Key>{lookup('mrc.credittab.selectedcreditprogram') + ' *'}</Key>
-                        <Value>
-                            {_.isEmpty(this.state.selectedCreditProgram)
-                                ? '-'
-                                : lookup(this.state.selectedCreditProgram)}
-                        </Value>
-                    </KeyValueGroup>
-                )}
+                <KeyValueGroup>
+                    <Key>{lookup('mrc.credittab.selectedcreditprogram')}</Key>
+                    <Value>
+                        {_.isEmpty(this.state.selectedCreditProgram) ? (
+                            <MissingValueValidationMessage message={lookup('mrc.credittab.missingvalue')} />
+                        ) : (
+                            lookup(this.state.selectedCreditProgram)
+                        )}
+                    </Value>
+                </KeyValueGroup>
                 {this.state.isModalVisible ? (
                     <ModalDialog
                         toggle={() => {

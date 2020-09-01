@@ -127,7 +127,14 @@ export default class AdditionalFieldsSectionWithDialog extends React.Component {
         ) : (
             <KeyValueGroup>
                 {elements.map((elem) => (
-                    <AdditionalField elem={elem} key={elem.id} onChange={null} disabled={true} editable={edit} />
+                    <AdditionalField
+                        elem={elem}
+                        key={elem.id}
+                        onChange={null}
+                        disabled={true}
+                        editable={edit}
+                        showMissingValueValidationMessage={true}
+                    />
                 ))}
             </KeyValueGroup>
         );
