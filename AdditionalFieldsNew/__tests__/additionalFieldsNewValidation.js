@@ -238,7 +238,37 @@ describe('isEmail', () => {
         expect(validations.isEmail(a)).toBeTruthy();
     });
 
-    test.each([['123'], [' wqe@   '], ['@.qwe']])('%s NOT email', (a) => {
+    test.each([['123'], ['ewqr@ds'], [' wqe@   '], ['@.qwe']])('%s NOT email', (a) => {
         expect(validations.isEmail(a)).toBeFalsy();
+    });
+});
+
+/* possible values for phone
+18005551234
+1 800 555 1234
++1 800 555-1234
++86 800 555 1234
+1-800-555-1234
+1 (800) 555-1234
+(800)555-1234
+(800) 555-1234
+(800)5551234
+800-555-1234
+800.555.1234
+800 555 1234x5678
+8005551234 x5678
+1    800    555-1234
+1----800----555-1234
+ */
+describe('isPhone', () => {
+    test.each([['18005551234'], ['+1 800 555-1234'], ['1 (800) 555-1234'], ['8005551234 x5678']])(
+        '%s is phone',
+        (a) => {
+            expect(validations.isPhone(a)).toBeTruthy();
+        }
+    );
+
+    test.each([['8005551234 xx5678'], ['-18005551234'], ['++18005551234'], ['@.qwe']])('%s NOT phone', (a) => {
+        expect(validations.isPhone(a)).toBeFalsy();
     });
 });
