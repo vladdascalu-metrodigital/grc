@@ -2,6 +2,8 @@ import { addCsrfToken } from './csrf';
 
 // Changing these translations might affect testing
 let translations = {
+    'cluster.id.': ' ',
+
     'mrc.apply': 'Apply',
     'mrc.cancel': 'Cancel',
 
