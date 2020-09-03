@@ -26,7 +26,7 @@ import CustomerDataGroup from '../../CustomerDataGroup';
 import * as util from '../../ApprovalService/ApprovalProcess/util';
 import { createBlockingInfo } from '../../Util/blockingInfoUtils';
 import { dataForPrepayment, dataForPrepaymentWithPrefix } from '../../Util/creditDataUtils';
-import { hasAdditionalFields } from '../../AdditionalFieldsNew/additionalFielsUtil';
+import { hasAdditionalFields } from '../../AdditionalFields/additionalFielsUtil';
 
 export default class HistoryDetailsPresentation extends Component {
     FILE_TYPES = [''];

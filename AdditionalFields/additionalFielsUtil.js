@@ -1,4 +1,6 @@
-export const orderRequestFields = requestFieldsList => {
+import { lookup } from '../Util/translations';
+
+export const orderRequestFields = (requestFieldsList) => {
     return requestFieldsList && requestFieldsList != null && requestFieldsList.length > 0
         ? requestFieldsList.sort((a, b) => {
               const aOrder =
@@ -34,17 +36,17 @@ export const filterAdditionalFieldsList = (requestFieldList, level, section, cou
         return [];
     }
     const filteredByFieldLevel = requestFieldList.filter(
-        rf => rf.countryField && rf.countryField.level && rf.countryField.level === level
+        (rf) => rf.countryField && rf.countryField.level && rf.countryField.level === level
     );
     const filteredBySection = filteredByFieldLevel.filter(
-        rf =>
+        (rf) =>
             section === undefined ||
             section === null ||
             (rf.countryField && rf.countryField.section && rf.countryField.section === section)
     );
 
     if (level === 'CUSTOMER') {
-        return filteredBySection.filter(rf => rf.storeNumber === storeNumber && rf.customerNumber === customerNumber);
+        return filteredBySection.filter((rf) => rf.storeNumber === storeNumber && rf.customerNumber === customerNumber);
     }
 
     return filteredBySection;
@@ -62,18 +64,20 @@ export const filterAdditionalFieldsByCode = (requestFieldList, code) => {
     }
 
     const filteredByCode = requestFieldList.filter(
-        rf =>
-            (rf.countryField && rf.countryField.field && rf.countryField.field.code && rf.countryField.field.code === code)
-    )
+        (rf) =>
+            rf.countryField &&
+            rf.countryField.field &&
+            rf.countryField.field.code &&
+            rf.countryField.field.code === code
+    );
 
     return filteredByCode;
-
 };
 
 export function getDateFormatString() {
     const formatObj = new Intl.DateTimeFormat().formatToParts(new Date());
     return formatObj
-        .map(obj => {
+        .map((obj) => {
             switch (obj.type) {
                 case 'day':
                     return 'dd';
@@ -127,12 +131,18 @@ export function formatDateForAdditionalField(date) {
 
 const additionalFieldsOptionSeparator = '|';
 
-export function getOptionValues(optionsStr) {
+export function getOptionValues(optionsStr, fieldLabel, withoutEmptyOption) {
     if (optionsStr === undefined || optionsStr === null || optionsStr.trim() === '') {
         return [];
     }
+    if (withoutEmptyOption) {
+        return [...optionsStr.split(additionalFieldsOptionSeparator).map((v) => [v, lookup(fieldLabel + '.' + v)])];
+    }
 
-    return optionsStr.split(additionalFieldsOptionSeparator);
+    return [
+        ['', lookup('mrc.forms.please_select')],
+        ...optionsStr.split(additionalFieldsOptionSeparator).map((v) => [v, lookup(fieldLabel + '.' + v)]),
+    ];
 }
 
 export function formatOptionValues(optionsListValues) {
@@ -166,4 +176,29 @@ export function setDateAtStartOfDay(date) {
         return date;
     }
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
+export function hasAdditionalFields(additionalFields) {
+    return additionalFields !== undefined && additionalFields !== null && additionalFields.length > 0 ? true : false;
+}
+
+export function atLeastOneFieldIsInvalid(additionalFieldsList, additionalFieldsValidations) {
+    if (additionalFieldsList === undefined || additionalFieldsList === null) {
+        return false;
+    }
+    if (additionalFieldsValidations === undefined || additionalFieldsValidations === null) {
+        return false;
+    }
+    let isInvalid = false;
+    additionalFieldsList.forEach((addField) => {
+        if (addField !== undefined && addField !== null && addField.id !== undefined && addField.id !== null) {
+            if (
+                additionalFieldsValidations[addField.id] !== undefined &&
+                additionalFieldsValidations[addField.id] === false
+            ) {
+                isInvalid = true;
+            }
+        }
+    });
+    return isInvalid;
 }

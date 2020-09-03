@@ -1,3 +1,5 @@
+@import '../lib/scss/variables';
+
 .additional-fields-background-text {
     position: relative;
 }
@@ -15,26 +17,22 @@
 }
 
 .additional-fields-section {
-    background-color: #fff;
+    background-color: transparent !important;
     padding: 0.5rem 0rem 0rem 0rem !important;
+
+    > * {
+      margin-top: $spacing-medium;
+    }
+
+    > *:first-child {
+      margin-top: 0;
+    }
 
     .date-picker-icon {
         float: right;
         margin: -1.85rem 0.75rem 0.5rem;
         position: relative;
         z-index: 2;
-    }
-
-    .mrc-input.not-valid input {
-        border: 1px solid red;
-    }
-
-    .mrc-input.not-valid textarea {
-        border: 1px solid red;
-    }
-
-    .mrc-input.not-valid select {
-        border: 1px solid red;
     }
 
     .react-datepicker__input-container input:not(.mrc-ui-datepicker-input) {
@@ -71,13 +69,5 @@
 
     select[multiple] {
         height: 10rem;
-    }
-
-    label.m-radioButton.radioButton_value {
-        padding-left: 1rem !important;
-    }
-
-    .m-radioButton input[type='radio'] {
-        display: none;
     }
 }

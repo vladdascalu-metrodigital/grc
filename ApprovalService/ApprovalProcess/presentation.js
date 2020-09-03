@@ -33,7 +33,7 @@ import {
     filterAdditionalFieldsByCode,
     hasAdditionalFields,
     atLeastOneFieldIsInvalid,
-} from '../../AdditionalFieldsNew/additionalFielsUtil';
+} from '../../AdditionalFields/additionalFielsUtil';
 
 import * as util from './util';
 import * as _ from 'lodash';
@@ -43,7 +43,7 @@ import CustomerDataGroup from '../../CustomerDataGroup';
 import {
     additionalFieldIsValid,
     additionalFieldMandatoryIsValid,
-} from '../../AdditionalFieldsNew/additionalFieldsValidation';
+} from '../../AdditionalFields/additionalFieldsValidation';
 
 import CreditDataTab from '../../CreditDataTab';
 import { displayName } from '../../Util';
@@ -1477,6 +1477,7 @@ export class ApprovalProcessPresentation extends Component {
         const process = this.props.process.data;
 
         if (process === null || !_.isArray(this.props.topManagementTabEnabledCountries)) {
+            console.log(this.props.topManagementTabEnabledCountries);
             return null;
         }
 

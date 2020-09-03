@@ -33,11 +33,3 @@ export const RequestFieldPropTypes = PropTypes.shape({
     value: PropTypes.any,
     textValue: PropTypes.string,
 });
-
-export const DefaultFieldPropTypes = {
-    elem: RequestFieldPropTypes,
-    onChange: PropTypes.func,
-    onBlur: PropTypes.func,
-    disabled: PropTypes.bool,
-    id: PropTypes.string,
-};

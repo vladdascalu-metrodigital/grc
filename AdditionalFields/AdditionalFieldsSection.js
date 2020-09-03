@@ -6,14 +6,16 @@ import { lookup } from '../Util/translations';
 import ErrorHandler from '../ErrorHandler';
 import AdditionalField from './AdditionalField';
 import { additionalFieldIsValid, additionalFieldMandatoryIsValid } from './additionalFieldsValidation';
+import BoxWithTitle from '../BoxWithTitle';
+import KeyValueGroup from '../KeyValueGroup';
 import './index.scss';
 
 export default class AdditionalFieldsSection extends React.Component {
     constructor(props) {
         super(props);
         const requestFields = {};
-        if (props.requestFields !== null && props.requestFields !== undefined) {
-            props.requestFields.forEach(rf => {
+        if (this.props.requestFields !== null && this.props.requestFields !== undefined) {
+            this.props.requestFields.forEach((rf) => {
                 const type = rf.countryField.field.type;
                 const oldValue = type === 'TEXTAREA' ? rf.textValue : rf.value;
                 const valid =
@@ -25,53 +27,58 @@ export default class AdditionalFieldsSection extends React.Component {
         this.state = { requestFields: requestFields };
     }
 
-    componentDidMount() {
-        if (!this.props.disabled && this.state && this.state.requestFields) {
-            Object.values(this.state.requestFields)
-                .filter(val => !val.valid)
-                .forEach(val => {
-                    this.props.onChange(val.item, val.valid);
-                });
-        }
-    }
-
     additionalFieldOnChange = (elem, value, valid) => {
+        let { disabled, onChange } = this.props;
         const oldValue = elem.countryField.field.type === 'TEXTAREA' ? elem.textValue : elem.value;
-        if (!this.props.disabled && value !== oldValue) {
+        if (!disabled && value !== oldValue) {
             if (elem.countryField.field.type === 'TEXTAREA') {
                 elem.textValue = value;
             } else {
                 elem.value = value;
             }
-
-            this.props.onChange(elem, valid);
+            if (onChange) onChange(elem, valid);
         }
     };
 
-    additionalFieldOnBlur = (elem, valid) => {
-        if (!this.props.disabled) {
-            this.props.onBlur(elem, valid);
-        }
-    };
+    renderElements(elements) {
+        return this.props.editable ? (
+            <div className="mrc-credit-data mrc-input-group additional-fields-section">
+                {elements.map((elem) => (
+                    <AdditionalField
+                        elem={elem}
+                        key={elem.id}
+                        onChange={this.additionalFieldOnChange}
+                        disabled={this.props.disabled}
+                        editable={this.props.editable}
+                    />
+                ))}
+            </div>
+        ) : (
+            <KeyValueGroup>
+                {elements.map((elem) => (
+                    <AdditionalField
+                        elem={elem}
+                        key={elem.id}
+                        onChange={this.additionalFieldOnChange}
+                        disabled={this.props.disabled}
+                        editable={this.props.editable}
+                    />
+                ))}
+            </KeyValueGroup>
+        );
+    }
 
     render() {
-        const elements = orderRequestFields(Object.values(this.state.requestFields).map(val => val.item));
+        const elements = orderRequestFields(Object.values(this.state.requestFields).map((val) => val.item));
         return (
             <ErrorHandler>
                 {this.props.title ? (
-                    <span className="additional-fields-background-text" title={lookup(this.props.title)}></span>
-                ) : null}
-                <div className="mrc-credit-data mrc-input-group additional-fields-section">
-                    {elements.map(elem => (
-                        <AdditionalField
-                            elem={elem}
-                            key={elem.id}
-                            onChange={this.additionalFieldOnChange}
-                            onBlur={this.additionalFieldOnBlur}
-                            disabled={this.props.disabled}
-                        />
-                    ))}
-                </div>
+                    <BoxWithTitle title={lookup(this.props.title)} action={null}>
+                        {this.renderElements(elements)}
+                    </BoxWithTitle>
+                ) : (
+                    this.renderElements(elements)
+                )}
             </ErrorHandler>
         );
     }
@@ -80,7 +87,7 @@ export default class AdditionalFieldsSection extends React.Component {
 AdditionalFieldsSection.propTypes = {
     requestFields: PropTypes.arrayOf(RequestFieldPropTypes),
     onChange: PropTypes.func.isRequired,
-    onBlur: PropTypes.func.isRequired,
     title: PropTypes.string,
-    disabled: PropTypes.bool,
+    disabled: PropTypes.bool.isRequired,
+    editable: PropTypes.bool.isRequired,
 };

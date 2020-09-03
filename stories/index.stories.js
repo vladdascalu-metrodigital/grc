@@ -31,7 +31,6 @@ import LaunchPad from '../LaunchPad';
 import RecentRequestsInfo from '../RecentRequestsInfo';
 
 import CreditLimitCustomerDetailsGroup from '../CreditLimit/CustomerDetailsGroup';
-import CreditLimitCreditData from '../CreditLimit/CreditData';
 import CreditLimitRequest from '../CreditLimit/LimitRequest';
 import CreditLimitRequestSubmitted from '../CreditLimit/LimitRequest/RequestSubmitted';
 import CreditLimitCustomerStatus from '../CreditLimit/CustomerStatus';

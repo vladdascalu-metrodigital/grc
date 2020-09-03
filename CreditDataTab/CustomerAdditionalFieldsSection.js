@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FormSection from '../FormSection';
 import PropTypes from 'prop-types';
-import AdditionalFieldsSection from '../AdditionalFieldsNew/AdditionalFieldsSection';
+import AdditionalFieldsSection from '../AdditionalFields/AdditionalFieldsSection';
 
 export default class CustomerAdditionalFieldsSection extends Component {
     constructor(props) {

@@ -3,19 +3,27 @@ import { PropTypes } from 'prop-types';
 import { lookup } from '../Util/translations';
 import { additionalFieldIsValid, additionalFieldMandatoryIsValid } from './additionalFieldsValidation';
 import { RequestFieldPropTypes } from './AdditionalFieldsPropTypes';
-import { FieldNumber } from './Fields/FieldNumber';
-import { FieldText } from './Fields/FieldText';
-import { FieldTextArea } from './Fields/FieldTextArea';
-import { FieldDate } from './Fields/FieldDate';
-import { FieldCheckBox } from './Fields/FieldCheckBox';
-import { FieldDropDown } from './Fields/FieldDropDown';
-import { FieldRadioButton } from './Fields/FieldRadioButton';
+import NumberInput from '../NumberInputNew';
+import TextInput from '../TextInput';
+import Select from '../Select';
+import TextArea from '../TextArea';
+import DatePicker from '../DatePicker';
+import MultipleSelect from '../MultipleSelect';
+import RadioButtons from '../RadioButtons';
+import CheckBox from '../Checkbox';
+import * as _ from 'lodash';
+
+import { Key, KeyValueRow, Value } from '../KeyValueGroup';
+import { getOptionValues, parseDateForAdditionalField, formatDateForAdditionalField } from './additionalFielsUtil';
+import MissingValueValidationMessage from '../MissingValueValidationMessage';
 
 export default function AdditionalField(props) {
     const elem = props.elem;
     const mandatory = elem.countryField.mandatory;
     const validation = elem.countryField.validation;
     const type = elem.countryField.field.type;
+    const labelKey = elem.countryField.field.label;
+    const label = lookup(labelKey);
     let oldValue = elem.countryField.field.type === 'TEXTAREA' ? elem.textValue : elem.value;
     const isValidNow =
         props.disabled ||
@@ -24,76 +32,169 @@ export default function AdditionalField(props) {
 
     const [valid, setValid] = useState(isValidNow);
 
-    const onChange = value => {
+    const onChange = (value) => {
         oldValue = type === 'TEXTAREA' ? elem.textValue : elem.value;
-        if (oldValue !== value) {
+        const val = type === 'DATE' ? formatDateForAdditionalField(value) : value;
+        if (oldValue !== val) {
             const isValid =
-                additionalFieldMandatoryIsValid(mandatory, value) &&
-                additionalFieldIsValid(validation, type, value, elem.creationTimestamp);
+                additionalFieldMandatoryIsValid(mandatory, val) &&
+                additionalFieldIsValid(validation, type, val, elem.creationTimestamp);
             setValid(isValid);
-            props.onChange(elem, value, isValid);
+            props.onChange(elem, val, isValid);
         }
     };
-    const onBlur = () => {
-        const theValue = type === 'TEXTAREA' ? elem.textValue : elem.value;
 
-        const isValid =
-            additionalFieldMandatoryIsValid(mandatory, theValue) &&
-            additionalFieldIsValid(validation, type, theValue, elem.creationTimestamp);
-        setValid(isValid);
-        props.onBlur(elem, isValid);
-    };
+    let fieldStatus = valid ? null : 'invalid';
 
     const generateField = () => {
         switch (type) {
             //NUMBER, TEXT, TEXTAREA, DATE, CHECKBOX, DROPDOWN, DROPDOWN_MULTIPLE, RADIOBUTTON, ATTACHMENT_REF
             case 'NUMBER':
-                return <FieldNumber {...{ ...props, id: elem.id }} onChange={onChange} onBlur={onBlur} />;
+                return (
+                    <NumberInput
+                        status={fieldStatus}
+                        label={label}
+                        required={mandatory}
+                        value={oldValue}
+                        onChange={onChange}
+                        disabled={props.disabled}
+                    />
+                );
             case 'TEXT':
-                return <FieldText {...{ ...props, id: elem.id }} onChange={onChange} onBlur={onBlur} />;
+                return (
+                    <TextInput
+                        status={fieldStatus}
+                        label={label}
+                        required={mandatory}
+                        value={oldValue}
+                        onChange={onChange}
+                        disabled={props.disabled}
+                    />
+                );
             case 'TEXTAREA':
-                return <FieldTextArea {...{ ...props, id: elem.id }} onChange={onChange} onBlur={onBlur} />;
+                return (
+                    <TextArea
+                        status={fieldStatus}
+                        label={label}
+                        required={mandatory}
+                        value={oldValue}
+                        onChange={onChange}
+                        disabled={props.disabled}
+                    />
+                );
             case 'DATE':
-                return <FieldDate {...{ ...props, id: elem.id }} onChange={onChange} onBlur={onBlur} />;
+                return (
+                    <DatePicker
+                        status={fieldStatus}
+                        label={label}
+                        required={mandatory}
+                        selected={parseDateForAdditionalField(oldValue)}
+                        onChange={onChange}
+                        disabled={props.disabled}
+                    />
+                );
             case 'CHECKBOX':
-                props.elem.value = elem.value === 'true';
-                return <FieldCheckBox {...{ ...props, id: elem.id }} onChange={onChange} onBlur={onBlur} />;
+                return (
+                    <CheckBox
+                        status={fieldStatus}
+                        label={label}
+                        checked={oldValue}
+                        onChange={onChange}
+                        disabled={props.disabled}
+                    />
+                );
             case 'DROPDOWN':
                 return (
-                    <FieldDropDown
-                        {...{ ...props, id: elem.id }}
+                    <Select
+                        status={fieldStatus}
+                        label={label}
+                        required={mandatory}
+                        options={getOptionValues(props.elem.countryField.options, labelKey)}
+                        value={oldValue}
                         onChange={onChange}
-                        onBlur={onBlur}
-                        multiple={false}
+                        disabled={props.disabled}
                     />
                 );
             case 'DROPDOWN_MULTIPLE':
                 return (
-                    <FieldDropDown {...{ ...props, id: elem.id }} onChange={onChange} onBlur={onBlur} multiple={true} />
+                    <MultipleSelect
+                        status={fieldStatus}
+                        label={label}
+                        required={mandatory}
+                        options={getOptionValues(props.elem.countryField.options, labelKey)}
+                        value={oldValue.split('|')}
+                        onChange={(v) => onChange(v.join('|'))}
+                        disabled={props.disabled}
+                    />
                 );
             case 'RADIOBUTTON':
-                return <FieldRadioButton {...{ ...props, id: elem.id }} onChange={onChange} onBlur={onBlur} />;
+                return (
+                    <RadioButtons
+                        status={fieldStatus}
+                        label={label}
+                        required={mandatory}
+                        options={getOptionValues(props.elem.countryField.options, labelKey)}
+                        value={oldValue}
+                        onChange={onChange}
+                        disabled={props.disabled}
+                    />
+                );
             default:
                 console.log('Warning: Field type ' + elem.countryField.field.type + ' is not supported.');
                 return null;
         }
     };
 
-    const classForLabel = type === 'CHECKBOX' ? 'checkbox-label' : type === 'RADIOBUTTON' ? 'm-radioButton' : '';
+    const generateValue = (oldValue, type, fieldLabel) => {
+        if (_.isNil(oldValue) || _.isEmpty(oldValue)) {
+            if (mandatory && props.showMissingValueValidationMessage) {
+                return <MissingValueValidationMessage message={lookup('mrc.credittab.missingvalue')} />;
+            }
+            return '-';
+        }
 
-    return (
-        <div className={valid ? 'mrc-input' : 'mrc-input not-valid'}>
-            <label className={classForLabel} htmlFor={props.elem.id}>
-                {lookup(props.elem.countryField.field.label)} {mandatory ? '*' : ''}
-            </label>
-            {generateField()}
-        </div>
+        if (type === 'CHECKBOX') {
+            if (oldValue === true) {
+                return lookup('mrc.credittab.additionalFields.checked');
+            } else {
+                return '-';
+            }
+        }
+
+        if (type === 'DROPDOWN' || type === 'DROPDOWN_MULTIPLE' || type === 'RADIOBUTTON') {
+            return getOptionValues(oldValue, fieldLabel, true)
+                .map((field) => field && field.length > 0 && field[1])
+                .map((value) => (
+                    <React.Fragment>
+                        {value}
+                        <br />
+                    </React.Fragment>
+                ));
+        }
+
+        return oldValue;
+    };
+
+    return props.editable ? (
+        generateField()
+    ) : (
+        <KeyValueRow>
+            <Key>
+                {lookup(props.elem.countryField.field.label)}{' '}
+                {mandatory && !props.showMissingValueValidationMessage ? '*' : ''}
+            </Key>
+            <Value>
+                {generateValue(oldValue, type, props.elem.countryField.field.label)}
+                {validation && validation === 'isPercentage' ? '%' : null}
+            </Value>
+        </KeyValueRow>
     );
 }
 
 AdditionalField.propTypes = {
     elem: RequestFieldPropTypes,
     onChange: PropTypes.func,
-    onBlur: PropTypes.func,
     disabled: PropTypes.bool,
+    editable: PropTypes.bool,
+    showMissingValueValidationMessage: PropTypes.bool, // only true for group or request additional fields
 };

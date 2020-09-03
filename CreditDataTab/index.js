@@ -11,7 +11,7 @@ import CreditTableRow from './CreditTableRow';
 import './index.scss';
 
 import * as _ from 'lodash';
-import AdditionalFieldsSectionWithDialog from '../AdditionalFieldsNew/AdditionalFieldsSectionWithDialog';
+import AdditionalFieldsSectionWithDialog from '../AdditionalFields/AdditionalFieldsSectionWithDialog';
 import CreditProgram from '../CreditProgram';
 import CreditCorrectionGroupActions from './CreditCorrectionGroupActions';
 import { countryBlockingOptions } from '../CreditCorrection/CreditCorrection/blockingOptions';

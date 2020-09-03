@@ -1318,6 +1318,7 @@ storiesOf('ApprovalService', module)
                         });
                 }}
                 countriesWithDifferentBlockingCodes={['ES']}
+                topManagementTabEnabledCountries={['DE']}
             />
         );
     })
@@ -2902,6 +2903,7 @@ storiesOf('ApprovalService', module)
                         });
                 }}
                 countriesWithDifferentBlockingCodes={['ES']}
+                topManagementTabEnabledCountries={['DE']}
             />
         );
     });

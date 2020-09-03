@@ -14,16 +14,16 @@ import { Accordion, Collapsible } from '../../Accordion';
 import RequestSubmitted from './RequestSubmitted';
 import { lookup } from '../../Util/translations';
 import './index.scss';
-import { RequestFieldPropTypes } from '../../AdditionalFieldsNew/AdditionalFieldsPropTypes';
+import { RequestFieldPropTypes } from '../../AdditionalFields/AdditionalFieldsPropTypes';
 import {
     filterAdditionalFieldsList,
     hasAdditionalFields,
     atLeastOneFieldIsInvalid,
-} from '../../AdditionalFieldsNew/additionalFielsUtil';
+} from '../../AdditionalFields/additionalFielsUtil';
 import {
     additionalFieldMandatoryIsValid,
     additionalFieldIsValid,
-} from '../../AdditionalFieldsNew/additionalFieldsValidation';
+} from '../../AdditionalFields/additionalFieldsValidation';
 import { createBlockingInfo } from '../../Util/blockingInfoUtils';
 import CreditDataTab from '../../CreditDataTab';
 
