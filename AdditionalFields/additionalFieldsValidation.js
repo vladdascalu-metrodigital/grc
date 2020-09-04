@@ -33,7 +33,7 @@ export const validations = {
             value
         ),
     isPhone: (value) =>
-        validations.isNull(value) ||
+        !validations.stringNotEmpty(value) ||
         /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/.test(value),
     //date
     isDate: (value) => value && value.getTime() === value.getTime(),

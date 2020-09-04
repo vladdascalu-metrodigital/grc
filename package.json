@@ -1,13 +1,13 @@
 {
     "name": "global-react-components",
-    "version": "2.5.47",
+    "version": "2.5.49",
     "description": "MRC collection of reusable frontend react components",
     "publishConfig": {
         "registry": "https://dx-nexus.metroscales.io/repository/npm-mrc-hosted/"
     },
     "author": "MRC4-Team",
     "devDependencies": {
-        "@babel/core": "^7.11.5",
+        "@babel/core": "^7.11.6",
         "@jest/globals": "^26.4.2",
         "@storybook/addon-actions": "5.3.19",
         "@storybook/addon-links": "5.3.19",
@@ -19,11 +19,11 @@
         "husky": "^4.2.5",
         "jest": "^26.4.2",
         "jest-config": "^26.4.2",
-        "lint-staged": "^10.2.13",
+        "lint-staged": "^10.3.0",
         "node-sass": "^4.14.1",
         "prettier": "^2.1.1",
         "prop-types": "^15.7.2",
-        "sass-loader": "^10.0.1",
+        "sass-loader": "^10.0.2",
         "semver": "^7.3.2",
         "style-loader": "^1.2.1"
     },
