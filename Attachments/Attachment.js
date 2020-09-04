@@ -10,6 +10,7 @@ import { List } from 'immutable';
 import * as _ from 'lodash';
 
 import './attachment.scss';
+import Moment from 'react-moment';
 
 export default class Attachment extends Component {
     constructor(props) {
@@ -53,7 +54,7 @@ export default class Attachment extends Component {
                               <div key="expiry" className="mrc-ui-attachment-info-group">
                                   <div className="mrc-ui-attachment-info-label">{lookup('mrc.attachments.expiry')}</div>
                                   <div className="mrc-ui-attachment-info-value">
-                                      {expiry ? moment(expiry).format('L') : '-'}
+                                      {expiry ? moment(expiry).locale(Moment.globalLocale).format('L') : '-'}
                                   </div>
                               </div>,
                           ]).concat(
@@ -63,7 +64,9 @@ export default class Attachment extends Component {
                                             <div key="expiry" className="mrc-ui-attachment-info-group">
                                                 <div className="mrc-ui-attachment-info-label">{lookup(e.label)}</div>
                                                 <div className="mrc-ui-attachment-info-value">
-                                                    {moment(e.value, 'dd.MM.YYYY').format('L')}
+                                                    {moment(e.value, 'dd.MM.YYYY')
+                                                        .locale(Moment.globalLocale)
+                                                        .format('L')}
                                                 </div>
                                             </div>
                                         ))
@@ -72,7 +75,9 @@ export default class Attachment extends Component {
                           )
                         : null}
                     <div className="mrc-ui-attachment-author">{this.props.author}</div>
-                    <div className="mrc-ui-attachment-timestamp">{moment(this.props.timestamp).format('LLL')}</div>
+                    <div className="mrc-ui-attachment-timestamp">
+                        {moment(this.props.timestamp).locale(Moment.globalLocale).format('LLL')}
+                    </div>
                 </div>
             );
         }
