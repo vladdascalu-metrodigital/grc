@@ -74,12 +74,16 @@ export default class CreditProgram extends Component {
         });
     }
 
-    setValidCreditProgram(selectedCreditPrograms) {
-        return this.state.availableCreditPrograms &&
+    setValidCreditProgram(selectedCreditProgram) {
+        return this.isInvalidCreditProgram(selectedCreditProgram) ? false : true;
+    }
+
+    isInvalidCreditProgram(selectedCreditProgram) {
+        return (
+            this.state.availableCreditPrograms &&
             this.state.availableCreditPrograms.length > 0 &&
-            (selectedCreditPrograms === null || selectedCreditPrograms === '')
-            ? false
-            : true;
+            _.isEmpty(selectedCreditProgram)
+        );
     }
 
     toOptionProgram(t) {
@@ -168,8 +172,10 @@ export default class CreditProgram extends Component {
                     <KeyValueGroup>
                         <Key>{lookup('mrc.credittab.creditprogramselection')}</Key>
                         <Value>
-                            {_.isEmpty(this.state.selectedCreditProgram) ? (
+                            {this.isInvalidCreditProgram(this.state.selectedCreditProgram) ? (
                                 <MissingValueValidationMessage message={lookup('mrc.credittab.missingcreditprogram')} />
+                            ) : _.isEmpty(this.state.selectedCreditProgram) ? (
+                                '-'
                             ) : (
                                 lookup(this.state.selectedCreditProgram)
                             )}
@@ -186,8 +192,10 @@ export default class CreditProgram extends Component {
                 <KeyValueGroup>
                     <Key>{lookup('mrc.credittab.selectedcreditprogram')}</Key>
                     <Value>
-                        {_.isEmpty(this.state.selectedCreditProgram) ? (
+                        {this.isInvalidCreditProgram(this.state.selectedCreditProgram) ? (
                             <MissingValueValidationMessage message={lookup('mrc.credittab.missingvalue')} />
+                        ) : _.isEmpty(this.state.selectedCreditProgram) ? (
+                            '-'
                         ) : (
                             lookup(this.state.selectedCreditProgram)
                         )}
