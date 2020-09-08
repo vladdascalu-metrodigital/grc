@@ -61,4 +61,12 @@ storiesOf('Forms/TextArea', module)
                 <TextArea disabled value="Lorem Ipsum" />
             </MainContent>
         );
+    })
+    .add('Autofocus', () => {
+        return (
+            <MainContent>
+                <TextArea label="No Autofocus" value="Lorem Ipsum" />
+                <TextArea label="Autofocus" autofocus value="Lorem Ipsum" />
+            </MainContent>
+        );
     });

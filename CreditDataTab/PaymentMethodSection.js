@@ -260,7 +260,7 @@ export default class PaymentMethodSection extends Component {
                                     </Grid>
                                 )}
                                 {_.isNil(debitTypeOptions) || debitTypeOptions.length === 0 ? null : (
-                                    <h4 className="mrc-ui-form-label mt-0 mb-2">{ts.choosedebittype}</h4>
+                                    <h4 className="mrc-ui-form-label mt-4 mb-2">{ts.choosedebittype}</h4>
                                 )}
                                 {_.isNil(debitTypeOptions) || debitTypeOptions.length === 0 ? null : (
                                     <Grid cols={4}>

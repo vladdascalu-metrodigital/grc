@@ -65,4 +65,12 @@ storiesOf('Forms/TextInput', module)
                 <TextInput disabled value="Humpty Dumpty" />
             </div>
         );
+    })
+    .add('Autofocus', () => {
+        return (
+            <div style={{ display: 'grid', gridGap: '1rem' }}>
+                <TextInput label="No Autofocus" value="Humpty Dumpty" />
+                <TextInput label="Autofocus" value="Humpty Dumpty" autofocus />
+            </div>
+        );
     });

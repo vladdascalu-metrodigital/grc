@@ -13,6 +13,7 @@ export default class TextArea extends Component {
         super(props);
         this.validate.bind(this);
         this.delayedChangeTimeout = null;
+        this.inputRef = React.createRef();
         this.state = {
             valid: true,
             validationMessages: [],
@@ -21,6 +22,7 @@ export default class TextArea extends Component {
 
     componentDidMount() {
         this.validate(this.props.value);
+        if (this.props.autofocus) this.inputRef.current.focus();
     }
 
     componentDidUpdate(prevProps) {
@@ -72,6 +74,7 @@ export default class TextArea extends Component {
             <div className="mrc-ui-text-area">
                 <InputLabel>{label}</InputLabel>
                 <textarea
+                    ref={this.inputRef}
                     rows={rows}
                     className={inputClassName}
                     value={value}
@@ -86,6 +89,7 @@ export default class TextArea extends Component {
 }
 
 TextArea.propTypes = {
+    autofocus: PropTypes.bool,
     disabled: PropTypes.bool,
     rows: PropTypes.number,
     value: PropTypes.string,

@@ -133,6 +133,7 @@ export default class LimitSection extends Component {
                                     <FlexRow alignItems="baseline">
                                         <div className="mr-3">
                                             <NumberInput
+                                                autofocus
                                                 required={true}
                                                 value={_.isNil(this.state.amount) ? '' : this.state.amount}
                                                 onChange={(amount) => {
@@ -424,6 +425,7 @@ export default class LimitSection extends Component {
                                     <FlexRow alignItems="baseline">
                                         <div className="mr-3">
                                             <NumberInput
+                                                autofocus={true}
                                                 required={true}
                                                 value={_.isNil(this.state.amount) ? '' : this.state.amount}
                                                 onChange={(amount) => {

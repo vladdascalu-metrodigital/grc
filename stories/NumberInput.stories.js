@@ -107,4 +107,12 @@ storiesOf('Forms/NumberInputNew', module)
                 <NumberInputNew value={12} disabled />
             </MainContent>
         );
+    })
+    .add('Autofocus', () => {
+        return (
+            <MainContent>
+                <NumberInputNew label="No Autofocus" value={12} />
+                <NumberInputNew label="Autofocus" value={12} autofocus />
+            </MainContent>
+        );
     });

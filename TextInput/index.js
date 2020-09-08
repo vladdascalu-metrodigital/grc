@@ -14,6 +14,7 @@ export default class TextInput extends Component {
         super(props);
         this.validate.bind(this);
         this.delayedChangeTimeout = null;
+        this.inputRef = React.createRef();
         this.state = {
             valid: true,
             validationMessages: [],
@@ -22,6 +23,7 @@ export default class TextInput extends Component {
 
     componentDidMount() {
         this.validate(this.props.value);
+        if (this.props.autofocus) this.inputRef.current.focus();
     }
 
     componentDidUpdate(prevProps) {
@@ -73,6 +75,7 @@ export default class TextInput extends Component {
             <div className="mrc-ui-text-input">
                 <InputLabel>{label}</InputLabel>
                 <input
+                    ref={this.inputRef}
                     className={inputClassName}
                     type="text"
                     value={value}
@@ -87,6 +90,7 @@ export default class TextInput extends Component {
 }
 
 TextInput.propTypes = {
+    autofocus: PropTypes.bool,
     disabled: PropTypes.bool,
     value: PropTypes.string,
     onChange: PropTypes.func,

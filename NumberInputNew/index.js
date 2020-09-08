@@ -35,6 +35,7 @@ export default class NumberInputNew extends Component {
         super(props);
         this.validate.bind(this);
         this.delayedChangeTimeout = null;
+        this.inputRef = React.createRef();
         this.state = {
             valid: true,
             validationMessages: [],
@@ -43,6 +44,7 @@ export default class NumberInputNew extends Component {
 
     componentDidMount() {
         this.validate(this.props.value);
+        if (this.props.autofocus) this.inputRef.current.focus();
     }
 
     componentDidUpdate(prevProps) {
@@ -129,6 +131,7 @@ export default class NumberInputNew extends Component {
             <div className={'mrc-ui-number-input-new'}>
                 {label ? <InputLabel>{label}</InputLabel> : null}
                 <input
+                    ref={this.inputRef}
                     className={inputClassName}
                     type="text"
                     value={value}
@@ -143,6 +146,7 @@ export default class NumberInputNew extends Component {
 }
 
 NumberInputNew.propTypes = {
+    autofocus: PropTypes.bool,
     disabled: PropTypes.bool,
     required: PropTypes.bool,
     status: PropTypes.oneOf(['invalid']),
