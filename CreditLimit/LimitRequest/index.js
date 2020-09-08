@@ -55,6 +55,7 @@ export default class LimitRequestLayout extends Component {
             approvedGroupLimit: 0,
             isApplyCurrentLimitAndExpiryClicked: false,
             additionalFieldsValidations: {},
+            additionalFieldsIgnoreIds: [],
         };
 
         this.props.showAuxControl({ back: true });
@@ -106,6 +107,35 @@ export default class LimitRequestLayout extends Component {
             // mark the requested customer
             //
             req.requestedItems.forEach((ri) => this.markRequestedCustomer(req.requestedCustomerId, ri.customer));
+
+            const additionalFieldsIdsTemp = [];
+            req.requestedItems.forEach((ri) => {
+                if (
+                    _.get(ri, 'creditOption') !== 'NEWCREDIT' &&
+                    nextProps.additionalFields &&
+                    nextProps.additionalFields.requestFields
+                ) {
+                    const additionalFields = nextProps.additionalFields;
+                    const customerAdditionalFieldsList = filterAdditionalFieldsList(
+                        additionalFields ? additionalFields.requestFields : undefined,
+                        'CUSTOMER',
+                        'CREDIT_DATA',
+                        _.get(ri, 'customer.country'),
+                        _.get(ri, 'customer.storeNumber'),
+                        _.get(ri, 'customer.customerNumber')
+                    );
+
+                    if (hasAdditionalFields(customerAdditionalFieldsList)) {
+                        customerAdditionalFieldsList.forEach((field) => {
+                            additionalFieldsIdsTemp.push(field.id);
+                        });
+                    }
+                }
+            });
+
+            this.setState({
+                additionalFieldsIgnoreIds: additionalFieldsIdsTemp,
+            });
 
             //
             // sort by customerID, taking the requestedCustomer first
@@ -173,7 +203,16 @@ export default class LimitRequestLayout extends Component {
     }
 
     additionalFieldsValid() {
-        return !(Object.values(this.state.additionalFieldsValidations).filter((value) => !value).length > 0);
+        const validationMap = new Map(Object.entries(this.state.additionalFieldsValidations));
+        if (validationMap.size === 0) {
+            return true;
+        }
+        for (const key of validationMap.keys()) {
+            if (!this.state.additionalFieldsIgnoreIds.includes(key) && !validationMap.get(key)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     anyCreditDataChanged(items) {
@@ -525,14 +564,19 @@ export default class LimitRequestLayout extends Component {
                 customers={
                     _.get(request, 'requestedItems')
                         ? request.requestedItems.map((item) => {
-                              const customerAdditionalFieldsList = filterAdditionalFieldsList(
-                                  this.props.additionalFields ? this.props.additionalFields.requestFields : undefined,
-                                  'CUSTOMER',
-                                  'CREDIT_DATA',
-                                  _.get(item, 'customer.country'),
-                                  _.get(item, 'customer.storeNumber'),
-                                  _.get(item, 'customer.customerNumber')
-                              );
+                              const customerAdditionalFieldsList =
+                                  _.get(item, 'creditOption') === 'NEWCREDIT'
+                                      ? filterAdditionalFieldsList(
+                                            this.props.additionalFields
+                                                ? this.props.additionalFields.requestFields
+                                                : undefined,
+                                            'CUSTOMER',
+                                            'CREDIT_DATA',
+                                            _.get(item, 'customer.country'),
+                                            _.get(item, 'customer.storeNumber'),
+                                            _.get(item, 'customer.customerNumber')
+                                        )
+                                      : [];
                               const hasCustomerAdditionalFields = hasAdditionalFields(customerAdditionalFieldsList);
                               const isAtLeastOneFieldIsInvalid =
                                   hasCustomerAdditionalFields &&

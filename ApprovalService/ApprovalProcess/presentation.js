@@ -90,6 +90,7 @@ export class ApprovalProcessPresentation extends Component {
             validMccScore: null,
             isValidMccScoreChanged: true,
             additionalFieldsValidations: {},
+            additionalFieldsIgnoreIds: [],
         };
 
         if (this.props.process.data) {
@@ -670,6 +671,35 @@ export class ApprovalProcessPresentation extends Component {
             let rgl = 0;
             let exhaustiongl = 0;
 
+            const additionalFieldsIdsTemp = [];
+            process.approvalItems.map((approvalItem) => {
+                if (
+                    _.get(approvalItem, 'creditOption') !== 'NEWCREDIT' &&
+                    nextProps.additionalFields &&
+                    nextProps.additionalFields.requestFields
+                ) {
+                    const additionalFields = nextProps.additionalFields;
+                    const customerAdditionalFieldsList = filterAdditionalFieldsList(
+                        additionalFields ? additionalFields.requestFields : undefined,
+                        'CUSTOMER',
+                        'CREDIT_DATA',
+                        _.get(approvalItem, 'customer.country'),
+                        _.get(approvalItem, 'customer.storeNumber'),
+                        _.get(approvalItem, 'customer.customerNumber')
+                    );
+
+                    if (hasAdditionalFields(customerAdditionalFieldsList)) {
+                        customerAdditionalFieldsList.forEach((field) => {
+                            additionalFieldsIdsTemp.push(field.id);
+                        });
+                    }
+                }
+            });
+
+            this.setState({
+                additionalFieldsIgnoreIds: additionalFieldsIdsTemp,
+            });
+
             process.approvalItems.map((approvalItem) => {
                 const custId = approvalItem.customer.id;
                 const creditData = approvalItem.approvedCreditData || approvalItem.requestedCreditData;
@@ -791,14 +821,17 @@ export class ApprovalProcessPresentation extends Component {
                     new: this.newGroupLimit(approvalItems),
                 }}
                 customers={approvalItems.map((item) => {
-                    const customerAdditionalFieldsList = filterAdditionalFieldsList(
-                        requestFields,
-                        'CUSTOMER',
-                        'CREDIT_DATA',
-                        _.get(item, 'customer.country'),
-                        _.get(item, 'customer.storeNumber'),
-                        _.get(item, 'customer.customerNumber')
-                    );
+                    const customerAdditionalFieldsList =
+                        _.get(item, 'creditOption') === 'NEWCREDIT'
+                            ? filterAdditionalFieldsList(
+                                  requestFields,
+                                  'CUSTOMER',
+                                  'CREDIT_DATA',
+                                  _.get(item, 'customer.country'),
+                                  _.get(item, 'customer.storeNumber'),
+                                  _.get(item, 'customer.customerNumber')
+                              )
+                            : [];
                     const hasCustomerAdditionalFields = hasAdditionalFields(customerAdditionalFieldsList);
 
                     const isAtLeastOneFieldIsInvalid =
@@ -1255,7 +1288,16 @@ export class ApprovalProcessPresentation extends Component {
     };
 
     additionalFieldsValid() {
-        return !(Object.values(this.state.additionalFieldsValidations).filter((value) => !value).length > 0);
+        const validationMap = new Map(Object.entries(this.state.additionalFieldsValidations));
+        if (validationMap.size === 0) {
+            return true;
+        }
+        for (const key of validationMap.keys()) {
+            if (!this.state.additionalFieldsIgnoreIds.includes(key) && !validationMap.get(key)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     anyCreditDataChanged(items) {
