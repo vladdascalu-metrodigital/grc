@@ -10,6 +10,7 @@ import RecentRequestsInfo from '../../RecentRequestsInfo';
 import CustomerDataGroup from '../../CustomerDataGroup';
 import MainContent from '../../MainContent';
 import './index.scss';
+import Precheck from '../../CreditCorrection/CustomerStatus/Precheck';
 
 export default class CustomerStatusLayout extends Component {
     UNSAFE_componentWillMount() {
@@ -134,6 +135,7 @@ export default class CustomerStatusLayout extends Component {
                         <div className="mrc-customer-status">
                             <LimitStatus requestedCustomer={this.getCustomer()} customers={this.props.customers} />
                             <CustomerInfo data={cid} showLink={!!this.props.customers.data} match={this.props.match} />
+                            <Precheck customers={this.props.customers} />
                             <RequestCredit selectedCustomerInfo={cid} disabled={btnDisabled} {...this.props} />
                             {this.props.recentRequests.loading ? null : (
                                 <RecentRequestsInfo

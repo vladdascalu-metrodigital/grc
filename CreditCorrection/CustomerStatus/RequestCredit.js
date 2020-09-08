@@ -21,9 +21,18 @@ export default class RequestCredit extends Component {
     };
 
     render() {
+        const hasErrors = !(
+            !this.props.customers ||
+            !this.props.customers.data ||
+            !this.props.customers.data.precheckErrors ||
+            this.props.customers.data.precheckErrors.length <= 0
+        );
+
         if (this.props.request.data) {
             // Redirect to details of the pending limitrequest
             return <Redirect push to={createUriPath('creditcorrection', 'requests', this.props.request.data.id)} />;
+        } else if (hasErrors) {
+            return null;
         } else if (this.props.customers.error) {
             return null;
         } else if (!this.props.pendingRequest.data) {
