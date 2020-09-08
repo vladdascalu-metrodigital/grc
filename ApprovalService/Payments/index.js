@@ -24,7 +24,7 @@ export default class Payments extends Component {
     }
 
     consolidatedPaymentOverviewTable(paymentsOverviews) {
-        var country;
+        let currency; // SAP has local currency may different to country currency e.g. RUR in RU
         const allData = _.reduce(
             paymentsOverviews,
             (acc, paymentsOverview) => {
@@ -32,9 +32,9 @@ export default class Payments extends Component {
                 const values = _.map(sapDatas, 'amountLocalCurrency');
                 const arrears = _.map(sapDatas, 'arrears');
                 const dunningLevel = _.map(sapDatas, 'dunningLevel');
-                country = _.get(
-                    _.find(sapDatas, (x) => !_.isNil(x.countryId)),
-                    'countryId'
+                currency = _.get(
+                    _.find(sapDatas, (x) => !_.isNil(x.currency)),
+                    'currency'
                 );
                 return {
                     values: _.concat(acc.values, values),
@@ -56,9 +56,9 @@ export default class Payments extends Component {
                 accessor: 'value',
                 renderFn: (value) => {
                     return (
-                        <MrcNumber isCurrency country={country}>
-                            {value}
-                        </MrcNumber>
+                        <div>
+                            <MrcNumber>{value}</MrcNumber> <span>{currency}</span>
+                        </div>
                     );
                 },
             },
