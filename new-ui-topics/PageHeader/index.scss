@@ -3,22 +3,33 @@
 @import '../../lib/scss/typography';
 
 .mrc-ui-pageheader {
+  background-color: $color-contrast-white;
   display: grid;
   grid-template-areas: 
     "page-menu page-title info-area"
-    "tabs      tabs       tabs";
+    "tabs      tabs       tabs"
+    "content   content    content";
   grid-template-columns: max-content 1fr max-content;
   width: 100%;
 }
 
 @media screen and (min-width: 1350px) {
   .mrc-ui-pageheader {
-    display: grid;
+    background: 
+      linear-gradient(
+        $color-contrast-white, 
+        $color-contrast-white calc(100% - 1px), 
+        $color-brand-primary-tint-90 calc(100% - 1px), 
+        $color-brand-primary-tint-90 100%
+      );
     grid-template-areas:
       "page-title info-area"
-      "tabs       tabs";
+      "tabs       tabs"
+      "content    content";
     grid-template-columns: 1fr max-content;
-    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 1;
   }
 }
 
@@ -64,14 +75,18 @@
   > :first-child {
     display: none; // hidden on small screens
 
-    @media #{$breakpoint-large} {
-      display: flex;
-    }
   }
+}
 
-  // > button {
-  //   // TODO: do it
-  // }
+@media screen and (min-width: 1050px) {
+  .mrc-ui-pageheader-info > :first-child {
+    display: flex;
+  }
+  
+  // toggle display of some items in sidescreen infos
+  :root {
+    --mrc-ui-header-info-items-display-none-toggle: none;
+  }
 }
 
 .mrc-ui-pageheader-more-button {
@@ -82,30 +97,6 @@
   
   &:hover .mrc-ui-icon-stroke {
     stroke: $color-interaction;
-  }
-}
-
-@media screen and (min-width: 1350px) {
-  .mrc-ui-pageheader {
-    // use 1px background line as "border" bottom
-    background: 
-      linear-gradient(
-        transparent, 
-        transparent calc(100% - 1px), 
-        $color-brand-primary-tint-90 calc(100% - 1px), 
-        $color-brand-primary-tint-90 100%
-      );
-    grid-template-areas: 
-      "page-title info-area"
-      "tabs       tabs";
-  }
-}
-
-@media screen and ($breakpoint-large) {
-  .mrc-ui-pageheader {
-    grid-template-areas: 
-      "page-title info-area"
-      "tabs       info-area";
   }
 }
 
@@ -177,35 +168,5 @@ $mrc-ui-page-header-tab-height: 2rem;
   &:hover * {
     color: $color-interaction;
     border: 1px solid $color-interaction;
-  }
-}
-
-// sidebar
-
-.mrc-ui-sidebar {
-  grid-area: sidebar;
-  background: $color-brand-primary-default;
-  text-align: center;
-  color: $color-contrast-white;
-  padding: 0 6px;
-  display: none;
-}
-
-.mrc-ui-sidebar-metro-icon {
-  padding: $spacing-medium;
-}
-
-@media screen and (min-width: 1350px) {
-  .mrc-ui-sidebar {
-    display: block;
-  }
-
-  .mrc-ui-main-wapper {
-    display: grid;
-    grid-template: 
-    "sidebar header" max-content
-    "sidebar content"
-    / 96px auto;
-    min-height: 100vh;
   }
 }

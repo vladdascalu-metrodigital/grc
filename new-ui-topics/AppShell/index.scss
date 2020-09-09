@@ -1,0 +1,45 @@
+@import '../../lib/scss/colors';
+@import '../../lib/scss/variables';
+@import '../../lib/scss/typography';
+
+$mrc-ui-sidebar-width: 96px;
+
+.mrc-ui-sidebar {
+  position: fixed;
+  height: 100%;
+
+  grid-area: sidebar;
+  background: $color-brand-primary-default;
+  text-align: center;
+  color: $color-contrast-white;
+  padding: 0 6px;
+  display: none;
+  width: $mrc-ui-sidebar-width;
+}
+
+.mrc-ui-sidebar-metro-icon {
+  padding: $spacing-medium;
+}
+
+@media screen and (min-width: 1350px) {
+  .mrc-ui-sidebar {
+    display: block;
+  }
+
+  .mrc-ui-app-shell {
+    display: grid;
+    grid-template: 
+      "sidebar header" max-content
+      "sidebar content" 1fr
+      / #{$mrc-ui-sidebar-width} auto;
+    min-height: 100vh;
+
+    .mrc-ui-pageheader {
+      grid-area: header;
+    }
+  
+    .mrc-ui-main-content {
+      grid-area: content;
+    }
+  }
+}

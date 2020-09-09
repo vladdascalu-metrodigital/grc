@@ -2,10 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-// import MrcDate from '../../MrcDate';
-// import { COLOR as IC} from '../../icons/index';
-// import RocketIcon from '../../icons/RocketIcon';
-
 import HeaderInfoRequestStart, { headerInfoRequestStartDataPropType } from './HeaderInfoRequestStart';
 import HeaderInfoRequestSummary, {
     HeaderInfoRequestSummaryDataPropType,
@@ -18,7 +14,8 @@ import './HeaderInfo.scss';
 
 export default class HeaderInfos extends PureComponent {
     render() {
-        let { requestStartDate, isColStyle } = this.props;
+        let { requestStartDate, context } = this.props;
+        let isColStyle = context === 'sidescreen';
         let className = classnames('mrc-ui-header-info', {
             'mrc-ui-header-info-row-style': !isColStyle,
             'mrc-ui-header-info-col-style': isColStyle,
@@ -64,6 +61,6 @@ export const headerInfoDataPropType = {
 };
 
 HeaderInfos.propTypes = {
-    isColStyle: PropTypes.bool,
+    context: PropTypes.oneOf(['sidescreen']),
     ...headerInfoDataPropType,
 };

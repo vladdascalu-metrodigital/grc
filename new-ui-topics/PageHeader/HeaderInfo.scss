@@ -31,4 +31,13 @@
 .mrc-ui-header-info-col-style {
   display: flex;
   flex-direction: column;
+
+  .mrc-ui-hi-request-start {
+    display: var(--mrc-ui-header-info-items-display-none-toggle, grid);
+  }
+
+  .mrc-ui-hi-rsummary,
+  .mrc-ui-hi-limits {
+    display: var(--mrc-ui-header-info-items-display-none-toggle, block);
+  }
 }

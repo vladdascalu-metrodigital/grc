@@ -20,6 +20,9 @@
 }
 
 .mrc-ui-page-title-subtitle-customer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   font-weight: bold;
   font-size: $font-size-8;
   line-height: $line-height-copy;

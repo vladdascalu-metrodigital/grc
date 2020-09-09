@@ -13,7 +13,7 @@ import BatchUpdateIcon from '../../icons/BatchUpdateIcon';
 
 import { COLOR as IC, SIZE as IS } from '../../icons/index';
 
-import './MainMenu.scss';
+import './index.scss';
 
 export const MENU_CONTEXT = {
     SIDEBAR: 'sidebar',
