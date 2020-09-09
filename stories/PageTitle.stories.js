@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import PageTitle from '../new-ui-topics/PageTitle';
-import PageSubTitleCustomer from '../new-ui-topics/PageSubTitleCustomer';
 
 storiesOf('New UI Topics/Header', module).add('PageTitle with customer', () => {
     return (
