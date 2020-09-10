@@ -4,6 +4,7 @@ import CreditDataTab from '../CreditDataTab';
 import { createCreditDataProps } from '../History/HistoryDetails/index';
 import { createBlockingInfo } from '../Util/blockingInfoUtils';
 import * as _ from 'lodash';
+import PropTypes from 'prop-types';
 
 storiesOf('CreditDataTab', module)
     .add('Credit Limit', () => (
@@ -306,22 +307,25 @@ storiesOf('CreditDataTab', module)
                 },
                 {
                     onAmountChange: () => null,
-                    name: 'CreditLimit: has current credit, no requested',
+                    name: 'CreditLimit: has current credit with invalid payment, no requested',
                     storeNumber: 10,
                     number: 990,
                     isCashCustomer: false,
                     limit: {
                         current: {
                             amount: 12000,
-                            product: 'Metro Cash',
-                            period: '12',
-                            debitType: 'Basislastschriftmandat',
-                            expiry: { amount: 1000, date: '4/2/2020' },
+                            product: null,
+                            period: null,
+                            debitType: null,
+                            expiry: null,
+                            creditSettleTypeCd: '1',
+                            creditSettlePeriodCd: '200',
+                            creditSettleFrequencyCd: '3',
                         },
                         wish: {},
                         new: null,
                         limitType: 'CURRENT',
-                        paymentMethodType: 'CURRENT',
+                        paymentMethodType: 'WISH',
                         valid: true,
                         creditOption: 'NEWCREDIT',
                     },
@@ -23245,17 +23249,20 @@ storiesOf('CreditDataTab', module)
                 },
                 {
                     onAmountChange: () => null,
-                    name: 'CreditLimit: has credit, no requested',
+                    name: 'CreditLimit: has credit with invalid payment, no requested',
                     storeNumber: 10,
                     number: 990,
                     isCashCustomer: false,
                     limit: {
                         current: {
                             amount: 12000,
-                            product: 'Metro Cash',
-                            period: '12',
-                            debitType: 'Basislastschriftmandat',
+                            product: null,
+                            period: null,
+                            debitType: null,
                             expiry: { amount: 1000, date: '4/2/2020' },
+                            creditSettleTypeCd: '1',
+                            creditSettlePeriodCd: '200',
+                            creditSettleFrequencyCd: '3',
                         },
                         new: null,
                         limitType: 'CURRENT',

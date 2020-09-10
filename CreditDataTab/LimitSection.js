@@ -284,6 +284,23 @@ export default class LimitSection extends Component {
         const isNewRequest = (!isCurrentLimit || !hasCurrentLimit) && !isWishedRequest && !isAppliedRequest;
         const isWithoutExpiry = _.isNil(newExpiryDate);
 
+        let prefillLimitAmount = null;
+        let prefillExpiryAmount = null;
+        let prefillExpiryDate = null;
+        if (hasAppliedRequest) {
+            prefillLimitAmount = appliedAmount;
+            prefillExpiryAmount = appliedExpiryAmount;
+            prefillExpiryDate = appliedExpiryDate;
+        } else if (hasWishedRequest) {
+            prefillLimitAmount = wishedAmount;
+            prefillExpiryAmount = wishedExpiryAmount;
+            prefillExpiryDate = wishedExpiryDate;
+        } else if (hasCurrentLimit) {
+            prefillLimitAmount = currentAmount;
+            prefillExpiryAmount = currentExpiryAmount;
+            prefillExpiryDate = currentExpiryDate;
+        }
+
         const amountInContracting =
             limitType === 'APPLIED' ? appliedAmount : limitType === 'WISH' ? wishedAmount : null;
         const expiryDateInContracting =
@@ -400,14 +417,14 @@ export default class LimitSection extends Component {
                             checked={isNewRequest}
                             onClick={() => {
                                 if (!isNewRequest) {
-                                    this.setState({ amount: null, newExpiryAmount: null });
+                                    this.setState({ amount: prefillLimitAmount, newExpiryAmount: prefillExpiryAmount });
                                     customer.onLimitAndExpiryChange(
-                                        null,
+                                        prefillLimitAmount,
                                         selectedProduct,
                                         selectedPeriod,
                                         selectedDebitType,
-                                        null,
-                                        null,
+                                        prefillExpiryAmount,
+                                        prefillExpiryDate,
                                         'NEW',
                                         paymentMethodType
                                     );

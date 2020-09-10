@@ -199,7 +199,7 @@ export const getPossiblePaymentMethodValues = (availablePayments, creditProduct,
     }
 };
 
-function isValidPaymentMethod(defaultPayment, availablePayments) {
+export const isValidPaymentMethod = (defaultPayment, availablePayments) => {
     const product =
         defaultPayment.product == null || defaultPayment.product.includes('mrc.payment.')
             ? defaultPayment.product
@@ -222,7 +222,7 @@ function isValidPaymentMethod(defaultPayment, availablePayments) {
                 (!_.isNil(ap.debitType) && 'mrc.payment.' + ap.debitType.split(' ').join('_') === debitType))
     );
     return matchingAvailablePayments.length === 1;
-}
+};
 
 function getFirstValidPayment(availablePayments) {
     const creditProductValues = extractCreditProducts(null, availablePayments);

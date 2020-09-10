@@ -16,6 +16,7 @@ import {
     createCreditPeriodOptions,
     createCreditProductOptions,
     createDebitTypeOptions,
+    isValidPaymentMethod,
 } from '../Util/creditDataUtils';
 
 import * as _ from 'lodash';
@@ -361,6 +362,33 @@ export default class PaymentMethodSection extends Component {
                 ? productOptionsContent
                 : productOptionsContent.concat(periodOptions.map((x) => [x, lookup(x)]));
 
+        let prefillProduct = this.state.defaultProduct;
+        let prefillPeriod = this.state.defaultPeriod;
+        let prefillDebitType = this.state.defaultDebitType;
+        if (hasAppliedPaymentMethod) {
+            prefillProduct = appliedProduct;
+            prefillPeriod = appliedPeriod;
+            prefillDebitType = appliedDebitType;
+        } else if (hasWishedPaymentMethod) {
+            prefillProduct = wishedProduct;
+            prefillPeriod = wishedPeriod;
+            prefillDebitType = wishedDebitType;
+        } else if (
+            hasCurrentPaymentMethod &&
+            isValidPaymentMethod(
+                {
+                    product: currentProduct,
+                    period: currentPeriod,
+                    debitType: currentDebitType,
+                },
+                customer.availablePayments
+            )
+        ) {
+            prefillProduct = currentProduct;
+            prefillPeriod = currentPeriod;
+            prefillDebitType = currentDebitType;
+        }
+
         return (
             <FormSection title={ts.paymentmethod} description={ts.paymentmethoddescription}>
                 <React.Fragment>
@@ -441,9 +469,9 @@ export default class PaymentMethodSection extends Component {
                                 if (!isNewRequest) {
                                     customer.onLimitChange(
                                         selectedAmount,
-                                        this.state.defaultProduct,
-                                        this.state.defaultPeriod,
-                                        this.state.defaultDebitType,
+                                        prefillProduct,
+                                        prefillPeriod,
+                                        prefillDebitType,
                                         limitType,
                                         'NEW'
                                     );

@@ -126,16 +126,44 @@ export default class CreditTableRowCreditLimit extends Component {
                                 />
                             </Table.D>
                             <Table.D>
-                                <CRTableCellCreditProduct
-                                    productName={lookup(_current(customer, 'product'))}
-                                    productTimePeriod={createProductTimePeriod(
-                                        _current(customer, 'period'),
-                                        _current(customer, 'period') ? lookup(_current(customer, 'period')) : null,
-                                        ts.days
-                                    )}
-                                    productPaymentMethod={lookup(_current(customer, 'debitType'))}
-                                    color={'blue'}
-                                />
+                                {_.isNil(_current(customer, 'product')) ? (
+                                    <CRTableCellCreditProduct
+                                        warning={ts.unsupportedCreditProduct}
+                                        productName={
+                                            ts.creditSettleTypeCd +
+                                            ' ' +
+                                            (_.isEmpty(_.get(customer, 'limit.current.creditSettleTypeCd'))
+                                                ? '-'
+                                                : _.get(customer, 'limit.current.creditSettleTypeCd'))
+                                        }
+                                        productTimePeriod={
+                                            ts.creditSettlePeriodCd +
+                                            ' ' +
+                                            (_.isEmpty(_.get(customer, 'limit.current.creditSettlePeriodCd'))
+                                                ? '-'
+                                                : _.get(customer, 'limit.current.creditSettlePeriodCd'))
+                                        }
+                                        productPaymentMethod={
+                                            ts.creditSettleFrequencyCd +
+                                            ' ' +
+                                            (_.isEmpty(_.get(customer, 'limit.current.creditSettleFrequencyCd'))
+                                                ? '-'
+                                                : _.get(customer, 'limit.current.creditSettleFrequencyCd'))
+                                        }
+                                        color={'red'}
+                                    />
+                                ) : (
+                                    <CRTableCellCreditProduct
+                                        productName={lookup(_current(customer, 'product'))}
+                                        productTimePeriod={createProductTimePeriod(
+                                            _current(customer, 'period'),
+                                            _current(customer, 'period') ? lookup(_current(customer, 'period')) : null,
+                                            ts.days
+                                        )}
+                                        productPaymentMethod={lookup(_current(customer, 'debitType'))}
+                                        color={'blue'}
+                                    />
+                                )}
                             </Table.D>
                         </React.Fragment>
                     )}

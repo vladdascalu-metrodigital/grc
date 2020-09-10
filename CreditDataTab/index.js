@@ -86,6 +86,10 @@ export default class CreditDataTab extends Component {
             activationNoChange: lookup('mrc.credittab.activationNoChange'),
             addcreditdata: lookup('mrc.credittab.addcreditdata'),
             addamount: lookup('mrc.credittab.addamount'),
+            unsupportedCreditProduct: lookup('mrc.credittab.unsupportedCreditProduct'),
+            creditSettleTypeCd: lookup('mrc.credittab.creditSettleTypeCd'),
+            creditSettlePeriodCd: lookup('mrc.credittab.creditSettlePeriodCd'),
+            creditSettleFrequencyCd: lookup('mrc.credittab.creditSettleFrequencyCd'),
         };
     }
 
@@ -252,6 +256,9 @@ CreditDataTab.propTypes = {
                     }),
                     blockingOption: PropTypes.string,
                     creditOption: PropTypes.string,
+                    creditSettleTypeCd: PropTypes.string,
+                    creditSettlePeriodCd: PropTypes.string,
+                    creditSettleFrequencyCd: PropTypes.string,
                 }),
                 wish: PropTypes.shape({
                     amount: PropTypes.number,

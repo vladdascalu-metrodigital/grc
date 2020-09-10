@@ -712,6 +712,12 @@ export default class LimitRequestLayout extends Component {
                                                     date: _.get(item, 'currentLimitExpiry.limitExpiryDate'),
                                                     amount: _.get(item, 'currentLimitExpiry.resetToLimitAmount'),
                                                 },
+                                                creditSettleTypeCd: _.get(item, 'customer.creditSettleTypeCd'),
+                                                creditSettlePeriodCd: _.get(item, 'customer.creditSettlePeriodCd'),
+                                                creditSettleFrequencyCd: _.get(
+                                                    item,
+                                                    'customer.creditSettleFrequencyCd'
+                                                ),
                                             },
                                       wish: {
                                           amount: _.get(item, 'creditData.amount'),

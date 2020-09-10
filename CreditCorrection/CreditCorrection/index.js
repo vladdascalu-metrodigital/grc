@@ -292,6 +292,9 @@ export default class CreditCorrectionLayout extends Component {
                                                   ? null
                                                   : _.get(item, 'currentLimitExpiry.resetToLimitAmount'),
                                           },
+                                          creditSettleTypeCd: _.get(item, 'customer.creditSettleTypeCd'),
+                                          creditSettlePeriodCd: _.get(item, 'customer.creditSettlePeriodCd'),
+                                          creditSettleFrequencyCd: _.get(item, 'customer.creditSettleFrequencyCd'),
                                       },
                                       new: {
                                           amount: _.get(item, 'creditData.amount'),
