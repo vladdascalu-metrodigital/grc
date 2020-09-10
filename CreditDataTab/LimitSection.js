@@ -349,7 +349,7 @@ export default class LimitSection extends Component {
                                 <CRLimitSetting
                                     country={country}
                                     limit={currentAmount}
-                                    limitAfterExpiry={currentExpiryAmount}
+                                    limitAfterExpiry={_.isNil(currentExpiryDate) ? null : currentExpiryAmount}
                                     expiryDate={currentExpiryDate}
                                 />
                             </CheckCard>
@@ -378,7 +378,7 @@ export default class LimitSection extends Component {
                                 <CRLimitSetting
                                     country={country}
                                     limit={wishedAmount}
-                                    limitAfterExpiry={wishedExpiryAmount}
+                                    limitAfterExpiry={_.isNil(wishedExpiryDate) ? null : wishedExpiryAmount}
                                     expiryDate={wishedExpiryDate}
                                 />
                             </CheckCard>
@@ -407,7 +407,7 @@ export default class LimitSection extends Component {
                                 <CRLimitSetting
                                     country={country}
                                     limit={appliedAmount}
-                                    limitAfterExpiry={appliedExpiryAmount}
+                                    limitAfterExpiry={_.isNil(appliedExpiryDate) ? null : appliedExpiryAmount}
                                     expiryDate={appliedExpiryDate}
                                 />
                             </CheckCard>
