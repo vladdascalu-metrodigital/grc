@@ -19,6 +19,7 @@ import * as _ from 'lodash';
 import CreditDataTab from '../../CreditDataTab';
 import { displayName } from '../../Util';
 import { createBlockingInfo } from '../../Util/blockingInfoUtils';
+import { dataForPrepayment } from '../../Util/creditDataUtils';
 
 export default class CreditCorrectionLayout extends Component {
     FILE_TYPES = [''];
@@ -234,6 +235,13 @@ export default class CreditCorrectionLayout extends Component {
                                       : null;
                               const editable = (!activationSubmitted || failedActivation) && !sucActivated;
                               const isCashCustomer = _.get(item, 'cashCustomer') === true;
+                              const isPrepaymentCustomer = dataForPrepayment(
+                                  _.get(item, 'customer.creditLimit'),
+                                  _.get(item, 'customer.paymentAllowanceCd'),
+                                  _.get(item, 'customer.creditSettleTypeCd'),
+                                  _.get(item, 'customer.creditSettlePeriodCd'),
+                                  _.get(item, 'customer.creditSettleFrequencyCd')
+                              );
                               return {
                                   onLimitChange: (amount, initialAmount, creditProduct, creditPeriod, debitType) => {
                                       this.props.setCreditData(request.id, {
@@ -309,6 +317,7 @@ export default class CreditCorrectionLayout extends Component {
                                       readOnly: !editable || disabled,
                                   },
                                   isCashCustomer: isCashCustomer,
+                                  isPrepaymentCustomer: isPrepaymentCustomer,
                                   limitExhaustion: _.get(item, 'customer.limitExhaustion'),
                                   failedActivation: failedActivation,
                                   activationResult: activationResult,

@@ -32,6 +32,7 @@ export default class CreditTableRowCreditCorrection extends Component {
         const customerCreditOption = _.get(customer, 'limit.creditOption');
         const groupCreditOption = selectedGroupAction;
         const isCashCustomer = customer.isCashCustomer;
+        const isPrepaymentCustomer = customer.isPrepaymentCustomer;
         const blockingInfo = customer.blockingInfo;
         const isBlocked = _.isNil(blockingInfo) ? false : blockingInfo.isBlocked;
 
@@ -77,6 +78,10 @@ export default class CreditTableRowCreditCorrection extends Component {
                     {isCashCustomer ? (
                         <Table.D colSpan="3">
                             <CRTableCellBiggerText text={ts.cash} color={'blue'} />
+                        </Table.D>
+                    ) : isPrepaymentCustomer ? (
+                        <Table.D colSpan="3">
+                            <CRTableCellBiggerText text={ts.prepayment} color={'blue'} />
                         </Table.D>
                     ) : (
                         <React.Fragment>

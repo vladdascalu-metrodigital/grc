@@ -42,7 +42,7 @@ export function dataForPrepayment(
         return false;
     }
     return (
-        limit < 5 &&
+        limit <= 10 &&
         limit >= 0 &&
         paymentAllowanceCd === '3' &&
         creditSettleTypeCd === '2' &&
@@ -71,7 +71,7 @@ export function dataForPrepaymentWithPrefix(
     }
 
     return (
-        limit < 5 &&
+        limit <= 10 &&
         limit >= 0 &&
         paymentAllowanceCd === '3' &&
         translatePaymentIfNeeded(creditProduct) === prepayment.product &&
