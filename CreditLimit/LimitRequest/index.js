@@ -215,8 +215,11 @@ export default class LimitRequestLayout extends Component {
         return true;
     }
 
-    anyCreditDataChanged(items) {
+    requestedCustomerCreditDataChanged(items) {
         const changedItem = items.find((item) => {
+            if (!item.customer.requestedCustomer) {
+                return false;
+            }
             const _limitType = _.get(item, 'limitType');
             const _paymentMethodType = _.get(item, 'paymentMethodType');
             if (_limitType !== 'CURRENT' || _paymentMethodType !== 'CURRENT') {
@@ -253,9 +256,10 @@ export default class LimitRequestLayout extends Component {
         const allValid =
             _.get(req, 'data.requestedItems') && req.data.requestedItems.every((item) => this.creditDataValid(item));
 
-        const anyChanged = _.get(req, 'data.requestedItems') && this.anyCreditDataChanged(req.data.requestedItems);
+        const requestedCustomerChanged =
+            _.get(req, 'data.requestedItems') && this.requestedCustomerCreditDataChanged(req.data.requestedItems);
 
-        const valid = allValid && anyChanged;
+        const valid = allValid && requestedCustomerChanged;
 
         return req.error ? null : (
             <Button
@@ -548,21 +552,24 @@ export default class LimitRequestLayout extends Component {
             this.props.countriesWithPrepayment !== null &&
             this.props.countriesWithPrepayment.length > 0 &&
             this.props.countriesWithPrepayment.includes(_.get(request, 'requestedCustomerId.country'));
+        const requestedItems = _.get(request, 'requestedItems');
+        const isRequestedCustomerWithoutChange = (item) =>
+            !(item.customer.requestedCustomer && !this.requestedCustomerCreditDataChanged(requestedItems));
         return (
             <CreditDataTab
                 country={_.get(request, 'requestedCustomerId.country')}
                 parent={parent !== undefined ? parent : 'creditlimit'}
                 groupLimit={{
-                    exhausted: _.get(request, 'requestedItems')
+                    exhausted: requestedItems
                         ? _.sum(request.requestedItems.map((x) => _.get(x, 'customer.limitExhaustion')))
                         : null,
-                    current: _.get(request, 'requestedItems')
+                    current: requestedItems
                         ? _.sum(request.requestedItems.map((x) => _.get(x, 'customer.creditLimit')))
                         : null,
                     wish: this.state.requestedGroupLimit,
                 }}
                 customers={
-                    _.get(request, 'requestedItems')
+                    requestedItems
                         ? request.requestedItems.map((item) => {
                               const customerAdditionalFieldsList =
                                   _.get(item, 'creditOption') === 'NEWCREDIT'
@@ -732,7 +739,10 @@ export default class LimitRequestLayout extends Component {
                                       limitType: _.get(item, 'limitType'),
                                       paymentMethodType: _.get(item, 'paymentMethodType'),
                                       creditOption: _.get(item, 'creditOption'),
-                                      valid: _.get(item, 'valid') && !isAtLeastOneFieldIsInvalid,
+                                      valid:
+                                          _.get(item, 'valid') &&
+                                          !isAtLeastOneFieldIsInvalid &&
+                                          isRequestedCustomerWithoutChange(item),
                                       readOnly: readOnly,
                                   },
                                   additionalFields: {
@@ -795,6 +805,11 @@ export default class LimitRequestLayout extends Component {
             this.setState({
                 isApplyCurrentLimitAndExpiryClicked: false,
             });
+        }
+        if (_.get(req, 'data.requestedItems') && !this.requestedCustomerCreditDataChanged(req.data.requestedItems)) {
+            this.props.showInfo(lookup('creditlimit.message.request.changeRequestedCustomer'));
+        } else {
+            this.props.hideNotification();
         }
     }
 
@@ -867,7 +882,9 @@ export default class LimitRequestLayout extends Component {
 }
 
 LimitRequestLayout.propTypes = {
+    showInfo: PropTypes.func,
     showError: PropTypes.func,
+    hideNotification: PropTypes.func,
     cleanup: PropTypes.func.isRequired,
     updateUiPageTitle: PropTypes.func.isRequired,
     showAuxControl: PropTypes.func.isRequired,
