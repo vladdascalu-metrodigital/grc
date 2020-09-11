@@ -19,17 +19,40 @@ storiesOf('Fundamentals/ActionDock', module)
         />
     ));
 
-storiesOf('New UI Topics/ApprovalServicee Docks', module).add('ApprovalDock', () => (
-    <ApprovalDock
-        onReject={() => action('onReject')()}
-        onBlock={() => action('onBlock')()}
-        onCancel={() => action('onCancel')()}
-        onApprove={() => action('onApprove')()}
-        onSendInfoRequest={(data) => action('onSendInfoRequest')(data)}
-    />
-));
+storiesOf('New UI Topics/ApprovalService Docks', module)
+    .add('ApprovalDock: Approval', () => (
+        <ApprovalDock
+            process={{
+                editableByCurrentUser: true,
+                supportsApprove: true,
+                supportsBlock: true,
+            }}
+            onReject={() => action('onReject')()}
+            onBlock={() => action('onBlock')()}
+            onCancel={() => action('onCancel')()}
+            onApprove={() => action('onApprove')()}
+            onConfirm={() => action('onConfirm')()}
+            onForward={() => action('onForward')()}
+            onSendInfoRequest={(data) => action('onSendInfoRequest')(data)}
+        />
+    ))
+    .add('ApprovalDock: Provide', () => (
+        <ApprovalDock
+            process={{
+                supportsProvide: true,
+            }}
+            onReject={() => action('onReject')()}
+            onBlock={() => action('onBlock')()}
+            onCancel={() => action('onCancel')()}
+            onApprove={() => action('onApprove')()}
+            onConfirm={() => action('onConfirm')()}
+            onForward={() => action('onForward')()}
+            onProvide={() => action('onProvide')()}
+            onSendInfoRequest={(data) => action('onSendInfoRequest')(data)}
+        />
+    ));
 
-storiesOf('New UI Topics/ApprovalServicee Docks', module)
+storiesOf('New UI Topics/ApprovalService Docks', module)
     .add('ContractingDock: Signing', () => (
         <ContractingDock
             currentStepType="CONTRACT_SIGNING"
@@ -49,7 +72,7 @@ storiesOf('New UI Topics/ApprovalServicee Docks', module)
         />
     ));
 
-storiesOf('New UI Topics/ApprovalServicee Docks', module).add('RejectionDock: Signing', () => (
+storiesOf('New UI Topics/ApprovalService Docks', module).add('RejectionDock: Signing', () => (
     <RejectionDock
         currentStepType="CONTRACT_SIGNING"
         onValidateContract={() => action('onValidateContract')()}

@@ -49,7 +49,17 @@ export default class ApprovalDock extends PureComponent {
     }
 
     render() {
-        let { onApprove, onCancel, onBlock, onReject, onSendInfoRequest, onProvide, onForward, onConfirm } = this.props;
+        let {
+            process,
+            onApprove,
+            onCancel,
+            onBlock,
+            onReject,
+            onSendInfoRequest,
+            onProvide,
+            onForward,
+            onConfirm,
+        } = this.props;
         let { infoRequestModalOpen, infoRequestFormData } = this.state;
         return (
             <React.Fragment>
