@@ -408,6 +408,7 @@ export default class CreditTableRowHistory extends Component {
         } = this.props;
 
         const isCashCustomer = customer.isCashCustomer;
+        const isPrepaymentCustomer = customer.isPrepaymentCustomer;
         const ts = translations;
         const blockingInfo = customer.blockingInfo;
         const isBlocked = _.isNil(blockingInfo) ? false : blockingInfo.isBlocked;
@@ -446,6 +447,10 @@ export default class CreditTableRowHistory extends Component {
                     {isCashCustomer ? (
                         <Table.D colSpan="3">
                             <CRTableCellBiggerText text={ts.cash} color={'blue'} />
+                        </Table.D>
+                    ) : isPrepaymentCustomer ? (
+                        <Table.D colSpan="3">
+                            <CRTableCellBiggerText text={ts.prepayment} color={'blue'} />
                         </Table.D>
                     ) : (
                         <React.Fragment>
