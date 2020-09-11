@@ -1,0 +1,50 @@
+@import '../../lib/scss/variables';
+
+.mrc-ui-contracting-dock {
+  display: grid;
+  grid-gap: $spacing-medium;
+  grid-template: 
+      'request_ . cancel_ primary_action_'
+      / max-content 1fr max-content max-content;
+}
+
+#mrc-ui-contracting-dock-request-btn {
+  grid-area: request_;
+}
+
+#mrc-ui-contracting-dock-cancel-btn {
+  grid-area: cancel_;
+}
+
+#mrc-ui-contracting-dock-sign-btn {
+  grid-area: primary_action_;
+}
+
+#mrc-ui-contracting-dock-validate-btn {
+  grid-area: primary_action_;
+}
+
+
+@media screen and (max-width: 62rem) {
+  .mrc-ui-contracting-dock {
+    grid-template: 
+      'cancel_ primary_action_'
+      'request_ request_' 
+      / 1fr 1fr;
+
+    grid-gap: $spacing-small $spacing-medium;
+  }
+}
+
+@media screen and (max-width: 38rem) {
+  .mrc-ui-contracting-dock {
+    grid-template: 
+      'primary_action_'
+      'cancel_' 
+      'request_' 
+      / 1fr;
+
+    grid-gap: $spacing-small $spacing-medium;
+    justify-items: stretch;
+  }
+}

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ActionDock from '../../ActionDock';
 import ModalDialog from '../../ModalDialog';
 import { FlexRow, FlexColumn } from '../../Flex';
+import Grid from '../../Grid';
 import Button from '../../Button';
 import TextArea from '../../TextArea';
 import CheckCard from '../../CheckCard';
@@ -48,23 +49,95 @@ export default class ApprovalDock extends PureComponent {
     }
 
     render() {
-        let { onApprove, onCancel, onBlock, onReject, onSendInfoRequest } = this.props;
+        let { onApprove, onCancel, onBlock, onReject, onSendInfoRequest, onProvide, onForward, onConfirm } = this.props;
         let { infoRequestModalOpen, infoRequestFormData } = this.state;
         return (
             <React.Fragment>
                 <ActionDock className="mrc-ui-approval-dock">
-                    <Button text="Request Info" onClick={this.toggleInfoRequestmodal} />
-                    <Button wide="small" text="Reject" color="danger" onClick={onReject} isOutlined />
-                    <Button wide="small" text="Block" color="danger" onClick={onBlock} />
-                    <Button wide="small" text="Cancel" color="success" onClick={onCancel} isOutlined />
-                    <Button wide="small" text="Approve" color="success" onClick={onApprove} />
+                    {!process.supportsProvideInfo && !process.supportsConfirm && process.editableByCurrentUser ? (
+                        <Button
+                            text="Request Info"
+                            id="mrc-ui-approval-dock-btn-request"
+                            onClick={this.toggleInfoRequestmodal}
+                        />
+                    ) : null}
+
+                    {process.supportsApprove ? (
+                        <Button
+                            text="Reject"
+                            id="mrc-ui-approval-dock-btn-reject"
+                            wide="small"
+                            color="danger"
+                            onClick={onReject}
+                            isOutlined
+                        />
+                    ) : null}
+
+                    {process.supportsBlock ? (
+                        <Button
+                            text="Block"
+                            id="mrc-ui-approval-dock-btn-block"
+                            wide="small"
+                            color="danger"
+                            onClick={onBlock}
+                        />
+                    ) : null}
+
+                    <Button
+                        text="Cancel"
+                        id="mrc-ui-approval-dock-btn-cancel"
+                        wide="small"
+                        color="success"
+                        onClick={onCancel}
+                        isOutlined
+                    />
+
+                    {process.supportsApprove ? (
+                        <Button
+                            text="Approve"
+                            id="mrc-ui-approval-dock-btn-approve"
+                            wide="small"
+                            color="success"
+                            onClick={onApprove}
+                        />
+                    ) : null}
+
+                    {process.supportsProvide ? (
+                        <Button
+                            text="Provide"
+                            id="mrc-ui-approval-dock-btn-provide"
+                            wide="small"
+                            color="success"
+                            onClick={onProvide}
+                        />
+                    ) : null}
+
+                    {process.supportsForwarding ? (
+                        <Button
+                            text="Forward"
+                            id="mrc-ui-approval-dock-btn-forward"
+                            wide="small"
+                            color="success"
+                            onClick={onForward}
+                        />
+                    ) : null}
+
+                    {process.supportsConfirm ? (
+                        <Button
+                            text="Confirm"
+                            id="mrc-ui-approval-dock-btn-confirm"
+                            wide="small"
+                            color="success"
+                            onClick={onConfirm}
+                        />
+                    ) : null}
                 </ActionDock>
                 {infoRequestModalOpen && (
                     <ModalDialog title="Request Additional Info" toggle={this.toggleInfoRequestmodal}>
                         <FlexColumn gap="medium">
                             <div>
                                 <InputLabel>Choose a Recipient</InputLabel>
-                                <FlexRow gap="small">
+                                <Grid gap="small" cols={4}>
                                     {Array.from(recipients).map(([k, v]) => (
                                         <CheckCard
                                             key={k}
@@ -74,7 +147,7 @@ export default class ApprovalDock extends PureComponent {
                                             onClick={() => this.setInfoRequestFormData('recipient', k)}
                                         />
                                     ))}
-                                </FlexRow>
+                                </Grid>
                             </div>
                             <TextArea
                                 label="Comment"
@@ -94,9 +167,14 @@ export default class ApprovalDock extends PureComponent {
 }
 
 ApprovalDock.propTypes = {
+    process: PropTypes.object.isRequired,
+
     onApprove: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onBlock: PropTypes.func.isRequired,
     onReject: PropTypes.func.isRequired,
+    onProvide: PropTypes.func.isRequired,
+    onConfirm: PropTypes.func.isRequired,
+    onForward: PropTypes.func.isRequired,
     onSendInfoRequest: PropTypes.func.isRequired,
 };

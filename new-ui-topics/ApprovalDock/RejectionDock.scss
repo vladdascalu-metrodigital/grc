@@ -1,0 +1,43 @@
+@import '../../lib/scss/variables';
+
+.mrc-ui-rejection-dock {
+  display: grid;
+  grid-gap: $spacing-medium;
+  grid-template: 
+      '. manual_ confirm_ .'
+      / 1fr max-content max-content 1fr;
+}
+
+#mrc-ui-rejection-dock-confirm-btn {
+  grid-area: confirm_;
+}
+
+#mrc-ui-rejection-dock-manual-btn {
+  grid-area: manual_;
+}
+
+// @media screen and (max-width: 62rem) {
+//   .mrc-ui-rejection-dock {
+//     grid-template: 
+//     '. manual_ confirm_ .'
+//       / 1fr 1fr;
+
+//     grid-gap: $spacing-small $spacing-medium;
+//   }
+// }
+
+@media screen and (max-width: 38rem) {
+  .mrc-ui-rejection-dock {
+    grid-template: 
+    'confirm_'
+    'manual_'
+      / 1fr;
+
+    grid-gap: $spacing-small $spacing-medium;
+    justify-items: stretch;
+
+    > :nth-child(4) {
+      margin-left: 0;
+    }
+  }
+}
