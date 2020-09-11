@@ -66,7 +66,7 @@ export default class HistoryDetailsPresentation extends Component {
                     />
                 </div>
             );
-        } else if (params.status === 'Pending' || params.status === 'Claimed') {
+        } else if (params.status === 'Pending' || params.status === 'Claimed' || params.status === 'Review_Pending') {
             return (
                 <div className="mrc-btn-group">
                     <Button
