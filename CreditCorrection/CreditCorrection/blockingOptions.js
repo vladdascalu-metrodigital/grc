@@ -46,6 +46,11 @@ export const countryBlockingOptions = {
     ],
     RO: [
         {
+            id: 'GENERALBLOCK',
+            translationKey: 'mrc.blocking-option.generalblock',
+            label: 'mrc.blocking-option.generalblock',
+        },
+        {
             id: 'SOFTBLOCK',
             translationKey: 'mrc.blocking-option.softblock',
             label: 'mrc.blocking-option.softblock',
