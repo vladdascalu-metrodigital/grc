@@ -14,7 +14,7 @@ export default class DocumentService extends Component {
         return (
             <FlexColumn gap="medium">
                 <DocumentFilter />
-                <BoxWithTitle title="10 Documents in Customer Group" type="smaller">
+                <BoxWithTitle title="8 of 10 Documents shown in Customer Group" type="smaller">
                     {data.map((d, k) => {
                         return (
                             <React.Fragment key={k}>
