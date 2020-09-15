@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { timePeriodFilters, fileTypeFilters, docTypeFilters } from './documentFilterObjects';
-
 import BoxWithTitle from '../../BoxWithTitle';
 import DocumentFilter from './DocumentFilter';
 import { FlexColumn } from '../../Flex';
@@ -15,7 +13,7 @@ export default class DocumentService extends Component {
         let { data } = this.props;
         return (
             <FlexColumn gap="medium">
-                <DocumentFilter allFilters={{ timePeriodFilters, fileTypeFilters, docTypeFilters }} />
+                <DocumentFilter />
                 <BoxWithTitle title="10 Documents in Customer Group" type="smaller">
                     {data.map((d, k) => {
                         return (

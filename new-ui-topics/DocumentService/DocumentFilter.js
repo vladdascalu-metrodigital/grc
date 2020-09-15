@@ -2,13 +2,22 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { lookup } from '../../Util/translations';
 
-import { filterArrayPropType, _filterName, _filterContext } from './documentFilterObjects';
+import {
+    timePeriodFilters,
+    fileTypeFilters,
+    docTypeFilters,
+    validFilter,
+    filterArrayPropType,
+    _filterName,
+    _filterContext,
+} from './documentFilterObjects';
 
 import { formatDate } from '../../MrcDate';
 import Pill from '../../Pill';
 import { FlexRow } from '../../Flex';
 import DocumentFilterTimePeriod from './DocumentFilterTimePeriod';
 import DocumentFilterSelection from './DocumentFilterSelection';
+import DocumentFilterBoolean from './DocumentFilterBoolean';
 
 import './DocumentFilter.scss';
 
@@ -18,10 +27,12 @@ export default class DocumentFilter extends Component {
         this.setFilters = this.setFilters.bind(this);
         this.removeFilter = this.removeFilter.bind(this);
         this.clearFilters = this.clearFilters.bind(this);
+        this.state = {};
         this.initialState = {
             [_filterContext.FILETYPE_FILTER]: [],
             [_filterContext.DOCTYPE_FILTER]: [],
             [_filterContext.TIMEPERIOD_FILTER]: [],
+            [_filterContext.VALID_FILTER]: [],
         };
         this.state = {
             ...this.initialState,
@@ -68,11 +79,11 @@ export default class DocumentFilter extends Component {
             ...this.state[_filterContext.TIMEPERIOD_FILTER],
             ...this.state[_filterContext.FILETYPE_FILTER],
             ...this.state[_filterContext.DOCTYPE_FILTER],
+            ...this.state[_filterContext.VALID_FILTER],
         ];
     }
 
     render() {
-        let { timePeriodFilters, docTypeFilters, fileTypeFilters } = this.props.allFilters;
         return (
             <div className="mrc-ui-documentfilter">
                 <h2>Filter</h2>
@@ -107,6 +118,12 @@ export default class DocumentFilter extends Component {
                             }
                             buttonText={lookup('mrc.docType')}
                             modalTitle={lookup('mrc.documents.addDocTypeFilter')}
+                        />
+                        <DocumentFilterBoolean
+                            option={validFilter}
+                            selectedFilter={this.state[_filterContext.VALID_FILTER]}
+                            onConfirm={(filter) => this.setFilters(filter, _filterContext.VALID_FILTER)}
+                            buttonText={lookup('mrc.validDocuments')}
                         />
                         <a className="mrc-ui-documentfilter-clear" onClick={this.clearFilters}>
                             clear filter

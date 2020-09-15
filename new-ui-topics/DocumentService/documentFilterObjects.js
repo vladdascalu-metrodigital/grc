@@ -4,6 +4,7 @@ export const _filterContext = {
     DOCTYPE_FILTER: 'DOCTYPE_FILTER',
     TIMEPERIOD_FILTER: 'TIMEPERIOD_FILTER',
     FILETYPE_FILTER: 'FILETYPE_FILTER',
+    VALID_FILTER: 'VALID_FILTER',
 };
 
 export const _filterName = {
@@ -19,6 +20,8 @@ export const _filterName = {
 
     DOCTYPE_FILTER_CONTRACT: 'DOCTYPE_FILTER_CONTRACT',
     DOCTYPE_FILTER_GENERAL: 'DOCTYPE_FILTER_GENERAL',
+
+    VALID_FILTER: 'VALID_FILTER',
 };
 
 export const filterNameArrayPropType = PropTypes.oneOf(Object.keys(_filterName));
@@ -111,3 +114,11 @@ export const docTypeFilters = [
         value: null,
     },
 ];
+
+export const validFilter = {
+    name: _filterName.VALID_FILTER,
+    label: '',
+    displayName: 'mrc.attachments.types.valid',
+    context: _filterContext.VALID_FILTER,
+    value: null,
+};

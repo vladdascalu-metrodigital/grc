@@ -30,6 +30,7 @@ export default class DocumentFilterTimePeriod extends Component {
                 modalFilters: syncedModalFilters,
             };
         }
+        return null;
     }
 
     toggleModal() {
@@ -57,10 +58,6 @@ export default class DocumentFilterTimePeriod extends Component {
         let { buttonText, modalTitle, fromDateFilter, toDateFilter } = this.props;
         let fromDate = modalFilters[fromDateFilter.name] && modalFilters[fromDateFilter.name].value;
         let toDate = modalFilters[toDateFilter.name] && modalFilters[toDateFilter.name].value;
-        console.log('this.props');
-        console.log(this.props);
-        console.log('this.state');
-        console.log(this.state);
         return (
             <div>
                 <Button size="small-round" onClick={this.toggleModal}>
@@ -68,7 +65,7 @@ export default class DocumentFilterTimePeriod extends Component {
                 </Button>
                 {showModal && (
                     <ModalDialogSimple title={modalTitle} onCancel={this.toggleModal} onOk={this.confirmFilters}>
-                        <FlexRow justifyContent="stretch" gap="medium">
+                        <FlexRow justifyContent="stretch" gap="medium" alignItems="flex-start">
                             <DatePicker
                                 label="From"
                                 selected={fromDate}

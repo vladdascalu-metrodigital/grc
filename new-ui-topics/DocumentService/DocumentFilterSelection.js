@@ -31,6 +31,7 @@ export default class DocumentFilterSelection extends Component {
                 modalFilters: syncedModalFilters,
             };
         }
+        return null;
     }
 
     toggleModal() {
