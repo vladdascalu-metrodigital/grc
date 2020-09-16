@@ -63,7 +63,7 @@ export class ModalDialogSimple extends Component {
 
 ModalDialogSimple.propTypes = {
     ...ModalDialog.propTypes,
-    onCancel: PropTypes.func,
+    onCancel: PropTypes.func.isRequired,
     onOk: PropTypes.func.isRequired,
     cancelText: PropTypes.string,
     okText: PropTypes.string,
