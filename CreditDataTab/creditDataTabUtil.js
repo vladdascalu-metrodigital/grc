@@ -1,7 +1,8 @@
 // in PL we must check if the customer limit is set to 0, if there is other countries,
 // which has no such check then add the country here like RU
 export function isPrepaymentAllowedForCountry(country, isCashCustomer, currentAmount) {
-    return country === 'RU' || isCashCustomer || currentAmount == '0' || !currentAmount;
+    const countriesWithPrepaymentAllowed = ['RU', 'HR'];
+    return countriesWithPrepaymentAllowed.includes(country) || isCashCustomer || currentAmount == '0' || !currentAmount;
 }
 
 export function isHistory(parent) {
