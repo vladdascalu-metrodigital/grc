@@ -57,6 +57,8 @@ const MRC_SYSTEM = 'MRC';
 export class ApprovalProcessPresentation extends Component {
     FILE_TYPES = [''];
 
+
+
     // Sort by customerId
     static approvalItemsSorter(item1, item2) {
         const cust1 = item1.customer;
@@ -108,6 +110,9 @@ export class ApprovalProcessPresentation extends Component {
         this.handleAdditionalFieldsOnBlur = this.handleAdditionalFieldsOnBlur.bind(this);
         this.toggleReviewReasonModal = this.toggleReviewReasonModal.bind(this);
         this.onReviewReasonSave = this.onReviewReasonSave.bind(this);
+
+        this.mdwStatus = 'init';
+        this.mccStatus = 'init';
     }
 
     isTopManagementEnabled() {
@@ -170,17 +175,30 @@ export class ApprovalProcessPresentation extends Component {
 
         this.updateNotification(approval);
 
-        if (approval && !this.state.mdwRequestCompleted) {
-            this.props.getMdwData(approval).then((result) => {
-                this.setState({ mdwData: result, mdwRequestCompleted: true });
-            });
+        if (!['complete', 'loading'].includes(this.mdwStatus) && approval && !this.state.mdwRequestCompleted) {
+            this.mdwStatus = 'loading';
+            this.props.getMdwData(approval)
+                .then((result) => {
+                    if (_.isEmpty(result)) {
+                        this.mdwRequestStatus = 'complete';
+                    }
+                    this.setState({ mdwData: result, mdwRequestCompleted: true });
+                })
+                .catch(() => {
+                    this.mdwStatus = 'error';
+                });
         }
         if (approval && !this.state.currentStepType) {
             this.setState({ currentStepType: _.get(approval, 'currentStep.type') });
         }
-        if (approval && this.state.isValidMccScoreChanged) {
+        if (!['complete', 'loading'].includes(this.mccStatus) && approval && this.state.isValidMccScoreChanged) {
+            this.mccStatus = 'loading';
             this.props.getValidMccScore(approval.request.id).then((result) => {
+                if (!result) {
+                    this.mccStatus = 'error';
+                }
                 this.setState({ validMccScore: result, isValidMccScoreChanged: false });
+                this.mccStatus = 'completed';
             });
         }
         const isCurrentUserAbleToCancel =
