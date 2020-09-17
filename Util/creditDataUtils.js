@@ -11,6 +11,11 @@ const prepayments = {
         product: 'mrc.payment.Bank_Transfer',
         period: 'mrc.payment.0',
     },
+    HR: {
+        amount: 0.01,
+        product: 'mrc.payment.Bank_Transfer',
+        period: 'mrc.payment.0',
+    },
     // TODO: Other countries with different setup can have different data
 };
 
