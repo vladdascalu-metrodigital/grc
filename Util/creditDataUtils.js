@@ -12,7 +12,7 @@ const prepayments = {
         period: 'mrc.payment.0',
     },
     HR: {
-        amount: 0.01,
+        amount: 0,
         product: 'mrc.payment.Bank_Transfer',
         period: 'mrc.payment.0',
     },
