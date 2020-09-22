@@ -46,6 +46,9 @@ export function stickyOffsetFromSelector(selector, add = 0) {
  * calculate offset px for sticky behaviour.
  * combine offsetFromPreviousSiblings and stickyOffsetFromSelector.
  *
+ * When stickyNamespace is used, previous sibling nodes must have namespace set in data-sticky attribute.
+ * See offsetFromPreviousSiblings for more details.
+ *
  * conveniently use callback to handle calculated offset immediately after calculation.
  *
  * @param {{node, stickyNamespace, offsetSelector, offsetPx, callback}} paramas
