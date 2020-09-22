@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { stickyOffsetFromCombined } from '../Util/stickyUtil';
 
 import './index.scss';
 
@@ -66,30 +67,16 @@ class R extends Component {
         }
     }
 
-    getStickyTop(node, top = 0) {
-        let prevSibling = node.previousSibling;
-        if (prevSibling && prevSibling.dataset.sticky === this.props.sticky) {
-            let prevSiblingOffset = top + prevSibling.clientHeight;
-            return this.getStickyTop(prevSibling, prevSiblingOffset);
-        } else {
-            return top;
-        }
-    }
-
     componentDidMount() {
         let { sticky, stickyOffset } = this.props;
         if (sticky) {
-            let stickyTopOffset = 0;
-            if (typeof stickyOffset === 'number') {
-                stickyTopOffset = stickyOffset;
-            } else if (typeof stickyOffset === 'string' && document.querySelector(stickyOffset)) {
-                stickyTopOffset = Array.from(document.querySelectorAll(stickyOffset)).reduce(
-                    (height, el) => (height += el.clientHeight),
-                    0
-                );
-            }
-            let stickyTop = stickyTopOffset + this.getStickyTop(this.selfRef.current);
-            this.selfRef.current.style.setProperty('--sticky-top', stickyTop + 'px');
+            stickyOffsetFromCombined({
+                node: this.selfRef.current,
+                stickyNamespace: sticky,
+                offsetSelector: typeof stickyOffset === 'string' ? stickyOffset : undefined,
+                offsetPx: typeof stickyOffset === 'number' ? stickyOffset : undefined,
+                callback: (offset) => this.selfRef.current.style.setProperty('--sticky-top', offset + 'px'),
+            });
         }
     }
 
