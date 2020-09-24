@@ -58,12 +58,16 @@ export default class PageHeader extends Component {
             headerInfoData,
             MainMenuComponent,
             LanguageListComponent,
+            NotificationComponent,
         } = this.props;
         let { showAsideInfo } = this.state;
         let { showLanguageSwitch } = this.state;
         let { showAppSwitch } = this.state;
         return (
             <header className={'mrc-ui-pageheader'}>
+                <div className="mrc-ui-pageheader-notification-area">
+                    {NotificationComponent ? <NotificationComponent /> : null}
+                </div>
                 <div className="mrc-ui-pageheader-menu" onClick={this.toggleMenuSwitch}>
                     <div className="mrc-ui-pageheader-menu-metro-icon">
                         <MetroIcon size={IS.XSMALL} />
@@ -152,6 +156,7 @@ PageHeader.propTypes = {
 
     MainMenuComponent: PropTypes.elementType,
     LanguageListComponent: PropTypes.elementType,
+    NotificationComponent: PropTypes.elementType,
 };
 
 PageHeader.defaultProps = {

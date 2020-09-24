@@ -6,6 +6,7 @@
   background-color: $color-contrast-white;
   display: grid;
   grid-template-areas: 
+    "notifications notifications notifications"
     "page-menu page-title info-area"
     "tabs      tabs       tabs"
     "content   content    content";
@@ -23,6 +24,7 @@
         $color-brand-primary-tint-90 100%
       );
     grid-template-areas:
+      "notifications notifications"
       "page-title info-area"
       "tabs       tabs"
       "content    content";
@@ -36,6 +38,10 @@
     top: 0;
     z-index: 1;
   }
+}
+
+.mrc-ui-pageheader-notification-area {
+  grid-area: notifications;
 }
 
 .mrc-ui-pageheader-menu {
