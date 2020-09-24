@@ -3,7 +3,7 @@ import { iconClassNames, iconPropTypes } from './index';
 
 import './index.scss';
 
-export default class CalendarIcon extends PureComponent {
+export default class CancelIcon extends PureComponent {
     render() {
         let { svgClassName, colorToFillClassName } = iconClassNames(this.props);
         return (
@@ -24,4 +24,4 @@ export default class CalendarIcon extends PureComponent {
     }
 }
 
-CalendarIcon.propTypes = iconPropTypes;
+CancelIcon.propTypes = iconPropTypes;
