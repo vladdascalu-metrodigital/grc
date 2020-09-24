@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import PageTitle from '../PageTitle';
 import MoreIcon from '../icons/MoreIcon';
 import SideScreen from '../SideScreen';
-import HeaderInfo from './HeaderInfo';
+import HeaderInfo, { headerInfoDataPropType } from './HeaderInfo';
 import { COLOR as ICOLOR } from '../icons/index';
 import MetroIcon from '../icons/MetroIcon';
 import MenuIcon from '../icons/MenuIcon';
@@ -135,7 +135,7 @@ export default class PageHeader extends Component {
 PageHeader.propTypes = {
     tabs: PropTypes.arrayOf(
         PropTypes.shape({
-            ir: PropTypes.string,
+            id: PropTypes.string,
             text: PropTypes.string,
             onClick: PropTypes.func,
         })
@@ -148,7 +148,7 @@ PageHeader.propTypes = {
     customerId: PropTypes.string,
     customerStatus: PropTypes.string,
 
-    headerInfoData: PropTypes.object,
+    headerInfoData: headerInfoDataPropType,
 
     MainMenuComponent: PropTypes.elementType,
     LanguageListComponent: PropTypes.elementType,
