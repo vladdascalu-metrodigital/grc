@@ -2,11 +2,11 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import MrcNumber from '../../MrcNumber';
-import { COLOR as IC, SIZE as IS } from '../../icons/index';
-import ArrowDownOutlinedIcon from '../../icons/ArrowDownOutlinedIcon';
-import ArrowRightOutlinedIcon from '../../icons/ArrowRightOutlinedIcon';
-import ArrowUpOutlinedIcon from '../../icons/ArrowUpOutlinedIcon';
+import MrcNumber from '../MrcNumber';
+import { COLOR as IC, SIZE as IS } from '../icons/index';
+import ArrowDownOutlinedIcon from '../icons/ArrowDownOutlinedIcon';
+import ArrowRightOutlinedIcon from '../icons/ArrowRightOutlinedIcon';
+import ArrowUpOutlinedIcon from '../icons/ArrowUpOutlinedIcon';
 
 import './HeaderInfoLimits.scss';
 

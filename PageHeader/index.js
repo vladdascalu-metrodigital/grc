@@ -3,18 +3,15 @@ import PropTypes from 'prop-types';
 // import classnames from 'classnames';
 
 import PageTitle from '../PageTitle';
-import MoreIcon from '../../icons/MoreIcon';
-import SideScreen from '../../SideScreen';
+import MoreIcon from '../icons/MoreIcon';
+import SideScreen from '../SideScreen';
 import HeaderInfo from './HeaderInfo';
-import { COLOR as ICOLOR } from '../../icons/index';
-import SideScreenLanguageEntry from './SideScreenLanguageEntry';
-import MetroIcon from '../../icons/MetroIcon';
+import { COLOR as ICOLOR } from '../icons/index';
+import MetroIcon from '../icons/MetroIcon';
+import MenuIcon from '../icons/MenuIcon';
 
-import MenuIcon from '../../icons/MenuIcon';
-
-import MainMenu, { MENU_CONTEXT } from '../MainMenu';
-
-import { SIZE as IS } from '../../icons/index';
+import { MENU_CONTEXT } from '../MainMenu';
+import { SIZE as IS } from '../icons/index';
 
 import './index.scss';
 
@@ -51,14 +48,20 @@ export default class PageHeader extends Component {
     }
 
     render() {
-        let { title, customerName, customerId, customerStatus } = this.props;
+        let {
+            tabs,
+            activeTabId,
+            title,
+            customerName,
+            customerId,
+            customerStatus,
+            headerInfoData,
+            MainMenuComponent,
+            LanguageListComponent,
+        } = this.props;
         let { showAsideInfo } = this.state;
         let { showLanguageSwitch } = this.state;
         let { showAppSwitch } = this.state;
-        let headerInfoData = {
-            requestStartDate: '2020-04-12',
-            // TODO: put all data here
-        };
         return (
             <header className={'mrc-ui-pageheader'}>
                 <div className="mrc-ui-pageheader-menu" onClick={this.toggleMenuSwitch}>
@@ -78,24 +81,31 @@ export default class PageHeader extends Component {
                     />
                 </div>
                 <div className="mrc-ui-pageheader-info">
-                    <HeaderInfo {...headerInfoData} />
-                    <button onClick={this.toggleAsideInfo} className="mrc-ui-pageheader-more-button">
-                        <MoreIcon color={ICOLOR.MUTED} />
-                    </button>
+                    {headerInfoData ? (
+                        <React.Fragment>
+                            <HeaderInfo {...headerInfoData} />
+                            <button onClick={this.toggleAsideInfo} className="mrc-ui-pageheader-more-button">
+                                <MoreIcon color={ICOLOR.MUTED} />
+                            </button>
+                        </React.Fragment>
+                    ) : null}
                     <button onClick={this.toggleLanguageSwitch} className="mrc-ui-pageheader-language-button">
                         <div className="mrc-ui-pageheader-language-icon">de</div>
                     </button>
                 </div>
                 <div className="mrc-ui-pageheader-tabs">
-                    <div className="mrc-ui-pageheader-tabitem mrc-ui-pageheader-tabitem-selected">Customer Data</div>
-                    <div className="mrc-ui-pageheader-tabitem">Credit Details</div>
-                    <div className="mrc-ui-pageheader-tabitem">Sales</div>
-                    <div className="mrc-ui-pageheader-tabitem">Scroring</div>
-                    <div className="mrc-ui-pageheader-tabitem">SAP Data</div>
-                    <div className="mrc-ui-pageheader-tabitem">Strategy</div>
-                    <div className="mrc-ui-pageheader-tabitem">Comments</div>
-                    <div className="mrc-ui-pageheader-tabitem">Attachments</div>
-                    <div className="mrc-ui-pageheader-tabitem">Audit Trail</div>
+                    {tabs.map((t, k) => {
+                        let activeClass = activeTabId === t.id ? 'mrc-ui-pageheader-tabitem-selected' : '';
+                        return (
+                            <div
+                                key={k}
+                                className={`mrc-ui-pageheader-tabitem ${activeClass}`}
+                                onClick={() => t.onClick(t.id)}
+                            >
+                                {t.text}
+                            </div>
+                        );
+                    })}
                 </div>
                 {this.state.showAsideInfo ? (
                     <SideScreen
@@ -108,15 +118,13 @@ export default class PageHeader extends Component {
                 ) : null}
                 {this.state.showLanguageSwitch ? (
                     <SideScreen isShown={showLanguageSwitch} toggle={this.toggleLanguageSwitch} title="Switch Language">
-                        <SideScreenLanguageEntry language="Deutsch" languageISO="de" />
-                        <SideScreenLanguageEntry language="English" languageISO="en" />
-                        <SideScreenLanguageEntry language="Russian" languageISO="ru" />
+                        <LanguageListComponent />
                     </SideScreen>
                 ) : null}
 
                 {this.state.showAppSwitch ? (
                     <SideScreen isShown={showAppSwitch} toggle={this.toggleMenuSwitch} title="Menu" side="left">
-                        <MainMenu context={MENU_CONTEXT.SIDESCREEN} />
+                        <MainMenuComponent context={MENU_CONTEXT.SIDESCREEN} />
                     </SideScreen>
                 ) : null}
             </header>
@@ -125,9 +133,27 @@ export default class PageHeader extends Component {
 }
 
 PageHeader.propTypes = {
+    tabs: PropTypes.arrayOf(
+        PropTypes.shape({
+            ir: PropTypes.string,
+            text: PropTypes.string,
+            onClick: PropTypes.func,
+        })
+    ),
+    activeTabId: PropTypes.string,
+
     title: PropTypes.string,
+
     customerName: PropTypes.string,
     customerId: PropTypes.string,
     customerStatus: PropTypes.string,
-    // TODO: add all headerInfoData proptypes
+
+    headerInfoData: PropTypes.object,
+
+    MainMenuComponent: PropTypes.elementType,
+    LanguageListComponent: PropTypes.elementType,
+};
+
+PageHeader.defaultProps = {
+    tabs: [],
 };

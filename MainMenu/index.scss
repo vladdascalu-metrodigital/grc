@@ -1,8 +1,10 @@
-@import '../../lib/scss/colors';
-@import '../../lib/scss/variables';
-@import '../../lib/scss/typography';
+@import '../lib/scss/colors';
+@import '../lib/scss/variables';
+@import '../lib/scss/typography';
 
-
+.mrc-ui-main-menu-item {
+  display: block;
+}
     
 .mrc-ui-main-menu-sidebar {          
     .mrc-ui-main-menu-item {
@@ -11,6 +13,7 @@
         color: $color-contrast-white;
         cursor: pointer;
 
+        &-active,
         &:hover {
             background-color: $color-palette-blue-tint-10;
         }
@@ -46,6 +49,7 @@
           cursor: pointer;
         }
       
+        &-active,
         &:hover * {
           color: $color-interaction;
         }
