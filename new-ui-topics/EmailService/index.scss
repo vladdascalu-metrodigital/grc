@@ -1,0 +1,116 @@
+@import '../../lib/scss/colors';
+@import '../../lib/scss/variables';
+
+.mrc-ui-form-box {
+    background-color: $color-form-background-grey;
+    padding: $spacing-large $spacing-medium;
+    margin-top: $spacing-small;
+
+}
+
+
+.mrc-ui-main-content {
+    padding: 0;
+}
+
+.mrc-ui-basic-grid-table {
+    display: grid;
+    grid-template-columns: 3rem 3fr 1fr 1fr max-content;
+    margin-bottom: $spacing-extra-extra-extra-large;
+    thead,
+    tbody,
+    tr {
+        display: contents;
+    }
+
+    th h2 {
+        color: $color-palette-grey-tint-50;
+    }
+
+    .mrc-ui-basic-table-grid-customer-cell span:first-child {
+        font-weight: bold;
+        color: $color-brand-primary-default;
+    }
+    .mrc-ui-basic-table-grid-customer-cell span:last-child {
+        font-weight: bold;
+        color: $color-brand-primary-tint-50;
+    }
+
+    th {
+        padding: $spacing-medium;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        background: $color-brand-primary-tint-60;
+        text-align: left;
+        font-weight: bold;
+        color: $color-contrast-white;
+    }
+
+    .mrc-ui-form-box-search-wrapper {
+        max-width: 600px;
+    }
+
+    .mrc-ui-basic-grid-table *{
+        z-index: 1;
+    }
+
+    thead tr * {
+        z-index: 20;
+    }
+        
+    thead tr:first-child th {
+        grid-column: span 5;
+        background-color: $color-contrast-white;
+        padding: $spacing-medium $spacing-none $spacing-none $spacing-none;
+    }
+
+    thead tr:last-child th {
+        text-transform: uppercase;
+        letter-spacing: 0.05rem;
+    }
+
+    // @media screen and (min-width: 1350px) {
+        thead tr:first-child th {
+            position: sticky;
+            top: var(--sticky-top);
+        }
+
+        thead tr:last-child th {
+            position: sticky;
+            // top: calc( 113px + 154px );
+            top: var(--sticky-top);
+        }
+    // }
+
+    td {
+        padding: $spacing-medium;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+     button {
+        // border: 1px solid $color-palette-grey-tint-90;
+        // background-color: grey;
+        z-index: 1;
+    }
+
+    .mrc-ui-basic-table-grid-search-column {
+
+    }
+
+    tr:nth-child(even) td {
+        background: $color-palette-blue-tint-95;
+        background: $color-brand-primary-tint-95;
+      }
+
+}
+
+@media screen and (min-width: 1350px) {
+    .mrc-ui-action-dock { 
+        // width: calc(100% - 96px - #{$spacing-extra-extra-extra-large} * 2);
+        width: calc(50% - 96px - #{$spacing-extra-extra-extra-large} * 2);
+        left: calc(96px + #{$spacing-extra-extra-extra-large} + 25%);
+    }
+  }
