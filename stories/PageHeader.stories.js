@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
+import MainMenu from '../MainMenu';
+import LanguageList from '../LanguageList';
 import PageHeader from '../PageHeader';
 import PageTitle from '../PageTitle';
+
+import quickNavConfig from './fixtures/config/quickNav';
+import languageConfig from './fixtures/config/languages';
 
 let tabs = [
     {
@@ -53,6 +58,19 @@ let tabs = [
     },
 ];
 
+const MockedMainMenu = (props) => (
+    <MainMenu
+        {...props}
+        navConfig={quickNavConfig}
+        activeItem="history"
+        updateActiveItem={(item) => action('updateActiveItem')(item)}
+    />
+);
+
+const MockedLanguageList = (props) => (
+    <LanguageList {...props} config={languageConfig} languageChange={(l) => action('languageChange')(l)} />
+);
+
 storiesOf('PageHeader', module)
     .add('PageHeader with Tabs and Data', () => {
         return (
@@ -64,6 +82,8 @@ storiesOf('PageHeader', module)
                 tabs={tabs}
                 activeTabId={tabs[0].id}
                 headerInfoData={{}}
+                MainMenuComponent={MockedMainMenu}
+                LanguageListComponent={MockedLanguageList}
             />
         );
     })
@@ -74,6 +94,8 @@ storiesOf('PageHeader', module)
                 customerName="Betterlife GmbH Super Long Name ;aj;djf jja dfjo;asijf ajfoasjdf oasdjfi ajsodfj"
                 customerId="15/116102"
                 customerStatus="Kassensperre"
+                MainMenuComponent={MockedMainMenu}
+                LanguageListComponent={MockedLanguageList}
             />
         );
     });
@@ -86,9 +108,17 @@ storiesOf('PageHeader', module)
                 customerName="Betterlife GmbH"
                 customerId="15/116102"
                 customerStatus="Kassensperre"
+                MainMenuComponent={MockedMainMenu}
+                LanguageListComponent={MockedLanguageList}
             />
         );
     })
     .add('PageTitle only with title', () => {
-        return <PageTitle title="Credit Correction" />;
+        return (
+            <PageTitle
+                title="Credit Correction"
+                MainMenuComponent={MockedMainMenu}
+                LanguageListComponent={MockedLanguageList}
+            />
+        );
     });
