@@ -32,9 +32,6 @@ export default class AppShell extends Component {
                     </div>
                     <MainMenuComponent context={MENU_CONTEXT.SIDEBAR} />
                 </div>
-                <div className="mrc-ui-app-shell-notification-area">
-                    {NotificationComponent ? <NotificationComponent /> : null}
-                </div>
                 <PageHeader
                     title={title}
                     customerName={customerName}
@@ -43,6 +40,7 @@ export default class AppShell extends Component {
                     headerInfoData={headerInfoData}
                     MainMenuComponent={MainMenuComponent}
                     LanguageListComponent={LanguageListComponent}
+                    NotificationComponent={NotificationComponent}
                 />
                 <MainContent>{children}</MainContent>
             </div>

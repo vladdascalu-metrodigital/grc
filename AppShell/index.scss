@@ -21,10 +21,6 @@ $mrc-ui-sidebar-width: 96px;
   padding: $spacing-medium;
 }
 
-.mrc-ui-app-shell-notification-area {
-  grid-area: notifications;
-}
-
 @media screen and (min-width: 1350px) {
   .mrc-ui-sidebar {
     display: block;
@@ -33,7 +29,6 @@ $mrc-ui-sidebar-width: 96px;
   .mrc-ui-app-shell {
     display: grid;
     grid-template: 
-      "sidebar notifications" max-content
       "sidebar header" max-content
       "sidebar content" 1fr
       / #{$mrc-ui-sidebar-width} auto;
