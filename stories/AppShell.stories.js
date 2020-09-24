@@ -22,17 +22,37 @@ const MockedLanguageList = (props) => (
     <LanguageList {...props} config={languageConfig} languageChange={(l) => action('languageChange')(l)} />
 );
 
-storiesOf('AppShell', module).add('AppShell including MainMenu', () => {
-    return (
-        <AppShell
-            title="Credit Correction"
-            customerName="Betterlife GmbH Super Long Name ;aj;djf jja dfjo;asijf ajfoasjdf oasdjfi ajsodfj"
-            customerId="15/116102"
-            customerStatus="Kassensperre"
-            MainMenuComponent={MockedMainMenu}
-            LanguageListComponent={MockedLanguageList}
-        >
-            <p>Content</p>
-        </AppShell>
-    );
-});
+const MockedNotification = () => (
+    <div style={{ background: 'red', color: 'white', padding: '.5rem' }}>Notification Dummy</div>
+);
+
+storiesOf('AppShell', module)
+    .add('AppShell including MainMenu', () => {
+        return (
+            <AppShell
+                title="Credit Correction"
+                customerName="Betterlife GmbH Super Long Name ;aj;djf jja dfjo;asijf ajfoasjdf oasdjfi ajsodfj"
+                customerId="15/116102"
+                customerStatus="Kassensperre"
+                MainMenuComponent={MockedMainMenu}
+                LanguageListComponent={MockedLanguageList}
+            >
+                <p>Content</p>
+            </AppShell>
+        );
+    })
+    .add('AppShell with Notification', () => {
+        return (
+            <AppShell
+                title="Credit Correction"
+                customerName="Betterlife GmbH Super Long Name ;aj;djf jja dfjo;asijf ajfoasjdf oasdjfi ajsodfj"
+                customerId="15/116102"
+                customerStatus="Kassensperre"
+                MainMenuComponent={MockedMainMenu}
+                LanguageListComponent={MockedLanguageList}
+                NotificationComponent={MockedNotification}
+            >
+                <p>Content</p>
+            </AppShell>
+        );
+    });

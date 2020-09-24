@@ -22,6 +22,7 @@ export default class AppShell extends Component {
             headerInfoData,
             MainMenuComponent,
             LanguageListComponent,
+            NotificationComponent,
         } = this.props;
         return (
             <div className="mrc-ui-app-shell">
@@ -30,6 +31,9 @@ export default class AppShell extends Component {
                         <MetroIcon size={IS.SMALL} />
                     </div>
                     <MainMenuComponent context={MENU_CONTEXT.SIDEBAR} />
+                </div>
+                <div className="mrc-ui-app-shell-notification-area">
+                    {NotificationComponent ? <NotificationComponent /> : null}
                 </div>
                 <PageHeader
                     title={title}
@@ -56,4 +60,5 @@ AppShell.propTypes = {
 
     MainMenuComponent: PropTypes.elementType,
     LanguageListComponent: PropTypes.elementType,
+    NotificationComponent: PropTypes.elementType,
 };
