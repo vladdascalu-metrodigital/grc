@@ -14,7 +14,7 @@ import './HeaderInfo.scss';
 
 export default class HeaderInfos extends PureComponent {
     render() {
-        let { requestStartDate, context } = this.props;
+        let { /* headerInfoData, */ context } = this.props;
         let isColStyle = context === 'sidescreen';
         let className = classnames('mrc-ui-header-info', {
             'mrc-ui-header-info-row-style': !isColStyle,
@@ -22,7 +22,7 @@ export default class HeaderInfos extends PureComponent {
         });
         return (
             <div className={className}>
-                <HeaderInfoRequestStart isColStyle={isColStyle} requestStartDate={requestStartDate} />
+                <HeaderInfoRequestStart isColStyle={isColStyle} requestStartDate={'2020-04-12'} />
                 <HeaderInfoRequestSummary
                     isColStyle={isColStyle}
                     phaseName="Initialisierung"

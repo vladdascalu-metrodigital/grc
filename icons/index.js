@@ -77,6 +77,7 @@ export const iconPropTypes = {
         'muted',
         'disabled',
         'light-red',
+        'current-color',
     ]),
     strokeWidth: PropTypes.oneOf(['thin', 'medium', 'midi']),
     size: PropTypes.oneOf(['small', 'xsmall', 'inline']),

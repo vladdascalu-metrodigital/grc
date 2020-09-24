@@ -1,3 +1,5 @@
+// TODO deprecated when new LanguageList is implemented in all services
+
 import { connect } from 'react-redux';
 import LanguageSelectLayout from './LanguageSelectLayout';
 
@@ -17,7 +19,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps() {
     return {
-        languageChange: event => {
+        languageChange: (event) => {
             const value = event.target.value;
             if (typeof value !== 'string') {
                 console.error('Wrong language code:', value);

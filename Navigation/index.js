@@ -1,3 +1,5 @@
+// TODO: whole navigation component will be deprecated and can be removed as soon as new AppShell with new MainMenu is implemented throughout the services (SH 23. Sept 2020)
+
 import { connect } from 'react-redux';
 import NavigationLayout from './NavigationLayout';
 

@@ -1,14 +1,8 @@
-@import '../../lib/scss/variables';
-@import '../../lib/scss/typography';
-@import '../../lib/scss/colors';
+@import '../lib/scss/variables';
+@import '../lib/scss/typography';
+@import '../lib/scss/colors';
 
-
-
-
-
-//
-
-.mrc-ui-side-screen-language-entry {
+.mrc-ui-language-list-entry {
   display: grid;
   grid-template: 
     'label  icon'
@@ -32,7 +26,7 @@
   }
 }
 
-.mrc-ui-side-screen-language-label {
+.mrc-ui-language-list-label {
     @include typo-small-caps;
     grid-area: label;
     color: $color-palette-grey-tint-40;
@@ -44,7 +38,7 @@
 
 
 
-.mrc-ui-side-screen-language-icon {
+.mrc-ui-language-list-icon {
     grid-area: icon;
     border: $border-width-thin solid $color-palette-grey-tint-40;
     color: $color-palette-grey-default;

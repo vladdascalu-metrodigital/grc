@@ -5,7 +5,7 @@ import './index.scss';
 
 export default class MetroIcon extends PureComponent {
     render() {
-        let { svgClassName, colorToStrokeClassName } = iconClassNames(this.props);
+        let { svgClassName } = iconClassNames(this.props);
         return (
             <svg
                 className={svgClassName}
@@ -16,7 +16,6 @@ export default class MetroIcon extends PureComponent {
                 xmlns="http://www.w3.org/2000/svg"
             >
                 <g
-                    className={colorToStrokeClassName}
                     stroke="none"
                     strokeWidth="1"
                     fill="none"
