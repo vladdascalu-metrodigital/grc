@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import './index.scss';
 import './deprecatedIndex.scss';
 
-const COLOR = {
+export const COLOR = {
     INTERACTION: 'interaction',
     SUCCESS: 'success',
     NEUTRAL: 'neutral',
@@ -13,7 +13,7 @@ const COLOR = {
     // ATTENTION: 'attention',
 };
 
-const SIZE = {
+export const SIZE = {
     SMALL: 'small',
     SMALL_ROUNDER: 'small-round',
     MEDIUM: 'medium',
