@@ -76,10 +76,10 @@ export default class MultipleSelect extends PureComponent {
 
     render() {
         let { valid, validationMessages } = this.state;
-        let { value, options, label, status, validationMessages: messages } = this.props;
+        let { value, options, label, status, validationMessages: messages, hideInvalid } = this.props;
         if (messages) validationMessages = [...validationMessages, ...messages];
         let inputClassName = classnames('mrc-ui-multiple-select-input', {
-            'mrc-ui-multiple-select-input-invalid': status === STATUS.INVALID || !valid,
+            'mrc-ui-multiple-select-input-invalid': !hideInvalid && (status === STATUS.INVALID || !valid),
         });
         return (
             <div className="mrc-ui-multiple-select">
@@ -103,7 +103,7 @@ export default class MultipleSelect extends PureComponent {
                         })}
                     </select>
                 ) : null}
-                <InputValidationMessages messages={validationMessages} />
+                {!hideInvalid ? <InputValidationMessages messages={validationMessages} /> : null}
             </div>
         );
     }
@@ -127,4 +127,5 @@ MultipleSelect.propTypes = {
     validationMessages: PropTypes.array,
     label: PropTypes.string,
     required: PropTypes.bool,
+    hideInvalid: PropTypes.bool,
 };

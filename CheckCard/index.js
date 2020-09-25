@@ -24,12 +24,13 @@ export default class CheckCard extends Component {
     }
 
     render() {
-        let { children, checked, disabled, title, size } = this.props;
+        let { children, checked, disabled, invalid, title, size } = this.props;
         children = typeof children === 'string' ? children.trim() : children;
         let className = classnames('mrc-ui-check-card', {
             'mrc-ui-check-card-no-content': !children,
             'mrc-ui-check-card-checked': checked && !disabled,
             'mrc-ui-check-card-disabled': disabled,
+            'mrc-ui-check-card-invalid': checked && invalid && !disabled,
             'mrc-ui-check-card-small': size === SIZE.SMALL,
         });
         return (
@@ -37,7 +38,7 @@ export default class CheckCard extends Component {
                 <div className="mrc-ui-check-card-head-row">
                     {title ? <span className="mrc-ui-check-card-title">{title}</span> : <div>{children}</div>}
                     <div className="mrc-ui-check-card-checkmark">
-                        <CheckSmallFilledIcon size={ISIZE.XSMALL} color={ICOLOR.SUCCESS} />
+                        <CheckSmallFilledIcon size={ISIZE.XSMALL} color={invalid ? ICOLOR.DANGER : ICOLOR.SUCCESS} />
                     </div>
                 </div>
                 {children && title && <div className="mrc-ui-check-card-extra-row">{children}</div>}
@@ -50,6 +51,7 @@ CheckCard.propTypes = {
     checked: PropTypes.bool,
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     disabled: PropTypes.bool,
+    invalid: PropTypes.bool,
     onClick: PropTypes.func,
     title: PropTypes.string,
     size: PropTypes.oneOf(['small']),

@@ -64,11 +64,11 @@ export default class TextArea extends Component {
     }
 
     render() {
-        let { value, rows, disabled, onBlur, status, label, validationMessages: messages } = this.props;
+        let { value, rows, disabled, onBlur, status, label, validationMessages: messages, hideInvalid } = this.props;
         let { valid, validationMessages } = this.state;
         if (messages) validationMessages = [...validationMessages, ...messages];
         let inputClassName = classnames('mrc-ui-text-area-input', {
-            'mrc-ui-text-area-input-invalid': status === STATUS.INVALID || !valid,
+            'mrc-ui-text-area-input-invalid': !hideInvalid && (status === STATUS.INVALID || !valid),
         });
         return (
             <div className="mrc-ui-text-area">
@@ -82,7 +82,7 @@ export default class TextArea extends Component {
                     disabled={disabled}
                     onBlur={onBlur}
                 />
-                <InputValidationMessages messages={validationMessages} />
+                {!hideInvalid ? <InputValidationMessages messages={validationMessages} /> : null}
             </div>
         );
     }
@@ -90,19 +90,19 @@ export default class TextArea extends Component {
 
 TextArea.propTypes = {
     autofocus: PropTypes.bool,
+    changeDelay: PropTypes.number,
     disabled: PropTypes.bool,
-    rows: PropTypes.number,
-    value: PropTypes.string,
+    hideInvalid: PropTypes.bool,
+    label: PropTypes.string,
+    onBlur: PropTypes.func,
     onChange: PropTypes.func,
     onChangeDelayed: PropTypes.func,
-    changeDelay: PropTypes.number,
-
-    status: PropTypes.oneOf(['invalid']),
     onValidChange: PropTypes.func,
-    onBlur: PropTypes.func,
-    validationMessages: PropTypes.array,
-    label: PropTypes.string,
     required: PropTypes.bool,
+    rows: PropTypes.number,
+    status: PropTypes.oneOf(['invalid']),
+    validationMessages: PropTypes.array,
+    value: PropTypes.string,
 };
 
 TextArea.defaultProps = {

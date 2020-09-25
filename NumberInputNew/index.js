@@ -90,7 +90,8 @@ export default class NumberInputNew extends Component {
                     if (!isValid) {
                         nextValidationMessages.push(lookup('mrc.forms.number_too_low'));
                     }
-                } else if (max || max === 0) {
+                }
+                if ((isValid && max) || max === 0) {
                     if (lessThanMax === true) {
                         isValid = v < max;
                     } else {
@@ -121,11 +122,12 @@ export default class NumberInputNew extends Component {
 
     render() {
         let { valid, validationMessages } = this.state;
-        let { value, disabled, status, label, onBlur, validationMessages: messages } = this.props;
+        let { value, disabled, status, label, onBlur, validationMessages: messages, hideInvalid } = this.props;
         value = value || value === 0 ? value : ''; // handle nullish values
         if (messages) validationMessages = [...validationMessages, ...messages];
+        console.log(status, valid);
         let inputClassName = classnames('mrc-ui-number-input-new-input', {
-            'mrc-ui-number-input-new-input-invalid': status === STATUS.INVALID || !valid,
+            'mrc-ui-number-input-new-input-invalid': !hideInvalid && (status === STATUS.INVALID || !valid),
         });
         return (
             <div className={'mrc-ui-number-input-new'}>
@@ -139,7 +141,7 @@ export default class NumberInputNew extends Component {
                     onBlur={onBlur}
                     disabled={disabled}
                 />
-                <InputValidationMessages messages={validationMessages} />
+                {!hideInvalid ? <InputValidationMessages messages={validationMessages} /> : null}
             </div>
         );
     }
@@ -147,20 +149,21 @@ export default class NumberInputNew extends Component {
 
 NumberInputNew.propTypes = {
     autofocus: PropTypes.bool,
+    changeDelay: PropTypes.number,
     disabled: PropTypes.bool,
-    required: PropTypes.bool,
-    status: PropTypes.oneOf(['invalid']),
+    greaterThanMin: PropTypes.bool,
+    hideInvalid: PropTypes.bool,
+    integer: PropTypes.bool,
+    label: PropTypes.string,
+    lessThanMax: PropTypes.bool,
+    max: PropTypes.number,
+    min: PropTypes.number,
+    onBlur: PropTypes.func,
     onChange: PropTypes.func,
     onChangeDelayed: PropTypes.func,
-    changeDelay: PropTypes.number,
     onValidChange: PropTypes.func,
-    onBlur: PropTypes.func,
+    required: PropTypes.bool,
+    status: PropTypes.oneOf(['invalid']),
     validationMessages: PropTypes.array,
     value: PropTypes.string,
-    integer: PropTypes.bool,
-    min: PropTypes.number,
-    max: PropTypes.number,
-    greaterThanMin: PropTypes.bool,
-    lessThanMax: PropTypes.bool,
-    label: PropTypes.string,
 };

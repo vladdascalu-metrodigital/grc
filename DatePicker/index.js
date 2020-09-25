@@ -104,10 +104,11 @@ export default class DatePicker extends Component {
             label,
             status,
             validationMessages: messages,
+            hideInvalid,
         } = this.props;
         if (messages) validationMessages = [...validationMessages, ...messages];
         let className = classnames('mrc-ui-datepicker-input', {
-            'mrc-ui-datepicker-input-invalid': status === STATUS.INVALID || !valid,
+            'mrc-ui-datepicker-input-invalid': !hideInvalid && (status === STATUS.INVALID || !valid),
         });
         return (
             <div className="mrc-ui-datepicker">
@@ -127,7 +128,7 @@ export default class DatePicker extends Component {
                         <CalendarIcon size="xsmall" color={disabled ? IC.DISABLED : null} />
                     </div>
                 </div>
-                <InputValidationMessages messages={validationMessages} />
+                {!hideInvalid ? <InputValidationMessages messages={validationMessages} /> : null}
             </div>
         );
     }
@@ -143,11 +144,11 @@ DatePicker.propTypes = {
     showYearDropdown: PropTypes.bool,
     dateFormat: PropTypes.string,
     placeholderText: PropTypes.string,
-
     locale: PropTypes.string,
     status: PropTypes.oneOf(['invalid']),
     onValidChange: PropTypes.func,
     validationMessages: PropTypes.array,
     label: PropTypes.string,
     required: PropTypes.bool,
+    hideInvalid: PropTypes.bool,
 };

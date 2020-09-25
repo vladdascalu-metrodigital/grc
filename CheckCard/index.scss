@@ -22,6 +22,10 @@
   @include card-succcess();
 }
 
+.mrc-ui-check-card-invalid {
+  @include card-error();
+}
+
 .mrc-ui-check-card-disabled {
   @include background-color-pattern-disabled();
   cursor: not-allowed;
@@ -51,14 +55,18 @@
     font-weight: 600;
     font-size: $font-size-6;
   }
-
-  @at-root .mrc-ui-check-card-disabled #{&} {
-    color: $color-disabled;
-  }
-
+  
   @at-root .mrc-ui-check-card-checked #{&} {
     color: $color-palette-green-shade-20;
     font-weight: bold;
+  }
+
+  @at-root .mrc-ui-check-card-invalid #{&} {
+    color: $color-danger;
+  }
+  
+  @at-root .mrc-ui-check-card-disabled #{&} {
+    color: $color-disabled;
   }
 }
 
