@@ -10,6 +10,7 @@ import NumberInput from '../NumberInputNew';
 import MrcCurrency from '../MrcCurrency';
 import CheckCard from '../CheckCard';
 import { translatePaymentIfNeeded, getPaymentDataByType } from '../Util/creditDataUtils';
+import { lookup } from '../Util/translations';
 
 import * as _ from 'lodash';
 import { isApproval } from './creditDataTabUtil';
@@ -52,6 +53,7 @@ export default class LimitSection extends Component {
         // requested data
         const wishedExpiryAmount = _.get(customer, 'limit.wish.expiry.amount');
         const wishedExpiryDate = _.get(customer, 'limit.wish.expiry.date');
+        const validExpiry = _.get(customer, 'limit.wish.expiry.valid');
         const wishedAmount = _.get(customer, 'limit.wish.amount');
         const selectedProduct = translatePaymentIfNeeded(getPaymentDataByType(customer, paymentMethodType, 'product'));
         const selectedPeriod = translatePaymentIfNeeded(getPaymentDataByType(customer, paymentMethodType, 'period'));
@@ -187,6 +189,7 @@ export default class LimitSection extends Component {
                                             id={'datepicker-' + customer.storeNumber + customer.number}
                                             disabled={readOnly}
                                             locale={Moment.globalLocale}
+                                            validationMessages={!validExpiry ? [lookup('mrc.forms.noPastDate')] : []}
                                         />
                                     </CheckCard>
                                     {/* TODO: tbd in future
@@ -273,6 +276,7 @@ export default class LimitSection extends Component {
         const newExpiryDate = _.get(customer, 'limit.new.expiry.date');
         // const newExpiryAmount = _.get(customer, 'limit.new.expiry.amount');
         const newAmount = _.get(customer, 'limit.new.amount');
+        const validExpiry = _.get(customer, 'limit.new.expiry.valid');
 
         const hasCurrentLimit = !_.isNil(currentAmount) && !customer.isCashCustomer && !customer.isPrepaymentCustomer;
         const isCurrentLimit = _.isNil(newAmount) && limitType === 'CURRENT' && hasCurrentLimit;
@@ -498,6 +502,7 @@ export default class LimitSection extends Component {
                                             id={'datepicker-' + customer.storeNumber + customer.number}
                                             disabled={readOnly}
                                             locale={Moment.globalLocale}
+                                            validationMessages={!validExpiry ? [lookup('mrc.forms.noPastDate')] : []}
                                         />
                                     </CheckCard>
                                     {/* TODO: tbd in future

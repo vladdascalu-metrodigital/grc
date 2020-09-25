@@ -734,6 +734,7 @@ export default class LimitRequestLayout extends Component {
                                           expiry: {
                                               date: _.get(item, 'requestedLimitExpiry.limitExpiryDate'),
                                               amount: _.get(item, 'requestedLimitExpiry.resetToLimitAmount'),
+                                              valid: _.get(item, 'validExpiry'),
                                           },
                                       },
                                       limitType: _.get(item, 'limitType'),

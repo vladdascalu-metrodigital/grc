@@ -57,8 +57,6 @@ const MRC_SYSTEM = 'MRC';
 export class ApprovalProcessPresentation extends Component {
     FILE_TYPES = [''];
 
-
-
     // Sort by customerId
     static approvalItemsSorter(item1, item2) {
         const cust1 = item1.customer;
@@ -141,6 +139,14 @@ export class ApprovalProcessPresentation extends Component {
 
     updateNotification(approval) {
         if (approval && !approval.claimedBySomebodyElse && approval.state !== 'CANCELLED') {
+            if (
+                approval.approvalItems &&
+                _.every(approval.approvalItems, (item) => !_.get(item, 'validRequestedExpiry'))
+            ) {
+                this.props.showError(lookup('approval.message.request.pastLimitExpiry'));
+            } else {
+                this.props.hideNotification();
+            }
             const limitExpiryModifiedInPreviousStage =
                 !approval ||
                 _.find(approval.approvalItems, (x) => _.get(x, 'requestedLimitExpiry.modifiedInContracting'));
@@ -177,7 +183,8 @@ export class ApprovalProcessPresentation extends Component {
 
         if (!['complete', 'loading'].includes(this.mdwStatus) && approval && !this.state.mdwRequestCompleted) {
             this.mdwStatus = 'loading';
-            this.props.getMdwData(approval)
+            this.props
+                .getMdwData(approval)
                 .then((result) => {
                     if (_.isEmpty(result)) {
                         this.mdwRequestStatus = 'complete';
@@ -839,6 +846,7 @@ export class ApprovalProcessPresentation extends Component {
                     new: this.newGroupLimit(approvalItems),
                 }}
                 customers={approvalItems.map((item) => {
+                    const isNewLimit = _.get(item, 'limitType') === 'NEW';
                     const customerAdditionalFieldsList =
                         _.get(item, 'creditOption') === 'NEWCREDIT'
                             ? filterAdditionalFieldsList(
@@ -1047,10 +1055,7 @@ export class ApprovalProcessPresentation extends Component {
                                           position: null,
                                       },
                             new: {
-                                amount:
-                                    _.get(item, 'limitType') === 'NEW'
-                                        ? _.get(item, 'lastCreditDataJson.amount')
-                                        : null,
+                                amount: isNewLimit ? _.get(item, 'lastCreditDataJson.amount') : null,
                                 product:
                                     _.get(item, 'paymentMethodType') === 'NEW'
                                         ? _.get(item, 'lastCreditDataJson.creditProduct')
@@ -1064,14 +1069,9 @@ export class ApprovalProcessPresentation extends Component {
                                         ? _.get(item, 'lastCreditDataJson.debitType')
                                         : null,
                                 expiry: {
-                                    date:
-                                        _.get(item, 'limitType') === 'NEW'
-                                            ? _.get(item, 'requestedLimitExpiry.limitExpiryDate')
-                                            : null,
-                                    amount:
-                                        _.get(item, 'limitType') === 'NEW'
-                                            ? _.get(item, 'requestedLimitExpiry.resetToLimitAmount')
-                                            : null,
+                                    date: isNewLimit ? _.get(item, 'requestedLimitExpiry.limitExpiryDate') : null,
+                                    amount: isNewLimit ? _.get(item, 'requestedLimitExpiry.resetToLimitAmount') : null,
+                                    valid: isNewLimit ? _.get(item, 'validRequestedExpiry') : null,
                                 },
                             },
                             limitType: _.get(item, 'limitType'),
