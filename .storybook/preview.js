@@ -1,0 +1,17 @@
+import React from 'react';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import reducer from 'reducers/reducer';
+import { HashRouter } from 'react-router-dom';
+
+const store = createStore(reducer);
+
+export const decorators = [
+    (Story) => (
+        <Provider store={store}>
+            <HashRouter>
+                <Story />
+            </HashRouter>
+        </Provider>
+    ),
+];
