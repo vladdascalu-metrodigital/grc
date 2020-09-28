@@ -53,7 +53,7 @@ export default class LimitSection extends Component {
         // requested data
         const wishedExpiryAmount = _.get(customer, 'limit.wish.expiry.amount');
         const wishedExpiryDate = _.get(customer, 'limit.wish.expiry.date');
-        const validExpiry = _.get(customer, 'limit.wish.expiry.valid');
+        const validExpiryDate = _.get(customer, 'limit.wish.expiry.validDate');
         const wishedAmount = _.get(customer, 'limit.wish.amount');
         const selectedProduct = translatePaymentIfNeeded(getPaymentDataByType(customer, paymentMethodType, 'product'));
         const selectedPeriod = translatePaymentIfNeeded(getPaymentDataByType(customer, paymentMethodType, 'period'));
@@ -170,7 +170,7 @@ export default class LimitSection extends Component {
                                         title={ts.expiryDate}
                                         checked={!_.isNil(wishedExpiryDate)}
                                         disabled={readOnly}
-                                        invalid={!validExpiry}
+                                        invalid={!validExpiryDate}
                                     >
                                         <MrcDatePickerInput
                                             className="m-input-element"
@@ -190,7 +190,9 @@ export default class LimitSection extends Component {
                                             id={'datepicker-' + customer.storeNumber + customer.number}
                                             disabled={readOnly}
                                             locale={Moment.globalLocale}
-                                            validationMessages={!validExpiry ? [lookup('mrc.forms.noPastDate')] : []}
+                                            validationMessages={
+                                                !validExpiryDate ? [lookup('mrc.forms.noPastDate')] : []
+                                            }
                                         />
                                     </CheckCard>
                                     {/* TODO: tbd in future
@@ -277,7 +279,7 @@ export default class LimitSection extends Component {
         const newExpiryDate = _.get(customer, 'limit.new.expiry.date');
         // const newExpiryAmount = _.get(customer, 'limit.new.expiry.amount');
         const newAmount = _.get(customer, 'limit.new.amount');
-        const validExpiry = _.get(customer, 'limit.new.expiry.valid');
+        const validExpiryDate = _.get(customer, 'limit.new.expiry.validDate');
 
         const hasCurrentLimit = !_.isNil(currentAmount) && !customer.isCashCustomer && !customer.isPrepaymentCustomer;
         const isCurrentLimit = _.isNil(newAmount) && limitType === 'CURRENT' && hasCurrentLimit;
@@ -482,7 +484,7 @@ export default class LimitSection extends Component {
                                         title={ts.expiryDate}
                                         checked={!_.isNil(newExpiryDate)}
                                         disabled={readOnly}
-                                        invalid={!validExpiry}
+                                        invalid={!validExpiryDate}
                                     >
                                         <MrcDatePickerInput
                                             className="m-input-element"
@@ -504,7 +506,9 @@ export default class LimitSection extends Component {
                                             id={'datepicker-' + customer.storeNumber + customer.number}
                                             disabled={readOnly}
                                             locale={Moment.globalLocale}
-                                            validationMessages={!validExpiry ? [lookup('mrc.forms.noPastDate')] : []}
+                                            validationMessages={
+                                                !validExpiryDate ? [lookup('mrc.forms.noPastDate')] : []
+                                            }
                                         />
                                     </CheckCard>
                                     {/* TODO: tbd in future
