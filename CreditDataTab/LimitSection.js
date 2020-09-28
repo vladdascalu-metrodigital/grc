@@ -279,7 +279,7 @@ export default class LimitSection extends Component {
         const newExpiryDate = _.get(customer, 'limit.new.expiry.date');
         // const newExpiryAmount = _.get(customer, 'limit.new.expiry.amount');
         const newAmount = _.get(customer, 'limit.new.amount');
-        const validExpiryDate = _.get(customer, 'limit.new.expiry.validDate');
+        const validExpiryDate = _.get(customer, 'limit.validExpiryDate');
 
         const hasCurrentLimit = !_.isNil(currentAmount) && !customer.isCashCustomer && !customer.isPrepaymentCustomer;
         const isCurrentLimit = _.isNil(newAmount) && limitType === 'CURRENT' && hasCurrentLimit;
@@ -365,6 +365,7 @@ export default class LimitSection extends Component {
                             <CheckCard
                                 title={ts.customerWish}
                                 checked={isWishedRequest}
+                                invalid={isWishedRequest && !validExpiryDate}
                                 onClick={() => {
                                     if (!isWishedRequest) {
                                         this.setState({ amount: null });
@@ -394,6 +395,7 @@ export default class LimitSection extends Component {
                             <CheckCard
                                 title={_.get(customer, 'limit.applied.position')}
                                 checked={isAppliedRequest}
+                                invalid={isAppliedRequest && !validExpiryDate}
                                 onClick={() => {
                                     if (!isAppliedRequest) {
                                         this.setState({ amount: null });
@@ -422,6 +424,7 @@ export default class LimitSection extends Component {
                         <CheckCard
                             title={ts.new}
                             checked={isNewRequest}
+                            invalid={isNewRequest && !validExpiryDate}
                             onClick={() => {
                                 if (!isNewRequest) {
                                     this.setState({ amount: prefillLimitAmount, newExpiryAmount: prefillExpiryAmount });
