@@ -19,6 +19,7 @@ export default class AppShell extends Component {
             customerName,
             customerId,
             customerStatus,
+            config,
             headerInfoData,
             MainMenuComponent,
             LanguageListComponent,
@@ -37,6 +38,7 @@ export default class AppShell extends Component {
                     customerName={customerName}
                     customerId={customerId}
                     customerStatus={customerStatus}
+                    config={config}
                     headerInfoData={headerInfoData}
                     MainMenuComponent={MainMenuComponent}
                     LanguageListComponent={LanguageListComponent}
@@ -53,6 +55,7 @@ AppShell.propTypes = {
     customerName: PropTypes.string,
     customerId: PropTypes.string,
     customerStatus: PropTypes.string,
+    config: PropTypes.object,
     children: PropTypes.node,
     headerInfoData: PropTypes.object,
 

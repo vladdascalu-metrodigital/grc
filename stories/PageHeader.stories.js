@@ -58,6 +58,13 @@ let tabs = [
     },
 ];
 
+const config = {
+    data: {
+        ...languageConfig.data,
+        ...quickNavConfig.data,
+    },
+};
+
 const MockedMainMenu = (props) => (
     <MainMenu
         {...props}
@@ -79,6 +86,7 @@ storiesOf('PageHeader', module)
                 customerName="Betterlife GmbH Super Long Name ;aj;djf jja dfjo;asijf ajfoasjdf oasdjfi ajsodfj"
                 customerId="15/116102"
                 customerStatus="Kassensperre"
+                config={config}
                 tabs={tabs}
                 activeTabId={tabs[0].id}
                 headerInfoData={{}}
@@ -94,6 +102,7 @@ storiesOf('PageHeader', module)
                 customerName="Betterlife GmbH Super Long Name ;aj;djf jja dfjo;asijf ajfoasjdf oasdjfi ajsodfj"
                 customerId="15/116102"
                 customerStatus="Kassensperre"
+                config={config}
                 MainMenuComponent={MockedMainMenu}
                 LanguageListComponent={MockedLanguageList}
             />

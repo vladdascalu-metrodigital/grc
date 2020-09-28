@@ -9,6 +9,13 @@ import LanguageList from '../LanguageList';
 import quickNavConfig from './fixtures/config/quickNav';
 import languageConfig from './fixtures/config/languages';
 
+const config = {
+    data: {
+        ...languageConfig.data,
+        ...quickNavConfig.data,
+    },
+};
+
 const MockedMainMenu = (props) => (
     <MainMenu
         {...props}
@@ -34,6 +41,7 @@ storiesOf('AppShell', module)
                 customerName="Betterlife GmbH Super Long Name ;aj;djf jja dfjo;asijf ajfoasjdf oasdjfi ajsodfj"
                 customerId="15/116102"
                 customerStatus="Kassensperre"
+                config={config}
                 MainMenuComponent={MockedMainMenu}
                 LanguageListComponent={MockedLanguageList}
             >
@@ -48,6 +56,7 @@ storiesOf('AppShell', module)
                 customerName="Betterlife GmbH Super Long Name ;aj;djf jja dfjo;asijf ajfoasjdf oasdjfi ajsodfj"
                 customerId="15/116102"
                 customerStatus="Kassensperre"
+                config={config}
                 MainMenuComponent={MockedMainMenu}
                 LanguageListComponent={MockedLanguageList}
                 NotificationComponent={MockedNotification}

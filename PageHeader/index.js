@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import classnames from 'classnames';
+import _ from 'lodash';
 
 import PageTitle from '../PageTitle';
 import MoreIcon from '../icons/MoreIcon';
@@ -55,6 +56,7 @@ export default class PageHeader extends Component {
             customerName,
             customerId,
             customerStatus,
+            config,
             headerInfoData,
             MainMenuComponent,
             LanguageListComponent,
@@ -94,7 +96,7 @@ export default class PageHeader extends Component {
                         </React.Fragment>
                     ) : null}
                     <button onClick={this.toggleLanguageSwitch} className="mrc-ui-pageheader-language-button">
-                        <div className="mrc-ui-pageheader-language-icon">de</div>
+                        <div className="mrc-ui-pageheader-language-icon">{_.get(config, 'data.currentLocale')}</div>
                     </button>
                 </div>
                 <div className="mrc-ui-pageheader-tabs">
@@ -151,6 +153,8 @@ PageHeader.propTypes = {
     customerName: PropTypes.string,
     customerId: PropTypes.string,
     customerStatus: PropTypes.string,
+
+    config: PropTypes.object,
 
     headerInfoData: headerInfoDataPropType,
 
