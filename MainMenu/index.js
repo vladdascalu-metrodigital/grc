@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import { lookup } from '../Util/translations';
+import _ from 'lodash';
 
 import { extractNavsFromQuickNav } from './mainMenuHelper';
 
@@ -17,20 +18,17 @@ export const MENU_CONTEXT = {
 
 export default class MainMenu extends Component {
     render() {
-        let { context, navConfig, activeItem, updateActiveItem } = this.props;
-        if (navConfig.loading) return null;
+        let { context, config: navConfig, activeItem, updateActiveItem } = this.props;
+        if (_.isEmpty(navConfig) || navConfig.loading) return null;
 
         let mainMenuContextClass = classnames({
             'mrc-ui-main-menu-sidebar': context == MENU_CONTEXT.SIDEBAR,
             'mrc-ui-main-menu-sidescreen': context == MENU_CONTEXT.SIDESCREEN,
         });
 
-        console.log('sdkjgdshflgkjsdhfglksjdhglskj');
-
         return (
             <div className={mainMenuContextClass}>
                 {extractNavsFromQuickNav(navConfig.data.quickNav).map((navItem, k) => {
-                    console.log('name', navItem);
                     let className = classnames('mrc-ui-main-menu-item', {
                         'mrc-ui-main-menu-item-active': name === activeItem,
                     });
@@ -60,34 +58,6 @@ export default class MainMenu extends Component {
                         );
                     }
                 })}
-                {/* <div className="mrc-ui-main-menu-item">
-                    <InboxIcon color={IC.CURRENT_COLOR} size={IS.XSMALL} />
-                    <h2>Inbox</h2>
-                </div>
-                <div className="mrc-ui-main-menu-item">
-                    <LimitCheckIcon color={IC.CURRENT_COLOR} size={IS.XSMALL} />
-                    <h2>Limit Check</h2>
-                </div>
-                <div className="mrc-ui-main-menu-item">
-                    <QuickCheckIcon color={IC.CURRENT_COLOR} size={IS.XSMALL} />
-                    <h2>Quick Check</h2>
-                </div>
-                <div className="mrc-ui-main-menu-item">
-                    <CreditCorrectionIcon color={IC.CURRENT_COLOR} size={IS.XSMALL} />
-                    <h2>Credit Correction</h2>
-                </div>
-                <div className="mrc-ui-main-menu-item">
-                    <PrepaymentIcon color={IC.CURRENT_COLOR} size={IS.XSMALL} />
-                    <h2>Prepayment</h2>
-                </div>
-                <div className="mrc-ui-main-menu-item">
-                    <BatchUpdateIcon color={IC.CURRENT_COLOR} size={IS.XSMALL} />
-                    <h2>Batch Update</h2>
-                </div>
-                <div className="mrc-ui-main-menu-item">
-                    <HistoryIcon color={IC.CURRENT_COLOR} size={IS.XSMALL} />
-                    <h2>History</h2>
-                </div> */}
             </div>
         );
     }
@@ -95,7 +65,7 @@ export default class MainMenu extends Component {
 
 MainMenu.propTypes = {
     context: PropTypes.string,
-    navConfig: PropTypes.object,
+    config: PropTypes.object,
     activeItem: PropTypes.string,
     updateActiveItem: PropTypes.func,
 };
