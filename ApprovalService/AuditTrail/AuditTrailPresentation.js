@@ -80,6 +80,7 @@ export default class AuditTrailPresentation extends Component {
         REJECTED: 'mrc.status.rejected',
         MANUAL: 'mrc.status.manual',
         REVIEW: 'mrc.status.review',
+        REVIEW_PENDING: 'mrc.status.review_pending',
     };
 
     //
