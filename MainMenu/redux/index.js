@@ -5,7 +5,7 @@ import { navigationItemActivated } from './actions';
 function mapStateToProps(state, ownProps) {
     return {
         config: state.ui.config,
-        activeItem: state.activeItem || ownProps.active,
+        activeItem: state.activeItem || ownProps.activeItem,
     };
 }
 
