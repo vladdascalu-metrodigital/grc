@@ -30,7 +30,7 @@ export default class MainMenu extends Component {
             <div className={mainMenuContextClass}>
                 {extractNavsFromQuickNav(navConfig.data.quickNav).map((navItem, k) => {
                     let className = classnames('mrc-ui-main-menu-item', {
-                        'mrc-ui-main-menu-item-active': name === activeItem,
+                        'mrc-ui-main-menu-item-active': navItem.name === activeItem,
                     });
                     if (navItem.isAbsolute) {
                         return (
