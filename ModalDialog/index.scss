@@ -31,7 +31,8 @@
 }
 
 .body--modal-open {
-  overflow: hidden;
+  overflow: hidden !important;
+  height: 100vh;
 }
 
 @media #{$breakpoint-not-small} {

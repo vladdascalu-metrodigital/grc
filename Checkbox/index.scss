@@ -20,3 +20,7 @@
     @include checkbox-disabled();
   }
 }
+
+.mrc-ui-checkbox:focus {
+    outline: none;
+}

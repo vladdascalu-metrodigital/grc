@@ -53,7 +53,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
                     customer: 'Maier Ag',
                     customerId: '123/99484',
                     dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'domainverified',
+                    dunningEmailStatus: 'Domain verified',
                 },
                 {
                     customer: 'Müller GmbH',
@@ -71,7 +71,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
                     customer: 'Maier Ag',
                     customerId: '123/99484',
                     dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'domainverified',
+                    dunningEmailStatus: 'Domain verified',
                 },
                 {
                     customer: 'Müller GmbH',
@@ -89,7 +89,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
                     customer: 'Maier Ag',
                     customerId: '123/99484',
                     dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'domainverified',
+                    dunningEmailStatus: 'Domain verified',
                 },
                 {
                     customer: 'Müller GmbH',
@@ -107,7 +107,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
                     customer: 'Maier Ag',
                     customerId: '123/99484',
                     dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'domainverified',
+                    dunningEmailStatus: 'Domain verified',
                 },
                 {
                     customer: 'Müller GmbH',
@@ -125,7 +125,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
                     customer: 'Maier Ag',
                     customerId: '123/99484',
                     dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'domainverified',
+                    dunningEmailStatus: 'Domain verified',
                 },
                 {
                     customer: 'Müller GmbH',
@@ -143,7 +143,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
                     customer: 'Maier Ag',
                     customerId: '123/99484',
                     dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'domainverified',
+                    dunningEmailStatus: 'Domain verified',
                 },
                 {
                     customer: 'Müller GmbH',
@@ -161,7 +161,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
                     customer: 'Maier Ag',
                     customerId: '123/99484',
                     dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'domainverified',
+                    dunningEmailStatus: 'Domain verified',
                 },
                 {
                     customer: 'Müller GmbH',
@@ -179,7 +179,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
                     customer: 'Maier Ag',
                     customerId: '123/99484',
                     dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'domainverified',
+                    dunningEmailStatus: 'Domain verified',
                 },
                 {
                     customer: 'Müller GmbH',
@@ -197,7 +197,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
                     customer: 'Maier Ag',
                     customerId: '123/99484',
                     dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'domainverified',
+                    dunningEmailStatus: 'Domain verified',
                 },
                 {
                     customer: 'Müller GmbH',
@@ -215,7 +215,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
                     customer: 'Maier Ag',
                     customerId: '123/99484',
                     dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'domainverified',
+                    dunningEmailStatus: 'Domain verified',
                 },
                 {
                     customer: 'Müller GmbH',
@@ -233,7 +233,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
                     customer: 'Maier Ag',
                     customerId: '123/99484',
                     dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'domainverified',
+                    dunningEmailStatus: 'Domain verified',
                 },
                 {
                     customer: 'Müller GmbH',
@@ -251,7 +251,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
                     customer: 'Maier Ag',
                     customerId: '123/99484',
                     dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'domainverified',
+                    dunningEmailStatus: 'Domain verified',
                 },
                 {
                     customer: 'Müller GmbH',
@@ -269,7 +269,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
                     customer: 'Maier Ag',
                     customerId: '123/99484',
                     dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'domainverified',
+                    dunningEmailStatus: 'Domain verified',
                 },
                 {
                     customer: 'Müller GmbH',
@@ -287,7 +287,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
                     customer: 'Maier Ag',
                     customerId: '123/99484',
                     dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'domainverified',
+                    dunningEmailStatus: 'Domain verified',
                 },
                 {
                     customer: 'Müller GmbH',
@@ -305,7 +305,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
                     customer: 'Maier Ag',
                     customerId: '123/99484',
                     dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'domainverified',
+                    dunningEmailStatus: 'Domain verified',
                 },
                 {
                     customer: 'Müller GmbH',
@@ -323,7 +323,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
                     customer: 'Maier Ag',
                     customerId: '123/99484',
                     dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'domainverified',
+                    dunningEmailStatus: 'Domain verified',
                 },
                 {
                     customer: 'Müller GmbH',
@@ -341,7 +341,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
                     customer: 'Maier Ag',
                     customerId: '123/99484',
                     dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'domainverified',
+                    dunningEmailStatus: 'Domain verified',
                 },
                 {
                     customer: 'Müller GmbH',
@@ -359,7 +359,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
                     customer: 'Maier Ag',
                     customerId: '123/99484',
                     dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'domainverified',
+                    dunningEmailStatus: 'Domain verified',
                 },
                 {
                     customer: 'Müller GmbH',
@@ -377,7 +377,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
                     customer: 'Maier Ag',
                     customerId: '123/99484',
                     dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'domainverified',
+                    dunningEmailStatus: 'Domain verified',
                 },
                 {
                     customer: 'Müller GmbH',
@@ -395,7 +395,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
                     customer: 'Maier Ag',
                     customerId: '123/99484',
                     dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'domainverified',
+                    dunningEmailStatus: 'Domain verified',
                 },
             ]}
         />

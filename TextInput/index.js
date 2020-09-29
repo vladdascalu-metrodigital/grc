@@ -65,7 +65,16 @@ export default class TextInput extends Component {
     }
 
     render() {
-        let { value, disabled, onBlur, status, label, validationMessages: messages, hideInvalid } = this.props;
+        let {
+            value,
+            disabled,
+            onBlur,
+            status,
+            label,
+            validationMessages: messages,
+            hideInvalid,
+            placeholder,
+        } = this.props;
         let { valid, validationMessages } = this.state;
         if (messages) validationMessages = [...validationMessages, ...messages];
         let inputClassName = classnames('mrc-ui-text-input-input', {
@@ -82,6 +91,7 @@ export default class TextInput extends Component {
                     onChange={this.handleChange.bind(this)}
                     disabled={disabled}
                     onBlur={onBlur}
+                    placeholder={placeholder}
                 />
                 {!hideInvalid ? <InputValidationMessages messages={validationMessages} /> : null}
             </div>
@@ -103,4 +113,5 @@ TextInput.propTypes = {
     status: PropTypes.oneOf(['invalid']),
     validationMessages: PropTypes.array,
     value: PropTypes.string,
+    placeholder: PropTypes.string,
 };

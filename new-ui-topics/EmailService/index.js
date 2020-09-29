@@ -12,7 +12,8 @@ import { stickyOffsetFromCombined } from '../../Util/stickyUtil';
 
 import _ from 'lodash';
 
-// import ArrowDownOutlinedIcon from '../../icons/ArrowDownOutlinedIcon';
+import SingleEMailEditModalDialog from './SingleEMailEditModalDialog';
+import MultipleEMailEditModalDialog from './MultipleEMailEditModalDialog';
 
 import './index.scss';
 
@@ -23,6 +24,8 @@ export default class EmailService extends Component {
         this.state = {
             selectAll: false,
             selectedCustomers: {},
+            showRowEditModal: null,
+            showMultiRowEditModal: null,
         };
     }
 
@@ -52,11 +55,12 @@ export default class EmailService extends Component {
         window.addEventListener('resize', _.debounce(this.refreshStickyOffset, 150));
     }
 
-    handleCustomerSelect(customerId) {
+    handleCustomerSelect(arrayId) {
         this.setState({
+            selectAll: false,
             selectedCustomers: {
                 ...this.state.selectedCustomers,
-                [customerId]: !this.state.selectedCustomers[customerId],
+                [arrayId]: !this.state.selectedCustomers[arrayId],
             },
         });
     }
@@ -64,8 +68,8 @@ export default class EmailService extends Component {
     handleCustomerSelectAll(data) {
         let selectedCustomers = {};
 
-        data.forEach((v) => {
-            selectedCustomers[v.customerId] = !this.state.selectAll;
+        data.forEach((v, k) => {
+            selectedCustomers[k] = !this.state.selectAll;
         });
 
         this.setState({
@@ -78,6 +82,7 @@ export default class EmailService extends Component {
 
     render() {
         let { data } = this.props;
+        let { showRowEditModal, showMultiRowEditModal, selectedCustomers } = this.state;
         return (
             <React.Fragment>
                 <table className="mrc-ui-basic-grid-table">
@@ -115,8 +120,8 @@ export default class EmailService extends Component {
                                 <tr key={k}>
                                     <td>
                                         <Checkbox
-                                            checked={this.state.selectedCustomers[d.customerId]}
-                                            onChange={() => this.handleCustomerSelect(d.customerId)}
+                                            checked={this.state.selectedCustomers[k]}
+                                            onChange={() => this.handleCustomerSelect(k)}
                                         />
                                     </td>
                                     <td className="mrc-ui-basic-table-grid-customer-cell">
@@ -132,6 +137,7 @@ export default class EmailService extends Component {
                                             text="Edit"
                                             isOutlined
                                             color={BUTTONCOLOR.PRIMARY}
+                                            onClick={() => this.setState({ showRowEditModal: d })}
                                         />
                                     </td>
                                 </tr>
@@ -140,7 +146,28 @@ export default class EmailService extends Component {
                     </tbody>
                 </table>
 
-                <SimpleActionDock cancelText="Cancel" applyText="Edit Selection" />
+                {showRowEditModal && (
+                    <SingleEMailEditModalDialog
+                        customer={showRowEditModal}
+                        onCancel={() => this.setState({ showRowEditModal: null })}
+                        onOk={() => this.setState({ showRowEditModal: null })}
+                    />
+                )}
+
+                {showMultiRowEditModal && (
+                    <MultipleEMailEditModalDialog
+                        customers={data}
+                        selectedCustomers={selectedCustomers}
+                        onCancel={() => this.setState({ showMultiRowEditModal: false })}
+                        onOk={() => this.setState({ showMultiRowEditModal: false })}
+                    />
+                )}
+
+                <SimpleActionDock
+                    cancelText="Cancel"
+                    applyText="Edit Selection"
+                    onApply={() => this.setState({ showMultiRowEditModal: true })}
+                />
             </React.Fragment>
         );
     }

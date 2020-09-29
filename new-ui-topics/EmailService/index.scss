@@ -1,5 +1,6 @@
 @import '../../lib/scss/colors';
 @import '../../lib/scss/variables';
+@import '../../lib/scss/typography';
 
 .mrc-ui-form-box {
     background-color: $color-form-background-grey;
@@ -33,7 +34,8 @@
     }
     .mrc-ui-basic-table-grid-customer-cell span:last-child {
         font-weight: bold;
-        color: $color-brand-primary-tint-50;
+        font-size: $font-size-8;
+        color: $color-brand-primary-tint-60;
     }
 
     th {
@@ -108,9 +110,9 @@
 }
 
 @media screen and (min-width: 1350px) {
-    .mrc-ui-action-dock { 
-        // width: calc(100% - 96px - #{$spacing-extra-extra-extra-large} * 2);
-        width: calc(50% - 96px - #{$spacing-extra-extra-extra-large} * 2);
-        left: calc(96px + #{$spacing-extra-extra-extra-large} + 25%);
-    }
+    // .mrc-ui-action-dock { 
+    //     // width: calc(100% - 96px - #{$spacing-extra-extra-extra-large} * 2);
+    //     width: calc(50% - 96px - #{$spacing-extra-extra-extra-large} * 2);
+    //     left: calc(96px + #{$spacing-extra-extra-extra-large} + 25%);
+    // }
   }
