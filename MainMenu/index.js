@@ -64,7 +64,7 @@ export default class MainMenu extends Component {
 }
 
 MainMenu.propTypes = {
-    context: PropTypes.string,
+    context: PropTypes.oneOf(['sidebar', 'sidescreen']),
     config: PropTypes.object,
     activeItem: PropTypes.string,
     updateActiveItem: PropTypes.func,

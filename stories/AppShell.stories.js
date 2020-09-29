@@ -19,7 +19,7 @@ const config = {
 const MockedMainMenu = (props) => (
     <MainMenu
         {...props}
-        navConfig={quickNavConfig}
+        config={quickNavConfig}
         activeItem="history"
         updateActiveItem={(item) => action('updateActiveItem')(item)}
     />

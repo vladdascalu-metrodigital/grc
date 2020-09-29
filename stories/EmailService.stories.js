@@ -16,7 +16,7 @@ import languageConfig from './fixtures/config/languages';
 const MockedMainMenu = (props) => (
     <MainMenu
         {...props}
-        navConfig={quickNavConfig}
+        config={quickNavConfig}
         activeItem="history"
         updateActiveItem={(item) => action('updateActiveItem')(item)}
     />

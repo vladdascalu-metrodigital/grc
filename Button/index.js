@@ -78,5 +78,5 @@ Button.propTypes = {
     size: PropTypes.oneOf(['small', 'small-round', 'medium', 'large']),
     color: PropTypes.oneOf(['interaction', 'success', 'neutral', 'danger']),
     isOutlined: PropTypes.bool,
-    wide: PropTypes.bool,
+    wide: PropTypes.oneOf(['small', 'medium']),
 };
