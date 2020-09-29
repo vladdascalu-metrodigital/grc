@@ -1,6 +1,6 @@
 export default {
     data: {
-        currentLocale: 'de',
+        currentLocale: 'es',
         availableLanguages: ['de', 'es', 'pt', 'rs', 'ru', 'en', 'hr', 'ro', 'key', 'pk', 'pl'],
     },
 };

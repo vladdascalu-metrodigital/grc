@@ -53,7 +53,7 @@ export default class LimitSection extends Component {
         // requested data
         const wishedExpiryAmount = _.get(customer, 'limit.wish.expiry.amount');
         const wishedExpiryDate = _.get(customer, 'limit.wish.expiry.date');
-        const validExpiry = _.get(customer, 'limit.wish.expiry.valid');
+        const validExpiryDate = _.get(customer, 'limit.wish.expiry.validDate');
         const wishedAmount = _.get(customer, 'limit.wish.amount');
         const selectedProduct = translatePaymentIfNeeded(getPaymentDataByType(customer, paymentMethodType, 'product'));
         const selectedPeriod = translatePaymentIfNeeded(getPaymentDataByType(customer, paymentMethodType, 'period'));
@@ -170,6 +170,7 @@ export default class LimitSection extends Component {
                                         title={ts.expiryDate}
                                         checked={!_.isNil(wishedExpiryDate)}
                                         disabled={readOnly}
+                                        invalid={!validExpiryDate}
                                     >
                                         <MrcDatePickerInput
                                             className="m-input-element"
@@ -189,7 +190,9 @@ export default class LimitSection extends Component {
                                             id={'datepicker-' + customer.storeNumber + customer.number}
                                             disabled={readOnly}
                                             locale={Moment.globalLocale}
-                                            validationMessages={!validExpiry ? [lookup('mrc.forms.noPastDate')] : []}
+                                            validationMessages={
+                                                !validExpiryDate ? [lookup('mrc.forms.noPastDate')] : []
+                                            }
                                         />
                                     </CheckCard>
                                     {/* TODO: tbd in future
@@ -276,7 +279,7 @@ export default class LimitSection extends Component {
         const newExpiryDate = _.get(customer, 'limit.new.expiry.date');
         // const newExpiryAmount = _.get(customer, 'limit.new.expiry.amount');
         const newAmount = _.get(customer, 'limit.new.amount');
-        const validExpiry = _.get(customer, 'limit.new.expiry.valid');
+        const validExpiryDate = _.get(customer, 'limit.validExpiryDate');
 
         const hasCurrentLimit = !_.isNil(currentAmount) && !customer.isCashCustomer && !customer.isPrepaymentCustomer;
         const isCurrentLimit = _.isNil(newAmount) && limitType === 'CURRENT' && hasCurrentLimit;
@@ -362,6 +365,7 @@ export default class LimitSection extends Component {
                             <CheckCard
                                 title={ts.customerWish}
                                 checked={isWishedRequest}
+                                invalid={isWishedRequest && !validExpiryDate}
                                 onClick={() => {
                                     if (!isWishedRequest) {
                                         this.setState({ amount: null });
@@ -391,6 +395,7 @@ export default class LimitSection extends Component {
                             <CheckCard
                                 title={_.get(customer, 'limit.applied.position')}
                                 checked={isAppliedRequest}
+                                invalid={isAppliedRequest && !validExpiryDate}
                                 onClick={() => {
                                     if (!isAppliedRequest) {
                                         this.setState({ amount: null });
@@ -419,6 +424,7 @@ export default class LimitSection extends Component {
                         <CheckCard
                             title={ts.new}
                             checked={isNewRequest}
+                            invalid={isNewRequest && !validExpiryDate}
                             onClick={() => {
                                 if (!isNewRequest) {
                                     this.setState({ amount: prefillLimitAmount, newExpiryAmount: prefillExpiryAmount });
@@ -481,6 +487,7 @@ export default class LimitSection extends Component {
                                         title={ts.expiryDate}
                                         checked={!_.isNil(newExpiryDate)}
                                         disabled={readOnly}
+                                        invalid={!validExpiryDate}
                                     >
                                         <MrcDatePickerInput
                                             className="m-input-element"
@@ -502,7 +509,9 @@ export default class LimitSection extends Component {
                                             id={'datepicker-' + customer.storeNumber + customer.number}
                                             disabled={readOnly}
                                             locale={Moment.globalLocale}
-                                            validationMessages={!validExpiry ? [lookup('mrc.forms.noPastDate')] : []}
+                                            validationMessages={
+                                                !validExpiryDate ? [lookup('mrc.forms.noPastDate')] : []
+                                            }
                                         />
                                     </CheckCard>
                                     {/* TODO: tbd in future

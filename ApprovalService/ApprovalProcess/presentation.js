@@ -141,7 +141,7 @@ export class ApprovalProcessPresentation extends Component {
         if (approval && !approval.claimedBySomebodyElse && approval.state !== 'CANCELLED') {
             if (
                 approval.approvalItems &&
-                _.every(approval.approvalItems, (item) => !_.get(item, 'validRequestedExpiry'))
+                _.every(approval.approvalItems, (item) => !_.get(item, 'validRequestedExpiryDate'))
             ) {
                 this.props.showError(lookup('approval.message.request.pastLimitExpiry'));
             } else {
@@ -1071,13 +1071,16 @@ export class ApprovalProcessPresentation extends Component {
                                 expiry: {
                                     date: isNewLimit ? _.get(item, 'requestedLimitExpiry.limitExpiryDate') : null,
                                     amount: isNewLimit ? _.get(item, 'requestedLimitExpiry.resetToLimitAmount') : null,
-                                    valid: isNewLimit ? _.get(item, 'validRequestedExpiry') : null,
                                 },
                             },
                             limitType: _.get(item, 'limitType'),
                             paymentMethodType: _.get(item, 'paymentMethodType'),
                             creditOption: _.get(item, 'creditOption'),
-                            valid: _.get(item, 'valid') && !isAtLeastOneFieldIsInvalid,
+                            valid:
+                                _.get(item, 'valid') &&
+                                !isAtLeastOneFieldIsInvalid &&
+                                _.get(item, 'validRequestedExpiryDate'),
+                            validExpiryDate: _.get(item, 'validRequestedExpiryDate'),
                             readOnly: creditReadOnly,
                         },
                         additionalFields: {

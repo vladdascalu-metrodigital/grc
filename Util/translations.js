@@ -7,6 +7,17 @@ let translations = {
     'mrc.apply': 'Apply',
     'mrc.cancel': 'Cancel',
 
+    'mrc.apps.inbox': 'Inbox',
+    'mrc.apps.history': 'History',
+    'mrc.apps.language': 'language',
+    'mrc.apps.launchpad': 'Launchpad',
+    'mrc.apps.prepayment': 'Prepayment',
+    'mrc.apps.quickcheck': 'Quick Check',
+    'mrc.apps.limitcheck': 'Limit Check',
+    'mrc.apps.batchupdate': 'Batch Update',
+    'mrc.apps.reports': 'Reporting',
+    'mrc.apps.creditcorrection': 'Credit Correction',
+
     'mrc.reports.title': 'Available Reports',
     'mrc.file.select': 'SELECT FILE',
     'mrc.file.upload': 'UPLOAD FILE',

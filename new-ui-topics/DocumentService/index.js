@@ -13,7 +13,11 @@ export default class DocumentService extends Component {
         let { data } = this.props;
         return (
             <FlexColumn gap="medium">
-                <DocumentFilter />
+                <DocumentFilter
+                    onChange={() => {
+                        /*  */
+                    }}
+                />
                 <BoxWithTitle title="8 of 10 Documents shown in Customer Group" type="smaller">
                     {data.map((d, k) => {
                         return (

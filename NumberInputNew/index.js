@@ -125,7 +125,6 @@ export default class NumberInputNew extends Component {
         let { value, disabled, status, label, onBlur, validationMessages: messages, hideInvalid } = this.props;
         value = value || value === 0 ? value : ''; // handle nullish values
         if (messages) validationMessages = [...validationMessages, ...messages];
-        console.log(status, valid);
         let inputClassName = classnames('mrc-ui-number-input-new-input', {
             'mrc-ui-number-input-new-input-invalid': !hideInvalid && (status === STATUS.INVALID || !valid),
         });

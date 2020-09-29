@@ -53,12 +53,12 @@ export default class HeaderInfos extends PureComponent {
     }
 }
 
-export const headerInfoDataPropType = {
+export const headerInfoDataPropType = PropTypes.shape({
     ...headerInfoRequestStartDataPropType,
     ...HeaderInfoRequestSummaryDataPropType,
     ...headerInfoLimitsDataPropType,
     ...headerInfoPaymentTermDataPropType,
-};
+});
 
 HeaderInfos.propTypes = {
     context: PropTypes.oneOf(['sidescreen']),

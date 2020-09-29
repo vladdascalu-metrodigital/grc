@@ -10,8 +10,6 @@ export default class DocumentFilterBoolean extends Component {
     render() {
         let { option, buttonText, selectedFilter, onConfirm } = this.props;
         let buttonDisabled = selectedFilter[0] && selectedFilter[0].value === true ? true : false;
-        console.log('selectedFilter');
-        console.log(selectedFilter);
         return (
             <div>
                 <Button

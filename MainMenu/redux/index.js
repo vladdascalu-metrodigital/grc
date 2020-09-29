@@ -4,11 +4,8 @@ import { navigationItemActivated } from './actions';
 
 function mapStateToProps(state, ownProps) {
     return {
-        // tablet: state.ui.tablet,
-        // displayMenu: state.burgerMenuExpended,
-        navConfig: state.ui.config,
-        activeItem: state.activeItem || ownProps.active,
-        // displayBackButton: !!state.ui.auxControls.back,
+        config: state.ui.config,
+        activeItem: state.activeItem || ownProps.activeItem,
     };
 }
 
