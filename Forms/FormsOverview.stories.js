@@ -32,17 +32,17 @@ storiesOf('Forms/Overview', module).add('An example form', () => {
                 <div>
                     <Search
                         placeholder="Search for Something"
-                        onEnterSearch={v => action('search: onEnterSearch')(v)}
-                        onChange={v => action('search: onChange')(v)}
+                        onEnterSearch={(v) => action('search: onEnterSearch')(v)}
+                        onChange={(v) => action('search: onChange')(v)}
                     />
                 </div>
                 <div>
-                    <Select options={options} value={selected} onChange={v => setSelected(v)} />
+                    <Select options={options} value={selected} onChange={(v) => setSelected(v)} />
                 </div>
                 <div>
                     <Toggle
                         checked={toggleState}
-                        onClick={v => {
+                        onClick={(v) => {
                             setToggle(v);
                             action('toggle: onClick')(v);
                         }}
@@ -57,10 +57,10 @@ storiesOf('Forms/Overview', module).add('An example form', () => {
                     <TextArea />
                 </div>
                 <div>
-                    <DatePicker selected={date} onChange={d => setDate(d)} />
+                    <DatePicker selected={date} onChange={(d) => setDate(d)} />
                 </div>
                 <div>
-                    <NumberInputNew label="Number" max={100} value={number} onChange={v => setNumber(v)} />
+                    <NumberInputNew label="Number" max={100} value={number} onChange={(v) => setNumber(v)} />
                 </div>
                 <div style={{ background: '#f9f9f9', padding: '1rem' }}>
                     <NumberInputNew disabled value={132} />

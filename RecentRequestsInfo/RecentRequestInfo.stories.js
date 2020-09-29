@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import recentRequestsData from './fixtures/credit-limit/customers.recentRequests';
+import recentRequestsData from '../fixtures/credit-limit/customers.recentRequests';
 
 import RecentRequestsInfo from '../RecentRequestsInfo';
 

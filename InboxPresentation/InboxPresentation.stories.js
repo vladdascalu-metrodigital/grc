@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 
 import InboxPresentation from '../InboxPresentation';
 
-import inboxItems from './fixtures/inbox/filteredinboxItems';
+import inboxItems from '../fixtures/inbox/filteredinboxItems';
 
 storiesOf('InboxPresentation', module).add('standard', () => (
     <InboxPresentation

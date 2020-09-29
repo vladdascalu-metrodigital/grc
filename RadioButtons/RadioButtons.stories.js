@@ -15,7 +15,7 @@ let options = [
 storiesOf('Forms/RadioButtons', module)
     .add('RadioButtons', () => {
         let [selected, setSelected] = useState('2');
-        const handleChange = value => {
+        const handleChange = (value) => {
             action('clicked')(value);
             setSelected(value);
         };

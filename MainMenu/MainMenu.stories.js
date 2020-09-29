@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import MainMenu, { MENU_CONTEXT as C } from '../MainMenu';
 
-import navConfig from './fixtures/config/quickNav';
+import navConfig from '../fixtures/config/quickNav';
 
 storiesOf('MainMenu', module)
     .add('Sidebar Context', () => (

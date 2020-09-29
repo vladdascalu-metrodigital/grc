@@ -1,11 +1,11 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
+// import { action } from '@storybook/addon-actions';
 
-import MainContent from '../MainContent';
-import DocumentService from '../new-ui-topics/DocumentService';
+import MainContent from '../../MainContent';
+import DocumentService from './index';
 
-import { attachments } from './fixtures/attachments';
+import { attachments } from '../../fixtures/attachments';
 
 storiesOf('New UI Topics/DocumentService', module).add('DocumentService', () => (
     <MainContent>

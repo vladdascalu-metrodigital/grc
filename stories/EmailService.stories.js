@@ -5,13 +5,13 @@ import { storiesOf } from '@storybook/react';
 import MainContent from '../MainContent';
 import EmailService from '../new-ui-topics/EmailService';
 import AppShell from '../AppShell';
-// import { attachments } from './fixtures/attachments';
+// import { attachments } from '../fixtures/attachments';
 
 import MainMenu from '../MainMenu';
 import LanguageList from '../LanguageList';
 
-import quickNavConfig from './fixtures/config/quickNav';
-import languageConfig from './fixtures/config/languages';
+import quickNavConfig from '../fixtures/config/quickNav';
+import languageConfig from '../fixtures/config/languages';
 
 const MockedMainMenu = (props) => (
     <MainMenu

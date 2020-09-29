@@ -7,7 +7,7 @@ import Checkbox from '../Checkbox';
 
 storiesOf('Forms/Checkbox', module).add('Checkbox', () => {
     const [isChecked, setChecked] = useState(false);
-    const handleClick = value => {
+    const handleClick = (value) => {
         action('clicked')(value);
         setChecked(value);
     };

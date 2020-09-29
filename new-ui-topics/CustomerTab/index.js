@@ -11,7 +11,7 @@ import KeyValueGroup, { KeyValueRow, Key, Value } from '../../KeyValueGroup';
 
 import './index.scss';
 
-import { person } from '../../stories/VCard.stories';
+import { person } from '../../VCard/VCard.stories';
 
 export default class CustomerTab extends Component {
     render() {

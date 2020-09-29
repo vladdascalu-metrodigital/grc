@@ -15,7 +15,7 @@ storiesOf('Forms/Toggle', module).add('Toggle', () => {
             <Grid cols="1">
                 <Toggle
                     checked={isChecked1}
-                    onClick={v => {
+                    onClick={(v) => {
                         action('toggle')(v);
                         setChecked1(v);
                     }}
@@ -24,7 +24,7 @@ storiesOf('Forms/Toggle', module).add('Toggle', () => {
                 </Toggle>
                 <Toggle
                     checked={isChecked2}
-                    onClick={v => {
+                    onClick={(v) => {
                         action('toggle')(v);
                         setChecked2(v);
                     }}
@@ -34,7 +34,7 @@ storiesOf('Forms/Toggle', module).add('Toggle', () => {
                 </Toggle>
                 <Toggle
                     checked={isChecked3}
-                    onClick={v => {
+                    onClick={(v) => {
                         action('toggle')(v);
                         setChecked3(v);
                     }}

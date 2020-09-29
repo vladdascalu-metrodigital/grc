@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import AdditionalFieldsSection from '../AdditionalFields/AdditionalFieldsSection';
 
-import { selection, selectionNoPreselection, multiSelection } from './fixtures/credit-limit/additionalfields.request';
+import { selection, selectionNoPreselection, multiSelection } from '../fixtures/credit-limit/additionalfields.request';
 
 import '../AdditionalFields/index.scss';
 

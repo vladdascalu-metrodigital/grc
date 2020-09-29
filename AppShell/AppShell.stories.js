@@ -6,8 +6,8 @@ import AppShell from '../AppShell';
 import MainMenu from '../MainMenu';
 import LanguageList from '../LanguageList';
 
-import quickNavConfig from './fixtures/config/quickNav';
-import languageConfig from './fixtures/config/languages';
+import quickNavConfig from '../fixtures/config/quickNav';
+import languageConfig from '../fixtures/config/languages';
 
 const config = {
     data: {

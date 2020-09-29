@@ -7,8 +7,8 @@ import LanguageList from '../LanguageList';
 import PageHeader from '../PageHeader';
 import PageTitle from '../PageTitle';
 
-import quickNavConfig from './fixtures/config/quickNav';
-import languageConfig from './fixtures/config/languages';
+import quickNavConfig from '../fixtures/config/quickNav';
+import languageConfig from '../fixtures/config/languages';
 
 let tabs = [
     {

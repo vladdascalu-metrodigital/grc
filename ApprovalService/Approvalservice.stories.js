@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import '../Util/imports';
 import { ApprovalProcessPresentation } from '../ApprovalService/ApprovalProcess/presentation';
 
-import recentRequestsData from './fixtures/approval-service/customers.recentRequests';
+import recentRequestsData from '../fixtures/approval-service/customers.recentRequests';
 
 storiesOf('ApprovalService', module)
     .add('manual approval flow', () => {

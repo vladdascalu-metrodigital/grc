@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 
 import Comments from '../Comments';
 
-import { comment, blocked, comments, previousRequestsComments } from './fixtures/comments';
+import { comment, blocked, comments, previousRequestsComments } from '../fixtures/comments';
 
 storiesOf('Comments', module)
     .add('Standard', () => (
