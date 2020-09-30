@@ -1,0 +1,105 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import LinkTo, { linkTo } from '@storybook/addon-links/react';
+
+<Meta title="Etc/Sticky Util" />
+
+# Sticky Util
+
+With the sticky Util you are able to make components *better* `sticky`. It relies on the CSS `position: sticky` properties but enhances it to be more flexible.
+
+`stickyUtil` exports 3 functions which can be used in the component you are building:  
+
+- stickyOffsetFromPreviousSiblings
+- stickyOffsetFromSelector
+- stickyOffsetFromCombined
+
+## stickyOffsetFromPreviousSiblings(node, stickyNamespace, top)
+
+`node`: (dom node) Reference to the dom element of your component.  
+`stickyNamespace`: (string) A "namespace" to identify the targeted sibling elements. (More info below)  
+`top`: (number) Add some additional offset px manually  
+
+💡 Useful for when you need to make siblings sticky and they must not overlap.  
+
+ℹ️ This function relies on a `data-sticky="..."` attribute which is set on the relevant elements to identify the targeted elements! 
+You will need to implement this functionality in your sticky component you are building. The value of the `data-sticky` must be the sticky namespace.
+
+🛠 As an example, we are building `MyComponent`. `MyComponent` exposes e.g. a `sticky` property. The sticky prop will be put into the `data-sticky` attribute.
+When the component mounts, we calculate the offset by preceding siblings with `stickyOffsetFromPreviousSiblings` and pass it into the css with a css custom property.
+You could also use inline styles, etc ...
+
+
+```jsx
+class MyComponent extends React.Component {
+    constructor(props) {
+        super(props)
+        this.ref = React.createRef();
+    }
+    componentDidMount() {
+        let offset = stickyOffsetFromPreviousSiblings(ref, props.sticky)
+        this.ref.current.style.setProperty('--sticky-top', offset + 'px')
+    }
+    render () {
+        let className = this.props.sticky ? "my-component my-component-stickcy" : "my-component"
+        return <div ref={ref} class={className} data-sticky={props.sticky}>{props.children}</div>
+    }
+}
+```
+
+```css
+.my-component-stickcy {
+    position: sticky;
+    top: var(--sticky-top, 0)
+}
+```
+
+```jsx
+<MyComponent />
+<MyComponent sticky="blurp" />
+<MyComponent sticky="stick" />
+<MyComponent sticky="stick" />
+```
+
+The result: When scrolling down, componenet 1 will *not* be sticky, componenet 2, 3 and 4 will be sticky.  
+Comppnent 2 will be hidden by the "sticky" componenet on further scrolling but component 3 will not be hidden by 4 because of the offset.
+
+```jsx
+<container>
+    <div class="my-component">                        ignored
+    <div class="my-component" data-sticky="blurp">    ignored
+    <div class="my-component" data-sticky="stick">    counted
+    <div class="my-component" data-sticky="stick">    initial node, counted
+</container>
+```
+
+## stickyOffsetFromSelector(selector, top)
+
+`selector`: (string) css selector.  
+`top`: (number) Add some additional offset px manually  
+
+💡 Useful for when you need to find an offset from elements which are not in the same level (E.g. PageHeader)
+
+ℹ️ Calculates the height of all  matching nodes, this is handy: Use comma separated css selectors for multiple elements `.header, .something-else`
+
+🛠 Usage as above: The function returns an offset, use that offset to set the `top` css property of you sticky component.  
+
+## stickyOffsetFromCombined({node, stickyNamespace, offsetSelector, offsetPx, callback})
+
+Combination of all the above. But with a callback, put a function there to call when the offset is calculated.
+
+Example from MrcTable
+
+```js
+componentDidMount() {
+        let { sticky, stickyOffset } = this.props;
+        if (sticky) {
+            stickyOffsetFromCombined({
+                node: this.selfRef.current,
+                stickyNamespace: sticky,
+                offsetSelector: typeof stickyOffset === 'string' ? stickyOffset : undefined,
+                offsetPx: typeof stickyOffset === 'number' ? stickyOffset : undefined,
+                callback: (offset) => this.selfRef.current.style.setProperty('--sticky-top', offset + 'px'),
+            });
+        }
+    }
+```
