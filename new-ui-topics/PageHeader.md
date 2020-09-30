@@ -1,3 +1,0 @@
-# PageHeader
-
-Moved to `/PageHeader`

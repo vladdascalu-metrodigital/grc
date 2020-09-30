@@ -4,15 +4,15 @@ import { action } from '@storybook/addon-actions';
 import Pill from '../Pill';
 
 storiesOf('New UI Topics', module)
-    .add('MOVED: PageHeader', () => {
-        return <div>Find in /PageHeader</div>;
+    .add('PageHeader', () => {
+        return <div>In Progress of being implemented: Find in /PageHeader</div>;
     })
-    .add('MOVED: MainMenu', () => {
-        return <div>Find in /MainMenu</div>;
+    .add('MainMenu', () => {
+        return <div>In Progress of being implemented: Find in /MainMenu</div>;
     })
-    .add('MOVED: PageTitle', () => {
-        return <div>Find in /PageTitle</div>;
+    .add('PageTitle', () => {
+        return <div>In Progress of being implemented: Find in /PageTitle</div>;
     })
-    .add('NOT HERE: LanguageList', () => {
-        return <div>Find in /LanguageList</div>;
+    .add('LanguageList', () => {
+        return <div>In Progress of being implemented: Find in /LanguageList</div>;
     });
