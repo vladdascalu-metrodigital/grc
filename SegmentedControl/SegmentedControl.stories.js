@@ -7,6 +7,6 @@ import { storiesOf } from '@storybook/react';
 
 import SegmentedControl from '../SegmentedControl';
 
-storiesOf('Segmented Control', module).add('basic', () => (
+storiesOf('Fundamentals/Segmented Control', module).add('basic', () => (
     <SegmentedControl selectedSegment={'Placeholder'} labels={['Document', 'Placeholder', 'bar', 'baz']} />
 ));

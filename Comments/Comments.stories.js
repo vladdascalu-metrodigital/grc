@@ -6,7 +6,7 @@ import Comments from '../Comments';
 
 import { comment, blocked, comments, previousRequestsComments } from '../fixtures/comments';
 
-storiesOf('Comments', module)
+storiesOf('Service Components/Comments', module)
     .add('Standard', () => (
         <Comments
             timeoutdate={'2020-04-21T12:10:46Z'}

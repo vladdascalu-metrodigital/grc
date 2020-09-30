@@ -12,7 +12,7 @@ const logAddFile = (filetype, file, title, expiryDate, attachmentType) =>
 const logDeleteFile = () => console.log('deleting file');
 const logRestoreFile = () => console.log('restoring file');
 
-storiesOf('Attachments', module)
+storiesOf('Service Components/Attachments', module)
     .add('standard', () => (
         <Attachments
             disabled={false}

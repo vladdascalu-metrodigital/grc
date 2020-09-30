@@ -7,7 +7,7 @@ import { storiesOf } from '@storybook/react';
 
 import LaunchPad from '../LaunchPad';
 
-storiesOf('LaunchPad', module)
+storiesOf('App Structure/LaunchPad', module)
     .add('standard desktop', () => (
         <LaunchPad
             config={{

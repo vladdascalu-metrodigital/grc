@@ -4,6 +4,6 @@ import { storiesOf } from '@storybook/react';
 
 import StarRating from './index';
 
-storiesOf('StarRating', module).add('StarRating', () => {
+storiesOf('Fundamentals/StarRating', module).add('StarRating', () => {
     return <StarRating selectedIndex="2" />;
 });

@@ -13,7 +13,7 @@ const Boom = () => {
     throw new Error('This is a demo Exception');
 };
 
-storiesOf('Error Handling', module).add('ErrorHandledTabPanel', () => (
+storiesOf('Fundamentals/ErrorHandledTabPanel', module).add('ErrorHandledTabPanel', () => (
     <Tabs>
         <TabList>
             <Tab>Error</Tab>

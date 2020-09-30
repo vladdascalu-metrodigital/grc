@@ -10,7 +10,7 @@ import CreditLimitRequest from '../CreditLimit/LimitRequest';
 import CreditLimitRequestSubmitted from '../CreditLimit/LimitRequest/RequestSubmitted';
 import CreditLimitCustomerStatus from '../CreditLimit/CustomerStatus';
 
-storiesOf('CreditLimit/CustomerDetailsGroup', module).add('standard', () => (
+storiesOf('Services/CreditLimit/CustomerDetailsGroup', module).add('standard', () => (
     <CreditLimitCustomerDetailsGroup
         customers={[
             {
@@ -113,7 +113,7 @@ storiesOf('CreditLimit/CustomerDetailsGroup', module).add('standard', () => (
     />
 ));
 
-storiesOf('CreditLimit/LimitRequest', module)
+storiesOf('Services/CreditLimit/LimitRequest', module)
     .add('standard request', () => (
         <CreditLimitRequest
             cleanup={(value) => console.log(value)}
@@ -859,7 +859,7 @@ storiesOf('CreditLimit/LimitRequest', module)
         />
     ));
 
-storiesOf('CreditLimit/CustomerStatus', module)
+storiesOf('Services/CreditLimit/CustomerStatus', module)
     .add('standard', () => (
         <CreditLimitCustomerStatus
             customers={{

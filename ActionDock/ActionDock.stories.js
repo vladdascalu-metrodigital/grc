@@ -6,7 +6,7 @@ import ContractingDock from '../new-ui-topics/ApprovalDock/ContractingDock';
 import RejectionDock from '../new-ui-topics/ApprovalDock/RejectionDock';
 import { action } from '@storybook/addon-actions';
 
-storiesOf('Fundamentals/ActionDock', module)
+storiesOf('App Structure/ActionDock', module)
     .add('Simple ActionDock', () => (
         <SimpleActionDock onCancel={() => action('actionDockCancel')()} onApply={() => action('actionDockApply')()} />
     ))

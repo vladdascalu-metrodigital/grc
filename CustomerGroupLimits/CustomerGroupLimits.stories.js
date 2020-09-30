@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 
 import CustomerGroupLimits from '../CustomerGroupLimits';
 
-storiesOf('CustomerGroupLimits', module).add('CustomerGroupLimits', () => {
+storiesOf('Service Components/CustomerGroupLimits', module).add('CustomerGroupLimits', () => {
     return (
         <CustomerGroupLimits
             country={'DE'}

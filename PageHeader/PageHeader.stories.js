@@ -78,7 +78,7 @@ const MockedLanguageList = (props) => (
     <LanguageList {...props} config={languageConfig} languageChange={(l) => action('languageChange')(l)} />
 );
 
-storiesOf('PageHeader', module)
+storiesOf('App Structure/PageHeader', module)
     .add('PageHeader with Tabs and Data', () => {
         return (
             <PageHeader
@@ -109,7 +109,7 @@ storiesOf('PageHeader', module)
         );
     });
 
-storiesOf('PageHeader', module)
+storiesOf('App Structure/PageHeader', module)
     .add('PageTitle with customer', () => {
         return (
             <PageTitle

@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import Grid, { GAP, GridItem } from '../Grid';
 import Card, { TYPE } from '../Card';
 
-storiesOf('Layouts/Grid', module)
+storiesOf('Fundamentals/Grid', module)
     .add('Auto Layouts', () => (
         <Grid cols="1">
             <h2>Default minmax(22rem, 1fr)</h2>

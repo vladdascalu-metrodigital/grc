@@ -5,7 +5,7 @@ import { storiesOf } from '@storybook/react';
 
 import Reports from '../Reports';
 
-storiesOf('Reports', module).add('report list', () => (
+storiesOf('Service Components/Reports', module).add('report list', () => (
     <Reports
         data={[
             { name: 'Credit Portfolio', id: 'bar' },

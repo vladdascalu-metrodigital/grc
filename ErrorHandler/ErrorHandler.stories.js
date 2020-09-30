@@ -11,7 +11,7 @@ const Boom = () => {
     throw new Error('This is a demo Exception');
 };
 
-storiesOf('Error Handling', module).add('ErrorHandler', () => (
+storiesOf('Etc/ErrorHandler', module).add('ErrorHandler', () => (
     <ErrorHandler>
         <Boom />
     </ErrorHandler>

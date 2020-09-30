@@ -5,6 +5,6 @@ import recentRequestsData from '../fixtures/credit-limit/customers.recentRequest
 
 import RecentRequestsInfo from '../RecentRequestsInfo';
 
-storiesOf('RecentRequestsInfo', module)
+storiesOf('Service Components/RecentRequestsInfo', module)
     .add('standard desktop', () => <RecentRequestsInfo isTablet={true} recentRequests={recentRequestsData} />)
     .add('standard mobile', () => <RecentRequestsInfo isTablet={false} recentRequests={recentRequestsData} />);

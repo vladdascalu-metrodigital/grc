@@ -7,7 +7,7 @@ import CreditCorrectionRequest from '../CreditCorrection/CreditCorrection';
 import CreditCorrectionRequestSubmitted from '../CreditCorrection/CreditCorrection/RequestSubmitted';
 import CreditLimitCustomerStatus from '../CreditCorrection/CustomerStatus';
 
-storiesOf('CreditCorrection/CustomerStatus', module)
+storiesOf('Services/CreditCorrection/CustomerStatus', module)
     .add('standard', () => (
         <CreditCorrectionCustomerStatus
             customers={{
@@ -582,7 +582,7 @@ storiesOf('CreditCorrection/CustomerStatus', module)
         />
     ));
 
-storiesOf('CreditCorrection/CreditCorrection', module)
+storiesOf('Services/CreditCorrection/CreditCorrection', module)
     .add('standard request', () => (
         <CreditCorrectionRequest
             cleanup={(value) => console.log(value)}

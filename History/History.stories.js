@@ -1357,11 +1357,11 @@ let requestStatus = {
     applied: true,
 };
 
-storiesOf('History/CustomerSummary', module)
+storiesOf('Services/History/CustomerSummary', module)
     .add('with history', () => <CustomerSummary {...historyCustomerData} noHistory={false} />)
     .add('no history', () => <CustomerSummary {...historyCustomerData} noHistory={true} />);
 
-storiesOf('History/HistoryDetails', module).add('history details', () => (
+storiesOf('Services/History/HistoryDetails', module).add('history details', () => (
     <HistoryDetailsPresentation
         error={false}
         isTablet={true}
@@ -1394,7 +1394,7 @@ storiesOf('History/HistoryDetails', module).add('history details', () => (
     />
 ));
 
-storiesOf('History/Management', module).add('Management', () => (
+storiesOf('Services/History/Management', module).add('Management', () => (
     <Management
         requestData={historyData.historyDetails.requestData}
         totalTurnover={123000}
@@ -1407,7 +1407,7 @@ storiesOf('History/Management', module).add('Management', () => (
     />
 ));
 
-storiesOf('History/StatusBar', module).add('with history', () => (
+storiesOf('Services/History/StatusBar', module).add('with history', () => (
     <HistoryStatusBar
         countryCode="DE"
         statusBar={{
@@ -1420,7 +1420,7 @@ storiesOf('History/StatusBar', module).add('with history', () => (
     />
 ));
 
-storiesOf('History/RequestDetails', module)
+storiesOf('Services/History/RequestDetails', module)
     .add('Red, LIMIT_EXPIRY', () => (
         <RequestDetails
             requestStatus={{

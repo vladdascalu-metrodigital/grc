@@ -5,7 +5,7 @@ import { ApprovalProcessPresentation } from '../ApprovalService/ApprovalProcess/
 
 import recentRequestsData from '../fixtures/approval-service/customers.recentRequests';
 
-storiesOf('ApprovalService', module)
+storiesOf('Services/ApprovalService', module)
     .add('manual approval flow', () => {
         let processInitialProp = {};
         let [processProp, setProcessProp] = useState(processInitialProp);

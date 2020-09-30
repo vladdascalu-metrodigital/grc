@@ -7,7 +7,7 @@ import { storiesOf } from '@storybook/react';
 
 import { NavLink } from 'react-router-dom';
 
-storiesOf('NavLink', module).add('MRC-3820', () => {
+storiesOf('Etc/React Router NavLink', module).add('MRC-3820', () => {
     const activeLinkFilter = (match, pathToCheck, location) => {
         // 1. for some reason match was always false and location had no values for its entries
         // soo we have to take the real window location url for testing..

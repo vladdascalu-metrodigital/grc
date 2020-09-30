@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 
 import CustomerDetails from '../CustomerDetails';
 
-storiesOf('CustomerDetails', module).add('CustomerDetails', () => (
+storiesOf('Service Components/CustomerDetails', module).add('CustomerDetails', () => (
     <CustomerDetails
         customer={{
             country: 'DE',

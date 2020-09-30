@@ -5,7 +5,7 @@ import '../Util/imports';
 import Report from '../ReportingService/Report';
 import Summary from '../ReportingService/Summary';
 
-storiesOf('reportingService', module)
+storiesOf('Services/ReportingService', module)
     .add('Report', () => <Report name="Report Title" datastudioId={'no-id'} />)
     .add('Summary', () => (
         <Summary

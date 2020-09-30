@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import CustomerDataGroup from '../CustomerDataGroup';
 
-storiesOf('CustomerDataGroup', module).add('customers data in group', () => (
+storiesOf('Service Components/CustomerDataGroup', module).add('customers data in group', () => (
     <CustomerDataGroup
         customers={[
             {

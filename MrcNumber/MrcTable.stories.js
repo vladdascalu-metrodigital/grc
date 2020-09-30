@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Table from '../MrcTable';
 
-storiesOf('Layouts/Tables/MrcTable', module)
+storiesOf('Fundamentals/Tables/MrcTable', module)
     .add('Sticky Usage', () => (
         <Table.Root>
             <Table.Head>

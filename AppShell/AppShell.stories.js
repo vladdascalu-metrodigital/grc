@@ -33,7 +33,7 @@ const MockedNotification = () => (
     <div style={{ background: 'red', color: 'white', padding: '.5rem' }}>Notification Dummy</div>
 );
 
-storiesOf('AppShell', module)
+storiesOf('App Structure/AppShell', module)
     .add('AppShell including MainMenu', () => {
         return (
             <AppShell

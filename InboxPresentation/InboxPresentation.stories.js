@@ -5,7 +5,7 @@ import InboxPresentation from '../InboxPresentation';
 
 import inboxItems from '../fixtures/inbox/filteredinboxItems';
 
-storiesOf('InboxPresentation', module).add('standard', () => (
+storiesOf('Services/InboxPresentation', module).add('InboxPresentation', () => (
     <InboxPresentation
         data={inboxItems}
         filterAvailable={true}

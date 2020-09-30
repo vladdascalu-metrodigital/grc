@@ -5,7 +5,7 @@ import { FlexRow, FlexColumn } from '../Flex';
 import Button from '../Button';
 import Card from '../Card';
 
-storiesOf('Layouts/Flex', module)
+storiesOf('Fundamentals/Flex', module)
     .add('Rows', () => (
         <FlexRow alignItems="center" gap="medium">
             <div>

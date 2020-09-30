@@ -7,7 +7,7 @@ import { storiesOf } from '@storybook/react';
 
 import Recommendations from '../Recommendations';
 
-storiesOf('Recommendations', module)
+storiesOf('Service Components/Recommendations', module)
     .add('standard', () => (
         <Recommendations
             recommendations={[

@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 
 import CustomerSearch from '../CustomerSearch';
 
-storiesOf('CustomerSearch', module)
+storiesOf('Service Components/CustomerSearch', module)
     .add('standard search', () => (
         <CustomerSearch
             results={null}

@@ -7,7 +7,7 @@ import { storiesOf } from '@storybook/react';
 
 import QuickCheck from '../QuickCheck';
 
-storiesOf('QuickCheck', module).add('standard status', () => (
+storiesOf('Services/QuickCheck', module).add('standard status', () => (
     <QuickCheck
         customers={{
             data: {

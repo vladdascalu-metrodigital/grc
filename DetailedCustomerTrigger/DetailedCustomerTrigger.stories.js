@@ -38,7 +38,7 @@ let customer = {
     requestedCustomer: true,
 };
 
-storiesOf('DetailedCustomerTrigger', module).add('Standard', () => (
+storiesOf('Service Components/DetailedCustomerTrigger', module).add('Standard', () => (
     <DetailedCustomerTrigger
         customer={customer}
         current={1200}

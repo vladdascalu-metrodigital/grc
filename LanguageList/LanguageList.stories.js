@@ -6,6 +6,6 @@ import LanguageList from '../LanguageList';
 
 import languageConfig from '../fixtures/config/languages';
 
-storiesOf('LanguageList', module).add('LanguageList', () => (
+storiesOf('App Structure/LanguageList', module).add('LanguageList', () => (
     <LanguageList config={languageConfig} languageChange={(l) => action('languageChange')(l)} />
 ));

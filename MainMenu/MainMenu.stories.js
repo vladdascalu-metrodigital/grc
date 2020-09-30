@@ -4,10 +4,10 @@ import MainMenu, { MENU_CONTEXT as C } from '../MainMenu';
 
 import navConfig from '../fixtures/config/quickNav';
 
-storiesOf('MainMenu', module)
+storiesOf('App Structure/MainMenu', module)
     .add('Sidebar Context', () => (
         <React.Fragment>
-            Background, Width, etc. coming from Context
+            Background, Width, etc. coming from parent component
             <div style={{ background: 'blue' }}>
                 <MainMenu
                     activeItem="inbox"

@@ -6,7 +6,7 @@ import { selection, selectionNoPreselection, multiSelection } from '../fixtures/
 
 import '../AdditionalFields/index.scss';
 
-storiesOf('AdditionalFields/Single Fields', module)
+storiesOf('Service Components/AdditionalFields/Single Fields', module)
     .add('Selection', () => {
         return <AdditionalFieldsSection requestFields={[selectionNoPreselection]} editable={true} />;
     })
@@ -20,7 +20,7 @@ storiesOf('AdditionalFields/Single Fields', module)
         return <AdditionalFieldsSection requestFields={[multiSelection]} editable={false} />;
     });
 
-storiesOf('AdditionalFields', module)
+storiesOf('Service Components/AdditionalFields', module)
     .add('all types editable AdditionalFields', () => {
         return (
             <AdditionalFieldsSection

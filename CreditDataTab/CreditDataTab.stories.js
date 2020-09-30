@@ -6,7 +6,7 @@ import { createBlockingInfo } from '../Util/blockingInfoUtils';
 import * as _ from 'lodash';
 import PropTypes from 'prop-types';
 
-storiesOf('CreditDataTab', module)
+storiesOf('Services/CreditDataTab', module)
     .add('Credit Limit', () => (
         <CreditDataTab
             parent={'creditlimit'}

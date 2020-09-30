@@ -7,7 +7,7 @@ import '../Util/imports';
 
 import FileUpload from '../FileUpload';
 
-storiesOf('FileUpload', module).add('standard', () => (
+storiesOf('Service Components/FileUpload', module).add('standard', () => (
     <FileUpload
         labelSelect={'select file'}
         updateFile={action('uploadAttachment')}
