@@ -16,6 +16,7 @@ import SingleEMailEditModalDialog from './SingleEMailEditModalDialog';
 import MultipleEMailEditModalDialog from './MultipleEMailEditModalDialog';
 
 import './index.scss';
+import './MrcUiBasicGridTable.scss';
 import ChevronDownIcon from '../../icons/ChevronDownIcon';
 
 export default class EmailService extends Component {

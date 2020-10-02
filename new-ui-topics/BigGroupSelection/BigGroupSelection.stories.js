@@ -1,13 +1,13 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import BigGroupSelection from '../new-ui-topics/BigGroupSelection';
-import AppShell from '../AppShell';
+import BigGroupSelection from '.';
+import AppShell from '../../AppShell';
 
-import MainMenu from '../MainMenu';
-import LanguageList from '../LanguageList';
+import MainMenu from '../../MainMenu';
+import LanguageList from '../../LanguageList';
 
-import quickNavConfig from '../fixtures/config/quickNav';
-import languageConfig from '../fixtures/config/languages';
+import quickNavConfig from '../../fixtures/config/quickNav';
+import languageConfig from '../../fixtures/config/languages';
 
 const config = {
     data: {

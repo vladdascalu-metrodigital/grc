@@ -6,6 +6,8 @@ import { SimpleActionDock } from '../../ActionDock';
 import { stickyOffsetFromCombined } from '../../Util/stickyUtil';
 import _ from 'lodash';
 import './index.scss';
+import '../EmailService/MrcUiBasicGridTable.scss';
+
 import ChevronDownIcon from '../../icons/ChevronDownIcon';
 import MrcNumber, { COUNTRY } from '../../MrcNumber';
 
