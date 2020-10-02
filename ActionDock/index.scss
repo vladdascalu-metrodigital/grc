@@ -24,3 +24,10 @@
     left: $spacing-large;
   }
 }
+
+@media screen and (min-width: 1350px) {
+  .mrc-ui-action-dock {
+      width: calc(100% - (#{$main-navigation} + 2 * #{$spacing-large}));
+      left: calc(#{$main-navigation} + #{$spacing-large});
+  }
+}

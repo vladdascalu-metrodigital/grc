@@ -12,18 +12,23 @@
     padding: 0;
 }
 
-
-.mrc-ui-email-service-table {
-    grid-template-columns: 3rem auto max-content max-content max-content;
+.mrc-ui-bigroup-table {
+    grid-template-columns: auto max-content max-content max-content;
     thead tr:first-child th {
-        grid-column: span 5;
+        grid-column: span 4;
     }
+}
+
+.mrc-ui-cell-tr {
+    // text-align: right;
+    // width: 100%;
 }
 
 .mrc-ui-basic-grid-table {
     display: grid;
-    margin-bottom: $spacing-extra-extra-extra-large;
     
+    margin-bottom: $spacing-extra-extra-extra-large;
+
     thead,
     tbody,
     tr {
@@ -38,7 +43,6 @@
         font-weight: bold;
         color: $color-brand-primary-default;
     }
-
     .mrc-ui-basic-table-grid-customer-cell span:last-child {
         font-weight: bold;
         font-size: $font-size-8;
@@ -77,14 +81,9 @@
         text-transform: uppercase;
         letter-spacing: 0.05rem;
         padding: $spacing-small;
-        white-space: normal;
+        white-space: normal !important;
         display: flex;
-        align-items: center;
-    }
-
-    thead tr:last-child th {
-        display: flex;
-        align-items: center;
+        align-items: flex-end;
     }
 
     thead tr:last-child th {
@@ -93,7 +92,6 @@
     }
 
     @media screen and (min-width: 1350px) {
-    
         thead tr:first-child th {
             position: sticky;
             top: var(--sticky-top);
@@ -114,7 +112,7 @@
         align-items: center;
     }
 
-    button {
+     button {
         z-index: 1;
     }
 

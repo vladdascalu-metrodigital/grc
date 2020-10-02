@@ -74,3 +74,5 @@ $border-style-default: $border-width-thin solid $color-palette-grey-tint-80;
 $breakpoint-not-small: 'screen and (min-width: 48em)' !default;
 $breakpoint-medium: 'screen and (min-width: 48em) and (max-width: 60em)' !default;
 $breakpoint-large: 'screen and (min-width: 60em)' !default;
+
+$main-navigation: 96px !default;

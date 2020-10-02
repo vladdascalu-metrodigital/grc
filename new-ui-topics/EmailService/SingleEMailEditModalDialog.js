@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import TextInput from '../../TextInput';
 import { ModalDialogSimple } from '../../ModalDialog';
+import CheckCard from '../../CheckCard';
+
+import './SingleEMailEditModalDialog.scss';
 
 export default class SingleEMailEditModalDialog extends Component {
     constructor(props) {
@@ -12,6 +15,7 @@ export default class SingleEMailEditModalDialog extends Component {
 
     render() {
         let { onCancel, onOk } = this.props;
+
         return (
             <ModalDialogSimple title="Edit E-Mail" onCancel={onCancel} onOk={onOk}>
                 <TextInput
@@ -21,6 +25,10 @@ export default class SingleEMailEditModalDialog extends Component {
                         this.setState({ customerEmail: value });
                     }}
                 />
+                <div className="mrc-ui-modal-checkcards">
+                    <CheckCard title="max.mustermann@meier.ag" size="small" checked={true} />
+                    <CheckCard title="peter.parker@betterlife.gmbh" size="small" checked={false} />
+                </div>
             </ModalDialogSimple>
         );
     }

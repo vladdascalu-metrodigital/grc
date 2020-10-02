@@ -1,33 +1,21 @@
 import React, { Component } from 'react';
-
 import Search from '../../Search';
-import Checkbox from '../../Checkbox';
 import Button, { COLOR as BUTTONCOLOR, SIZE as BUTTONSIZE } from '../../Button';
 import PropTypes from 'prop-types';
-
 import { SimpleActionDock } from '../../ActionDock';
-import Pill from '../../Pill';
-
 import { stickyOffsetFromCombined } from '../../Util/stickyUtil';
-
 import _ from 'lodash';
-
-import SingleEMailEditModalDialog from './SingleEMailEditModalDialog';
-import MultipleEMailEditModalDialog from './MultipleEMailEditModalDialog';
-
 import './index.scss';
 import ChevronDownIcon from '../../icons/ChevronDownIcon';
+import MrcNumber, { COUNTRY } from '../../MrcNumber';
 
-export default class EmailService extends Component {
+export default class BigGroupSelection extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            selectAll: false,
-            selectedCustomers: {},
-            showRowEditModal: null,
-            showMultiRowEditModal: null,
-        };
+        // this.state = {
+        //     selectedCustomers: {},
+        // };
     }
 
     refreshStickyOffset() {
@@ -56,42 +44,15 @@ export default class EmailService extends Component {
         window.addEventListener('resize', _.debounce(this.refreshStickyOffset, 150));
     }
 
-    handleCustomerSelect(arrayId) {
-        this.setState({
-            selectAll: false,
-            selectedCustomers: {
-                ...this.state.selectedCustomers,
-                [arrayId]: !this.state.selectedCustomers[arrayId],
-            },
-        });
-    }
-
-    handleCustomerSelectAll(data) {
-        let selectedCustomers = {};
-
-        if (!this.state.selectAll) {
-            data.forEach((v, k) => {
-                selectedCustomers[k] = !this.state.selectAll;
-            });
-        }
-
-        this.setState({
-            selectAll: !this.state.selectAll,
-            selectedCustomers: {
-                ...selectedCustomers,
-            },
-        });
-    }
-
     render() {
         let { data } = this.props;
-        let { showRowEditModal, showMultiRowEditModal, selectedCustomers } = this.state;
+        // let { selectedCustomers } = this.state;
         return (
             <React.Fragment>
-                <table className="mrc-ui-basic-grid-table mrc-ui-email-service-table">
+                <table className="mrc-ui-basic-grid-table mrc-ui-bigroup-table">
                     <thead>
                         <tr>
-                            <th>
+                            <th className="mrc-biggroup-table-full-scolspan">
                                 <h2>Customer Group</h2>
                                 <div className="mrc-ui-form-box">
                                     <div className="mrc-ui-form-box-search-wrapper">
@@ -102,25 +63,19 @@ export default class EmailService extends Component {
                         </tr>
                         <tr>
                             <th>
-                                <Checkbox
-                                    checked={this.state.selectAll}
-                                    onChange={() => this.handleCustomerSelectAll(data)}
-                                />
-                            </th>
-                            <th>
                                 Customer{' '}
                                 <span className="mrc-ui-basic-grid-table-sort-icon">
                                     <ChevronDownIcon size="inline" color="current-color" />
                                 </span>
                             </th>
                             <th>
-                                Status
+                                Payment Method
                                 <span className="mrc-ui-basic-grid-table-sort-icon">
                                     <ChevronDownIcon size="inline" color="current-color" />
                                 </span>
                             </th>
                             <th>
-                                Dunning Email
+                                Limit{' '}
                                 <span className="mrc-ui-basic-grid-table-sort-icon">
                                     <ChevronDownIcon size="inline" color="current-color" />
                                 </span>
@@ -135,29 +90,25 @@ export default class EmailService extends Component {
                     </thead>
                     <tbody>
                         {data.map((d, k) => {
-                            let type = 'success';
-                            if (d.dunningEmailStatus != 'approved') {
-                                type = 'danger';
-                            }
                             return (
                                 <tr key={k}>
-                                    <td>
-                                        <Checkbox
-                                            checked={this.state.selectedCustomers[k]}
-                                            onChange={() => this.handleCustomerSelect(k)}
-                                        />
-                                    </td>
                                     <td className="mrc-ui-basic-table-grid-customer-cell">
                                         <span>{d.customer}</span>&nbsp;<span>{d.customerId}</span>
                                     </td>
                                     <td>
-                                        <Pill text={d.dunningEmailStatus} type={type} withIcon />
+                                        <div className="mrc-ui-cell-tr">{d.paymentMethod}</div>
                                     </td>
-                                    <td className="mrc-ui-basic-table-grid-dunning-email-cell">{d.dunningEmail}</td>
+                                    <td>
+                                        <div className="mrc-ui-cell-tr">
+                                            <MrcNumber isCurrency country={COUNTRY.ES}>
+                                                {d.limit}
+                                            </MrcNumber>
+                                        </div>
+                                    </td>
                                     <td>
                                         <Button
                                             size={BUTTONSIZE.SMALL}
-                                            text="Edit"
+                                            text="Add"
                                             isOutlined
                                             color={BUTTONCOLOR.PRIMARY}
                                             onClick={() => this.setState({ showRowEditModal: d })}
@@ -169,52 +120,23 @@ export default class EmailService extends Component {
                     </tbody>
                 </table>
 
-                {showRowEditModal && (
-                    <SingleEMailEditModalDialog
-                        customer={showRowEditModal}
-                        onCancel={() => this.setState({ showRowEditModal: null })}
-                        onOk={() => this.setState({ showRowEditModal: null })}
-                    />
-                )}
-
-                {showMultiRowEditModal && (
-                    <MultipleEMailEditModalDialog
-                        customers={data}
-                        selectedCustomers={selectedCustomers}
-                        onCancel={() => this.setState({ showMultiRowEditModal: false })}
-                        onOk={() => this.setState({ showMultiRowEditModal: false })}
-                    />
-                )}
-
-                <SimpleActionDock
-                    cancelText="Cancel"
-                    applyText="Edit Selection"
-                    applyDisabled={!Object.values(this.state.selectedCustomers).includes(true)}
-                    cancelDisabled={!Object.values(this.state.selectedCustomers).includes(true)}
-                    onApply={() => this.setState({ showMultiRowEditModal: true })}
-                    onCancel={() =>
-                        this.setState({
-                            selectAll: false,
-                            selectedCustomers: {},
-                        })
-                    }
-                />
+                <SimpleActionDock cancelText="Cancel" applyText="Apply" onApply={null} onCancel={null} />
             </React.Fragment>
         );
     }
 }
 
-EmailService.propTypes = {
+BigGroupSelection.propTypes = {
     data: PropTypes.arrayOf(
         PropTypes.shape({
             customer: PropTypes.string,
             customerId: PropTypes.string,
-            dunningEmail: PropTypes.string,
-            dunningEmailStatus: PropTypes.string,
+            paymentMethod: PropTypes.string,
+            limit: PropTypes.string,
         })
     ),
 };
 
-EmailService.defaultProps = {
+BigGroupSelection.defaultProps = {
     data: [],
 };

@@ -1,17 +1,20 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-// import { action } from '@storybook/addon-actions';
-
-import MainContent from '../MainContent';
 import EmailService from '../new-ui-topics/EmailService';
 import AppShell from '../AppShell';
-// import { attachments } from './fixtures/attachments';
 
 import MainMenu from '../MainMenu';
 import LanguageList from '../LanguageList';
 
 import quickNavConfig from './fixtures/config/quickNav';
 import languageConfig from './fixtures/config/languages';
+
+const config = {
+    data: {
+        ...languageConfig.data,
+        ...quickNavConfig.data,
+    },
+};
 
 const MockedMainMenu = (props) => (
     <MainMenu
@@ -34,6 +37,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
         customerStatus=""
         MainMenuComponent={MockedMainMenu}
         LanguageListComponent={MockedLanguageList}
+        config={config}
     >
         <EmailService
             data={[

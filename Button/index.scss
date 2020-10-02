@@ -45,7 +45,8 @@
 .mrc-ui-btn:disabled {
   @include background-color-pattern-disabled();
   cursor: not-allowed;
-  color: $color-disabled;
+  color: $color-disabled !important;
+  border: 0px !important;
 }
 
 ////// SIZES

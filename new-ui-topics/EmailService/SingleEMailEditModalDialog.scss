@@ -1,0 +1,14 @@
+@import '../../lib/scss/variables';
+
+.mrc-ui-modal-checkcards {
+    margin: $spacing-medium $spacing-none;
+}
+
+.mrc-ui-modal-checkcards > * {
+    width: max-content;
+}
+
+.mrc-ui-modal-checkcards * {
+    display: inline;
+    margin-right: $spacing-small;
+}
