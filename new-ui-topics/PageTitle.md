@@ -1,3 +1,0 @@
-# PageTitle
-
-Moved to `PageTitle`

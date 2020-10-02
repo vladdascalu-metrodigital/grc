@@ -1,0 +1,50 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+
+<Meta title="Forms/_Intro" />
+
+# Forms and Inputs
+
+The most inputs share a common API. Try to keep this as consistent as possible.
+
+## Fully Controlled
+
+The inputs use the "Fully Controlled Components" pattern as described here: https://reactjs.org/docs/forms.html  
+This makes the inputs simpler: We don't need to handle prop change and state change with `getDerivedStateFromProps` which can easy lead to confusing errors.  
+
+So we need to handle its state somewhere outside.
+
+## Common props
+
+Here are some common props with notable behavior.   
+
+There are more props and some components differ in their props, but they should be self explanatory.
+
+### onChange
+
+- **onChange: PropTypes.func**  
+  onChange as we know it, but:
+
+- **changeDelay: PropTypes.number**  
+  a delayed onChange, called after a certain timeout. Useful to throttle ajax reqeusts which are coupled to onChange. Cool!
+
+- **onChangeDelayed: PropTypes.func**  
+  set a custom timeout 
+
+### Validation
+  
+- **hideInvalid: PropTypes.bool**  
+  Surpress styling and messages of invalid state. E.g. used on inputs inside `CheckCard`.
+  
+- **onValidChange: PropTypes.func**  
+  callback for when the inputs own validation changes, returns `true` or `false`.
+  
+- **status: PropTypes.oneOf(['invalid', ...?])**  
+  Used to set some custom status from outside, currently used to set `invalid`.
+  
+- **validationMessages: PropTypes.array**  
+  Pass down additional, custom invalid messages.
+
+### Etc
+
+- **autofocus: PropTypes.bool**  
+  catches focus as soon as input gets mounted
