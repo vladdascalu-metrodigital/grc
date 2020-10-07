@@ -1098,7 +1098,9 @@ export class ApprovalProcessPresentation extends Component {
                     };
                 })}
                 creditProgram={
-                    selectedCreditProgram !== undefined && !_.isNil(selectedCreditProgram)
+                    selectedCreditProgram !== undefined &&
+                    !_.isNil(selectedCreditProgram) &&
+                    selectedCreditProgram !== ''
                         ? {
                               defaultText: selectedCreditProgram,
                               readOnly: true,

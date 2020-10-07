@@ -413,7 +413,9 @@ export const createCreditDataProps = (params) => {
             hasGroup: hasGroupAdditionalFields,
         },
         creditProgram:
-            params.selectedCreditProgram !== undefined && !_.isNil(params.selectedCreditProgram)
+            params.selectedCreditProgram !== undefined &&
+            !_.isNil(params.selectedCreditProgram) &&
+            params.selectedCreditProgram !== ''
                 ? {
                       defaultText: params.selectedCreditProgram,
                       readOnly: true,
