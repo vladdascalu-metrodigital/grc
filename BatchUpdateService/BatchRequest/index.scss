@@ -1,0 +1,49 @@
+.batch-request {
+    .column {
+        display: flex;
+        flex-direction: column;
+        flex-basis: 100%;
+        flex: 1;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .batch-request-add {
+        height: 7.5rem;
+
+        select {
+            width: 100%;
+            margin-top: 0px !important;
+        }
+    }
+
+    .red-warning {
+        color: red;
+        margin-bottom: 10px;
+    }
+
+    .batch-request-list {
+        .type-icon {
+            width: 25px;
+        }
+
+        .action-buttons {
+            display: flex;
+        }
+
+        .downloadLink {
+            margin-left: 0.3rem;
+        }
+    }
+
+    .template-buttons {
+        display: flex;
+    }
+}

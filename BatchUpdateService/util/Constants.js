@@ -1,0 +1,18 @@
+export const BACKEND_API_CONTEXT = '/batchupdate/api';
+export const BACKEND_BATCH_REQUEST_CONTEXT = BACKEND_API_CONTEXT + '/batch-request';
+
+export const HTTP_METHOD_NAME_POST = 'POST';
+export const HTTP_METHOD_NAME_GET = 'GET';
+export const HTTP_METHOD_NAME_PUT = 'PUT';
+export const HTTP_METHOD_NAME_DELETE = 'DELETE';
+
+export const MAX_UPLOAD_FILE_SIZE = 20000000;
+
+export const STATE_KEY_BATCH_REQUEST = 'batchRequest';
+export const ERROR_KEY_PREFIX = 'mrc.batchupdate.error.';
+
+export const BATCH_REQUEST_TYPE_CREDIT_CORRECTION = 'CREDIT_CORRECTION';
+export const BATCH_REQUEST_AVAILABLE_TYPES = [BATCH_REQUEST_TYPE_CREDIT_CORRECTION];
+export const BATCH_REQUEST_STATUS_IN_PROGRESS = 'IN_PROGRESS';
+export const BATCH_REQUEST_STATUS_NEW = 'NEW';
+export const BATCH_REQUEST_STATUS_WITH_ERROR = 'WITH_ERROR';
