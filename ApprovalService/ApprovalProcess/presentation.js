@@ -1383,6 +1383,7 @@ export class ApprovalProcessPresentation extends Component {
                             )
                             .map((auditTrail) => auditTrail.position)}
                         requestInfo={this.requestInfo}
+                        disabled={process.editableByCurrentUser && (!creditDataValid || !this.additionalFieldsValid())}
                     />
                 ) : null}
                 {isContracting || (!inTopManagmentTab && !process.waitingForReview && !process.reviewed) ? (
