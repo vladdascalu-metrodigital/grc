@@ -1,0 +1,63 @@
+@import '../../lib/scss/colors';
+@import '../../lib/scss/variables';
+@import '../../lib/scss/typography';
+
+.mrc-ui-audit-trail {
+    max-width: 800px;
+    margin: $spacing-extra-large auto;
+    margin: 0px auto;
+}
+
+.mrc-ui-audit-trail-user {}
+
+.mrc-ui-audit-trail-user-name {}
+
+.mrc-ui-audit-trail-user-email {
+    font-weight: bold;
+    color: $color-brand-primary-default;
+}
+
+.mrc-ui-audit-trail-user-name-link {
+    cursor: pointer;
+}
+
+.mrc-ui-audit-trail-status {
+    text-align: right;
+}
+
+.mrc-ui-audit-trail-status-state {
+    color: $color-brand-primary-tint-20;
+    text-transform: uppercase;    
+}
+.mrc-ui-audit-trail-status-state-green {
+    font-weight: bold;
+    color: $color-palette-green-tint-20;
+}
+
+.mrc-ui-audit-trail-status-state-red {
+    font-weight: bold;
+    color: $color-palette-red-tint-30;
+}
+
+.mrc-ui-audit-trail-status-date {}
+
+.mrc-ui-audit-trail-status-disc {
+    width: $width-1;
+    height: $height-1;
+    border: $border-width-thin solid $color-palette-grey-tint-60;
+    background: $color-palette-grey-tint-90;
+    border-radius: $border-radius-circle;
+}
+
+.mrc-ui-audit-trail-status-disc-green {
+    border: $border-width-thin solid $color-palette-green-shade-30;
+    background: $color-palette-green-tint-20;
+}
+
+.mrc-ui-audit-trail-status-disc-red {
+    border: $border-width-thin solid $color-palette-red-shade-30;
+    background: $color-palette-red-tint-30;
+}
+.mrc-ui-audit-trail-colleages * {
+    margin-right: $spacing-extra-small;
+}
