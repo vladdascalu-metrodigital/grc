@@ -2,20 +2,10 @@
 @import '../../lib/scss/variables';
 @import '../../lib/scss/typography';
 
-.mrc-ui-form-box {
-    background-color: $color-form-background-grey;
-    padding: $spacing-medium $spacing-medium;
-    margin-top: $spacing-small;
-}
-
 .mrc-ui-main-content {
     padding: 0;
 }
 
-
 .mrc-ui-email-service-table {
-    grid-template-columns: 3rem auto max-content max-content max-content;
-    thead tr:first-child th {
-        grid-column: span 5;
-    }
+    margin-bottom: $spacing-extra-extra-extra-large;
 }

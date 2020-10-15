@@ -19,6 +19,8 @@ import './index.scss';
 import './MrcUiBasicGridTable.scss';
 import ChevronDownIcon from '../../icons/ChevronDownIcon';
 
+import Select from '../../Select';
+
 export default class EmailService extends Component {
     constructor(props) {
         super(props);
@@ -33,22 +35,19 @@ export default class EmailService extends Component {
 
     refreshStickyOffset() {
         stickyOffsetFromCombined({
-            offsetSelector: '.mrc-ui-basic-grid-table thead tr:first-child th, .mrc-ui-pageheader',
-            callback: (offset) =>
-                Array.from(document.querySelectorAll('.mrc-ui-basic-grid-table thead tr:last-child th')).forEach(
-                    (e) => {
-                        e.style.setProperty('--sticky-top', offset + 'px');
-                    }
-                ),
-        });
-        stickyOffsetFromCombined({
             offsetSelector: '.mrc-ui-pageheader',
             callback: (offset) =>
-                Array.from(document.querySelectorAll('.mrc-ui-basic-grid-table thead tr:first-child th')).forEach(
-                    (e) => {
-                        e.style.setProperty('--sticky-top', offset + 'px');
-                    }
-                ),
+                Array.from(document.querySelectorAll('.mrc-ui-basic-grid-table-form')).forEach((e) => {
+                    e.style.setProperty('--sticky-top', offset + 'px');
+                }),
+        });
+
+        stickyOffsetFromCombined({
+            offsetSelector: ' .mrc-ui-basic-grid-table-form, .mrc-ui-pageheader',
+            callback: (offset) =>
+                Array.from(document.querySelectorAll('.mrc-ui-basic-grid-table-header th')).forEach((e) => {
+                    e.style.setProperty('--sticky-top', offset + 'px');
+                }),
         });
     }
 
@@ -87,21 +86,31 @@ export default class EmailService extends Component {
     render() {
         let { data } = this.props;
         let { showRowEditModal, showMultiRowEditModal, selectedCustomers } = this.state;
+        let options = [
+            ['NULL', 'all'],
+            ['1', 'approved'],
+            ['2', 'pending'],
+            ['3', 'Domain verified'],
+        ];
         return (
             <React.Fragment>
-                <table className="mrc-ui-basic-grid-table mrc-ui-email-service-table">
+                <div className="mrc-ui-basic-grid-table-form">
+                    <h3>Customer Group</h3>
+                    <div className="mrc-ui-form-box">
+                        <div className="mrc-ui-form-box-search-wrapper">
+                            <Search placeholder="Search by Id, Name..." />
+                        </div>
+                        <div>
+                            <Select options={options} value={'0'} onChange="" />
+                        </div>
+                    </div>
+                </div>
+                <table
+                    className="mrc-ui-basic-grid-table mrc-ui-email-service-table"
+                    style={{ '--mrc-ui-grid-template-columns': '2.3rem 3fr 1fr 1fr 1fr' }}
+                >
                     <thead>
-                        <tr>
-                            <th>
-                                <h2>Customer Group</h2>
-                                <div className="mrc-ui-form-box">
-                                    <div className="mrc-ui-form-box-search-wrapper">
-                                        <Search placeholder="Search by Id, Name..." />
-                                    </div>
-                                </div>
-                            </th>
-                        </tr>
-                        <tr>
+                        <tr className="mrc-ui-basic-grid-table-header mrc-ui-basic-grid-table-header-sticky">
                             <th>
                                 <Checkbox
                                     checked={this.state.selectAll}
@@ -109,28 +118,25 @@ export default class EmailService extends Component {
                                 />
                             </th>
                             <th>
-                                Customer{' '}
+                                <span>Customer</span>
                                 <span className="mrc-ui-basic-grid-table-sort-icon">
                                     <ChevronDownIcon size="inline" color="current-color" />
                                 </span>
                             </th>
                             <th>
-                                Status
+                                <span>Status</span>
                                 <span className="mrc-ui-basic-grid-table-sort-icon">
                                     <ChevronDownIcon size="inline" color="current-color" />
                                 </span>
                             </th>
                             <th>
-                                Dunning Email
+                                <span>Dunning Email</span>
                                 <span className="mrc-ui-basic-grid-table-sort-icon">
                                     <ChevronDownIcon size="inline" color="current-color" />
                                 </span>
                             </th>
-                            <th>
-                                Action
-                                <span className="mrc-ui-basic-grid-table-sort-icon">
-                                    <ChevronDownIcon size="inline" color="current-color" />
-                                </span>
+                            <th className="mrc-ui-grid-table-cell-align-right">
+                                <span>Action</span>
                             </th>
                         </tr>
                     </thead>
@@ -148,14 +154,21 @@ export default class EmailService extends Component {
                                             onChange={() => this.handleCustomerSelect(k)}
                                         />
                                     </td>
-                                    <td className="mrc-ui-basic-table-grid-customer-cell">
-                                        <span>{d.customer}</span>&nbsp;<span>{d.customerId}</span>
+                                    <td>
+                                        <div className="mrc-ui-basic-table-grid-cell-customer">
+                                            <span className="mrc-ui-basic-table-grid-cell-customer-name">
+                                                {d.customer}
+                                            </span>
+                                            <span className="mrc-ui-basic-table-grid-cell-customer-id">
+                                                {d.customerId}
+                                            </span>
+                                        </div>
                                     </td>
                                     <td>
                                         <Pill text={d.dunningEmailStatus} type={type} withIcon />
                                     </td>
                                     <td className="mrc-ui-basic-table-grid-dunning-email-cell">{d.dunningEmail}</td>
-                                    <td>
+                                    <td className="mrc-ui-grid-table-cell-align-right">
                                         <Button
                                             size={BUTTONSIZE.SMALL}
                                             text="Edit"
