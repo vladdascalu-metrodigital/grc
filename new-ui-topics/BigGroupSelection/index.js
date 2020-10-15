@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Search from '../../Search';
 import Button, { COLOR as BUTTONCOLOR, SIZE as BUTTONSIZE } from '../../Button';
 import PropTypes from 'prop-types';
-import { SimpleActionDock } from '../../ActionDock';
 import { stickyOffsetFromCombined } from '../../Util/stickyUtil';
 import _ from 'lodash';
 import './index.scss';
@@ -22,22 +21,27 @@ export default class BigGroupSelection extends Component {
 
     refreshStickyOffset() {
         stickyOffsetFromCombined({
-            offsetSelector: '.mrc-ui-basic-grid-table thead tr:first-child th, .mrc-ui-pageheader',
+            offsetSelector: '.mrc-ui-pageheader',
             callback: (offset) =>
-                Array.from(document.querySelectorAll('.mrc-ui-basic-grid-table thead tr:last-child th')).forEach(
-                    (e) => {
-                        e.style.setProperty('--sticky-top', offset + 'px');
-                    }
-                ),
+                Array.from(document.querySelectorAll('.mrc-ui-basic-grid-table-form')).forEach((e) => {
+                    e.style.setProperty('--sticky-top', offset + 'px');
+                }),
         });
+
+        stickyOffsetFromCombined({
+            offsetSelector: ' .mrc-ui-basic-grid-table-form, .mrc-ui-pageheader',
+            callback: (offset) =>
+                Array.from(document.querySelectorAll('.mrc-ui-basic-grid-table-header th')).forEach((e) => {
+                    e.style.setProperty('--sticky-top', offset + 'px');
+                }),
+        });
+
         stickyOffsetFromCombined({
             offsetSelector: '.mrc-ui-pageheader',
             callback: (offset) =>
-                Array.from(document.querySelectorAll('.mrc-ui-basic-grid-table thead tr:first-child th')).forEach(
-                    (e) => {
-                        e.style.setProperty('--sticky-top', offset + 'px');
-                    }
-                ),
+                Array.from(document.querySelectorAll('.mrc-ui-big-group-right-column')).forEach((e) => {
+                    e.style.setProperty('--sticky-top', offset + 'px');
+                }),
         });
     }
 
@@ -51,78 +55,91 @@ export default class BigGroupSelection extends Component {
         // let { selectedCustomers } = this.state;
         return (
             <React.Fragment>
-                <table className="mrc-ui-basic-grid-table mrc-ui-bigroup-table">
-                    <thead>
-                        <tr>
-                            <th className="mrc-biggroup-table-full-scolspan">
-                                <h2>Customer Group</h2>
-                                <div className="mrc-ui-form-box">
-                                    <div className="mrc-ui-form-box-search-wrapper">
-                                        <Search placeholder="Search by Id, Name..." />
-                                    </div>
+                <div className="mrc-ui-big-group">
+                    <div className="mrc-ui-big-group-left">
+                        <div className="mrc-ui-basic-grid-table-form">
+                            <h3>Customer Group</h3>
+                            <div className="mrc-ui-form-box">
+                                <div className="mrc-ui-form-box-search-wrapper">
+                                    <Search placeholder="Search by Id, Name..." />
                                 </div>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>
-                                Customer{' '}
-                                <span className="mrc-ui-basic-grid-table-sort-icon">
-                                    <ChevronDownIcon size="inline" color="current-color" />
-                                </span>
-                            </th>
-                            <th>
-                                Payment Method
-                                <span className="mrc-ui-basic-grid-table-sort-icon">
-                                    <ChevronDownIcon size="inline" color="current-color" />
-                                </span>
-                            </th>
-                            <th>
-                                Limit{' '}
-                                <span className="mrc-ui-basic-grid-table-sort-icon">
-                                    <ChevronDownIcon size="inline" color="current-color" />
-                                </span>
-                            </th>
-                            <th>
-                                Action
-                                <span className="mrc-ui-basic-grid-table-sort-icon">
-                                    <ChevronDownIcon size="inline" color="current-color" />
-                                </span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data.map((d, k) => {
-                            return (
-                                <tr key={k}>
-                                    <td className="mrc-ui-basic-table-grid-customer-cell">
-                                        <span>{d.customer}</span>&nbsp;<span>{d.customerId}</span>
-                                    </td>
-                                    <td>
-                                        <div className="mrc-ui-cell-tr">{d.paymentMethod}</div>
-                                    </td>
-                                    <td>
-                                        <div className="mrc-ui-cell-tr">
-                                            <MrcNumber isCurrency country={COUNTRY.ES}>
-                                                {d.limit}
-                                            </MrcNumber>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <Button
-                                            size={BUTTONSIZE.SMALL}
-                                            text="Add"
-                                            isOutlined
-                                            color={BUTTONCOLOR.PRIMARY}
-                                            onClick={() => this.setState({ showRowEditModal: d })}
-                                        />
-                                    </td>
+                            </div>
+                        </div>
+                        <table
+                            className="mrc-ui-basic-grid-table"
+                            style={{ '--mrc-ui-grid-template-columns': '2fr 1fr 1fr 1fr' }}
+                        >
+                            <thead>
+                                <tr className="mrc-ui-basic-grid-table-header mrc-ui-basic-grid-table-header-sticky">
+                                    <th>
+                                        <span>Customer</span>
+                                        <span className="mrc-ui-basic-grid-table-sort-icon">
+                                            <ChevronDownIcon size="inline" color="current-color" />
+                                        </span>
+                                    </th>
+                                    <th className="mrc-ui-grid-table-cell-align-right">
+                                        <span>Payment Method</span>
+                                        <span className="mrc-ui-basic-grid-table-sort-icon">
+                                            <ChevronDownIcon size="inline" color="current-color" />
+                                        </span>
+                                    </th>
+                                    <th className="mrc-ui-grid-table-cell-align-right">
+                                        <span>Limit</span>
+                                        <span className="mrc-ui-basic-grid-table-sort-icon">
+                                            <ChevronDownIcon size="inline" color="current-color" />
+                                        </span>
+                                    </th>
+                                    <th className="mrc-ui-grid-table-cell-align-right">
+                                        <span>Action</span>
+                                    </th>
                                 </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
-
-                <SimpleActionDock cancelText="Cancel" applyText="Apply" onApply={null} onCancel={null} />
+                            </thead>
+                            <tbody>
+                                {data.map((d, k) => {
+                                    return (
+                                        <tr key={k}>
+                                            <td>
+                                                <div className="mrc-ui-basic-table-grid-cell-customer">
+                                                    <span className="mrc-ui-basic-table-grid-cell-customer-name">
+                                                        {d.customer}
+                                                    </span>
+                                                    <span className="mrc-ui-basic-table-grid-cell-customer-id">
+                                                        {d.customerId}
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td className="mrc-ui-grid-table-cell-align-right">
+                                                <span>{d.paymentMethod}</span>
+                                            </td>
+                                            <td className="mrc-ui-grid-table-cell-align-right">
+                                                <MrcNumber isCurrency country={COUNTRY.ES}>
+                                                    {d.limit}
+                                                </MrcNumber>
+                                            </td>
+                                            <td className="mrc-ui-grid-table-cell-align-right">
+                                                <Button
+                                                    size={BUTTONSIZE.SMALL}
+                                                    text="Add"
+                                                    isOutlined
+                                                    color={BUTTONCOLOR.PRIMARY}
+                                                    onClick={() => this.setState({ showRowEditModal: d })}
+                                                />
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="mrc-ui-big-group-right-column">
+                        <h3>Selected Customers</h3>
+                        <div className="mrc-ui-big-group-selecion">
+                            <div>foobar</div>
+                        </div>
+                        <Button text="Start Request" color={BUTTONCOLOR.SECONDARY} />
+                    </div>
+                </div>
+                {/* <SimpleActionDock cancelText="Cancel" applyText="Apply" onApply={null} onCancel={null} /> */}
             </React.Fragment>
         );
     }

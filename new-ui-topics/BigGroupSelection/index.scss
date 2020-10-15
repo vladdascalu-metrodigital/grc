@@ -5,21 +5,28 @@
 .mrc-ui-form-box {
     background-color: $color-form-background-grey;
     padding: $spacing-medium $spacing-medium;
-    margin-top: $spacing-small;
 }
 
 .mrc-ui-main-content {
     padding: 0;
 }
 
-.mrc-ui-bigroup-table {
-    grid-template-columns: auto max-content max-content max-content;
-    thead tr:first-child th {
-        grid-column: span 4;
+.mrc-ui-big-group {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    margin-bottom: $spacing-extra-extra-extra-large;
+}
+
+@media screen and (min-width: 1350px) {
+    .mrc-ui-big-group-right-column {
+        position: sticky;
+        top: var(--sticky-top);
     }
 }
 
-.mrc-ui-cell-tr {
-    // text-align: right;
-    // width: 100%;
+.mrc-ui-big-group-selecion {
+    height: 100%;
+}
+.mrc-ui-big-group-right-column {
+    height: 80vh;
 }
