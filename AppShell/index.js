@@ -24,6 +24,8 @@ export default class AppShell extends Component {
             MainMenuComponent,
             LanguageListComponent,
             NotificationComponent,
+            tabs,
+            activeTabId,
         } = this.props;
         return (
             <div className="mrc-ui-app-shell">
@@ -43,6 +45,8 @@ export default class AppShell extends Component {
                     MainMenuComponent={MainMenuComponent}
                     LanguageListComponent={LanguageListComponent}
                     NotificationComponent={NotificationComponent}
+                    tabs={tabs}
+                    activeTabId={activeTabId}
                 />
                 <MainContent>{children}</MainContent>
             </div>
@@ -58,6 +62,14 @@ AppShell.propTypes = {
     config: PropTypes.object,
     children: PropTypes.node,
     headerInfoData: PropTypes.object,
+    activeTabId: PropTypes.string,
+    tabs: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string,
+            text: PropTypes.string,
+            onClick: PropTypes.func,
+        })
+    ),
 
     MainMenuComponent: PropTypes.elementType,
     LanguageListComponent: PropTypes.elementType,
