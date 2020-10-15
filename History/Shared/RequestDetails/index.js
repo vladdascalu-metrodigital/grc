@@ -188,6 +188,8 @@ export default class RequestDetails extends Component {
                 return this.createCustomerStatusForCreditCorrection(requestStatus);
             case 'Manual':
                 return <span className="uppercase">{lookup('mrc.status.manual')}</span>;
+            case 'Waiting_For_Data':
+                return <span className="uppercase">{lookup('mrc.status.waiting_for_data')}</span>;
             default:
                 return <span></span>;
         }

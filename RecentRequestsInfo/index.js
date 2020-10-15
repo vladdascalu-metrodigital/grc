@@ -286,6 +286,8 @@ export default class RecentRequestsInfo extends Component {
                 return <span className="span-blue uppercase">{lookup('mrc.status.contractSigned')}</span>;
             case 'Contract_validated':
                 return <span className="span-blue uppercase">{lookup('mrc.status.contractValidated')}</span>;
+            case 'Waiting_For_Data':
+                return <span className="uppercase">{lookup('mrc.status.waiting_for_data')}</span>;
             default:
                 return <span></span>;
         }

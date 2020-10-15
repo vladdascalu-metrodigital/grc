@@ -31,6 +31,7 @@ export default class HistoryStatusBar extends Component {
         REVIEW_PENDING: 'mrc.status.review_pending',
         CHANGED: 'mrc.status.changed',
         ABORTED: 'mrc.status.aborted',
+        WAITING_FOR_DATA: 'mrc.status.waiting_for_data',
     };
 
     render() {

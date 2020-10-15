@@ -36,6 +36,7 @@ export default class AuditTrail extends Component {
         CONTRACT_SIGNED: 'mrc.status.done',
         CONTRACT_VALIDATED: 'mrc.status.done',
         SENT_BACK_CONTRACTING: 'mrc.status.sentback_contracting',
+        WAITING_FOR_DATA: 'mrc.status.waiting_for_data',
     };
 
     actionTranslation = (action) => {
