@@ -46,7 +46,7 @@
 
 @mixin input-shell() {
   width: 100%;
-  border: 1px solid $color-contrast-white;
+  // border: 1px solid $color-contrast-white;
   box-shadow: $shadow-tiny;
   font-size: 1rem;
   font-family: inherit;
