@@ -137,41 +137,46 @@ export class ApprovalProcessPresentation extends Component {
         });
     }
 
+    displayContractSigningNotification(approval) {
+        const [lastStep, thisStep] = _.takeRight(approval.steps, 2).map((a) => a.type);
+        if (lastStep === 'CONTRACT_VALIDATION' && thisStep === 'CONTRACT_SIGNING') {
+            this.props.showInfo(lookup('approval.message.request.uploadContractAgain'));
+        } else if (!util.placeholdersUploaded(approval)) {
+            this.props.showInfo(lookup('approval.message.request.uploadContract'));
+        } else {
+            this.props.hideNotification();
+        }
+    }
+
+    displayContractValidationNotification(approval) {
+        const limitExpiryModifiedInPreviousStage =
+            !approval || _.find(approval.approvalItems, (x) => _.get(x, 'requestedLimitExpiry.modifiedInContracting'));
+
+        if (approval.state === 'COMPLETED' || approval.state === 'CONTRACT_VALIDATED') {
+            this.props.hideNotification();
+        } else {
+            this.props.showInfo(
+                lookup(
+                    limitExpiryModifiedInPreviousStage
+                        ? 'approval.message.request.validateContractWithWarning'
+                        : 'approval.message.request.validateContract'
+                )
+            );
+        }
+    }
+
     updateNotification(approval) {
         if (approval && !approval.claimedBySomebodyElse && approval.state !== 'CANCELLED') {
-            if (
-                approval.approvalItems &&
-                _.every(approval.approvalItems, (item) => !_.get(item, 'validRequestedExpiryDate'))
-            ) {
+            const anyInvalidExpiryDate = _.every(
+                approval.approvalItems,
+                (item) => !_.get(item, 'validRequestedExpiryDate')
+            );
+            if (approval.approvalItems && anyInvalidExpiryDate) {
                 this.props.showError(lookup('approval.message.request.pastLimitExpiry'));
-            } else {
-                this.props.hideNotification();
-            }
-            const limitExpiryModifiedInPreviousStage =
-                !approval ||
-                _.find(approval.approvalItems, (x) => _.get(x, 'requestedLimitExpiry.modifiedInContracting'));
-
-            if (this.state.currentStepType === 'CONTRACT_SIGNING') {
-                const [lastStep, thisStep] = _.takeRight(approval.steps, 2).map((a) => a.type);
-                if (lastStep === 'CONTRACT_VALIDATION' && thisStep === 'CONTRACT_SIGNING') {
-                    this.props.showInfo(lookup('approval.message.request.uploadContractAgain'));
-                } else if (!util.placeholdersUploaded(approval)) {
-                    this.props.showInfo(lookup('approval.message.request.uploadContract'));
-                } else {
-                    this.props.hideNotification();
-                }
+            } else if (this.state.currentStepType === 'CONTRACT_SIGNING') {
+                this.displayContractSigningNotification(approval);
             } else if (this.state.currentStepType === 'CONTRACT_VALIDATION') {
-                if (approval.state === 'COMPLETED' || approval.state === 'CONTRACT_VALIDATED') {
-                    this.props.hideNotification();
-                } else {
-                    this.props.showInfo(
-                        lookup(
-                            limitExpiryModifiedInPreviousStage
-                                ? 'approval.message.request.validateContractWithWarning'
-                                : 'approval.message.request.validateContract'
-                        )
-                    );
-                }
+                this.displayContractValidationNotification(approval);
             }
         }
     }
@@ -1383,6 +1388,7 @@ export class ApprovalProcessPresentation extends Component {
                             )
                             .map((auditTrail) => auditTrail.position)}
                         requestInfo={this.requestInfo}
+                        disabled={process.editableByCurrentUser && (!creditDataValid || !this.additionalFieldsValid())}
                     />
                 ) : null}
                 {isContracting || (!inTopManagmentTab && !process.waitingForReview && !process.reviewed) ? (
