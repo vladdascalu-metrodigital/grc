@@ -287,6 +287,9 @@ export default class RecentRequestsInfo extends Component {
         if (requestStatus.status == 'Changed') {
             return this.createCustomerStatusForCreditCorrection(requestStatus);
         }
+        if (requestStatus.status == 'Waiting_For_Data') {
+            return <span className="span-blue uppercase">{lookup('mrc.status.waiting_for_data')}</span>;
+        }
         return <span></span>;
     }
 
