@@ -84,9 +84,8 @@
   align-self: center;
   padding: $spacing-small;
 
-  > :first-child {
+  > .mrc-ui-header-info {
     display: none; // hidden on small screens
-
   }
 }
 
