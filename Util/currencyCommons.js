@@ -17,6 +17,7 @@ export const CURRENCY = {
     RSD: 'RSD',
     HRK: 'HRK',
     RUB: 'RUB',
+    RON: 'RON',
 };
 
 export const countryToCurrency = {
@@ -29,4 +30,5 @@ export const countryToCurrency = {
     RS: CURRENCY.RSD,
     HR: CURRENCY.HRK,
     RU: CURRENCY.RUB,
+    RO: CURRENCY.RON,
 };

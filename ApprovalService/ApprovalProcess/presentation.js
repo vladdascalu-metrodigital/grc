@@ -1588,6 +1588,7 @@ export class ApprovalProcessPresentation extends Component {
             PK: 'PKR',
             PL: 'PLN',
             RS: 'RSD',
+            RO: 'RON',
         }[process.country];
 
         return (

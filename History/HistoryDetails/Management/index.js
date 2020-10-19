@@ -208,6 +208,7 @@ export default class Management extends Component {
             PK: 'PKR',
             PL: 'PLN',
             RS: 'RSD',
+            RO: 'RON',
         }[customerData.country];
 
         let yearsSinceRegistrationDate = yearDiffFromNow(customerData.registrationDate);
