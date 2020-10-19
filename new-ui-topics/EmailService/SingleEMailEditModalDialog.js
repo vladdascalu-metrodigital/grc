@@ -17,17 +17,24 @@ export default class SingleEMailEditModalDialog extends Component {
         let { onCancel, onOk } = this.props;
 
         return (
-            <ModalDialogSimple title="Edit E-Mail" onCancel={onCancel} onOk={onOk}>
-                <TextInput
-                    label="E-Mail"
-                    value={this.state.customerEmail}
-                    onChange={(value) => {
-                        this.setState({ customerEmail: value });
-                    }}
-                />
-                <div className="mrc-ui-modal-checkcards">
-                    <CheckCard title="max.mustermann@meier.ag" size="small" checked={true} />
-                    <CheckCard title="peter.parker@betterlife.gmbh" size="small" checked={false} />
+            <ModalDialogSimple title="Select E-Mail" onCancel={onCancel} onOk={onOk} okText="Save">
+                <div className="mrc-ui-single-email-modal-checkcards">
+                    <CheckCard title="New E-Mail" checked={true} size="small">
+                        <TextInput
+                            value={this.state.customerEmail}
+                            onChange={(value) => {
+                                this.setState({ customerEmail: value });
+                            }}
+                        />
+                    </CheckCard>
+                    <CheckCard size="small" checked={false}>
+                        <span className="mrc-ui-check-card-title">Dunning E-Mail</span>
+                        <div className="mrc-ui-check-card-content">max.mustermann@meier.ag</div>
+                    </CheckCard>
+                    <CheckCard size="small" checked={false}>
+                        <span className="mrc-ui-check-card-title">Special E-Mail</span>
+                        <div className="mrc-ui-check-card-content">peter.parker@betterlife.gmbh</div>
+                    </CheckCard>
                 </div>
             </ModalDialogSimple>
         );

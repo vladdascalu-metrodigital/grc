@@ -105,84 +105,85 @@ export default class EmailService extends Component {
                         </div>
                     </div>
                 </div>
-                <table
-                    className="mrc-ui-basic-grid-table mrc-ui-email-service-table"
-                    style={{ '--mrc-ui-grid-template-columns': '2.3rem 3fr 1fr 1fr 1fr' }}
-                >
-                    <thead>
-                        <tr className="mrc-ui-basic-grid-table-header mrc-ui-basic-grid-table-header-sticky">
-                            <th>
-                                <Checkbox
-                                    checked={this.state.selectAll}
-                                    onChange={() => this.handleCustomerSelectAll(data)}
-                                />
-                            </th>
-                            <th>
-                                <span>Customer</span>
-                                <span className="mrc-ui-basic-grid-table-sort-icon">
-                                    <ChevronDownIcon size="inline" color="current-color" />
-                                </span>
-                            </th>
-                            <th>
-                                <span>Status</span>
-                                <span className="mrc-ui-basic-grid-table-sort-icon">
-                                    <ChevronDownIcon size="inline" color="current-color" />
-                                </span>
-                            </th>
-                            <th>
-                                <span>Dunning Email</span>
-                                <span className="mrc-ui-basic-grid-table-sort-icon">
-                                    <ChevronDownIcon size="inline" color="current-color" />
-                                </span>
-                            </th>
-                            <th className="mrc-ui-grid-table-cell-align-right">
-                                <span>Action</span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data.map((d, k) => {
-                            let type = 'success';
-                            if (d.dunningEmailStatus != 'approved') {
-                                type = 'danger';
-                            }
-                            return (
-                                <tr key={k}>
-                                    <td>
-                                        <Checkbox
-                                            checked={this.state.selectedCustomers[k]}
-                                            onChange={() => this.handleCustomerSelect(k)}
-                                        />
-                                    </td>
-                                    <td>
-                                        <div className="mrc-ui-basic-table-grid-cell-customer">
-                                            <span className="mrc-ui-basic-table-grid-cell-customer-name">
-                                                {d.customer}
-                                            </span>
-                                            <span className="mrc-ui-basic-table-grid-cell-customer-id">
-                                                {d.customerId}
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <Pill text={d.dunningEmailStatus} type={type} withIcon />
-                                    </td>
-                                    <td className="mrc-ui-basic-table-grid-dunning-email-cell">{d.dunningEmail}</td>
-                                    <td className="mrc-ui-grid-table-cell-align-right">
-                                        <Button
-                                            size={BUTTONSIZE.SMALL}
-                                            text="Edit"
-                                            isOutlined
-                                            color={BUTTONCOLOR.PRIMARY}
-                                            onClick={() => this.setState({ showRowEditModal: d })}
-                                        />
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
-
+                <div className="mrc-ui-email-service">
+                    <table
+                        className="mrc-ui-basic-grid-table mrc-ui-email-service-table"
+                        style={{ '--mrc-ui-grid-template-columns': '2.3rem 3fr 1fr 1fr 1fr' }}
+                    >
+                        <thead>
+                            <tr className="mrc-ui-basic-grid-table-header mrc-ui-basic-grid-table-header-sticky">
+                                <th>
+                                    <Checkbox
+                                        checked={this.state.selectAll}
+                                        onChange={() => this.handleCustomerSelectAll(data)}
+                                    />
+                                </th>
+                                <th>
+                                    <span>Customer</span>
+                                    <span className="mrc-ui-basic-grid-table-sort-icon">
+                                        <ChevronDownIcon size="inline" color="current-color" />
+                                    </span>
+                                </th>
+                                <th>
+                                    <span>Status</span>
+                                    <span className="mrc-ui-basic-grid-table-sort-icon">
+                                        <ChevronDownIcon size="inline" color="current-color" />
+                                    </span>
+                                </th>
+                                <th>
+                                    <span>Dunning Email</span>
+                                    <span className="mrc-ui-basic-grid-table-sort-icon">
+                                        <ChevronDownIcon size="inline" color="current-color" />
+                                    </span>
+                                </th>
+                                <th className="mrc-ui-grid-table-cell-align-right">
+                                    <span>Action</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data.map((d, k) => {
+                                let type = 'success';
+                                if (d.dunningEmailStatus != 'approved') {
+                                    type = 'danger';
+                                }
+                                return (
+                                    <tr key={k}>
+                                        <td>
+                                            <Checkbox
+                                                checked={this.state.selectedCustomers[k]}
+                                                onChange={() => this.handleCustomerSelect(k)}
+                                            />
+                                        </td>
+                                        <td>
+                                            <div className="mrc-ui-basic-table-grid-cell-customer">
+                                                <span className="mrc-ui-basic-table-grid-cell-customer-name">
+                                                    {d.customer}
+                                                </span>
+                                                <span className="mrc-ui-basic-table-grid-cell-customer-id">
+                                                    {d.customerId}
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <Pill text={d.dunningEmailStatus} type={type} withIcon />
+                                        </td>
+                                        <td className="mrc-ui-basic-table-grid-dunning-email-cell">{d.dunningEmail}</td>
+                                        <td className="mrc-ui-grid-table-cell-align-right">
+                                            <Button
+                                                size={BUTTONSIZE.SMALL}
+                                                text="Edit"
+                                                isOutlined
+                                                color={BUTTONCOLOR.PRIMARY}
+                                                onClick={() => this.setState({ showRowEditModal: d })}
+                                            />
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                </div>
                 {showRowEditModal && (
                     <SingleEMailEditModalDialog
                         customer={showRowEditModal}

@@ -40,6 +40,7 @@
 .mrc-ui-basic-grid-table {
     display: grid;
     grid-template-columns: var(--mrc-ui-grid-template-columns);
+    position: relative;
         
     thead,
     tbody,
@@ -80,12 +81,12 @@
         display: flex;
         align-items: center;
         min-width: 0;
+        
     }
     th > *, td * {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        min-width: 0;
     }
 
     .mrc-ui-basic-grid-table-cell-longtext, .mrc-ui-basic-grid-table-cell-longtext * {

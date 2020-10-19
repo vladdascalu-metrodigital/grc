@@ -9,3 +9,18 @@
 .mrc-ui-email-service-table {
     margin-bottom: $spacing-extra-extra-extra-large;
 }
+
+.mrc-ui-email-service {
+    overflow-x: auto;
+}
+
+.mrc-ui-email-service table {
+    min-width: 600px;
+}
+
+@media #{$breakpoint-not-small} {
+    .mrc-ui-email-service {
+        min-width: none;
+        overflow: visible;
+    }
+}
