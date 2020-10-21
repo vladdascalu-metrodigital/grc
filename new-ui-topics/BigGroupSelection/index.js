@@ -13,10 +13,6 @@ import MrcNumber, { COUNTRY } from '../../MrcNumber';
 export default class BigGroupSelection extends Component {
     constructor(props) {
         super(props);
-
-        // this.state = {
-        //     selectedCustomers: {},
-        // };
     }
 
     refreshStickyOffset() {
@@ -55,90 +51,79 @@ export default class BigGroupSelection extends Component {
         // let { selectedCustomers } = this.state;
         return (
             <React.Fragment>
-                <div className="mrc-ui-big-group">
-                    <div className="mrc-ui-big-group-left">
-                        <div className="mrc-ui-basic-grid-table-form">
-                            <h3>Customer Group</h3>
-                            <div className="mrc-ui-form-box">
-                                <div className="mrc-ui-form-box-search-wrapper">
-                                    <Search placeholder="Search by Id, Name..." />
-                                </div>
-                            </div>
+                <div className="mrc-ui-basic-grid-table-form">
+                    <h3>Customer Group</h3>
+                    <div className="mrc-ui-form-box">
+                        <div className="mrc-ui-form-box-search-wrapper">
+                            <Search placeholder="Search by Id, Name..." />
                         </div>
-                        <table
-                            className="mrc-ui-basic-grid-table"
-                            style={{ '--mrc-ui-grid-template-columns': '2fr 1fr 1fr 1fr' }}
-                        >
-                            <thead>
-                                <tr className="mrc-ui-basic-grid-table-header mrc-ui-basic-grid-table-header-sticky">
-                                    <th>
-                                        <span>Customer</span>
-                                        <span className="mrc-ui-basic-grid-table-sort-icon">
-                                            <ChevronDownIcon size="inline" color="current-color" />
-                                        </span>
-                                    </th>
-                                    <th className="mrc-ui-grid-table-cell-align-right">
-                                        <span>Payment Method</span>
-                                        <span className="mrc-ui-basic-grid-table-sort-icon">
-                                            <ChevronDownIcon size="inline" color="current-color" />
-                                        </span>
-                                    </th>
-                                    <th className="mrc-ui-grid-table-cell-align-right">
-                                        <span>Limit</span>
-                                        <span className="mrc-ui-basic-grid-table-sort-icon">
-                                            <ChevronDownIcon size="inline" color="current-color" />
-                                        </span>
-                                    </th>
-                                    <th className="mrc-ui-grid-table-cell-align-right">
-                                        <span>Action</span>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {data.map((d, k) => {
-                                    return (
-                                        <tr key={k}>
-                                            <td>
-                                                <div className="mrc-ui-basic-table-grid-cell-customer">
-                                                    <span className="mrc-ui-basic-table-grid-cell-customer-name">
-                                                        {d.customer}
-                                                    </span>
-                                                    <span className="mrc-ui-basic-table-grid-cell-customer-id">
-                                                        {d.customerId}
-                                                    </span>
-                                                </div>
-                                            </td>
-                                            <td className="mrc-ui-grid-table-cell-align-right">
-                                                <span>{d.paymentMethod}</span>
-                                            </td>
-                                            <td className="mrc-ui-grid-table-cell-align-right">
-                                                <MrcNumber isCurrency country={COUNTRY.ES}>
-                                                    {d.limit}
-                                                </MrcNumber>
-                                            </td>
-                                            <td className="mrc-ui-grid-table-cell-align-right">
-                                                <Button
-                                                    size={BUTTONSIZE.SMALL}
-                                                    text="Add"
-                                                    isOutlined
-                                                    color={BUTTONCOLOR.PRIMARY}
-                                                    onClick={() => this.setState({ showRowEditModal: d })}
-                                                />
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div className="mrc-ui-big-group-right-column">
-                        <h3>Selected Customers</h3>
-                        <div className="mrc-ui-big-group-selecion">
-                            <div>foobar</div>
-                        </div>
-                        <Button text="Start Request" color={BUTTONCOLOR.SECONDARY} />
                     </div>
                 </div>
+                <table
+                    className="mrc-ui-basic-grid-table"
+                    style={{ '--mrc-ui-grid-template-columns': '2fr 1fr 1fr 1fr' }}
+                >
+                    <thead>
+                        <tr className="mrc-ui-basic-grid-table-header mrc-ui-basic-grid-table-header-sticky">
+                            <th>
+                                <span>Customer</span>
+                                <span className="mrc-ui-basic-grid-table-sort-icon">
+                                    <ChevronDownIcon size="inline" color="current-color" />
+                                </span>
+                            </th>
+                            <th className="mrc-ui-grid-table-cell-align-right">
+                                <span>Payment Method</span>
+                                <span className="mrc-ui-basic-grid-table-sort-icon">
+                                    <ChevronDownIcon size="inline" color="current-color" />
+                                </span>
+                            </th>
+                            <th className="mrc-ui-grid-table-cell-align-right">
+                                <span>Limit</span>
+                                <span className="mrc-ui-basic-grid-table-sort-icon">
+                                    <ChevronDownIcon size="inline" color="current-color" />
+                                </span>
+                            </th>
+                            <th className="mrc-ui-grid-table-cell-align-right">
+                                <span>Action</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.map((d, k) => {
+                            return (
+                                <tr key={k}>
+                                    <td>
+                                        <div className="mrc-ui-basic-table-grid-cell-customer">
+                                            <span className="mrc-ui-basic-table-grid-cell-customer-name">
+                                                {d.customer}
+                                            </span>
+                                            <span className="mrc-ui-basic-table-grid-cell-customer-id">
+                                                {d.customerId}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td className="mrc-ui-grid-table-cell-align-right">
+                                        <span>{d.paymentMethod}</span>
+                                    </td>
+                                    <td className="mrc-ui-grid-table-cell-align-right">
+                                        <MrcNumber isCurrency country={COUNTRY.ES}>
+                                            {d.limit}
+                                        </MrcNumber>
+                                    </td>
+                                    <td className="mrc-ui-grid-table-cell-align-right">
+                                        <Button
+                                            size={BUTTONSIZE.SMALL}
+                                            text="Add"
+                                            isOutlined
+                                            color={BUTTONCOLOR.PRIMARY}
+                                            onClick={() => this.setState({ showRowEditModal: d })}
+                                        />
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
                 {/* <SimpleActionDock cancelText="Cancel" applyText="Apply" onApply={null} onCancel={null} /> */}
             </React.Fragment>
         );

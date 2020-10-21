@@ -19,7 +19,7 @@ export default class SingleEMailEditModalDialog extends Component {
         return (
             <ModalDialogSimple title="Select E-Mail" onCancel={onCancel} onOk={onOk} okText="Save">
                 <div className="mrc-ui-single-email-modal-checkcards">
-                    <CheckCard title="New E-Mail" checked={true} size="small">
+                    <CheckCard title="E-Mail" checked={true} size="small">
                         <TextInput
                             value={this.state.customerEmail}
                             onChange={(value) => {
@@ -28,11 +28,13 @@ export default class SingleEMailEditModalDialog extends Component {
                         />
                     </CheckCard>
                     <CheckCard size="small" checked={false}>
-                        <span className="mrc-ui-check-card-title">Dunning E-Mail</span>
+                        <span className="mrc-ui-check-card-title">
+                            Type A E-Mail (Dont show a type if it does not exist)
+                        </span>
                         <div className="mrc-ui-check-card-content">max.mustermann@meier.ag</div>
                     </CheckCard>
                     <CheckCard size="small" checked={false}>
-                        <span className="mrc-ui-check-card-title">Special E-Mail</span>
+                        <span className="mrc-ui-check-card-title">Type B E-Mail</span>
                         <div className="mrc-ui-check-card-content">peter.parker@betterlife.gmbh</div>
                     </CheckCard>
                 </div>

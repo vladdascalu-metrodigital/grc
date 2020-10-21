@@ -44,7 +44,7 @@ storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
                 {
                     customer: 'Müller GmbH',
                     customerId: '9949/343456',
-                    dunningEmail: 'contact@mueller.gmbh',
+                    dunningEmail: '',
                     dunningEmailStatus: 'pending',
                 },
                 {
