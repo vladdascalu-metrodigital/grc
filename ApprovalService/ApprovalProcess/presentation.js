@@ -167,9 +167,9 @@ export class ApprovalProcessPresentation extends Component {
 
     updateNotification(approval) {
         if (approval && !approval.claimedBySomebodyElse && approval.state !== 'CANCELLED') {
-            const anyInvalidExpiryDate = _.every(
+            const anyInvalidExpiryDate = !_.every(
                 approval.approvalItems,
-                (item) => !_.get(item, 'validRequestedExpiryDate')
+                (item) => _.get(item, 'validRequestedExpiryDate')
             );
             if (approval.approvalItems && anyInvalidExpiryDate) {
                 this.props.showError(lookup('approval.message.request.pastLimitExpiry'));
