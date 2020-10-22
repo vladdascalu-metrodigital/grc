@@ -372,6 +372,52 @@
       "is_collateral": false
     },
     {
+      "country": "RO",
+      "type": "cec_avalizat_banca",
+      "label": "mrc.attachments.types.cec_avalizat_banca",
+      "remark": "CEC avalizat de banca",
+      "is_collateral": true,
+      "fields": [
+        {
+          "field_label": "mrc.attachments.fields.generic.amount",
+          "data_type": "Double",
+          "mandatory": true,
+          "field_in_db": "amount"
+        },
+        {
+          "field_label": "mrc.attachments.fields.generic.validity_date",
+          "data_type": "Date",
+          "mandatory": true,
+          "field_in_db": "expiry_date",
+          "validation_operation": "GREATER_THAN",
+          "validation_argument": "TODAY"
+        }
+      ]
+    },
+    {
+      "country": "RO",
+      "type": "scrisoare_garantie_bancara",
+      "label": "mrc.attachments.types.scrisoare_garantie_bancara",
+      "remark": "Scrisoare de Garantie Bancara",
+      "is_collateral": true,
+      "fields": [
+        {
+          "field_label": "mrc.attachments.fields.generic.amount",
+          "data_type": "Double",
+          "mandatory": true,
+          "field_in_db": "amount"
+        },
+        {
+          "field_label": "mrc.attachments.fields.generic.validity_date",
+          "data_type": "Date",
+          "mandatory": true,
+          "field_in_db": "expiry_date",
+          "validation_operation": "GREATER_THAN",
+          "validation_argument": "TODAY"
+        }
+      ]
+    },
+    {
       "country": "RU",
       "type": "contract",
       "label": "mrc.attachments.types.contract",
