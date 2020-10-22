@@ -394,7 +394,7 @@
           "field_label": "mrc.attachments.fields.contract.type_of_contract",
           "data_type": "Dropdown",
           "mandatory": true,
-          "optionLabelKey": "mrc.attachments.fields.contract.type.option",
+          "optionLabelKey": "mrc.attachments.fields.contract.type.RO.option",
           "options": "C_and_C_5_days_CEC|C_and_C_TF|C_and_C_TM|D_C_and_C_TF|D_C_and_C_TM|TD"
         }
       ]

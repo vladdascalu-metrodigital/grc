@@ -128,7 +128,7 @@ export default class UploaderForm extends Component {
     readyToSend(fields, title, fileType, fileTypes) {
         const fieldsFilledIn = fields
             ? List(fields)
-                  .filter((e) => e && e.mandatory && _.isNil(e.value))
+                  .filter((e) => e && e.mandatory && (_.isNil(e.value) || e.value === ''))
                   .isEmpty()
             : true;
         return this.props.onlyPlaceholder
@@ -272,6 +272,8 @@ export default class UploaderForm extends Component {
                     name="attachment-select-input"
                     required={field.mandatory}
                     options={getOptionValues(field.options, field.optionLabelKey)}
+                    value={field.value}
+                    nullValue={''}
                     onChange={(value) => {
                         this.setField(value, field);
                     }}
@@ -410,7 +412,15 @@ export default class UploaderForm extends Component {
                             List(this.state.attachmentSpec.fields)
                                 .filter((field) => !field.field_in_db)
                                 .map((field) => {
-                                    return { label: field.field_label, value: field.value };
+                                    const ret = {
+                                        label: field.field_label,
+                                        value: field.value,
+                                        data_type: field.data_type,
+                                    };
+                                    if (field.optionLabelKey) {
+                                        ret.optionLabelKey = field.optionLabelKey;
+                                    }
+                                    return ret;
                                 })
                                 .toArray()
                         );

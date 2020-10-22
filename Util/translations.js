@@ -18,6 +18,10 @@ let translations = {
     'mrc.apps.reports': 'Reporting',
     'mrc.apps.creditcorrection': 'Credit Correction',
 
+    'mrc.forms.please_select': 'Please Select ...',
+    'mrc.forms.required': 'Data is requiered',
+    'mrc.forms.requiredNumber': 'required is valid number',
+
     'mrc.reports.title': 'Available Reports',
     'mrc.file.select': 'SELECT FILE',
     'mrc.file.upload': 'UPLOAD FILE',
@@ -26,6 +30,16 @@ let translations = {
     'mrc.attachments.fields.file': 'Selected file',
     'mrc.attachments.noattachments': 'No Attachments',
     'mrc.attachments.unknown-mime': 'Unknown',
+    'mrc.attachments.delete': 'Delete',
+    'mrc.attachments.addbutton': 'Add attachment',
+    'mrc.attachments.modaltitle': 'Add Attachment',
+    'mrc.attachments.fields.fileType': 'File Type',
+    'mrc.attachments.choose': 'Please Choose...',
+    'mrc.attachments.types.general': 'General',
+
+    'mrc.fileUpload.chooseFile': 'Choose files',
+    'mrc.fileUpload.uploadOrDropThemHere': 'to upload or drop them here.',
+    'mrc.attachments.addPlaceholder': 'Add Placeholder',
 
     'mrc.attachments.amount': 'Amount',
     'mrc.attachments.expiry': 'expiry',
@@ -35,6 +49,22 @@ let translations = {
     'mrc.attachments.types.delkredere': 'Delkredere',
     'mrc.attachments.headline': 'Attachments',
     'mrc.attachments.contractlinktext': 'Contract Templates',
+
+    'mrc.attachments.types.cec_avalizat_banca': 'CEC avalizat de banca',
+    'mrc.attachments.types.scrisoare_garantie_bancara': 'Scrisoare de Garantie Bancara',
+    'mrc.attachments.fields.generic.amount': 'Amount',
+    'mrc.attachments.fields.generic.validity_date': 'Validity Date',
+
+    'mrc.attachments.fields.contract.expiration_date': 'Expiration Date',
+    'mrc.attachments.fields.contract.contract_id': 'Contract ID',
+    'mrc.attachments.fields.contract.type_of_contract': 'Type of contract',
+
+    'mrc.attachments.fields.contract.type.RO.option.C_and_C_5_days_CEC': 'Contract C&C- plata 5 zile - fila CEC',
+    'mrc.attachments.fields.contract.type.RO.option.C_and_C_TF': 'Contract C&C_TF',
+    'mrc.attachments.fields.contract.type.RO.option.C_and_C_TM': 'Contract C&C_TM',
+    'mrc.attachments.fields.contract.type.RO.option.D_C_and_C_TF': 'Contract D_C&C_TF',
+    'mrc.attachments.fields.contract.type.RO.option.D_C_and_C_TM': 'Contract D_C&C_TM',
+    'mrc.attachments.fields.contract.type.RO.option.TD': 'Contract TD',
 
     'mrc.customerdetails.fields.customernumber': 'Customer Number',
     'mrc.customerdetails.fields.taxnumber': 'Tax Number',

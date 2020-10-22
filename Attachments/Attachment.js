@@ -57,22 +57,21 @@ export default class Attachment extends Component {
                                       {expiry ? moment(expiry).locale(Moment.globalLocale).format('L') : '-'}
                                   </div>
                               </div>,
-                          ]).concat(
-                              _.isArray(metadata)
-                                  ? List(
-                                        metadata.map((e) => (
-                                            <div key="expiry" className="mrc-ui-attachment-info-group">
-                                                <div className="mrc-ui-attachment-info-label">{lookup(e.label)}</div>
-                                                <div className="mrc-ui-attachment-info-value">
-                                                    {moment(e.value, 'dd.MM.YYYY')
-                                                        .locale(Moment.globalLocale)
-                                                        .format('L')}
-                                                </div>
-                                            </div>
-                                        ))
-                                    )
-                                  : null
-                          )
+                          ])
+                        : null}
+                    {metadata
+                        ? _.isArray(metadata)
+                            ? List(
+                                  metadata.map((e) => (
+                                      <div key="expiry" className="mrc-ui-attachment-info-group">
+                                          <div className="mrc-ui-attachment-info-label">{lookup(e.label)}</div>
+                                          <div className="mrc-ui-attachment-info-value">
+                                              {this.displayMetadataFieldValue(e)}
+                                          </div>
+                                      </div>
+                                  ))
+                              )
+                            : null
                         : null}
                     <div className="mrc-ui-attachment-author">{this.props.author}</div>
                     <div className="mrc-ui-attachment-timestamp">
@@ -80,6 +79,38 @@ export default class Attachment extends Component {
                     </div>
                 </div>
             );
+        }
+    }
+
+    displayMetadataFieldValue(metadataField) {
+        if (metadataField.data_type === undefined || metadataField.data_type === null) {
+            return moment(metadataField.value, 'dd.MM.YYYY').locale(Moment.globalLocale).format('L');
+        }
+
+        switch (metadataField.data_type.toUpperCase()) {
+            case 'DATE':
+                return moment(metadataField.value, 'dd.MM.YYYY').locale(Moment.globalLocale).format('L');
+
+            case 'DOUBLE':
+            case 'INTEGER':
+                return metadataField.value;
+
+            case 'DROPDOWN':
+                if (metadataField.optionLabelKey === undefined || metadataField.optionLabelKey === null) {
+                    console.error('Option label key is not defined for type Dropdown');
+                }
+                return lookup(
+                    (metadataField.optionLabelKey ? metadataField.optionLabelKey + '.' : '') + metadataField.value
+                );
+
+            default:
+                console.warn(
+                    'Attachment metadata value ' +
+                        metadataField.value +
+                        ' may not be displayed properly for unknown data type ' +
+                        metadataField.data_type
+                );
+                return metadataField.value;
         }
     }
 

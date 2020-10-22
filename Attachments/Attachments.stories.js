@@ -231,11 +231,15 @@ storiesOf('Service Components/Attachments', module)
                     contentType: 'application/msword',
                     fileType: 'Contract',
                     amount: null,
-                    expiryDate: new Date('2020-02-03'),
+                    expiryDate: null,
                     uploaderPrincipalName: 'ion.popescu@metrosystems.net',
                     uploadTimestamp: new Date('2020-10-22'),
                     secondaryInteraction: 'delete',
-                    metadataJson: '[{"label":"mrc.attachments.fields.contract.start_date","value":"07.05.2020"}]',
+                    metadataJson:
+                        '[{"label":"mrc.attachments.fields.contract.start_date","value":"22.10.2020","data_type":"Date"},' +
+                        '{"label":"mrc.attachments.fields.contract.expiration_date","value":"25.10.2020","data_type":"Date"},' +
+                        '{"label":"mrc.attachments.fields.contract.contract_id","value":3110032,"data_type":"Integer"},' +
+                        '{"label":"mrc.attachments.fields.contract.type_of_contract","value":"C_and_C_TM","data_type":"Dropdown","optionLabelKey":"mrc.attachments.fields.contract.type.RO.option"}]',
                 },
             ]}
             fileTypes={['general', 'contract', 'cec_avalizat_banca', 'scrisoare_garantie_bancara']}
