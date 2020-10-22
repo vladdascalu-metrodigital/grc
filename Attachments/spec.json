@@ -423,6 +423,105 @@
       "label": "mrc.attachments.types.contract",
       "remark": "Contract",
       "is_collateral": false
+    },
+    {
+      "country": "HU",
+      "type": "contract",
+      "label": "mrc.attachments.types.contract",
+      "remark": "Contract",
+      "is_collateral": false
+    },
+    {
+      "country": "HU",
+      "type": "bank_guarantee",
+      "label": "mrc.attachments.types.bank_guarantee",
+      "remark": "Collaterals",
+      "is_collateral": true,
+      "fields": [
+        {
+          "field_label": "mrc.attachments.fields.amount",
+          "data_type": "Double",
+          "mandatory": true,
+          "field_in_db": "amount"
+        },
+        {
+          "field_label": "mrc.attachments.fields.validity_date",
+          "data_type": "Date",
+          "mandatory": true,
+          "field_in_db": "expiry_date",
+          "validation_operation": "GREATER_THAN",
+          "validation_argument": "TODAY"
+        }
+      ]
+    },
+    {
+      "country": "HU",
+      "type": "person_guarantee",
+      "label": "mrc.attachments.types.person_guarantee",
+      "remark": "Collaterals",
+      "is_collateral": true,
+      "fields": [
+        {
+          "field_label": "mrc.attachments.fields.amount",
+          "data_type": "Double",
+          "mandatory": true,
+          "field_in_db": "amount"
+        },
+        {
+          "field_label": "mrc.attachments.fields.validity_date",
+          "data_type": "Date",
+          "mandatory": true,
+          "field_in_db": "expiry_date",
+          "validation_operation": "GREATER_THAN",
+          "validation_argument": "TODAY"
+        }
+      ]
+    },
+    {
+      "country": "HU",
+      "type": "company_guarantee",
+      "label": "mrc.attachments.types.company_guarantee",
+      "remark": "Collaterals",
+      "is_collateral": true,
+      "fields": [
+        {
+          "field_label": "mrc.attachments.fields.amount",
+          "data_type": "Double",
+          "mandatory": true,
+          "field_in_db": "amount"
+        },
+        {
+          "field_label": "mrc.attachments.fields.validity_date",
+          "data_type": "Date",
+          "mandatory": true,
+          "field_in_db": "expiry_date",
+          "validation_operation": "GREATER_THAN",
+          "validation_argument": "TODAY"
+        }
+      ]
+    },
+    {
+      "country": "PL",
+      "type": "other_collaterals",
+      "label": "mrc.attachments.types.other_collaterals",
+      "remark": "Other Collaterals",
+      "is_collateral": true,
+      "fields": [
+        {
+          "field_label": "mrc.attachments.fields.amount",
+          "data_type": "Double",
+          "mandatory": true,
+          "field_in_db": "amount"
+        },
+        {
+          "field_label": "mrc.attachments.fields.validity_date",
+          "data_type": "Date",
+          "mandatory": true,
+          "field_in_db": "expiry_date",
+          "validation_operation": "GREATER_THAN",
+          "validation_argument": "TODAY"
+        }
+      ]
     }
   ]
 }
