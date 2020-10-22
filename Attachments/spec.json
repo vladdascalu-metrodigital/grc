@@ -369,7 +369,35 @@
       "type": "contract",
       "label": "mrc.attachments.types.contract",
       "remark": "Contract",
-      "is_collateral": false
+      "is_collateral": false,
+      "fields": [
+        {
+          "field_label": "mrc.attachments.fields.contract.start_date",
+          "data_type": "Date",
+          "mandatory": true,
+          "validation_operation": "LESS_THAN_AND_EQUALS",
+          "validation_argument": "TODAY"
+        },
+        {
+          "field_label": "mrc.attachments.fields.contract.expiration_date",
+          "data_type": "Date",
+          "mandatory": true,
+          "validation_operation": "GREATER_THAN_AND_EQUALS",
+          "validation_argument": "TODAY"
+        },
+        {
+          "field_label": "mrc.attachments.fields.contract.contract_id",
+          "data_type": "Integer",
+          "mandatory": true
+        },
+        {
+          "field_label": "mrc.attachments.fields.contract.type_of_contract",
+          "data_type": "Dropdown",
+          "mandatory": true,
+          "optionLabelKey": "mrc.attachments.fields.contract.type.option",
+          "options": "C_and_C_5_days_CEC|C_and_C_TF|C_and_C_TM|D_C_and_C_TF|D_C_and_C_TM|TD"
+        }
+      ]
     },
     {
       "country": "RO",

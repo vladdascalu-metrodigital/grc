@@ -4,7 +4,8 @@ import './UploaderForm.scss';
 import PropTypes from 'prop-types';
 import { lookup } from '../Util/translations.js';
 import FileUpload from '../FileUpload';
-import { NumberInput } from '../NumberInput/index';
+import NumberInputOld from '../NumberInput';
+import NumberInput from '../NumberInputNew';
 import MrcDatePickerInput from '../DatePicker/index';
 
 import AttachmentSpec from './spec.json';
@@ -13,6 +14,8 @@ import * as _ from 'lodash';
 
 import { List, Map } from 'immutable';
 import Moment from 'react-moment';
+import Select from '../Select';
+import { getOptionValues } from './util';
 
 const MAX_FILE_LENGTH = 50;
 
@@ -219,7 +222,7 @@ export default class UploaderForm extends Component {
                 <label name={field.field_label} className="selected-file">
                     {lookup(field.field_label)}
                 </label>
-                <NumberInput
+                <NumberInputOld
                     className="m-input-element"
                     name="attachment-amount"
                     onBlur={(event) => {
@@ -233,14 +236,65 @@ export default class UploaderForm extends Component {
         );
     }
 
+    integerInput(id, field) {
+        return (
+            <div className="column" key={this.state.attachmentSpec.type + '.' + field.field_label + '_' + id}>
+                <label name={field.field_label} className="selected-file">
+                    {lookup(field.field_label)}
+                </label>
+                <NumberInput
+                    id={id}
+                    className="m-input-element"
+                    name="attachment-integer-input"
+                    required={field.mandatory}
+                    integer={true}
+                    greaterThanMin={true}
+                    min={0}
+                    value={field.value}
+                    onChange={(value) => {
+                        const parsed = parseFloat(value);
+                        this.setField(_.isNaN(parsed) ? null : parsed, field);
+                    }}
+                />
+            </div>
+        );
+    }
+
+    dropdownInput(id, field) {
+        return (
+            <div className="column" key={this.state.attachmentSpec.type + '.' + field.field_label + '_' + id}>
+                <label name={field.field_label} className="selected-file">
+                    {lookup(field.field_label)}
+                </label>
+                <Select
+                    id={id}
+                    className="m-input-element"
+                    name="attachment-select-input"
+                    required={field.mandatory}
+                    options={getOptionValues(field.options, field.optionLabelKey)}
+                    onChange={(value) => {
+                        this.setField(value, field);
+                    }}
+                />
+            </div>
+        );
+    }
+
     field(field, id) {
-        return field
-            ? field.data_type.toLowerCase() === 'date'
-                ? this.datePickerField(field, id)
-                : field.data_type.toLowerCase() === 'double'
-                ? this.numberInput(id, field)
-                : null
-            : null;
+        const fieldType = field && field.data_type.toUpperCase();
+        switch (fieldType) {
+            case 'DATE':
+                return this.datePickerField(field, id);
+            case 'DOUBLE':
+                return this.numberInput(id, field);
+            case 'INTEGER':
+                return this.integerInput(id, field);
+            case 'DROPDOWN':
+                return this.dropdownInput(id, field);
+            default:
+                console.log('Warning: Attachement field type ' + fieldType + ' is not supported.');
+                return null;
+        }
     }
 
     fieldPair(field1, id1, field2, id2) {

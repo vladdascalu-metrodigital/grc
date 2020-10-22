@@ -221,6 +221,28 @@ storiesOf('Service Components/Attachments', module)
             country="ES"
         />
     ))
+    .add('RO', () => (
+        <Attachments
+            disabled={false}
+            attachments={[
+                {
+                    status: 'normal',
+                    title: 'RO Contract',
+                    contentType: 'application/msword',
+                    fileType: 'Contract',
+                    amount: null,
+                    expiryDate: new Date('2020-02-03'),
+                    uploaderPrincipalName: 'ion.popescu@metrosystems.net',
+                    uploadTimestamp: new Date('2020-10-22'),
+                    secondaryInteraction: 'delete',
+                    metadataJson: '[{"label":"mrc.attachments.fields.contract.start_date","value":"07.05.2020"}]',
+                },
+            ]}
+            fileTypes={['general', 'contract', 'cec_avalizat_banca', 'scrisoare_garantie_bancara']}
+            addAttachment={() => console.log('adding file')}
+            country="RO"
+        />
+    ))
     .add('provide-info-cc', () => (
         <Attachments
             disabled={false}
