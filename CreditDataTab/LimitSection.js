@@ -583,6 +583,7 @@ export default class LimitSection extends Component {
                             title={ts.expiryDate}
                             checked={expiryDateInContracting}
                             disabled={!editableLimitExpiryInContracting}
+                            invalid={!validExpiryDate}
                         >
                             <MrcDatePickerInput
                                 className="m-input-element"
