@@ -572,6 +572,7 @@ export default class LimitSection extends Component {
         country,
         ts
     ) {
+        const validExpiryDate = _.get(customer, 'limit.wish.expiry.validDate');
         return editableLimitExpiryInContracting === true ? (
             <React.Fragment>
                 <h4 className="mrc-ui-form-label mt-5 mb-2">{ts.updateexpiry}</h4>
@@ -604,6 +605,9 @@ export default class LimitSection extends Component {
                                 disabled={!editableLimitExpiryInContracting}
                                 required={true}
                                 locale={Moment.globalLocale}
+                                validationMessages={
+                                    !validExpiryDate ? [lookup('mrc.forms.noPastDate')] : []
+                                }
                             />
                         </CheckCard>
                     </Grid>
