@@ -233,7 +233,7 @@ storiesOf('Service Components/Attachments', module)
                     amount: null,
                     expiryDate: null,
                     uploaderPrincipalName: 'ion.popescu@metrosystems.net',
-                    uploadTimestamp: new Date('2020-10-22'),
+                    uploadTimestamp: '2020-10-22T16:27:00',
                     secondaryInteraction: 'delete',
                     metadataJson:
                         '[{"label":"mrc.attachments.fields.contract.start_date","value":"22.10.2020","data_type":"Date"},' +

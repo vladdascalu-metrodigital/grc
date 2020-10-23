@@ -63,7 +63,7 @@ export default class Attachment extends Component {
                         ? _.isArray(metadata)
                             ? List(
                                   metadata.map((e) => (
-                                      <div key="expiry" className="mrc-ui-attachment-info-group">
+                                      <div key={'field-' + e.label} className="mrc-ui-attachment-info-group">
                                           <div className="mrc-ui-attachment-info-label">{lookup(e.label)}</div>
                                           <div className="mrc-ui-attachment-info-value">
                                               {this.displayMetadataFieldValue(e)}
@@ -84,12 +84,12 @@ export default class Attachment extends Component {
 
     displayMetadataFieldValue(metadataField) {
         if (metadataField.data_type === undefined || metadataField.data_type === null) {
-            return moment(metadataField.value, 'dd.MM.YYYY').locale(Moment.globalLocale).format('L');
+            return moment(metadataField.value, 'DD.MM.YYYY').locale(Moment.globalLocale).format('L');
         }
 
         switch (metadataField.data_type.toUpperCase()) {
             case 'DATE':
-                return moment(metadataField.value, 'dd.MM.YYYY').locale(Moment.globalLocale).format('L');
+                return moment(metadataField.value, 'DD.MM.YYYY').locale(Moment.globalLocale).format('L');
 
             case 'DOUBLE':
             case 'INTEGER':
