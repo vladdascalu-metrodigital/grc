@@ -1254,12 +1254,16 @@ export class ApprovalProcessPresentation extends Component {
     };
 
     contractingSubmitButton(process) {
+        const anyInvalidExpiryDate = !_.every(
+            process.approvalItems,
+            (item) => _.get(item, 'validRequestedExpiryDate')
+        );
         return this.state.currentStepType === 'CONTRACT_SIGNING' ? (
             <Button
                 text={lookup('approval.action.signContract')}
                 id="mrc-approve-button"
                 status="primary"
-                disabled={!process.editableByCurrentUser || !util.placeholdersUploaded(process)}
+                disabled={!process.editableByCurrentUser || !util.placeholdersUploaded(process) || anyInvalidExpiryDate}
                 onClick={() => this.props.signContract(process.id, process.version)}
             />
         ) : (
@@ -1267,7 +1271,7 @@ export class ApprovalProcessPresentation extends Component {
                 text={lookup('approval.action.validateContract')}
                 id="mrc-approve-button"
                 status="primary"
-                disabled={!process.editableByCurrentUser || !util.placeholdersUploaded(process)}
+                disabled={!process.editableByCurrentUser || !util.placeholdersUploaded(process) || anyInvalidExpiryDate}
                 onClick={() => this.props.validateContract(process.id, process.version)}
             />
         );
@@ -1369,11 +1373,11 @@ export class ApprovalProcessPresentation extends Component {
             _.get(process, 'approvalItems') && process.approvalItems.every((item) => this.creditDataValid(item));
         const anyCreditDataChanged =
             _.get(process, 'approvalItems') && this.anyCreditDataChanged(process.approvalItems);
-        const creditDataValid = allCreditDataValid && anyCreditDataChanged;
         const anyInvalidExpiryDate = !_.every(
             process.approvalItems,
             (item) => _.get(item, 'validRequestedExpiryDate')
         );
+        const creditDataValid = allCreditDataValid && anyCreditDataChanged && !anyInvalidExpiryDate;
         return (
             <div className="mrc-btn-group">
                 {isContracting ? this.contractingSubmitButton(process) : null}
@@ -1463,7 +1467,7 @@ export class ApprovalProcessPresentation extends Component {
                         text={lookup('approval.action.forward')}
                         id="mrc-approve-button"
                         status={process.isForwardableByCurrentUser ? 'primary' : 'secondary'}
-                        disabled={!process.forwardableByCurrentUser}
+                        disabled={!process.forwardableByCurrentUser|| anyInvalidExpiryDate}
                         onClick={() => {
                             this.props.forward(process.id, process.version);
                         }}
