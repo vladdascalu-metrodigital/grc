@@ -572,7 +572,7 @@ export default class LimitSection extends Component {
         country,
         ts
     ) {
-        const validExpiryDate = _.get(customer, 'limit.wish.expiry.validDate');
+        const validExpiryDate = _.get(customer, 'limit.validExpiryDate');
         return editableLimitExpiryInContracting === true ? (
             <React.Fragment>
                 <h4 className="mrc-ui-form-label mt-5 mb-2">{ts.updateexpiry}</h4>
