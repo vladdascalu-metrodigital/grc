@@ -1370,6 +1370,10 @@ export class ApprovalProcessPresentation extends Component {
         const anyCreditDataChanged =
             _.get(process, 'approvalItems') && this.anyCreditDataChanged(process.approvalItems);
         const creditDataValid = allCreditDataValid && anyCreditDataChanged;
+        const anyInvalidExpiryDate = !_.every(
+            process.approvalItems,
+            (item) => _.get(item, 'validRequestedExpiryDate')
+        );
         return (
             <div className="mrc-btn-group">
                 {isContracting ? this.contractingSubmitButton(process) : null}
@@ -1470,7 +1474,7 @@ export class ApprovalProcessPresentation extends Component {
                         text={lookup('approval.action.approve')}
                         id="mrc-confirm-button"
                         status="success"
-                        disabled={!process.editableByCurrentUser}
+                        disabled={!process.editableByCurrentUser || anyInvalidExpiryDate}
                         onClick={() => {
                             this.props.confirm(process.id, process.version);
                         }}
