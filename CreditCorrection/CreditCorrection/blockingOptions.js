@@ -69,6 +69,36 @@ export const countryBlockingOptions = {
             customerLevel: true,
         },
     ],
+    HU: [
+        {
+            id: 'GENERALBLOCK',
+            translationKey: 'mrc.blocking-option.generalblock',
+            label: 'mrc.blocking-option.generalblock',
+        },
+        {
+            id: 'HARDBLOCK',
+            translationKey: 'mrc.blocking-option.hardblock',
+            label: 'mrc.blocking-option.hardblock',
+        },
+        {
+            id: 'SOFTBLOCK',
+            translationKey: 'mrc.blocking-option.softblock',
+            label: 'mrc.blocking-option.softblock',
+            customerLevel: true,
+        },
+        {
+            id: 'CREDITTOCASH',
+            translationKey: 'mrc.blocking-option.credittocash',
+            label: 'mrc.blocking-option.credittocash',
+            customerLevel: true,
+        },
+        {
+            id: 'REMOVEBLOCK',
+            translationKey: 'mrc.blocking-option.removeblock',
+            label: 'mrc.blocking-option.removeblock',
+            customerLevel: true,
+        },
+    ],
     RS: [
         {
             id: 'HARDBLOCK',
