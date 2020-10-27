@@ -71,20 +71,9 @@ export const countryBlockingOptions = {
     ],
     HU: [
         {
-            id: 'GENERALBLOCK',
-            translationKey: 'mrc.blocking-option.generalblock',
-            label: 'mrc.blocking-option.generalblock',
-        },
-        {
             id: 'HARDBLOCK',
             translationKey: 'mrc.blocking-option.hardblock',
             label: 'mrc.blocking-option.hardblock',
-        },
-        {
-            id: 'SOFTBLOCK',
-            translationKey: 'mrc.blocking-option.softblock',
-            label: 'mrc.blocking-option.softblock',
-            customerLevel: true,
         },
         {
             id: 'CREDITTOCASH',
