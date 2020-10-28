@@ -109,6 +109,8 @@ export default class Strategy extends Component {
                 'strategy.keyindicators.externalScore.schufa.recommendedLimit',
                 'strategy.keyindicators.externalScore.schufa_b2b.recommendedLimit',
                 'strategy.keyindicators.externalScore.schufa_b2c.recommendedLimit',
+                'strategy.keyindicators.externalScore.cma.recommendedLimit',
+                'strategy.keyindicators.comparelimits',
             ].includes(indicator.original.indicatorName);
             if (isNaN(value)) {
                 return lookup(value);
