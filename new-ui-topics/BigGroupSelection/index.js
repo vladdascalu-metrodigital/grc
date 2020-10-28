@@ -13,6 +13,10 @@ import MrcNumber, { COUNTRY } from '../../MrcNumber';
 export default class BigGroupSelection extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            selectedCustomers: [],
+            searchResult: [],
+        };
     }
 
     refreshStickyOffset() {
@@ -46,19 +50,48 @@ export default class BigGroupSelection extends Component {
         window.addEventListener('resize', _.debounce(this.refreshStickyOffset, 150));
     }
 
-    render() {
-        let { data } = this.props;
-        // let { selectedCustomers } = this.state;
-        return (
-            <React.Fragment>
-                <div className="mrc-ui-basic-grid-table-form">
-                    <h3>Customer Group</h3>
-                    <div className="mrc-ui-form-box">
-                        <div className="mrc-ui-form-box-search-wrapper">
-                            <Search placeholder="Search by Id, Name..." />
-                        </div>
-                    </div>
-                </div>
+    componentDidUpdate() {
+        this.refreshStickyOffset();
+    }
+
+    handleCustomerAdd(customer) {
+        if (!this.state.selectedCustomers.includes(customer)) {
+            this.setState({ selectedCustomers: [...this.state.selectedCustomers, customer] });
+        }
+    }
+
+    handleCustomerRemove(customer) {
+        if (this.state.selectedCustomers.includes(customer)) {
+            this.setState({
+                selectedCustomers: this.state.selectedCustomers.filter(function (selectedCustomer) {
+                    return selectedCustomer !== customer;
+                }),
+            });
+        }
+    }
+
+    handleShowSelectedCustomers(customer) {
+        if (this.state.selectedCustomers.includes(customer)) {
+            this.setState({
+                selectedCustomers: this.state.selectedCustomers.filter(function (selectedCustomer) {
+                    return selectedCustomer !== customer;
+                }),
+            });
+        }
+    }
+
+    handleSearch(str) {
+        if (str.length > 2) {
+            let { customers } = this.props;
+            this.setState({ searchResult: customers });
+        } else {
+            this.setState({ searchResult: [] });
+        }
+    }
+
+    renderTable(searchResult) {
+        if (searchResult.length > 0) {
+            return (
                 <table
                     className="mrc-ui-basic-grid-table"
                     style={{ '--mrc-ui-grid-template-columns': '2fr 1fr 1fr 1fr' }}
@@ -89,41 +122,102 @@ export default class BigGroupSelection extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((d, k) => {
+                        {searchResult.map((customer, k) => {
+                            let button = {};
+                            if (this.state.selectedCustomers.includes(customer)) {
+                                button = (
+                                    <Button
+                                        size={BUTTONSIZE.SMALL}
+                                        text="Remove"
+                                        isOutlined
+                                        color={BUTTONCOLOR.DANGER}
+                                        onClick={() => this.handleCustomerRemove(customer)}
+                                    />
+                                );
+                            } else {
+                                button = (
+                                    <Button
+                                        size={BUTTONSIZE.SMALL}
+                                        text="Add"
+                                        isOutlined
+                                        color={BUTTONCOLOR.INTERACTION}
+                                        onClick={() => this.handleCustomerAdd(customer)}
+                                    />
+                                );
+                            }
                             return (
                                 <tr key={k}>
                                     <td>
                                         <div className="mrc-ui-basic-table-grid-cell-customer">
                                             <span className="mrc-ui-basic-table-grid-cell-customer-name">
-                                                {d.customer}
+                                                {customer.customer}
                                             </span>
                                             <span className="mrc-ui-basic-table-grid-cell-customer-id">
-                                                {d.customerId}
+                                                {customer.customerId}
                                             </span>
                                         </div>
                                     </td>
                                     <td className="mrc-ui-grid-table-cell-align-right">
-                                        <span>{d.paymentMethod}</span>
+                                        <span>{customer.paymentMethod}</span>
                                     </td>
                                     <td className="mrc-ui-grid-table-cell-align-right">
                                         <MrcNumber isCurrency country={COUNTRY.ES}>
-                                            {d.limit}
+                                            {customer.limit}
                                         </MrcNumber>
                                     </td>
-                                    <td className="mrc-ui-grid-table-cell-align-right">
-                                        <Button
-                                            size={BUTTONSIZE.SMALL}
-                                            text="Add"
-                                            isOutlined
-                                            color={BUTTONCOLOR.PRIMARY}
-                                            onClick={() => this.setState({ showRowEditModal: d })}
-                                        />
-                                    </td>
+                                    <td className="mrc-ui-grid-table-cell-align-right">{button}</td>
                                 </tr>
                             );
                         })}
                     </tbody>
                 </table>
+            );
+        } else {
+            return <div>no search results</div>;
+        }
+    }
+
+    render() {
+        let { selectedCustomers, searchResult } = this.state;
+        let button;
+        if (selectedCustomers.length > 0) {
+            button = (
+                <Button
+                    size={BUTTONSIZE.LARGE}
+                    text={'Show ' + selectedCustomers.length + ' selected Customers'}
+                    color={BUTTONCOLOR.INTERACTION}
+                    onClick={() => this.setState({ searchResult: this.state.selectedCustomers })}
+                />
+            );
+        } else {
+            button = (
+                <Button
+                    size={BUTTONSIZE.LARGE}
+                    text={'No Customers selected'}
+                    color={BUTTONCOLOR.INTERACTION}
+                    disabled={true}
+                    onClick={() => this.setState({ searchResult: this.state.selectedCustomers })}
+                />
+            );
+        }
+
+        return (
+            <React.Fragment>
+                <div className="mrc-ui-basic-grid-table-form">
+                    <h3>Customer Group</h3>
+                    <div className="mrc-ui-form-box">
+                        <div className="mrc-ui-form-box-search-wrapper">
+                            <Search
+                                placeholder="Search by Id, Name..."
+                                onChangeDelayed={(str) => this.handleSearch(str)}
+                                onEnterSearch={(str) => this.handleSearch(str)}
+                            />
+                        </div>
+                        {button}
+                    </div>
+                </div>
+                {this.renderTable(searchResult)}
+
                 {/* <SimpleActionDock cancelText="Cancel" applyText="Apply" onApply={null} onCancel={null} /> */}
             </React.Fragment>
         );
@@ -131,7 +225,7 @@ export default class BigGroupSelection extends Component {
 }
 
 BigGroupSelection.propTypes = {
-    data: PropTypes.arrayOf(
+    customers: PropTypes.arrayOf(
         PropTypes.shape({
             customer: PropTypes.string,
             customerId: PropTypes.string,
@@ -142,5 +236,5 @@ BigGroupSelection.propTypes = {
 };
 
 BigGroupSelection.defaultProps = {
-    data: [],
+    customers: [],
 };

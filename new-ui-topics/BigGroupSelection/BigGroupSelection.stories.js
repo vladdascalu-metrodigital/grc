@@ -40,7 +40,7 @@ storiesOf('New UI Topics/BigGroupSelection', module).add('BigGroupSelection', ()
         config={config}
     >
         <BigGroupSelection
-            data={[
+            customers={[
                 {
                     customer: 'Müller GmbH',
                     customerId: '9949/343456',
