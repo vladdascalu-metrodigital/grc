@@ -55,7 +55,11 @@ export default class Scoring extends Component {
     scoring = (scorings, isHistoricExtScores) => {
         const makeScore = (score, scoring) => {
             const scoreAvailable = !(score == null || score === '');
-            const scoreString = !scoreAvailable ? lookup('mrc.scores.scoreunavailable') : score;
+            const scoreString = !scoreAvailable
+                ? scoring.agency === 'CMA'
+                    ? lookup('cma.scores.scoreunavailable')
+                    : lookup('mrc.scores.scoreunavailable')
+                : score;
             const status = this.getScoreStatus(scoring.original.evaluation);
             return (
                 <span className={!scoreAvailable ? 'cell-score span-error' : 'cell-score'}>
@@ -65,9 +69,13 @@ export default class Scoring extends Component {
             );
         };
 
-        const makeLimit = (limit) => {
+        const makeLimit = (limit, scoring) => {
             const limitUnavailable = limit == null || limit === '';
-            const limitString = limitUnavailable ? lookup('mrc.scores.limitunavailable') : limit;
+            const limitString = limitUnavailable
+                ? scoring.agency === 'CMA'
+                    ? lookup('cma.scores.limitunavailable')
+                    : lookup('mrc.scores.limitunavailable')
+                : limit;
             return (
                 <div className={limitUnavailable ? 'span-error' : ''}>
                     {limitUnavailable ? (

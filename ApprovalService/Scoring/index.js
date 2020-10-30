@@ -229,8 +229,16 @@ export default class Scoring extends Component {
                 }
                 const scoreAvailable = !(scoring.score == null || scoring.score === '');
                 const limitUnavailable = scoring.limit == null || scoring.limit === '';
-                const scoreString = !scoreAvailable ? lookup('mrc.scores.scoreunavailable') : scoring.score;
-                const limitString = limitUnavailable ? lookup('mrc.scores.limitunavailable') : scoring.limit;
+                const scoreString = !scoreAvailable
+                    ? scoring.agency === 'CMA'
+                        ? lookup('cma.scores.scoreunavailable')
+                        : lookup('mrc.scores.scoreunavailable')
+                    : scoring.score;
+                const limitString = limitUnavailable
+                    ? scoring.agency === 'CMA'
+                        ? lookup('cma.scores.limitunavailable')
+                        : lookup('mrc.scores.limitunavailable')
+                    : scoring.limit;
                 const status = this.getScoreStatus(scoring.evaluation);
                 const noReport = isBlank(scoring.reportPath);
                 const requestedAt = scoring.requestedAt;
