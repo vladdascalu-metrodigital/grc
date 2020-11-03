@@ -21,6 +21,7 @@ export const validations = {
     isPercentage2: (value) =>
         validations.isPercentage(value) &&
         (value.toString().split('.').length < 2 || value.toString().split('.')[1].length <= 2),
+    isPositivePercentage: (value) => validations.isPercentage2(value) && value > 0,
     lessThanEq1000: (value) => validations.lessThanEq(value, 1000),
     //string
     stringNotEmpty: (value) => value && value.toString().trim().length !== 0,
