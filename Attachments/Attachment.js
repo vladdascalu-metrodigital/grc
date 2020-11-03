@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ModalDialog from '../ModalDialog';
 import classnames from 'classnames';
 import Textlink from './TextLink';
 import { PropTypes } from 'prop-types';
@@ -6,6 +7,7 @@ import { lookup } from '../Util/translations';
 import * as mime from 'react-native-mime-types';
 import moment from 'moment';
 import { List } from 'immutable';
+import KeyValueGroup, { KeyValueRow, Key, Value } from '../KeyValueGroup';
 
 import * as _ from 'lodash';
 
@@ -13,11 +15,22 @@ import './attachment.scss';
 import Moment from 'react-moment';
 
 export default class Attachment extends Component {
+    toggleModal(event) {
+        event.stopPropagation();
+        this.setState((prevState) => ({
+            isModalVisible: !prevState.isModalVisible,
+        }));
+    }
+
     constructor(props) {
         super(props);
         this.classnames = {
             missing: 'mrc-ui-attachment-missing',
             deleted: 'mrc-ui-attachment-deleted',
+        };
+
+        this.state = {
+            isModalVisible: false,
         };
     }
 
@@ -59,20 +72,22 @@ export default class Attachment extends Component {
                               </div>,
                           ])
                         : null}
-                    {metadata
-                        ? _.isArray(metadata)
-                            ? List(
-                                  metadata.map((e) => (
-                                      <div key={'field-' + e.label} className="mrc-ui-attachment-info-group">
-                                          <div className="mrc-ui-attachment-info-label">{lookup(e.label)}</div>
-                                          <div className="mrc-ui-attachment-info-value">
-                                              {this.displayMetadataFieldValue(e)}
-                                          </div>
-                                      </div>
-                                  ))
-                              )
-                            : null
-                        : null}
+
+                    {metadata && _.isArray(metadata) && metadata.length > 0 ? (
+                        <React.Fragment>
+                            <div className="mrc-ui-attachment-show-details" onClick={this.toggleModal.bind(this)}>
+                                <Textlink text={lookup('mrc.attachments.showDetails')} />
+                            </div>
+
+                            {this.state.isModalVisible ? (
+                                <ModalDialog
+                                    toggle={(event) => this.toggleModal(event)}
+                                    content={this.createModalMetadataContent(metadata)}
+                                    title={lookup('mrc.attachments.showDetailsModalTitle')}
+                                />
+                            ) : null}
+                        </React.Fragment>
+                    ) : null}
                     <div className="mrc-ui-attachment-author">{this.props.author}</div>
                     <div className="mrc-ui-attachment-timestamp">
                         {moment(this.props.timestamp).locale(Moment.globalLocale).format('LLL')}
@@ -80,6 +95,29 @@ export default class Attachment extends Component {
                 </div>
             );
         }
+    }
+
+    createModalMetadataContent(metadata) {
+        return (
+            <KeyValueGroup>
+                {metadata.map((e) => this.createKeyValue(e.label, this.displayMetadataFieldValue(e)))}
+            </KeyValueGroup>
+        );
+    }
+
+    createKeyValue(key, value) {
+        console.log(!_.isEmpty(value));
+        return !_.isEmpty(value) ? (
+            <KeyValueRow key={key}>
+                <Key>{lookup(key)}</Key>
+                <Value>{value}</Value>
+            </KeyValueRow>
+        ) : (
+            <KeyValueRow key={key}>
+                <Key>{lookup(key)}</Key>
+                <Value>-</Value>
+            </KeyValueRow>
+        );
     }
 
     displayMetadataFieldValue(metadataField) {
@@ -93,7 +131,7 @@ export default class Attachment extends Component {
 
             case 'DOUBLE':
             case 'INTEGER':
-                return metadataField.value;
+                return metadataField.value.toString();
 
             case 'DROPDOWN':
                 if (metadataField.optionLabelKey === undefined || metadataField.optionLabelKey === null) {
@@ -110,7 +148,7 @@ export default class Attachment extends Component {
                         ' may not be displayed properly for unknown data type ' +
                         metadataField.data_type
                 );
-                return metadataField.value;
+                return metadataField.value.toString();
         }
     }
 

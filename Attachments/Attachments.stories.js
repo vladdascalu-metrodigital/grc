@@ -238,9 +238,9 @@ storiesOf('Service Components/Attachments', module)
                     metadataJson:
                         '[{"label":"mrc.attachments.fields.contract.start_date","value":"22.10.2020","data_type":"Date"},' +
                         '{"label":"mrc.attachments.fields.contract.expiration_date","value":"25.10.2020","data_type":"Date"},' +
-                        '{"label":"mrc.attachments.fields.contract.contract_id","value":"3110032","data_type":"Integer"},' +
+                        '{"label":"mrc.attachments.fields.contract.contract_id","value":3110032,"data_type":"Integer"},' +
                         '{"label":"mrc.attachments.fields.contract.type_of_contract","value":"C_and_C_TM","data_type":"Dropdown","optionLabelKey":"mrc.attachments.fields.contract.type.RO.option"},' +
-                        '{"label":"mrc.attachments.fields.contract.cma_request_id","value":"543210","data_type":"Integer"},' +
+                        '{"label":"mrc.attachments.fields.contract.cma_request_id","value":543210,"data_type":"Integer"},' +
                         '{"label":"mrc.attachments.fields.contract.cma_request_date","value":"23.10.2020","data_type":"Date"}]',
                 },
             ]}

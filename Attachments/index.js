@@ -135,6 +135,16 @@ export default class Attachments extends Component {
         });
         return (
             <div className="mrc-ui-attachments-component">
+                {this.props.noAddButton ? null : (
+                    <button
+                        type="button"
+                        className="mrc-primary-large-add-button"
+                        onClick={() => this.toggleModal()}
+                        disabled={this.props.disabled}
+                    >
+                        {lookup('mrc.attachments.addbutton')}
+                    </button>
+                )}
                 {this.props.noDeletedAttachmentsToggle ? null : (
                     <Toggle
                         disabled={this.props.disabled}
@@ -145,16 +155,6 @@ export default class Attachments extends Component {
                     >
                         <label>{lookup('mrc.attachments.showDeletedAttachments')}</label>
                     </Toggle>
-                )}
-                {this.props.noAddButton ? null : (
-                    <button
-                        type="button"
-                        className="mrc-primary-large-add-button"
-                        onClick={() => this.toggleModal()}
-                        disabled={this.props.disabled}
-                    >
-                        {lookup('mrc.attachments.addbutton')}
-                    </button>
                 )}
                 <div className="mrc-ui-attachments">
                     <div className="mrc-ui-attachments-headerrow">{this.contractLink()}</div>

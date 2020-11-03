@@ -87,14 +87,14 @@ div.mrc-ui-attachment-deleted .mrc-ui-attachment-interaction {
   padding: 6px $spacing-small $spacing-extra-small $spacing-small;
   letter-spacing: $letter-spacing-1;
   line-height: $line-height-solid;
-  margin-bottom: $spacing-medium;
+  margin-bottom: $spacing-small;
   text-transform: uppercase;
 }
 
 .mrc-ui-attachment-documenttype {
   font-weight: bold;
   text-align: center;
-  margin: 0 auto;
+  margin: $spacing-extra-small auto $spacing-none auto;
 }
 
 .mrc-ui-attachment-info-group {
@@ -117,7 +117,7 @@ div.mrc-ui-attachment-deleted .mrc-ui-attachment-interaction {
 .mrc-ui-attachment-author {
   font-size: $font-size-10;
   color: $color-brand-primary-tint-40;
-  margin-top: $spacing-medium;
+  margin-top: $spacing-small;
 }
 
 .mrc-ui-attachment-timestamp {
@@ -143,4 +143,12 @@ div.mrc-ui-attachment-deleted .mrc-ui-attachment-interaction {
 .mrc-ui-attachment-disabled:hover {
     cursor: auto;
     box-shadow: 0 0 0 rgba(0, 0, 0, 0.0);
+}
+
+.mrc-ui-attachment-show-details {
+  .mrc-ui-link {
+    padding: $spacing-small $spacing-none $spacing-none $spacing-none;
+    z-index: 4;
+  }
+
 }
