@@ -396,6 +396,17 @@
           "mandatory": true,
           "optionLabelKey": "mrc.attachments.fields.contract.type.RO.option",
           "options": "C_and_C_5_days_CEC|C_and_C_TF|C_and_C_TM|D_C_and_C_TF|D_C_and_C_TM|TD"
+        },
+        {
+          "field_label": "mrc.attachments.fields.contract.cma_request_id",
+          "data_type": "Integer",
+          "mandatory": false
+        },
+        {
+          "field_label": "mrc.attachments.fields.contract.cma_request_date",
+          "data_type": "Date",
+          "mandatory": false,
+          "validation_operation": ""
         }
       ]
     },

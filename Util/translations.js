@@ -58,6 +58,8 @@ let translations = {
     'mrc.attachments.fields.contract.expiration_date': 'Expiration Date',
     'mrc.attachments.fields.contract.contract_id': 'Contract ID',
     'mrc.attachments.fields.contract.type_of_contract': 'Type of contract',
+    'mrc.attachments.fields.contract.cma_request_id': 'CMA request ID',
+    'mrc.attachments.fields.contract.cma_request_date': 'CMA request date',
 
     'mrc.attachments.fields.contract.type.RO.option.C_and_C_5_days_CEC': 'Contract C&C- plata 5 zile - fila CEC',
     'mrc.attachments.fields.contract.type.RO.option.C_and_C_TF': 'Contract C&C_TF',
