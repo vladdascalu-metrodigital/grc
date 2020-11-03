@@ -400,12 +400,12 @@
         {
           "field_label": "mrc.attachments.fields.contract.cma_request_id",
           "data_type": "Integer",
-          "mandatory": false
+          "mandatory": true
         },
         {
           "field_label": "mrc.attachments.fields.contract.cma_request_date",
           "data_type": "Date",
-          "mandatory": false,
+          "mandatory": true,
           "validation_operation": ""
         }
       ]
