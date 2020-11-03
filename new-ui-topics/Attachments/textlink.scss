@@ -1,0 +1,17 @@
+@import '../../lib/scss/variables';
+@import '../../lib/scss/typography';
+
+.mrc-ui-link {
+    font-weight: bold;
+    font-size: $font-size-8;
+    width: 100%;
+    line-height: $line-height-solid;
+    padding: $spacing-medium;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+
+.mrc-ui-link [class^="icon"] {
+    margin-right: $spacing-extra-small;
+}
