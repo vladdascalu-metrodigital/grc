@@ -12,7 +12,7 @@ const logAddFile = (filetype, file, title, expiryDate, attachmentType) =>
 const logDeleteFile = () => console.log('deleting file');
 const logRestoreFile = () => console.log('restoring file');
 
-storiesOf('New UI Topics/Attachments', module)
+storiesOf('New UI Topics/Archive/Attachments', module)
     .add('RS', () => (
         <Attachments
             disabled={false}
