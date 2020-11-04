@@ -38,6 +38,7 @@ import SearchCircledIcon from '../icons/SearchCircledIcon';
 import SearchIcon from '../icons/SearchIcon';
 import SelectIcon from '../icons/SelectIcon';
 import WarningSmallFilledIcon from '../icons/WarningSmallFilledIcon';
+import EmailServiceIcon from '../icons/EmailServiceIcon';
 
 storiesOf('Fundamentals/Icons', module)
     .add('all icons', () => {
@@ -90,6 +91,7 @@ storiesOf('Fundamentals/Icons', module)
                     <SearchIcon color={color} size={size} />
                     <SelectIcon color={color} size={size} />
                     <WarningSmallFilledIcon color={color} size={size} />
+                    <EmailServiceIcon color={color} size={size} />
                 </Grid>
             </MainContent>
         );

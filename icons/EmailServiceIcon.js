@@ -1,0 +1,38 @@
+import React, { PureComponent } from 'react';
+import { iconClassNames, iconPropTypes } from './index';
+
+import './index.scss';
+
+export default class EmailServiceIcon extends PureComponent {
+    render() {
+        let { svgClassName, colorToStrokeClassName } = iconClassNames(this.props);
+        return (
+            <svg
+                className={svgClassName}
+                width="26px"
+                height="34px"
+                viewBox="0 0 26 34"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <g
+                    className={colorToStrokeClassName}
+                    id="Page-1"
+                    stroke="none"
+                    strokeWidth="2"
+                    fill="none"
+                    fillRule="evenodd"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                >
+                    <polyline points="3.54166667 3.54166667 20.5416667 3.54166667 20.5416667 6.375"></polyline>
+                    <path d="M23.375,6.375 L23.375,0.708333333 L3.54166667,0.708333333 C1.97766667,0.708333333 0.708333333,1.97625 0.708333333,3.54166667 C0.708333333,5.10566667 1.97766667,6.375 3.54166667,6.375 L24.7916667,6.375 L24.7916667,33.2916667 L3.54166667,33.2916667 C1.97766667,33.2916667 0.708333333,32.0223333 0.708333333,30.4583333 L0.708333333,3.54166667"></path>
+                    <path d="M17,20.5416667 C17,22.4974537 15.4141204,24.0833333 13.4583333,24.0833333 C11.5025463,24.0833333 9.91666667,22.4974537 9.91666667,20.5416667 C9.91666667,18.5858796 11.5025463,17 13.4583333,17 C15.4141204,17 17,18.5858796 17,20.5416667 L17,20.5416667 Z"></path>
+                    <path d="M17.5543478,26.8550725 C16.1869565,27.7937681 14.5327826,28.3333333 12.75,28.3333333 C8.05504348,28.3333333 4.25,24.5282899 4.25,19.8333333 C4.25,15.1391159 8.05504348,11.3333333 12.75,11.3333333 C17.4449565,11.3333333 21.25,15.1391159 21.25,19.8333333 L21.25,20.5724638 C21.25,22.001942 20.0917826,23.1594203 18.6630435,23.1594203 C17.2343043,23.1594203 16.076087,22.001942 16.076087,20.5724638 L16.076087,19.8333333"></path>
+                </g>
+            </svg>
+        );
+    }
+}
+
+EmailServiceIcon.propTypes = iconPropTypes;
