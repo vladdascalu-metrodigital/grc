@@ -67,6 +67,9 @@ export default class InboxPresentation extends Component {
                 onChange={this.onFilterChange}
                 setChosenFilter={this.props.setChosenFilter}
                 getChosenFilter={this.props.getChosenFilter}
+                getAvailableSortingOptions={this.props.getAvailableSortingOptions}
+                setChosenSortOption={this.props.setChosenSortOption}
+                getChosenSortOption={this.props.getChosenSortOption}
             />
         );
     };
@@ -134,6 +137,9 @@ InboxPresentation.propTypes = {
     fetchInboxItems: PropTypes.func,
     getChosenFilter: PropTypes.func,
     setChosenFilter: PropTypes.func,
+    getAvailableSortingOptions: PropTypes.func,
+    setChosenSortOption: PropTypes.func,
+    getChosenSortOption: PropTypes.func,
     data: PropTypes.shape({
         assignedUserNames: PropTypes.arrayOf(PropTypes.string),
         positions: PropTypes.arrayOf(PropTypes.string),

@@ -13,7 +13,10 @@ export default class InboxFilterPanel extends Component {
             filter: {
                 filterName: this.props.getChosenFilter(),
             },
+            availableSortingOptions: this.props.getAvailableSortingOptions(),
+            selectedSortingOption: this.props.getChosenSortOption(),
         };
+        this.onSortChange = this.onSortChange.bind(this);
     }
 
     renderFirstLevelFilter = () => {
@@ -89,7 +92,7 @@ export default class InboxFilterPanel extends Component {
                     <select
                         id="filter-assignedUser"
                         className="m-input-element"
-                        onChange={e => this.execOnChange({ assignedUser: e.target.value })}
+                        onChange={(e) => this.execOnChange({ assignedUser: e.target.value })}
                         onBlur={() => {
                             return;
                         }}
@@ -97,8 +100,8 @@ export default class InboxFilterPanel extends Component {
                     >
                         <option value=""></option>
                         {this.props.availableFilterOptions.assignedUserNames
-                            .filter(option => option !== undefined && option !== null && option.trim().length > 0)
-                            .map(option => {
+                            .filter((option) => option !== undefined && option !== null && option.trim().length > 0)
+                            .map((option) => {
                                 return (
                                     <option value={option} key={option}>
                                         {option}
@@ -113,7 +116,7 @@ export default class InboxFilterPanel extends Component {
                     <select
                         id="filter-assignedPosition"
                         className="m-input-element"
-                        onChange={e => this.execOnChange({ selectedPosition: e.target.value })}
+                        onChange={(e) => this.execOnChange({ selectedPosition: e.target.value })}
                         onBlur={() => {
                             return;
                         }}
@@ -121,8 +124,8 @@ export default class InboxFilterPanel extends Component {
                     >
                         <option value=""></option>
                         {this.props.availableFilterOptions.positions
-                            .filter(option => option !== undefined && option !== null && option.trim().length > 0)
-                            .map(option => {
+                            .filter((option) => option !== undefined && option !== null && option.trim().length > 0)
+                            .map((option) => {
                                 return (
                                     <option value={option} key={option}>
                                         {option}
@@ -142,16 +145,59 @@ export default class InboxFilterPanel extends Component {
         );
     };
 
+    renderSortOptions = () => {
+        if (!this.state.availableSortingOptions) {
+            return null;
+        }
+        return (
+            <div className="inbox-filter-raw">
+                <div className="inbox-filter-item">
+                    <label>{lookup('inbox.sorting.label')}</label>
+                    <select
+                        id="inbox-sort-dropdown"
+                        className="m-input-element"
+                        onChange={this.onSortChange}
+                        onBlur={() => {
+                            return;
+                        }}
+                        value={this.state.selectedSortingOption}
+                    >
+                        {this.state.availableSortingOptions.map((option) => {
+                            return (
+                                <option value={option} key={option}>
+                                    {lookup('inbox.sorting.option.' + option.replaceAll(',', '').replaceAll('&', ''))}
+                                </option>
+                            );
+                        })}
+                    </select>
+                    <img htmlFor="inbox-sort-dropdown" className="mrc-icon-small mrc-down-icon" src={ChevronDownIcon} />
+                </div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        );
+    };
+
     render() {
         return (
             <div>
                 {this.renderFirstLevelFilter()}
                 {this.renderSecondLevelFilter()}
+                {this.renderSortOptions()}
             </div>
         );
     }
 
-    execOnChange = newFilter => {
+    onSortChange = (e) => {
+        this.props.setChosenSortOption(e.target.value);
+        this.setState({
+            selectedSortingOption: e.target.value,
+        });
+        this.props.onChange(this.state.filter);
+    };
+
+    execOnChange = (newFilter) => {
         const filter = { ...this.state.filter, ...newFilter };
 
         if (filter.filterName !== 'store-customers-requests') {
@@ -177,6 +223,9 @@ InboxFilterPanel.propTypes = {
     onChange: PropTypes.func,
     getChosenFilter: PropTypes.func,
     setChosenFilter: PropTypes.func,
+    setChosenSortOption: PropTypes.func,
+    getChosenSortOption: PropTypes.func,
+    getAvailableSortingOptions: PropTypes.func,
     availableFilterOptions: PropTypes.shape({
         assignedUserNames: PropTypes.arrayOf(PropTypes.string),
         positions: PropTypes.arrayOf(PropTypes.string),
