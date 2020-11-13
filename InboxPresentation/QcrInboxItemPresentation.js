@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { lookup } from '../Util/translations';
 
 import MrcDate from '../MrcDate';
+import { createIssueAndRequestDate } from 'global-react-components/InboxPresentation/util';
 
 export default class QcrInboxItemPresentation extends Component {
     render() {
@@ -10,16 +11,7 @@ export default class QcrInboxItemPresentation extends Component {
         // if collapsed, don't render anything;
         if (this.props.collapsed) {
             if (entry.customerNumber != null && entry.customerStoreNumber != null)
-                return (
-                    <div>
-                        <div>
-                            <p>
-                                <label>{lookup('inbox.requestDate')}:&nbsp;</label>
-                                <MrcDate>{entry.requestDate ? entry.requestDate : entry.issueDate}</MrcDate>
-                            </p>
-                        </div>
-                    </div>
-                );
+                return <div>{createIssueAndRequestDate(entry)}</div>;
             else {
                 return null;
             }

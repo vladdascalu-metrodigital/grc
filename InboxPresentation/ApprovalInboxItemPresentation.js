@@ -4,6 +4,7 @@ import { lookup } from '../Util/translations';
 
 import ArrowRight from '../icons/arrow-right-12.svg';
 import MrcDate from '../MrcDate';
+import { createIssueAndRequestDate } from 'global-react-components/InboxPresentation/util';
 
 export default class ApprovalInboxItemPresentation extends Component {
     render() {
@@ -14,10 +15,7 @@ export default class ApprovalInboxItemPresentation extends Component {
     renderCollapsed = (entry) => {
         return (
             <span>
-                <p>
-                    <label>{lookup('inbox.requestDate')}:&nbsp;</label>
-                    <MrcDate>{entry.requestDate ? entry.requestDate : entry.issueDate}</MrcDate>
-                </p>
+                {createIssueAndRequestDate(entry)}
                 {entry.assignedUserName != null ? (
                     <p>
                         <label>{lookup('inbox.assignedUserName')}:&nbsp;</label>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { lookup } from '../Util/translations';
 
 import MrcDate from '../MrcDate';
+import { createIssueAndRequestDate } from 'global-react-components/InboxPresentation/util';
 
 export default class ReviewInboxItemPresentation extends Component {
     render() {
@@ -12,10 +13,7 @@ export default class ReviewInboxItemPresentation extends Component {
             if (entry.customerNumber != null && entry.customerStoreNumber != null)
                 return (
                     <span>
-                        <p>
-                            <label>{lookup('inbox.requestDate')}:&nbsp;</label>
-                            <MrcDate>{entry.requestDate ? entry.requestDate : entry.issueDate}</MrcDate>
-                        </p>
+                        {createIssueAndRequestDate(entry)}
                         {entry.assignedUserName != null ? (
                             <p>
                                 <label>{lookup('inbox.assignedUserName')}:&nbsp;</label>
