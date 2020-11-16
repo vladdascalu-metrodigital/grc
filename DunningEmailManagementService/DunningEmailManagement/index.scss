@@ -1,0 +1,33 @@
+@import '../../lib/scss/colors';
+@import '../../lib/scss/variables';
+@import '../../lib/scss/typography';
+
+.mrc-ui-main-content {
+    padding: 0;
+}
+
+.mrc-ui-email-service-table {
+    margin-bottom: $spacing-extra-extra-extra-large;
+}
+
+.mrc-ui-email-service {
+    overflow-x: auto;
+}
+
+.mrc-ui-email-service table {
+    min-width: 600px;
+}
+
+@media #{$breakpoint-not-small} {
+    .mrc-ui-email-service {
+        min-width: none;
+        overflow: visible;
+    }
+}
+
+.dunning-email-management {
+    h3 {
+        padding: 1rem;
+        color: #002d72;
+    }
+}

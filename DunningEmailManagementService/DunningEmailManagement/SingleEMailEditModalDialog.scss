@@ -1,0 +1,23 @@
+@import '../../lib/scss/variables';
+
+
+@media #{$breakpoint-not-small} {
+    .mrc-ui-single-email-modal-checkcards {
+        padding: $spacing-none $spacing-large;
+    }
+}
+
+.mrc-ui-check-card-head-row div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mrc-ui-single-email-modal-checkcards > * {
+    margin-top: $spacing-small;
+}
+
+.mrc-ui-single-email-modal-checkcards .mrc-ui-text-input {
+    width: 100%;
+    padding-right: 2rem;
+}

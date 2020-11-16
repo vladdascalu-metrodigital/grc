@@ -121,6 +121,7 @@ storiesOf('Services/CreditLimit/LimitRequest', module)
             showAuxControl={(value) => console.log(value)}
             loadRequest={(value) => console.log(value)}
             loadAdditionalFields={(value) => console.log(value)}
+            showInfo={(value) => console.log(value)}
             match={{
                 isExact: true,
                 params: {

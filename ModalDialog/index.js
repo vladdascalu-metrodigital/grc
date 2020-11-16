@@ -23,7 +23,11 @@ export default class ModalDialog extends Component {
             <div className="mrc-ui-modal-component">
                 <div className="mrc-ui-modal-overlay"></div>
                 <div className="mrc-ui-modal">
-                    <button className="mrc-ui-modal-close-button" onClick={this.props.toggle}>
+                    <button
+                        className="mrc-ui-modal-close-button"
+                        disabled={this.props.disabledClose}
+                        onClick={this.props.toggle}
+                    >
                         <img src={closeModalImageFile} alt="Close" />
                     </button>
                     <h3 className="mrc-ui-modal-title">{this.props.title}</h3>
@@ -38,12 +42,23 @@ ModalDialog.propTypes = {
     toggle: PropTypes.func,
     content: PropTypes.node,
     children: PropTypes.node,
+    disabledClose: PropTypes.bool,
     title: PropTypes.string.isRequired,
 };
 
 export class ModalDialogSimple extends Component {
     render() {
-        let { content, children, onCancel, onOk, cancelText, okText, ...otherProps } = this.props;
+        let {
+            content,
+            children,
+            onCancel,
+            onOk,
+            cancelText,
+            okText,
+            disabledOK,
+            disabledCancel,
+            ...otherProps
+        } = this.props;
         otherProps.toggle = onCancel = onCancel || otherProps.toggle;
         cancelText = cancelText || lookup('mrc.cancel');
         okText = okText || 'OK';
@@ -51,10 +66,12 @@ export class ModalDialogSimple extends Component {
             <ModalDialog {...otherProps}>
                 <div>{content || children}</div>
                 <div className="mrc-ui-modal-simple-buttons">
-                    <Button isOutlined onClick={onCancel}>
+                    <Button isOutlined onClick={onCancel} disabled={disabledCancel}>
                         {cancelText}
                     </Button>
-                    <Button onClick={onOk}>{okText}</Button>
+                    <Button onClick={onOk} disabled={disabledOK}>
+                        {okText}
+                    </Button>
                 </div>
             </ModalDialog>
         );
@@ -67,4 +84,6 @@ ModalDialogSimple.propTypes = {
     onOk: PropTypes.func.isRequired,
     cancelText: PropTypes.string,
     okText: PropTypes.string,
+    disabledOK: PropTypes.bool,
+    disabledCancel: PropTypes.bool,
 };

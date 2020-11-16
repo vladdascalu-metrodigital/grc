@@ -17,6 +17,7 @@ let translations = {
     'mrc.apps.batchupdate': 'Batch Update',
     'mrc.apps.reports': 'Reporting',
     'mrc.apps.creditcorrection': 'Credit Correction',
+    'mrc.apps.dunningemailmanagement': 'Dunning Email Management',
 
     'mrc.forms.please_select': 'Please Select ...',
     'mrc.forms.required': 'Data is requiered',
@@ -132,6 +133,53 @@ let translations = {
     'mrc.credittab.creditprogramEdit': 'Edit',
     'mrc.credittab.missingvalue': 'Value is missing',
     'mrc.credittab.selectedcreditprogram': 'Selected credit program',
+
+    'mrc.dunningemailmanagement.table.customer': 'Customer',
+    'mrc.dunningemailmanagement.table.status': 'Status',
+    'mrc.dunningemailmanagement.table.dunningEmail': 'Dunning Email',
+    'mrc.dunningemailmanagement.table.action': 'Action',
+
+    'mrc.dunningemailmanagement.button.edit': 'Edit',
+    'mrc.dunningemailmanagement.button.cancel': 'Cancel',
+    'mrc.dunningemailmanagement.button.editSelection': 'Edit Selection',
+    'mrc.dunningemailmanagement.button.save': 'Save And Verify',
+    'mrc.dunningemailmanagement.button.delete': 'Delete',
+
+    'mrc.dunningemailmanagement.status.ALL': 'All Status',
+    'mrc.dunningemailmanagement.status.DOMAIN_VERIFIED': 'Domain Verified',
+    'mrc.dunningemailmanagement.status.UNVERIFIED': 'Unverified',
+    'mrc.dunningemailmanagement.status.NO_DUNNING_EMAIL': 'No Dunning Email',
+
+    'mrc.dunningemailmanagement.noActiveCustomer': 'No active customers in group!',
+    'mrc.dunningemailmanagement.searchCustomerPlaceHolder': 'Search by Id, Name...',
+    'mrc.dunningemailmanagement.searchClearText': 'clear',
+    'mrc.dunningemailmanagement.customerGroupInfo': ' active Customers in Customer Group',
+
+    'mrc.dunningemailmanagement.editSingleDialogTitle': 'Select E-Mail',
+    'mrc.dunningemailmanagement.editSelectionDialogTitle': 'Edit E-Mail',
+    'mrc.dunningemailmanagement.emailLabel': 'E-Mail',
+    'mrc.dunningemailmanagement.searchEmailPlaceHolder': 'Type Email',
+    'mrc.dunningemailmanagement.newEmailLabel': 'E-Mail',
+    'mrc.dunningemailmanagement.dunningEmailLabel': 'Dunning Email',
+    'mrc.dunningemailmanagement.otherEmailLabel': 'Other Email',
+
+    'mrc.dunningemailmanagement.editStatus.waitingForHandling': 'Waiting for handling dunning email change',
+    'mrc.dunningemailmanagement.editStatus.customerInPending':
+        'Last dunning email change of customer is still in progress, please try it later',
+    'mrc.dunningemailmanagement.editStatus.noCustomerChanged': 'No customer can be changed, please try it later',
+    'mrc.dunningemailmanagement.editStatus.unknownError':
+        'Failed to change dunning email, please try it later or contact mrc team',
+    'mrc.dunningemailmanagement.editStatus.updateSuccessfully': 'Dunning email is changed successfully',
+
+    'mrc.dunningemailmanagement.validation.alreadyDeleted': 'Dunning email of this customer was already deleted',
+    'mrc.dunningemailmanagement.validation.allAlreadyDeleted':
+        'Dunning emails of all selected customers were already deleted',
+    'mrc.dunningemailmanagement.validation.alreadyVerified': 'Dunning email of this customer was already verified',
+    'mrc.dunningemailmanagement.validation.allAlreadyVerified':
+        'Dunning emails of all selected customers were all verified',
+    'mrc.dunningemailmanagement.validation.invalid': 'Email is invalid',
+
+    'mrc.dunningemailmanagement.error.search': 'Failed to search customer',
 };
 
 export const addTranslations = (update) => {
