@@ -4,7 +4,7 @@ import { lookup } from '../Util/translations';
 
 import ArrowRight from '../icons/arrow-right-12.svg';
 import MrcDate from '../MrcDate';
-import { createIssueAndRequestDate } from 'global-react-components/InboxPresentation/util';
+import { createIssueAndRequestDate } from './util';
 
 export default class ApprovalInboxItemPresentation extends Component {
     render() {

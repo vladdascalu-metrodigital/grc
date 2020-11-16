@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { createIssueAndRequestDate } from 'global-react-components/InboxPresentation/util';
+import { createIssueAndRequestDate } from './util';
 
 export default class GenericInboxItemPresentation extends Component {
     render() {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { lookup } from '../Util/translations';
 
 import MrcDate from '../MrcDate';
-import { createIssueAndRequestDate } from 'global-react-components/InboxPresentation/util';
+import { createIssueAndRequestDate } from './util';
 
 export default class QcrInboxItemPresentation extends Component {
     render() {

@@ -1,5 +1,5 @@
-import { lookup } from 'global-react-components/Util/translations';
-import MrcDate from 'global-react-components/MrcDate';
+import { lookup } from '../Util/translations';
+import MrcDate from '../MrcDate';
 import React from 'react';
 
 export const createIssueAndRequestDate = (entry) => {

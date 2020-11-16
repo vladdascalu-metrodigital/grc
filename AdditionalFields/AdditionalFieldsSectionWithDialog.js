@@ -108,11 +108,15 @@ export default class AdditionalFieldsSectionWithDialog extends React.Component {
     };
 
     onSave() {
-        this.props.onChange(this.state.requestFields);
+        const stateFieldsList =
+            this.state.requestFields !== null && this.state.requestFields !== undefined
+                ? Object.values(this.state.requestFields).map((it) => it.item)
+                : [];
+        this.props.onChange(stateFieldsList);
         const requestFields = {};
         const currentRequestFields = [];
-        if (this.state.requestFields !== null && this.state.requestFields !== undefined) {
-            this.state.requestFields.forEach((rf) => {
+        if (stateFieldsList !== null && stateFieldsList !== undefined) {
+            stateFieldsList.forEach((rf) => {
                 const type = rf.countryField.field.type;
                 const oldValue = type === 'TEXTAREA' ? rf.textValue : rf.value;
                 const valid =
