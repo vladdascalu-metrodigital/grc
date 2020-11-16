@@ -9,6 +9,7 @@ import QcrInboxItemPresentation from './QcrInboxItemPresentation';
 import { lookup, numberDependentLookup } from '../Util/translations';
 
 import InboxFilterPanel from '../InboxFilterPanel';
+import GenericInboxItemPresentation from './GenericInboxItemPresentation';
 
 export default class InboxPresentation extends Component {
     constructor(props) {
@@ -122,13 +123,14 @@ export default class InboxPresentation extends Component {
                     />
                 );
             case 'REVIEW_NOTIFICATION':
+            case 'CONTRACT_SIGNING_REQUESTED':
+            case 'CONTRACT_VALIDATION_REQUESTED':
                 return <ReviewInboxItemPresentation isTablet={this.props.isTablet} entry={entry} />;
             case 'QCR_NOTIFICATION':
                 return <QcrInboxItemPresentation isTablet={this.props.isTablet} entry={entry} />;
-            case 'CONTRACT_SIGNING_REQUESTED':
-                return <ReviewInboxItemPresentation isTablet={this.props.isTablet} entry={entry} />;
-            case 'CONTRACT_VALIDATION_REQUESTED':
-                return <ReviewInboxItemPresentation isTablet={this.props.isTablet} entry={entry} />;
+            default:
+                //LIMIT_EXPIRY_NOTIFICATION, ATTACHMENT_EXPIRY_NOTIFICATION and maybe others in the future
+                return <GenericInboxItemPresentation entry={entry} />;
         }
     };
 }

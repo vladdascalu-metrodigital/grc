@@ -5,13 +5,13 @@ import React from 'react';
 export const createIssueAndRequestDate = (entry) => {
     return (
         <p>
-            {entry.issueDate ? (
+            {entry.issueDate || entry.creationDate ? (
                 <React.Fragment>
                     <label>{lookup('inbox.issueDate')}:&nbsp;</label>
-                    <MrcDate>{entry.issueDate}</MrcDate>
+                    <MrcDate>{entry.issueDate ? entry.issueDate : entry.creationDate}</MrcDate>
                 </React.Fragment>
             ) : null}
-            {entry.issueDate && entry.requestDate ? ',' : null}
+            {(entry.issueDate || entry.creationDate) && entry.requestDate ? ',' : null}
             &nbsp;
             {entry.requestDate ? (
                 <React.Fragment>
