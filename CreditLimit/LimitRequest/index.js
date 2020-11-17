@@ -810,7 +810,7 @@ export default class LimitRequestLayout extends Component {
         if (
             _.get(request, 'data.requestedItems') &&
             !this.requestedCustomerCreditDataChanged(request.data.requestedItems) &&
-            parent === 'prepayment' &&
+            parent !== 'prepayment' &&
             request.data.requestedItems.length > 1
         ) {
             showInfo(lookup('creditlimit.message.request.changeRequestedCustomer'));
