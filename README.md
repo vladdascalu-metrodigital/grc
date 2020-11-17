@@ -10,6 +10,10 @@ microservices. Since then, almost all React components (even the
 service-specific ones) have been move to this library for a better, single
 overview and possibility to test entire UI's directly in storybook.
 
+Service-specific components are located in directories with the same name as
+the microservice: `CreditLimit`, `CreditCorrection`, `ApprovalService`,
+`History`, `Inbox`, `ReportingService`, `BatchUpdateService`.
+
 # Using Storybook for local development
 
 -   npm install
@@ -22,9 +26,9 @@ On http://localhost:6006 you should now be able to see a UI having links to some
 -   Update the library version in package.json
 -   npm publish
 
-# How to debug react-related components locally (NO npm publishing is required to do it):
+# How generate a local version of the library (No `npm publish` needed)
 
-1.  make your changes in the component (global-react-components or component-library)
+1.  make your changes in this repository global-react-components
 1.  change version locally only
 1.  npm install
 1.  npm pack (it will show you archived component name)
