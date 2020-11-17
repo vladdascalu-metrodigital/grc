@@ -105,7 +105,6 @@ export class ApprovalProcessPresentation extends Component {
 
         this.updateValidMccScoreChangedFlag = this.updateValidMccScoreChangedFlag.bind(this);
         this.handleAdditionalFieldsOnChange = this.handleAdditionalFieldsOnChange.bind(this);
-        this.handleAdditionalFieldsOnBlur = this.handleAdditionalFieldsOnBlur.bind(this);
         this.toggleReviewReasonModal = this.toggleReviewReasonModal.bind(this);
         this.onReviewReasonSave = this.onReviewReasonSave.bind(this);
 
@@ -167,9 +166,8 @@ export class ApprovalProcessPresentation extends Component {
 
     updateNotification(approval) {
         if (approval && !approval.claimedBySomebodyElse && approval.state !== 'CANCELLED') {
-            const anyInvalidExpiryDate = !_.every(
-                approval.approvalItems,
-                (item) => _.get(item, 'validRequestedExpiryDate')
+            const anyInvalidExpiryDate = !_.every(approval.approvalItems, (item) =>
+                _.get(item, 'validRequestedExpiryDate')
             );
             if (approval.approvalItems && anyInvalidExpiryDate) {
                 this.props.showError(lookup('approval.message.request.pastLimitExpiry'));
@@ -1254,10 +1252,7 @@ export class ApprovalProcessPresentation extends Component {
     };
 
     contractingSubmitButton(process) {
-        const anyInvalidExpiryDate = !_.every(
-            process.approvalItems,
-            (item) => _.get(item, 'validRequestedExpiryDate')
-        );
+        const anyInvalidExpiryDate = !_.every(process.approvalItems, (item) => _.get(item, 'validRequestedExpiryDate'));
         return this.state.currentStepType === 'CONTRACT_SIGNING' ? (
             <Button
                 text={lookup('approval.action.signContract')}
@@ -1290,14 +1285,21 @@ export class ApprovalProcessPresentation extends Component {
     }
 
     handleAdditionalFieldsOnSave = (fields) => {
-        const newAdditionalFieldsValidations = this.state.additionalFieldsValidations;
-        fields.forEach((field) => {
-            newAdditionalFieldsValidations[field.id] = true;
-        });
-        this.setState({
-            additionalFieldsValidations: newAdditionalFieldsValidations,
-        });
-        this.props.updateAdditionalFields(fields);
+        return this.props
+            .updateAdditionalFields(fields)
+            .then((resp) => {
+                const newAdditionalFieldsValidations = this.state.additionalFieldsValidations;
+                fields.forEach((field) => {
+                    newAdditionalFieldsValidations[field.id] = true;
+                });
+                this.setState({
+                    additionalFieldsValidations: newAdditionalFieldsValidations,
+                });
+                return resp;
+            })
+            .catch((err) => {
+                throw err;
+            });
     };
 
     handleAdditionalFieldsOnChange = (elem, valid) => {
@@ -1308,14 +1310,6 @@ export class ApprovalProcessPresentation extends Component {
         });
         if (valid) {
             this.props.updateAdditionalField(elem);
-        }
-    };
-
-    handleAdditionalFieldsOnBlur = (elem, valid) => {
-        if (valid) {
-            this.props.updateAdditionalField(elem);
-        } else {
-            this.handleAdditionalFieldsOnChange(elem, valid);
         }
     };
 
@@ -1373,10 +1367,7 @@ export class ApprovalProcessPresentation extends Component {
             _.get(process, 'approvalItems') && process.approvalItems.every((item) => this.creditDataValid(item));
         const anyCreditDataChanged =
             _.get(process, 'approvalItems') && this.anyCreditDataChanged(process.approvalItems);
-        const anyInvalidExpiryDate = !_.every(
-            process.approvalItems,
-            (item) => _.get(item, 'validRequestedExpiryDate')
-        );
+        const anyInvalidExpiryDate = !_.every(process.approvalItems, (item) => _.get(item, 'validRequestedExpiryDate'));
         const creditDataValid = allCreditDataValid && anyCreditDataChanged && !anyInvalidExpiryDate;
         return (
             <div className="mrc-btn-group">
@@ -1467,7 +1458,7 @@ export class ApprovalProcessPresentation extends Component {
                         text={lookup('approval.action.forward')}
                         id="mrc-approve-button"
                         status={process.isForwardableByCurrentUser ? 'primary' : 'secondary'}
-                        disabled={!process.forwardableByCurrentUser|| anyInvalidExpiryDate}
+                        disabled={!process.forwardableByCurrentUser || anyInvalidExpiryDate}
                         onClick={() => {
                             this.props.forward(process.id, process.version);
                         }}

@@ -29,6 +29,7 @@ export default class AdditionalFieldsSectionWithDialog extends React.Component {
         }
         this.state = { requestFields: requestFields, currentRequestFields: currentRequestFields };
         this.toggleModal = this.toggleModal.bind(this);
+        this.resetChangedAdditionalFields = this.resetChangedAdditionalFields.bind(this);
     }
 
     toggleModal() {
@@ -112,7 +113,7 @@ export default class AdditionalFieldsSectionWithDialog extends React.Component {
             this.state.requestFields !== null && this.state.requestFields !== undefined
                 ? Object.values(this.state.requestFields).map((it) => it.item)
                 : [];
-        this.props.onChange(stateFieldsList);
+
         const requestFields = {};
         const currentRequestFields = [];
         if (stateFieldsList !== null && stateFieldsList !== undefined) {
@@ -126,7 +127,10 @@ export default class AdditionalFieldsSectionWithDialog extends React.Component {
                 currentRequestFields.push({ id: rf.id, valid: valid, value: oldValue });
             });
         }
-        this.setState({ currentRequestFields: currentRequestFields });
+        this.props
+            .onChange(stateFieldsList)
+            .then(() => this.setState({ currentRequestFields: currentRequestFields }))
+            .catch(() => this.resetChangedAdditionalFields());
     }
 
     renderElements(elements, edit) {

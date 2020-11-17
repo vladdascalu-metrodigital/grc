@@ -64,7 +64,6 @@ export default class LimitRequestLayout extends Component {
         this.props.updateUiPageTitle(lookup('creditlimit.limitrequest.title'));
         this.handleAdditionalFieldsOnChange = this.handleAdditionalFieldsOnChange.bind(this);
         this.handleAdditionalFieldsOnSave = this.handleAdditionalFieldsOnSave.bind(this);
-        this.handleAdditionalFieldsOnBlur = this.handleAdditionalFieldsOnBlur.bind(this);
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
     }
 
@@ -318,32 +317,35 @@ export default class LimitRequestLayout extends Component {
     };
 
     handleAdditionalFieldsOnSave = (fields) => {
-        const newAdditionalFieldsValidations = this.state.additionalFieldsValidations;
-        fields.forEach((field) => {
-            newAdditionalFieldsValidations[field.id] = true;
-        });
-        this.setState({
-            additionalFieldsValidations: newAdditionalFieldsValidations,
-        });
-        this.props.updateAdditionalFields(fields);
+        return this.props
+            .updateAdditionalFields(fields)
+            .then((resp) => {
+                const newAdditionalFieldsValidations = this.state.additionalFieldsValidations;
+                fields.forEach((field) => {
+                    newAdditionalFieldsValidations[field.id] = true;
+                });
+                this.setState({
+                    additionalFieldsValidations: newAdditionalFieldsValidations,
+                });
+                return resp;
+            })
+            .catch((err) => {
+                throw err;
+            });
     };
 
     handleAdditionalFieldsOnChange = (elem, valid) => {
         const newAdditionalFieldsValidations = this.state.additionalFieldsValidations;
         newAdditionalFieldsValidations[elem.id] = valid;
-        this.setState({
-            additionalFieldsValidations: newAdditionalFieldsValidations,
-        });
         if (valid) {
-            this.props.updateAdditionalField(elem);
-        }
-    };
-
-    handleAdditionalFieldsOnBlur = (elem, valid) => {
-        if (valid) {
-            this.props.updateAdditionalField(elem);
-        } else {
-            this.handleAdditionalFieldsOnChange(elem, valid);
+            return this.props
+                .updateAdditionalField(elem)
+                .then(() =>
+                    this.setState({
+                        additionalFieldsValidations: newAdditionalFieldsValidations,
+                    })
+                )
+                .catch((err) => throw err);
         }
     };
 
