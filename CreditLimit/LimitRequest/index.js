@@ -796,21 +796,26 @@ export default class LimitRequestLayout extends Component {
     }
 
     componentDidUpdate() {
-        const req = this.props.request;
+        const { request, parent, showInfo, hideNotification, history } = this.props;
         const path = 'submitted';
-        if (!this.props.history.location.pathname.endsWith(path) && req.data && req.data.submitInfo) {
-            const target = `/limitrequests/${req.data.id}/${path}`;
-            this.props.history.replace(target);
+        if (!history.location.pathname.endsWith(path) && request.data && request.data.submitInfo) {
+            const target = `/limitrequests/${request.data.id}/${path}`;
+            history.replace(target);
         }
         if (this.state.isApplyCurrentLimitAndExpiryClicked) {
             this.setState({
                 isApplyCurrentLimitAndExpiryClicked: false,
             });
         }
-        if (_.get(req, 'data.requestedItems') && !this.requestedCustomerCreditDataChanged(req.data.requestedItems)) {
-            this.props.showInfo(lookup('creditlimit.message.request.changeRequestedCustomer'));
+        if (
+            _.get(request, 'data.requestedItems') &&
+            !this.requestedCustomerCreditDataChanged(request.data.requestedItems) &&
+            parent === 'prepayment' &&
+            request.data.requestedItems.length > 1
+        ) {
+            showInfo(lookup('creditlimit.message.request.changeRequestedCustomer'));
         } else {
-            this.props.hideNotification();
+            hideNotification();
         }
     }
 
