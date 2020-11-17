@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { lookup } from '../../Util/translations';
 import PropTypes from 'prop-types';
 import { validateLimit, validateReportFile, validateScore } from './validation';
-import { Agencies } from './agencies.json';
+import Agencies from './agencies.json';
 
 export default class AddExtScore extends Component {
     constructor(props) {

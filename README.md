@@ -1,6 +1,14 @@
-# Metro Risk Check - Global React Components
+# Global React Components
 
-This repo is used to share react components and styles between multiple MRC services.
+This repo contains a library that is used by all microservices that have an UI.
+The library primarily consists of React components but also styles, images,
+icons and JSON specs used by the frontend.
+
+The name "global-react-components" comes from a time when this repo was thought
+to only contain shared components that would be used by at least 2 different
+microservices. Since then, almost all React components (even the
+service-specific ones) have been move to this library for a better, single
+overview and possibility to test entire UI's directly in storybook.
 
 # Using Storybook for local development
 
@@ -8,6 +16,11 @@ This repo is used to share react components and styles between multiple MRC serv
 -   npm run storybook
 
 On http://localhost:6006 you should now be able to see a UI having links to some components. Also changes on your local files should be watched and updated into your browser.
+
+# Publishing a new version of the library
+
+-   Update the library version in package.json
+-   npm publish
 
 # How to debug react-related components locally (NO npm publishing is required to do it):
 
