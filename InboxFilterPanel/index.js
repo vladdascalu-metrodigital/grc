@@ -164,7 +164,7 @@ export default class InboxFilterPanel extends Component {
                     >
                         {this.state.availableSortingOptions.map((option) => {
                             if (typeof option === 'string' || option instanceof String) {
-                                const suffix = option.replaceAll(new RegExp('&|,', 'g'), '');
+                                const suffix = option.replace(new RegExp('&|,', 'g'), '');
                                 return (
                                     <option value={option} key={option}>
                                         {lookup('inbox.sorting.option.' + suffix)}
