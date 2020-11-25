@@ -1,4 +1,5 @@
 import { lookup } from '../Util/translations';
+import { additionalFieldIsValid, additionalFieldMandatoryIsValid } from './additionalFieldsValidation';
 
 export const orderRequestFields = (requestFieldsList) => {
     return requestFieldsList && requestFieldsList != null && requestFieldsList.length > 0
@@ -201,4 +202,19 @@ export function atLeastOneFieldIsInvalid(additionalFieldsList, additionalFieldsV
         }
     });
     return isInvalid;
+}
+
+export function getMapByIdWithValidAndElement(requestFields) {
+    const newRequestFields = {};
+    if (requestFields !== null && requestFields !== undefined) {
+        requestFields.forEach((rf) => {
+            const type = rf.countryField.field.type;
+            const oldValue = type === 'TEXTAREA' ? rf.textValue : rf.value;
+            const valid =
+                additionalFieldMandatoryIsValid(rf.countryField.mandatory, oldValue) &&
+                additionalFieldIsValid(rf.countryField.validation, type, oldValue, rf.creationTimestamp);
+            newRequestFields[rf.id] = { valid: valid, item: rf };
+        });
+    }
+    return newRequestFields;
 }

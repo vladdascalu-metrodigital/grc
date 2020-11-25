@@ -849,6 +849,7 @@ storiesOf('Services/CreditLimit/LimitRequest', module)
             setCreditPrograms={(value) => console.log(value)}
             updateAdditionalField={(value) => console.log(value)}
             countriesWithDifferentBlockingCodes={['DE']}
+            showInfo={(value) => console.log(value)}
         />
     ))
     .add('standard submitted', () => (

@@ -40,10 +40,6 @@ import * as _ from 'lodash';
 import { List } from 'immutable';
 import AutoDecisionReviewReason from './AutoDecisionReviewReason';
 import CustomerDataGroup from '../../CustomerDataGroup';
-import {
-    additionalFieldIsValid,
-    additionalFieldMandatoryIsValid,
-} from '../../AdditionalFields/additionalFieldsValidation';
 
 import CreditDataTab from '../../CreditDataTab';
 import { displayName } from '../../Util';
@@ -90,7 +86,6 @@ export class ApprovalProcessPresentation extends Component {
             validMccScore: null,
             isValidMccScoreChanged: true,
             additionalFieldsValidations: {},
-            additionalFieldsIgnoreIds: [],
         };
 
         if (this.props.process.data) {
@@ -654,26 +649,6 @@ export class ApprovalProcessPresentation extends Component {
         //
         const process = nextProps.process.data;
 
-        if (
-            Object.values(this.state.additionalFieldsValidations).length === 0 &&
-            nextProps.additionalFields &&
-            nextProps.additionalFields.requestFields
-        ) {
-            const additionalFields = nextProps.additionalFields;
-            const newAdditionalFieldsValidations = this.state.additionalFieldsValidations;
-            additionalFields.requestFields.forEach((field) => {
-                const type = field.countryField.field.type;
-                const oldValue = type === 'TEXTAREA' ? field.textValue : field.value;
-                const valid =
-                    additionalFieldMandatoryIsValid(field.countryField.mandatory, oldValue) &&
-                    additionalFieldIsValid(field.countryField.validation, type, oldValue, field.creationTimestamp);
-                newAdditionalFieldsValidations[field.id] = valid;
-            });
-            this.setState({
-                additionalFieldsValidations: newAdditionalFieldsValidations,
-            });
-        }
-
         //
         // If there is creditdata, use it *as is*.
         // The second condition needs some explanation (and see bugs https://jira.metrosystems.net/browse/MRC-2069 and https://jira.metrosystems.net/browse/MRC-2070):
@@ -698,35 +673,6 @@ export class ApprovalProcessPresentation extends Component {
             let cgl = 0;
             let rgl = 0;
             let exhaustiongl = 0;
-
-            const additionalFieldsIdsTemp = [];
-            process.approvalItems.map((approvalItem) => {
-                if (
-                    _.get(approvalItem, 'creditOption') !== 'NEWCREDIT' &&
-                    nextProps.additionalFields &&
-                    nextProps.additionalFields.requestFields
-                ) {
-                    const additionalFields = nextProps.additionalFields;
-                    const customerAdditionalFieldsList = filterAdditionalFieldsList(
-                        additionalFields ? additionalFields.requestFields : undefined,
-                        'CUSTOMER',
-                        'CREDIT_DATA',
-                        _.get(approvalItem, 'customer.country'),
-                        _.get(approvalItem, 'customer.storeNumber'),
-                        _.get(approvalItem, 'customer.customerNumber')
-                    );
-
-                    if (hasAdditionalFields(customerAdditionalFieldsList)) {
-                        customerAdditionalFieldsList.forEach((field) => {
-                            additionalFieldsIdsTemp.push(field.id);
-                        });
-                    }
-                }
-            });
-
-            this.setState({
-                additionalFieldsIgnoreIds: additionalFieldsIdsTemp,
-            });
 
             process.approvalItems.map((approvalItem) => {
                 const custId = approvalItem.customer.id;
@@ -1090,6 +1036,7 @@ export class ApprovalProcessPresentation extends Component {
                             hasCustomerAdditionalFields: hasCustomerAdditionalFields,
                             customerAdditionalFieldsList: customerAdditionalFieldsList,
                             onChange: this.handleAdditionalFieldsOnChange,
+                            onInit: this.handleAdditionalFieldsOnInit,
                             disabled: creditReadOnly,
                             editable: true,
                         },
@@ -1114,6 +1061,7 @@ export class ApprovalProcessPresentation extends Component {
                     request: {
                         requestFields: requestAdditionalFields,
                         onChange: this.handleAdditionalFieldsOnSave,
+                        onInit: this.handleAdditionalFieldsOnInit,
                         editable: true,
                         disabled: creditReadOnly,
                     },
@@ -1121,6 +1069,7 @@ export class ApprovalProcessPresentation extends Component {
                     group: {
                         requestFields: groupAdditionalFields,
                         onChange: this.handleAdditionalFieldsOnSave,
+                        onInit: this.handleAdditionalFieldsOnInit,
                         editable: true,
                         disabled: creditReadOnly,
                     },
@@ -1308,22 +1257,25 @@ export class ApprovalProcessPresentation extends Component {
         this.setState({
             additionalFieldsValidations: newAdditionalFieldsValidations,
         });
-        if (valid) {
-            this.props.updateAdditionalField(elem);
+        this.props.updateAdditionalField(elem);
+    };
+
+    handleAdditionalFieldsOnInit = (elems) => {
+        if (elems !== null && elems !== undefined) {
+            const newAdditionalFieldsValidations = this.state.additionalFieldsValidations;
+            elems.forEach((elem) => {
+                if (elem.valid !== undefined && elem.item !== undefined && elem.item.id !== undefined) {
+                    newAdditionalFieldsValidations[elem.item.id] = elem.valid;
+                }
+            });
+            this.setState({
+                additionalFieldsValidations: newAdditionalFieldsValidations,
+            });
         }
     };
 
     additionalFieldsValid() {
-        const validationMap = new Map(Object.entries(this.state.additionalFieldsValidations));
-        if (validationMap.size === 0) {
-            return true;
-        }
-        for (const key of validationMap.keys()) {
-            if (!this.state.additionalFieldsIgnoreIds.includes(key) && !validationMap.get(key)) {
-                return false;
-            }
-        }
-        return true;
+        return !(Object.values(this.state.additionalFieldsValidations).filter((value) => !value).length > 0);
     }
 
     anyCreditDataChanged(items) {

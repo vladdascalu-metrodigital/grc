@@ -10,8 +10,52 @@ import CRTableCellBiggerText from './CreditTable/CRTableCellBiggerText';
 import ToggleIndicator from '../ToggleIndicator';
 import { lookup } from '../Util/translations';
 import { createProductTimePeriod } from './creditDataTabUtil';
+import { getMapByIdWithValidAndElement } from '../AdditionalFields/additionalFielsUtil';
 
 export default class CreditTableRowCreditLimit extends Component {
+    isNoChange = undefined;
+    setIsNoChange = (value) => {
+        if (this.isNoChange !== value) {
+            this.isNoChange = value;
+            const additionalFieldsObj = _.get(this.props, 'customer.additionalFields');
+            if (additionalFieldsObj && additionalFieldsObj.onInit) {
+                additionalFieldsObj.onInit(
+                    Object.values(
+                        getMapByIdWithValidAndElement(
+                            this.createAdditionalFieldsBasedOnIsNoChange(additionalFieldsObj)
+                                .customerAdditionalFieldsList
+                        )
+                    )
+                );
+            }
+        } else {
+            this.isNoChange = value;
+        }
+    };
+
+    createAdditionalFieldsBasedOnIsNoChange = (additionalFields) => {
+        if (this.isNoChange && additionalFields && additionalFields.hasCustomerAdditionalFields) {
+            return {
+                ...additionalFields,
+                customerAdditionalFieldsList: additionalFields.customerAdditionalFieldsList.map((additionalField) => {
+                    if (additionalField && additionalField.countryField && additionalField.countryField.mandatory) {
+                        return {
+                            ...additionalField,
+                            countryField: {
+                                ...additionalField.countryField,
+                                mandatory: false,
+                            },
+                        };
+                    }
+                    return {
+                        ...additionalField,
+                    };
+                }),
+            };
+        }
+        return additionalFields;
+    };
+
     render() {
         const _current = (customer, path) => _.get(customer, 'limit.current.' + path);
         const {
@@ -68,7 +112,19 @@ export default class CreditTableRowCreditLimit extends Component {
             ? _current(customer, 'debitType')
             : _.get(customer, 'limit.wish.debitType');
 
-        const isNoChange = limitType === 'CURRENT' && paymentMethodType === 'CURRENT' && _.isNil(wishedAmount);
+        this.setIsNoChange(
+            (requestsCash && isCashCustomer) ||
+                (requestsPrePayment && isPrepaymentCustomer) ||
+                (!isCashCustomer && limitType === 'CURRENT' && paymentMethodType === 'CURRENT' && _.isNil(wishedAmount))
+        );
+
+        const newProps = {
+            ...this.props,
+            customer: {
+                ...customer,
+                additionalFields: this.createAdditionalFieldsBasedOnIsNoChange(customer.additionalFields),
+            },
+        };
 
         const isValid = _.get(customer, 'limit.valid');
         return (
@@ -175,9 +231,7 @@ export default class CreditTableRowCreditLimit extends Component {
                         <Table.D colSpan="3">
                             <CRTableCellBiggerText text={ts.cash} color={'green'} />
                         </Table.D>
-                    ) : (requestsCash && isCashCustomer) ||
-                      (requestsPrePayment && isPrepaymentCustomer) ||
-                      (!isCashCustomer && isNoChange) ? (
+                    ) : this.isNoChange ? (
                         <Table.D colSpan="3">
                             <CRTableCellBiggerText text={ts.nochange} color={'green'} />
                         </Table.D>
@@ -218,7 +272,7 @@ export default class CreditTableRowCreditLimit extends Component {
                         <ToggleIndicator />
                     </Table.D>
                 </Table.R>
-                {isExpanded ? <ExpandedRow {...this.props} /> : null}
+                {isExpanded ? <ExpandedRow {...newProps} /> : null}
             </React.Fragment>
         );
     }

@@ -10,8 +10,53 @@ import CRTableCellBiggerText from './CreditTable/CRTableCellBiggerText';
 import ToggleIndicator from '../ToggleIndicator';
 import { lookup } from '../Util/translations';
 import { createProductTimePeriod } from './creditDataTabUtil';
+import { getMapByIdWithValidAndElement } from '../AdditionalFields/additionalFielsUtil';
 
 export default class CreditTableRowApproval extends Component {
+    isNoChangeInNew = undefined;
+
+    setIsNoChangeInNew = (value) => {
+        if (this.isNoChangeInNew !== value) {
+            this.isNoChangeInNew = value;
+            const additionalFieldsObj = _.get(this.props, 'customer.additionalFields');
+            if (additionalFieldsObj && additionalFieldsObj.onInit) {
+                additionalFieldsObj.onInit(
+                    Object.values(
+                        getMapByIdWithValidAndElement(
+                            this.createAdditionalFieldsBasedOnIsNoChange(additionalFieldsObj)
+                                .customerAdditionalFieldsList
+                        )
+                    )
+                );
+            }
+        } else {
+            this.isNoChangeInNew = value;
+        }
+    };
+
+    createAdditionalFieldsBasedOnIsNoChange = (additionalFields) => {
+        if (this.isNoChangeInNew && additionalFields && additionalFields.hasCustomerAdditionalFields) {
+            return {
+                ...additionalFields,
+                customerAdditionalFieldsList: additionalFields.customerAdditionalFieldsList.map((additionalField) => {
+                    if (additionalField && additionalField.countryField && additionalField.countryField.mandatory) {
+                        return {
+                            ...additionalField,
+                            countryField: {
+                                ...additionalField.countryField,
+                                mandatory: false,
+                            },
+                        };
+                    }
+                    return {
+                        ...additionalField,
+                    };
+                }),
+            };
+        }
+        return additionalFields;
+    };
+
     retrieveNewCreditData(customer, isNoChangeInNew, limitType, paymentMethodType) {
         if (isNoChangeInNew) {
             return null;
@@ -116,16 +161,25 @@ export default class CreditTableRowApproval extends Component {
 
         // new data flag
         const isPrepaymentInNew = requestsPrePayment;
-        const isNoChangeInNew =
+        this.setIsNoChangeInNew(
             (limitType === 'CURRENT' &&
                 paymentMethodType === 'CURRENT' &&
                 _.isNil(_.get(customer, 'limit.new.amount'))) ||
-            (isPrepaymentCustomer && (requestsPrePayment || isPrepaymentRequest));
-        const newCreditData = this.retrieveNewCreditData(customer, isNoChangeInNew, limitType, paymentMethodType);
+                (isPrepaymentCustomer && (requestsPrePayment || isPrepaymentRequest))
+        );
+        const newCreditData = this.retrieveNewCreditData(customer, this.isNoChangeInNew, limitType, paymentMethodType);
 
         const refinedCanToggle = isPrepaymentRequest ? isBlocked : canToggle;
 
         const isValid = _.get(customer, 'limit.valid');
+
+        const newProps = {
+            ...this.props,
+            customer: {
+                ...customer,
+                additionalFields: this.createAdditionalFieldsBasedOnIsNoChange(customer.additionalFields),
+            },
+        };
         return (
             <React.Fragment>
                 <Table.R
@@ -271,7 +325,7 @@ export default class CreditTableRowApproval extends Component {
                         </Table.D>
                     ) : (requestsCash && isCashCustomer) ||
                       (requestsPrePayment && isPrepaymentCustomer) ||
-                      (!isCashCustomer && isNoChangeInNew) ? (
+                      (!isCashCustomer && this.isNoChangeInNew) ? (
                         <Table.D colSpan="3" borderFix>
                             <CRTableCellBiggerText text={ts.nochange} color={'green'} />
                         </Table.D>
@@ -311,7 +365,7 @@ export default class CreditTableRowApproval extends Component {
                         </React.Fragment>
                     )}
                 </Table.R>
-                {isExpanded ? <ExpandedRow {...this.props} /> : null}
+                {isExpanded ? <ExpandedRow {...newProps} /> : null}
             </React.Fragment>
         );
     }

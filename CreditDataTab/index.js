@@ -159,6 +159,7 @@ export default class CreditDataTab extends Component {
         return additionalFields && additionalFields.hasGroup ? (
             <AdditionalFieldsSectionWithDialog
                 onChange={additionalFields.group.onChange}
+                onInit={additionalFields.group.onInit}
                 title={lookup('mrc.credittab.groupdetails')}
                 editable={additionalFields.group.editable}
                 requestFields={additionalFields.group.requestFields}
@@ -171,6 +172,7 @@ export default class CreditDataTab extends Component {
         return additionalFields && additionalFields.hasRequest ? (
             <AdditionalFieldsSectionWithDialog
                 onChange={additionalFields.request.onChange}
+                onInit={additionalFields.request.onInit}
                 title={lookup('mrc.credittab.requestdetails')}
                 editable={additionalFields.request.editable}
                 requestFields={this.props.additionalFields.request.requestFields}

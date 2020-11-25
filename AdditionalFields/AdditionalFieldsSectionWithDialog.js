@@ -1,7 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { RequestFieldPropTypes } from './AdditionalFieldsPropTypes';
-import { orderRequestFields } from './additionalFielsUtil';
+import { getMapByIdWithValidAndElement, orderRequestFields } from './additionalFielsUtil';
 import { lookup } from '../Util/translations';
 import ErrorHandler from '../ErrorHandler';
 import AdditionalField from './AdditionalField';
@@ -14,20 +14,15 @@ import './index.scss';
 export default class AdditionalFieldsSectionWithDialog extends React.Component {
     constructor(props) {
         super(props);
-        const requestFields = {};
+        const requestFields = getMapByIdWithValidAndElement(this.props.requestFields);
         const currentRequestFields = [];
-        if (this.props.requestFields !== null && this.props.requestFields !== undefined) {
-            this.props.requestFields.forEach((rf) => {
-                const type = rf.countryField.field.type;
-                const oldValue = type === 'TEXTAREA' ? rf.textValue : rf.value;
-                const valid =
-                    additionalFieldMandatoryIsValid(rf.countryField.mandatory, oldValue) &&
-                    additionalFieldIsValid(rf.countryField.validation, type, oldValue, rf.creationTimestamp);
-                requestFields[rf.id] = { valid: valid, item: rf };
-                currentRequestFields.push({ id: rf.id, valid: valid, value: oldValue });
-            });
-        }
+        Object.values(requestFields).forEach((mapItem) => {
+            const type = mapItem.item.countryField.field.type;
+            const value = type === 'TEXTAREA' ? mapItem.item.textValue : mapItem.item.value;
+            currentRequestFields.push({ id: mapItem.item.id, valid: mapItem.valid, value: value });
+        });
         this.state = { requestFields: requestFields, currentRequestFields: currentRequestFields };
+        if (this.props.onInit) this.props.onInit(Object.values(requestFields));
         this.toggleModal = this.toggleModal.bind(this);
         this.resetChangedAdditionalFields = this.resetChangedAdditionalFields.bind(this);
     }
@@ -91,10 +86,16 @@ export default class AdditionalFieldsSectionWithDialog extends React.Component {
         );
     }
 
-    additionalFieldOnChange = (elem, value, valid) => {
+    additionalFieldOnChange = (elem, value) => {
         const oldValue = elem.countryField.field.type === 'TEXTAREA' ? elem.textValue : elem.value;
         if (!this.props.disabled && value !== oldValue) {
-            let requestFields = this.state.requestFields;
+            const requestFields = this.state.requestFields;
+
+            const type = elem.countryField.field.type;
+            const valid =
+                additionalFieldMandatoryIsValid(elem.countryField.mandatory, value) &&
+                additionalFieldIsValid(elem.countryField.validation, type, value, elem.creationTimestamp);
+
             if (elem.countryField.field.type === 'TEXTAREA') {
                 elem.textValue = value;
                 requestFields[elem.id].item.textValue = value;
@@ -104,27 +105,22 @@ export default class AdditionalFieldsSectionWithDialog extends React.Component {
                 requestFields[elem.id].item.value = value;
                 requestFields[elem.id].valid = valid;
             }
+
             this.setState({ requestFields: requestFields });
         }
     };
 
     onSave() {
-        const stateFieldsList =
-            this.state.requestFields !== null && this.state.requestFields !== undefined
-                ? Object.values(this.state.requestFields).map((it) => it.item)
-                : [];
-
-        const requestFields = {};
+        const stateFieldsList = [];
         const currentRequestFields = [];
-        if (stateFieldsList !== null && stateFieldsList !== undefined) {
-            stateFieldsList.forEach((rf) => {
-                const type = rf.countryField.field.type;
-                const oldValue = type === 'TEXTAREA' ? rf.textValue : rf.value;
-                const valid =
-                    additionalFieldMandatoryIsValid(rf.countryField.mandatory, oldValue) &&
-                    additionalFieldIsValid(rf.countryField.validation, type, oldValue, rf.creationTimestamp);
-                requestFields[rf.id] = { valid: valid, item: rf };
-                currentRequestFields.push({ id: rf.id, valid: valid, value: oldValue });
+
+        if (this.state.requestFields != null && this.state.requestFields !== undefined) {
+            Object.keys(this.state.requestFields).forEach((key) => {
+                const requestField = this.state.requestFields[key];
+                const type = requestField.item.countryField.field.type;
+                const value = type === 'TEXTAREA' ? requestField.item.textValue : requestField.item.value;
+                currentRequestFields.push({ id: key, valid: requestField.valid, value: value });
+                stateFieldsList.push(requestField.item);
             });
         }
         this.props
@@ -143,6 +139,7 @@ export default class AdditionalFieldsSectionWithDialog extends React.Component {
                         onChange={this.additionalFieldOnChange}
                         disabled={false}
                         editable={edit}
+                        valid={this.state.requestFields[elem.id].valid}
                     />
                 ))}
             </div>
@@ -155,6 +152,7 @@ export default class AdditionalFieldsSectionWithDialog extends React.Component {
                         onChange={null}
                         disabled={true}
                         editable={edit}
+                        valid={true}
                         showMissingValueValidationMessage={true}
                     />
                 ))}
@@ -197,6 +195,7 @@ export default class AdditionalFieldsSectionWithDialog extends React.Component {
 AdditionalFieldsSectionWithDialog.propTypes = {
     requestFields: PropTypes.arrayOf(RequestFieldPropTypes),
     onChange: PropTypes.func.isRequired,
+    onInit: PropTypes.func,
     title: PropTypes.string.isRequired,
     editable: PropTypes.bool.isRequired,
     disabled: PropTypes.bool.isRequired,
