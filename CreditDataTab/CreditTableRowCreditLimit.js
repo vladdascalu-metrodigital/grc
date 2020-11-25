@@ -33,8 +33,15 @@ export default class CreditTableRowCreditLimit extends Component {
         }
     };
 
-    createAdditionalFieldsBasedOnIsNoChange = (additionalFields) => {
+    createAdditionalFieldsBasedOnIsNoChange = (additionalFields, creditOption) => {
         if (this.isNoChange && additionalFields && additionalFields.hasCustomerAdditionalFields) {
+            if (creditOption !== null && creditOption !== undefined && creditOption !== 'NEWCREDIT') {
+                return {
+                    ...additionalFields,
+                    hasCustomerAdditionalFields: false,
+                    customerAdditionalFieldsList: [],
+                };
+            }
             return {
                 ...additionalFields,
                 customerAdditionalFieldsList: additionalFields.customerAdditionalFieldsList.map((additionalField) => {
@@ -122,7 +129,7 @@ export default class CreditTableRowCreditLimit extends Component {
             ...this.props,
             customer: {
                 ...customer,
-                additionalFields: this.createAdditionalFieldsBasedOnIsNoChange(customer.additionalFields),
+                additionalFields: this.createAdditionalFieldsBasedOnIsNoChange(customer.additionalFields, creditOption),
             },
         };
 

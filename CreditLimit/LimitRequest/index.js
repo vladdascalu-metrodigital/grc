@@ -520,19 +520,14 @@ export default class LimitRequestLayout extends Component {
                 customers={
                     requestedItems
                         ? request.requestedItems.map((item) => {
-                              const customerAdditionalFieldsList =
-                                  _.get(item, 'creditOption') === 'NEWCREDIT'
-                                      ? filterAdditionalFieldsList(
-                                            this.props.additionalFields
-                                                ? this.props.additionalFields.requestFields
-                                                : undefined,
-                                            'CUSTOMER',
-                                            'CREDIT_DATA',
-                                            _.get(item, 'customer.country'),
-                                            _.get(item, 'customer.storeNumber'),
-                                            _.get(item, 'customer.customerNumber')
-                                        )
-                                      : [];
+                              const customerAdditionalFieldsList = filterAdditionalFieldsList(
+                                  this.props.additionalFields ? this.props.additionalFields.requestFields : undefined,
+                                  'CUSTOMER',
+                                  'CREDIT_DATA',
+                                  _.get(item, 'customer.country'),
+                                  _.get(item, 'customer.storeNumber'),
+                                  _.get(item, 'customer.customerNumber')
+                              );
                               const hasCustomerAdditionalFields = hasAdditionalFields(customerAdditionalFieldsList);
                               const isAtLeastOneFieldIsInvalid =
                                   hasCustomerAdditionalFields &&

@@ -796,17 +796,14 @@ export class ApprovalProcessPresentation extends Component {
                 }}
                 customers={approvalItems.map((item) => {
                     const isNewLimit = _.get(item, 'limitType') === 'NEW';
-                    const customerAdditionalFieldsList =
-                        _.get(item, 'creditOption') === 'NEWCREDIT'
-                            ? filterAdditionalFieldsList(
-                                  requestFields,
-                                  'CUSTOMER',
-                                  'CREDIT_DATA',
-                                  _.get(item, 'customer.country'),
-                                  _.get(item, 'customer.storeNumber'),
-                                  _.get(item, 'customer.customerNumber')
-                              )
-                            : [];
+                    const customerAdditionalFieldsList = filterAdditionalFieldsList(
+                        requestFields,
+                        'CUSTOMER',
+                        'CREDIT_DATA',
+                        _.get(item, 'customer.country'),
+                        _.get(item, 'customer.storeNumber'),
+                        _.get(item, 'customer.customerNumber')
+                    );
                     const hasCustomerAdditionalFields = hasAdditionalFields(customerAdditionalFieldsList);
 
                     const isAtLeastOneFieldIsInvalid =
