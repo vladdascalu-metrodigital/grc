@@ -1,5 +1,5 @@
 import { customersInGroupReduxHelper } from '../redux/reduxHelpers';
-import { hideNotification, showError, showSuccess } from '../../Util/events';
+import { hideNotification, showSuccess } from '../../Util/events';
 import { BACKEND_API_CONTEXT, HTTP_METHOD_NAME_POST } from '../../DunningEmailManagementService/util/Constants';
 import { lookup } from '../../Util/translations';
 import { addCsrfToken } from '../../Util/csrf';
@@ -13,38 +13,6 @@ export function fetchCustomerInGroup(dispatch, country, storeNumber, customerNum
 
 export function cleanupCustomerInGroup(dispatch) {
     return batchRequestReduxHelper.createCleanup(dispatch)();
-}
-
-export function onSearchChange(dispatch, customerId, query, filter) {
-    dispatch(hideNotification());
-    const updater = customersInGroupReduxHelper.createUpdater(dispatch);
-
-    const body = {
-        query: query !== undefined && query !== null && query !== '' ? query : null,
-        filter: filter,
-    };
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json;charset=UTF-8');
-    updater.start();
-    return fetchSequentially(
-        BACKEND_API_CONTEXT +
-            '/customers/search/' +
-            customerId.country +
-            '/' +
-            customerId.storeNumber +
-            '/' +
-            customerId.customerNumber,
-        createRequestInit(HTTP_METHOD_NAME_POST, headers, JSON.stringify(body))
-    )
-        .then(checkResponseIsOkOrThrowResponse)
-        .then((resp) => resp.json())
-        .then((json) => {
-            updater.done(json);
-            return json;
-        })
-        .catch(() => {
-            dispatch(showError(lookup('mrc.dunningemailmanagement.error.search')));
-        });
 }
 
 export function onDunningEmailSave(dispatch, customerId, dunningEmail, accountIds) {

@@ -6,12 +6,7 @@ import MrcSpinner from '../../Util/MrcSpinner';
 import ErrorHandler from '../../ErrorHandler';
 import { DunningEmailManagement } from './DunningEmailManagement';
 import { connect } from 'react-redux';
-import {
-    fetchCustomerInGroup,
-    onSearchChange,
-    onDunningEmailSave,
-    hideDunningEmailChangeNotification,
-} from './service';
+import { fetchCustomerInGroup, onDunningEmailSave, hideDunningEmailChangeNotification } from './service';
 import * as _ from 'lodash';
 import { displayCustomerId, displayCustomerName } from '../util/util';
 
@@ -60,6 +55,7 @@ export class DunningEmailManagementLayout extends Component {
                 <ErrorHandler>
                     <DunningEmailManagement
                         requestedCustomerId={customersInGroupData.customerBasicInfo.customerId}
+                        isRequestedCustomerActive={customersInGroupData.customerBasicInfo.active}
                         customers={dunningEmailCustomers.map((customer) => {
                             return {
                                 customerName: displayCustomerName(customer),
@@ -67,35 +63,14 @@ export class DunningEmailManagementLayout extends Component {
                                 dunningEmail: _.isEmpty(customer.dunningEmail)
                                     ? null
                                     : customer.dunningEmail.toLowerCase().trim(),
-                                dunningEmailStatus: customer.emailVerificationStatus,
+                                dunningEmailStatus: customer.emailVerificationStatus
+                                    ? customer.emailVerificationStatus
+                                    : 'NO_DUNNING_EMAIL',
                                 accountId: customer.accountId,
                                 customerEmails: customer.customerEmails,
                             };
                         })}
                         size={customersInGroupData.size}
-                        search={{
-                            query: customersInGroupData.query,
-                            filter: customersInGroupData.filter,
-                            onChange: (value, filter) => {
-                                this.props.onSearchChange(
-                                    customersInGroupData.customerBasicInfo.customerId,
-                                    value,
-                                    filter
-                                );
-                            },
-                            onEnterSearch: (value, filter) => {
-                                this.props.onSearchChange(
-                                    customersInGroupData.customerBasicInfo.customerId,
-                                    value,
-                                    filter
-                                );
-                            },
-                        }}
-                        filters={
-                            this.props.config.dunningEmailStatusFilters[
-                                customersInGroupData.customerBasicInfo.customerId.country
-                            ]
-                        }
                         onDunningEmailSave={this.props.onDunningEmailSave}
                         allCustomerEmails={allCustomerEmails}
                         hideDunningEmailChangeNotification={this.props.hideDunningEmailChangeNotification}
@@ -111,15 +86,12 @@ DunningEmailManagementLayout.propTypes = {
     config: PropTypes.object,
     currentUiPageTitleEvent: PropTypes.func,
     onDunningEmailSave: PropTypes.func,
-    onSearchChange: PropTypes.func,
-    onEnterSearch: PropTypes.func,
     fetchCustomerInGroup: PropTypes.func,
     hideDunningEmailChangeNotification: PropTypes.func,
 };
 
 export default connect(null, function (dispatch) {
     return {
-        onSearchChange: (customerId, query, filter) => onSearchChange(dispatch, customerId, query, filter),
         onDunningEmailSave: (customerId, dunningEmail, accountIds) =>
             onDunningEmailSave(dispatch, customerId, dunningEmail, accountIds),
         fetchCustomerInGroup: (country, storeNumber, customerNumber) =>

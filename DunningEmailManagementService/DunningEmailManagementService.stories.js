@@ -39,7 +39,7 @@ storiesOf('Services/DunningEmailManagement', module)
                         },
                         customers: [
                             {
-                                accountId: '1',
+                                accountId: 't1',
                                 country: 'de',
                                 customerId: {
                                     country: 'de',
@@ -50,10 +50,10 @@ storiesOf('Services/DunningEmailManagement', module)
                                 companyOwnerFullName: 'test owner',
                                 dunningEmail: 'dunning1@t.com',
                                 customerEmails: ['dunning1@t.com', 't1@t.com', 't2@t.com'],
-                                emailVerificationStatus: 'DOMAIN_VERIFIED',
+                                emailVerificationStatus: 'SYNTAX_VERIFIED',
                             },
                             {
-                                accountId: '2',
+                                accountId: 't2',
                                 country: 'de',
                                 customerId: {
                                     country: 'de',
@@ -67,7 +67,7 @@ storiesOf('Services/DunningEmailManagement', module)
                                 emailVerificationStatus: 'UNVERIFIED',
                             },
                             {
-                                accountId: '3',
+                                accountId: 't3',
                                 country: 'de',
                                 customerId: {
                                     country: 'de',
@@ -81,7 +81,7 @@ storiesOf('Services/DunningEmailManagement', module)
                                 emailVerificationStatus: null,
                             },
                             {
-                                accountId: '4',
+                                accountId: 't4',
                                 country: 'de',
                                 customerId: {
                                     country: 'de',
@@ -182,9 +182,6 @@ const config = {
     data: {
         ...languageConfig.data,
         ...quickNavConfig.data,
-    },
-    dunningEmailStatusFilters: {
-        de: ['DOMAIN_VERIFIED', 'UNVERIFIED', 'NO_DUNNING_EMAIL'],
     },
 };
 

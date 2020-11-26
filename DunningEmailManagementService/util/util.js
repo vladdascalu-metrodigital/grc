@@ -111,7 +111,7 @@ function validateCustomerChange(newDunningEmail, customer, selectedCustomerAccou
 
 function validateDunningEmailChange(newDunningEmail, oldDunningEmail, dunningEmailStatus) {
     // TODO: country specific according to doi
-    return newDunningEmail === oldDunningEmail && dunningEmailStatus === 'DOMAIN_VERIFIED';
+    return newDunningEmail === oldDunningEmail && dunningEmailStatus === 'SYNTAX_VERIFIED';
 }
 
 function validateEmail(email) {

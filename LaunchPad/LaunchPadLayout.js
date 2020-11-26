@@ -13,6 +13,7 @@ import CreditcorrectionIcon from '../icons/credit-correction-blue.svg';
 import BatchUpdateIcon from '../icons/batch-update-blue.svg';
 import ReportingIcon from '../icons/reporting-blue.svg';
 import PrepaymentIcon from '../icons/prepayment-blue.svg';
+import EmailServiceIcon from '../icons/emailserviceicon-blue.svg';
 
 const trainingMovieStyle = {
     margin: '1rem',
@@ -30,6 +31,7 @@ const iconMap = {
     batchupdate: BatchUpdateIcon,
     reports: ReportingIcon,
     prepayment: PrepaymentIcon,
+    dunningemailmanagement: EmailServiceIcon,
 };
 
 export default class LaunchPadLayout extends Component {
