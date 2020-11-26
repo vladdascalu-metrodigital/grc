@@ -50,6 +50,12 @@ export default {
                 title: 'Prepayment',
                 show: true,
             },
+            dunningemailmanagement: {
+                active: true,
+                url: '/dunningemailmanagement/{country}/{storeNumber}/{customerNumber}',
+                title: 'Dunning Email Management',
+                show: true,
+            },
         },
     },
 };

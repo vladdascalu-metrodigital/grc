@@ -20,10 +20,6 @@ import {
     hasAdditionalFields,
     atLeastOneFieldIsInvalid,
 } from '../../AdditionalFields/additionalFielsUtil';
-import {
-    additionalFieldMandatoryIsValid,
-    additionalFieldIsValid,
-} from '../../AdditionalFields/additionalFieldsValidation';
 import { createBlockingInfo } from '../../Util/blockingInfoUtils';
 import CreditDataTab from '../../CreditDataTab';
 
@@ -55,7 +51,6 @@ export default class LimitRequestLayout extends Component {
             approvedGroupLimit: 0,
             isApplyCurrentLimitAndExpiryClicked: false,
             additionalFieldsValidations: {},
-            additionalFieldsIgnoreIds: [],
         };
 
         this.props.showAuxControl({ back: true });
@@ -64,7 +59,6 @@ export default class LimitRequestLayout extends Component {
         this.props.updateUiPageTitle(lookup('creditlimit.limitrequest.title'));
         this.handleAdditionalFieldsOnChange = this.handleAdditionalFieldsOnChange.bind(this);
         this.handleAdditionalFieldsOnSave = this.handleAdditionalFieldsOnSave.bind(this);
-        this.handleAdditionalFieldsOnBlur = this.handleAdditionalFieldsOnBlur.bind(this);
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
     }
 
@@ -78,28 +72,6 @@ export default class LimitRequestLayout extends Component {
      * @param nextProps
      */
     UNSAFE_componentWillReceiveProps(nextProps) {
-        //
-        // in case we got data, prepare it
-        //
-        if (
-            Object.values(this.state.additionalFieldsValidations).length === 0 &&
-            nextProps.additionalFields &&
-            nextProps.additionalFields.requestFields
-        ) {
-            const additionalFields = nextProps.additionalFields;
-            const newAdditionalFieldsValidations = this.state.additionalFieldsValidations;
-            additionalFields.requestFields.forEach((field) => {
-                const type = field.countryField.field.type;
-                const oldValue = type === 'TEXTAREA' ? field.textValue : field.value;
-                const valid =
-                    additionalFieldMandatoryIsValid(field.countryField.mandatory, oldValue) &&
-                    additionalFieldIsValid(field.countryField.validation, type, oldValue, field.creationTimestamp);
-                newAdditionalFieldsValidations[field.id] = valid;
-            });
-            this.setState({
-                additionalFieldsValidations: newAdditionalFieldsValidations,
-            });
-        }
         if (nextProps.request && nextProps.request.data) {
             const req = nextProps.request.data;
 
@@ -107,35 +79,6 @@ export default class LimitRequestLayout extends Component {
             // mark the requested customer
             //
             req.requestedItems.forEach((ri) => this.markRequestedCustomer(req.requestedCustomerId, ri.customer));
-
-            const additionalFieldsIdsTemp = [];
-            req.requestedItems.forEach((ri) => {
-                if (
-                    _.get(ri, 'creditOption') !== 'NEWCREDIT' &&
-                    nextProps.additionalFields &&
-                    nextProps.additionalFields.requestFields
-                ) {
-                    const additionalFields = nextProps.additionalFields;
-                    const customerAdditionalFieldsList = filterAdditionalFieldsList(
-                        additionalFields ? additionalFields.requestFields : undefined,
-                        'CUSTOMER',
-                        'CREDIT_DATA',
-                        _.get(ri, 'customer.country'),
-                        _.get(ri, 'customer.storeNumber'),
-                        _.get(ri, 'customer.customerNumber')
-                    );
-
-                    if (hasAdditionalFields(customerAdditionalFieldsList)) {
-                        customerAdditionalFieldsList.forEach((field) => {
-                            additionalFieldsIdsTemp.push(field.id);
-                        });
-                    }
-                }
-            });
-
-            this.setState({
-                additionalFieldsIgnoreIds: additionalFieldsIdsTemp,
-            });
 
             //
             // sort by customerID, taking the requestedCustomer first
@@ -203,16 +146,7 @@ export default class LimitRequestLayout extends Component {
     }
 
     additionalFieldsValid() {
-        const validationMap = new Map(Object.entries(this.state.additionalFieldsValidations));
-        if (validationMap.size === 0) {
-            return true;
-        }
-        for (const key of validationMap.keys()) {
-            if (!this.state.additionalFieldsIgnoreIds.includes(key) && !validationMap.get(key)) {
-                return false;
-            }
-        }
-        return true;
+        return !(Object.values(this.state.additionalFieldsValidations).filter((value) => !value).length > 0);
     }
 
     requestedCustomerCreditDataChanged(items) {
@@ -318,32 +252,47 @@ export default class LimitRequestLayout extends Component {
     };
 
     handleAdditionalFieldsOnSave = (fields) => {
-        const newAdditionalFieldsValidations = this.state.additionalFieldsValidations;
-        fields.forEach((field) => {
-            newAdditionalFieldsValidations[field.id] = true;
-        });
-        this.setState({
-            additionalFieldsValidations: newAdditionalFieldsValidations,
-        });
-        this.props.updateAdditionalFields(fields);
+        return this.props
+            .updateAdditionalFields(fields)
+            .then((resp) => {
+                const newAdditionalFieldsValidations = this.state.additionalFieldsValidations;
+                fields.forEach((field) => {
+                    newAdditionalFieldsValidations[field.id] = true;
+                });
+                this.setState({
+                    additionalFieldsValidations: newAdditionalFieldsValidations,
+                });
+                return resp;
+            })
+            .catch((err) => {
+                throw err;
+            });
     };
 
     handleAdditionalFieldsOnChange = (elem, valid) => {
         const newAdditionalFieldsValidations = this.state.additionalFieldsValidations;
         newAdditionalFieldsValidations[elem.id] = valid;
-        this.setState({
-            additionalFieldsValidations: newAdditionalFieldsValidations,
-        });
-        if (valid) {
-            this.props.updateAdditionalField(elem);
-        }
+        return this.props
+            .updateAdditionalField(elem)
+            .then(() =>
+                this.setState({
+                    additionalFieldsValidations: newAdditionalFieldsValidations,
+                })
+            )
+            .catch((err) => throw err);
     };
 
-    handleAdditionalFieldsOnBlur = (elem, valid) => {
-        if (valid) {
-            this.props.updateAdditionalField(elem);
-        } else {
-            this.handleAdditionalFieldsOnChange(elem, valid);
+    handleAdditionalFieldsOnInit = (elems) => {
+        if (elems !== null && elems !== undefined) {
+            const newAdditionalFieldsValidations = this.state.additionalFieldsValidations;
+            elems.forEach((elem) => {
+                if (elem.valid !== undefined && elem.item !== undefined && elem.item.id !== undefined) {
+                    newAdditionalFieldsValidations[elem.item.id] = elem.valid;
+                }
+            });
+            this.setState({
+                additionalFieldsValidations: newAdditionalFieldsValidations,
+            });
         }
     };
 
@@ -571,19 +520,14 @@ export default class LimitRequestLayout extends Component {
                 customers={
                     requestedItems
                         ? request.requestedItems.map((item) => {
-                              const customerAdditionalFieldsList =
-                                  _.get(item, 'creditOption') === 'NEWCREDIT'
-                                      ? filterAdditionalFieldsList(
-                                            this.props.additionalFields
-                                                ? this.props.additionalFields.requestFields
-                                                : undefined,
-                                            'CUSTOMER',
-                                            'CREDIT_DATA',
-                                            _.get(item, 'customer.country'),
-                                            _.get(item, 'customer.storeNumber'),
-                                            _.get(item, 'customer.customerNumber')
-                                        )
-                                      : [];
+                              const customerAdditionalFieldsList = filterAdditionalFieldsList(
+                                  this.props.additionalFields ? this.props.additionalFields.requestFields : undefined,
+                                  'CUSTOMER',
+                                  'CREDIT_DATA',
+                                  _.get(item, 'customer.country'),
+                                  _.get(item, 'customer.storeNumber'),
+                                  _.get(item, 'customer.customerNumber')
+                              );
                               const hasCustomerAdditionalFields = hasAdditionalFields(customerAdditionalFieldsList);
                               const isAtLeastOneFieldIsInvalid =
                                   hasCustomerAdditionalFields &&
@@ -750,6 +694,7 @@ export default class LimitRequestLayout extends Component {
                                       hasCustomerAdditionalFields: hasCustomerAdditionalFields,
                                       customerAdditionalFieldsList: customerAdditionalFieldsList,
                                       onChange: this.handleAdditionalFieldsOnChange,
+                                      onInit: this.handleAdditionalFieldsOnInit,
                                       disabled: readOnly,
                                       editable: true,
                                   },
@@ -777,6 +722,7 @@ export default class LimitRequestLayout extends Component {
                     request: {
                         requestFields: requestAdditionalFields,
                         onChange: this.handleAdditionalFieldsOnSave,
+                        onInit: this.handleAdditionalFieldsOnInit,
                         editable: true,
                         disabled: readOnly,
                     },
@@ -784,6 +730,7 @@ export default class LimitRequestLayout extends Component {
                     group: {
                         requestFields: groupAdditionalFields,
                         onChange: this.handleAdditionalFieldsOnSave,
+                        onInit: this.handleAdditionalFieldsOnInit,
                         editable: true,
                         disabled: readOnly,
                     },

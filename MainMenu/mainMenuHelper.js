@@ -9,6 +9,7 @@ import CreditCorrectionIcon from '../icons/CreditCorrectionIcon';
 import PrepaymentIcon from '../icons/PrepaymentIcon';
 import BatchUpdateIcon from '../icons/BatchUpdateIcon';
 import ReportingIcon from '../icons/ReportingIcon';
+import EmailServiceIcon from '../icons/EmailServiceIcon';
 
 const iconMap = {
     launchpad: LaunchPadIcon, // Will not be part of the config, just for here
@@ -20,6 +21,7 @@ const iconMap = {
     batchupdate: BatchUpdateIcon,
     reports: ReportingIcon,
     prepayment: PrepaymentIcon,
+    dunningemailmanagement: EmailServiceIcon,
 };
 
 const sortMap = [
@@ -32,6 +34,7 @@ const sortMap = [
     'batchupdate',
     'reports',
     'prepayment',
+    'dunningemailmanagement',
 ];
 
 function sortNavs(navs, sortMap) {

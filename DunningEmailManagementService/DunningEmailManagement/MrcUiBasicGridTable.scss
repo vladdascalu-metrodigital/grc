@@ -1,0 +1,114 @@
+@import '../../lib/scss/colors';
+@import '../../lib/scss/variables';
+@import '../../lib/scss/typography';
+
+.mrc-ui-basic-grid-table-form {
+    z-index: 8;
+    // position: sticky;
+    // top: 0;
+    background-color: $color-contrast-white;
+    h2 {
+        color: $color-palette-grey-tint-50;
+    }
+}
+
+.mrc-ui-form-box {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-column-gap: 1rem;
+    background-color: $color-form-background-grey;
+    padding: $spacing-medium $spacing-medium;
+}
+
+@media screen and (min-width: 1350px) {
+    .mrc-ui-basic-grid-table-form {
+        position: sticky;
+        top: var(--sticky-top);
+    }
+}
+
+.mrc-ui-basic-table-grid-cell-customer-name {
+    font-weight: bold;
+    color: $color-brand-primary-default;
+}
+
+.mrc-ui-basic-table-grid-cell-customer-id {
+    font-weight: bold;
+    font-size: $font-size-8;
+    color: $color-brand-primary-tint-60;
+    margin-left: $spacing-extra-small;
+}
+
+.mrc-ui-basic-grid-table {
+    display: grid;
+    grid-template-columns: var(--mrc-ui-grid-template-columns);
+    position: relative;
+        
+    thead,
+    tbody,
+    tr {
+        display: contents;
+    }
+
+    .mrc-ui-basic-grid-table-header-sticky th {
+        position: sticky;
+        top: 0;
+    }
+
+    @media screen and (min-width: 1350px) {  
+        .mrc-ui-basic-grid-table-header-sticky th {
+            position: sticky;
+            top: var(--sticky-top);
+        }
+    }
+
+    * {
+        z-index: 1;
+    }
+    
+    thead tr * {
+        z-index: 8 !important;
+    }
+    
+    .mrc-ui-basic-grid-table-sort-icon {
+        margin-left: $spacing-extra-extra-small;
+    }
+    
+    th, td {
+        padding: $spacing-small;
+        background: $color-contrast-white;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        min-width: 0;
+        
+    }
+    th > *, td * {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .mrc-ui-basic-grid-table-cell-longtext, .mrc-ui-basic-grid-table-cell-longtext * {
+        overflow: visible;
+        white-space: normal;
+    }
+
+    .mrc-ui-grid-table-cell-align-right {
+        justify-content: flex-end;
+    }
+
+    th {
+        background: $color-brand-primary-tint-60;
+        color: $color-contrast-white;
+        text-transform: uppercase;
+        letter-spacing: 0.05rem;
+        position: relative;
+    }
+
+    tr:nth-child(even) td {
+        background: $color-brand-primary-tint-95;
+    }
+}

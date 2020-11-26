@@ -40,10 +40,6 @@ import * as _ from 'lodash';
 import { List } from 'immutable';
 import AutoDecisionReviewReason from './AutoDecisionReviewReason';
 import CustomerDataGroup from '../../CustomerDataGroup';
-import {
-    additionalFieldIsValid,
-    additionalFieldMandatoryIsValid,
-} from '../../AdditionalFields/additionalFieldsValidation';
 
 import CreditDataTab from '../../CreditDataTab';
 import { displayName } from '../../Util';
@@ -90,7 +86,6 @@ export class ApprovalProcessPresentation extends Component {
             validMccScore: null,
             isValidMccScoreChanged: true,
             additionalFieldsValidations: {},
-            additionalFieldsIgnoreIds: [],
         };
 
         if (this.props.process.data) {
@@ -105,7 +100,6 @@ export class ApprovalProcessPresentation extends Component {
 
         this.updateValidMccScoreChangedFlag = this.updateValidMccScoreChangedFlag.bind(this);
         this.handleAdditionalFieldsOnChange = this.handleAdditionalFieldsOnChange.bind(this);
-        this.handleAdditionalFieldsOnBlur = this.handleAdditionalFieldsOnBlur.bind(this);
         this.toggleReviewReasonModal = this.toggleReviewReasonModal.bind(this);
         this.onReviewReasonSave = this.onReviewReasonSave.bind(this);
 
@@ -167,9 +161,8 @@ export class ApprovalProcessPresentation extends Component {
 
     updateNotification(approval) {
         if (approval && !approval.claimedBySomebodyElse && approval.state !== 'CANCELLED') {
-            const anyInvalidExpiryDate = !_.every(
-                approval.approvalItems,
-                (item) => _.get(item, 'validRequestedExpiryDate')
+            const anyInvalidExpiryDate = !_.every(approval.approvalItems, (item) =>
+                _.get(item, 'validRequestedExpiryDate')
             );
             if (approval.approvalItems && anyInvalidExpiryDate) {
                 this.props.showError(lookup('approval.message.request.pastLimitExpiry'));
@@ -656,26 +649,6 @@ export class ApprovalProcessPresentation extends Component {
         //
         const process = nextProps.process.data;
 
-        if (
-            Object.values(this.state.additionalFieldsValidations).length === 0 &&
-            nextProps.additionalFields &&
-            nextProps.additionalFields.requestFields
-        ) {
-            const additionalFields = nextProps.additionalFields;
-            const newAdditionalFieldsValidations = this.state.additionalFieldsValidations;
-            additionalFields.requestFields.forEach((field) => {
-                const type = field.countryField.field.type;
-                const oldValue = type === 'TEXTAREA' ? field.textValue : field.value;
-                const valid =
-                    additionalFieldMandatoryIsValid(field.countryField.mandatory, oldValue) &&
-                    additionalFieldIsValid(field.countryField.validation, type, oldValue, field.creationTimestamp);
-                newAdditionalFieldsValidations[field.id] = valid;
-            });
-            this.setState({
-                additionalFieldsValidations: newAdditionalFieldsValidations,
-            });
-        }
-
         //
         // If there is creditdata, use it *as is*.
         // The second condition needs some explanation (and see bugs https://jira.metrosystems.net/browse/MRC-2069 and https://jira.metrosystems.net/browse/MRC-2070):
@@ -700,35 +673,6 @@ export class ApprovalProcessPresentation extends Component {
             let cgl = 0;
             let rgl = 0;
             let exhaustiongl = 0;
-
-            const additionalFieldsIdsTemp = [];
-            process.approvalItems.map((approvalItem) => {
-                if (
-                    _.get(approvalItem, 'creditOption') !== 'NEWCREDIT' &&
-                    nextProps.additionalFields &&
-                    nextProps.additionalFields.requestFields
-                ) {
-                    const additionalFields = nextProps.additionalFields;
-                    const customerAdditionalFieldsList = filterAdditionalFieldsList(
-                        additionalFields ? additionalFields.requestFields : undefined,
-                        'CUSTOMER',
-                        'CREDIT_DATA',
-                        _.get(approvalItem, 'customer.country'),
-                        _.get(approvalItem, 'customer.storeNumber'),
-                        _.get(approvalItem, 'customer.customerNumber')
-                    );
-
-                    if (hasAdditionalFields(customerAdditionalFieldsList)) {
-                        customerAdditionalFieldsList.forEach((field) => {
-                            additionalFieldsIdsTemp.push(field.id);
-                        });
-                    }
-                }
-            });
-
-            this.setState({
-                additionalFieldsIgnoreIds: additionalFieldsIdsTemp,
-            });
 
             process.approvalItems.map((approvalItem) => {
                 const custId = approvalItem.customer.id;
@@ -852,17 +796,14 @@ export class ApprovalProcessPresentation extends Component {
                 }}
                 customers={approvalItems.map((item) => {
                     const isNewLimit = _.get(item, 'limitType') === 'NEW';
-                    const customerAdditionalFieldsList =
-                        _.get(item, 'creditOption') === 'NEWCREDIT'
-                            ? filterAdditionalFieldsList(
-                                  requestFields,
-                                  'CUSTOMER',
-                                  'CREDIT_DATA',
-                                  _.get(item, 'customer.country'),
-                                  _.get(item, 'customer.storeNumber'),
-                                  _.get(item, 'customer.customerNumber')
-                              )
-                            : [];
+                    const customerAdditionalFieldsList = filterAdditionalFieldsList(
+                        requestFields,
+                        'CUSTOMER',
+                        'CREDIT_DATA',
+                        _.get(item, 'customer.country'),
+                        _.get(item, 'customer.storeNumber'),
+                        _.get(item, 'customer.customerNumber')
+                    );
                     const hasCustomerAdditionalFields = hasAdditionalFields(customerAdditionalFieldsList);
 
                     const isAtLeastOneFieldIsInvalid =
@@ -1092,6 +1033,7 @@ export class ApprovalProcessPresentation extends Component {
                             hasCustomerAdditionalFields: hasCustomerAdditionalFields,
                             customerAdditionalFieldsList: customerAdditionalFieldsList,
                             onChange: this.handleAdditionalFieldsOnChange,
+                            onInit: this.handleAdditionalFieldsOnInit,
                             disabled: creditReadOnly,
                             editable: true,
                         },
@@ -1116,6 +1058,7 @@ export class ApprovalProcessPresentation extends Component {
                     request: {
                         requestFields: requestAdditionalFields,
                         onChange: this.handleAdditionalFieldsOnSave,
+                        onInit: this.handleAdditionalFieldsOnInit,
                         editable: true,
                         disabled: creditReadOnly,
                     },
@@ -1123,6 +1066,7 @@ export class ApprovalProcessPresentation extends Component {
                     group: {
                         requestFields: groupAdditionalFields,
                         onChange: this.handleAdditionalFieldsOnSave,
+                        onInit: this.handleAdditionalFieldsOnInit,
                         editable: true,
                         disabled: creditReadOnly,
                     },
@@ -1254,10 +1198,7 @@ export class ApprovalProcessPresentation extends Component {
     };
 
     contractingSubmitButton(process) {
-        const anyInvalidExpiryDate = !_.every(
-            process.approvalItems,
-            (item) => _.get(item, 'validRequestedExpiryDate')
-        );
+        const anyInvalidExpiryDate = !_.every(process.approvalItems, (item) => _.get(item, 'validRequestedExpiryDate'));
         return this.state.currentStepType === 'CONTRACT_SIGNING' ? (
             <Button
                 text={lookup('approval.action.signContract')}
@@ -1290,14 +1231,21 @@ export class ApprovalProcessPresentation extends Component {
     }
 
     handleAdditionalFieldsOnSave = (fields) => {
-        const newAdditionalFieldsValidations = this.state.additionalFieldsValidations;
-        fields.forEach((field) => {
-            newAdditionalFieldsValidations[field.id] = true;
-        });
-        this.setState({
-            additionalFieldsValidations: newAdditionalFieldsValidations,
-        });
-        this.props.updateAdditionalFields(fields);
+        return this.props
+            .updateAdditionalFields(fields)
+            .then((resp) => {
+                const newAdditionalFieldsValidations = this.state.additionalFieldsValidations;
+                fields.forEach((field) => {
+                    newAdditionalFieldsValidations[field.id] = true;
+                });
+                this.setState({
+                    additionalFieldsValidations: newAdditionalFieldsValidations,
+                });
+                return resp;
+            })
+            .catch((err) => {
+                throw err;
+            });
     };
 
     handleAdditionalFieldsOnChange = (elem, valid) => {
@@ -1306,30 +1254,25 @@ export class ApprovalProcessPresentation extends Component {
         this.setState({
             additionalFieldsValidations: newAdditionalFieldsValidations,
         });
-        if (valid) {
-            this.props.updateAdditionalField(elem);
-        }
+        this.props.updateAdditionalField(elem);
     };
 
-    handleAdditionalFieldsOnBlur = (elem, valid) => {
-        if (valid) {
-            this.props.updateAdditionalField(elem);
-        } else {
-            this.handleAdditionalFieldsOnChange(elem, valid);
+    handleAdditionalFieldsOnInit = (elems) => {
+        if (elems !== null && elems !== undefined) {
+            const newAdditionalFieldsValidations = this.state.additionalFieldsValidations;
+            elems.forEach((elem) => {
+                if (elem.valid !== undefined && elem.item !== undefined && elem.item.id !== undefined) {
+                    newAdditionalFieldsValidations[elem.item.id] = elem.valid;
+                }
+            });
+            this.setState({
+                additionalFieldsValidations: newAdditionalFieldsValidations,
+            });
         }
     };
 
     additionalFieldsValid() {
-        const validationMap = new Map(Object.entries(this.state.additionalFieldsValidations));
-        if (validationMap.size === 0) {
-            return true;
-        }
-        for (const key of validationMap.keys()) {
-            if (!this.state.additionalFieldsIgnoreIds.includes(key) && !validationMap.get(key)) {
-                return false;
-            }
-        }
-        return true;
+        return !(Object.values(this.state.additionalFieldsValidations).filter((value) => !value).length > 0);
     }
 
     anyCreditDataChanged(items) {
@@ -1373,10 +1316,7 @@ export class ApprovalProcessPresentation extends Component {
             _.get(process, 'approvalItems') && process.approvalItems.every((item) => this.creditDataValid(item));
         const anyCreditDataChanged =
             _.get(process, 'approvalItems') && this.anyCreditDataChanged(process.approvalItems);
-        const anyInvalidExpiryDate = !_.every(
-            process.approvalItems,
-            (item) => _.get(item, 'validRequestedExpiryDate')
-        );
+        const anyInvalidExpiryDate = !_.every(process.approvalItems, (item) => _.get(item, 'validRequestedExpiryDate'));
         const creditDataValid = allCreditDataValid && anyCreditDataChanged && !anyInvalidExpiryDate;
         return (
             <div className="mrc-btn-group">
@@ -1467,7 +1407,7 @@ export class ApprovalProcessPresentation extends Component {
                         text={lookup('approval.action.forward')}
                         id="mrc-approve-button"
                         status={process.isForwardableByCurrentUser ? 'primary' : 'secondary'}
-                        disabled={!process.forwardableByCurrentUser|| anyInvalidExpiryDate}
+                        disabled={!process.forwardableByCurrentUser || anyInvalidExpiryDate}
                         onClick={() => {
                             this.props.forward(process.id, process.version);
                         }}

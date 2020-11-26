@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { PropTypes } from 'prop-types';
 import { lookup } from '../Util/translations';
-import { additionalFieldIsValid, additionalFieldMandatoryIsValid } from './additionalFieldsValidation';
 import { RequestFieldPropTypes } from './AdditionalFieldsPropTypes';
 import NumberInput from '../NumberInputNew';
 import TextInput from '../TextInput';
@@ -24,27 +23,18 @@ export default function AdditionalField(props) {
     const type = elem.countryField.field.type;
     const labelKey = elem.countryField.field.label;
     const label = lookup(labelKey);
+    const valid = props.valid;
     let oldValue = elem.countryField.field.type === 'TEXTAREA' ? elem.textValue : elem.value;
-    const isValidNow =
-        props.disabled ||
-        (additionalFieldMandatoryIsValid(mandatory, oldValue) &&
-            additionalFieldIsValid(validation, type, oldValue, elem.creationTimestamp));
-
-    const [valid, setValid] = useState(isValidNow);
 
     const onChange = (value) => {
         oldValue = type === 'TEXTAREA' ? elem.textValue : elem.value;
         const val = type === 'DATE' ? formatDateForAdditionalField(value) : value;
         if (oldValue !== val) {
-            const isValid =
-                additionalFieldMandatoryIsValid(mandatory, val) &&
-                additionalFieldIsValid(validation, type, val, elem.creationTimestamp);
-            setValid(isValid);
-            props.onChange(elem, val, isValid);
+            props.onChange(elem, val);
         }
     };
 
-    let fieldStatus = valid ? null : 'invalid';
+    let fieldStatus = props.disabled || valid ? null : 'invalid';
 
     const generateField = () => {
         switch (type) {
@@ -196,5 +186,6 @@ AdditionalField.propTypes = {
     onChange: PropTypes.func,
     disabled: PropTypes.bool,
     editable: PropTypes.bool,
+    valid: PropTypes.bool,
     showMissingValueValidationMessage: PropTypes.bool, // only true for group or request additional fields
 };

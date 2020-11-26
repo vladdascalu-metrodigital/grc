@@ -8,6 +8,7 @@ export const COUNTRY = {
     RS: 'RS',
     HR: 'HR',
     RU: 'RU',
+    HU: 'HU',
 };
 
 export const CURRENCY = {
@@ -18,6 +19,7 @@ export const CURRENCY = {
     HRK: 'HRK',
     RUB: 'RUB',
     RON: 'RON',
+    HUF: 'HUF',
 };
 
 export const countryToCurrency = {
@@ -31,4 +33,5 @@ export const countryToCurrency = {
     HR: CURRENCY.HRK,
     RU: CURRENCY.RUB,
     RO: CURRENCY.RON,
+    HU: CURRENCY.HUF,
 };

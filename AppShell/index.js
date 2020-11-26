@@ -26,6 +26,7 @@ export default class AppShell extends Component {
             NotificationComponent,
             tabs,
             activeTabId,
+            activeItem,
         } = this.props;
         return (
             <div className="mrc-ui-app-shell">
@@ -33,7 +34,7 @@ export default class AppShell extends Component {
                     <div className="mrc-ui-sidebar-metro-icon">
                         <MetroIcon size={IS.SMALL} />
                     </div>
-                    <MainMenuComponent context={MENU_CONTEXT.SIDEBAR} />
+                    <MainMenuComponent activeItem={activeItem} context={MENU_CONTEXT.SIDEBAR} />
                 </div>
                 <PageHeader
                     title={title}
@@ -63,6 +64,7 @@ AppShell.propTypes = {
     children: PropTypes.node,
     headerInfoData: PropTypes.object,
     activeTabId: PropTypes.string,
+    activeItem: PropTypes.string,
     tabs: PropTypes.arrayOf(
         PropTypes.shape({
             id: PropTypes.string,

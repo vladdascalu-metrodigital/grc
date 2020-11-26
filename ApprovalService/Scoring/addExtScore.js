@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { lookup } from '../../Util/translations';
 import PropTypes from 'prop-types';
 import { validateLimit, validateReportFile, validateScore } from './validation';
-import { getAgencyList } from './agencySetup';
+import Agencies from './agencies.json';
 
 export default class AddExtScore extends Component {
     constructor(props) {
@@ -16,6 +16,10 @@ export default class AddExtScore extends Component {
             reportName: null,
             readyToSave: null,
         };
+    }
+
+    agencyList(country) {
+        return Agencies[country.toLowerCase()];
     }
 
     render() {
@@ -111,7 +115,7 @@ export default class AddExtScore extends Component {
                                 <td data-label="">
                                     <input
                                         type="file"
-                                        ref={input => {
+                                        ref={(input) => {
                                             this.reportInput = input;
                                         }}
                                         accept=".pdf"
@@ -120,7 +124,7 @@ export default class AddExtScore extends Component {
                                     />
                                     <button
                                         type="button"
-                                        ref={input => {
+                                        ref={(input) => {
                                             this.reportButton = input;
                                         }}
                                         className="mrc-ghost-button uploadReportButton"
@@ -159,14 +163,12 @@ export default class AddExtScore extends Component {
     };
 
     createAgencyOptions = () => {
-        // create different agencies by country
-        let agencyList = getAgencyList(this.props.country);
         return [
             <option key="" value="">
                 Please Choose...
             </option>,
         ].concat(
-            agencyList.map(agency => {
+            this.agencyList(this.props.country).map((agency) => {
                 return (
                     <option key={agency.key} value={agency.value}>
                         {agency.label}
@@ -188,7 +190,7 @@ export default class AddExtScore extends Component {
         });
     };
 
-    handleReportUpload = e => {
+    handleReportUpload = (e) => {
         const maxFilNameLength = 50;
         const reportFile = e.target.files[0];
         const reportFileName = this.shortenFileName(e.target.files[0].name, maxFilNameLength);
@@ -232,7 +234,7 @@ export default class AddExtScore extends Component {
         this.reportInput.click();
     };
 
-    handleScoreChange = e => {
+    handleScoreChange = (e) => {
         const value = e.target.value;
         const selectedAgency = this.state.agency;
         this.setState({ score: value });
@@ -246,7 +248,7 @@ export default class AddExtScore extends Component {
         }
     };
 
-    handleAgencyChange = e => {
+    handleAgencyChange = (e) => {
         const value = e.target.value;
         if (this.state.agency != null && this.state.agency !== '' && value !== this.state.agency) {
             this.setState({
@@ -264,7 +266,7 @@ export default class AddExtScore extends Component {
         this.setState({ agency: value, readyToSave: false });
     };
 
-    handleLimitChange = e => {
+    handleLimitChange = (e) => {
         const value = e.target.value;
         this.setState({ limit: value });
         if (
@@ -277,7 +279,7 @@ export default class AddExtScore extends Component {
         }
     };
 
-    handleCustomerIdChange = e => {
+    handleCustomerIdChange = (e) => {
         const value = e.target.value;
         this.setState({ customerId: value });
     };
@@ -291,7 +293,7 @@ export default class AddExtScore extends Component {
             report: this.state.report,
             reportName: this.state.reportName,
         };
-        this.props.addExtScore(newExtScore).then(result => {
+        this.props.addExtScore(newExtScore).then((result) => {
             if (result !== undefined) {
                 this.setState({
                     agency: null,

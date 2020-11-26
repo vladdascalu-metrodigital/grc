@@ -1,0 +1,74 @@
+{
+    "de": [
+        {
+            "key": "SCHUFA_B2B",
+            "value": "SCHUFA_B2B",
+            "label": "Schufa B2B"
+        },
+        {
+            "key": "SCHUFA_B2C",
+            "value": "SCHUFA_B2C",
+            "label": "Schufa B2C"
+        },
+        {
+            "key": "BONIVERSUM",
+            "value": "BONIVERSUM",
+            "label": "Boniversum"
+        },
+        {
+            "key": "CREFO",
+            "value": "CREFO",
+            "label": "CREFO"
+        },
+        {
+            "key": "COFACE",
+            "value": "COFACE",
+            "label": "COFACE"
+        },
+        {
+            "key": "MCC_SCORE",
+            "value": "MCC_SCORE",
+            "label": "MCC Score"
+        }
+    ],
+    "pl": [
+        {
+            "key": "CREFO",
+            "value": "CREFO",
+            "label": "CREFO"
+        },
+        {
+            "key": "KRD",
+            "value": "KRD",
+            "label": "KRD"
+        }
+    ],
+    "hr": [
+        {
+            "key": "COFACE",
+            "value": "COFACE",
+            "label": "COFACE"
+        }
+    ],
+    "ru": [
+        {
+            "key": "GLOBAS",
+            "value": "GLOBAS",
+            "label": "GLOBAS"
+        }
+    ],
+    "rs": [
+        {
+            "key": "POSLOVNI_PLAN",
+            "value": "POSLOVNI_PLAN",
+            "label": "Poslovni Plan"
+        }
+    ],
+    "hu": [
+        {
+            "key": "COFACE",
+            "value": "COFACE",
+            "label": "COFACE"
+        }
+    ]
+}

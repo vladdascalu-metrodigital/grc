@@ -163,11 +163,16 @@ export default class InboxFilterPanel extends Component {
                         value={this.state.selectedSortingOption}
                     >
                         {this.state.availableSortingOptions.map((option) => {
-                            return (
-                                <option value={option} key={option}>
-                                    {lookup('inbox.sorting.option.' + option.replaceAll(',', '').replaceAll('&', ''))}
-                                </option>
-                            );
+                            if (typeof option === 'string' || option instanceof String) {
+                                const suffix = option.replace(new RegExp('&|,', 'g'), '');
+                                return (
+                                    <option value={option} key={option}>
+                                        {lookup('inbox.sorting.option.' + suffix)}
+                                    </option>
+                                );
+                            } else {
+                                return null;
+                            }
                         })}
                     </select>
                     <img htmlFor="inbox-sort-dropdown" className="mrc-icon-small mrc-down-icon" src={ChevronDownIcon} />

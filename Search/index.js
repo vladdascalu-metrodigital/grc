@@ -72,7 +72,7 @@ export default class Search extends Component {
                     />
                     {showClearButton && (
                         <div className="mrc-ui-search-clear">
-                            <a onClick={this.handleClear.bind(this)}>clear</a>
+                            <a onClick={this.handleClear.bind(this)}>{this.props.clearText}</a>
                         </div>
                     )}
                     <div className="mrc-ui-search-icon">
@@ -90,6 +90,7 @@ Search.propTypes = {
     changeDelay: PropTypes.number,
     onEnterSearch: PropTypes.func,
     placeholder: PropTypes.string,
+    clearText: PropTypes.string,
     disabled: PropTypes.bool,
     onBlur: PropTypes.func,
     label: PropTypes.string,
