@@ -218,3 +218,31 @@ export function getMapByIdWithValidAndElement(requestFields) {
     }
     return newRequestFields;
 }
+
+export function getCustomerAdditionalFieldsOptional(additionalFields) {
+    if (
+        additionalFields &&
+        additionalFields.hasCustomerAdditionalFields &&
+        additionalFields.customerAdditionalFieldsList
+    ) {
+        return {
+            ...additionalFields,
+            customerAdditionalFieldsList: additionalFields.customerAdditionalFieldsList.map((additionalField) => {
+                if (additionalField && additionalField.countryField && additionalField.countryField.mandatory) {
+                    return {
+                        ...additionalField,
+                        countryField: {
+                            ...additionalField.countryField,
+                            mandatory: false,
+                        },
+                    };
+                }
+                return {
+                    ...additionalField,
+                };
+            }),
+        };
+    }
+
+    return additionalFields;
+}

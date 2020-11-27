@@ -10,55 +10,69 @@ import CRTableCellBiggerText from './CreditTable/CRTableCellBiggerText';
 import ToggleIndicator from '../ToggleIndicator';
 import { lookup } from '../Util/translations';
 import { createProductTimePeriod } from './creditDataTabUtil';
-import { getMapByIdWithValidAndElement } from '../AdditionalFields/additionalFielsUtil';
+import {
+    getCustomerAdditionalFieldsOptional,
+    getMapByIdWithValidAndElement,
+} from '../AdditionalFields/additionalFielsUtil';
 
 export default class CreditTableRowCreditLimit extends Component {
     isNoChange = undefined;
-    setIsNoChange = (value) => {
-        if (this.isNoChange !== value) {
-            this.isNoChange = value;
-            const additionalFieldsObj = _.get(this.props, 'customer.additionalFields');
-            if (additionalFieldsObj && additionalFieldsObj.onInit) {
-                additionalFieldsObj.onInit(
-                    Object.values(
-                        getMapByIdWithValidAndElement(
-                            this.createAdditionalFieldsBasedOnIsNoChange(additionalFieldsObj)
-                                .customerAdditionalFieldsList
-                        )
-                    )
-                );
-            }
-        } else {
-            this.isNoChange = value;
+    creditOption = undefined;
+
+    setIsNoChangeAndCreditOption = (newIsNoChange, newCreditOption, additionalFields) => {
+        if (this.isNoChange === newIsNoChange && this.creditOption === newCreditOption) {
+            return;
         }
+
+        if (
+            additionalFields === null ||
+            additionalFields === undefined ||
+            !additionalFields.hasCustomerAdditionalFields ||
+            !additionalFields.onInit
+        ) {
+            this.creditOption = newCreditOption;
+            this.isNoChange = newIsNoChange;
+            return;
+        }
+
+        let fieldsValidations = [];
+
+        if (this.creditOption !== newCreditOption && newCreditOption !== 'NEWCREDIT') {
+            //send to parent all valid
+            additionalFields.customerAdditionalFieldsList.forEach((additionalField) =>
+                fieldsValidations.push({
+                    valid: true,
+                    item: additionalField,
+                })
+            );
+        } else if (newIsNoChange === true) {
+            //send validation for optional field
+            fieldsValidations = Object.values(
+                getMapByIdWithValidAndElement(
+                    getCustomerAdditionalFieldsOptional(additionalFields).customerAdditionalFieldsList
+                )
+            );
+        } else {
+            //send validation for field as they are
+            fieldsValidations = Object.values(
+                getMapByIdWithValidAndElement(additionalFields.customerAdditionalFieldsList)
+            );
+        }
+
+        additionalFields.onInit(fieldsValidations);
+        this.creditOption = newCreditOption;
+        this.isNoChange = newIsNoChange;
     };
 
-    createAdditionalFieldsBasedOnIsNoChange = (additionalFields, creditOption) => {
-        if (this.isNoChange && additionalFields && additionalFields.hasCustomerAdditionalFields) {
-            if (creditOption !== null && creditOption !== undefined && creditOption !== 'NEWCREDIT') {
-                return {
-                    ...additionalFields,
-                    hasCustomerAdditionalFields: false,
-                    customerAdditionalFieldsList: [],
-                };
-            }
+    getAdditionalFieldsForChildren = (additionalFields) => {
+        if (this.creditOption !== 'NEWCREDIT') {
             return {
                 ...additionalFields,
-                customerAdditionalFieldsList: additionalFields.customerAdditionalFieldsList.map((additionalField) => {
-                    if (additionalField && additionalField.countryField && additionalField.countryField.mandatory) {
-                        return {
-                            ...additionalField,
-                            countryField: {
-                                ...additionalField.countryField,
-                                mandatory: false,
-                            },
-                        };
-                    }
-                    return {
-                        ...additionalField,
-                    };
-                }),
+                hasCustomerAdditionalFields: false,
+                customerAdditionalFieldsList: [],
             };
+        } else if (this.isNoChange === true) {
+            return getCustomerAdditionalFieldsOptional(additionalFields);
         }
         return additionalFields;
     };
@@ -119,17 +133,22 @@ export default class CreditTableRowCreditLimit extends Component {
             ? _current(customer, 'debitType')
             : _.get(customer, 'limit.wish.debitType');
 
-        this.setIsNoChange(
+        this.setIsNoChangeAndCreditOption(
             (requestsCash && isCashCustomer) ||
                 (requestsPrePayment && isPrepaymentCustomer) ||
-                (!isCashCustomer && limitType === 'CURRENT' && paymentMethodType === 'CURRENT' && _.isNil(wishedAmount))
+                (!isCashCustomer &&
+                    limitType === 'CURRENT' &&
+                    paymentMethodType === 'CURRENT' &&
+                    _.isNil(wishedAmount)),
+            creditOption,
+            customer.additionalFields
         );
 
         const newProps = {
             ...this.props,
             customer: {
                 ...customer,
-                additionalFields: this.createAdditionalFieldsBasedOnIsNoChange(customer.additionalFields, creditOption),
+                additionalFields: this.getAdditionalFieldsForChildren(customer.additionalFields),
             },
         };
 
