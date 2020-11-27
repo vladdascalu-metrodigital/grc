@@ -48,7 +48,7 @@ export default class NumberInputNew extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.value !== this.props.value) {
+        if (prevProps.value !== this.props.value || prevProps.required !== this.props.required) {
             this.validate(this.props.value);
         }
     }

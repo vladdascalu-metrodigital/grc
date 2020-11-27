@@ -19,8 +19,9 @@ export const validations = {
     isPercentage: (value) =>
         validations.isNumber(value) && validations.greaterThanEq(value, 0) && validations.lessThanEq(value, 100),
     isPercentage2: (value) =>
-        validations.isPercentage(value) &&
-        (value.toString().split('.').length < 2 || value.toString().split('.')[1].length <= 2),
+        validations.isNull(value) ||
+        (validations.isPercentage(value) &&
+            (value.toString().split('.').length < 2 || value.toString().split('.')[1].length <= 2)),
     isPositivePercentage: (value) => validations.isPercentage2(value) && value > 0,
     lessThanEq1000: (value) => validations.lessThanEq(value, 1000),
     //string
