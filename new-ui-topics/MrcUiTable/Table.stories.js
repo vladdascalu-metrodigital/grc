@@ -46,7 +46,7 @@ while (i < 51) {
 }
 
 storiesOf('New UI Topics/Table', module)
-    .add('Table basic', () => {
+    .add('basic Table with lots of Data', () => {
         const columnData = [
             {
                 Header: 'Customer',
@@ -97,6 +97,6 @@ storiesOf('New UI Topics/Table', module)
         ];
         return DunningEmailTable(tableData, columnData);
     })
-    .add('Table basic new', () => {
+    .add('basic Table', () => {
         return DunningEmailTable(tableData);
     });

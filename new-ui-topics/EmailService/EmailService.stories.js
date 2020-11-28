@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import EmailService from '.';
+import EmailServiceReactTableExample from './EmailService';
 import AppShell from '../../AppShell';
 
 import MainMenu from '../../MainMenu';
@@ -29,379 +30,1508 @@ const MockedLanguageList = (props) => (
     <LanguageList {...props} config={languageConfig} languageChange={(l) => action('languageChange')(l)} />
 );
 
-storiesOf('New UI Topics/EmailService', module).add('EmailService', () => (
-    <AppShell
-        title="E-Mail Service"
-        customerName="Betterlife GmbH Super Long Name ;aj;djf jja dfjo;asijf ajfoasjdf oasdjfi ajsodfj"
-        customerId="15/116102"
-        customerStatus=""
-        MainMenuComponent={MockedMainMenu}
-        LanguageListComponent={MockedLanguageList}
-        config={config}
-    >
-        <EmailService
-            data={[
-                {
-                    customer: 'Müller GmbH',
-                    customerId: '9949/343456',
-                    dunningEmail: '',
-                    dunningEmailStatus: 'pending',
-                },
-                {
-                    customer: 'Betterlife GmbH',
-                    customerId: ' 133/343456',
-                    dunningEmail: 'info@betterlife.gmbh',
-                    dunningEmailStatus: 'approved',
-                },
-                {
-                    customer: 'Maier Ag',
-                    customerId: '123/99484',
-                    dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'Domain verified',
-                },
-                {
-                    customer: 'Müller GmbH',
-                    customerId: '9949/343456',
-                    dunningEmail: 'contact@mueller.gmbh',
-                    dunningEmailStatus: 'pending',
-                },
-                {
-                    customer: 'Betterlife GmbH',
-                    customerId: ' 133/343456',
-                    dunningEmail: 'info@betterlife.gmbh',
-                    dunningEmailStatus: 'approved',
-                },
-                {
-                    customer: 'Maier Ag',
-                    customerId: '123/99484',
-                    dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'Domain verified',
-                },
-                {
-                    customer: 'Müller GmbH',
-                    customerId: '9949/343456',
-                    dunningEmail: 'contact@mueller.gmbh',
-                    dunningEmailStatus: 'pending',
-                },
-                {
-                    customer: 'Betterlife GmbH',
-                    customerId: ' 133/343456',
-                    dunningEmail: 'info@betterlife.gmbh',
-                    dunningEmailStatus: 'approved',
-                },
-                {
-                    customer: 'Maier Ag',
-                    customerId: '123/99484',
-                    dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'Domain verified',
-                },
-                {
-                    customer: 'Müller GmbH',
-                    customerId: '9949/343456',
-                    dunningEmail: 'contact@mueller.gmbh',
-                    dunningEmailStatus: 'pending',
-                },
-                {
-                    customer: 'Betterlife GmbH',
-                    customerId: ' 133/343456',
-                    dunningEmail: 'info@betterlife.gmbh',
-                    dunningEmailStatus: 'approved',
-                },
-                {
-                    customer: 'Maier Ag',
-                    customerId: '123/99484',
-                    dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'Domain verified',
-                },
-                {
-                    customer: 'Müller GmbH',
-                    customerId: '9949/343456',
-                    dunningEmail: 'contact@mueller.gmbh',
-                    dunningEmailStatus: 'pending',
-                },
-                {
-                    customer: 'Betterlife GmbH',
-                    customerId: ' 133/343456',
-                    dunningEmail: 'info@betterlife.gmbh',
-                    dunningEmailStatus: 'approved',
-                },
-                {
-                    customer: 'Maier Ag',
-                    customerId: '123/99484',
-                    dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'Domain verified',
-                },
-                {
-                    customer: 'Müller GmbH',
-                    customerId: '9949/343456',
-                    dunningEmail: 'contact@mueller.gmbh',
-                    dunningEmailStatus: 'pending',
-                },
-                {
-                    customer: 'Betterlife GmbH',
-                    customerId: ' 133/343456',
-                    dunningEmail: 'info@betterlife.gmbh',
-                    dunningEmailStatus: 'approved',
-                },
-                {
-                    customer: 'Maier Ag',
-                    customerId: '123/99484',
-                    dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'Domain verified',
-                },
-                {
-                    customer: 'Müller GmbH',
-                    customerId: '9949/343456',
-                    dunningEmail: 'contact@mueller.gmbh',
-                    dunningEmailStatus: 'pending',
-                },
-                {
-                    customer: 'Betterlife GmbH',
-                    customerId: ' 133/343456',
-                    dunningEmail: 'info@betterlife.gmbh',
-                    dunningEmailStatus: 'approved',
-                },
-                {
-                    customer: 'Maier Ag',
-                    customerId: '123/99484',
-                    dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'Domain verified',
-                },
-                {
-                    customer: 'Müller GmbH',
-                    customerId: '9949/343456',
-                    dunningEmail: 'contact@mueller.gmbh',
-                    dunningEmailStatus: 'pending',
-                },
-                {
-                    customer: 'Betterlife GmbH',
-                    customerId: ' 133/343456',
-                    dunningEmail: 'info@betterlife.gmbh',
-                    dunningEmailStatus: 'approved',
-                },
-                {
-                    customer: 'Maier Ag',
-                    customerId: '123/99484',
-                    dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'Domain verified',
-                },
-                {
-                    customer: 'Müller GmbH',
-                    customerId: '9949/343456',
-                    dunningEmail: 'contact@mueller.gmbh',
-                    dunningEmailStatus: 'pending',
-                },
-                {
-                    customer: 'Betterlife GmbH',
-                    customerId: ' 133/343456',
-                    dunningEmail: 'info@betterlife.gmbh',
-                    dunningEmailStatus: 'approved',
-                },
-                {
-                    customer: 'Maier Ag',
-                    customerId: '123/99484',
-                    dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'Domain verified',
-                },
-                {
-                    customer: 'Müller GmbH',
-                    customerId: '9949/343456',
-                    dunningEmail: 'contact@mueller.gmbh',
-                    dunningEmailStatus: 'pending',
-                },
-                {
-                    customer: 'Betterlife GmbH',
-                    customerId: ' 133/343456',
-                    dunningEmail: 'info@betterlife.gmbh',
-                    dunningEmailStatus: 'approved',
-                },
-                {
-                    customer: 'Maier Ag',
-                    customerId: '123/99484',
-                    dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'Domain verified',
-                },
-                {
-                    customer: 'Müller GmbH',
-                    customerId: '9949/343456',
-                    dunningEmail: 'contact@mueller.gmbh',
-                    dunningEmailStatus: 'pending',
-                },
-                {
-                    customer: 'Betterlife GmbH',
-                    customerId: ' 133/343456',
-                    dunningEmail: 'info@betterlife.gmbh',
-                    dunningEmailStatus: 'approved',
-                },
-                {
-                    customer: 'Maier Ag',
-                    customerId: '123/99484',
-                    dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'Domain verified',
-                },
-                {
-                    customer: 'Müller GmbH',
-                    customerId: '9949/343456',
-                    dunningEmail: 'contact@mueller.gmbh',
-                    dunningEmailStatus: 'pending',
-                },
-                {
-                    customer: 'Betterlife GmbH',
-                    customerId: ' 133/343456',
-                    dunningEmail: 'info@betterlife.gmbh',
-                    dunningEmailStatus: 'approved',
-                },
-                {
-                    customer: 'Maier Ag',
-                    customerId: '123/99484',
-                    dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'Domain verified',
-                },
-                {
-                    customer: 'Müller GmbH',
-                    customerId: '9949/343456',
-                    dunningEmail: 'contact@mueller.gmbh',
-                    dunningEmailStatus: 'pending',
-                },
-                {
-                    customer: 'Betterlife GmbH',
-                    customerId: ' 133/343456',
-                    dunningEmail: 'info@betterlife.gmbh',
-                    dunningEmailStatus: 'approved',
-                },
-                {
-                    customer: 'Maier Ag',
-                    customerId: '123/99484',
-                    dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'Domain verified',
-                },
-                {
-                    customer: 'Müller GmbH',
-                    customerId: '9949/343456',
-                    dunningEmail: 'contact@mueller.gmbh',
-                    dunningEmailStatus: 'pending',
-                },
-                {
-                    customer: 'Betterlife GmbH',
-                    customerId: ' 133/343456',
-                    dunningEmail: 'info@betterlife.gmbh',
-                    dunningEmailStatus: 'approved',
-                },
-                {
-                    customer: 'Maier Ag',
-                    customerId: '123/99484',
-                    dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'Domain verified',
-                },
-                {
-                    customer: 'Müller GmbH',
-                    customerId: '9949/343456',
-                    dunningEmail: 'contact@mueller.gmbh',
-                    dunningEmailStatus: 'pending',
-                },
-                {
-                    customer: 'Betterlife GmbH',
-                    customerId: ' 133/343456',
-                    dunningEmail: 'info@betterlife.gmbh',
-                    dunningEmailStatus: 'approved',
-                },
-                {
-                    customer: 'Maier Ag',
-                    customerId: '123/99484',
-                    dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'Domain verified',
-                },
-                {
-                    customer: 'Müller GmbH',
-                    customerId: '9949/343456',
-                    dunningEmail: 'contact@mueller.gmbh',
-                    dunningEmailStatus: 'pending',
-                },
-                {
-                    customer: 'Betterlife GmbH',
-                    customerId: ' 133/343456',
-                    dunningEmail: 'info@betterlife.gmbh',
-                    dunningEmailStatus: 'approved',
-                },
-                {
-                    customer: 'Maier Ag',
-                    customerId: '123/99484',
-                    dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'Domain verified',
-                },
-                {
-                    customer: 'Müller GmbH',
-                    customerId: '9949/343456',
-                    dunningEmail: 'contact@mueller.gmbh',
-                    dunningEmailStatus: 'pending',
-                },
-                {
-                    customer: 'Betterlife GmbH',
-                    customerId: ' 133/343456',
-                    dunningEmail: 'info@betterlife.gmbh',
-                    dunningEmailStatus: 'approved',
-                },
-                {
-                    customer: 'Maier Ag',
-                    customerId: '123/99484',
-                    dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'Domain verified',
-                },
-                {
-                    customer: 'Müller GmbH',
-                    customerId: '9949/343456',
-                    dunningEmail: 'contact@mueller.gmbh',
-                    dunningEmailStatus: 'pending',
-                },
-                {
-                    customer: 'Betterlife GmbH',
-                    customerId: ' 133/343456',
-                    dunningEmail: 'info@betterlife.gmbh',
-                    dunningEmailStatus: 'approved',
-                },
-                {
-                    customer: 'Maier Ag',
-                    customerId: '123/99484',
-                    dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'Domain verified',
-                },
-                {
-                    customer: 'Müller GmbH',
-                    customerId: '9949/343456',
-                    dunningEmail: 'contact@mueller.gmbh',
-                    dunningEmailStatus: 'pending',
-                },
-                {
-                    customer: 'Betterlife GmbH',
-                    customerId: ' 133/343456',
-                    dunningEmail: 'info@betterlife.gmbh',
-                    dunningEmailStatus: 'approved',
-                },
-                {
-                    customer: 'Maier Ag',
-                    customerId: '123/99484',
-                    dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'Domain verified',
-                },
-                {
-                    customer: 'Müller GmbH',
-                    customerId: '9949/343456',
-                    dunningEmail: 'contact@mueller.gmbh',
-                    dunningEmailStatus: 'pending',
-                },
-                {
-                    customer: 'Betterlife GmbH',
-                    customerId: ' 133/343456',
-                    dunningEmail: 'info@betterlife.gmbh',
-                    dunningEmailStatus: 'approved',
-                },
-                {
-                    customer: 'Maier Ag',
-                    customerId: '123/99484',
-                    dunningEmail: 'info@maier.ag',
-                    dunningEmailStatus: 'Domain verified',
-                },
-            ]}
-        />
-    </AppShell>
-));
+storiesOf('New UI Topics/EmailService', module)
+    .add('EmailService', () => (
+        <AppShell
+            title="E-Mail Service"
+            customerName="Betterlife GmbH Super Long Name ;aj;djf jja dfjo;asijf ajfoasjdf oasdjfi ajsodfj"
+            customerId="15/116102"
+            customerStatus=""
+            MainMenuComponent={MockedMainMenu}
+            LanguageListComponent={MockedLanguageList}
+            config={config}
+        >
+            <EmailService
+                data={[
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: '',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                ]}
+            />
+        </AppShell>
+    ))
+    .add('EmailService with React Table', () => (
+        <AppShell
+            title="E-Mail Service"
+            customerName="Betterlife GmbH Super Long Name ;aj;djf jja dfjo;asijf ajfoasjdf oasdjfi ajsodfj"
+            customerId="15/116102"
+            customerStatus=""
+            MainMenuComponent={MockedMainMenu}
+            LanguageListComponent={MockedLanguageList}
+            config={config}
+        >
+            <EmailServiceReactTableExample
+                data={[
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: '',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                ]}
+            />
+        </AppShell>
+    ))
+    .add('EmailService', () => (
+        <AppShell
+            title="E-Mail Service"
+            customerName="Betterlife GmbH Super Long Name ;aj;djf jja dfjo;asijf ajfoasjdf oasdjfi ajsodfj"
+            customerId="15/116102"
+            customerStatus=""
+            MainMenuComponent={MockedMainMenu}
+            LanguageListComponent={MockedLanguageList}
+            config={config}
+        >
+            <EmailService
+                data={[
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: '',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                ]}
+            />
+        </AppShell>
+    ))
+    .add('EmailService with React Table', () => (
+        <AppShell
+            title="E-Mail Service"
+            customerName="Betterlife GmbH Super Long Name ;aj;djf jja dfjo;asijf ajfoasjdf oasdjfi ajsodfj"
+            customerId="15/116102"
+            customerStatus=""
+            MainMenuComponent={MockedMainMenu}
+            LanguageListComponent={MockedLanguageList}
+            config={config}
+        >
+            <EmailServiceReactTableExample
+                data={[
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: '',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                    {
+                        customer: 'Müller GmbH',
+                        customerId: '9949/343456',
+                        dunningEmail: 'contact@mueller.gmbh',
+                        dunningEmailStatus: 'pending',
+                    },
+                    {
+                        customer: 'Betterlife GmbH',
+                        customerId: ' 133/343456',
+                        dunningEmail: 'info@betterlife.gmbh',
+                        dunningEmailStatus: 'approved',
+                    },
+                    {
+                        customer: 'Maier Ag',
+                        customerId: '123/99484',
+                        dunningEmail: 'info@maier.ag',
+                        dunningEmailStatus: 'Domain verified',
+                    },
+                ]}
+            />
+        </AppShell>
+    ));
