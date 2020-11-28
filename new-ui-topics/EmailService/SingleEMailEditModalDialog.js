@@ -15,7 +15,7 @@ export default class SingleEMailEditModalDialog extends Component {
 
     render() {
         let { onCancel, onOk } = this.props;
-
+        console.log(this.props.customer);
         return (
             <ModalDialogSimple title="Select E-Mail" onCancel={onCancel} onOk={onOk} okText="Save">
                 <div className="mrc-ui-single-email-modal-checkcards">

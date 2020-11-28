@@ -12,6 +12,7 @@ export default class MultipleEMailEditModalDialog extends Component {
 
     render() {
         let { onCancel, onOk } = this.props;
+        console.log(this.props.selectedCustomers);
         return (
             <ModalDialogSimple title="Edit E-Mail" onCancel={onCancel} onOk={onOk} okText="Save">
                 <TextInput

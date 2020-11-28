@@ -41,6 +41,8 @@
 }
 
 .mrc-ui-table {
+  font-size: $font-size-8;
+  margin-top: $spacing-medium;
   .thead .th input[type=text] {
     font-size: $font-size-7;
     padding: 0 $spacing-extra-small;
@@ -78,8 +80,7 @@
   .thead .mrc-ui-select-icon {
     height: $spacing-large;
   }
-  
-  font-size: $font-size-8;
+
   // max-width: max-content;
  
   .tr:nth-child(even) .td {

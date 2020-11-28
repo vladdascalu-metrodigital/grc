@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTable, useRowSelect, useSortBy, useResizeColumns, useFilters, useFlexLayout } from 'react-table';
 import { useSticky } from 'react-table-sticky';
 
 import ChevronDownIcon from '../../icons/ChevronDownIcon';
 import ChevronUpIcon from '../../icons/ChevronUpIcon';
-
+import { SimpleActionDock } from '../../ActionDock';
+import SingleEMailEditModalDialog from '../EmailService/SingleEMailEditModalDialog';
+import MultipleEMailEditModalDialog from '../EmailService/MultipleEMailEditModalDialog';
 import { DefaultColumnFilter, SelectColumnFilter } from './MrcUiTableFilter';
-
-import { SelectAllCheckbox, SelectRowCheckbox } from './MrcUiTableSelectRowCheckbox';
+import { SelectRowCheckbox, SelectAllCheckbox } from './MrcUiTableSelectUtils';
+import Button, { COLOR as BUTTONCOLOR, SIZE as BUTTONSIZE } from '../../Button';
+import Pill from '../../Pill';
 
 import './index.scss';
 
-export default function DunningEmailTable(tableData, customColumnConfig) {
+export default function DunningEmailTable({ tableData, customColumnConfig }) {
+    const [showRowEditModal, setShowRowEditModal] = useState(null);
+    const [showMultiRowEditModal, setShowMultiRowEditModal] = useState(null);
+
     const defaultColumnConfig = [
         {
             id: 'selection',
@@ -34,6 +40,14 @@ export default function DunningEmailTable(tableData, customColumnConfig) {
             accessor: 'dunningEmailStatus',
             Filter: SelectColumnFilter,
             filter: 'includes',
+            Cell: React.useCallback(({ row }) => {
+                let status = row.original.dunningEmailStatus;
+                let type = 'success';
+                if (status != 'approved') {
+                    type = 'danger';
+                }
+                return <Pill text={row.original.dunningEmailStatus} type={type} withIcon />;
+            }),
         },
         {
             Header: 'Email',
@@ -45,6 +59,15 @@ export default function DunningEmailTable(tableData, customColumnConfig) {
             disableSortBy: true,
             disableFilters: true,
             sticky: 'right',
+            Cell: React.useCallback(({ cell }) => (
+                <Button
+                    size={BUTTONSIZE.SMALL}
+                    text="Edit"
+                    isOutlined
+                    color={BUTTONCOLOR.PRIMARY}
+                    onClick={() => setShowRowEditModal(cell.row.original)}
+                />
+            )),
         },
     ];
 
@@ -52,7 +75,7 @@ export default function DunningEmailTable(tableData, customColumnConfig) {
 
     const data = React.useMemo(() => tableData, []);
 
-    const columns = React.useMemo(() => columnConfig, []);
+    const columns = React.useMemo(() => defaultColumnConfig, []);
 
     const filterTypes = React.useMemo(
         () => ({
@@ -82,7 +105,7 @@ export default function DunningEmailTable(tableData, customColumnConfig) {
         rows,
         // state,
         prepareRow,
-        // state: {selectedFlatRows},
+        selectedFlatRows,
         // state: { selectedRowIds },
     } = useTable(
         {
@@ -179,6 +202,31 @@ export default function DunningEmailTable(tableData, customColumnConfig) {
                     );
                 })}
             </div>
+            {showRowEditModal && (
+                <SingleEMailEditModalDialog
+                    customer={showRowEditModal}
+                    onCancel={() => setShowRowEditModal(null)}
+                    onOk={() => setShowRowEditModal(null)}
+                />
+            )}
+
+            {showMultiRowEditModal && (
+                <MultipleEMailEditModalDialog
+                    customers={data}
+                    selectedCustomers={selectedFlatRows.map((d) => d.original)}
+                    onCancel={() => setShowMultiRowEditModal(null)}
+                    onOk={() => setShowMultiRowEditModal(null)}
+                />
+            )}
+
+            <SimpleActionDock
+                cancelText="Cancel"
+                applyText="Edit Selection"
+                applyDisabled={!selectedFlatRows.length}
+                cancelDisabled={!selectedFlatRows.length}
+                onApply={() => setShowMultiRowEditModal(true)}
+                onCancel={() => alert('cancel')}
+            />
         </div>
     );
 }

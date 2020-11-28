@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import DunningEmailTable from './DunningEmailTable';
 import { SelectColumnFilter } from './MrcUiTableFilter';
-import { SelectAllCheckbox, SelectRowCheckbox } from './MrcUiTableSelectRowCheckbox';
+import { SelectAllCheckbox, SelectRowCheckbox } from './MrcUiTableSelectUtils';
 
 var tableData = [];
 var i = 0;
@@ -46,6 +46,7 @@ while (i < 51) {
 }
 
 storiesOf('New UI Topics/Table', module)
+    .add('basic Table', () => <DunningEmailTable tableData={tableData} />)
     .add('basic Table with lots of Data', () => {
         const columnData = [
             {
@@ -95,8 +96,5 @@ storiesOf('New UI Topics/Table', module)
                 sticky: 'right',
             },
         ];
-        return DunningEmailTable(tableData, columnData);
-    })
-    .add('basic Table', () => {
-        return DunningEmailTable(tableData);
+        return <DunningEmailTable tableData={tableData} customColumnConfig={columnData} />;
     });

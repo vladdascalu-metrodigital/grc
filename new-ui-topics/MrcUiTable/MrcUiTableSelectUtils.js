@@ -24,5 +24,3 @@ SelectAllCheckbox.displayName = 'SelectAllCheckbox';
 
 export const SelectRowCheckbox = ({ row }) => <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />;
 SelectRowCheckbox.displayName = 'SelectRowCheckbox';
-
-export default { SelectAllCheckbox, SelectRowCheckbox };
