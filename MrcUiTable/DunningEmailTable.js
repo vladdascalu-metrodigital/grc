@@ -7,7 +7,7 @@ import ChevronUpIcon from '../icons/ChevronUpIcon';
 import { SimpleActionDock } from '../ActionDock';
 import SingleEMailEditModalDialog from '../DunningEmailManagementService/DunningEmailManagement/SingleEMailEditModalDialog';
 import MultipleEMailEditModalDialog from '../DunningEmailManagementService/DunningEmailManagement/MultipleEMailEditModalDialog';
-import { DefaultColumnFilter, SelectColumnFilter } from './MrcUiTableFilter';
+import { DefaultColumnFilter, SelectDunningEmailStatusColumnFilter } from './MrcUiTableFilter';
 import { SelectRowCheckbox, SelectAllCheckbox } from './MrcUiTableSelectUtils';
 import Button, { COLOR as BUTTONCOLOR, SIZE as BUTTONSIZE } from '../Button';
 import Pill from '../Pill';
@@ -50,7 +50,7 @@ export default function DunningEmailTable({
         {
             Header: lookup('mrc.dunningemailmanagement.table.status'),
             accessor: 'dunningEmailStatus',
-            Filter: SelectColumnFilter,
+            Filter: SelectDunningEmailStatusColumnFilter,
             filter: 'includes',
             Cell: React.useCallback(({ row }) => {
                 let status = row.original.dunningEmailStatus;

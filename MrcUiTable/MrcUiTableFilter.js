@@ -17,8 +17,9 @@ export const DefaultColumnFilter = ({ column: { filterValue, setFilter } }) => {
 
 DefaultColumnFilter.displayName = 'DefaultColumnFilter';
 
-export const SelectColumnFilter = ({ column: { filterValue, setFilter, preFilteredRows, id } }) => {
-    const options = React.useMemo(() => {
+// TODO: currently only for dunning email
+export const SelectDunningEmailStatusColumnFilter = ({ column: { filterValue, setFilter, preFilteredRows, id } }) => {
+    React.useMemo(() => {
         const options = new Set();
         preFilteredRows.forEach((row) => {
             options.add(row.values[id]);
@@ -31,9 +32,20 @@ export const SelectColumnFilter = ({ column: { filterValue, setFilter, preFilter
         return ops;
     }, [id, preFilteredRows]);
 
+    // here we must not use memo data to recreate the filter after emails are edited
+    const options = new Set();
+    preFilteredRows.forEach((row) => {
+        options.add(row.values[id]);
+    });
+
+    let ops = [['', lookup('mrc.dunningemailmanagement.status.ALL')]];
+    options.forEach((v) => {
+        ops.push([v, lookup('mrc.dunningemailmanagement.status.' + v)]);
+    });
+
     return (
         <Select
-            options={options}
+            options={ops}
             value={filterValue}
             onChange={(e) => {
                 setFilter(e || undefined);
@@ -42,6 +54,6 @@ export const SelectColumnFilter = ({ column: { filterValue, setFilter, preFilter
     );
 };
 
-SelectColumnFilter.displayName = 'SelectColumnFilter';
+SelectDunningEmailStatusColumnFilter.displayName = 'SelectDunningEmailColumnFilter';
 
-export default { SelectColumnFilter, DefaultColumnFilter };
+export default { SelectDunningEmailStatusColumnFilter, DefaultColumnFilter };

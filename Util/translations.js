@@ -149,7 +149,7 @@ let translations = {
     'mrc.dunningemailmanagement.status.ALL': 'All Status',
     'mrc.dunningemailmanagement.status.SYNTAX_VERIFIED': 'Syntax Verified',
     'mrc.dunningemailmanagement.status.UNVERIFIED': 'Unverified',
-    'mrc.dunningemailmanagement.status.NO_DUNNING_EMAIL': 'No Dunning Email',
+    'mrc.dunningemailmanagement.status.NO_DUNNING_EMAIL': 'No Status',
 
     'mrc.dunningemailmanagement.noActiveCustomer': 'No active customers in group!',
     'mrc.dunningemailmanagement.customerGroupInfo': ' active Customers in Customer Group',
