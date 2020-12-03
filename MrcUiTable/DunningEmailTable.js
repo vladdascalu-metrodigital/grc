@@ -66,7 +66,7 @@ export default function DunningEmailTable({
             }),
         },
         {
-            Header: 'Email',
+            Header: lookup('mrc.dunningemailmanagement.table.dunningEmail'),
             accessor: 'dunningEmail',
             Cell: React.useCallback(({ row }) => {
                 let email = row.original.dunningEmail;
@@ -82,7 +82,7 @@ export default function DunningEmailTable({
             Cell: React.useCallback(({ cell }) => (
                 <Button
                     size={BUTTONSIZE.SMALL}
-                    text="Edit"
+                    text={lookup('mrc.dunningemailmanagement.button.edit')}
                     isOutlined
                     color={BUTTONCOLOR.PRIMARY}
                     onClick={() => updateShowRowEditModal(cell.row.original)}
@@ -206,6 +206,9 @@ export default function DunningEmailTable({
                         >
                             {row.cells.map((cell, index) => {
                                 const label = columnConfig[index];
+
+                                // this part just overwrite the changed data manually because the react useMemo never change the data model
+                                // TODO: find a better way for this
                                 let value = null;
                                 const hasDunningEmailChange =
                                     changedCustomers[row.original.accountId] && cell.column.id === 'dunningEmail';

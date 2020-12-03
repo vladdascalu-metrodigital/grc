@@ -140,7 +140,6 @@ let translations = {
     'mrc.dunningemailmanagement.table.dunningEmail': 'Dunning Email',
 
     'mrc.dunningemailmanagement.button.edit': 'Edit',
-    'mrc.dunningemailmanagement.button.cancel': 'Cancel',
     'mrc.dunningemailmanagement.button.editSelection': 'Edit Selection',
     'mrc.dunningemailmanagement.button.cleanAll': 'Clean All',
     'mrc.dunningemailmanagement.button.save': 'Save And Verify',
