@@ -94,6 +94,12 @@ export class DunningEmailManagement extends Component {
             );
         }
 
+        const columnHeaderNames = {
+            customerName: lookup('mrc.dunningemailmanagement.table.customerName'),
+            customerId: lookup('mrc.dunningemailmanagement.table.customerId'),
+            dunningEmailStatus: lookup('mrc.dunningemailmanagement.table.status'),
+            dunningEmail: lookup('mrc.dunningemailmanagement.table.dunningEmail'),
+        };
         return (
             <React.Fragment>
                 <h3>
@@ -108,6 +114,7 @@ export class DunningEmailManagement extends Component {
                 </h3>
                 <DunningEmailTable
                     tableData={customers}
+                    columnHeaderNames={columnHeaderNames}
                     requestedCustomerId={this.props.requestedCustomerId}
                     handleCustomerDunningEmailSave={this.handleCustomerDunningEmailSave}
                     showRowEditModal={this.state.showRowEditModal}

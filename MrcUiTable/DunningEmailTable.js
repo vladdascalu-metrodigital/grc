@@ -19,6 +19,7 @@ import _ from 'lodash';
 export default function DunningEmailTable({
     tableData,
     customColumnConfig,
+    columnHeaderNames,
     requestedCustomerId,
     handleCustomerDunningEmailSave,
     showRowEditModal,
@@ -39,16 +40,16 @@ export default function DunningEmailTable({
             Cell: SelectRowCheckbox,
         },
         {
-            Header: lookup('mrc.dunningemailmanagement.table.customerName'),
+            Header: columnHeaderNames.customerName,
             accessor: 'customerName',
             sticky: 'left',
         },
         {
-            Header: lookup('mrc.dunningemailmanagement.table.customerId'),
+            Header: columnHeaderNames.customerId,
             accessor: 'customerId',
         },
         {
-            Header: lookup('mrc.dunningemailmanagement.table.status'),
+            Header: columnHeaderNames.dunningEmailStatus,
             accessor: 'dunningEmailStatus',
             Filter: SelectDunningEmailStatusColumnFilter,
             filter: 'includes',
@@ -66,7 +67,7 @@ export default function DunningEmailTable({
             }),
         },
         {
-            Header: lookup('mrc.dunningemailmanagement.table.dunningEmail'),
+            Header: columnHeaderNames.dunningEmail,
             accessor: 'dunningEmail',
             Cell: React.useCallback(({ row }) => {
                 let email = row.original.dunningEmail;
@@ -208,7 +209,7 @@ export default function DunningEmailTable({
                                 const label = columnConfig[index];
 
                                 // this part just overwrite the changed data manually because the react useMemo never change the data model
-                                // TODO: find a better way for this
+                                // TODO: find a better way
                                 let value = null;
                                 const hasDunningEmailChange =
                                     changedCustomers[row.original.accountId] && cell.column.id === 'dunningEmail';
