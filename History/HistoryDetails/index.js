@@ -283,7 +283,7 @@ export default class HistoryDetailsPresentation extends Component {
     // where C% = profitability
     //       C$ = turnower last 6m
     getGroupProfitability() {
-        const _requestFields = _.get(this.props, 'additionalFields.data.requestFields');
+        const _requestFields = _.get(this.props, 'additionalFields.requestFields');
         if (_.isNil(_requestFields)) {
             return null;
         }
