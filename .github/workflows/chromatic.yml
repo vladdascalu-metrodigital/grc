@@ -15,7 +15,7 @@ jobs:
       - run: npx chromatic --project-token=4kovzynxmx
       - uses: chromaui/action@v1
         env:
-          CHROMATIC_STORYBOOK_VERSION: v6.0.26
+          CHROMATIC_STORYBOOK_VERSION: 6.0.26
         # options required to the GitHub chromatic action
         with:
           # our project token, to see how to obtain it
