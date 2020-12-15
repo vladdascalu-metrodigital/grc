@@ -33,6 +33,7 @@
     },
     "dependencies": {
         "babel-eslint": "^10.1.0",
+        "chromatic": "^5.5.0",
         "classnames": "^2.2.6",
         "date-fns": "^2.16.1",
         "eslint-config-prettier": "^6.12.0",
