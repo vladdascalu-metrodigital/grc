@@ -12,7 +12,7 @@ jobs:
     # the list of steps that the action will go through
     steps:
       - uses: actions/checkout@v1
-      - run: npx chromatic
+      - run: npx chromatic --project-token=4kovzynxmx
       - uses: chromaui/action@v1
         env:
           CHROMATIC_STORYBOOK_VERSION: react@6.0.26
