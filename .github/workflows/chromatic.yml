@@ -12,7 +12,7 @@ jobs:
     # the list of steps that the action will go through
     steps:
       - uses: actions/checkout@v1
-      - run: yarn
+      - run: npx chromatic
       - uses: chromaui/action@v1
         env:
           CHROMATIC_STORYBOOK_VERSION: react@6.0.26
@@ -21,4 +21,4 @@ jobs:
           # our project token, to see how to obtain it
           # refer to https://www.learnstorybook.com/intro-to-storybook/react/en/deploy/
           projectToken: 4kovzynxmx
-          token: ${{ secrets.GITHUB_TOKEN }}
+          #token: ${{ secrets.GITHUB_TOKEN }}
