@@ -16,6 +16,7 @@ jobs:
       - uses: chromaui/action@v1
         env:
           CHROMATIC_STORYBOOK_VERSION: react@6.0.26
+          CHROMATIC_PROJECT_TOKEN: 4kovzynxmx
         # options required to the GitHub chromatic action
         with:
           # our project token, to see how to obtain it
